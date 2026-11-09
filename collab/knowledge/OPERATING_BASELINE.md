@@ -1,0 +1,17 @@
+# CoWork 운영 기준 — 마이그레이션 최소 정본 안내
+상태: POINTER_ONLY / RAW_SOURCE_NOT_COPIED | 2026-11-10 KST
+
+현재 운영 규칙 원본은 기존 Dropbox:
+- `/SKILL-COLLAB/knowledge/OPERATING_RULES_r0010.md` — GPT 판정 후 연속 실행 및 권한 게이트.
+- `/SKILL-COLLAB/knowledge/OPERATING_RULES_r0009.md` — SEMI_AUTO 기본, AUTO_PENDING_SETUP 분리.
+- `/SKILL-COLLAB/knowledge/OPERATING_RULES_r0008.md` — 기본 역할/권한, Claude 노트·리뷰·증거 계약.
+- `/SKILL-COLLAB/knowledge/REQUEST_PUBLICATION_GUARD_20261106.md` — 실제 바이트 SHA 및 READY 마지막 게시.
+- `/SKILL-COLLAB/RESUME_LATEST_r0005.md` — 기존 Dropbox 운영 진입점.
+
+이 파일은 위 원본을 대체하지 않는다. 원문 복제는 실제 바이트 대조/민감 분류 후 개별 승인한다.
+- GPT: 오케스트레이션·코드 변경·시험·최종 판정.
+- Windows Claude Code: 독립 리뷰어(정식 유효 요청일 때만 모델 리뷰).
+- Python watcher: 감지/검증/실행/영수증 게시. 무요청 호출 0건.
+- 비용 정책: STATIC $1 / LARGE $3 / XLARGE $6; 예산 자동 증액 금지.
+- 리뷰 불가 시 GPT 독자 개발 가능, `CLAUDE_REVIEW=NOT_RUN/PENDING`; 리뷰 성공 오인 금지.
+- 리뷰 결과, ZIP 검증, 배포 승인, 호스트 적용, 사내 E2E는 서로 다른 상태.
