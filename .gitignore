@@ -1,0 +1,17 @@
+# CoWork: never commit credentials or host runtime state
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+**/secrets.json
+**/reviewer.config.json
+**/policy.local.json
+**/*.sqlite
+**/*.sqlite3
+**/*.db
+**/__pycache__/
+**/.venv/
+**/*.log
+# Gitignore is not a security boundary; publication requires content scanning.
