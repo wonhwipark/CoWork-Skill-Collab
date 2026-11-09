@@ -6,6 +6,10 @@
 - PUBLIC 배포처: `wonhwipark/L1Work`의 기존 ZIP 다운로드 경로; **승인된 최종 ZIP에 한해 별도 게시**.
 - 현행 LIVE 리뷰 운송 채널은 기존 Dropbox `/SKILL-COLLAB/`. GitHub watcher는 아직 설치/활성화되지 않음.
 
+## 협업 방식 결정
+- **PR 없이 직접 GitHub PRIVATE 파일 기반 REQUEST/READY로 협업**한다. PR은 선택적 코드 검토용일 뿐 리뷰 실행 조건이 아니다.
+- 정규 협업 계약: `collab/ops/CONTRACTS/NO_PR_COLLABORATION_V1.md`. 이 문서의 게시만으로 모델 실행이 일어나지 않는다.
+
 ## 순서
 1. `collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md`에서 최신 진행상태 확인.
 2. `collab/knowledge/OPERATING_BASELINE.md`와 `collab/ops/CONTRACTS/`의 안전·권한 원칙 확인.
