@@ -1,0 +1,16 @@
+{
+  "schema": "COWORK_MIGRATION_MANIFEST_V1",
+  "generated_at": "2026-11-10",
+  "source_system": "DROPBOX",
+  "target_repository": "wonhwipark/CoWork-Skill-Collab",
+  "target_visibility": "private",
+  "scope": "P0_METADATA_SEED_ONLY",
+  "raw_source_bytes_collected": false,
+  "raw_sha256_verified": 0,
+  "source_metadata_items_previously_observed": 10,
+  "review_required_default": true,
+  "classified_approved_files": 0,
+  "migrated_files": 0,
+  "entries": [],
+  "note": "No source artifacts have been uploaded. Add only independently SHA-256-verified, approved, non-restricted files. Dropbox content_hash and Git blob SHA are not raw SHA-256."
+}
