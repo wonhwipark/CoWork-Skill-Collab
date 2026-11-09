@@ -4,7 +4,7 @@
 ## 현재 상태
 - P0-A 대상 구조: **PRIVATE + 기존 PUBLIC** 확정.
 - P1 PRIVATE 저장소 생성/ChatGPT 연결: **PASS** — `wonhwipark/CoWork-Skill-Collab`, visibility `private`, default branch `main`, GPT `pull/push/admin` 확인.
-- P1 기본 운영 폴더/안내 문서: **BOOTSTRAP IN PROGRESS** (커밋된 파일은 GitHub readback 후 PASS 판정).
+- P1 기본 운영 폴더/안내 문서: **PASS** — README/START_HERE/운영 기준/계약/빈 이관 Manifest/리뷰·영수증·요청·패키지·대시보드 자리표시자 등 14개 파일이 PRIVATE main에 존재하고 원격 readback 확인. 실제 ZIP 및 요청 데이터는 0건.
 - P0-B Dropbox 인벤토리: PARTIAL. 운영규칙 r0010/r0009/r0008, 게시 가드 확인. 원본 ZIP raw SHA와 전체 항목 분류는 NOT_RUN.
 - P0-C ZIP/문서 공개 적합성 검사: 합성 입력 오프라인 단위시험 18 PASS(이전 실행), 실제 운영 ZIP 샘플 E2E NOT_RUN.
 - Windows watcher 실제 설치 버전/SQLite/CLI/토큰/Telegram: NOT_VERIFIED.
