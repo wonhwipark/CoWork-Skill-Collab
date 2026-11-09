@@ -12,6 +12,7 @@ This repository is a **private collaboration workspace**, not a deployment repos
 - [최종 ZIP 공개 배포 게이트](collab/ops/CONTRACTS/PUBLIC_RELEASE_GATE.md)
 - [이관 Manifest](collab/inventory/MIGRATION_MANIFEST.json)
 - [이관 변경 이력](docs/MIGRATION_LOG.md)
+- [Windows 호스트 읽기 전용 점검 인계](collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/NEXT_WINDOWS_READONLY_HANDOFF.md)
 
 ## Repository roles
 - **PRIVATE here:** non-restricted design, candidate artifacts, reviews, receipts, status and dashboard — only after explicit source classification/approval.
