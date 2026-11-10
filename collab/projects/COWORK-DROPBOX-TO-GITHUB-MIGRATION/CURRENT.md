@@ -2,6 +2,16 @@
 관찰일: 2026-11-10 KST | work_id: COWORK-DROPBOX-TO-GITHUB-MIGRATION
 
 
+## 최신 GPT 판정 — v0.2.4 최종 전환 준비 (2026-11-11 KST)
+- 상태: **GPT_DISPOSITION=ACCEPT_WITH_CHANGE / PRE_CUTOVER_PARTIAL**. 운영 `MIGRATION_NOT_CUTOVER` / Dropbox LIVE 유지. 실제 GitHub 호스트 SHADOW, 독립 Claude 정식 리뷰/영수증, 운영 DB 이행/실 LIVE는 NOT_RUN.
+- Claude 자체 보고 원문 `CLAUDE_FINAL_PRE_CUTOVER_GATE_RESULT_FOR_GPT_20261110.md`, 리뷰 입력 `REVIEW_INPUT_MANIFEST_v0_2_4_FOR_GPT_20261110.md` 재조회. 후보 `skill-collab-watcher_v0_2_4_1110.zip` (146879B, reported SHA256 `854d2d324033dac77771ed7145feabf0a659b3450d7b7579c54f487ae3f6ed20`, Windows 로컬). GPT raw ZIP/code 재검증 NOT_RUN.
+- 개발 자체 시험 410 PASS/0 FAIL/12 SKIP, T 23 SYNTH PASS/3 PARTIAL/12 NOT_RUN, S 10 REAL TEST-KEY PASS. F1=정상 WAIT_INPUT이고 운영 pending 1건과 일치, 나머지 예외·거부 요청 설명됨. 실제 HOLD 처리/호스트 설치/리뷰 호출 없음.
+- **중요 신규 위험 S-1:** SQLite `mode=ro` 사본 SHADOW에서 메인·WAL 불변이나 **SHM 파일 변화 관측**. 단일 LIVE·DB 무쓰기 요구에 맞는 SHM 처리 검증/일관된 격리 스냅샷 설계 없이 **실제 운영 호스트 SHADOW 승인 불가**. 사본 변화가 운영 DB 손상을 뜻하는 것은 아님.
+- **S-2:** B-7 신뢰 루트 fingerprint/핀·Windows ACL·버전 래칫/시계 역행의 실제 독립성과 운영 signer 도구 미완성. 64항목 ZIP의 실제 바이트·반출 분류 및 정식 독립 리뷰 필수.
+- **GPT 상세 판정:** `GPT_V0_2_4_FINAL_GATE_DISPOSITION_r0001_20261111.md` (PRIVATE main 게시, readback PASS). 1차 안전 승인 묶음(키/신뢰 루트, 안전 SHADOW, ZIP 게시 반출 승인, 유료 독립 리뷰 1회)과 2차 운영 DB 이행·GitHub LIVE 승인 분리.
+- 실제 LIVE/운영 watcher·DB·예약작업·Telegram 변경 없음. REQUEST/READY 발행 또는 모델 호출 없음. 사용자에게 작은 인계 반복 요구 없이 승인할 항목을 묶어 보고.
+
+
 ## 지금 읽을 최신 상태 — GPT 단독 진행 (2026-11-10 KST)
 - `MIGRATION_NOT_CUTOVER`: **Dropbox LIVE 계속 유지**, GitHub LIVE/SHADOW 운영 전환 미승인. Claude Code 토큰 사용 불가로 정식 독립 리뷰 `NOT_RUN`.
 - GPT 직접 Dropbox 원격 메타데이터 검사: 요청 폴더 65개 → REQUEST/READY 정상 63쌍; **READY 없는 2개 폴더**. 한 폴더는 REVIEW_RESULT 형태 및 RECEIPT 파일이 존재, 다른 하나는 리뷰·영수증이 없음. **Windows 운영 DB pending 1건과의 연결은 UNKNOWN**. 운영 요청/DB 변경 0.
