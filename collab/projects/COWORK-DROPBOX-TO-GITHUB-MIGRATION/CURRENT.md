@@ -3,6 +3,18 @@
 
 
 
+
+## 전환 필수 게이트 원샷 통합 인계 (2026-11-11 KST)
+- 사용자 요청: Dropbox→GitHub 전환에 실제 필수인 안전 게이트만 묶어 **Windows 개발/시험/후보·종합 결과 준비를 한 번에 수행**하고, 운영 전환 승인 직전까지 진행. **실제 운영변경·유료 리뷰·PRIVATE 소스 ZIP 반출·LIVE 전환 승인은 이번 '그래'에 포함하지 않음**.
+- 통합 인계 **`GPT_CUTOVER_ESSENTIAL_GATES_ONE_SHOT_HANDOFF_r0001_20261111.md`** 를 PRIVATE `main`에 PR 없이 게시·원격 내용 readback PASS. commit `9a3c1a3780647f6f0e25a804268b6292b001694f`; 이전 `GPT_STAGE1_SHADOW_TRUST_REVIEW_ONE_SHOT_r0001_20261111.md`는 역사와 상세 참고로 보존하며 신규 실행 인계의 S-1/S-2에 통합.
+- 후보 기준 정합화: **v0.2.5**(Windows 로컬, 보고 155288 B / SHA256 `40a1a944ec55d7414051374a67e264fd4fe03dadfcdead449ff37bac86dd93e6`)를 최신 개발 후보로 취급; v0.2.4(146879 B)는 기존 SHADOW/Trust 검토 이력. 둘 다 원본 ZIP GPT 직접 수령·바이트 독립검증은 NOT_RUN.
+- 작업 범위: G0 현재 호스트 읽기전용 점검/F1 무손실 보존 상태 → G1 운영 DB main/WAL/SHM 미접근 SHADOW·B-7 신뢰검증의 **격리 코드 작업** → G2 회귀/신규 ZIP 무결성 → G3 독립 리뷰 **준비만** → G4 운영 DB 전환·복구·단일 LIVE의 **격리 리허설 자료**. 범위 밖을 `NOT_RUN/BLOCKED`로 기록하고 계속 수행.
+- 재부팅 후 무로그온 실행 S4U, 스케줄러 변경, 일일 상한·Notifier 신규 기능은 **이번 필수 GitHub LIVE 전환 게이트에서 분리**.
+- 새 Windows 결과 파일 예고: `CLAUDE_CUTOVER_ESSENTIAL_GATES_RESULT_FOR_GPT_20261111.md` (GitHub PRIVATE `main`, 비민감 결과, remote readback 필수). **Windows Claude Code 실행은 아직 관측되지 않음**. 현재 상태 `CUTOVER_ESSENTIAL_HANDOFF=PREPARED_NOT_EXECUTED`; `INDEPENDENT_REVIEW=NOT_RUN`; `CUTOVER=MIGRATION_NOT_CUTOVER`.
+- 운영 Dropbox watcher v0.1.5·DB/WAL/SHM·예약 작업·Telegram·GitHub READY·모델 호출·PUBLIC·LIVE 전환은 이번 문서 정리로 변경하지 않음. 실제 host SHADOW, 서명키, 리뷰, DB 운영 이행, LIVE는 **개별 명시 승인 후**.
+- **다음 한 동작**: Windows Claude Code 대화에서 새로운 통합 인계의 정확한 repo/branch/path를 지정하여 **단일 실행**. 미승인 차단을 제외한 작업은 끝내고 결과 MD 직접 게시·readback 후 GPT 판정과 승인 묶음 제시.
+
+
 ## GPT 판정 — 로그온 없는 시작 호환성 (2026-11-11 KST)
 - 결과 원문 `CLAUDE_NO_LOGON_START_COMPAT_RESULT_FOR_GPT_20261111.md` 직접 확인. `COMPAT_STATUS=PARTIAL`, R01 PASS(READ_ONLY), R02 PARTIAL, R03 PASS(SYNTHETIC), R04 분석, R05 조건부 PASS(READ_ONLY), R06 계획만 수용.
 - GPT 판정 `ACCEPT_WITH_CHANGE / HOST_LOGONLESS_E2E=NOT_RUN`; 상세 `GPT_NO_LOGON_START_COMPAT_DISPOSITION_r0001_20261111.md` PRIVATE main 게시·원격 readback PASS (commit `2f4e43e937dfc30e8943162d4b12f423e4c423d8`).
