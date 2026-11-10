@@ -4,6 +4,17 @@
 
 
 
+## Windows 실행 결과 — 전환 필수 게이트 G0~G4 (Claude 자체 시험 보고, 2026-11-11)
+- 상태: `PRE_CUTOVER_READINESS=PARTIAL ; HOST_SHADOW=NOT_RUN ; INDEPENDENT_REVIEW=NOT_RUN ; DB_LIVE_MIGRATION=NOT_RUN ; CUTOVER=MIGRATION_NOT_CUTOVER ; PRODUCTION_CHANGED=false ; MODEL_CALLS=0`. 개발 자체 시험(SELF_TEST_REPORTED)이며 독립 리뷰가 아님.
+- 결과 원문 `CLAUDE_CUTOVER_ESSENTIAL_GATES_RESULT_FOR_GPT_20261111.md`, 독립 리뷰 입력 자료 `REVIEW_INPUT_MANIFEST_v0_2_8_FOR_GPT_20261111.md` (실행 요청 아님). PRIVATE main, PR 없이 게시, 원격 바이트 재검증 완료. 이전 결과와 CURRENT 이력은 보존.
+- 후보 `skill-collab-watcher_v0_2_8_1111.zip`, 173,615 bytes, SHA-256 `c6231cc329faff26c6e04a0ca454dec0d62a5eaaa0eb08edf9b6a57280f78daa`. Windows 로컬 보관, development_not_for_deployment, PRIVATE 게시 없음(반출 승인 대기). 이전 후보 v0.2.0~v0.2.5 불변, 중간본 v0.2.6·v0.2.7은 폐기 보존.
+- 시험: 522 PASS / 0 FAIL / 12 SKIP (운영 인터프리터에서는 487 PASS / 0 FAIL / 14 SKIP). T 23 PASS·3 PARTIAL·12 NOT_RUN, S 10 PASS(시험 키). 간헐 실패 1건(시험 헬퍼 2초 경계)과 런북·코드 불일치 1건을 찾아 수정.
+- S-1 해결: SHADOW는 운영 DB를 아예 열지 않음(자체 폴더·자체 DB, 경로 가드, 읽기 전용 전송, 실행 불가 러너). Windows 파일 핸들 tripwire와 실제 `watch` 명령, 실제 GitHub GET으로 격리 환경에서 확인. 실제 호스트 프로세스의 파일 I/O 추적은 NOT_RUN.
+- S-2: 감시기 계정이 신뢰 루트·핀을 바꿀 수 있는지 검사하는 기능 구현. **이 호스트 구성(대화형 관리자 계정)은 LIVE에서 거부됨(BLOCKED_TRUST)**. 비관리자 실행 계정과 관리자 전용 신뢰 폴더 구성이 필요. 승인자 서명 도구와 제공자 시계 단조 증가 가드 추가.
+- F1(READY 대기 요청)은 Dropbox에 그대로 보존. 이번 작업에서 운영 DB는 열지 않음. G4 리허설(스냅샷 사본)에서 보류 전환·롤백·복원·알림 중복 0 통과. 운영 DB 실제 이행·보류 실행·LIVE는 NOT_RUN.
+- 필요한 승인 묶음(LIVE 제외): 실행 계정·폴더 구성, 승인자 키·신뢰 루트, 호스트 SHADOW(읽기 전용 토큰·I/O 추적), 소스 반출 분류 승인, 정식 독립 리뷰 1회. 이후 별도: 운영 DB 이행·F1 처분·LIVE 전환.
+- 이 갱신은 상태 기록이며 READY 신호, 리뷰·과금·운영 변경 승인이 아닙니다.
+
 ## 전환 필수 게이트 원샷 통합 인계 (2026-11-11 KST)
 - 사용자 요청: Dropbox→GitHub 전환에 실제 필수인 안전 게이트만 묶어 **Windows 개발/시험/후보·종합 결과 준비를 한 번에 수행**하고, 운영 전환 승인 직전까지 진행. **실제 운영변경·유료 리뷰·PRIVATE 소스 ZIP 반출·LIVE 전환 승인은 이번 '그래'에 포함하지 않음**.
 - 통합 인계 **`GPT_CUTOVER_ESSENTIAL_GATES_ONE_SHOT_HANDOFF_r0001_20261111.md`** 를 PRIVATE `main`에 PR 없이 게시·원격 내용 readback PASS. commit `9a3c1a3780647f6f0e25a804268b6292b001694f`; 이전 `GPT_STAGE1_SHADOW_TRUST_REVIEW_ONE_SHOT_r0001_20261111.md`는 역사와 상세 참고로 보존하며 신규 실행 인계의 S-1/S-2에 통합.
