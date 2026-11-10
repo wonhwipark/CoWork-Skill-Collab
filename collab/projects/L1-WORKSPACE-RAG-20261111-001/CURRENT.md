@@ -57,3 +57,15 @@
 - **EXTEND 후보:** 사용자 확인 기반 `work_category` 메타데이터 및 Kernel exporter 파생 README Work 분류. 기존 필드/파일/스키마 변경은 개발·회귀시험 전 금지.
 - **DEFER:** 별도 vector DB, 새 독립 RAG skill, 추가 `by-type` 이중 인덱스, 코드 구현/배포.
 - **NEXT_ONE_ACTION:** Windows Claude Code의 **별도 독립 리뷰 세션**에서 `wonhwipark/CoWork-Skill-Collab`, `main`, `collab/projects/L1-WORKSPACE-RAG-20261111-001/CLAUDE_DESIGN_REVIEW_HANDOFF_r0002_20261111.md`를 읽고 허용된 범위의 정적 검토를 명시적으로 실행. 비민감 결과를 지정 파일에 게시·remote readback할 때만 검토 완료로 표시. 이것은 자동 실행 예약이 아님.
+
+## 2026-11-11 — GPT RAG r0002 구조적 자체 리뷰 (LATEST)
+
+- **REVIEW_KIND:** `GPT_SELF_REVIEW`; **REVIEW_STATUS:** `COMPLETED_WITH_GAPS`; **DISPOSITION:** `DESIGN_ACCEPT_WITH_REQUIRED_CHANGES / IMPLEMENTATION_BLOCKED_AT_G0_M1`.
+- **REVIEWED:** `L1_WORKSPACE_RAG_DESIGN_r0002_20261111.md` + `CLAUDE_DESIGN_REVIEW_HANDOFF_r0002_20261111.md` + r0001 baseline; 첨부 Kernel `work-ledger-kernel_v0_7_37_1103.zip` 실제 코드/합성 테스트; PUBLIC Workflow/Analyzer/GitHub/Converter/Job ZIP 인벤토리 및 RAG 검증 계약.
+- **ISSUES:** `BLOCKING=5 / MAJOR=8 / MINOR=3`. 핵심: 실제 Provider 본문 소비/Owner·Root·Job gate 미검증; Git/P4 SourceSnapshot 일관성; Kernel source digest symlink 경계; 외부 반출 가드; CODE_ANALYSIS-only Work의 CODE_FACTS/MSC navigation 공백; work_category 호환/이력; 기존 regression baseline.
+- **TEST:** 격리 Kernel v0.7.37 관련 5개 테스트 파일에서 `11 PASS / 1 FAIL` (실제 FAIL은 구형 README 예상 문구와 현재 exporter 출력 차이, r0002 신규 regression 아님). 별도 synthetic symlink 밖 파일 hash 포함, empty glob, code_rev shape, Work category/문서 생성 부재 실측. **사내 호스트/실 API/Workflow·Analyzer 통합 회귀**: `NOT_RUN`.
+- **REVIEW_RESULT:** `collab/projects/L1-WORKSPACE-RAG-20261111-001/GPT_SELF_REVIEW_STRUCTURAL_r0001_ON_RAG_r0002_20261111.md`. **PRIVATE main POSTED / REMOTE_READBACK PASS**. UTF-8 bytes: 28954, SHA-256 `9c8bb5d5003bbbc1332772fb6654305d8c473b4f4678cfeb0af99beff7ccea50`, blob SHA `9cf8216794d1acbf13fe8c8498315b4f16c869b1`, commit `63da953118f68b244b3c825416a0254fe492f0a9`.
+- **CLAUDE_INDEPENDENT_REVIEW:** `NOT_RUN` — 이 GPT 자체 리뷰를 독립 Claude 리뷰/영수증으로 소급하지 않음.
+- **G0 / INHOUSE_WORKSPACE / INSTALLED_SKILLS / OWNER_ROOT / MCP_TOOL_MAP:** `NOT_VERIFIED`. **M1_RAG_PROVIDER_INPUT:** `BLOCKED / NOT_RUN`.
+- **DEVELOPMENT / SOURCE_PATCH / PACKAGE_BUILD / PUBLIC_RELEASE / HOST_INSTALL / REQUEST_READY / LIVE_CUTOVER:** `NOT_RUN`. 기존 스킬·운영 watcher/DB/Job/Telegram 및 `/AI-CONTINUITY/` 변경 0, `MIGRATION_NOT_CUTOVER / DROPBOX_LIVE` 유지.
+- **NEXT_ONE_ACTION:** 사내 승인된 G0 읽기 전용 인벤토리와 최소 `SourceSnapshot + artifact_kind + category + trusted payload` 연결 계약을 이 결과의 우선순위/부정시험에 맞춰 확정. 사용자 승인 없는 운영 변경/유료 리뷰 금지.
