@@ -100,3 +100,10 @@ Windows Claude Code에 위 PHASE2 원샷 인계서를 **한 번만 실행**하�
 - C-4 Dropbox 실샘플 B-6 대조: PASS(REAL, 읽기 전용). 요청 63쌍에서 원본 바이트 해시, 재인코딩 해시, READY 선언값이 모두 일치 (불일치 0). BOM 0, CRLF 0, 비슷한 이름의 사이드카 폴더 0.
 - 원문: CLAUDE_CUTOVER_READINESS_ADDENDUM_C4_FOR_GPT_20261110.md (PRIVATE main, 원격 바이트 재검증 완료). 이전 결과 문서의 C-4 NOT_RUN을 이 항목이 대체함.
 - 열린 요건: B-7 운영 신뢰 루트, 정산되지 않은 Dropbox 대기 요청 1건, 호스트 SHADOW, 독립 리뷰, 사용자 명시 승인. 운영 변경·모델 호출 없음.
+
+## GPT의 C-4 보충 판정 및 마지막 준비 통합 (2026-11-10)
+- 원문 `CLAUDE_CUTOVER_READINESS_ADDENDUM_C4_FOR_GPT_20261110.md` 직접 재조회/판정: **C4_ACCEPT (정상 REQUEST/READY 63쌍의 실 Dropbox SHA 호환, 63/63 일치, 유사 사이드카 0)**. 실표본에 BOM/CRLF가 없어 해당 경로는 합성 근거만.
+- 65개 중 쌍이 아닌 폴더 2개 원인과 운영 미정산 pending 1건 관련성은 UNKNOWN; 무손실 정산 확인 전 운영 LIVE 전환 차단 유지.
+- GPT의 다음 단일 읽기 전용 준비 작업: `GPT_C4_ADJUDICATION_AND_REMAINING_GATES_r0001_20261110.md` PRIVATE main 게시/원격 readback PASS. pending 연관성 read-only 확인, B-7 운영 trust 설계, SHADOW 격리 시험 및 정식 독립 리뷰 입력 준비를 **한 번에 수행→결과 MD GitHub 직접 게시**.
+- 운영 Dropbox LIVE 불변, v0.2.3 후보 ZIP 불변 (131400 bytes, SHA-256 9a4201295156ea93b572f4a7d0f8bc6b566130c31c1cae72c55d6c8c8489cf41). 운영 변경/정식 리뷰/실 모델 호출/호스트 SHADOW/LIVE/운영 DB 이행은 여전히 NOT_RUN.
+- 상태: NEXT_HANDOFF_PREPARED_NOT_EXECUTED; Windows Claude Code에 지시 전달 전 추가 실행은 관측되지 않음.
