@@ -95,3 +95,8 @@ Windows Claude Code에 위 PHASE2 원샷 인계서를 **한 번만 실행**하�
 - 모델 호출 0회, 운영 watcher/DB/예약 작업/Telegram 변경 없음.
 - 전환 차단 요건: C-4, 운영 신뢰 루트 수명주기(B-7), 정산되지 않은 Dropbox 대기 요청 1건 처리, 호스트 SHADOW, 독립 리뷰와 영수증, 사용자 명시 승인.
 - 이 갱신은 상태 기록이며 READY 신호나 리뷰 실행 승인이 아닙니다.
+
+## C-4 보충 (Claude 자체 시험 보고, 2026-11-10)
+- C-4 Dropbox 실샘플 B-6 대조: PASS(REAL, 읽기 전용). 요청 63쌍에서 원본 바이트 해시, 재인코딩 해시, READY 선언값이 모두 일치 (불일치 0). BOM 0, CRLF 0, 비슷한 이름의 사이드카 폴더 0.
+- 원문: CLAUDE_CUTOVER_READINESS_ADDENDUM_C4_FOR_GPT_20261110.md (PRIVATE main, 원격 바이트 재검증 완료). 이전 결과 문서의 C-4 NOT_RUN을 이 항목이 대체함.
+- 열린 요건: B-7 운영 신뢰 루트, 정산되지 않은 Dropbox 대기 요청 1건, 호스트 SHADOW, 독립 리뷰, 사용자 명시 승인. 운영 변경·모델 호출 없음.
