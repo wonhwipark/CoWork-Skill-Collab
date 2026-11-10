@@ -10,6 +10,13 @@
 - **PR 없이 직접 GitHub PRIVATE 파일 기반 REQUEST/READY로 협업**한다. PR은 선택적 코드 검토용일 뿐 리뷰 실행 조건이 아니다.
 - 정규 협업 계약: `collab/ops/CONTRACTS/NO_PR_COLLABORATION_V1.md`. 이 문서의 게시만으로 모델 실행이 일어나지 않는다.
 
+## 최신 구현 기준 (2026-11-10)
+- 전체 설계: `collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/GITHUB_ADAPTER_AND_REVIEW_FLOW_DESIGN_r0002_20261110.md`
+- 48개 수락시험: `collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/ACCEPTANCE_TEST_MATRIX_r0001_20261110.md`
+- Windows 개발 인계: `collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/NEXT_WINDOWS_CLAUDE_ADAPTER_IMPLEMENTATION_HANDOFF_r0001_20261110.md`
+- Claude Code 정적 리뷰 원문: `collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CLAUDE_STATIC_REVIEW_RESULT_FOR_GPT_20261110.md`
+- **문서 게시만 완료. GitHub watcher 구현/실행/공식 리뷰/LIVE는 완료되지 않음.**
+
 ## 순서
 1. `collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md`에서 최신 진행상태 확인.
 2. `collab/knowledge/OPERATING_BASELINE.md`와 `collab/ops/CONTRACTS/`의 안전·권한 원칙 확인.
