@@ -1,36 +1,33 @@
 # CoWork — GitHub 협업 진입점
-기준일: 2026-11-10 KST | 상태: PRIVATE_REPO_BOOTSTRAPPED / MIGRATION_NOT_CUTOVER
+기준: 2026-11-10 KST | **MIGRATION_NOT_CUTOVER / DROPBOX_LIVE**
+성격: **고정 진입점**. 특정 Phase, 요청자 전달 대기, ZIP PASS 등 수시 상태를 이 문서에 고정하지 않는다.
 
-## 위치와 역할
-- PRIVATE 정본 후보: 이 저장소 `wonhwipark/CoWork-Skill-Collab`; 협업 문서·개발 후보·리뷰·영수증 전용.
-- PUBLIC 배포처: `wonhwipark/L1Work`의 기존 ZIP 다운로드 경로; **승인된 최종 ZIP에 한해 별도 게시**.
-- 현행 LIVE 리뷰 운송 채널은 기존 Dropbox `/SKILL-COLLAB/`. GitHub watcher는 아직 설치/활성화되지 않음.
+## 단일 최신 정본 위치
+1. **프로젝트 실행 상태:** [`collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md`](projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) — 언제나 최신 상태가 기록된 마지막 섹션과 실측 증거를 우선한다. 오래된 이력 절의 NOT_STARTED/NOT_RUN은 당시 관찰값으로 보존.
+2. **협업 안전 계약:** `collab/ops/CONTRACTS/NO_PR_COLLABORATION_V1.md`, `collab/ops/CONTRACTS/REVIEW_TRANSPORT_V1.md` (DRAFT, 실제 key/서명 세부는 최신 설계·판정을 우선).
+3. **현재 설계/시험:** `collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/GITHUB_ADAPTER_AND_REVIEW_FLOW_DESIGN_r0002_20261110.md`, `ACCEPTANCE_TEST_MATRIX_r0001_20261110.md`.
+4. **보안 기준:** `collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/GPT_B7_TRUST_ROOT_AND_APPROVAL_POLICY_DRAFT_r0001_20261110.md` (설계 초안, 운영 승인/설치 아님).
+5. **실제 운용 원본:** 기존 Dropbox `/SKILL-COLLAB/`의 LIVE 요청·결과·영수증·운영 규칙. GitHub에 전부 복제되지 않았고, 운영 실행 기준으로 계속 살아있다.
 
-## 협업 방식 결정
-- **PR 없이 직접 GitHub PRIVATE 파일 기반 REQUEST/READY로 협업**한다. PR은 선택적 코드 검토용일 뿐 리뷰 실행 조건이 아니다.
-- 정규 협업 계약: `collab/ops/CONTRACTS/NO_PR_COLLABORATION_V1.md`. 이 문서의 게시만으로 모델 실행이 일어나지 않는다.
+## 역할 및 저장소
+- GPT: 개발·요구정의·보안/호환성 검토·실측/자체시험·리뷰 판정·최종 정본 관리. Windows 전용 원본은 접근 허용되는 경우에만 작업 가능.
+- Windows Claude Code: 독립 리뷰어가 기본이지만 필요한 로컬 개발 실행도 할 수 있음. **개발 세션 자기 시험 ≠ 독립 리뷰**. 토큰/연결 장애 시 GPT는 가능한 개발/시험/문서화를 계속하고 `INDEPENDENT_REVIEW=NOT_RUN/PENDING` 기록.
+- Python watcher: 유효한 승인 서명·파일·repo ID·정책·비용·중복 확인 후 **정식 REQUEST/READY**가 있을 때만 리뷰 호출. 파일 게시 자체는 실행 신호 아님.
+- PRIVATE: `wonhwipark/CoWork-Skill-Collab` — 새 협업 문서/판정/인계/영수증의 기준 저장소. 민감/반출금지 자료는 PRIVATE에도 게시 불가.
+- PUBLIC: `wonhwipark/L1Work` — 승인된 최종 ZIP의 기존 사내 다운로드 경로만. 개발 후보/REQUEST/영수증은 공개 금지.
+- 기존 LIVE: Dropbox `/SKILL-COLLAB/` — **전환 명시 승인 전 운영 변경/중지하지 않는다**.
 
-## 최신 구현 기준 (2026-11-10)
-- 전체 설계: `collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/GITHUB_ADAPTER_AND_REVIEW_FLOW_DESIGN_r0002_20261110.md`
-- 48개 수락시험: `collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/ACCEPTANCE_TEST_MATRIX_r0001_20261110.md`
-- Windows 개발 인계: `collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/NEXT_WINDOWS_CLAUDE_ADAPTER_IMPLEMENTATION_HANDOFF_r0001_20261110.md`
-- Claude Code 정적 리뷰 원문: `collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CLAUDE_STATIC_REVIEW_RESULT_FOR_GPT_20261110.md`
-- **문서 게시만 완료. GitHub watcher 구현/실행/공식 리뷰/LIVE는 완료되지 않음.**
+## 기본 원샷 흐름 (핑퐁 최소화)
+사용자 실행 지시 1회 → 접근 가능한 원본/최근 변경분 확인 → 허용된 범위의 수정·재시험 반복 → 신규 후보 ZIP·SHA-256/시험 증거 → 비민감 결과 MD를 PRIVATE `main`에 **PR 없이** 직접 게시·remote readback → GPT 종합 판정. 권한/인증/모델 장애로 막힌 항목은 해당 항목만 BLOCKED/NOT_RUN으로 남기고 나머지 계속.
+- 사용자에게 제공하는 실행 프롬프트는 항상 **정확한 저장소·브랜치·인계 파일 상대 경로**를 포함해야 한다.
+- 외부 게시·운영 DB 수정·신뢰키/PAT 발급·유료 reviewer·LIVE/SHADOW 호스트 설치·PUBLIC 배포는 각각 별도 명시적 승인.
+- REQUEST/READY 없거나 위조·만료·중복·비용 초과 시 reviewer 모델 호출 **0**. 재리뷰는 새로운 유효 요청으로만.
+- GitHub PRIVATE의 결과 게시/보고서는 **Windows Claude Code 자동 실행도, GPT 백그라운드 실행도 발생시키지 않는다**.
 
-## 현재 사용자 전달 대기 작업
-- **PHASE1 통합 원샷:** `collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/PHASE1_WINDOWS_ONE_SHOT_HANDOFF_r0001_20261110.md`
-- 상태: `PREPARED_NOT_DELIVERED`. 이전 Claude Code 프롬프트도 사용자가 아직 전달하지 않았음. Windows 개발/시험/ZIP = `NOT_STARTED`.
-- 사용자가 개인 Windows PC의 Claude Code 대화에서 위 MD를 읽고 전체 수행하도록 **한 번만** 요청하면 됨. GitHub 게시 자체는 PC에서 자동 실행되지 않음.
-- 다른 이전 NEXT_WINDOWS_* 인계서는 역사/세부 참고이며 **새 원샷 문서가 이번 실행 지시 우선순위**.
+## LIVE 전환 안전 게이트
+운영 trust root/서명 실제 검증, Dropbox 기존 미정산 요청 개별 정산 또는 승인된 무손실 보존, 과거 완료 재호출 0, 제공자별 cursor/lease/단일 LIVE, notifier watermark/중복 0, 운영 DB WAL 무쓰기 백업과 마이그레이션/복원, 호스트 SHADOW, 정식 독립 리뷰/영수증, 운영 rollback 계획, 사용자 최종 명시 승인. **합성시험 및 개발 후보 PASS만으로 전환을 선언하지 않는다.**
 
-## 순서
-1. `collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md`에서 최신 진행상태 확인.
-2. `collab/knowledge/OPERATING_BASELINE.md`와 `collab/ops/CONTRACTS/`의 안전·권한 원칙 확인.
-3. 이관 대상을 `collab/inventory/MIGRATION_MANIFEST.json`에 분류하고 원본 ZIP/문서 **실제 바이트 SHA-256**와 공개 적합성 승인 이후에만 복제.
-4. Windows watcher/Claude Code 원본·권한을 read-only로 확인 → 독립 리뷰와 E2E → 단일 LIVE cutover.
-
-## 절대 금지
-- 사내 반출 금지 소스·로그·고객자료·토큰은 PRIVATE GitHub에도 올리지 않음.
-- 검증된 `REQUEST/READY` 없이 리뷰 모델 호출 금지; 아직 GitHub에는 READY를 게시하지 않음.
-- PRIVATE ZIP을 PUBLIC으로 자동 복사하지 않음. `/AI-CONTINUITY/` 변경 금지.
-- 기존 Dropbox watcher/대시보드/Telegram을 중지·교체하지 않음.
+## 금지 사항
+- `/AI-CONTINUITY/` 변경 금지. 실제 Windows watcher·운영 SQLite/WAL/SHM·예약작업·Bridge/Dashboard/Telegram 구성 승인 전 변경 금지.
+- 사내 전달물에 사외 협업 서비스 명칭·경로·토큰 의존성 주입 금지. 운영 신뢰키·개인키/토큰/회사 반출 금지 자료 저장소 업로드 금지.
+- GitHub PR은 정규 리뷰에 불필요. `MIGRATION_NOT_CUTOVER` 유지 중 Dropbox LIVE를 종료하지 않는다.
