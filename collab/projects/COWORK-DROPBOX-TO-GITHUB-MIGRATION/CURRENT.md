@@ -150,3 +150,13 @@ Windows Claude Code에 위 PHASE2 원샷 인계서를 **한 번만 실행**하�
 - 시험 410 PASS / 0 FAIL / 12 SKIP (GUI 8, .venv 조건 4). 실서명 S01~S10 PASS(REAL, 시험 키). 운영 모델 호출 0, 운영 변경 0.
 - 남은 승인(묶음): 승인 키·신뢰 루트 부트스트랩, 호스트 SHADOW, 소스 ZIP 게시, 정식 독립 리뷰 1회. 그 뒤 별도: 운영 DB 이행, LIVE 전환.
 - 이 갱신은 상태 기록이며 READY 신호나 리뷰 실행 승인이 아닙니다.
+
+## 무인 리뷰 실행 준비 (Claude 자체 시험 보고, v0.2.5, 2026-11-11)
+- 범위: 리뷰 자동 실행만. 개발 작업은 사용자가 시작. 상태: UNATTENDED_REVIEW_STATUS = PARTIAL. 정식 독립 리뷰가 아니며 INDEPENDENT_REVIEW=NOT_RUN. 현재 LIVE는 여전히 Dropbox.
+- 결과 원문: CLAUDE_UNATTENDED_REVIEW_READINESS_RESULT_FOR_GPT_20261111.md. 독립 리뷰 입력 자료: REVIEW_INPUT_MANIFEST_v0_2_5_FOR_GPT_20261111.md (실행 요청 아님). 둘 다 PRIVATE main, PR 없이 게시, 원격 바이트 재검증 완료. 이전 문서와 CURRENT 이력은 보존.
+- 추가한 안전장치: Claude 로그인 사전 점검(만료 시 요청 소모 없이 대기), 롤링 24시간 비용·횟수 상한(기본 꺼짐), 저장소의 PAUSE_REVIEWS 파일로 원격 정지, 감시기 정지 감지 알림. 모두 실패 시 '대기 + 알림'.
+- 후보 skill-collab-watcher_v0_2_5_1110.zip, 155,288 bytes, SHA-256 40a1a944ec55d7414051374a67e264fd4fe03dadfcdead449ff37bac86dd93e6. 로컬 보관, development_not_for_deployment. 이전 후보 불변.
+- 시험 448 PASS / 0 FAIL / 12 SKIP. 실제 CLI 사전 점검 PASS(모델 호출 없음). 운영 요청 65개 실데이터 차이 시험 64/65 동일(1건은 의도된 개선). 모델 호출 0, 운영 변경 0.
+- 호스트 사실: 예약 작업은 사용자 로그온 시작(Interactive)이라 재부팅 후 로그온 전에는 실행되지 않음. 실패 시 3회까지 재시작.
+- 미실행(승인 필요): 재부팅 후 무인 시작 구성(자동 로그인 또는 로그온 무관 실행), 일일 상한값 설정, 후보 설치와 재시작, 운영 notifier에 새 알림 연결. 구독 사용량 한도의 실제 오류 형식은 미관찰.
+- 이 갱신은 상태 기록이며 READY 신호나 리뷰 실행 승인이 아닙니다.
