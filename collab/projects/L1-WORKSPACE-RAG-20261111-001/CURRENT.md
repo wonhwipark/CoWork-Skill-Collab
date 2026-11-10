@@ -88,3 +88,15 @@
 - **DELIVERABLE:** `collab/projects/L1-WORKSPACE-RAG-20261111-001/L1_REVIEW_ACCUMULATION_SKILL_IO_CONTRACT_AUDIT_r0001_20261111.md`, GitHub PRIVATE `main`, PR 없이 게시, remote readback PASS. File bytes 15686, SHA-256 `4835a65d5f7aa7d93b500c11f2db0a4f9f359f39912de29d0650e3b8f107a39a`, Git blob `203e09ae1ab7dba1377689fe9470d1c3440b6dd5`, commit `41d62b819d4bc6c32620d6bf75cc33521978d345`.
 - **NEXT:** Step 2 proposed `ReviewSession + Finding + SourceSnapshot + Evidence` minimum schema/duplication contracts and inhouse read-only C01–C07 verification before code modifications.
 - **SAFETY:** `G0=NOT_VERIFIED / M1=BLOCKED / CLAUDE_INDEPENDENT_REVIEW=NOT_RUN`; `CODE_PATCH/INHOUSE_GIT_WRITES/REQUEST_READY/PAID_REVIEW/PUBLIC_RELEASE/LIVE=NOT_RUN`. `MIGRATION_NOT_CUTOVER / DROPBOX_LIVE` unchanged.
+
+## 2026-11-11 — Review accumulation Step 2: logical schema + synthetic tests (LATEST)
+
+- **STEP2_STATUS:** `CONTRACT_DESIGN_COMPLETE / SYNTHETIC_TEST_17_PASS / INHOUSE_G0_NOT_VERIFIED`.
+- **DECISION:** `REUSE_EXISTING_ANALYZERS + MINIMAL_REVIEW_LEDGER_CONNECTOR`. Separate `ReviewSession`, `Finding`, typed Git/P4 `SourceSnapshot`, `EvidenceRef`, `FindingEvent` and branch/revision-aware idempotency.
+- **KERNEL_EVIDENCE_GATE:** Kernel `record_evidence` registered `provider/kind/stage/profile` slot constraint directly inspected; new review kinds are NOT assumed supported. Preserve `record.json` Work SSOT and generated `README/index/문서안내` ownership.
+- **SYNTHETIC_CHECK:** Draft 2020-12 JSON Schema validated; local Python `jsonschema 4.26.0` + semantic reference checker observed **17 PASS / 0 FAIL** on fully synthetic scenarios (Git/P4 positive, duplicate/mismatch/closure/authority/event tamper negative). NOT a host or Provider E2E.
+- **PRIVATE MAIN DELIVERABLE:** `collab/projects/L1-WORKSPACE-RAG-20261111-001/L1_REVIEW_ACCUMULATION_STEP2_SCHEMA_AND_TEST_r0001_20261111.md`. Remote readback PASS, UTF-8 bytes **13306**, SHA-256 `469c4eb87c57a4a6d5686333a0dbb86e26b109cba425aa674eb64b22d21bf95f`, Git blob `e1cb87cadaf4f33a9831446648093a02d15c1862`, commit `41e7c4785a65b93b19493ded33981bdd12267ef3`.
+- **LOCAL ADDITIONAL ARTIFACTS:** A detailed non-operational JSON Schema r0001, full design MD, and synthetic test report exist as conversation downloads. **Not claimed posted to GitHub**.
+- **BLOCKERS:** RL-B01 Kernel Evidence registry integration; RL-B02 G0 owner/root/Job/Provider trust boundary; RL-B03 internal/external information export. GitHub review comment API and append-only writer/CAS remain MAJOR / NOT_VERIFIED.
+- **NEXT_ONE_ACTION:** Inhouse H01–H04 read-only inventory of installed Kernel evidence slots, l1-github PR/review tool, code-analyzer source/MSC output, Jira/Mango P4; then decide minimal authorized connector implementation.
+- **UNTOUCHED:** `CLAUDE_INDEPENDENT_REVIEW=NOT_RUN / M1_RAG=BLOCKED / INHOUSE_HOST=NOT_VERIFIED / WORKFLOW_OR_SKILL_PATCH=NOT_RUN / REQUEST_READY=UNCHANGED / PUBLIC_RELEASE=NOT_RUN / LIVE=MIGRATION_NOT_CUTOVER / DROPBOX_LIVE`.
