@@ -76,3 +76,8 @@ Windows Claude Code에 위 PHASE2 원샷 인계서를 **한 번만 실행**하�
 - 통합 인계: `GPT_V0_2_2_DISPOSITION_AND_CUTOVER_READINESS_ONE_SHOT_r0001_20261110.md` GitHub PRIVATE main **게시·재조회 PASS**. 다음 Windows 작업은 격리 환경에서 남은 결함 수정, 시험키·암호 모듈 권한이 되는 경우 실 서명 S 시험, B-6 비교, pending/알림·DB 전환/롤백, 새 ZIP 패키징, **결과 원문을 GitHub PRIVATE에 직접 게시**까지 한 번에 수행.
 - 현 단계: `HANDOFF_PREPARED_NOT_EXECUTED`. GitHub 문서 게시 자체는 Windows Claude Code에 대한 자동 실행 요청이 아니며 사용자 전달 전 새로운 실행 관측 없음.
 - 기존 Dropbox LIVE 유지. 승인되지 않은 운영 신뢰키/PAT 생성·운영 DB 마이그레이션·실 유료 독립 리뷰·PUBLIC 게시·LIVE 전환 없음.
+
+## 핑퐁 최소화 운영 결정 (2026-11-10)
+- 사용자의 새 요구를 반영하여 v0.2.2 통합 인계서 `GPT_V0_2_2_DISPOSITION_AND_CUTOVER_READINESS_ONE_SHOT_r0001_20261110.md`의 **§5 핑퐁 최소화 실행 규칙**을 확정. **한 번 실행 → 허용 범위 내 수정·재시험 반복 → 새 ZIP → PRIVATE main에 결과 보고/remote readback → 사용자 최종 판정 요청 1회**.
+- 중간 질문은 원칙적으로 중지하고 권한/보안·유료 모델 호출·LIVE cutover/PUBLIC 배포 등 승인 필요 사항은 마지막 보고서에 취합한다. 개발 Claude 자기 시험은 독립 리뷰가 아님.
+- 현재 상태: **통합 인계서 업데이트 게시 및 재조회 완료, 신규 Windows 실행은 아직 관측되지 않음**. 운영 Dropbox watcher/DB/Telegram/task 변경 없음.
