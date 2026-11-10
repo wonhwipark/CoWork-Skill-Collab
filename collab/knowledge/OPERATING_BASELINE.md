@@ -15,3 +15,8 @@
 - 비용 정책: STATIC $1 / LARGE $3 / XLARGE $6; 예산 자동 증액 금지.
 - 리뷰 불가 시 GPT 독자 개발 가능, `CLAUDE_REVIEW=NOT_RUN/PENDING`; 리뷰 성공 오인 금지.
 - 리뷰 결과, ZIP 검증, 배포 승인, 호스트 적용, 사내 E2E는 서로 다른 상태.
+
+## 프로젝트 공통 참고 정보 (운영 규칙과 분리)
+
+- [L1 Workspace RAG · Work 유형 · 브랜치별 AS-IS MSC 공통 컨텍스트](L1_WORKSPACE_RAG_COMMON_r0001_20261111.md) — 새 GPT 대화/리뷰/인계에서 재사용하는 **비민감 설계·검증 상태·정본 포인터**. 프로젝트별 최신 상태는 `collab/projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md`의 마지막 섹션을 우선한다.
+- 공통 문서 기록은 Dropbox LIVE 운영 규칙을 복제·수정하거나 REQUEST/READY, 독립 리뷰, 사내 배포·실행을 승인하지 않는다.
