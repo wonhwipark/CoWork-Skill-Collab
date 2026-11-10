@@ -1,0 +1,13 @@
+{
+  "schema": "l1/mcp-feedback/0.1",
+  "feedback_id": "FEEDBACK-0001",
+  "handoff_revision": "r0001",
+  "subject": "WORKFLOW_INTEGRATION",
+  "change_kind": "CONTRACT_GAP",
+  "reason_code": "INTERFACE_MISMATCH",
+  "compatibility": "NEEDS_REVIEW",
+  "test_state": "NOT_RUN",
+  "test_scope": "NONE",
+  "evidence_level": "E1",
+  "decision_requested": "REVISE_CONTRACT"
+}
