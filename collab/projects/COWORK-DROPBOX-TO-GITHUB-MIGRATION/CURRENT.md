@@ -1,6 +1,18 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 관찰일: 2026-11-10 KST | work_id: COWORK-DROPBOX-TO-GITHUB-MIGRATION
 
+
+## 지금 읽을 최신 상태 — GPT 단독 진행 (2026-11-10 KST)
+- `MIGRATION_NOT_CUTOVER`: **Dropbox LIVE 계속 유지**, GitHub LIVE/SHADOW 운영 전환 미승인. Claude Code 토큰 사용 불가로 정식 독립 리뷰 `NOT_RUN`.
+- GPT 직접 Dropbox 원격 메타데이터 검사: 요청 폴더 65개 → REQUEST/READY 정상 63쌍; **READY 없는 2개 폴더**. 한 폴더는 REVIEW_RESULT 형태 및 RECEIPT 파일이 존재, 다른 하나는 리뷰·영수증이 없음. **Windows 운영 DB pending 1건과의 연결은 UNKNOWN**. 운영 요청/DB 변경 0.
+- GPT 직접 보안계약 정리 `GPT_B7_TRUST_ROOT_AND_APPROVAL_POLICY_DRAFT_r0001_20261110.md` (초안, 운영키·토큰·운영 venv 설치 없음).
+- GPT 별도 오프라인 `skill-collab-github-review-gate_v0_1_0_1110.zip` 참조 코드 **41 PASS**. 구형 코드는 시간이 만료 후 뒤로 이동하면 서명이 다시 유효할 수 있는 시간 역행 검사 공백 있음. **Windows v0.2.3 재현 아님**.
+- GitHub 고정 진입점 `collab/START_HERE.md` 오래된 Phase1 미시작 표기를 제거하고 `CURRENT.md`를 정본 포인터로 변경. `collab/ops/CONTRACTS/REVIEW_TRANSPORT_V1.md` 오래된 `review_attempt` 처리키 설명 주의 보충.
+- **GPT 종합 원문:** `GPT_SOLO_PROGRESS_AND_CUTOVER_RISK_ASSESSMENT_r0001_20261110.md` (PRIVATE main, PR 없이 게시 및 원격 readback PASS).
+- **최신 Windows 후보는 그대로** `skill-collab-watcher_v0_2_3_1110.zip`, 131400 bytes, Claude 보고 SHA256 `9a4201295156ea93b572f4a7d0f8bc6b566130c31c1cae72c55d6c8c8489cf41`, `development_not_for_deployment`; Windows 로컬 전용이라 GPT가 ZIP 소스 재검증·수정·테스트는 NOT_RUN. Claude 자체 시험 348 PASS/12 SKIP 및 C-4 Dropbox 정상 63쌍 비교 수용(기존 기록 참조).
+- 남은 차단: (1) pending 1건/READY 없는 폴더 2개 운영 DB 연관성 확인과 무손실 정산·보존, (2) B-7 운영 신뢰 루트 실보안 검증, (3) 실제 호스트 SHADOW, (4) 정식 독립 리뷰/영수증, (5) 운영 DB 백업·이행, (6) 사용자 명시 LIVE 승인.
+- 추가 사용자 핑퐁 없이 GPT 가능한 분석·설계·문서화 완료. **새 유료 모델 호출/REQUEST/READY/키발급/운영 변경/PUBLIC 게시 0**.
+
 ## 현재 상태
 - P0-A 대상 구조: **PRIVATE + 기존 PUBLIC** 확정.
 - P1 PRIVATE 저장소 생성/ChatGPT 연결: **PASS** — `wonhwipark/CoWork-Skill-Collab`, visibility `private`, default branch `main`, GPT `pull/push/admin` 확인.
