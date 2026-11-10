@@ -156,3 +156,14 @@ Claude Code 독립 리뷰로 간주하지 마. 운영 watcher/DB/Job/Telegram,
 `COMMON_DOC=SHARED_REFERENCE`; `DESIGN=REVISED_R0002`; `GPT_SELF_REVIEW=COMPLETED_WITH_GAPS`; `INDEPENDENT_CLAUDE_REVIEW=NOT_RUN`; `INHOUSE_HOST=NOT_VERIFIED`; `M1_RAG_PROVIDER=BLOCKED`; `SOURCE_PATCH/PACKAGE/DEPLOYMENT=NOT_RUN`; `LIVE=DROPBOX_LIVE`.
 
 이 공통 정보 등록 자체는 신규 리뷰 요청/유료 호출/코드 변경/실행 승인/운영 이관이 아니다.
+
+## 2026-11-11 — 사외 설계·사내 GPT/OpenCode·Knowledge Updater 통합 설계 신규 링크 (델타)
+
+**이 공통 문서는 최신 실행 상태가 아닌 포인터다. 항상 `collab/projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md` 마지막 섹션을 우선 확인한다.**
+
+- **상위 통합 아키텍처:** `collab/projects/L1-WORKSPACE-RAG-20261111-001/L1_E2E_INHOUSE_OFFSITE_ARCHITECTURE_r0001_20261111.md` — 사외 GPT 고난도 설계·사내 GPT 텍스트 인계·OpenCode 현장 실행·사내 `L1 Knowledge Updater` 지식 라우팅/스터디·Workflow/Kernel Work Evidence·그룹 Dev Knowledge/개인 Workspace·비민감 MCP 피드백 경계. **GitHub 렌더 가능한 Mermaid 전체 흐름도 포함**.
+- **사내 전달용 새 상위 인계:** `collab/projects/L1-WORKSPACE-RAG-20261111-001/L1_INHOUSE_GPT_OPENCODE_HANDOFF_r0001_20261111.md` — 외부 협업 서비스 경로·토큰 의존성 없음. 사내 실제 설치본·MCP·Updater는 **아직 미검증**, 문서만 준비.
+- **MCP 피드백 계약:** `collab/projects/L1-WORKSPACE-RAG-20261111-001/L1_MCP_FEEDBACK_CONTRACT_r0001_20261111.md` 및 `L1_MCP_FEEDBACK_SCHEMA_r0001_20261111.json`. 허용 enum·스키마 검증·비식별·별도 반출 승인·영수증/중복 차단을 제안한 **사외 전송 보안 계약 초안**이며 MCP 구현·API 연결·반출 승인·네트워크 시험 **NOT_RUN**.
+- **새 문서와 이전 작업의 관계:** 기존 RAG 설계 r0002, CODE_ANALYSIS/MSC_AS_IS, Review Ledger Step 1~3 및 G0 readonly handoff를 대체하지 않는다. 기존 G0 문서는 하위 진단용으로 유지하고 새 문서가 전체 사용 경로의 상위 설계다.
+- **저장 범위:** PRIVATE `main`에 MD 3개, JSON schema 1개, synthetic 예제/검증 설명 2개, 최신 `CURRENT.md` 갱신·readback PASS. 원본 PNG·SVG·설계 ZIP은 이 GitHub 갱신에 포함하지 않았고 Mermaid를 원격 그림으로 사용한다.
+- **변경 금지 상태:** `G0_INHOUSE=NOT_VERIFIED`, `RAG_M1=BLOCKED`, `MCP_FEEDBACK=SPEC_ONLY`, `CLAUDE_INDEPENDENT_REVIEW=NOT_RUN`, `MIGRATION_NOT_CUTOVER / DROPBOX_LIVE`. 문서 게시로 사내 GPT/OpenCode 실행 또는 watcher 요청이 자동 발생하지 않는다.
