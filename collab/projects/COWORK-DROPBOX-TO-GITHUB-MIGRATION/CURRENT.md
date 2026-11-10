@@ -2,6 +2,16 @@
 관찰일: 2026-11-10 KST | work_id: COWORK-DROPBOX-TO-GITHUB-MIGRATION
 
 
+
+## GPT 판정 — 로그온 없는 시작 호환성 (2026-11-11 KST)
+- 결과 원문 `CLAUDE_NO_LOGON_START_COMPAT_RESULT_FOR_GPT_20261111.md` 직접 확인. `COMPAT_STATUS=PARTIAL`, R01 PASS(READ_ONLY), R02 PARTIAL, R03 PASS(SYNTHETIC), R04 분석, R05 조건부 PASS(READ_ONLY), R06 계획만 수용.
+- GPT 판정 `ACCEPT_WITH_CHANGE / HOST_LOGONLESS_E2E=NOT_RUN`; 상세 `GPT_NO_LOGON_START_COMPAT_DISPOSITION_r0001_20261111.md` PRIVATE main 게시·원격 readback PASS (commit `2f4e43e937dfc30e8943162d4b12f423e4c423d8`).
+- 자동 로그인 비권장. S4U 우선 검증하되 Claude 인증 보호 저장소/실제 배치 실행 권한/암호 상태가 UNKNOWN. 암호 저장 방식으로 자동 fallback 금지. `claude_executable` 절대경로·WorkingDirectory 및 Notifier/Updater/Bridge 의존성 확인 필요.
+- 별도 SHADOW 안전판정 S-1에 따라 SQLite mode=ro도 SHM 변경 가능. 현재 R05의 '변경 없음'은 운영 스냅샷 자체 보고이며 DB main/WAL/SHM 바이트 불변의 독립 확인은 아님.
+- **운영 변경 0**: 기존 Dropbox LIVE watcher v0.1.5, 작업 스케줄러, 운영 DB/WAL/SHM, Telegram/Bridge/Dashboard, 토큰·키, Claude 모델 호출, GitHub READY, PUBLIC 배포, 실제 재부팅·무로그온 부팅 E2E 변경/실행 없음. 독립 리뷰 `NOT_RUN`.
+- 다음 한 동작: 다른 SHADOW/신뢰 루트 보안 게이트와 충돌 없는 격리 시험 계획을 확정하고, 실제 시험용 작업 등록·부팅 E2E는 사용자 별도 명시 승인 후 진행.
+
+
 ## 최신 GPT 직접 실행 — 1차 SHADOW 안전 검증 (2026-11-11 KST)
 - 상태: `STAGE1_PREP_SAFETY=PARTIAL / WINDOWS_HOST_NOT_RUN / MIGRATION_NOT_CUTOVER`. 사용자 '진행'을 1차 안전 검증 진행 지시로 반영함. **Dropbox LIVE 유지**, 운영 DB/Watcher/Task/Telegram/키/토큰/READY/유료 독립 reviewer 변경 없음.
 - GPT 합성시험(실행 완료): `collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/tools/shadow_isolation_preflight_r0001.py` — 4541 bytes, SHA256 `0550d4ddba6766ffa643f9fcf604a12271ebd5f7852e6b309046523525b7f811`. `5 PASS/0 FAIL`, 원본 WAL DB main/WAL/SHM 바이트 불변·상위/하위/symlink 경로 중첩 차단. 파일 GitHub PRIVATE 게시 및 raw readback PASS. **별도 합성 테스트**이며 v0.2.4의 410 자체 PASS에 더하지 않음.
