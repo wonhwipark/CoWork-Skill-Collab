@@ -66,3 +66,13 @@ Windows Claude Code에 위 PHASE2 원샷 인계서를 **한 번만 실행**하�
 - 모델 리뷰 호출 0회. 운영 watcher, 운영 DB, 예약 작업, Bridge, Dashboard, Telegram 설정 변경 없음.
 - 미해결: 실 서명 라이브러리 설치 승인, Dropbox 실샘플 바이트 대조(B-6), 신뢰키 수명주기 정책(B-7), 운영 DB 스키마 적용 승인과 백업.
 - 이 갱신은 상태 기록일 뿐 READY 신호나 리뷰 실행 승인이 아닙니다.
+
+## 가장 최근 상태 — Windows v0.2.2 전달 결과 및 GPT 판정 (2026-11-10 KST)
+- 사용자가 전달한 신규 Windows Claude 결과: **v0.2.2, pytest 314 PASS / 0 FAIL / 13 SKIP**, 격리 운영 DB 사본+실 GitHub 기반 전환/롤백 리허설 수행, WAL mode=ro 및 provider별 cursor key 분리 수정 보고.
+- 후보: `skill-collab-watcher_v0_2_2_1110.zip`, **126729 bytes**, 보고 SHA-256 `7ec4f63e175b582ceec1f809281fba003f4248331a3f296689e7e19981323410`, Windows 로컬 `dist_phase2`. **GPT는 해당 ZIP·원문을 독립 검증하지 못함**. v0.2.2 상세보고서 아직 GitHub에 게시되지 않았다는 사용자 전달.
+- 중요: PRIVATE에는 **이전 v0.2.1 Phase2 결과 원문(312 PASS/13 SKIP)이 이미 존재**, v0.2.2와 혼동·덮어쓰기 금지.
+- 운영 전환 차단: Dropbox pending 요청 1건 무손실 인계 확인 실패, notifier 초기 구동 시 과거 event 65건 재발송 가능성, 실 Ed25519 NOT_RUN, 기존 Dropbox B-6 실샘플 NOT_RUN, 운영 DB 3개 table 추가 전 백업/승인 필요.
+- GPT 판정 **ACCEPT_WITH_CHANGE / PARTIAL**, production watcher/DB/task 변경이나 GitHub LIVE/cutover 승인 아님.
+- 통합 인계: `GPT_V0_2_2_DISPOSITION_AND_CUTOVER_READINESS_ONE_SHOT_r0001_20261110.md` GitHub PRIVATE main **게시·재조회 PASS**. 다음 Windows 작업은 격리 환경에서 남은 결함 수정, 시험키·암호 모듈 권한이 되는 경우 실 서명 S 시험, B-6 비교, pending/알림·DB 전환/롤백, 새 ZIP 패키징, **결과 원문을 GitHub PRIVATE에 직접 게시**까지 한 번에 수행.
+- 현 단계: `HANDOFF_PREPARED_NOT_EXECUTED`. GitHub 문서 게시 자체는 Windows Claude Code에 대한 자동 실행 요청이 아니며 사용자 전달 전 새로운 실행 관측 없음.
+- 기존 Dropbox LIVE 유지. 승인되지 않은 운영 신뢰키/PAT 생성·운영 DB 마이그레이션·실 유료 독립 리뷰·PUBLIC 게시·LIVE 전환 없음.
