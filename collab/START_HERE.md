@@ -17,6 +17,12 @@
 - Claude Code 정적 리뷰 원문: `collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CLAUDE_STATIC_REVIEW_RESULT_FOR_GPT_20261110.md`
 - **문서 게시만 완료. GitHub watcher 구현/실행/공식 리뷰/LIVE는 완료되지 않음.**
 
+## 현재 사용자 전달 대기 작업
+- **PHASE1 통합 원샷:** `collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/PHASE1_WINDOWS_ONE_SHOT_HANDOFF_r0001_20261110.md`
+- 상태: `PREPARED_NOT_DELIVERED`. 이전 Claude Code 프롬프트도 사용자가 아직 전달하지 않았음. Windows 개발/시험/ZIP = `NOT_STARTED`.
+- 사용자가 개인 Windows PC의 Claude Code 대화에서 위 MD를 읽고 전체 수행하도록 **한 번만** 요청하면 됨. GitHub 게시 자체는 PC에서 자동 실행되지 않음.
+- 다른 이전 NEXT_WINDOWS_* 인계서는 역사/세부 참고이며 **새 원샷 문서가 이번 실행 지시 우선순위**.
+
 ## 순서
 1. `collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md`에서 최신 진행상태 확인.
 2. `collab/knowledge/OPERATING_BASELINE.md`와 `collab/ops/CONTRACTS/`의 안전·권한 원칙 확인.
