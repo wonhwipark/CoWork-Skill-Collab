@@ -1,10 +1,10 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
-- Updated: 2026-11-11 KST
+- Updated: 2026-11-11 KST — r0002 GPT design disposition and remote readback
 - CoWork operating mode: `MIGRATION_NOT_CUTOVER / DROPBOX_LIVE`
 - Scope: design publication and independent review handoff only
 - DEVELOPMENT: DESIGN_ONLY
-- SELF_TEST: Kernel v0.7.37 ZIP layout/contract inspection; no new inhouse E2E
+- SELF_TEST: existing Kernel v0.7.37 package contract and v0.7.38-dev.1 static source inspected; r0002 GitHub document remote readback; no inhouse E2E
 - INDEPENDENT_REVIEW: NOT_RUN (GitHub documents posted; no Claude execution or valid LIVE REQUEST/READY witnessed)
 - REVIEW_REQUEST: PREPARED_NOT_QUEUED (SEMI_AUTO; GitHub watcher NOT_ACTIVE)
 - INHOUSE_WORKSPACE_TREE: NOT_VERIFIED
@@ -25,4 +25,35 @@
 - Claude Code may read the source and submit a non-sensitive static review result to `collab/projects/L1-WORKSPACE-RAG-20261111-001/CLAUDE_DESIGN_REVIEW_RESULT_FOR_GPT_20261111.md`, then remote readback; no source code/operational data export.
 - GitHub publication **does not enqueue or invoke** Claude. Dropbox LIVE valid signed REQUEST/READY is a separate verified transport contract. No READY or reviewer call is claimed here.
 - Operating watcher/DB/Telegram/Job-list, inhouse Git repositories, `/AI-CONTINUITY/`, Workflow and Kernel package unchanged.
-- Exact next action: Windows Claude Code conversation executes the review handoff from GitHub PRIVATE main once (if user intends an interactive static review), or a valid authorized Dropbox LIVE REQUEST/READY is separately submitted for the formal paid watcher review.
+- Historical r0001 next action: Windows Claude Code interactive static review or separately authorized Dropbox LIVE formal REQUEST/READY. **Latest r0002 instruction appears in the following section.**
+
+
+## 2026-11-11 — GPT r0002 최신 판정 및 게시 재검증
+
+- **GPT_DISPOSITION:** `DESIGN_ACCEPT_WITH_CHANGE` — 기존 RAG r0001은 보존하고 r0002 설계안을 추가.
+- **DELTA:** `CODE_ANALYSIS` Work 유형, `MSC_AS_IS/MSC_TO_BE` 산출물 구분, Git branch+불변 commit/P4 실제 revision 고정, Branch A/B source scope 오적용 차단, Kernel Export 기반 README 개선 설계. **설계 메타데이터이지 사내 구현·검증 결과가 아님.**
+- **ORIGINAL_R0001:** 보존; r0001의 기존 게시/해시/커밋 및 readback 기록 유지.
+- **REVIEW_STATUS:** `INDEPENDENT_REVIEW=NOT_RUN`; r0001 기대 경로 `CLAUDE_DESIGN_REVIEW_RESULT_FOR_GPT_20261111.md` GitHub `main` 조회 `NOT_FOUND`. 저장소 검색에서 다른 결과 미확인, Dropbox LIVE 동일 작업 ID 검색 0건(검색의 한계가 있으므로 reviewer 실행 부재 전체를 단정하지 않음).
+- **REVIEW_MODE:** `SEMI_AUTO / INTERACTIVE_STATIC_REVIEW_PREPARED / NOT_QUEUED`. GitHub PRIVATE 문서만으로 Windows Claude Code 또는 watcher 실행 없음. 유효한 Dropbox LIVE REQUEST/READY, 영수증, reviewer 호출 모두 이번 회차 `NOT_RUN`.
+- **DEVELOPMENT:** `DESIGN_ONLY`; **CODE_OR_SKILL_MODIFICATION:** `NONE`.
+- **SELF_TEST:** r0002 설계/인계/판정 MD 각각 GitHub 원격 fetch와 로컬 작성 내용 정확 일치 `PASS`. SHA-256은 원격 fetch의 실제 UTF-8 문서 bytes 기준 계산. **사내 호스트/Provider/Kernel 회귀시험 `NOT_RUN`.**
+- **INHOUSE_WORKSPACE_TREE / WORK_CATEGORY_FIELD_HOST / ACTUAL_INSTALLED_SKILLS / RAG_PROVIDER_INPUT:** `NOT_VERIFIED`. 사용자는 Work 유형 필드가 없다고 확인했으나 실제 사내 file tree, install/version 및 MCP 구현 상태는 조회되지 않음.
+- **M1:** `BLOCKED` (기존 owner/root, installed version, driver body digest 및 Job gate 해제 증거 없음).
+- **PUBLIC_RELEASE / HOST_INSTALL / REQUEST_READY / LIVE_CUTOVER:** `NOT_RUN`. `MIGRATION_NOT_CUTOVER / DROPBOX_LIVE` 유지.
+
+### Newly posted files on GitHub PRIVATE `main` (no PR)
+
+| File | Remote UTF-8 bytes | SHA-256 | Git blob SHA | Creation commit | Remote readback |
+|---|---:|---|---|---|---|
+| `L1_WORKSPACE_RAG_DESIGN_r0002_20261111.md` | 14494 | `d0efd84847f8680a944e2d7e4cf03672723a89d5832a7586d8520fafb7253fad` | `44d7bc056f203b1c7d82b44532ef7be410e82d33` | `2fdfea75e981a75243d185013a1b7e7ce4cff844` | **PASS** |
+| `CLAUDE_DESIGN_REVIEW_HANDOFF_r0002_20261111.md` | 6147 | `6e937929250bde31dc7a58f3593280f93d249ecc9b9f7c0ef3c9a16fc7ffdbdc` | `c4e44280875dbce5a01d6fc465f0cc5299e8332c` | `1c2813399f711bc523f5400caa61f14c2150c103` | **PASS** |
+| `GPT_ASSESSMENT_AND_DELTA_r0001_20261111.md` | 5797 | `b0dc5ab7bb90e873d06254485e9c88c8f540eb2555dbd8c7f73a05367441e60c` | `43202db584baa1a4cf8865a5aef953a77fc066f0` | `3fc3929bb7c13b252c2dfec29657cc0240c292e3` | **PASS** |
+
+### GPT assessment
+
+- 정식 판정 근거: `GPT_ASSESSMENT_AND_DELTA_r0001_20261111.md`.
+- **REUSE:** Kernel Work SSOT, `문서안내.md`, 기존 machine index, Cross-host, Workflow knowledge retrieval 계약, l1-github work_docs.
+- **CONNECT:** 실제 source branch/commit + CODE_FACTS/MSC + module-library + Provider 최종 본문 검증.
+- **EXTEND 후보:** 사용자 확인 기반 `work_category` 메타데이터 및 Kernel exporter 파생 README Work 분류. 기존 필드/파일/스키마 변경은 개발·회귀시험 전 금지.
+- **DEFER:** 별도 vector DB, 새 독립 RAG skill, 추가 `by-type` 이중 인덱스, 코드 구현/배포.
+- **NEXT_ONE_ACTION:** Windows Claude Code의 **별도 독립 리뷰 세션**에서 `wonhwipark/CoWork-Skill-Collab`, `main`, `collab/projects/L1-WORKSPACE-RAG-20261111-001/CLAUDE_DESIGN_REVIEW_HANDOFF_r0002_20261111.md`를 읽고 허용된 범위의 정적 검토를 명시적으로 실행. 비민감 결과를 지정 파일에 게시·remote readback할 때만 검토 완료로 표시. 이것은 자동 실행 예약이 아님.
