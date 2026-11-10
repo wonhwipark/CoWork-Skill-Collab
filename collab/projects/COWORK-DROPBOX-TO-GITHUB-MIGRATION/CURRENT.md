@@ -30,4 +30,4 @@ GPT가 Claude 리뷰 원문을 직접 확인한 뒤 r0002 설계 및 48개 시�
 - PRIVATE `main` 브랜치 보호는 아직 확인/설정되지 않았으며 자동 운영 전 보강 필요.
 
 ## 다음 한 동작
-Windows Claude Code가 GitHub PRIVATE main의 설계 r0002와 48개 시험표를 읽고 **기존 watcher의 격리된 복사본에서 GitHub transport 최소 변경 후보를 작성·합성 회귀시험**하도록 준비한다. 실 운영 파일/DB/예약작업 변경, 토큰/키 발급·라이브러리 설치, REQUEST/READY 게시, LIVE 활성화는 승인 전 금지.
+Windows Claude Code가 `NEXT_WINDOWS_CLAUDE_ADAPTER_IMPLEMENTATION_HANDOFF_r0001_20261110.md`를 읽고 설계 r0002·48개 시험표를 기준으로 **기존 watcher 격리 복사본의 GitHub transport 최소 변경 후보 및 합성 회귀시험**을 수행한다. 실 운영 파일/DB/예약작업 변경, 토큰/키 발급·라이브러리 설치, REQUEST/READY 게시, LIVE 활성화는 승인 전 금지.
