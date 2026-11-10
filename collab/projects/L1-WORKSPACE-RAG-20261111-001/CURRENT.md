@@ -69,3 +69,12 @@
 - **G0 / INHOUSE_WORKSPACE / INSTALLED_SKILLS / OWNER_ROOT / MCP_TOOL_MAP:** `NOT_VERIFIED`. **M1_RAG_PROVIDER_INPUT:** `BLOCKED / NOT_RUN`.
 - **DEVELOPMENT / SOURCE_PATCH / PACKAGE_BUILD / PUBLIC_RELEASE / HOST_INSTALL / REQUEST_READY / LIVE_CUTOVER:** `NOT_RUN`. 기존 스킬·운영 watcher/DB/Job/Telegram 및 `/AI-CONTINUITY/` 변경 0, `MIGRATION_NOT_CUTOVER / DROPBOX_LIVE` 유지.
 - **NEXT_ONE_ACTION:** 사내 승인된 G0 읽기 전용 인벤토리와 최소 `SourceSnapshot + artifact_kind + category + trusted payload` 연결 계약을 이 결과의 우선순위/부정시험에 맞춰 확정. 사용자 승인 없는 운영 변경/유료 리뷰 금지.
+
+## 2026-11-11 — 공통 컨텍스트 등록 (문서만; 실행 상태 변동 없음)
+
+- **COMMON_REFERENCE:** `collab/knowledge/L1_WORKSPACE_RAG_COMMON_r0001_20261111.md` (`main`, PRIVATE, 비민감 공통 설계·근거수준·새 창 델타 리뷰 안내).
+- **PURPOSE:** 신규 GPT 대화/독립 리뷰에서 Work 유형 `CODE_ANALYSIS`, 산출물 `MSC_AS_IS/MSC_TO_BE`, SourceSnapshot, 18개 스킬 시점별 감사 및 최신 GPT_SELF_REVIEW 5/8/3 문제를 재사용하고 **완료된 GPT 리뷰의 무의미한 재실행 방지**.
+- **DISCOVERY:** `collab/knowledge/OPERATING_BASELINE.md`에 공통 문서 링크 추가. 기존 Dropbox LIVE 운영 지침은 변경하지 않음.
+- **SOURCE_OF_TRUTH:** 본 `CURRENT.md` 최신 섹션과 직접 확인한 결과/영수증이 공통 문서의 작성 당시 상태보다 항상 우선.
+- **REVIEW:** `GPT_SELF_REVIEW=COMPLETED_WITH_GAPS`(기존 결과 유지); `CLAUDE_INDEPENDENT_REVIEW=NOT_RUN`; `G0=NOT_VERIFIED`; `M1=BLOCKED/NOT_RUN`.
+- **CODE/PACKAGE/INHOUSE_HOST/REQUEST_READY/PAID_REVIEW/PUBLIC_RELEASE/LIVE:** `NOT_RUN`. **`MIGRATION_NOT_CUTOVER / DROPBOX_LIVE` 유지**. 공통 지식 게시 자체로 자동 실행 없음.
