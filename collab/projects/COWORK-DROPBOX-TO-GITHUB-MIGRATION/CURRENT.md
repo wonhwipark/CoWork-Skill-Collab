@@ -119,3 +119,14 @@ Windows Claude Code에 위 PHASE2 원샷 인계서를 **한 번만 실행**하�
 - GPT의 다음 단일 읽기 전용 준비 작업: `GPT_C4_ADJUDICATION_AND_REMAINING_GATES_r0001_20261110.md` PRIVATE main 게시/원격 readback PASS. pending 연관성 read-only 확인, B-7 운영 trust 설계, SHADOW 격리 시험 및 정식 독립 리뷰 입력 준비를 **한 번에 수행→결과 MD GitHub 직접 게시**.
 - 운영 Dropbox LIVE 불변, v0.2.3 후보 ZIP 불변 (131400 bytes, SHA-256 9a4201295156ea93b572f4a7d0f8bc6b566130c31c1cae72c55d6c8c8489cf41). 운영 변경/정식 리뷰/실 모델 호출/호스트 SHADOW/LIVE/운영 DB 이행은 여전히 NOT_RUN.
 - 상태: NEXT_HANDOFF_PREPARED_NOT_EXECUTED; Windows Claude Code에 지시 전달 전 추가 실행은 관측되지 않음.
+
+## 최종 전환 전 게이트 결과 (Claude 자체 시험 보고, v0.2.4)
+- 상태: PRE_CUTOVER_STATUS = PARTIAL. 정식 독립 리뷰가 아니며 INDEPENDENT_REVIEW=NOT_RUN. 현재 LIVE는 여전히 Dropbox.
+- 결과 원문: CLAUDE_FINAL_PRE_CUTOVER_GATE_RESULT_FOR_GPT_20261110.md. 독립 리뷰 입력 자료: REVIEW_INPUT_MANIFEST_v0_2_4_FOR_GPT_20261110.md (실행 요청 아님). 둘 다 PRIVATE main, PR 없이 게시, 원격 바이트 재검증 완료.
+- 미정산 대기 1건: READY를 기다리는 정상 대기이며 불완전 폴더 중 하나와 동일. 분실·중복 아님. HOLD로 보존. 나머지 불완전 폴더 1개는 완료된 작업(READY 제거 후), 쌍은 맞지만 작업이 없는 3개는 검증 단계에서 REJECTED로 종료된 건. 미설명 폴더 0.
+- B-7 신뢰키 정책: 설계와 구현 완료(해시 고정, 버전 래칫, 폐기·회전·동결, 승인 수명 상한, 시계 검증, 파일 권한 검사). 운영 키 발급은 하지 않음.
+- SHADOW: 운영 상태 폴더의 복사본과 실제 GitHub 읽기로 리허설 통과(GET만, DB 메인·WAL 동일, 운영 폴더 무변경). 호스트 설치·가동은 NOT_RUN.
+- 후보 skill-collab-watcher_v0_2_4_1110.zip, 146,879 bytes, SHA-256 854d2d324033dac77771ed7145feabf0a659b3450d7b7579c54f487ae3f6ed20. 로컬 보관, development_not_for_deployment. 이전 후보 불변.
+- 시험 410 PASS / 0 FAIL / 12 SKIP (GUI 8, .venv 조건 4). 실서명 S01~S10 PASS(REAL, 시험 키). 운영 모델 호출 0, 운영 변경 0.
+- 남은 승인(묶음): 승인 키·신뢰 루트 부트스트랩, 호스트 SHADOW, 소스 ZIP 게시, 정식 독립 리뷰 1회. 그 뒤 별도: 운영 DB 이행, LIVE 전환.
+- 이 갱신은 상태 기록이며 READY 신호나 리뷰 실행 승인이 아닙니다.
