@@ -160,3 +160,11 @@ Windows Claude Code에 위 PHASE2 원샷 인계서를 **한 번만 실행**하�
 - 호스트 사실: 예약 작업은 사용자 로그온 시작(Interactive)이라 재부팅 후 로그온 전에는 실행되지 않음. 실패 시 3회까지 재시작.
 - 미실행(승인 필요): 재부팅 후 무인 시작 구성(자동 로그인 또는 로그온 무관 실행), 일일 상한값 설정, 후보 설치와 재시작, 운영 notifier에 새 알림 연결. 구독 사용량 한도의 실제 오류 형식은 미관찰.
 - 이 갱신은 상태 기록이며 READY 신호나 리뷰 실행 승인이 아닙니다.
+
+
+## Windows 로그온 없는 시작 검토 인계 (2026-11-11)
+- 사용자 지시: Windows 자동 로그인은 비권장; `시스템 시작 시 + 사용자 로그온 여부와 관계없이 실행` 대안을 **운영 설정 변경 없이** 우선 검토.
+- 원샷 인계: `WINDOWS_NO_LOGON_START_COMPAT_HANDOFF_r0001_20261111.md` PRIVATE `main`에 PR 없이 직접 게시, 원격 readback PASS (commit `9935e5b5dd0295daf086c738d249965e11f867dc`).
+- 상태: `HANDOFF_PREPARED_NOT_EXECUTED`; Windows Claude Code 시험 수행·결과 게시·진짜 로그온 없는 재부팅 E2E = `NOT_RUN`. 기존 v0.2.5 후보, 운영 watcher v0.1.5, 예약 작업, 운영 DB/WAL/SHM, Telegram, GitHub/Dropbox LIVE 변경 0.
+- 인계의 허용 범위: read-only 스케줄러·인증 의존성 조회와 격리 synthetic 호환성 시험만. 스케줄 신규 등록·자동 로그인·자격 저장·재부팅·운영설치·모델 호출·READY·PUBLIC·LIVE 전환 금지.
+- 다음 한 동작: 사용자가 Windows Claude Code 대화에서 새 인계서의 정확한 `main` 경로를 읽고 R01–R06을 단일 실행하도록 지시. 승인 필요 실제 호스트 시험은 별도 게이트로 분리.
