@@ -20,6 +20,14 @@
 - `collab/ops/CONTRACTS/NO_PR_COLLABORATION_V1.md`를 이 결정의 계약으로 사용한다. PR #1은 이전 설계 검토 자료로만 보존한다.
 - Claude 정적 리뷰 B-1~B-7 전부 읽고 설계 r0002 반영. 우선순위 B-2(사이드카), B-5(실제 처리키·정책), B-3(중단/봉인), 이후 B-4/B-6/B-1/B-7. 전체 48개(T01~T38/S01~S10) 시험 명세 게시·개별 E2E는 NOT_RUN. 파일: GITHUB_ADAPTER_AND_REVIEW_FLOW_DESIGN_r0002_20261110.md 및 ACCEPTANCE_TEST_MATRIX_r0001_20261110.md.
 
+
+## 2026-11-10 PHASE1 원샷 작업 합의
+- 사용자가 반복 프롬프트 전달을 줄이기 위해 **1단계 Windows 개발·회귀시험·ZIP·결과보고를 단일 작업**으로 묶도록 승인함.
+- 통합 인계: `PHASE1_WINDOWS_ONE_SHOT_HANDOFF_r0001_20261110.md` → **GitHub 게시 및 readback PASS**.
+- **사용자 확인: 이전 Claude Code 실행 프롬프트는 전달하지 않았음**. 따라서 Windows 어댑터 구현·시험·패키징 실행은 여전히 `NOT_STARTED`; 새 인계서는 `PREPARED_NOT_DELIVERED`.
+- 이 GitHub 문서 게시만으로 집 PC의 Claude Code 자동 실행은 시작되지 않음. 실제 시작은 사용자가 단일 짧은 실행 지시를 Claude Code 대화에 전달한 시점에만 가능.
+- 운영 watcher, 인증·토큰·키, 정식 REQUEST/READY, PUBLIC 배포, PR 생성, LIVE 전환에는 변화 없음.
+
 ## 이번 단계 범위
 GPT가 Claude 리뷰 원문을 직접 확인한 뒤 r0002 설계 및 48개 시험 명세를 PRIVATE main에 PR 없이 게시하고 원격 readback 검증. 기존 Dropbox 요청/READY/영수증·watcher/Bridge/Dashboard/Telegram 변경 없음. 운영 ZIP/Public 게시 없음.
 
@@ -30,4 +38,4 @@ GPT가 Claude 리뷰 원문을 직접 확인한 뒤 r0002 설계 및 48개 시�
 - PRIVATE `main` 브랜치 보호는 아직 확인/설정되지 않았으며 자동 운영 전 보강 필요.
 
 ## 다음 한 동작
-Windows Claude Code가 `NEXT_WINDOWS_CLAUDE_ADAPTER_IMPLEMENTATION_HANDOFF_r0001_20261110.md`를 읽고 설계 r0002·48개 시험표를 기준으로 **기존 watcher 격리 복사본의 GitHub transport 최소 변경 후보 및 합성 회귀시험**을 수행한다. 실 운영 파일/DB/예약작업 변경, 토큰/키 발급·라이브러리 설치, REQUEST/READY 게시, LIVE 활성화는 승인 전 금지.
+사용자가 Windows Claude Code 대화에 **한 번만** PRIVATE main의 `PHASE1_WINDOWS_ONE_SHOT_HANDOFF_r0001_20261110.md` 전체 수행을 지시한다. 그 전까지 `NOT_STARTED`; 지시 후에도 운영 watcher 변경/LIVE/정식 리뷰는 별도 승인 대상.
