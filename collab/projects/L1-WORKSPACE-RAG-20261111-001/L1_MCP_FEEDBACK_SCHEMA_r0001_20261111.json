@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:l1:mcp-feedback:0.1",
+  "title": "L1 MCP feedback (sanitized design-delta envelope)",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema": {
+      "const": "l1/mcp-feedback/0.1"
+    },
+    "feedback_id": {
+      "type": "string",
+      "pattern": "^FEEDBACK-[0-9]{4,12}$"
+    },
+    "handoff_revision": {
+      "type": "string",
+      "pattern": "^r[0-9]{4,6}$"
+    },
+    "subject": {
+      "enum": [
+        "KNOWLEDGE_ROUTING",
+        "WORKFLOW_INTEGRATION",
+        "RAG_CONTRACT",
+        "REVIEW_LEDGER",
+        "MCP_TRANSPORT"
+      ]
+    },
+    "change_kind": {
+      "enum": [
+        "NO_CHANGE",
+        "LOCAL_ADAPTATION",
+        "CONTRACT_GAP",
+        "PROPOSED_DESIGN_CHANGE",
+        "BLOCKED"
+      ]
+    },
+    "reason_code": {
+      "enum": [
+        "ENV_CONSTRAINT",
+        "INTERFACE_MISMATCH",
+        "DUPLICATE_CAPABILITY",
+        "EVIDENCE_GAP",
+        "SECURITY_GATE",
+        "OTHER_APPROVED"
+      ]
+    },
+    "compatibility": {
+      "enum": [
+        "COMPATIBLE",
+        "NEEDS_REVIEW",
+        "BREAKING_PROPOSAL",
+        "UNKNOWN"
+      ]
+    },
+    "test_state": {
+      "enum": [
+        "PASS",
+        "FAIL",
+        "SKIP",
+        "NOT_RUN"
+      ]
+    },
+    "test_scope": {
+      "enum": [
+        "NONE",
+        "SYNTHETIC",
+        "INHOUSE_HOST",
+        "AUTHORIZED_API"
+      ]
+    },
+    "evidence_level": {
+      "enum": [
+        "E0",
+        "E1",
+        "E2",
+        "E3"
+      ]
+    },
+    "decision_requested": {
+      "enum": [
+        "ACK",
+        "REVIEW_DELTA",
+        "REVISE_CONTRACT",
+        "CLARIFY_GATE"
+      ]
+    }
+  },
+  "required": [
+    "schema",
+    "feedback_id",
+    "handoff_revision",
+    "subject",
+    "change_kind",
+    "reason_code",
+    "compatibility",
+    "test_state",
+    "test_scope",
+    "evidence_level",
+    "decision_requested"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "test_state": {
+            "const": "PASS"
+          }
+        },
+        "required": [
+          "test_state"
+        ]
+      },
+      "then": {
+        "properties": {
+          "test_scope": {
+            "not": {
+              "const": "NONE"
+            }
+          },
+          "evidence_level": {
+            "enum": [
+              "E2",
+              "E3"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "test_scope": {
+            "const": "NONE"
+          }
+        },
+        "required": [
+          "test_scope"
+        ]
+      },
+      "then": {
+        "properties": {
+          "test_state": {
+            "enum": [
+              "NOT_RUN",
+              "SKIP"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}
