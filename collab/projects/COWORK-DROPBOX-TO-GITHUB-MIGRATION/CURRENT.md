@@ -2,6 +2,16 @@
 관찰일: 2026-11-10 KST | work_id: COWORK-DROPBOX-TO-GITHUB-MIGRATION
 
 
+## 최신 GPT 직접 실행 — 1차 SHADOW 안전 검증 (2026-11-11 KST)
+- 상태: `STAGE1_PREP_SAFETY=PARTIAL / WINDOWS_HOST_NOT_RUN / MIGRATION_NOT_CUTOVER`. 사용자 '진행'을 1차 안전 검증 진행 지시로 반영함. **Dropbox LIVE 유지**, 운영 DB/Watcher/Task/Telegram/키/토큰/READY/유료 독립 reviewer 변경 없음.
+- GPT 합성시험(실행 완료): `collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/tools/shadow_isolation_preflight_r0001.py` — 4541 bytes, SHA256 `0550d4ddba6766ffa643f9fcf604a12271ebd5f7852e6b309046523525b7f811`. `5 PASS/0 FAIL`, 원본 WAL DB main/WAL/SHM 바이트 불변·상위/하위/symlink 경로 중첩 차단. 파일 GitHub PRIVATE 게시 및 raw readback PASS. **별도 합성 테스트**이며 v0.2.4의 410 자체 PASS에 더하지 않음.
+- 설계판정 S-1: SQLite read-only `mode=ro`여도 SHM 변화 가능. 운영 LIVE SQLite 자체를 열지 않는 **완전 분리 SHADOW DB/상태 폴더**를 우선안으로 제안. 운영 host 실제 ProcMon/Windows file identity/비가변 접근 0 및 GitHub GET only 검증 아직 NOT_RUN. 별도 일관성 있는 snapshot 제작은 운영 권한/영향 검증 필요.
+- B-7 신뢰 루트: signer key/신뢰 공개 루트/ACL 및 pin 독립성이 실제 Windows에서 확인되기 전 운영 승인 NOT_RUN. 운영 key 발급이나 token 생성은 하지 않음.
+- **1차 Windows 통합 인계서**: `GPT_STAGE1_SHADOW_TRUST_REVIEW_ONE_SHOT_r0001_20261111.md` (PRIVATE main, PR 없이 게시·readback PASS). Windows 사용자 전달·호스트 실행은 아직 관측되지 않음. 결과 예정 `CLAUDE_STAGE1_HOST_SECURITY_RESULT_FOR_GPT_20261111.md`.
+- 소스 후보는 여전히 Windows 로컬 v0.2.4 (146879 bytes, reported SHA256 `854d2d324033dac77771ed7145feabf0a659b3450d7b7579c54f487ae3f6ed20`). 외부 게시·실 ZIP 검증/코드 patch/호스트 회귀 수행하지 못함. 독립 리뷰 `NOT_RUN`.
+- 2차 운영 DB 이행/F1 hold/실 GitHub LIVE cutover는 **명시적 후속 승인 없이는 미실행**.
+
+
 ## 최신 GPT 판정 — v0.2.4 최종 전환 준비 (2026-11-11 KST)
 - 상태: **GPT_DISPOSITION=ACCEPT_WITH_CHANGE / PRE_CUTOVER_PARTIAL**. 운영 `MIGRATION_NOT_CUTOVER` / Dropbox LIVE 유지. 실제 GitHub 호스트 SHADOW, 독립 Claude 정식 리뷰/영수증, 운영 DB 이행/실 LIVE는 NOT_RUN.
 - Claude 자체 보고 원문 `CLAUDE_FINAL_PRE_CUTOVER_GATE_RESULT_FOR_GPT_20261110.md`, 리뷰 입력 `REVIEW_INPUT_MANIFEST_v0_2_4_FOR_GPT_20261110.md` 재조회. 후보 `skill-collab-watcher_v0_2_4_1110.zip` (146879B, reported SHA256 `854d2d324033dac77771ed7145feabf0a659b3450d7b7579c54f487ae3f6ed20`, Windows 로컬). GPT raw ZIP/code 재검증 NOT_RUN.
