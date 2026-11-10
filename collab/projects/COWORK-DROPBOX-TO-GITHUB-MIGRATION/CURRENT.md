@@ -45,5 +45,13 @@ GPT가 Claude 리뷰 원문을 직접 확인한 뒤 r0002 설계 및 48개 시�
 - 새 GitHub watcher를 LIVE로 바꾸려면 독립 Claude 리뷰/회귀시험 및 사용자 명시 승인 필요.
 - PRIVATE `main` 브랜치 보호는 아직 확인/설정되지 않았으며 자동 운영 전 보강 필요.
 
+## 최신 실행 계획 — PHASE2 원샷 인계 준비 (2026-11-10)
+- 사용자 요구: 당분간 중간 피드백 없이 **보완→회귀·서명·가능한 실 API 읽기전용 검증→새 ZIP→PRIVATE main의 결과 MD 게시 및 원격 재검증**까지 하나의 Claude Code 작업으로 통합.
+- 정식 인계: `PHASE2_END_TO_END_ONE_SHOT_HANDOFF_r0001_20261110.md` (**GitHub PRIVATE main 게시 및 내용 재조회 PASS**). GitHub 문서 게시만으로 Windows Claude Code가 자동 실행되는 것은 아님.
+- 실행 상태: **PREPARED_NOT_DELIVERED / PHASE2_NOT_STARTED**. Windows Claude Code 대화에서 사용자가 통합 지시를 실행해야 시작.
+- 격리 테스트용 Ed25519/암호 라이브러리: 통합 명령을 **명시적으로 전달할 때만** 일회성 시험 범위 허가. 운영 신뢰키·PAT·LIVE·유료 리뷰·PUBLIC 배포는 승인 대상에서 제외.
+- 다음 결과 원문: `CLAUDE_PHASE2_END_TO_END_RESULT_FOR_GPT_20261110.md` (개발자 자체 시험이며 정식 독립 리뷰 아님). GitHub PRIVATE main에 PR 없이 올리고 readback 검증하도록 인계.
+- 기존 Dropbox watcher/DB/예약작업은 변경 금지.
+
 ## 다음 한 동작
-사용자가 **격리 개발 venv에 한정한 cryptography 설치·폐기 가능한 TEST 전용 Ed25519 키 생성 및 실 서명 S01~S10 시험의 승인 여부**를 결정한다. 승인 후 또는 보류 상태로 PHASE2 통합 보완·검증을 한 번에 수행한다. 운영 인증·키 발급/배포/LIVE 전환은 승인 범위 밖이다.
+Windows Claude Code에 위 PHASE2 원샷 인계서를 **한 번만 실행**하도록 전달한다. 결과 원문을 PRIVATE main에 게시·재검증하면 GPT가 종합 판정한다. 차단 항목은 NOT_RUN을 기록하고 그 밖의 허용된 작업은 계속한다.
