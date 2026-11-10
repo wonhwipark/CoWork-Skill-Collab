@@ -81,3 +81,17 @@ Windows Claude Code에 위 PHASE2 원샷 인계서를 **한 번만 실행**하�
 - 사용자의 새 요구를 반영하여 v0.2.2 통합 인계서 `GPT_V0_2_2_DISPOSITION_AND_CUTOVER_READINESS_ONE_SHOT_r0001_20261110.md`의 **§5 핑퐁 최소화 실행 규칙**을 확정. **한 번 실행 → 허용 범위 내 수정·재시험 반복 → 새 ZIP → PRIVATE main에 결과 보고/remote readback → 사용자 최종 판정 요청 1회**.
 - 중간 질문은 원칙적으로 중지하고 권한/보안·유료 모델 호출·LIVE cutover/PUBLIC 배포 등 승인 필요 사항은 마지막 보고서에 취합한다. 개발 Claude 자기 시험은 독립 리뷰가 아님.
 - 현재 상태: **통합 인계서 업데이트 게시 및 재조회 완료, 신규 Windows 실행은 아직 관측되지 않음**. 운영 Dropbox watcher/DB/Telegram/task 변경 없음.
+
+## v0.2.3 전환 준비 검증 결과 (Claude 자체 시험 보고, 2026-11-10)
+- 상태: CUTOVER_READINESS_STATUS = PARTIAL. 정식 독립 리뷰가 아니며 INDEPENDENT_REVIEW=NOT_RUN. 운영 provider는 여전히 Dropbox LIVE.
+- 결과 원문: CLAUDE_CUTOVER_READINESS_RESULT_FOR_GPT_20261110.md (PRIVATE main, PR 없이 게시, 원격 바이트 재검증 완료). 이전 v0.2.1 결과 문서와 CURRENT 이력은 보존.
+- 후보: skill-collab-watcher_v0_2_3_1110.zip, 131,400 bytes, SHA-256 9a4201295156ea93b572f4a7d0f8bc6b566130c31c1cae72c55d6c8c8489cf41. 로컬 보관, development_not_for_deployment. v0.2.0/0.2.1/0.2.2 원본 불변.
+- 시험: 348 PASS / 0 FAIL / 12 SKIP (GUI 옵트인 8, 프로젝트 .venv 조건 4). 후보 ZIP을 풀어 낸 사본에서도 동일.
+- C-1 대기 요청 소실: 해결. 제공자별 대기 범위 분리, 정산 없는 전환 거부, 보류 전환은 감사·알림 기록. 사본 리허설로 보존 확인.
+- C-2 알림 폭주: 해결. 제공자+epoch 워터마크, 초기화 없이는 발송 거부, 운영 notifier 위치 이어받기. 실 Telegram 발송 없음.
+- C-3 실서명: 격리 가상환경 + 해시 고정 cryptography + 시험 키로 S01~S10 PASS(REAL). 운영 신뢰 루트·키 미생성.
+- C-4 Dropbox 실샘플 B-6 대조: NOT_RUN (로컬 사본 없음, 원격 읽기는 보호된 자격 증명 필요).
+- C-5 DB 이행: 온라인 백업 사본에서 이행·무결성·재개방·구버전 호환·복원 PASS. 운영 DB 무변경.
+- 모델 호출 0회, 운영 watcher/DB/예약 작업/Telegram 변경 없음.
+- 전환 차단 요건: C-4, 운영 신뢰 루트 수명주기(B-7), 정산되지 않은 Dropbox 대기 요청 1건 처리, 호스트 SHADOW, 독립 리뷰와 영수증, 사용자 명시 승인.
+- 이 갱신은 상태 기록이며 READY 신호나 리뷰 실행 승인이 아닙니다.
