@@ -48,3 +48,13 @@ Job-list **한 버전에 활성 One-shot Job 최대 1건**. 이미 소비된 Job
 - 기존 개발자가 `job-list v0.4.35` 비활성 후보를 PRIVATE에 게시하고 전달과 혼동한 것은 작업 경로 선정 오류. PRIVATE에는 결과·검토 기록만 보존하고, 이후에는 후보 ZIP을 PRIVATE 배송본으로 올리지 않는다.
 - v0.4.35 상태: 후보 ZIP 제작, 33 PASS 자기 시험, **활성 Job 0 / 사내 L1 Knowledge Updater 실제 호출·독립 리뷰·호스트 G0 미검증**. PUBLIC 자동설치·분석은 `NOT_RUN`. 올바른 목적지에 게시할 최종 활성 배포본을 추가 검증·승인 후 제공해야 함.
 - 본 정책 변경은 Dropbox LIVE watcher, 운영 DB/WAL, 예약 작업, Bridge/Telegram, 사내 설치본, 기존 PUBLIC ZIP을 변경하지 않음. CoWork `MIGRATION_NOT_CUTOVER / DROPBOX_LIVE` 유지.
+
+## 6. 사용자 승인된 사내 G0 선행 조사 Job — 제한적 PUBLIC 전달 모드 (2026-11-12)
+
+- 적용 목적: **실제 `l1-knowledge-updater` 설치 action/호출 계약 및 독립 리뷰는 사내에서만 확인 가능**하므로, 이를 확인하기 위한 무인 **READ_ONLY_BOOTSTRAP_ONE_SHOT**을 사용자 명시 승인 후 PUBLIC `L1Work/main` 루트에 먼저 배송할 수 있다. 일반 개발 후보 ZIP에 대한 무조건 예외가 아님.
+- 사전 충족: 고정된 한 개의 활성 Linux Job ID, 비밀/사내 소스 미포함, 승인된 공개 패키지 메타데이터, 신뢰된 기존 ZIP byte pin, CRC·SHA·경로/심링크 검사, 기존 Job 보존, Profile 스키마 검증 및 실패-차단 테스트, 원격 ZIP 재다운로드 해시 검증.
+- 허용: 사내 **read-only 탐색/분석/등록된 비파괴 SkillSilent action**, 코드 facts/AS-IS MSC 생성, 기존 그룹 Knowledge의 읽기 전용 비교, **사내 새 출력 파일·영수증** 작성, 설치 계약/실행·리뷰 가능성 사실 조사.
+- 금지: 기존 코드·Knowledge 정본·운영 설정·Kernel Work/Evidence·DB 수정, source reset/stash/commit/push, CLI 임의 action/권한 우회, 자료 사외 반출, 독립 리뷰 완료/그룹 게시 PASS 사전 선언.
+- 런타임 G0 미통과·허용 action 미확인 시 **BLOCKED/ANALYSIS_PARTIAL** 증거를 남기고 STOP; 스킬 업데이트·인증 발급·사내 데이터 변경으로 우회하지 않는다. 무인 실행이므로 사용자 질의로 멈추지 않고 허용 범위 내 결과를 최대한 취합.
+- 배포 성공과 사내 `SKILL_UPDATER_INSTALLED`·`JOB_ACTIVATED`·`KNOWLEDGE_UPDATER_CALL`·`MSC_READY`·`INDEPENDENT_REVIEW`는 서로 독립. 미수신 호스트 결과를 `NOT_VERIFIED` 또는 `NOT_RUN`으로 유지.
+- **특수 사례:** 사용자는 `JOBLIST-NRTX-20261112-001`의 조사/호출계약 검증을 PUBLIC 배송 후 사내에서 실행하라고 승인. `job-list_v0_4_36_1112.zip`을 활성 Job 1건의 read-only 조사 전달본으로 PUBLIC 게시. 정식 지식 정본 쓰기/무인 수정/독립 리뷰 PASS 승인은 **아님**.
