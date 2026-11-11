@@ -180,3 +180,15 @@ Claude Code 독립 리뷰로 간주하지 마. 운영 watcher/DB/Job/Telegram,
 - **최신 한눈에 보기:** `collab/projects/L1-WORKSPACE-RAG-20261111-001/L1_E2E_INHOUSE_OFFSITE_WORKFLOW_VISUAL_GUIDE_r0002_20261111.html` — 사외·사내 경계, 자연어 Updater·OpenCode 분석·Workflow/Kernel Evidence, 그룹/개인 지식 분기, RAG M1, 비민감 MCP 피드백 역방향 화살표. 데스크톱 SVG/모바일 세로형 도식.
 - **검증 상태:** `HTML_POSTED / REMOTE_READBACK_PASS / BROWSER_4_VIEWPORTS_PASS`; 원본 r0001 HTML은 보존. 다이어그램은 기존 설계 해설이며 실제 사내 네트워크/API/Knowledge Updater/RAG/MCP 실동작 증거 아님.
 - **우선 참조:** 프로젝트 `CURRENT.md` 최신 섹션. GitHub에서는 파일을 `Raw` 저장 후 웹 브라우저로 열어 상호작용.
+
+
+## 2026-11-11 — 최신 저장소 역할 재정의·Workflow × Knowledge Updater 연동 (r0002/HTML r0003, NEWEST)
+
+- **최신 저장소 정책:** 개인 Eron Workspace는 **작업 분류·Work ID·진행상태·수정·시험·리뷰·근거 이력의 정본**. 그룹 Eron Software Dev Knowledge는 **검증된 모듈 상세 지식·기존 코드 AS-IS MSC·시나리오·이슈 해결 지식 정본**으로 범위 확장. 그룹 회의에서 내용 등록이 허용됐다는 사용자 전달 사실이며 자동 쓰기/덮어쓰기 허가가 아님.
+- **역할:** Workflow가 작업 intent/Work lifecycle·Kernel Evidence 관리, 사내 기존 Knowledge Updater가 기술 후보 분류(module→feature→scenario)·중복/승인 게시 조정. 실제 설치 입출력·중복 기능은 **G0 읽기 전용 실측 전 NOT_VERIFIED**.
+- **신규 아키텍처:** `collab/projects/L1-WORKSPACE-RAG-20261111-001/L1_E2E_INHOUSE_OFFSITE_ARCHITECTURE_r0002_20261111.md`.
+- **사내 GPT/OpenCode 인계:** `collab/projects/L1-WORKSPACE-RAG-20261111-001/L1_INHOUSE_GPT_OPENCODE_HANDOFF_r0002_20261111.md`. 독립형 사내 실행 설계이며 사외 경로/인증 의존성 없음. 승인된 G0 읽기 전용 검토, REUSE/CONNECT/EXTEND/DEFER, 합성 S01~S09, 내부 원본·비민감 후보 분리.
+- **새 구조도 HTML:** `collab/projects/L1-WORKSPACE-RAG-20261111-001/L1_E2E_INHOUSE_OFFSITE_WORKFLOW_VISUAL_GUIDE_r0003_20261111.html` (이전 r0002 UI 보존 + 상단 새 정본 역할 시각화). r0003 브라우저 렌더 시험 **NOT_RUN**; 파일 게시/원격 재조회만 확인.
+- **기존 문서:** r0001 아키텍처/인계·HTML r0001/r0002·RAG 설계 r0002 및 리뷰 결과 원본 보존. 새 설계는 Work 유형과 artifact 종류·기술 분류를 분리하는 기존 계약을 유지한다.
+- **운영:** `INHOUSE_G0=NOT_RUN`, `GROUP_PUBLISH=NOT_RUN`, `M1_RAG=BLOCKED`, `MCP_FEEDBACK=SPEC_ONLY/NO_EXPORT`, `INDEPENDENT_REVIEW=NOT_RUN`, `MIGRATION_NOT_CUTOVER / DROPBOX_LIVE`. 승인 없는 운영·지식 정본·사외 반출 변경 없음.
+- **LATEST SOURCE OF TRUTH:** 해당 프로젝트 `CURRENT.md` 최신 섹션과 실제 영수증/실측이 이 문서보다 우선.
