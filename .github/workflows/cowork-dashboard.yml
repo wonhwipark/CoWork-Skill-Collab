@@ -5,7 +5,7 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/cowork-dashboard.yml'
-      - 'collab/dashboard/generate.py'
+      - 'collab/dashboard/*.py'
       - 'collab/dashboard/tests/**'
       - 'collab/projects/**/CURRENT.md'
       - 'collab/requests/**'
