@@ -12,6 +12,8 @@ import re
 from pathlib import Path
 from urllib.parse import quote
 
+import review_chain
+
 REPO = "wonhwipark/CoWork-Skill-Collab"
 PROJECT_NAME = re.compile(r"[A-Za-z0-9][A-Za-z0-9_-]{0,100}\Z")
 STATUS_RE = re.compile(r"(?:CUTOVER|PRE_CUTOVER_READINESS|GPT_DISPOSITION|INDEPENDENT_REVIEW|HOST_SHADOW)\s*[=:]\s*([A-Z][A-Z0-9_]+)")
@@ -72,7 +74,7 @@ def build_state(root: Path, repo: str = REPO) -> dict:
                     PROJECT_NAME.fullmatch(d.name) and safe_read(d / target, 300_000) is not None)
         transport[family] = {"files_observed": n, "verified": False,
                              "note": "GitHub 문서만 집계 · Dropbox LIVE/서명/영수증 검증 아님"}
-    return {"schema": "COWORK_GITHUB_DASHBOARD_SHADOW_V1",
+    return {"review_chains": review_chain.collect(root), "schema": "COWORK_GITHUB_DASHBOARD_SHADOW_V2",
             "phase": "MIGRATION_NOT_CUTOVER", "live_provider": "DROPBOX",
             "visibility": "PRIVATE_REPO_ONLY", "source": "GITHUB_TRACKED_FILES_ONLY",
             "disclaimer": "GitHub SHADOW 현황. 미이관 자료는 0건이 아니라 미확인입니다.",
@@ -116,6 +118,7 @@ body{{margin:0;background:var(--bg);font:15px/1.6 system-ui,'Malgun Gothic',sans
 <section class="stats" aria-label="GitHub 관측 파일 수"><div class="stat"><strong>{count}</strong><span>현재 문서가 있는 프로젝트</span></div><div class="stat"><strong>{reqs}</strong><span>GitHub 요청 파일 수 (검증 아님)</span></div><div class="stat"><strong>{reviews}</strong><span>GitHub 결과 파일 수 (검증 아님)</span></div><div class="stat"><strong>{receipts}</strong><span>GitHub 영수증 파일 수 (검증 아님)</span></div></section>
 <div class="toolbar"><h2>진행 중인 Work</h2><label>프로젝트 검색 <input id="search" type="search" placeholder="Work 이름 또는 키워드" autocomplete="off"></label></div>
 <div class="grid" id="cards">{grid}</div><p id="zero" class="empty" hidden>검색 결과가 없습니다.</p>
+{review_chain.render_html(state["review_chains"], repo)}
 <footer>개발·현황 확인용 PRIVATE 출력입니다. Windows Claude 리뷰·호스트 설치·운영 DB·GitHub PUBLIC 및 Pages를 변경하지 않습니다. 표시된 상태는 소스 문서의 주장입니다.</footer>
 </main><script>
 const box=document.getElementById('search'),cards=Array.from(document.querySelectorAll('.card')),zero=document.getElementById('zero');
@@ -136,6 +139,7 @@ def render_summary(state: dict, repo: str = REPO) -> str:
         clean = lambda s: s.replace("|", "\\|").replace("\n", " ")
         lines.append(f"| {clean(p['id'])} | {clean(p['status'])} | [CURRENT.md]({url_for(repo,p['source'])}) |")
     lines += ["", "미이관 파일이나 승인·서명 검증 결과가 없어도, 이 화면은 이를 임의로 성공/0건 완료 처리하지 않습니다.", ""]
+    lines.append(review_chain.render_markdown(state["review_chains"], repo))
     return "\n".join(lines)
 
 
