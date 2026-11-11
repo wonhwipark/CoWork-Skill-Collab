@@ -8,6 +8,45 @@ import html
 import re
 from pathlib import Path
 
+
+FLOW_CSS = """
+.flow-area{margin:28px 0;background:transparent}
+.flow-area h2{font-size:23px;margin:4px 0 8px}.flow-area h3{font-size:17px;margin:0}
+.flow-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin:20px 0 14px}
+.flow-heading .sub{margin:4px 0 0}
+.live-lane{border:1px solid #bad2cc;background:#edf6f3;border-radius:15px;padding:17px 20px;margin:12px 0 24px}
+.lane-label{color:#285f51;font-weight:800;font-size:13px}
+.lane-path{font-weight:700;line-height:1.9;margin:8px 0;overflow-wrap:anywhere}
+.lane-path b{color:#4b7b6d;margin:0 7px}
+.live-lane .flow-note{margin:5px 0 0;font-size:12px;color:#48685f}
+.target-label{display:flex;gap:12px;align-items:center;margin:20px 0 13px;flex-wrap:wrap}
+.flow-strip{counter-reset:flow;list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px 16px}
+.flow-node{position:relative;min-width:0;background:#fff;border:1px solid #d7e2ef;border-radius:14px;padding:16px;box-shadow:0 2px 9px rgba(12,38,72,.03)}
+.flow-node:after{content:"→";position:absolute;right:-15px;top:45%;font-size:20px;font-weight:750;color:#7087a3;z-index:2}
+.flow-node:nth-child(4):after{content:"↓";right:14px;top:auto;bottom:-27px}
+.flow-node:last-child:after{display:none}
+.flow-number{display:inline-block;color:#3c668e;font-size:12px;font-weight:850;letter-spacing:.05em;margin-bottom:9px}
+.flow-node h3{font-size:15px;line-height:1.4;margin-bottom:6px}
+.flow-owner{font-size:12px;color:#53677f;margin:5px 0 9px}
+.flow-observed{font-size:13px;font-weight:750;color:#264d77;margin:9px 0 6px;overflow-wrap:anywhere}
+.flow-note{font-size:12px;color:#56677d;margin:0;line-height:1.55}
+.flow-caption{font-size:13px;color:#51647b;margin:13px 0 28px}
+.flow-table-scroll{overflow-x:auto;background:#fff;border:1px solid #d7e2ef;border-radius:14px}
+.flow-table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.6}
+.flow-table th,.flow-table td{padding:12px 14px;text-align:left;border-bottom:1px solid #e5ebf2;vertical-align:top}
+.flow-table thead{background:#f1f5fa;color:#253b57}
+.flow-table tr:last-child th,.flow-table tr:last-child td{border-bottom:0}
+.flow-table tbody th{font-weight:700;width:25%}
+.flow-table td:nth-child(2){width:30%}
+.flow-links{display:flex;gap:18px;flex-wrap:wrap;margin:14px 0 25px;font-size:13px}
+@media(max-width:960px){.flow-strip{grid-template-columns:repeat(2,minmax(0,1fr))}
+.flow-node:nth-child(4):after{content:"→";right:-15px;top:45%;bottom:auto}
+.flow-node:nth-child(2n):not(:last-child):after{content:"↓";right:14px;top:auto;bottom:-24px}}
+@media(max-width:650px){.flow-strip{grid-template-columns:1fr;gap:20px}
+.flow-node:not(:last-child):after,.flow-node:nth-child(4):after{content:"↓";right:calc(50% - 7px);top:auto;bottom:-23px}
+.flow-table{min-width:550px}.live-lane{padding:14px}.lane-path{font-size:13px}.flow-heading h2{font-size:21px}}
+"""
+
 MIGRATION = "COWORK-DROPBOX-TO-GITHUB-MIGRATION"
 DASHBOARD = "COWORK-GITHUB-DASHBOARD-20261111-001"
 FIELD_RE = re.compile(r"\b([A-Z][A-Z0-9_]{2,50})\s*=\s*([A-Z][A-Z0-9_]{1,80})\b")
