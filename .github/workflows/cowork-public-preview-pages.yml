@@ -1,0 +1,81 @@
+name: CoWork public synthetic-only Pages release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/cowork-public-preview-pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: cowork-public-preview-pages
+  cancel-in-progress: false
+
+jobs:
+  publish-fixed-sample:
+    if: github.repository == 'wonhwipark/CoWork-Skill-Collab' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout approved PRIVATE source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Verify locked source and stage only one public HTML file
+        env:
+          OUT: ${{ runner.temp }}/cowork-public-site
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import hashlib
+          import os
+          from pathlib import Path
+          src = Path('collab/dashboard/public_preview/index.html')
+          raw = src.read_bytes()
+          source_sha = '6acf4bc151dc292e32d97a03479784b26f0384c61aef59f99120867c1d239786'
+          if len(raw) != 4754 or hashlib.sha256(raw).hexdigest() != source_sha:
+              raise SystemExit('REJECT: approved public sample bytes changed')
+          text = raw.decode('utf-8')
+          if 'data-classification="SYNTHETIC_ONLY"' not in text or 'data-release="NOT_APPROVED"' not in text:
+              raise SystemExit('REJECT: candidate classification mismatch')
+          substitutions = [
+              ('data-release="NOT_APPROVED"', 'data-release="PUBLIC_SAMPLE_APPROVED"'),
+              ('공개 웹사이트 게시도 아직 승인되지 않았습니다.', '현재 공개된 샘플 화면이며 실제 업무 현황이 아닙니다.'),
+              ('배포 승인 전 · 비운영 데모', '공개 샘플 · 비운영 데모'),
+              ('© CoWork · 공개용 후보 화면.', '© CoWork · 공개 샘플 화면.'),
+          ]
+          for old, new in substitutions:
+              if text.count(old) != 1:
+                  raise SystemExit('REJECT: unexpected public copy')
+              text = text.replace(old, new)
+          forbidden = ('<script', '<iframe', '<form', 'http://', 'https://', 'github.com', 'collab/projects/', 'collab/requests/', 'collab/reviews/', 'collab/receipts/')
+          if any(term in text.lower() for term in forbidden):
+              raise SystemExit('REJECT: non-static or private content in public HTML')
+          dest = Path(os.environ['OUT'])
+          dest.mkdir(parents=True, exist_ok=True)
+          output = dest / 'index.html'
+          output.write_bytes(text.encode('utf-8'))
+          if [p.name for p in dest.iterdir()] != ['index.html']:
+              raise SystemExit('REJECT: extra site file')
+          print('APPROVED_SOURCE_SHA256=' + source_sha)
+          print('PUBLIC_OUTPUT_SHA256=' + hashlib.sha256(output.read_bytes()).hexdigest())
+          print('PUBLIC_OUTPUT_SIZE=' + str(output.stat().st_size))
+          PY
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Upload only staged public HTML
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ runner.temp }}/cowork-public-site
+      - name: Deploy approved synthetic-only site
+        id: deployment
+        uses: actions/deploy-pages@v4
