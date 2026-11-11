@@ -6,6 +6,13 @@
 - Job-list에서 신규 ZIP은 사내 업데이트 감지 신호가 될 수 있으므로 **활성 One-shot Job·실제 Profile·승인·검증·원격 재조회**가 준비된 최종 ZIP만 PUBLIC 게시. `jobs: []` 비활성 후보를 무인 Job 전달 성공으로 오인하지 않는다.
 - 사용자가 PUBLIC 배송을 지시했더라도 **필수 배포 게이트 실패는 `PUBLIC_RELEASE=BLOCKED/NOT_POSTED`**로 보고하고 PRIVATE 배송으로 대체하지 않는다. 개발/시험과 승인·배송, 설치, 활성화, 실행, 결과 조회는 각각 별도 상태.
 
+## 사내 계약 조사용 제한적 READ_ONLY_BOOTSTRAP_ONE_SHOT (2026-11-12)
+
+- `JOBLIST_PUBLIC_DELIVERY_V1.md` 6절 조건에 한해, 사내에서만 가능한 설치 계약·독립 리뷰의 **사전 G0 탐색을 위해** 사용자 명시 승인된 읽기 전용 활성 One-shot ZIP을 PUBLIC 루트에 먼저 게시할 수 있다.
+- 이때 외부에서 요구되는 것은 바이트·보안·정적/회귀시험·한 건의 고정 활성 Job·무인 FAIL-CLOSED 동작·원격 재다운로드 검증. 실호스트 설치/Skill 호출·MSC 완성/독립 리뷰는 **사내에서 수행할 후속 항목**이므로 PASS로 표기하지 않는다.
+- `READ_ONLY_BOOTSTRAP_ONE_SHOT`은 **운영 쓰기/배포 승인 일반화가 아님**. 기존 소스·그룹 Knowledge·운영 DB/설정 수정, 사내 민감 자료 반출, 무승인 외부 게시, 임의 CLI 실행 및 미완료 리뷰의 소급 PASS 금지.
+- `job-list_v0_4_36_1112.zip`: 사용자 승인된 최초 적용 사례. 공개 배송 POSTED, 호스트 결과 NOT_VERIFIED. v0.4.35 비활성 후보와 구분.
+
 2026-11-10
 
 - PRIVATE: 개발 후보·설계·리뷰·영수증·판정·대시보드.
