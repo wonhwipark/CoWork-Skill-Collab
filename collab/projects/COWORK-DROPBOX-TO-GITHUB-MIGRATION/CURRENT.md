@@ -4,6 +4,16 @@
 
 
 
+## GPT 최종 판정 — v0.2.8 전환 필수 게이트 (2026-11-11 KST)
+- **GPT_DISPOSITION=ACCEPT_WITH_CHANGE / PRE_CUTOVER_READINESS=PARTIAL / CUTOVER=MIGRATION_NOT_CUTOVER**. 상세 판정 `GPT_V0_2_8_FINAL_PRE_CUTOVER_DISPOSITION_r0001_20261111.md` PRIVATE main 신규 게시·원격 readback PASS (commit `70f015c38f0072c8082d4afaf1b9c6bbf21d257a`).
+- Claude 결과 `CLAUDE_CUTOVER_ESSENTIAL_GATES_RESULT_FOR_GPT_20261111.md`와 70개 파일 매니페스트 `REVIEW_INPUT_MANIFEST_v0_2_8_FOR_GPT_20261111.md`를 GPT가 원격 재조회. 최신 ZIP `skill-collab-watcher_v0_2_8_1111.zip` 보고 크기 173615B/SHA256 `c6231cc329faff26c6e04a0ca454dec0d62a5eaaa0eb08edf9b6a57280f78daa`. ZIP 로컬 보관/PRIVATE 미게시, GPT 원본 바이트 독립 검증 NOT_RUN.
+- 코드·합성 시험 자체 보고 522 PASS/0 FAIL/12 SKIP, Windows 운영 인터프리터 487 PASS/0 FAIL/14 SKIP; 런북 불일치 및 시험 ZIP 타임스탬프 결함 수정은 조건부 수용. **시험 수집 수 차이**: 534 vs 501 (33건 차이)는 collect-only/skip 근거 추가 확인 필요. 폐기된 v0.2.6/0.2.7은 원본 보존.
+- SHADOW S-1의 운영 DB 무접근 격리 설계/Windows 합성 tripwire/실 GitHub GET 7회는 수용, **실제 호스트 SHADOW 설치·파일 I/O 추적은 NOT_RUN**. 운영 DB를 과거 세션에서 열었을 때의 SHM 영향은 배제할 수 없음.
+- **S-2 BLOCKED_TRUST**: 현 대화형 관리자 계정/프로필은 trust root·핀 변경권한을 가져 LIVE 독립성 검사 거부. 시험용 비관리자 계정, 관리자 쓰기 전용 신뢰 폴더, 승인자 개인키의 별도 기기 보관 및 실제 ACL 검증 필요.
+- F1은 Dropbox WAIT_INPUT 그대로 보존(실제 HOLD/이행 NOT_RUN). DB 백업·이행·rollback·중복 알림 0은 격리 사본 리허설만 수용. `INDEPENDENT_REVIEW=NOT_RUN`, `HOST_SHADOW=NOT_RUN`, `PRODUCTION_CHANGED=false` (Windows 자체 보고).
+- **다음 한 동작:** LIVE 제외 1차 승인 묶음(비관리자 계정/ACL, 승인자 키·신뢰 루트, 실제 호스트 read-only SHADOW, 파일별 반출 승인 뒤 PRIVATE ZIP, 비용 상한 $1의 독립 리뷰 1회)을 **명시적으로** 사용자에게 확인. 이후 운영 DB·F1 실제 처분·GitHub LIVE는 별도 2차 승인. 기존 Dropbox LIVE v0.1.5·운영 DB/예약 작업/Telegram/키/토큰 불변.
+
+
 ## Windows 실행 결과 — 전환 필수 게이트 G0~G4 (Claude 자체 시험 보고, 2026-11-11)
 - 상태: `PRE_CUTOVER_READINESS=PARTIAL ; HOST_SHADOW=NOT_RUN ; INDEPENDENT_REVIEW=NOT_RUN ; DB_LIVE_MIGRATION=NOT_RUN ; CUTOVER=MIGRATION_NOT_CUTOVER ; PRODUCTION_CHANGED=false ; MODEL_CALLS=0`. 개발 자체 시험(SELF_TEST_REPORTED)이며 독립 리뷰가 아님.
 - 결과 원문 `CLAUDE_CUTOVER_ESSENTIAL_GATES_RESULT_FOR_GPT_20261111.md`, 독립 리뷰 입력 자료 `REVIEW_INPUT_MANIFEST_v0_2_8_FOR_GPT_20261111.md` (실행 요청 아님). PRIVATE main, PR 없이 게시, 원격 바이트 재검증 완료. 이전 결과와 CURRENT 이력은 보존.
