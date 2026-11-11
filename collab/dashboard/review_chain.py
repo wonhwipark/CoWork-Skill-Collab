@@ -9,6 +9,31 @@ from urllib.parse import quote
 VALID_ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9_-]{0,100}\Z")
 SHA_RE = re.compile(r"[0-9a-f]{64}\Z")
 DECISIONS = {"ACCEPT", "ACCEPT_WITH_CHANGE", "REJECT", "DEFER", "NEED_INFO"}
+
+DISPLAY = {
+ "REQUEST_INVALID": "요청 정보 확인 필요",
+ "READY_NOT_OBSERVED": "READY 대기",
+ "READY_MISMATCH": "READY 불일치 · 실행 금지",
+ "REVIEW_NOT_OBSERVED": "Claude 리뷰 대기",
+ "REVIEW_INCOMPLETE_OR_MISMATCH": "리뷰 미완료·불일치",
+ "RECEIPT_NOT_OBSERVED": "영수증 대기",
+ "RECEIPT_MISMATCH": "영수증 불일치 · 완료 아님",
+ "GPT_NOT_OBSERVED": "GPT 판정 대기",
+ "GPT_DISPOSITION_MISMATCH": "GPT 판정 문서 불일치",
+ "GPT_RECORDED_UNAUTHENTICATED": "GPT 판정 기록 · 서명 미검증",
+}
+NEXT_OWNER = {
+ "REQUEST_INVALID": "GPT · 요청 내용 확인",
+ "READY_NOT_OBSERVED": "GPT · 유효 승인·READY 확인",
+ "READY_MISMATCH": "GPT · 기존 파일 보존 후 불일치 조사",
+ "REVIEW_NOT_OBSERVED": "Windows 감시기 · 실제 실행 근거 대기",
+ "REVIEW_INCOMPLETE_OR_MISMATCH": "GPT · 리뷰 입력/결과 대조",
+ "RECEIPT_NOT_OBSERVED": "Windows 감시기 · 영수증 게시 확인",
+ "RECEIPT_MISMATCH": "GPT · 영수증 검증, 재호출 금지",
+ "GPT_NOT_OBSERVED": "GPT · 결과 판정과 후속 조치",
+ "GPT_DISPOSITION_MISMATCH": "GPT · 판정 파일 정합성 확인",
+ "GPT_RECORDED_UNAUTHENTICATED": "GPT · 미해결 피드백 추적",
+}
 FINDING_RE = re.compile(r"^(?:#{2,5}\s*|[-*]\s*\*{0,2})([A-Z]{1,5}-\d{1,4})\b[\s:.)*\]-]*(.{0,160})$")
 
 
@@ -164,7 +189,7 @@ def render_html(chains, repo):
             rows.append(f"<li>{link} · {e(status)}</li>")
         items = "".join(f'<li><b>{e(f["id"])}</b> · {e(f["decision"])} · {e(f["summary"])}</li>' for f in x["findings"])
         feedback = f'<strong>피드백 {len(x["findings"])}건</strong><ul>{items}</ul>' if items else '<p class="minor">항목별 피드백 미확인</p>'
-        cards.append(f'<article class="card"><div class="card-top"><span class="pill {e(x["tone"])}">{e(x["stage"])}</span></div><h3>{e(x["id"])}</h3><p class="topic">Work {e(x["work_id"])} · revision {e(x["revision"])}</p><ol>{"".join(rows)}</ol>{feedback}</article>')
+        cards.append(f'<article class="card"><div class="card-top"><span class="pill {e(x["tone"])}">{e(DISPLAY.get(x["stage"], x["stage"]))}</span></div><h3>{e(x["id"])}</h3><p class="topic">Work {e(x["work_id"])} · revision {e(x["revision"])}</p><ol>{"".join(rows)}</ol>{feedback}<p class="next"><strong>다음 담당:</strong> {e(NEXT_OWNER.get(x["stage"], "상태 확인 필요"))}</p></article>')
     rendered = "\n".join(cards) if cards else '<p class="empty">GitHub 리뷰 요청 미이관 · 리뷰 완료 0건이 아닙니다.</p>'
     return '<section aria-label="GitHub 리뷰 진행"><div class="toolbar"><h2>REQUEST → READY → REVIEW → RECEIPT → GPT 판정</h2></div><p class="sub">문서 간 ID·개정·해시 연결만 확인. 승인 서명·Windows 실행 미검증.</p><div class="grid">' + rendered + "</div></section>"
 
