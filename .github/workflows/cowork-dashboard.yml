@@ -38,7 +38,7 @@ jobs:
           python3 -m json.tool collab/dashboard/state.json >/dev/null
       - name: Publish only dashboard artifacts back to PRIVATE main
         env:
-          GH_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
           git add -- collab/dashboard/index.html collab/dashboard/SUMMARY.md collab/dashboard/state.json
