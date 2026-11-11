@@ -174,3 +174,9 @@ Claude Code 독립 리뷰로 간주하지 마. 운영 watcher/DB/Job/Telegram,
 - **사용법:** GitHub HTML 소스 보기에서 `Raw`로 파일을 저장하여 브라우저에서 열면 데스크톱·모바일 밝은 톤 상세 구조도, 4가지 인터랙티브 사용자 사례, Knowledge Updater/Workflow/Kernel 책임, 팀/개인 지식 정본 구분, MCP 반출 승인 단계 및 G0~G3를 볼 수 있다.
 - **STATUS:** `HTML_POSTED / REMOTE_READBACK_PASS / BROWSER_RENDER_QA_PASS`. 실제 사내 GPT/OpenCode/MCP 자동 연결, 설치·배포 또는 RAG M1 검증의 PASS를 뜻하지 않는다.
 - 최신 실행·승인 상태는 `collab/projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md`의 마지막 섹션이 우선이다. 이전 r0001/r0002 설계/결과는 삭제·덮어쓰기하지 않는다.
+
+## 2026-11-11 — 최신 시각화 HTML r0002 (원페이지 도식)
+
+- **최신 한눈에 보기:** `collab/projects/L1-WORKSPACE-RAG-20261111-001/L1_E2E_INHOUSE_OFFSITE_WORKFLOW_VISUAL_GUIDE_r0002_20261111.html` — 사외·사내 경계, 자연어 Updater·OpenCode 분석·Workflow/Kernel Evidence, 그룹/개인 지식 분기, RAG M1, 비민감 MCP 피드백 역방향 화살표. 데스크톱 SVG/모바일 세로형 도식.
+- **검증 상태:** `HTML_POSTED / REMOTE_READBACK_PASS / BROWSER_4_VIEWPORTS_PASS`; 원본 r0001 HTML은 보존. 다이어그램은 기존 설계 해설이며 실제 사내 네트워크/API/Knowledge Updater/RAG/MCP 실동작 증거 아님.
+- **우선 참조:** 프로젝트 `CURRENT.md` 최신 섹션. GitHub에서는 파일을 `Raw` 저장 후 웹 브라우저로 열어 상호작용.
