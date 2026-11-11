@@ -1,16 +1,17 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
-- Updated: 2026-11-11 KST — r0002 GPT design disposition and remote readback
+- Updated: 2026-11-11 KST — K5.8/K6 r0003 self-review, r0004 contract and approved PUBLIC G0 handoff
 - CoWork operating mode: `MIGRATION_NOT_CUTOVER / DROPBOX_LIVE`
-- Scope: design publication and independent review handoff only
+- Scope: design self-review, revised contract and user-approved non-sensitive PUBLIC G0 handoff documents only; no skill/runtime changes
 - DEVELOPMENT: DESIGN_ONLY
-- SELF_TEST: existing Kernel v0.7.37 package contract and v0.7.38-dev.1 static source inspected; r0002 GitHub document remote readback; no inhouse E2E
+- SELF_TEST: document static QA and remote UTF-8/blob/hash readback PASS; prior Kernel E2 reports retained as historical; new skill/schema/host tests NOT_RUN
 - INDEPENDENT_REVIEW: NOT_RUN (GitHub documents posted; no Claude execution or valid LIVE REQUEST/READY witnessed)
 - REVIEW_REQUEST: PREPARED_NOT_QUEUED (SEMI_AUTO; GitHub watcher NOT_ACTIVE)
 - INHOUSE_WORKSPACE_TREE: NOT_VERIFIED
-- RAG_PROVIDER_INPUT: NOT_VERIFIED
+- RAG_PROVIDER_INPUT: BLOCKED / NOT_VERIFIED
 - CODE_OR_SKILL_MODIFICATION: NONE
-- PUBLIC_RELEASE / HOST_INSTALL / LIVE_CUTOVER: NOT_RUN
+- PUBLIC_HANDOFF_DOCUMENT: POSTED / REMOTE_READBACK_PASS (specific user authorization)
+- SKILL_PUBLIC_RELEASE / HOST_INSTALL / LIVE_CUTOVER: NOT_RUN
 
 ## Posted on GitHub PRIVATE main without PR
 
@@ -184,3 +185,18 @@
 - **TEST:** 14 proposed synthetic/negative regression scenarios T01-T14 documented. `G0_K58_K6_SOURCE=NOT_VERIFIED`, `TEST_T01_T14=NOT_RUN`, `INHOUSE_HOST=NOT_RUN`, `GROUP_WRITE=NOT_RUN`.
 - **SECURITY:** PRIVATE design contains no corporate code/MSC source or internal logs. No PUBLIC file/ZIP posting, actual skill change, group knowledge write, REQUEST/READY, paid independent review, MCP export or operation LIVE cutover. `RAG_M1=BLOCKED`, `MIGRATION_NOT_CUTOVER / DROPBOX_LIVE` unchanged.
 - **NEXT_ONE_ACTION:** 사내 GPT + 승인된 OpenCode가 실제 `l1-knowledge-updater` **K5.8/K6 전체 원문과 설치 I/O**를 READ_ONLY G0로 확인, 원문 대비 항목별 diff, REUSE/CONNECT/EXTEND/DEFER, 최소 수정범위와 14개 회귀시험을 사내 기록. 원문·실 소스·그룹 정본은 사내 보관.
+
+## 2026-11-11 — K5.8/K6 r0003 자체 리뷰·보완 계약 r0004·PUBLIC 사내 G0 handoff (LATEST)
+
+- **USER_AUTHORIZATION:** “github 업데이트해줘. 사내 gpt 전달은 github L1Work handoff 로 올려줘”. PRIVATE 결과/보완 설계/상태와 비민감 PUBLIC 인계 MD의 게시 범위. 일반 PUBLIC 스킬 배포 또는 운영 권한 확대가 아님.
+- **REVIEW_KIND/DISPOSITION:** GPT_SELF_REVIEW / DESIGN_DELTA_REVIEW; r0003=REVISE, BLOCKING 2 / MAJOR 11 / MINOR 1. collab/projects/L1-WORKSPACE-RAG-20261111-001/GPT_SELF_REVIEW_K58_K6_WORKFLOW_r0001_ON_r0003_20261111.md. 기존 RAG 5/8/3 지적은 재실행·신규 합산하지 않음.
+- **R0004_CONTRACT:** `collab/projects/L1-WORKSPACE-RAG-20261111-001/L1_KNOWLEDGE_UPDATER_K58_K6_WORKFLOW_CONTRACT_r0004_20261111.md`. 지적 14건의 설계 보완을 기록했으며 DESIGN_MITIGATION_DOCUMENTED / VALIDATION_NOT_RUN. KR-04 tier 호환성은 AS_IS_NOT_VERIFIED, KR-05/06 게시·복구 기능 블로커는 OPEN.
+- **PUBLIC_HANDOFF:** PUBLIC `wonhwipark/L1Work`, branch `main`, `handoffs/L1_KNOWLEDGE_UPDATER_WORKFLOW_INHOUSE_HANDOFF_r0004_1111.md`. [사내 GPT 인계 r0004](https://github.com/wonhwipark/L1Work/blob/cf13392bbf02a1d178f1cd3b83348a7321447c07/handoffs/L1_KNOWLEDGE_UPDATER_WORKFLOW_INHOUSE_HANDOFF_r0004_1111.md). 독립형 G0 READ_ONLY: G01~G14·T01~T24 계획·사내 결과 형식·원샷 요청. PRIVATE 협업 경로/인증 의존성·사내 원문/코드/MSC/로그 없음. 취득 후 첨부 문서로 오프라인 사용 가능.
+- **PUBLIC_NAVIGATION:** `wonhwipark/L1Work/main/handoffs/README.md` 새 진입 링크. handoff r0002는 보존. 기존 ZIP·스킬 설치본·소스·Work/Evidence·그룹 정본 변경 0.
+- **ACTUAL_PUBLICATION:** PUBLIC content commit `cf13392bbf02a1d178f1cd3b83348a7321447c07`; PRIVATE content commit `b37db8698559a07f4241644c0ee073a8d67f9c97`. 위 두 commit의 대상 문서 전체 원격 UTF-8 내용 일치와 Git blob 확인 PASS; 동일 바이트 SHA-256 검증. 각 diff는 승인된 문서 경로만 변경함을 확인.
+- **PUBLIC_HANDOFF_BYTES_SHA256:** 33224 bytes, `415aa62c0154c184758d32fbfccbfb0d41144ecf40009ce42c1d42215c4b593a`.
+- **PUBLICATION_RECEIPT:** `collab/projects/L1-WORKSPACE-RAG-20261111-001/K58_K6_R0004_PUBLIC_HANDOFF_PUBLICATION_RECEIPT_20261111.md`. 원격 검증한 content commit/경로/크기/SHA-256/blob를 기록. 이 CURRENT·영수증 자체의 최종 commit/readback은 게시 후 별도 확인하며 content commit과 혼동하지 않음.
+- **DOCUMENT_QA:** 신규 리뷰/계약/인계/README의 UTF-8·LF·fence·필수 ID/게이트, PUBLIC 인계의 비민감 경계 점검 PASS. 스킬·스키마·상태전이·실API·호스트 시험 아님.
+- **GATES:** G0_K58_K6_SOURCE=NOT_VERIFIED / INHOUSE_E3=NOT_RUN / TEST_T01_T24=NOT_RUN / RAG_M1=BLOCKED / INDEPENDENT_REVIEW=NOT_RUN / GROUP_WRITE=NOT_RUN / SOURCE_PATCH=NOT_RUN / SKILL_PUBLIC_RELEASE=NOT_RUN / HOST_INSTALL=NOT_RUN / REQUEST_READY=NOT_RUN / PAID_REVIEW=NOT_RUN / LIVE_CUTOVER=NOT_RUN. MIGRATION_NOT_CUTOVER / DROPBOX_LIVE 유지.
+- **READINESS:** r0003 원문 그대로 구현=REQUIRES_REVISION; r0004 독립 인계의 G0 읽기 전용 조사=READY_FOR_INHOUSE_G0; 실제 구현/그룹 게시/M1 해제=BLOCKED_AT_G0_AND_RELEVANT_VALIDATION.
+- **NEXT_ONE_ACTION:** 사내 GPT에 PUBLIC handoff r0004 파일을 첨부해 기존 K5.8/K6 전체 원문·실제 설치 I/O·writer 보장만 읽기 전용 매핑하고 사내 결과를 작성. 문서 취득을 실행 승인·외부 회신 요청으로 해석하지 않음. 원문·근거·상세 결과는 사내 보관, 외부 반출 기본 NO_EXPORT.
