@@ -35,3 +35,11 @@
 ## One next action
 
 Use the already-built candidate for an approved, read-only in-house G0 check of the installed `l1-knowledge-updater` invocation and host source/approval/Skill-Updater activation contracts, then independent review. Only after the gates are satisfied, create a **new approved active One-shot version** (rather than silently reusing or overwriting the staged v0.4.35) and publish to `wonhwipark/L1Work` root with actual package hash and remote readback. User has requested public release, but currently unverified runtime and independent review prevent classifying this candidate as deployable.
+
+## 2026-11-12 — Candidate ZIP committed to PRIVATE (latest)
+
+- **PRIVATE_ARTIFACT_ARCHIVED=PASS**: `collab/candidates/joblist_nrtx/job-list_v0_4_35_1112.zip`; GitHub main remote directory readback size **1,562,969 bytes**, Git blob **`26c4276eb3912a7f09feddbb5fc12bd20f42ea03`**, Actions push commit prefix **`283307b`**.
+- **Real inner package SHA-256 (Actions actual bytes):** `3061be176932ed145554b583624a96f0c2bbb22533c5fed8635c1acc2101779c`. After commit, GitHub blob SHA matches the Actions-reported `git hash-object`; remote directory readback PASS.
+- **FINAL_SELF_TEST:** GitHub Actions run `43059239712` completed SUCCESS: baseline byte pin, ZIP CRC/manifest, Python compile, `job_core validate`, 33 pytest PASS/0 FAIL, unsupported-OS BLOCKED test, zero active jobs. This is a **development candidate**, NOT host E2E or independent review.
+- **PUBLIC_RELEASE=NOT_POSTED / INHOUSE_SKILL_UPDATER=NOT_RUN / JOB_ACTIVATION=NOT_RUN / GROUP_KNOWLEDGE_WRITE=NOT_RUN**. The requested automatic analysis has **not started**. This restriction avoids unwarranted auto-install/one-shot consumption while host approval, Knowledge Updater CLI and independent review remain unverified.
+- **NEXT_ONE_ACTION:** verify in-house installed Knowledge Updater invocation, owner-approved Work/SourceSnapshot and Skill-Updater activation contract, then request independent review and build a new explicitly active deployable release. Do not overwrite candidate ZIP, create a fake PASS, or treat GitHub PRIVATE posting as an in-house execution signal.
