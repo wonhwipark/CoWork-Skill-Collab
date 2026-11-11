@@ -4,18 +4,15 @@
 
 This repository is a **private collaboration workspace**, not a deployment repository and not an approved location for restricted corporate materials.
 
-## HTML 대시보드 바로가기
+## 기본 대시보드 — 클릭하면 바로 열리는 HTML (GitHub Pages)
 
-- **[협업 흐름·STATUS HTML 최신 스냅샷 (PRIVATE)](collab/dashboard/snapshots/CoWork_협업흐름_STATUS_20261112.html)** — 실제 협업 흐름과 운영·검증 상태를 보기 위한 HTML. 다운로드 후 브라우저에서 열기
-- **[GitHub Actions 자동 갱신 HTML (PRIVATE)](collab/dashboard/index.html)** — CURRENT.md 변경 시 갱신되는 최신 HTML 원본
-- [공개용 샘플 웹페이지](https://wonhwipark.github.io/L1Work/cowork-dashboard/) — 내부 실제 현황과 분리된 합성 샘플
+**[CoWork 협업 흐름·현재 STATUS 웹페이지 바로 열기](https://wonhwipark.github.io/L1Work/cowork-dashboard/)** — **기본 확인 경로**. PC·모바일 브라우저에서 즉시 HTML 화면으로 표시됩니다.
 
-## 대시보드 바로가기
-
-- **[CoWork 협업 흐름·최신 STATUS HTML (PRIVATE)](collab/dashboard/index.html)** — 기본 화면. GitHub에서 다운로드 후 브라우저로 열기 (실제 진행 상태 포함)
-- [GitHub 화면에서 바로 보는 보조 요약](collab/dashboard/VIEW.md) — Markdown/Mermaid 렌더링
-- **[CoWork 공개 샘플 대시보드 (웹페이지)](https://wonhwipark.github.io/L1Work/cowork-dashboard/)** — 브라우저에서 HTML 직접 보기, 실제 업무 데이터 없는 샘플
-- [대시보드 최신 작업 현황](collab/projects/COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md) — 개발·검증·공개 현황
+- 공개 화면은 2026-11-12 기준 PRIVATE 기록에서 선별·검증한 상위 상태 요약입니다. 원문 요청·리뷰·영수증·식별자·비밀 정보는 게시하지 않습니다.
+- **[PRIVATE 상세 HTML](collab/dashboard/index.html)** — 최신 GitHub 기록을 Actions로 재생성. GitHub HTML blob은 다운로드 후 브라우저에서 확인할 수 있습니다.
+- [PRIVATE HTML 보존 스냅샷](collab/dashboard/snapshots/CoWork_협업흐름_STATUS_20261112.html) · [GitHub 네이티브 요약](collab/dashboard/VIEW.md)
+- **갱신 구분:** GitHub Pages는 PUBLIC HTML 변경 시 자동 배포되지만 PRIVATE 실무 데이터를 PUBLIC으로 자동 동기화하지 않습니다. 실제 상태는 공개 가능 항목 확인 후 갱신합니다.
+- [대시보드 최신 작업 현황](collab/projects/COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md)
 
 ## Start here
 - [운영 진입점](collab/START_HERE.md)
