@@ -171,3 +171,16 @@
 - **ACTUAL TEST STATE:** `DOCUMENT_PUBLISHED`; `INHOUSE_G0=NOT_RUN`; `UPDATER_WORKFLOW_E2E=NOT_RUN`; `HTML_BROWSER_QA_r0003=NOT_RUN` (기존 r0002 QA 결과를 신버전 PASS로 소급 금지); `GROUP_AUTO_PUBLISH=NOT_RUN`; `RAG_M1=BLOCKED`; `MCP_FEEDBACK=SPEC_ONLY/NO_EXPORT`; `CLAUDE_INDEPENDENT_REVIEW=NOT_RUN`.
 - **NO OPERATIONAL CHANGE:** 기존 Workflow/Kernel/Updater 설치·사내 repo/Work/DB/그룹 지식 정본/PUBLIC ZIP/REQUEST_READY/Watcher/Job/Telegram 변경 없음. `MIGRATION_NOT_CUTOVER / DROPBOX_LIVE` 유지.
 - **NEXT_ONE_ACTION:** 사내 GPT가 새 `L1_INHOUSE_GPT_OPENCODE_HANDOFF_r0002_20261111.md`를 받아 설치된 Workflow·Knowledge Updater 실제 I/O·중복 기능·역할을 읽기 전용 G0로 확인, `REUSE / CONNECT / EXTEND / DEFER`와 격리 합성 테스트 결과를 사내에 기록. 허가 없는 그룹 지식 게시·사외 반출 금지.
+
+## 2026-11-11 — K5.8 tier/K6 MSC 및 Workflow × Knowledge Updater 연계 계약 r0003
+
+- **CONTEXT:** 2026-11-11 사용자 전달 그룹 합의: `l1sw-dev-knowledge`는 현행 코드 기반 HLD·상세설계·AS-IS MSC·설계 변경 이력·재사용 가능한 기술적 이슈 히스토리도 관리. 개인 `l1-workspace`는 Work ID/상태/수정·시험·리뷰/Evidence 과정의 정본.
+- **NEW DRAFT:** `collab/projects/L1-WORKSPACE-RAG-20261111-001/L1_KNOWLEDGE_UPDATER_K58_K6_WORKFLOW_CONTRACT_r0003_20261111.md` (`GPT_DESIGN_REVIEW+INHOUSE_G0_HANDOFF`), GitHub PRIVATE main 새 파일 게시, UTF-8 원문 비교 readback PASS.
+- **REAL POSTED FILE:** 21,580 UTF-8 bytes, Git blob `789f06c3bb199565a049daf30bdbf1330fa17c2c`, creation commit `98310646690a9c217ce6d0058579bacc2032657e`.
+- **K5.8 CHANGE PROPOSAL:** 기존 tier 값/이름을 즉시 대체하지 않는다. `knowledge_kind`(개요/HLD/상세설계/AS-IS MSC/설계변경/Issue history), `validation_state`(코드 확인/설계승인/수정반영/시험 확인 등), `publication_decision`(Workspace only/Group candidate/승인대기/게시/역링크대기)을 서로 독립적으로 판단. **상세도는 개인/그룹 routing 결정 조건이 아님.**
+- **K6 CHANGE PROPOSAL:** 상세 AS-IS MSC는 그룹 정본 게시 후보. TO-BE·설계 변경은 승인된 설계 상태와 현행 소스 검증을 명확히 분리. Git/P4 fixed source revision/branch/dirty/scope, CODE_FACTS·EvidenceRef, participant 표시명 vs stable ID, 그룹 diff/Owner approval/readback와 Work→게시 revision 포인터 필수.
+- **ISSUE HISTORY:** 미완료 이슈라도 기술적으로 검증된 원인은 그룹 재사용 후보 가능하지만 `CAUSE_VERIFIED / FIX_PENDING`을 `FIX_INTEGRATED / TEST_VERIFIED`로 오인하지 않는다. Work 진행/토론/시험 로그는 개인 Workspace 원장에 남긴다.
+- **CONTRACT:** Workflow owns request intent/work lifecycle; Kernel owns Work ID and authorized Evidence registry; code-analyzer owns facts/MSC evidence; Updater owns knowledge candidate/K5.8/K6, duplicates/conflicts/approval/authorized group writer coordination. Same Work ID, pinned SourceSnapshot, ArtifactRef, idempotent publication receipt, Work reverse-link state; unknown Kernel Evidence kind/provider no arbitrary writes.
+- **TEST:** 14 proposed synthetic/negative regression scenarios T01-T14 documented. `G0_K58_K6_SOURCE=NOT_VERIFIED`, `TEST_T01_T14=NOT_RUN`, `INHOUSE_HOST=NOT_RUN`, `GROUP_WRITE=NOT_RUN`.
+- **SECURITY:** PRIVATE design contains no corporate code/MSC source or internal logs. No PUBLIC file/ZIP posting, actual skill change, group knowledge write, REQUEST/READY, paid independent review, MCP export or operation LIVE cutover. `RAG_M1=BLOCKED`, `MIGRATION_NOT_CUTOVER / DROPBOX_LIVE` unchanged.
+- **NEXT_ONE_ACTION:** 사내 GPT + 승인된 OpenCode가 실제 `l1-knowledge-updater` **K5.8/K6 전체 원문과 설치 I/O**를 READ_ONLY G0로 확인, 원문 대비 항목별 diff, REUSE/CONNECT/EXTEND/DEFER, 최소 수정범위와 14개 회귀시험을 사내 기록. 원문·실 소스·그룹 정본은 사내 보관.
