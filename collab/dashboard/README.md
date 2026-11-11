@@ -5,13 +5,19 @@
 - **개발·판정 주체:** GPT
 - **대시보드 생성:** GitHub Actions `.github/workflows/cowork-dashboard.yml`
 - **입력:** 같은 PRIVATE 저장소 `collab/projects/*/CURRENT.md`, `collab/requests/`, `collab/reviews/`, `collab/receipts/`
-- **출력:** `collab/dashboard/index.html`, `SUMMARY.md`, `state.json` (생성기 `generate.py`)
+- **출력:** `collab/dashboard/VIEW.md` (즉시 렌더링), `index.html`, `SUMMARY.md`, `state.json` (생성기 `generate.py`)
 - **업데이트:** `main`에 관련 입력/생성기 변경 시 push 이벤트, 또는 Actions 화면의 `Run workflow` 수동 실행
 - **영역:** GitHub PRIVATE만. 공개 Pages, PUBLIC `L1Work`, Windows 및 Dropbox LIVE에는 게시하지 않음
 
+## 클릭 한 번으로 보기 (PRIVATE)
+
+**[대시보드 바로 보기 — GitHub 화면에서 즉시 표시](VIEW.md)**
+
+이 링크는 GitHub가 직접 렌더링하는 Markdown 대시보드입니다. PRIVATE 저장소 권한이 있는 로그인 사용자만 확인할 수 있습니다. 기존 HTML 파일의 코드 화면을 여는 방식과 다릅니다. GitHub Pages나 PUBLIC 게시 없이 GitHub Actions가 `VIEW.md`를 함께 자동 갱신합니다.
+
 ## 사용자 확인 방법
 
-1. [GitHub에서 읽는 요약](SUMMARY.md) — GitHub 모바일/웹에서 바로 확인할 Markdown.
+1. [클릭 한 번에 열리는 대시보드](VIEW.md) — GitHub 모바일/웹에서 바로 표시. [GitHub에서 읽는 요약](SUMMARY.md) — GitHub 모바일/웹에서 바로 확인할 Markdown.
 2. [HTML 대시보드](index.html) — 파일 다운로드 후 브라우저에서 표시할 수 있는 정적 HTML. GitHub 코드 화면에서는 HTML 렌더링이 제한될 수 있음.
 3. [자동 갱신 워크플로](../../.github/workflows/cowork-dashboard.yml) — Actions의 해당 run 결과/로그로 갱신 성공 확인.
 
