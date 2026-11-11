@@ -1,5 +1,17 @@
 # COWORK-GITHUB-DASHBOARD-20261111-001 — CURRENT
 
+## 최신 상태 — GitHub Pages HTML 기본화 및 공개 상태 요약 게시 (2026-11-12)
+- **사용자 최신 지시:** `page 에 게시해서 링크클릭후 바로 볼 수 있도록, 항상 default`. 앞으로 CoWork 대시보드 기본 경로는 **`https://wonhwipark.github.io/L1Work/cowork-dashboard/`** (GitHub Pages HTML). Markdown/PRIVATE HTML blob 직접 열기를 기본값으로 삼지 않음.
+- **PUBLIC_HTML=POSTED, PRIVATE_TO_PUBLIC_FILTER=ALLOWLIST**: `wonhwipark/L1Work` PUBLIC `main/docs/cowork-dashboard/index.html`을 기존 합성 샘플에서 검증된 상태 요약·7단계 흐름·역할별 환경·검증 상태표로 교체. 직접 PRIVATE 파일 ID/원문/영수증/개인정보/토큰/비밀정보 반출 없음.
+- **페이지 원격 게시:** PUBLIC HTML commit `9d08be675cd0ee929e3305cbbc4bd44750423ffc`, Git blob SHA `4b67f5afa107b8420100a5be11f2d9f611b43d2d`, 원격 본문 일치 검증 PASS. 공개 README commit `6652b3001ddf4261685c1805c3be53f017c7d9e5`, Pages 진입 `docs/index.html` commit `5633f7b1ee21ea3027e9006cb7019faccc731907`, 각 readback PASS.
+- **실제 배포 증거:** GitHub Pages Actions #43054416940 (HTML 교체 자체, SUCCESS), #43054544105 (최종 진입 페이지 변경, SUCCESS). 최신 run의 build/deploy/report-build-status 모두 SUCCESS, 배포 로그 `Reported success!` 및 `https://wonhwipark.github.io/L1Work/` URL 발급 관측. 직접 HTTP GET/served body SHA는 네트워크 제한으로 `NOT_VERIFIED`.
+- **게시한 사실 상태:** 2026-11-12 기준 PRIVATE `state.json`에서 3개 프로젝트 문서, GitHub REQUEST/REVIEW/RECEIPT 각 0개 관측, `WINDOWS_STAGE1_EXECUTION=NOT_RUN`, `INDEPENDENT_REVIEW=NOT_RUN`, `CUTOVER=MIGRATION_NOT_CUTOVER`. 기존 Dropbox LIVE 운송 유지(운영 변경 미실시). 공개 HTML에는 업무 IDs 대신 상위 범주로 표시.
+- **공개·보안 계약:** `collab/dashboard/PUBLIC_PAGES_DEFAULT_POLICY.md` 신규. CoWork PRIVATE 루트 README, 대시보드 README 및 `collab/START_HERE.md`에 Pages 기본 경로와 예외 범위 명시. PUBLIC L1Work에는 허용된 상위 상태만 표시, 내부 원문·PRIVATE 링크·민감 메타데이터는 미게시.
+- **중요 제한:** `PAGES_AUTO_DEPLOY=PASS`는 PUBLIC 저장소에 커밋될 때의 자동 재배포. `PRIVATE_STATUS_AUTO_SYNC=NOT_IMPLEMENTED`로 유지. 공개 상태는 마지막 검증 시점의 스냅샷이며 최신 PRIVATE 결과를 자동 반영하지 않음. 공개 동기화 자동화에는 별도 권한·보안 설계·승인 필요.
+- **독립 리뷰·운영:** Claude Code `INDEPENDENT_REVIEW=NOT_RUN`, Windows 실제 호스트 SHADOW `NOT_RUN`, LIVE 전환 `MIGRATION_NOT_CUTOVER`. 기존 watcher/운영 DB/예약 작업/Telegram 및 PUBLIC 스킬 ZIP 무변경.
+- **다음 한 동작:** 사용자에게 Pages HTML URL을 기본 제공. 향후 PRIVATE 상태가 바뀔 때 공개 허용 목록 검토 후 PUBLIC HTML을 업데이트하고 Pages 배포 성공을 재검증. 자동 동기화는 승인 전 구현하지 않음.
+
+
 ## 최신 게시 상태 — HTML 스냅샷 PRIVATE 업로드 (2026-11-12)
 - **사용자 지시:** 이전에 제공한 `CoWork_협업흐름_STATUS_20261112.html`을 GitHub에 업로드.
 - **UPLOAD=PASS / GITHUB_REMOTE_READBACK=PASS**: `collab/dashboard/snapshots/CoWork_협업흐름_STATUS_20261112.html`을 PRIVATE `main`에 새 파일로 게시. 원본/원격 본문 정확히 일치.
