@@ -9,6 +9,15 @@
 - **업데이트:** `main`에 관련 입력/생성기 변경 시 push 이벤트, 또는 Actions 화면의 `Run workflow` 수동 실행
 - **이 Actions의 출력 영역:** GitHub PRIVATE만. L1Work 공개 샘플은 별도 게시된 정적 HTML이고, Windows 감시기·기존 LIVE 경로에는 쓰지 않음
 
+## 최신 HTML 업로드 파일 (PRIVATE 스냅샷)
+
+**[2026-11-12 협업 흐름·STATUS HTML 스냅샷](snapshots/CoWork_협업흐름_STATUS_20261112.html)** — GPT가 별도로 디자인하여 제공한 파일을 PRIVATE GitHub에 그대로 업로드했습니다. 파일 원본과 원격 본문이 정확히 일치함을 재검증했습니다.
+
+- **저장 위치:** `collab/dashboard/snapshots/CoWork_협업흐름_STATUS_20261112.html`
+- **무결성:** SHA-256 `e2530c1062540e93191ca62bcf9dd0ece1d8cdac35e0903d8e6079c047f5d9e1`, Git blob `df233dd31404735f2d41bdc0a6b0059a97d49494`.
+- **주의:** 이 HTML은 고정 스냅샷입니다. **실제 자동 갱신 HTML은** `collab/dashboard/index.html`이며 GitHub Actions가 업데이트합니다. 두 HTML을 혼동하지 않습니다.
+- GitHub PRIVATE는 HTML 파일을 웹페이지로 직접 호스팅하지 않으므로 다운로드 후 브라우저에서 열어야 합니다. 공개 `L1Work` Pages는 샘플 전용입니다.
+
 ## HTML 기본 확인 방식 (2026-11-12)
 
 - **기본 산출물은 HTML:** [협업 흐름·현재 STATUS HTML](index.html) — PRIVATE GitHub의 HTML 원본. GitHub 코드 화면은 HTML을 렌더링하지 않으므로 **파일을 다운로드한 뒤 브라우저에서 열어** 실제 화면을 확인한다.
