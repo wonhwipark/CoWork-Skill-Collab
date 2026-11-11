@@ -6,7 +6,8 @@ This repository is a **private collaboration workspace**, not a deployment repos
 
 ## 대시보드 바로가기
 
-- **[CoWork 협업 흐름·최신 STATUS 대시보드 (PRIVATE)](collab/dashboard/VIEW.md)** — GitHub에서 도식(Mermaid)·실행 주체·운영 상태·리뷰/피드백 확인
+- **[CoWork 협업 흐름·최신 STATUS HTML (PRIVATE)](collab/dashboard/index.html)** — 기본 화면. GitHub에서 다운로드 후 브라우저로 열기 (실제 진행 상태 포함)
+- [GitHub 화면에서 바로 보는 보조 요약](collab/dashboard/VIEW.md) — Markdown/Mermaid 렌더링
 - **[CoWork 공개 샘플 대시보드 (웹페이지)](https://wonhwipark.github.io/L1Work/cowork-dashboard/)** — 브라우저에서 HTML 직접 보기, 실제 업무 데이터 없는 샘플
 - [대시보드 최신 작업 현황](collab/projects/COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md) — 개발·검증·공개 현황
 
