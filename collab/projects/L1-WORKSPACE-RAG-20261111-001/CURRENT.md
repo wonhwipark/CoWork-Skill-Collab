@@ -132,3 +132,15 @@
 - **RAG_M1:** `BLOCKED`; `G0_INHOUSE_E3=NOT_RUN`; `CLAUDE_INDEPENDENT_REVIEW=NOT_RUN`; `WORKFLOW_SKILL_PATCH=NOT_RUN`; `REQUEST_READY=NOT_RUN`; `PAID_PROVIDER_CALL=NOT_RUN`.
 - **OPERATING:** `MIGRATION_NOT_CUTOVER / DROPBOX_LIVE`; existing Kernel/Workflow/Source Git/Job/Windows watcher/DB/Telegram, Public L1Work release and `/AI-CONTINUITY/` unchanged.
 - **NEXT_ONE_ACTION:** 사내 GPT에 새 인계 MD를 전달하고 OpenCode와 함께 **기존 L1 Knowledge Updater·Workflow·Kernel·MCP의 실제 입출력·기능 중복과 보안/권한을 읽기 전용 실측**한 다음, 허용되는 비민감 상태 요약만 회신. 실 MCP 배포/연결/반출은 별도 승인.
+
+## 2026-11-11 — 사외·사내 통합 Workflow 인터랙티브 HTML 가이드 (LATEST)
+
+- **OUTPUT:** `collab/projects/L1-WORKSPACE-RAG-20261111-001/L1_E2E_INHOUSE_OFFSITE_WORKFLOW_VISUAL_GUIDE_r0001_20261111.html` (GitHub PRIVATE `main`, PR 없이 신규 게시).
+- **STATUS:** `HTML_CREATED / PUBLISHED / REMOTE_READBACK_PASS`; standalone self-contained, light-theme Korean layout, desktop/mobile responsive, 4 interactive scenario tabs, no external CSS/JS network dependency.
+- **DETAILS:** 사외 GPT 설계 ↔ 사내 GPT 현장 오케스트레이션 ↔ OpenCode·기존 skills 분석 ↔ Knowledge Updater 자연어 진입·라우팅 ↔ Workflow/Kernel Work/Evidence ↔ 그룹 Dev Knowledge/개인 Workspace 분리 ↔ 승인된 비민감 MCP 피드백, RAG M1 source/owner/root/digest gate, G0~G3, 운영 불변조건/상태.
+- **QA ACTUAL:** Chromium headless render in isolated test using HTML `set_content` (local file navigation blocked by browser policy), viewport `1440x900` + `390x844` with `scrollWidth == viewportWidth`; tab 2/4 visibility toggle correct; JavaScript page errors 0. Browser test did not contact corporate systems.
+- **BYTES:** `43,325`; **SHA-256:** `07de22f81bddd78673de31aaca4e8da416eec6d11860398a7e2aa9c8ea981a3f`; **GIT BLOB:** `e3bc0c260c6bc71618a46420c60258ab190f0917`; **CREATE COMMIT:** `ac2ffae37a6646397c79f166080ba2b0efd74130`.
+- **FORMAT:** GitHub's HTML source view may not execute scripts; download the `.html` file or open the local copy with a browser to use tabs. The Markdown architecture includes a separate Mermaid diagram.
+- **IMPLEMENTATION TRUTH:** This is **design visualization only**: inhouse `L1 Knowledge Updater` real internals `NOT_VERIFIED`, automatic Workflow routing `NOT_VERIFIED`, MCP `SPEC_ONLY` and `NO_EXPORT`, RAG M1 `BLOCKED`. Neither host E3 nor deployment testing executed.
+- **NEXT_ONE_ACTION:** 사용자 HTML로 전체 책임·흐름 확인 후 사내 GPT에 상위 인계서 전달, G0 read-only 실제 설치·MCP·Updater 동작/중복 판정. 보안/사내 운영 승인 전 자동 연결·전송 금지.
+- **NO CHANGES:** 기존 r0001/r0002 설계, 사내 Work·Kernel/Workflow/skills, REQUEST/READY, paid Claude review, PUBLIC ZIP, Windows watcher/DB/Job, Dropbox `MIGRATION_NOT_CUTOVER / DROPBOX_LIVE`, `/AI-CONTINUITY/`.
