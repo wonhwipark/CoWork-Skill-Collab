@@ -4,6 +4,12 @@
 
 This repository is a **private collaboration workspace**, not a deployment repository and not an approved location for restricted corporate materials.
 
+## HTML 대시보드 바로가기
+
+- **[협업 흐름·STATUS HTML 최신 스냅샷 (PRIVATE)](collab/dashboard/snapshots/CoWork_협업흐름_STATUS_20261112.html)** — 실제 협업 흐름과 운영·검증 상태를 보기 위한 HTML. 다운로드 후 브라우저에서 열기
+- **[GitHub Actions 자동 갱신 HTML (PRIVATE)](collab/dashboard/index.html)** — CURRENT.md 변경 시 갱신되는 최신 HTML 원본
+- [공개용 샘플 웹페이지](https://wonhwipark.github.io/L1Work/cowork-dashboard/) — 내부 실제 현황과 분리된 합성 샘플
+
 ## 대시보드 바로가기
 
 - **[CoWork 협업 흐름·최신 STATUS HTML (PRIVATE)](collab/dashboard/index.html)** — 기본 화면. GitHub에서 다운로드 후 브라우저로 열기 (실제 진행 상태 포함)
