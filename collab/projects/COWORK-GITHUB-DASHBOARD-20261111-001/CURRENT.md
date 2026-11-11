@@ -1,5 +1,18 @@
 # COWORK-GITHUB-DASHBOARD-20261111-001 — CURRENT
 
+## 최신 상태 — 공개 샘플 Pages 업로드 시도 및 실제 차단 (2026-11-11 23:49 KST)
+- **사용자 승인:** 기존 합성 샘플 HTML GitHub Pages 공개 업로드 승인. 실제 협업/업무·리뷰 데이터 공개 승인은 아님.
+- **PUBLIC_SAMPLE_SOURCE=VERIFIED**: 원본 `collab/dashboard/public_preview/index.html` 4,754 bytes, SHA-256 `6acf4bc151dc292e32d97a03479784b26f0384c61aef59f99120867c1d239786`. 고정 SHA 일치일 때만 게시 후보로 허용.
+- **PUBLIC_PAGES_WORKFLOW=POSTED / REMOTE_READBACK=PASS**: 신규 `.github/workflows/cowork-public-preview-pages.yml`, commit `7b251a336ed1184e90682495e5d79652260d22a2`. 기존 PRIVATE dashboard Actions와 역할 분리, PUBLIC `L1Work` 불변.
+- **PUBLISH_RUN=FAILED_ON_PAGES_CONFIGURATION**: [GitHub Actions #43042181335](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43042181335). Checkout PASS, 승인 후보 해시 검증·정적 HTML 단일 파일 스테이징 PASS; Pages `configure-pages`에서 404 `Not Found` (Pages 미설정/사용 불가); Pages artifact 업로드 SKIP, 실제 배포 SKIP.
+- **스테이징 출력:** 공개 상태 안내 문구만 4개 고정 치환한 4,765 bytes HTML, SHA-256 `40a33950e4fc37ed643522ed06b73ea89afdd9b4c0447417d67bc19501c82779` (Actions 로그 실측). PUBLIC에 **실제로 발행된 바이트가 아님**.
+- **PUBLICATION=BLOCKED_NOT_PUBLISHED; PUBLIC_URL=NOT_AVAILABLE; HOST_E2E=NOT_RUN**. URL 생성·외부 접속 성공을 선언하지 않음.
+- **PRIVATE 대시보드:** VIEW.md/HTML/SUMMARY/state.json 및 PRIVATE 자동 갱신 기존 구현 유지. 기존 공개 후보 자체시험 8 PASS, PRIVATE 대시보드 기존 18 PASS; 실제 GitHub REQUEST→REVIEW→RECEIPT E2E NOT_RUN, Claude 독립 리뷰 NOT_RUN.
+- **CUTOVER=MIGRATION_NOT_CUTOVER**. Dropbox LIVE, Windows Claude Code watcher/Bridge/운영 DB/예약 작업/Telegram 및 운영 신뢰키 미변경.
+- **최종 결과 정본:** `PUBLIC_PAGES_ATTEMPT_AND_FINAL_STATUS_20261111.md` (이번 업데이트에 앞서 PRIVATE main 게시)와 `collab/dashboard/public_preview/PUBLIC_RELEASE_GATE.md`.
+- **다음 한 동작:** [GitHub 저장소 Pages 설정](https://github.com/wonhwipark/CoWork-Skill-Collab/settings/pages)에서 **Source=GitHub Actions**로 활성화(계정 요금제에 따라 PRIVATE Pages 제한 가능). 그 후 `CoWork public synthetic-only Pages release` 수동 재실행 1회 → 실제 공개 URL/바이트 검증 → 상태 갱신. 설정 불가 시 임의 PUBLIC L1Work 게시로 우회하지 않는다.
+
+
 ## 공개용 HTML 독립 후보 — 설계·구현·시험 (2026-11-11 KST)
 - **사용자 요청 범위:** 민감정보를 제거한 별도 공개용 HTML 설계·구현·시험. 실제 공개 게시/Pages/PUBLIC 배포는 별도 승인. 이번 작업은 PRIVATE `main`에서만 후보 제작 및 검증.
 - **현재 판정:** `DEVELOPMENT=IMPLEMENTED`, `SELF_TEST=PASS`, `ACTIONS_PRIVATE_RUN=PASS`, `INDEPENDENT_REVIEW=NOT_RUN`, `PUBLICATION_APPROVAL=NOT_GRANTED`, `PUBLIC_HOST_E2E=NOT_RUN`, `CUTOVER=MIGRATION_NOT_CUTOVER`.
