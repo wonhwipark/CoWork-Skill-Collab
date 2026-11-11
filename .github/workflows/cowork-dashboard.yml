@@ -7,6 +7,7 @@ on:
       - '.github/workflows/cowork-dashboard.yml'
       - 'collab/dashboard/*.py'
       - 'collab/dashboard/tests/**'
+      - 'collab/dashboard/public_preview/**'
       - 'collab/projects/**/CURRENT.md'
       - 'collab/requests/**'
       - 'collab/reviews/**'
@@ -34,6 +35,8 @@ jobs:
       - name: Build and test without external API or dependencies
         run: |
           python3 -m unittest discover -s collab/dashboard/tests -v
+          python3 -m unittest discover -s collab/dashboard/public_preview/tests -v
+          python3 collab/dashboard/public_preview/build.py
           python3 collab/dashboard/generate.py
           python3 -m json.tool collab/dashboard/state.json >/dev/null
       - name: Publish only dashboard artifacts back to PRIVATE main
@@ -41,7 +44,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          git add -- collab/dashboard/index.html collab/dashboard/SUMMARY.md collab/dashboard/state.json collab/dashboard/VIEW.md
+          git add -- collab/dashboard/index.html collab/dashboard/SUMMARY.md collab/dashboard/state.json collab/dashboard/VIEW.md collab/dashboard/public_preview/index.html
           if git diff --cached --quiet; then
             echo 'UNCHANGED: no commit needed'
             exit 0
