@@ -167,3 +167,10 @@ Claude Code 독립 리뷰로 간주하지 마. 운영 watcher/DB/Job/Telegram,
 - **새 문서와 이전 작업의 관계:** 기존 RAG 설계 r0002, CODE_ANALYSIS/MSC_AS_IS, Review Ledger Step 1~3 및 G0 readonly handoff를 대체하지 않는다. 기존 G0 문서는 하위 진단용으로 유지하고 새 문서가 전체 사용 경로의 상위 설계다.
 - **저장 범위:** PRIVATE `main`에 MD 3개, JSON schema 1개, synthetic 예제/검증 설명 2개, 최신 `CURRENT.md` 갱신·readback PASS. 원본 PNG·SVG·설계 ZIP은 이 GitHub 갱신에 포함하지 않았고 Mermaid를 원격 그림으로 사용한다.
 - **변경 금지 상태:** `G0_INHOUSE=NOT_VERIFIED`, `RAG_M1=BLOCKED`, `MCP_FEEDBACK=SPEC_ONLY`, `CLAUDE_INDEPENDENT_REVIEW=NOT_RUN`, `MIGRATION_NOT_CUTOVER / DROPBOX_LIVE`. 문서 게시로 사내 GPT/OpenCode 실행 또는 watcher 요청이 자동 발생하지 않는다.
+
+## 2026-11-11 — 통합 Workflow 시각화 HTML 가이드 신규 포인터
+
+- GitHub PRIVATE `main`: `collab/projects/L1-WORKSPACE-RAG-20261111-001/L1_E2E_INHOUSE_OFFSITE_WORKFLOW_VISUAL_GUIDE_r0001_20261111.html`.
+- **사용법:** GitHub HTML 소스 보기에서 `Raw`로 파일을 저장하여 브라우저에서 열면 데스크톱·모바일 밝은 톤 상세 구조도, 4가지 인터랙티브 사용자 사례, Knowledge Updater/Workflow/Kernel 책임, 팀/개인 지식 정본 구분, MCP 반출 승인 단계 및 G0~G3를 볼 수 있다.
+- **STATUS:** `HTML_POSTED / REMOTE_READBACK_PASS / BROWSER_RENDER_QA_PASS`. 실제 사내 GPT/OpenCode/MCP 자동 연결, 설치·배포 또는 RAG M1 검증의 PASS를 뜻하지 않는다.
+- 최신 실행·승인 상태는 `collab/projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md`의 마지막 섹션이 우선이다. 이전 r0001/r0002 설계/결과는 삭제·덮어쓰기하지 않는다.
