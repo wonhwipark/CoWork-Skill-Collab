@@ -1,5 +1,14 @@
 # COWORK-GITHUB-DASHBOARD-20261111-001 — CURRENT
 
+## 클릭 한 번으로 보기 — PRIVATE GitHub 렌더링 (2026-11-11 KST)
+- 사용자 요청: GitHub HTML을 다운받지 않고 링크 클릭만으로 진행 현황을 보고 싶음. GitHub PRIVATE HTML blob은 브라우저 실행 화면이 아니므로, 공개 Pages를 열지 않고 **GitHub Markdown native VIEW**로 제공.
+- **직접 보기:** `collab/dashboard/VIEW.md` — PRIVATE 로그인 권한을 가진 사람에게 GitHub 화면에서 즉시 렌더링됨. 기존 `index.html`과 `SUMMARY.md`는 보존.
+- 구현: `collab/dashboard/generate.py`에 `render_direct_view` 및 `VIEW.md` 출력 추가, `collab/dashboard/tests/test_direct_view.py` 2개 합성 회귀시험 추가, `.github/workflows/cowork-dashboard.yml`에서 `VIEW.md` 자동 commit 대상 등록. `collab/dashboard/README.md`에 바로 보기 진입점 추가.
+- 원격 자체 검증: GitHub Actions **#43036400263** `completed/success`; Checkout, Build/Test, PRIVATE Publish 각각 success; bot commit `85ec2330d42933e44a5b967711c6d4d2332d2c88`에서 VIEW.md 원격 생성. GitHub 원격 `VIEW.md` 재조회로 title, 요약, 5단계, REQUEST 미이관 표기 확인. 기존 16개 + 신규 2개로 **18개 테스트 수행 설계**, Actions 전체 test 단계 SUCCESS (개별 테스트 숫자는 로그 검증 시 확정).
+- **경계:** 새 VIEW는 GitHub가 렌더링하는 Markdown이며 원본 HTML을 사이트로 호스팅하는 기능은 아님. GitHub Pages 및 PUBLIC 공개 미실시; 외부 익명 접근 불가. Windows 감시기, Claude Code 호출, GitHub 리뷰 실제 E2E, 기존 Dropbox LIVE와 운영 SQLite/예약 작업 변경 없음. `CUTOVER=MIGRATION_NOT_CUTOVER`; 독립 리뷰 `NOT_RUN`.
+- 사용자 다음 동작: PRIVATE 로그인 상태에서 [대시보드 바로 보기](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/dashboard/VIEW.md) 클릭. 운영 LIVE 전환 승인은 별개.
+
+
 ## 2차 GitHub 리뷰 연결·항목별 피드백 및 Actions 검증 (2026-11-11 KST)
 
 - 사용자 실행 지시: GitHub Actions SHADOW 대시보드에 GitHub REQUEST → READY → REVIEW → RECEIPT → GPT 판정 연결, 항목별 피드백·다음 담당을 추가.
