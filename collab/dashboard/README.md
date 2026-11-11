@@ -7,7 +7,17 @@
 - **입력:** 같은 PRIVATE 저장소 `collab/projects/*/CURRENT.md`, `collab/requests/`, `collab/reviews/`, `collab/receipts/`
 - **출력:** `collab/dashboard/VIEW.md` (즉시 렌더링), `index.html`, `SUMMARY.md`, `state.json` (생성기 `generate.py`)
 - **업데이트:** `main`에 관련 입력/생성기 변경 시 push 이벤트, 또는 Actions 화면의 `Run workflow` 수동 실행
-- **영역:** GitHub PRIVATE만. 공개 Pages, PUBLIC `L1Work`, Windows 및 Dropbox LIVE에는 게시하지 않음
+- **이 Actions의 출력 영역:** GitHub PRIVATE만. L1Work 공개 샘플은 별도 게시된 정적 HTML이고, Windows 감시기·기존 LIVE 경로에는 쓰지 않음
+
+## 현재 협업 흐름 및 검증 상태 (2026-11-12)
+
+**[현재 협업 흐름 도식·상태표 바로 보기](VIEW.md)** — GitHub PRIVATE의 Markdown/Mermaid 렌더링을 이용하므로 HTML 다운로드 없이 확인할 수 있습니다.
+
+- **협업 관리 환경:** GPT(범위 정의·최종 판정) + GitHub PRIVATE(REQUEST/READY·결과·영수증) + GitHub Actions(상태 읽기·화면 갱신).
+- **업무 실행 환경:** Windows Python watcher(승인·신뢰·비용·중복 가드) + Claude Code(독립 리뷰). 호스트 설치와 독립 검토는 별도 증거 및 승인 게이트.
+- 화면은 **현재 기존 LIVE 경로**와 **향후 GitHub 목표 경로**를 구분하며, `CURRENT.md` 최신 섹션의 `WINDOWS_STAGE1_EXECUTION`, `INDEPENDENT_REVIEW`, `CUTOVER`, `GITHUB_PAGES_DEPLOY` 기록을 읽습니다. 오래된 PASS 구간을 최신으로 승격하지 않습니다.
+- 신규 `flow_view.py`가 반응형 7단계 HTML 흐름, Mermaid 도식, 운영 STATUS 표를 생성합니다. GitHub 관측 파일 수는 운영 리뷰 완료 수가 아닙니다.
+- **공개 [L1Work 샘플 HTML](https://wonhwipark.github.io/L1Work/cowork-dashboard/)**은 실제 진행 상태를 포함하지 않는 별도 페이지입니다. PRIVATE 현황을 PUBLIC에 동기화하지 않습니다.
 
 ## 클릭 한 번으로 보기 (PRIVATE)
 
@@ -15,14 +25,14 @@
 
 이 링크는 GitHub가 직접 렌더링하는 Markdown 대시보드입니다. PRIVATE 저장소 권한이 있는 로그인 사용자만 확인할 수 있습니다. 기존 HTML 파일의 코드 화면을 여는 방식과 다릅니다. GitHub Pages나 PUBLIC 게시 없이 GitHub Actions가 `VIEW.md`를 함께 자동 갱신합니다.
 
-## 별도 공개 후보 HTML (미배포)
+## 별도 공개 샘플 HTML (실제 현황과 분리)
 
 **[공개용 후보 HTML 소스 — PRIVATE에서만 접근](public_preview/index.html)** · [생성기와 보안 기준](public_preview/README.md) · [PUBLIC 배포 승인 게이트](public_preview/PUBLIC_RELEASE_GATE.md)
 
 - 공개용 HTML을 별도로 구현하고 PRIVATE Actions에서 생성·보안 시험합니다.
 - 이 후보는 **정적 예시 화면**으로 실제 Work, REQUEST, REVIEW, RECEIPT, GPT 판정, 링크, 수치, 운영 현황을 읽거나 포함하지 않습니다.
-- 브라우저 화면 확인은 다운로드한 `public_preview/index.html`을 열어 실시합니다. 현재 공개 URL은 **없습니다**.
-- **실제 PUBLIC 게시/Pages·외부 호스팅 활성화는 별도 명시적 승인 전 금지**입니다.
+- PRIVATE 원본 후보는 이 저장소에 남아 있습니다. 승인된 샘플 치환본만 L1Work PUBLIC Pages에 별도로 게시했습니다.
+- **실제 협업 상태·새 후보의 추가 PUBLIC 게시**는 별도 명시적 승인 전 금지입니다.
 
 ## 사용자 확인 방법
 
@@ -38,7 +48,7 @@
 - Action의 `contents: write`는 PRIVATE `main`의 위 세 출력 파일을 갱신하는 데 사용한다. `git push`는 비강제이며 경쟁 커밋이 있으면 실패 후 수동 재실행.
 - Dashboard 갱신은 reviewer REQUEST/READY를 만들지 않고, Claude 모델을 호출하지 않으며, 자동 배포를 승인하지 않는다.
 - 기존 Dropbox LIVE 및 Windows watcher/Bridge/예약 작업은 **별도 명시적 전환 승인 전 그대로** 유지한다.
-- GitHub Pages는 PRIVATE 저장소와 관계없이 외부 노출 위험이 있을 수 있어 **활성화하지 않는다**.
+- PRIVATE 저장소 Pages는 활성화하지 않습니다. L1Work PUBLIC Pages는 별도의 승인된 **합성 샘플**만 게시하며 PRIVATE 운영 현황은 공개하지 않습니다.
 
 ## 시험과 현재 한계
 
