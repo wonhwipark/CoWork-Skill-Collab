@@ -35,3 +35,7 @@ Work ID: `COWORK-GITHUB-DASHBOARD-20261111-001`
 `PUBLIC_SAMPLE_SOURCE=VERIFIED`, `PUBLIC_WORKFLOW_POSTED=PASS`, `ACTIONS_STATIC_BUILD=PASS`, `PAGES_SETUP=BLOCKED_DISABLED_OR_UNAVAILABLE`, `PUBLIC_URL=NOT_AVAILABLE`, `PUBLIC_HOST_E2E=NOT_RUN`, `INDEPENDENT_REVIEW=NOT_RUN`, `CUTOVER=MIGRATION_NOT_CUTOVER`.
 
 **다음 한 동작:** GitHub 저장소의 Settings → Pages에서 Source=GitHub Actions 설정. 가능하면 그 뒤 승인된 고정 샘플 배포 워크플로를 한 번만 재실행하고 실제 URL 검증. 새로운 PRIVATE 협업 데이터의 자동 공개는 계속 금지.
+
+## 6. 최종 재조회 보강 — 기존 PRIVATE 자동화 영향 없음
+- 이번 상태 문서·배포 게이트 갱신으로 트리거된 PRIVATE 대시보드 Actions [#43042614707](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43042614707), [#43042707103](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43042707103)은 모두 `completed/success`로 원격 확인. PRIVATE 대시보드 자동 갱신 기능에 대한 이번 변경의 직접적인 실패 증거는 없음.
+- 공개 Pages 별도 배포 워크플로 #43042181335는 `failure`이고 `PUBLIC_URL=NOT_AVAILABLE`을 유지. 두 Actions의 판정은 서로 독립.
