@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="description" content="L1 지식 설계: 사외 GPT, 사내 GPT, OpenCode, Knowledge Updater, Workflow/Kernel, Dev Knowledge, Workspace, RAG, MCP 피드백의 전체 흐름 및 역할 경계">
+<title>L1 지식 설계 · 한눈에 보는 사내·사외 통합 Workflow 구조</title>
+<style>
+:root{--ink:#17273b;--muted:#617185;--muted2:#7d8997;--stroke:#dbe3eb;--soft:#f5f8fb;--paper:#fff;--navy:#244869;--blue:#2866b0;--bluebg:#ebf4ff;--teal:#167a72;--tealbg:#e9f8f5;--purple:#7359a9;--purplebg:#f3effb;--amber:#996511;--amberbg:#fff5df;--rose:#aa4b50;--rosebg:#fff0f1;--shadow:0 12px 32px rgba(27,56,90,.07)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#f7f9fc;color:var(--ink);font:15px/1.7 "Malgun Gothic","Apple SD Gothic Neo","Noto Sans KR",system-ui,sans-serif;word-break:keep-all}button,a{font:inherit}a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}a:focus-visible,button:focus-visible{outline:3px solid #72b6f1;outline-offset:3px;border-radius:6px}button{cursor:pointer}h1,h2,h3,p{margin-top:0}h1{font-size:clamp(27px,3vw,42px);letter-spacing:-1.4px;line-height:1.25;margin-bottom:12px}h2{font-size:24px;letter-spacing:-.65px;line-height:1.4;margin-bottom:8px}h3{font-size:17px;line-height:1.5;letter-spacing:-.2px;margin-bottom:7px}.caption{color:var(--muted);font-size:13px}.eyebrow{text-transform:uppercase;letter-spacing:1.2px;font-weight:800;font-size:11px;color:#496b89}.lead{font-size:16px;color:#4b627a;max-width:870px}.wrap{max-width:1440px;margin:auto;padding:0 32px}.topbar{background:#fff;border-bottom:1px solid var(--stroke);position:sticky;top:0;z-index:20;box-shadow:0 3px 14px rgba(20,43,75,.025)}.topbar-inner{min-height:63px;display:flex;align-items:center;gap:22px;flex-wrap:wrap}.brand{font-weight:900;letter-spacing:-.5px;white-space:nowrap;color:#244869}.brand-mark{display:inline-grid;place-items:center;width:29px;height:29px;border-radius:9px;background:#e8f0fb;color:var(--blue);font-weight:900;margin-right:8px}.nav{display:flex;align-items:center;gap:18px;overflow:auto;white-space:nowrap;flex:1}.nav a{font-size:12px;font-weight:700;color:#58728a}.nav a:hover{color:var(--blue)}.version{margin-left:auto;background:#f0f4f8;border:1px solid var(--stroke);border-radius:20px;padding:2px 10px;font-size:11px;color:#617185;white-space:nowrap}.hero{background:radial-gradient(ellipse at 80% 5%,#e9f4ff 0%,transparent 43%),linear-gradient(180deg,#fff 30%,#f7f9fc 100%);padding:48px 0 35px}.hero-intro{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center}.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}.chip{display:inline-flex;gap:6px;align-items:center;padding:4px 10px;border-radius:18px;font-size:12px;font-weight:700;background:white;border:1px solid #d6e1eb;color:#42637e}.chip i{display:inline-block;width:7px;height:7px;border-radius:50%;background:#6c93b2}.chip.working i{background:#2c947d}.chip.unknown i{background:#c38a2e}.hero-side{border:1px solid var(--stroke);border-radius:18px;background:#fff;padding:18px 23px;min-width:235px;box-shadow:var(--shadow)}.hero-side .big{font-size:24px;line-height:1.2;font-weight:900;color:#234e77;letter-spacing:-.5px}.hero-side .small{color:var(--muted);font-size:12px}.hero-side hr{border:0;border-top:1px solid var(--stroke);margin:11px 0}.legend{display:flex;flex-wrap:wrap;gap:15px;margin-top:19px;font-size:12px;color:#62768c}.legend span{display:flex;align-items:center;gap:6px}.dot{width:8px;height:8px;border-radius:50%;display:inline-block}.dot.verified{background:#2e9383}.dot.proposal{background:#d69a38}.dot.blocked{background:#c16b73}.separator{height:1px;background:var(--stroke);margin:18px 0}.section{padding:32px 0}.section-head{margin-bottom:20px}.section-head p{color:var(--muted);margin:0;max-width:1020px}.panel{background:#fff;border:1px solid var(--stroke);border-radius:18px;box-shadow:var(--shadow);padding:23px}.status-label{display:inline-flex;align-items:center;gap:5px;border-radius:8px;padding:2px 7px;font-size:10px;font-weight:800;letter-spacing:.15px;border:1px solid #d5e2ed;color:#476883;background:#f6f9fd;vertical-align:middle}.status-label.design{background:var(--amberbg);border-color:#eed9ad;color:#9c721e}.status-label.tested{background:var(--tealbg);border-color:#c7e9dd;color:#117569}.status-label.blocked{background:var(--rosebg);border-color:#f2d3d3;color:#a94f52}.status-label.neutral{background:#f3f5f7;border-color:#dce2e8;color:#67788a}.eyelabel{font-size:11px;font-weight:800;letter-spacing:.9px;color:#6a7e94;text-transform:uppercase}.flow-shell{display:grid;grid-template-columns:300px 88px 1fr;gap:14px;align-items:stretch}.swimlane{border-radius:16px;border:1px solid var(--stroke);padding:15px;background:#fff;min-width:0}.swimlane.external{background:#f0f6ff;border-color:#d8e8fb}.swimlane.internal{background:#f3faf8;border-color:#d9ede9}.lane-head{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-bottom:12px}.lane-head strong{font-size:15px}.lane-stacks{display:grid;gap:11px}.flow-node{border:1px solid #dce6ef;background:#fff;border-radius:12px;padding:13px 15px;min-width:0;box-shadow:0 3px 9px rgba(26,63,91,.025)}.flow-node.blue{border-left:4px solid #5e95cf}.flow-node.teal{border-left:4px solid #4ba394}.flow-node.purple{border-left:4px solid #9581c8}.flow-node.amber{border-left:4px solid #dfad52}.flow-node h3{font-size:14px;margin:0 0 4px}.flow-node p{font-size:12px;color:#5b7185;margin:0;line-height:1.6}.node-tag{font-size:10px;color:#66819a;text-transform:uppercase;letter-spacing:.4px;font-weight:800;margin:0 0 5px}.flow-arrow{display:flex;align-items:center;justify-content:center;color:#3974a4;font-size:23px;flex-shrink:0}.flow-connector{display:flex;flex-direction:column;gap:12px;justify-content:center;align-items:center;position:relative;text-align:center;padding:0 6px}.boundary{background:#dbe5ee;width:1px;height:100%;position:absolute;z-index:0}.transfer{z-index:1;background:#fff;border:1px solid #d4dfea;border-radius:12px;padding:9px 5px;font-size:10px;font-weight:700;width:85px;color:#44617c;line-height:1.6;box-shadow:0 3px 12px rgba(38,61,90,.06)}.transfer .arrow{font-size:18px;display:block;color:#3f7db3}.transfer.reverse .arrow{transform:scaleX(-1);color:#9e752b}.inside-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.inside-grid>.wide{grid-column:1/-1}.inside-grid .inter{display:flex;align-items:center;justify-content:center;font-size:18px;color:#6c9c97;margin:-8px 0}.inside-grid .two-output{display:grid;grid-template-columns:1fr 1fr;gap:11px}.storage-card{background:#fff;border-radius:12px;border:1px solid #cee4de;padding:13px}.storage-card strong{font-size:14px;display:block}.storage-card small{display:block;color:#5d7778;line-height:1.6;margin-top:4px}.flow-note{font-size:12px;margin-top:16px;background:#f6f8fa;padding:11px 14px;border-radius:10px;color:#536a80;border:1px solid #e2e8ee}.outbound{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:11px;align-items:center}.outbound .flow-node{height:100%}.pathway{display:flex;align-items:center;justify-content:center;gap:12px;margin:13px 0 6px;font-size:12px;font-weight:750;color:#496c83}.pathway:before,.pathway:after{content:"";flex:1;border-top:1px dashed #aac8d5}.table-wrap{overflow-x:auto;border:1px solid var(--stroke);border-radius:14px;background:white}.data-table{border-collapse:collapse;width:100%;min-width:680px;font-size:13px}.data-table thead{background:#f5f8fb}.data-table th{font-size:12px;text-align:left;color:#51677d;font-weight:900}.data-table th,.data-table td{border-bottom:1px solid #e5ebf0;padding:13px 14px;vertical-align:top}.data-table tr:last-child td{border-bottom:0}.data-table tbody tr:hover{background:#fafcfe}.data-table td:first-child{font-weight:750;color:#24455f}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}.callout{padding:15px 17px;border-radius:13px;border:1px solid #dce7f0;background:#f8fbfe;font-size:13px;color:#50677b}.callout.warn{background:#fffaf0;border-color:#f0e2c1}.callout strong{color:#2a4a65}.timeline{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;counter-reset:step}.step-card{border-radius:13px;border:1px solid #dce5ee;padding:15px;background:white;position:relative;min-height:142px}.step-card:after{content:'→';position:absolute;right:-12px;top:45%;color:#89aec7;z-index:2;font-size:19px;font-weight:bold}.step-card:last-child:after{display:none}.step-card .num{font-size:11px;letter-spacing:.4px;color:#6b89a0;font-weight:900}.step-card strong{display:block;font-size:14px;margin:6px 0}.step-card p{font-size:12px;color:#5d7386;margin:0}.usecase{border:1px solid var(--stroke);border-radius:16px;overflow:hidden;background:white}.case-tabbar{display:grid;grid-template-columns:repeat(4,1fr);gap:0;background:#f4f7fa;border-bottom:1px solid var(--stroke)}.case-tab{border:0;background:transparent;padding:13px 12px;color:#60758a;font-size:13px;font-weight:800;border-right:1px solid #e3e9ef}.case-tab:last-child{border-right:0}.case-tab[aria-selected="true"]{color:#225f91;background:white;border-bottom:3px solid #3e8ec7;padding-bottom:10px}.case-content{padding:20px}.case-view{display:none}.case-view.active{display:block}.case-title{font-size:17px;font-weight:900;margin-bottom:4px}.case-timeline{margin-top:14px;display:flex;flex-wrap:wrap;align-items:stretch;gap:8px}.case-hop{background:#f6f9fc;border:1px solid #dde7ef;border-radius:11px;padding:10px 12px;flex:1 1 155px;min-width:150px}.case-hop strong{font-size:12px;display:block;color:#244d6b}.case-hop span{font-size:11px;color:#6a7c8d}.case-hop:after{content:'→';margin-left:8px;color:#7da5bd}.case-hop:last-child:after{content:''}.case-result{margin-top:15px;padding:12px;border-radius:10px;background:#eff9f6;color:#356c65;font-size:13px}.mini-d{border-radius:16px;border:1px solid var(--stroke);background:white;padding:16px;display:flex;flex-direction:column;gap:8px}.mini-d h3{font-size:15px;margin-bottom:2px}.mini-d p{font-size:12px;color:#6b7a8c;margin:0}.mini-d small{color:#536c81}.mini-arrow{display:flex;justify-content:center;font-size:18px;color:#7ea2b6}.gate-row{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;align-items:stretch}.gate{border:1px solid #dce6ed;border-radius:13px;padding:16px;background:white}.gate .gate-num{display:block;color:#63849d;font-size:11px;letter-spacing:.5px;font-weight:900}.gate strong{display:block;font-size:14px}.gate p{font-size:12px;color:#65798b;margin:8px 0 0}.gate:nth-child(4){border-color:#efdfbf;background:#fffaf0}.mcp-rail{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;align-items:stretch}.mcp-node{padding:14px 10px;border-radius:12px;border:1px solid #d7e2ec;background:white;min-height:140px;position:relative}.mcp-node strong{display:block;font-size:12px}.mcp-node small{display:block;color:#6b7c8b;font-size:11px;line-height:1.55;margin-top:7px}.mcp-node:after{content:'→';position:absolute;top:49px;right:-11px;z-index:2;font-weight:900;color:#6090b2}.mcp-node:last-child:after{content:''}.mcp-node.reject{border:1.5px dashed #d6a4aa;background:#fff7f7}.mono{font-family:ui-monospace,"Cascadia Code",Consolas,monospace;font-size:.88em;overflow-wrap:anywhere}.pill{display:inline-block;border-radius:6px;background:#eff3f7;padding:1px 6px;font-size:11px;color:#4c657d;font-weight:700}.phase-item{display:flex;gap:10px;align-items:flex-start;margin:10px 0}.phase-num{width:31px;height:31px;display:grid;place-items:center;background:#e8eff6;border-radius:9px;font-size:12px;font-weight:900;color:#285a7b;flex:0 0 auto}.phase-item strong{font-size:13px}.phase-item p{font-size:12px;color:#667e8e;margin:0}.footer{padding:35px 0 48px;border-top:1px solid #dce4ee;background:#f5f8fb;color:#677c90;font-size:12px}.footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}.notes{font-size:12px;color:#607387;margin:12px 0 0}.kbd{font-family:ui-monospace,Consolas,monospace;font-size:11px;border-radius:5px;background:#eef3f8;padding:2px 6px}.print-only{display:none}
+@media(max-width:1150px){.flow-shell{grid-template-columns:250px 75px 1fr}.mcp-rail{grid-template-columns:repeat(4,minmax(0,1fr))}.mcp-node:nth-child(4):after{display:none}.hero-intro{grid-template-columns:1fr}.hero-side{width:min(100%,420px)}.timeline{grid-template-columns:repeat(3,1fr)}.step-card:nth-child(3):after{display:none}}
+@media(max-width:800px){.wrap{padding:0 17px}.topbar-inner{gap:10px;min-height:55px}.brand{font-size:13px}.nav{order:3;flex-basis:100%;padding-bottom:9px;gap:15px}.version{margin-left:auto}.hero{padding-top:29px}.section{padding:23px 0}.panel{padding:15px}.flow-shell{grid-template-columns:1fr;gap:9px}.flow-connector{min-height:72px;flex-direction:row;gap:8px}.boundary{height:1px;width:100%}.transfer{width:46%;padding:7px}.transfer .arrow{display:inline;margin-left:5px}.inside-grid{grid-template-columns:1fr 1fr}.grid3,.grid2{grid-template-columns:1fr}.timeline{grid-template-columns:1fr 1fr}.gate-row{grid-template-columns:1fr 1fr}.mcp-rail{grid-template-columns:repeat(2,1fr)}.mcp-node:after{display:none}.case-tabbar{grid-template-columns:1fr 1fr}.case-tab:nth-child(2){border-right:0}.case-tab:nth-child(-n+2){border-bottom:1px solid var(--stroke)}}
+@media(max-width:480px){.inside-grid{grid-template-columns:1fr}.inside-grid>.wide{grid-column:auto}.inside-grid .two-output{grid-template-columns:1fr}.outbound{grid-template-columns:1fr}.timeline{grid-template-columns:1fr}.step-card:after{display:none}.gate-row{grid-template-columns:1fr}.mcp-rail{grid-template-columns:1fr}.flow-note{font-size:11px}}
+@media print{html{scroll-behavior:auto}.topbar,.case-tabbar{display:none}.hero{padding:14px 0;background:white}.hero-side{display:none}.wrap{max-width:100%;padding:0 12px}.section{break-inside:avoid;padding:17px 0}.panel{box-shadow:none}.flow-shell{grid-template-columns:270px 90px 1fr}.case-view{display:block!important;border-bottom:1px solid #ddd;padding:12px 0}.case-view:last-child{border:0}.footer{display:none}.print-only{display:block}body{font-size:12px}.flow-node{padding:9px}.grid3{gap:9px}.step-card{min-height:100px}a{color:inherit}}
+
+/* r0002 — above-the-fold diagram, independent of JS and external assets */
+.overview-section{padding-top:24px}.section[id]{scroll-margin-top:112px}.overview-section .section-head{margin-bottom:15px}
+.map-overview{padding:16px 16px 14px}
+.map-topline{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:12px}
+.map-keyfacts{display:flex;gap:15px;flex-wrap:wrap;font-size:12px;font-weight:800;color:#496376}
+.map-keyfacts span{display:inline-flex;align-items:center;gap:7px}
+.map-color{width:13px;height:13px;border:1px solid #b4c8d8;border-radius:4px;display:inline-block}
+.map-color.ext{background:#e6f0fe}.map-color.internal{background:#e1f5eb}.map-color.risk{background:#fff3e1;border-color:#dfbd8f}
+.map-status-note{font-size:12px;color:#6c7e90}
+.map-svg-wrap{width:100%;overflow:hidden;background:linear-gradient(180deg,#fff,#fafcfe);border-radius:14px;border:1px solid #e1e8ef;padding:4px}
+.map-svg{display:block;width:100%;height:auto;font-family:"Malgun Gothic","Apple SD Gothic Neo","Noto Sans KR",sans-serif}
+.map-svg .line-good{stroke:#4d98a0;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.map-svg .line-soft{stroke:#6d99c4;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.map-svg .line-warn{stroke:#c58c59;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:7 5}
+.map-svg .svg-node{filter:drop-shadow(0 2px 2px rgba(40,66,95,.055))}
+.map-bottomline{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:12px}
+.map-catch{background:#f6f9fc;border-radius:10px;padding:9px 12px;border:1px solid #e1eaf0;font-size:12px;color:#5d7488}
+.map-catch strong{font-weight:900;color:#2e607b;margin-right:6px}.map-catch b{color:#304d63}
+.map-shortcuts{display:flex;flex-wrap:wrap;gap:8px;margin-top:13px}
+.map-shortcuts a{font-size:12px;font-weight:750;border:1px solid #d1e1ef;border-radius:18px;background:#fff;padding:5px 12px;color:#37688d}
+.map-mobile{display:none}.map-m-zone,.map-m-card,.map-m-link,.map-m-return{font-size:13px}
+@media(max-width:1000px){.map-svg-wrap{overflow-x:auto}.map-svg{width:1080px;max-width:none}.map-status-note{display:none}}
+@media(max-width:740px){.map-svg-wrap{display:none}.map-mobile{display:block;background:#f8fbfc;border:1px solid #e2eaf1;border-radius:14px;padding:12px}.map-m-zone{font-weight:850;text-align:center;letter-spacing:.1px;padding:6px 12px;border-radius:9px;margin:4px 0 10px}.map-m-external{background:#e8f2fe;color:#2c638e}.map-m-internal{background:#e7f7f2;color:#217569;margin-top:8px}.map-m-card{background:#fff;border:1px solid #bfd9d4;border-left:4px solid #4d9e90;border-radius:12px;padding:10px 12px;box-shadow:0 2px 8px #182e4008}.map-m-card.is-out{border-color:#c5d9ee;border-left-color:#578dc1}.map-m-card.is-warn{border-color:#e7cc9f;border-left-color:#c39141;background:#fffaf0}.map-m-card.is-block{border-color:#eec7ca;border-left-color:#c06b71;background:#fff7f7}.map-m-card b{font-size:14px;display:block;line-height:1.45}.map-m-card small{font-size:11.5px;line-height:1.55;color:#597083;display:block;margin-top:3px}.map-m-number{display:inline-grid;place-items:center;border-radius:50%;width:20px;height:20px;background:#edf3f9;color:#396b8a;margin-right:3px;font-size:11px}.map-m-link{text-align:center;color:#367f77;font-weight:850;padding:5px 0;font-size:12px}.map-m-return{font-weight:800;padding:7px;text-align:center;color:#a17133}.map-m-duo{display:grid;grid-template-columns:1fr 1fr;gap:8px}.map-m-duo .map-m-card{padding:9px;min-width:0}.map-m-duo .map-m-card b{font-size:12px}.map-m-duo .map-m-card small{font-size:11px}.map-bottomline{grid-template-columns:1fr}.map-overview{padding:12px}.map-status-note{display:block}.map-shortcuts a{padding:5px 9px;font-size:11.5px}}
+@media print{.overview-section{break-inside:avoid}.map-mobile{display:none!important}.map-svg-wrap{display:block!important;overflow:visible}.map-svg{width:100%!important}}
+
+</style>
+</head>
+<body>
+<header class="topbar"><div class="wrap topbar-inner">
+ <div class="brand"><span class="brand-mark">L1</span>지식 설계 · 통합 Workflow</div>
+ <nav class="nav" aria-label="문서 목차"><a href="#overview">한눈에 보기</a><a href="#big-picture">상세 구조</a><a href="#roles">역할과 책임</a><a href="#scenarios">사용 시나리오</a><a href="#knowledge">지식 저장·RAG</a><a href="#mcp">MCP 피드백</a><a href="#gates">검증·진행상태</a></nav>
+ <span class="version">시각화 r0002 · 2026.11.11</span>
+</div></header>
+<section class="hero"><div class="wrap">
+ <div class="eyebrow">End-to-end architecture / External &amp; In-house</div>
+ <div class="hero-intro"><div><h1>L1 지식 설계의 전체 협업 구조</h1><p class="lead">사외 GPT가 <b>설계 기준</b>을 정하고, 사내 GPT가 실제 개발 환경에 맞게 <b>오케스트레이션</b>하며, OpenCode와 기존 스킬이 <b>분석·시험</b>합니다. 결과는 그룹과 개인 지식으로 분리해 누적하고, 승인된 비민감 변경 정보만 MCP로 외부에 피드백하는 설계입니다.</p>
+ <div class="chips"><span class="chip"><i></i>사외 GPT: 아키텍처 총괄</span><span class="chip"><i></i>사내 GPT: 현장 설계</span><span class="chip"><i></i>OpenCode: 소스 분석·실행</span><span class="chip"><i></i>Knowledge Updater: 지식 라우팅</span></div>
+ </div><aside class="hero-side"><div class="small">현재 종합 상태</div><div class="big">설계 완료 / 연동 미검증</div><hr><div class="small">기존 RAG M1</div><strong style="color:#a05b41;font-size:15px">BLOCKED</strong><div class="small" style="margin-top:7px">MCP 피드백</div><strong style="font-size:14px;color:#4d667c">SPEC_ONLY · 송신 비활성</strong></aside></div>
+ <div class="legend"><span><i class="dot verified"></i>기존 코드·일부 격리시험으로 확인</span><span><i class="dot proposal"></i>신규 설계 / 실환경 검증 필요</span><span><i class="dot blocked"></i>보안·운영 게이트 미충족</span></div>
+ </div></section>
+<main>
+<section class="section overview-section" id="overview"><div class="wrap">
+<div class="section-head"><div class="eyebrow">00 · ONE-PAGE MAP</div><h2>전체 구조를 그림 하나로 이해하기</h2><p><strong>윗줄은 설계·분석의 정방향 흐름</strong>, <strong>오른쪽 아래는 그룹·개인 지식의 분리</strong>, <strong>아랫줄은 승인된 메타데이터만 사외로 돌아오는 역방향 흐름</strong>입니다. 회사 코드·MSC 원문은 사내 경계를 넘지 않습니다.</p></div>
+<div class="map-overview panel">
+<div class="map-topline"><div class="map-keyfacts"><span><i class="map-color ext"></i>사외 설계</span><span><i class="map-color internal"></i>사내 실행·정본</span><span><i class="map-color risk"></i>설계/승인 전·미검증</span></div><span class="map-status-note">실제 연결이 확인되지 않은 곳은 도식상의 설계 경로입니다.</span></div>
+<div class="map-svg-wrap"><svg class="map-svg" viewBox="0 0 1300 717" role="img" aria-labelledby="map-svg-title map-svg-description" xmlns="http://www.w3.org/2000/svg">
+<title id="map-svg-title">사외 설계에서 사내 현장 분석, 지식 저장, 승인된 MCP 피드백까지 이어지는 전체 지도</title>
+<desc id="map-svg-description">왼쪽 푸른 사외 영역에는 GPT 설계와 설계 피드백이 있고 오른쪽 초록 사내 영역에는 사내 GPT, Knowledge Updater, OpenCode, Workflow/Kernel, 팀 지식과 개인 Workspace가 있다. 위쪽은 설계 인계와 실행 흐름이고 아래쪽은 지식 분기와 검증되지 않은 RAG, 그리고 반출 승인 전에는 전송되지 않는 MCP 피드백의 역방향 흐름이다.</desc>
+<defs><marker id="arrow-good" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L9 4.5 L0 9 Z" fill="#4d98a0"/></marker><marker id="arrow-soft" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L9 4.5 L0 9 Z" fill="#6d99c4"/></marker><marker id="arrow-warn" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L9 4.5 L0 9 Z" fill="#c58c59"/></marker></defs>
+<rect x="4" y="8" width="252" height="704" rx="20" fill="#f0f6ff" stroke="#c9def3"/>
+<rect x="276" y="8" width="1020" height="704" rx="20" fill="#f0faf7" stroke="#c9e8e1"/>
+<line x1="266" y1="22" x2="266" y2="698" stroke="#adbecf" stroke-width="1.5" stroke-dasharray="7 7"/>
+<text x="23" y="40" font-size="15" font-weight="800" fill="#32638e">사외 · 아키텍처</text>
+<text x="295" y="40" font-size="15" font-weight="800" fill="#207668">사내 · 개발 환경 · 내부 지식 정본</text>
+<rect x="24" y="55" width="214" height="27" rx="9" fill="#deebfa"/>
+<text x="131" y="73" text-anchor="middle" font-size="11.5" font-weight="800" fill="#456d99">설계 / 표준계약 / 구조 리뷰</text>
+<rect x="294" y="55" width="975" height="27" rx="9" fill="#dbf1eb"/>
+<text x="782" y="73" text-anchor="middle" font-size="11.5" font-weight="800" fill="#387d70">사내 코드는 이 영역 안에서만 분석 · 저장 · 검증</text>
+<path d="M 233 184 H 311" fill="none" class="line-soft" marker-end="url(#arrow-soft)" />
+<path d="M 509 184 H 548" fill="none" class="line-good" marker-end="url(#arrow-good)" />
+<path d="M 762 184 H 801" fill="none" class="line-good" marker-end="url(#arrow-good)" />
+<path d="M 1023 184 H 1062" fill="none" class="line-good" marker-end="url(#arrow-good)" />
+<rect x="246" y="118" width="60" height="40" rx="8" fill="#fff" stroke="#d7e5ed"/>
+<text x="276" y="133" text-anchor="middle" font-size="10.2" font-weight="800" fill="#53718d">MD 전달</text>
+<text x="276" y="147" text-anchor="middle" font-size="9.8" fill="#647b90">수동·통제</text>
+<path d="M 1170 243 V 302" fill="none" class="line-good" marker-end="url(#arrow-good)" />
+<text x="1186" y="268" font-size="11.5" font-weight="700" fill="#50857b">근거 등록 후</text>
+<path d="M 1069 387 V 416 H 977 V 452" fill="none" class="line-good" marker-end="url(#arrow-good)" />
+<path d="M 1069 416 H 1170 V 452" fill="none" class="line-good" marker-end="url(#arrow-good)" />
+<path d="M 976 560 V 583 H 1069 V 599" fill="none" class="line-soft" marker-end="url(#arrow-soft)" />
+<path d="M 1170 560 V 583 H 1069" fill="none" class="line-soft" marker-end="url(#arrow-soft)" />
+<path d="M 886 345 H 705 V 445" fill="none" class="line-warn" marker-end="url(#arrow-warn)" />
+<path d="M 710 546 V 638 H 554" fill="none" class="line-warn" marker-end="url(#arrow-warn)" />
+<path d="M 320 640 H 237" fill="none" class="line-warn" marker-end="url(#arrow-warn)" />
+<rect x="243" y="580" width="68" height="31" rx="8" fill="#fff" stroke="#ddc9aa"/>
+<text x="277" y="592" text-anchor="middle" font-size="10.5" font-weight="800" fill="#9b733e">승인된 필드</text>
+<text x="277" y="605" text-anchor="middle" font-size="10.1" fill="#97785d">만 경계 통과</text>
+<text x="740" y="374" font-size="10.8" font-weight="700" fill="#90734a">설계 변경이 있을 때</text>
+<text x="1055" y="695" font-size="11" fill="#a65d62" text-anchor="middle">실 Provider 본문 입력·권한 검증 완료 전 BLOCKED</text>
+<g class="svg-node node-external" aria-label="사외 GPT: 전체 구조·RAG 설계 검증 기준과 공통 계약">
+<rect x="26" y="122" width="207" height="122" rx="15" fill="#eff5ff" stroke="#90b5db" stroke-width="1.6"/>
+<circle cx="48" cy="146" r="14" fill="#2363a6"/>
+<text x="48" y="151" font-size="13" font-weight="800" text-anchor="middle" fill="#fff">1</text>
+<text x="70" y="150" font-size="16" font-weight="800" fill="#1a3146">사외 GPT</text>
+<text x="44" y="178" font-size="12.8" fill="#4c6478">전체 구조·RAG 설계</text>
+<text x="44" y="198" font-size="12.8" fill="#4c6478">검증 기준과 공통 계약</text>
+<text x="44" y="233" font-size="11" font-weight="700" fill="#2363a6">현행: 설계 문서 게시</text>
+</g>
+<g class="svg-node node-gpt" aria-label="사내 GPT: 설계 MD 해석·현장화 작업 지시/판정 MD">
+<rect x="315" y="122" width="194" height="122" rx="15" fill="#ffffff" stroke="#aac8ed" stroke-width="1.6"/>
+<circle cx="337" cy="146" r="14" fill="#316aac"/>
+<text x="337" y="151" font-size="13" font-weight="800" text-anchor="middle" fill="#fff">2</text>
+<text x="359" y="150" font-size="16" font-weight="800" fill="#1a3146">사내 GPT</text>
+<text x="333" y="178" font-size="12.8" fill="#4c6478">설계 MD 해석·현장화</text>
+<text x="333" y="198" font-size="12.8" fill="#4c6478">작업 지시/판정 MD</text>
+<text x="333" y="233" font-size="11" font-weight="700" fill="#316aac">텍스트 기반 · 수동 인계</text>
+</g>
+<g class="svg-node node-updater" aria-label="Knowledge Updater: 자연어 질문 → 블록 식별 그룹/개인 지식 분류">
+<rect x="550" y="122" width="212" height="122" rx="15" fill="#fffdf7" stroke="#edcf97" stroke-width="1.6"/>
+<circle cx="572" cy="146" r="14" fill="#946318"/>
+<text x="572" y="151" font-size="13" font-weight="800" text-anchor="middle" fill="#fff">3</text>
+<text x="594" y="150" font-size="16" font-weight="800" fill="#1a3146">Knowledge Updater</text>
+<text x="568" y="178" font-size="12.8" fill="#4c6478">자연어 질문 → 블록 식별</text>
+<text x="568" y="198" font-size="12.8" fill="#4c6478">그룹/개인 지식 분류</text>
+<text x="568" y="233" font-size="11" font-weight="700" fill="#946318">기존 구현: 실측 필요</text>
+</g>
+<g class="svg-node node-tool" aria-label="OpenCode + 스킬: 코드·Git/P4·이슈 분석 CODE_FACTS·MSC·시험">
+<rect x="804" y="122" width="219" height="122" rx="15" fill="#ffffff" stroke="#96cec3" stroke-width="1.6"/>
+<circle cx="826" cy="146" r="14" fill="#168071"/>
+<text x="826" y="151" font-size="13" font-weight="800" text-anchor="middle" fill="#fff">4</text>
+<text x="848" y="150" font-size="16" font-weight="800" fill="#1a3146">OpenCode + 스킬</text>
+<text x="822" y="178" font-size="12.8" fill="#4c6478">코드·Git/P4·이슈 분석</text>
+<text x="822" y="198" font-size="12.8" fill="#4c6478">CODE_FACTS·MSC·시험</text>
+<text x="822" y="233" font-size="11" font-weight="700" fill="#168071">현장 연결: G0 미검증</text>
+</g>
+<g class="svg-node node-kernel" aria-label="Workflow / Kernel: Work ID·Evidence·이력 SourceSnapshot·검증">
+<rect x="1065" y="122" width="211" height="122" rx="15" fill="#eef8f5" stroke="#82bcaf" stroke-width="1.6"/>
+<circle cx="1087" cy="146" r="14" fill="#167469"/>
+<text x="1087" y="151" font-size="13" font-weight="800" text-anchor="middle" fill="#fff">5</text>
+<text x="1109" y="150" font-size="16" font-weight="800" fill="#1a3146">Workflow / Kernel</text>
+<text x="1083" y="178" font-size="12.8" fill="#4c6478">Work ID·Evidence·이력</text>
+<text x="1083" y="198" font-size="12.8" fill="#4c6478">SourceSnapshot·검증</text>
+<text x="1083" y="233" font-size="11" font-weight="700" fill="#167469">Kernel 일부 격리시험</text>
+</g>
+<g class="svg-node node-approval" aria-label="검증 · 중복 비교 · 승인: 근거 확인 후 그룹/개인 정본 반영">
+<rect x="887" y="306" width="374" height="82" rx="15" fill="#fff8e9" stroke="#e9c67f" stroke-width="1.6"/>
+<circle cx="909" cy="330" r="14" fill="#98651e"/>
+<text x="909" y="335" font-size="13" font-weight="800" text-anchor="middle" fill="#fff">6</text>
+<text x="931" y="334" font-size="16" font-weight="800" fill="#1a3146">검증 · 중복 비교 · 승인</text>
+<text x="905" y="357" font-size="12" fill="#4c6478">근거 확인 후 그룹/개인 정본 반영</text>
+<text x="905" y="377" font-size="11" font-weight="700" fill="#98651e">승인 전 덮어쓰기 금지</text>
+</g>
+<g class="svg-node node-team" aria-label="그룹 지식: Dev Knowledge · HLD">
+<rect x="887" y="454" width="178" height="107" rx="15" fill="#ffffff" stroke="#88bcae" stroke-width="1.6"/>
+<circle cx="909" cy="478" r="14" fill="#167469"/>
+<text x="909" y="483" font-size="13" font-weight="800" text-anchor="middle" fill="#fff">7A</text>
+<text x="931" y="482" font-size="16" font-weight="800" fill="#1a3146">그룹 지식</text>
+<text x="905" y="510" font-size="12.8" fill="#4c6478">Dev Knowledge · HLD</text>
+<text x="905" y="550" font-size="11" font-weight="700" fill="#167469">공통 정본 · 승인 후</text>
+</g>
+<g class="svg-node node-personal" aria-label="개인 지식: Workspace · AS-IS MSC">
+<rect x="1082" y="454" width="179" height="107" rx="15" fill="#ffffff" stroke="#88bcae" stroke-width="1.6"/>
+<circle cx="1104" cy="478" r="14" fill="#167469"/>
+<text x="1104" y="483" font-size="13" font-weight="800" text-anchor="middle" fill="#fff">7B</text>
+<text x="1126" y="482" font-size="16" font-weight="800" fill="#1a3146">개인 지식</text>
+<text x="1100" y="510" font-size="12.8" fill="#4c6478">Workspace · AS-IS MSC</text>
+<text x="1100" y="550" font-size="11" font-weight="700" fill="#167469">분석·리뷰·스터디</text>
+</g>
+<g class="svg-node node-rag" aria-label="RAG → 실제 본문 입력: 제품·권한·revision·digest 검증">
+<rect x="887" y="600" width="374" height="75" rx="15" fill="#fff7f8" stroke="#e8b5bc" stroke-width="1.6"/>
+<circle cx="909" cy="624" r="14" fill="#a6444e"/>
+<text x="909" y="629" font-size="13" font-weight="800" text-anchor="middle" fill="#fff">8</text>
+<text x="931" y="628" font-size="16" font-weight="800" fill="#1a3146">RAG → 실제 본문 입력</text>
+<text x="905" y="651" font-size="12" fill="#4c6478">제품·권한·revision·digest 검증</text>
+<text x="905" y="664" font-size="11" font-weight="700" fill="#a6444e">M1 BLOCKED</text>
+</g>
+<g class="svg-node node-feedback" aria-label="비민감 피드백 후보: 변경 이유·시험 상태 코드만">
+<rect x="596" y="448" width="229" height="98" rx="15" fill="#fff9ef" stroke="#dbba7b" stroke-width="1.6"/>
+<circle cx="618" cy="472" r="14" fill="#91601b"/>
+<text x="618" y="477" font-size="13" font-weight="800" text-anchor="middle" fill="#fff">9</text>
+<text x="640" y="476" font-size="16" font-weight="800" fill="#1a3146">비민감 피드백 후보</text>
+<text x="614" y="499" font-size="12" fill="#4c6478">변경 이유·시험 상태 코드만</text>
+<text x="614" y="535" font-size="11" font-weight="700" fill="#91601b">승인 전 전송 0</text>
+</g>
+<g class="svg-node node-mcp" aria-label="MCP 피드백 (제안): 스키마·승인·전송·영수증">
+<rect x="320" y="598" width="234" height="84" rx="15" fill="#fff0ef" stroke="#e2b1b1" stroke-width="1.6"/>
+<circle cx="342" cy="622" r="14" fill="#ad5657"/>
+<text x="342" y="627" font-size="13" font-weight="800" text-anchor="middle" fill="#fff">10</text>
+<text x="364" y="626" font-size="16" font-weight="800" fill="#1a3146">MCP 피드백 (제안)</text>
+<text x="338" y="649" font-size="12" fill="#4c6478">스키마·승인·전송·영수증</text>
+<text x="338" y="671" font-size="11" font-weight="700" fill="#ad5657">SPEC_ONLY · NO_EXPORT</text>
+</g>
+<g class="svg-node node-external" aria-label="사외 GPT 델타 판정: 승인된 요약만 수신">
+<rect x="26" y="598" width="211" height="84" rx="15" fill="#eff5ff" stroke="#90b5db" stroke-width="1.6"/>
+<circle cx="48" cy="622" r="14" fill="#2363a6"/>
+<text x="48" y="627" font-size="13" font-weight="800" text-anchor="middle" fill="#fff">11</text>
+<text x="70" y="626" font-size="16" font-weight="800" fill="#1a3146">사외 GPT 델타 판정</text>
+<text x="44" y="649" font-size="12" fill="#4c6478">승인된 요약만 수신</text>
+<text x="44" y="671" font-size="11" font-weight="700" fill="#2363a6">설계 반영 · 미구현</text>
+</g>
+</svg></div>
+<div class="map-mobile" aria-label="사외·사내 통합 워크플로우 모바일 구조도">
+<div class="map-m-zone map-m-external">사외 · 설계</div>
+<div class="map-m-card is-out"><b><span class="map-m-number">1</span> 사외 GPT</b><small>아키텍처 · RAG · 공통 계약 · 품질 기준</small></div>
+<div class="map-m-link"><span>↓ 비민감 설계 MD · 수동 인계</span></div>
+<div class="map-m-zone map-m-internal">사내 · 실제 코드 및 지식</div>
+<div class="map-m-card"><b><span class="map-m-number">2</span> 사내 GPT</b><small>설계 해석 · 설치 스킬/담당 범위 대조 · 실행 지시</small></div>
+<div class="map-m-link">↓</div>
+<div class="map-m-card"><b><span class="map-m-number">3</span> L1 Knowledge Updater</b><small>자연어 질문 → 분석 범위 선택 → 지식 라우팅 · 스터디</small></div>
+<div class="map-m-link">↓</div>
+<div class="map-m-card"><b><span class="map-m-number">4</span> OpenCode · 분석 스킬</b><small>code-analyzer · l1-github · p4-code-owner</small></div>
+<div class="map-m-link">↓</div>
+<div class="map-m-card"><b><span class="map-m-number">5</span> Workflow / Kernel</b><small>Work ID · Evidence · SourceSnapshot · 리뷰 이력</small></div>
+<div class="map-m-link">↓ 중복 확인 · 근거 검증 · 승인</div>
+<div class="map-m-duo"><div class="map-m-card"><b>그룹 정본</b><small>Dev Knowledge<br>개요 · HLD</small></div><div class="map-m-card"><b>개인 정본</b><small>Workspace<br>상세 코드 · MSC</small></div></div>
+<div class="map-m-link">↓ 근거가 맞는 경우에만 재사용</div>
+<div class="map-m-card is-block"><b>RAG · 실제 Provider 입력</b><small>본문 · SourceSnapshot · Owner · Hash 검증 / M1 BLOCKED</small></div>
+<div class="map-m-return">↶ 별도 반출 승인 흐름</div>
+<div class="map-m-card is-warn"><b>MCP 피드백 (미구현)</b><small>비민감 변경 코드 → 스키마·DLP → 승인 → 영수증 → 사외 GPT 델타 판정. 미승인이면 전송 0</small></div>
+</div>
+<div class="map-bottomline"><div class="map-catch"><strong>핵심 ①</strong> 같은 지식은 세 곳에 중복 저장하지 않고, <b>Work/Evidence를 근거로 그룹 정본과 개인 상세를 연결</b>합니다.</div><div class="map-catch"><strong>핵심 ②</strong> 외부 MCP는 <b>자동 연결되지 않았으며</b> 보안 승인 없이는 회사 데이터가 나가지 않습니다.</div></div>
+</div>
+<div class="map-shortcuts"><a href="#big-picture">구성 요소 자세히 ↓</a><a href="#scenarios">실제 요청 예시 보기 ↓</a><a href="#mcp">반출·MCP 승인 절차 ↓</a></div>
+</div></section>
+
+<section class="section" id="big-picture"><div class="wrap"><div class="section-head"><div class="eyebrow">01 · 전체 시스템 지도</div><h2>사외 설계 ↔ 사내 실행 ↔ 지식 축적 ↔ 승인된 피드백</h2><p>아래는 <b>책임과 데이터 이동 방향</b>을 보여주는 상위 지도입니다. 실제 데이터가 사외로 무조건 전송되는 구조가 아닙니다. 우측 사내 영역에서 생성한 회사 원본은 경계를 넘지 않습니다.</p></div>
+<div class="panel">
+<div class="flow-shell" role="img" aria-label="사외 설계 GPT가 버전 고정 설계 Markdown으로 사내 GPT에 인계한다. 사내 GPT가 OpenCode와 Knowledge Updater를 조정하고 Workflow Kernel에 근거를 기록한다. 승인된 지식만 그룹 Dev Knowledge 또는 개인 Workspace에 반영되며 비민감 피드백만 MCP 승인 게이트를 통과해 사외 GPT로 돌아간다.">
+ <div class="swimlane external"><div class="lane-head"><strong>① 사외 · 설계 및 판정</strong><span class="status-label tested">문서 정본</span></div><div class="lane-stacks">
+  <div class="flow-node blue"><div class="node-tag">DESIGN OWNER</div><h3>사외 GPT</h3><p>RAG 아키텍처, 스킬 간 역할, 공통 I/O, 호환성·보안·시험 게이트, 변경분 판정</p></div>
+  <div class="flow-node blue"><div class="node-tag">CONTROLLED IMPORT</div><h3>설계 MD · 인계서</h3><p>버전이 고정된 비민감 설계 지침. 사내 코드/내부 저장소·인증정보 포함하지 않음</p></div>
+  <div class="flow-node purple"><div class="node-tag">DESIGN REVIEW LOOP</div><h3>사외 델타 리뷰</h3><p>승인된 상태 코드·변경 사유 코드·검증 수준만 수신하여 공통 설계 개정</p></div>
+  <div class="flow-node amber"><div class="node-tag">EXTERNAL COLLAB</div><h3>GitHub PRIVATE</h3><p>CoWork 설계·판정·인계 문서만 저장. 회사 원문/상세 MSC 반출 불가</p></div>
+ </div></div>
+ <div class="flow-connector"><div class="boundary"></div><div class="transfer"><span class="arrow">→</span>설계 MD<br>사내 전달</div><div class="transfer reverse"><span class="arrow">←</span>MCP 상태 코드<br>별도 승인 필요</div><div class="caption" style="text-align:center;z-index:1;background:#f8fafc;padding:3px">보안 경계</div></div>
+ <div class="swimlane internal"><div class="lane-head"><strong>② 사내 · 현장 오케스트레이션 및 지식 축적</strong><span class="status-label design">설계상 연결 · G0 미확인</span></div>
+ <div class="inside-grid">
+  <div class="flow-node blue"><div class="node-tag">INHOUSE GPT · WEB</div><h3>사내 GPT (텍스트 중심)</h3><p>사외 설계 해석 → 설치본·담당 블록과 비교 → 실행 순서/수정 지시 MD 작성. 코드 직접 접근은 전제하지 않음</p></div>
+  <div class="flow-node teal"><div class="node-tag">USER ENTRY POINT</div><h3>L1 Knowledge Updater</h3><p>“ULCA TX 지식 업데이트” → 블록/코드 폴더 질문 → 그룹/개인 분류 → 스터디. 실제 구현 범위 미확인</p></div>
+  <div class="wide" style="display:flex;justify-content:center;align-items:center;color:#7ba6a0;font-size:20px">↓ &nbsp;업무 요청·범위 확정 및 실행 지시&nbsp; ↓</div>
+  <div class="flow-node teal"><div class="node-tag">EXECUTOR · CODE ACCESS</div><h3>OpenCode / 사내 Agent</h3><p>읽기 권한 있는 소스·Git·P4·Jira 분석. 허용된 격리 사본에서만 개발/시험</p></div>
+  <div class="flow-node purple"><div class="node-tag">REUSE SKILLS</div><h3>기존 분석 스킬</h3><p><b>l1-github</b> · <b>code-analyzer</b> · <b>p4-code-owner</b> · issue-analyzer / doc-converter 등 필요 범위만 재사용</p></div>
+  <div class="wide flow-node blue"><div class="node-tag">SINGLE OWNER OF WORK HISTORY</div><h3>Workflow + Work Ledger Kernel</h3><p>Work ID · SourceSnapshot(Git SHA/P4 file#rev) · Evidence · ReviewSession/Finding(논리 계약) · 시험/판정 이력을 연결. 기존 <span class="mono">record.json</span> 정본과 파생 Export 유지</p></div>
+  <div class="wide flow-node amber"><div class="node-tag">KNOWLEDGE ROUTING GATE</div><h3>중복·충돌 확인 → Preview → 근거·소유자 확인 → 사용자/관리자 승인</h3><p>검증 안 된 사실/다른 브랜치/TO-BE 설계는 그룹 정본으로 자동 반영하지 않음. Knowledge Updater의 현행 구현 여부는 G0 확인 필요</p></div>
+  <div class="wide two-output">
+    <div class="storage-card"><span class="node-tag">TEAM COMMON SSOT</span><strong>L1 Software Dev Knowledge</strong><small>모듈 개요, HLD, 주요 기능, 인터페이스, 승인된 공통 규칙</small><span class="status-label neutral">그룹 정본</span></div>
+    <div class="storage-card"><span class="node-tag">PERSONAL DETAILS</span><strong>L1 Workspace</strong><small>Work 이력 · CODE_FACTS · 브랜치별 AS-IS MSC · 리뷰·이슈·스터디 · 개인 module-library 후보</small><span class="status-label design">일부 구조 설계 단계</span></div>
+  </div>
+  <div class="wide flow-node amber"><div class="node-tag">OUTBOUND CANDIDATE</div><h3>사내 원본 결과 보존 + 비민감 MCP 피드백 후보 생성</h3><p>원본 자료는 사내에만. 승인된 열거형 상태·변경 사유·검증 수준만 별도 검증 후 외부 전송 후보로 구성. <b>현행 자동 송신 없음</b></p></div>
+ </div></div>
+</div>
+<div class="flow-note"><b>읽는 방법:</b> 이 그림은 향후 통합 설계의 관계도입니다. <b>실제 확인된 사항</b>은 공개 스킬 계약·Kernel 일부 격리시험·GitHub 문서 게시이며, 사내 Knowledge Updater/사내 GPT API/전체 자동 라우팅/MCP 송신은 <b>아직 실측되지 않았습니다</b>. 사외 문서 게시 자체가 사내 Agent를 실행하지 않습니다.</div>
+</div>
+</div></section>
+<section class="section" id="roles"><div class="wrap"><div class="section-head"><div class="eyebrow">02 · 책임 분담</div><h2>누가 무엇을 판단하고, 무엇은 하지 않는가</h2><p>복잡한 설계는 사외 GPT가 기준을 제시하고, 사내의 실제 코드/환경 판단과 구현·시험 책임은 분리합니다.</p></div>
+<div class="table-wrap"><table class="data-table"><thead><tr><th>구성 요소</th><th>입력 → 수행</th><th>출력 · 정본 책임</th><th>주요 금지·미검증</th></tr></thead><tbody>
+<tr><td>사외 GPT</td><td>비민감 정책·기존 설계 → 구조, 계약, 수용기준, 델타 판정</td><td>버전별 설계 MD, 사내 인계, 판정</td><td>사내 코드 직접 사용·그룹 지식 자동 수정 불가</td></tr>
+<tr><td>사내 GPT 웹</td><td>설계 MD + 허용된 텍스트/내부 사정 → 현장 설계·오케스트레이션</td><td>사내 실행 지시 MD, 설계 차이 및 사유</td><td>코드 직접 읽기·OpenCode 자동 호출/API 지원 미확인</td></tr>
+<tr><td>L1 Knowledge Updater</td><td>“TX 지식 업데이트” 자연어 + 범위·담당 질문</td><td>코드/지식 분석 조정, 그룹/개인 후보 분류, 스터디</td><td>사내 실제 구현·권한·자동 저장/승격 미확인</td></tr>
+<tr><td>OpenCode·분석 스킬</td><td>권한 있는 소스·PR·Jira/P4·실행 지시</td><td>CODE_FACTS, MSC, 분석 Evidence, 격리 시험 결과</td><td>실행·시험 결과 ≠ 독립 리뷰/그룹 승인</td></tr>
+<tr><td>Workflow + Kernel</td><td>Work/분석 Evidence/수정·검증 이벤트</td><td>Work ID, 원장, 스냅샷, 문서 Export</td><td>미등록 <span class="mono">review_kind</span>를 Evidence kind에 바로 쓰지 않음</td></tr>
+<tr><td>그룹 Dev Knowledge</td><td>검증·승인된 공통 내용 후보</td><td>조직 공통 지식 정본</td><td>개인 코드 세부/미검증 AS-IS 자동 승격 금지</td></tr>
+<tr><td>개인 L1 Workspace</td><td>Work Evidence, 브랜치별 분석·MSC·지식 후보</td><td>개인 상세 분석, Work 이력/근거</td><td>그룹 정본과 원문 불필요한 복제 금지</td></tr>
+<tr><td>MCP Feedback (제안)</td><td>승인 받은 비민감 enum + 별도 반출 증명</td><td>전송 영수증, 외부 설계 델타 판단 입력</td><td>현재 <span class="mono">SPEC_ONLY</span>, 무승인 전송 0</td></tr>
+</tbody></table></div>
+</div></section>
+<section class="section" id="scenarios"><div class="wrap"><div class="section-head"><div class="eyebrow">03 · 사용자가 실제 요청하는 흐름</div><h2>네 가지 시나리오 전환</h2><p>요청 형태에 따라 같은 스킬을 재사용하지만, 최종 저장 위치·승인 기준은 다릅니다. 아래 탭을 눌러 실행 단계를 비교하세요.</p></div>
+<div class="usecase"><div class="case-tabbar" role="tablist" aria-label="워크플로우 시나리오"><button class="case-tab" role="tab" id="tab-knowledge" aria-controls="case-knowledge" aria-selected="true" tabindex="0" data-target="knowledge">① 지식 업데이트</button><button class="case-tab" role="tab" id="tab-code" aria-controls="case-code" aria-selected="false" tabindex="-1" data-target="code">② 코드 분석</button><button class="case-tab" role="tab" id="tab-issue" aria-controls="case-issue" aria-selected="false" tabindex="-1" data-target="issue">③ 이슈·리뷰</button><button class="case-tab" role="tab" id="tab-skill" aria-controls="case-skill" aria-selected="false" tabindex="-1" data-target="skill">④ 스킬 개선</button></div><div class="case-content">
+<section class="case-view active" id="case-knowledge" role="tabpanel" aria-labelledby="tab-knowledge"><div class="case-title">“ULCA TX 지식 업데이트해 줘”</div><p class="caption">Knowledge Updater가 자연어 요청의 진입점인 사용자 설명 기반 시나리오. 실제 동작 증거는 사내 G0 필요.</p><div class="case-timeline"><div class="case-hop"><strong>범위 질문</strong><span>블록·폴더·RAT/제품·담당 영역</span></div><div class="case-hop"><strong>기존 지식 비교</strong><span>팀 공통 문서/개인 이력 검색</span></div><div class="case-hop"><strong>코드 사실 분석</strong><span>code-analyzer + SourceSnapshot</span></div><div class="case-hop"><strong>라우팅 Preview</strong><span>공통 개요 vs 상세 MSC/이력</span></div><div class="case-hop"><strong>승인된 반영·스터디</strong><span>그룹/개인 별도 저장·학습</span></div></div><div class="case-result"><b>기대 결과:</b> 그룹에는 핵심 구조·기능만, 개인에는 실제 근거 코드·MSC·실험 이력을 연결. 이미 있는 그룹 내용은 중복 저장 대신 참조·개정 제안.</div></section>
+<section class="case-view" id="case-code" role="tabpanel" aria-labelledby="tab-code"><div class="case-title">“SMP1900 브랜치 B의 DRX 동작과 MSC를 분석해 줘”</div><p class="caption">코드 스냅샷의 안정성이 핵심. 브랜치 이름은 가변이므로 고정 SHA/dirty 상태 확인 필요.</p><div class="case-timeline"><div class="case-hop"><strong>분석 범위</strong><span>제품·모듈·브랜치 B 지정</span></div><div class="case-hop"><strong>고정 소스</strong><span>l1-github, Git full SHA</span></div><div class="case-hop"><strong>의미 분석</strong><span>code-analyzer·기존 사실 검색</span></div><div class="case-hop"><strong>AS-IS MSC</strong><span>CODE_FACTS/anchor 연결</span></div><div class="case-hop"><strong>Work·개인 지식</strong><span>Kernel Evidence·Workspace</span></div></div><div class="case-result"><b>기대 결과:</b> 같은 브랜치라도 HEAD가 바뀌면 <span class="mono">STALE</span> 판정. 다른 브랜치의 MSC를 현재 코드인 것처럼 재사용하지 않음.</div></section>
+<section class="case-view" id="case-issue" role="tabpanel" aria-labelledby="tab-issue"><div class="case-title">“과거 TX 장애와 수정 이력을 분석하고 재발 원인을 찾아 줘”</div><p class="caption">P4 Jira·CL 포함 여부와 버그 원인 확정은 다른 개념입니다. Git 기반 변경이면 l1-github와 PR scope 사용.</p><div class="case-timeline"><div class="case-hop"><strong>Work/Issue 연결</strong><span>ISSUE 목적·근거 범위 지정</span></div><div class="case-hop"><strong>변경 계보 추적</strong><span>p4-code-owner·Jira/Mango</span></div><div class="case-hop"><strong>원인 가설 검증</strong><span>code-analyzer·반증·AS-IS MSC</span></div><div class="case-hop"><strong>Finding·시험</strong><span>ReviewSession + EvidenceRef</span></div><div class="case-hop"><strong>지식 후보</strong><span>반복 패턴/재발 방지 Preview</span></div></div><div class="case-result"><b>기대 결과:</b> 증상·근본 원인·수정 코드·실제 회귀시험을 구분. 하나의 CL이 관련되었다고 해서 해결 성공으로 표기하지 않음.</div></section>
+<section class="case-view" id="case-skill" role="tabpanel" aria-labelledby="tab-skill"><div class="case-title">“사내 Knowledge Updater가 현장에 맞게 스킬 설계를 바꿔야 해”</div><p class="caption">사내 GPT와 OpenCode의 빠른 수정·시험, 사외 GPT의 아키텍처 델타 검토를 연결하는 시나리오.</p><div class="case-timeline"><div class="case-hop"><strong>사외 기준 MD</strong><span>설계/계약/수용기준 버전 고정</span></div><div class="case-hop"><strong>사내 GPT 분석</strong><span>설치본·중복·호환성 비교</span></div><div class="case-hop"><strong>OpenCode 격리 시험</strong><span>허용된 비운영 후보만 변경</span></div><div class="case-hop"><strong>MCP 피드백 후보</strong><span>변경 사유/상태 enum만 생성</span></div><div class="case-hop"><strong>보안 승인·외부 판정</strong><span>송신 가능 시에만 설계 델타 반영</span></div></div><div class="case-result"><b>기대 결과:</b> 사내 스킬이 먼저 개선되더라도 사외 설계가 임의로 뒤처지지 않도록 비민감 변경 신호만 제공. 실제 배포·LIVE 변경은 별도 승인.</div></section>
+</div></div>
+</div></section>
+<section class="section" id="knowledge"><div class="wrap"><div class="section-head"><div class="eyebrow">04 · 정본 경계와 재사용</div><h2>그룹 지식·개인 Workspace·Work 이력을 구분</h2><p>같은 분석 결과를 세 곳에 복사하는 대신, 각 원본이 담당하는 책임을 보존하고 근거 링크로 연결합니다.</p></div>
+<div class="grid3"><div class="mini-d"><span class="eyelabel">공통 지식 정본 · TEAM</span><h3>L1 Software Dev Knowledge</h3><p>담당 모듈 개요, HLD/아키텍처, 공통 API, 설계 지침, 승인된 주요 시나리오</p><div class="callout"><b>쓰기 게이트</b><br>중복·충돌 비교 → Owner 검토 → 승인 → 사내 Git readback</div></div><div class="mini-d"><span class="eyelabel">작업 사실·이력 SSOT</span><h3>Workflow + Kernel Work</h3><p>변경 사유, 분석 Session/Findings, Evidence, SourceSnapshot, 재시험·상태, Work ID</p><div class="callout"><b>보존 규칙</b><br>기존 <span class="mono">record.json</span>, Journal, README/문서안내 Export 구조 불변</div></div><div class="mini-d"><span class="eyelabel">개인 기술 지식 · PERSONAL</span><h3>l1-workspace</h3><p>CODE_FACTS, 상세 설계 근거, 브랜치별 AS-IS MSC, 장애·리뷰 이력, 스터디</p><div class="callout"><b>기술지식 계획</b><br><span class="mono">module-library/</span>는 제안 단계: 사내 존재 여부 확인 전 경로 확정 금지</div></div></div>
+<div style="margin-top:18px" class="panel"><h3>RAG가 “이미 아는 지식”을 실제 답변 근거로 사용하려면</h3><div class="timeline"><div class="step-card"><span class="num">01 · 요청 범위</span><strong>제품·RAT·모듈·브랜치</strong><p>담당 및 대상 구분. 변경 전/후 시나리오 혼합 금지</p></div><div class="step-card"><span class="num">02 · 소스 고정</span><strong>SourceSnapshot</strong><p>Git full SHA 또는 P4 file#haveRev + dirty 검증</p></div><div class="step-card"><span class="num">03 · 근거 검색</span><strong>원문 Body + Anchor</strong><p>그룹/개인 지식·기존 Work에서 실제 본문 조회</p></div><div class="step-card"><span class="num">04 · 신뢰 검증</span><strong>Owner · Root · Hash</strong><p>출처 권한, 버전, 적용 범위 및 digest 검증</p></div><div class="step-card"><span class="num">05 · 최종 입력 확인</span><strong>Provider payload / Receipt</strong><p>실제 모델 입력에 동일 본문 소비됐는지 증거 확인</p></div></div><div class="callout warn" style="margin-top:15px"><b>현재 RAG M1 = BLOCKED.</b> 검색 제목·URL만 찾았거나 모델이 “봤다”고 보고하는 것만으로 본문 사용 PASS가 아닙니다. 사내 실제 Driver/Provider 입력·권한·해시를 확인해야 합니다.</div></div>
+</div></section>
+<section class="section" id="mcp"><div class="wrap"><div class="section-head"><div class="eyebrow">05 · 가장 중요한 왕복 인터페이스</div><h2>사내 변경을 사외 설계에 반영하는 MCP 피드백</h2><p>기존의 긴 Markdown 수동 전달 대신, **사내에 남겨야 할 데이터와 외부로 내보낼 수 있는 메타데이터를 분리**합니다. 이 인터페이스는 <b>제안이며 현재 구현·연결되지 않았습니다.</b></p></div>
+<div class="panel"><div class="mcp-rail" role="img" aria-label="사내 상세 원본, 허용 enum으로 추상화, JSON 스키마 검증, 승인 게이트, 아웃바운드 MCP, 수신 영수증, 사외 GPT 델타 리뷰 순서이며 미승인은 외부 전송을 하지 않는다.">
+<div class="mcp-node"><span class="eyelabel">내부 전용</span><strong>① 변경 결과 원본</strong><small>코드·로그·상세 원인·실제 시험 근거. 사내 저장만</small></div>
+<div class="mcp-node"><span class="eyelabel">사내 변환</span><strong>② 추상 Enum</strong><small>변경 유형·사유·호환성·시험 수준 코드만 추출</small></div>
+<div class="mcp-node"><span class="eyelabel">엄격 검증</span><strong>③ Schema + DLP</strong><small>추가 필드·자유 텍스트·금지 데이터 제거/거부</small></div>
+<div class="mcp-node reject"><span class="eyelabel">Fail closed</span><strong>④ 반출 승인</strong><small>정확한 payload·대상·만료·권한을 독립 검증. 없으면 0회 송신</small></div>
+<div class="mcp-node"><span class="eyelabel">미구현</span><strong>⑤ MCP submit</strong><small>승인된 outbound 경로가 실존할 때만 전송</small></div>
+<div class="mcp-node"><span class="eyelabel">수신측</span><strong>⑥ 영수증·중복 차단</strong><small>동일 ID 재전송 방지, 불명확하면 상태조회</small></div>
+<div class="mcp-node"><span class="eyelabel">사외 GPT</span><strong>⑦ 설계 델타 판정</strong><small>변경된 공통 계약만 업데이트, 실제 코드 미수신</small></div>
+</div>
+<div style="margin-top:17px" class="grid2"><div class="callout"><b>전송 후보 예시</b><br><span class="mono">subject=WORKFLOW_INTEGRATION</span><br><span class="mono">change_kind=CONTRACT_GAP</span><br><span class="mono">reason_code=INTERFACE_MISMATCH</span><br><span class="mono">test_state=NOT_RUN</span><br><span class="mono">decision_requested=REVISE_CONTRACT</span></div><div class="callout warn"><b>금지·차단</b><br>소스/상세 MSC/Jira·CL/사내 경로/토큰/사내 조직 정보/원본 로그 외부 전송 금지. MCP 서버나 전송 권한이 미확인이면 <span class="mono">NO_EXPORT</span>. 외부 PRIVATE GitHub도 사외로 취급.</div></div>
+<p class="notes">제안 Tool: <span class="kbd">feedback.preview</span> (사내 사전검사), <span class="kbd">feedback.submit</span> (승인된 송신), <span class="kbd">feedback.status</span> (중복 방지·영수증 조회). 계약: <span class="mono">l1/mcp-feedback/0.1</span>. 이 Tool들은 현재 동작한다고 주장하지 않습니다.</p></div>
+</div></section>
+<section class="section" id="gates"><div class="wrap"><div class="section-head"><div class="eyebrow">06 · 검증 게이트 및 현재 이정표</div><h2>무엇을 확인했고, 무엇을 아직 확인하지 않았는가</h2><p>현재 가능한 진단과 실제 사내 E2E·MCP 연결을 구분합니다. 기존 운영 시스템은 별도 승인이 있기 전까지 변경하지 않습니다.</p></div>
+<div class="gate-row"><div class="gate"><span class="gate-num">G0 · HOST REALITY</span><strong>사내 설치·MCP 실측</strong><span class="status-label design">PARTIAL / E3 NOT_RUN</span><p>Kernel 공개 코드/격리시험은 확인. 실제 Updater, 설치 버전, MCP 권한·도구는 미확인</p></div><div class="gate"><span class="gate-num">G1 · CONTRACT</span><strong>기존 스킬 역할 대조</strong><span class="status-label design">DESIGN_ONLY</span><p>Updater ↔ Workflow ↔ Kernel의 이중 정본·새 kind 충돌 방지 계약 필요</p></div><div class="gate"><span class="gate-num">G2 · ISOLATED TEST</span><strong>사내 격리 연동</strong><span class="status-label neutral">NOT_RUN</span><p>합성 샘플로 분석→Evidence→그룹/개인 Preview 연결 실증 필요</p></div><div class="gate"><span class="gate-num">G3 · EXPORT</span><strong>MCP 승인·전송 실증</strong><span class="status-label blocked">NOT_APPROVED</span><p>송신 정책, DLP, 비밀정보 배제, 중복방지, 영수증·readback 필요</p></div></div>
+<div class="grid2" style="margin-top:16px"><div class="panel"><h3>기존 자료에서 이미 확인한 항목</h3><div class="phase-item"><div class="phase-num">E1</div><div><strong>스킬 문서 및 아키텍처 계약</strong><p>l1-github·code-analyzer·p4-code-owner 입력·출력 계약 정적 확인</p></div></div><div class="phase-item"><div class="phase-num">E2</div><div><strong>Kernel 격리 시험 6 PASS</strong><p>등록된 asis_msc Evidence와 미등록 review kind 차단 등 (첨부 개발 후보 ZIP 기준)</p></div></div><div class="phase-item"><div class="phase-num">DOC</div><div><strong>통합 설계 MD·MCP 스키마</strong><p>사외 PRIVATE 게시·원격 비교 PASS. 설계와 실제 구현은 별개</p></div></div></div><div class="panel"><h3>아직 막혀 있는 항목</h3><div class="phase-item"><div class="phase-num">E3</div><div><strong>사내 G0 실제 설치/도구 권한</strong><p>Knowledge Updater 현행 기능, 사용자 질문·분류·스터디 저장, MCP 구동 증거 부재</p></div></div><div class="phase-item"><div class="phase-num">M1</div><div><strong>실 RAG 본문 소비</strong><p>Provider에 전달된 본문·권한·digest/Receipt 입증되지 않아 BLOCKED</p></div></div><div class="phase-item"><div class="phase-num">MCP</div><div><strong>외부 피드백 송신 구현·승인</strong><p>서버/네트워크/반출 승인/수신 영수증 NOT_RUN</p></div></div></div></div>
+<div class="callout warn" style="margin-top:16px"><b>운영 불변:</b> 기존 Dropbox LIVE는 유지합니다(<span class="mono">MIGRATION_NOT_CUTOVER</span>). REQUEST/READY, Windows watcher·운영 DB/WAL/SHM·Bridge·Dashboard·Telegram·Job, 사내 Git/스킬 설치본, PUBLIC ZIP 배포는 이 설계 문서로 자동 변경되지 않습니다. 새로운 피드백 MCP는 유료 Claude 리뷰 실행과 별개입니다.</div>
+</div></section>
+<section class="section" id="next"><div class="wrap"><div class="section-head"><div class="eyebrow">07 · 다음 한 동작</div><h2>사내 인계 전에 무엇을 해야 하나</h2></div>
+<div class="grid2"><div class="panel"><h3>사내 GPT가 받아야 할 설계 범위</h3><p class="caption">상위 인계 문서는 이 구조도의 원칙을 포함해야 하며, 기존 G0 진단을 대체하지 않습니다.</p><div class="phase-item"><div class="phase-num">1</div><div><strong>Updater 실제 기능과 범위 확인</strong><p>질문·모듈 위치·담당 식별·기존 그룹/개인 지식 분류/스터디·중복검사</p></div></div><div class="phase-item"><div class="phase-num">2</div><div><strong>설치된 스킬과 Work 계약 대조</strong><p>Workflow·Kernel·code-analyzer·l1-github·p4-code-owner, 실제 Evidence 등록 슬롯</p></div></div><div class="phase-item"><div class="phase-num">3</div><div><strong>사내 MCP 인터페이스 조사</strong><p>읽기 전용 Tool inventory·송수신 방향·반출 권한·연동 존재 여부</p></div></div><div class="phase-item"><div class="phase-num">4</div><div><strong>비민감 결과만 별도 피드백</strong><p>설계 변경 사유·호환성·시험 수준 enum을 승인 전 로컬 후보로 기록</p></div></div></div><div class="panel"><h3>작업별 사용 자료</h3><p class="caption">비민감 공통 설계 파일. 사내에서 외부 저장소에 직접 접근하도록 요구하지 않습니다.</p><div class="phase-item"><div class="phase-num">A</div><div><strong>통합 아키텍처 Markdown</strong><p class="mono">L1_E2E_INHOUSE_OFFSITE_ARCHITECTURE_r0001_20261111.md</p></div></div><div class="phase-item"><div class="phase-num">B</div><div><strong>새 사내 GPT·OpenCode 인계서</strong><p class="mono">L1_INHOUSE_GPT_OPENCODE_HANDOFF_r0001_20261111.md</p></div></div><div class="phase-item"><div class="phase-num">C</div><div><strong>MCP 피드백 계약 및 JSON Schema</strong><p class="mono">L1_MCP_FEEDBACK_CONTRACT_r0001_20261111.md</p><p class="mono">L1_MCP_FEEDBACK_SCHEMA_r0001_20261111.json</p></div></div><div class="phase-item"><div class="phase-num">D</div><div><strong>현재 G0 진단</strong><p class="mono">L1_REVIEW_ACCUMULATION_INHOUSE_G0_READONLY_HANDOFF_r0001_20261111.md</p></div></div></div></div>
+</div></section>
+</main>
+<footer class="footer"><div class="wrap"><div><b>L1 Knowledge Architecture · CoWork</b><div>2026-11-11 · Visual Guide r0002 · 비민감 설계 문서</div></div><div>기준: RAG r0002 · 사내·사외 아키텍처 r0001 · MCP feedback 0.1<br>GitHub PRIVATE `wonhwipark/CoWork-Skill-Collab` · 변경된 운영 설정 없음</div></div></footer>
+<script>
+(function(){const tabs=Array.from(document.querySelectorAll('.case-tab'));const views=Array.from(document.querySelectorAll('.case-view'));function select(tab,focus){const id=tab.dataset.target;tabs.forEach(t=>{const active=t===tab;t.setAttribute('aria-selected',String(active));t.setAttribute('tabindex',active?'0':'-1')});views.forEach(v=>v.classList.toggle('active',v.id==='case-'+id));if(focus)tab.focus()}tabs.forEach((tab,i)=>{tab.addEventListener('click',()=>select(tab,false));tab.addEventListener('keydown',e=>{if(e.key!=='ArrowRight'&&e.key!=='ArrowLeft'&&e.key!=='Home'&&e.key!=='End')return;e.preventDefault();let ix=e.key==='Home'?0:e.key==='End'?tabs.length-1:e.key==='ArrowRight'?(i+1)%tabs.length:(i-1+tabs.length)%tabs.length;select(tabs[ix],true)})})})();
+</script>
+</body>
+</html>
