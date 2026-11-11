@@ -1,6 +1,15 @@
 {
   "disclaimer": "GitHub SHADOW 현황. 미이관 자료는 0건이 아니라 미확인입니다.",
   "live_provider": "DROPBOX",
+  "operations": {
+    "cutover": "MIGRATION_NOT_CUTOVER",
+    "dashboard_source": true,
+    "host_shadow": "NOT_OBSERVED",
+    "independent_review": "NOT_RUN",
+    "migration_source": true,
+    "pages_deployment": "PASS",
+    "windows_stage1": "NOT_RUN"
+  },
   "phase": "MIGRATION_NOT_CUTOVER",
   "projects": [
     {
@@ -32,7 +41,7 @@
     }
   ],
   "review_chains": [],
-  "schema": "COWORK_GITHUB_DASHBOARD_SHADOW_V2",
+  "schema": "COWORK_GITHUB_DASHBOARD_SHADOW_V3",
   "source": "GITHUB_TRACKED_FILES_ONLY",
   "transport": {
     "receipts": {
