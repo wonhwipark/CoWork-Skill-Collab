@@ -6,7 +6,7 @@ on:
       - collab/tools/joblist_nrtx/**
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
 jobs:
   build_candidate:
     runs-on: ubuntu-latest
@@ -15,7 +15,7 @@ jobs:
       - name: Checkout PRIVATE non-sensitive builder
         uses: actions/checkout@v4
         with:
-          persist-credentials: false
+          persist-credentials: true
       - name: Read pinned PUBLIC baseline ZIP
         shell: bash
         run: |
@@ -90,3 +90,21 @@ jobs:
           path: candidate/job-list_v0_4_35_1112.zip
           retention-days: 14
           if-no-files-found: error
+      - name: Keep candidate ZIP in PRIVATE repo with exact pinned bytes
+        if: success()
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo '3061be176932ed145554b583624a96f0c2bbb22533c5fed8635c1acc2101779c  candidate/job-list_v0_4_35_1112.zip' | sha256sum --check
+          mkdir -p collab/candidates/joblist_nrtx
+          cp candidate/job-list_v0_4_35_1112.zip collab/candidates/joblist_nrtx/job-list_v0_4_35_1112.zip
+          git add collab/candidates/joblist_nrtx/job-list_v0_4_35_1112.zip
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if git diff --cached --quiet; then
+            echo 'ALREADY_STORED_IDENTICAL'
+          else
+            git commit -m "build(job-list): store verified NR Tx v0.4.35 candidate PRIVATE only"
+            git push origin HEAD:main
+          fi
+          git hash-object collab/candidates/joblist_nrtx/job-list_v0_4_35_1112.zip
