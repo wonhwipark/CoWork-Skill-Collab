@@ -144,3 +144,14 @@
 - **IMPLEMENTATION TRUTH:** This is **design visualization only**: inhouse `L1 Knowledge Updater` real internals `NOT_VERIFIED`, automatic Workflow routing `NOT_VERIFIED`, MCP `SPEC_ONLY` and `NO_EXPORT`, RAG M1 `BLOCKED`. Neither host E3 nor deployment testing executed.
 - **NEXT_ONE_ACTION:** 사용자 HTML로 전체 책임·흐름 확인 후 사내 GPT에 상위 인계서 전달, G0 read-only 실제 설치·MCP·Updater 동작/중복 판정. 보안/사내 운영 승인 전 자동 연결·전송 금지.
 - **NO CHANGES:** 기존 r0001/r0002 설계, 사내 Work·Kernel/Workflow/skills, REQUEST/READY, paid Claude review, PUBLIC ZIP, Windows watcher/DB/Job, Dropbox `MIGRATION_NOT_CUTOVER / DROPBOX_LIVE`, `/AI-CONTINUITY/`.
+
+## 2026-11-11 — 시각화 HTML r0002: 한눈에 보는 전체 구조도 (LATEST)
+
+- **TYPE/STATE:** `DESIGN_VISUALIZATION / HTML_PUBLISHED / REMOTE_READBACK_PASS`. 기존 r0001 HTML과 설계 r0002/Step 1~G0 보고서 보존; 새 r0002 HTML 파일 별도 게시.
+- **PUBLICATION:** PRIVATE `wonhwipark/CoWork-Skill-Collab` branch `main`, path `collab/projects/L1-WORKSPACE-RAG-20261111-001/L1_E2E_INHOUSE_OFFSITE_WORKFLOW_VISUAL_GUIDE_r0002_20261111.html`.
+- **UPDATED UI:** 페이지 상단 `#overview` 한 장짜리 **inline SVG arrows/swimlane** 신규 추가(사외 GPT→사내 GPT→Knowledge Updater→OpenCode+기존 skills→Workflow/Kernel→검증·그룹/개인 지식 정본→RAG), 하단은 **반출 승인을 거친 비민감 feedback만** 역방향 MCP→사외 GPT. 모바일에는 별도 세로형 도식; 원래 #big-picture 상세 구조·역할·4개 시나리오·RAG·MCP·G0 정보 유지.
+- **BROWSER QA:** 격리 Chromium/Playwright에서 1440×900, 1280×800, 390×844, 320×720 브라우저 가로 넘침 없음, desktop/mobile 도식 전환 의도대로, JS pageerror 0, 4개 시나리오 탭 `code` 전환 PASS. 회사 API/내부 저장소 접근 없음.
+- **REAL BYTES:** `63,618`, SHA-256 `a057e5da56eeed12fdbd56b30bf24a147d47643dd671d3bdcb36ed384ff9bb65`, remote Git blob `738b046c0e4a0e05566eb1ea8ab0c9dcc7301ef3`, creation commit `b118a13f76a4104e0c47c69e0eb173bc9f145337`. Full UTF-8 remote content equality and blob SHA verified.
+- **STATUS DISTINCT:** User-described Knowledge Updater operation and target topology are **design evidence**, not actual E3 verification. `INHOUSE_G0=NOT_VERIFIED`, `RAG_M1=BLOCKED`, `MCP_FEEDBACK=SPEC_ONLY / NO_EXPORT`, `CLAUDE_INDEPENDENT_REVIEW=NOT_RUN`.
+- **UNCHANGED:** 기존 사내 스킬/Work/DB/Windows watcher/Job/Telegram, `REQUEST/READY`, GitHub PUBLIC 배포, Dropbox `MIGRATION_NOT_CUTOVER / DROPBOX_LIVE`, 운영 LIVE 전환 없음.
+- **NEXT:** r0002 HTML 전체 구조 확인 → 승인된 사내 GPT에 기존 상위 인계 MD로 G0 읽기 전용 실측 수행; MCP나 지식 정본 자동 쓰기/반출은 별도 승인 필요.
