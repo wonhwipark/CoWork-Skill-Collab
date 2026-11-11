@@ -134,6 +134,9 @@ No automatic group knowledge publish, source modifications or external export.
     data["tests/test_v0431_knowledge_input_stage.py"] = replace_one(
         data["tests/test_v0431_knowledge_input_stage.py"],
         b"core.VERSION=='0.4.34'", b"core.VERSION=='0.4.35'", "TEST_CORE_VERSION")
+    data["tests/test_v0431_knowledge_input_stage.py"] = replace_one(
+        data["tests/test_v0431_knowledge_input_stage.py"],
+        b"read_text())[field]=='0.4.34'", b"read_text())[field]=='0.4.35'", "TEST_RELEASE_METADATA")
     data["tests/test_v0435_nrtx_candidate.py"] = (
         tool_dir / "test_v0435_nrtx_candidate.py").read_bytes()
 
