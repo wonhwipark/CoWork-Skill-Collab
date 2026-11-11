@@ -14,7 +14,7 @@
 - Windows Claude Code: 독립 리뷰어가 기본이지만 필요한 로컬 개발 실행도 할 수 있음. **개발 세션 자기 시험 ≠ 독립 리뷰**. 토큰/연결 장애 시 GPT는 가능한 개발/시험/문서화를 계속하고 `INDEPENDENT_REVIEW=NOT_RUN/PENDING` 기록.
 - Python watcher: 유효한 승인 서명·파일·repo ID·정책·비용·중복 확인 후 **정식 REQUEST/READY**가 있을 때만 리뷰 호출. 파일 게시 자체는 실행 신호 아님.
 - PRIVATE: `wonhwipark/CoWork-Skill-Collab` — 새 협업 문서/판정/인계/영수증의 기준 저장소. 민감/반출금지 자료는 PRIVATE에도 게시 불가.
-- PUBLIC: `wonhwipark/L1Work` — 승인된 최종 ZIP의 기존 사내 다운로드 경로만. 개발 후보/REQUEST/영수증은 공개 금지.
+- PUBLIC: `wonhwipark/L1Work` — 승인된 최종 ZIP 다운로드 및 **별도 사용자 승인된 공개 허용 목록 기반 HTML Pages 상태 요약**. 개발 후보/REQUEST/영수증/PRIVATE 원문은 공개 금지. Pages 기본 URL: `https://wonhwipark.github.io/L1Work/cowork-dashboard/`. 공개 범위는 `collab/dashboard/PUBLIC_PAGES_DEFAULT_POLICY.md` 참조.
 - 기존 LIVE: Dropbox `/SKILL-COLLAB/` — **전환 명시 승인 전 운영 변경/중지하지 않는다**.
 
 ## 후속 메모·대화형 노트
