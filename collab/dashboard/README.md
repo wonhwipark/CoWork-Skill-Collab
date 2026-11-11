@@ -31,3 +31,20 @@
 - `python3 collab/dashboard/generate.py` (로컬 수동 생성, 실제 운영 입력은 본 PRIVATE 저장소의 파일에 한정).
 - 실제 GitHub Action run 및 자동 push 성공은 **워크플로 실행 이력으로 별도 확인**해야 한다.
 - GitHub 리뷰 워처 LIVE 전환·서명/영수증 검증·Windows 설치·재로그인/장기 운영과 본 SHADOW UI를 혼동하지 않는다.
+
+
+## 2차 — GitHub 리뷰 연결 및 항목별 피드백 (2026-11-11)
+
+- 개발 주체 GPT. 생성기는 collab/dashboard/review_chain.py의 읽기 전용 GitHub 문서 연결 검사를 호출한다.
+- 입력: collab/requests/ID/REQUEST.md 및 READY.md, collab/reviews/ID/REVIEW_RESULT_1.md, collab/receipts/ID/RECEIPT_1.md, collab/reviews/ID/GPT_DISPOSITION.json.
+- 출력: state.json의 review_chains, SUMMARY.md의 요청별 진행 단계·판정·피드백, index.html의 5단계 카드 및 다음 담당자.
+- REQUEST의 request_id·request_revision·package_sha256이 폴더 및 다음 문서와 일치해야 한다.
+- READY의 request_sha256은 REQUEST.md 원본 UTF-8 SHA-256과 일치해야 한다. READY 자체는 실행 승인 아님.
+- REVIEW_RESULT의 responds_to_request_id/revision, package_sha256, execution_status=COMPLETED가 일치해야 한다.
+- RECEIPT의 request_id/revision/package_sha256, ok=true, processing_key=id|revision|sha|positive_revision을 대조한다. 결과의 review_id가 있으면 processing_key와도 일치해야 한다.
+- GPT_DISPOSITION.json은 request_id, request_revision, package_sha256, verdict, findings 배열을 갖는다. verdict/decision 허용값: ACCEPT, ACCEPT_WITH_CHANGE, REJECT, DEFER, NEED_INFO. findings의 각 항목은 id(B-1/N-1 등), decision, summary로 구성한다.
+- 리뷰 파일에서 발견한 피드백은 GPT_DISPOSITION.json이 없으면 NOT_ADJUDICATED로 표시한다. 서명·신뢰루트·GitHub repo/commit pin 검증은 별도 Windows watcher 책임이므로 문서 연결을 운영 완료로 해석하지 않는다.
+- REVIEW/RECEIPT/판정 파일 중 하나라도 불일치하면 뒤 단계는 PASS로 표시하지 않는다. 승인·추가 과금·자동 재리뷰를 발생시키지 않는다.
+- 파일명/경로 검증, symlink 제외, 크기 제한, HTML escape, PRIVATE GitHub 원문 링크만 지원. GitHub Pages, PUBLIC, 외부 API, Windows 감시기·운영 DB 접근 없음.
+- 기존 7개 + 리뷰 연결 합성 시험 9개로 총 16개 unittest. 실제 GitHub review E2E는 아직 NOT_RUN. 샘플 요청·영수증을 LIVE main에 허위 게시하지 않는다.
+- CUTOVER=MIGRATION_NOT_CUTOVER. Dropbox LIVE 유지. 이 화면의 GitHub 리뷰 0건은 이전 Dropbox 리뷰 완료 0건을 뜻하지 않는다.
