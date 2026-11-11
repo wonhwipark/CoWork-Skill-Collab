@@ -1,5 +1,14 @@
 # COWORK-GITHUB-DASHBOARD-20261111-001 — CURRENT
 
+## 최신 표시 방식 — HTML 우선 (2026-11-12)
+- **사용자 요청:** "앞으로는 대시보드는 HTML로 확인". 기본 화면은 `collab/dashboard/index.html` (PRIVATE), GitHub `VIEW.md`는 보조. 루트 `README.md` 및 `collab/dashboard/README.md`에 HTML 기본 표시로 갱신. GitHub 파일 화면은 HTML 소스가 보이므로 파일 다운로드→브라우저로 열기 방식이며, PRIVATE HTML의 익명 공개 URL은 제공하지 않음.
+- **HTML 단일파일 스냅샷 별도 제공:** `CoWork_협업흐름_STATUS_20261112.html` (현재 대화 첨부) 20,943B, SHA-256 `e2530c1062540e93191ca62bcf9dd0ece1d8cdac35e0903d8e6079c047f5d9e1`; 프로젝트 CURRENT 3, GitHub REQUEST/REVIEW/RECEIPT 관측 각 0, Windows Stage1 NOT_RUN, Claude 독립 리뷰 NOT_RUN, CUTOVER=MIGRATION_NOT_CUTOVER, L1Work 합성 샘플 Pages 배포 PASS 기록. 협업 관리 환경 / 업무 실행 환경 용어 사용.
+- **정본 구분:** 위 대화 첨부 HTML은 2026-11-12 기준 **고정 스냅샷**이며 PRIVATE GitHub `main`에 같은 바이트의 신규 파일을 게시한 것으로 보고하지 않음. 자동 최신 생성의 정본은 `collab/dashboard/index.html` (Actions 관리)이고 별도로 GitHub `VIEW.md`가 있다.
+- **파일 자체 정적 검사:** HTML DOM 구조, 7개 흐름 카드, 8개 STATUS 테이블 항목, 3개 프로젝트 카드, 4 KPI 및 허용된 links/CSP 확인 PASS. 실제 Chromium 렌더링은 브라우저 바이너리 부재로 **NOT_RUN**. GitHub Actions의 기존 합성 회귀 35 PASS는 별도 실측 기록이며 새 별도 스냅샷의 브라우저 시험 PASS로 대체하지 않음.
+- **보안:** 실제 PRIVATE 현황을 L1Work PUBLIC Pages 또는 Dropbox로 게시하지 않음. L1Work 공개 주소는 계속 실제 협업 정보 없는 합성 샘플 전용. `WINDOWS_HOST_E2E=NOT_RUN`, `INDEPENDENT_REVIEW=NOT_RUN`, `CUTOVER=MIGRATION_NOT_CUTOVER` 유지.
+- **다음 한 동작:** 사용자가 내려받은 HTML을 브라우저에서 열고 도식·상태 가독성을 확인. 실시간 웹 URL로 실제 PRIVATE 상태를 볼 필요가 있으면 별도 접근 통제/공개 범위 설계와 승인 필요.
+
+
 
 ## 최신 업데이트 — 협업 흐름·현재 STATUS 도식화 (2026-11-12)
 - **DEVELOPMENT=IMPLEMENTED, SELF_TEST=PASS, PRIVATE_ACTIONS=PASS, GITHUB_PAGES_DEPLOY=PASS(기존 합성 샘플에 한정).** 샘플 웹페이지가 PRIVATE 협업 현황이라는 뜻은 아님.
