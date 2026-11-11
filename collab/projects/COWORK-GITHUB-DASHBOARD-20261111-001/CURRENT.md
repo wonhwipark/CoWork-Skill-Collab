@@ -1,5 +1,16 @@
 # COWORK-GITHUB-DASHBOARD-20261111-001 — CURRENT
 
+## 최신 상태 — L1Work PUBLIC HTML 파일 게시 완료 / Pages 웹사이트 활성화 미검증 (2026-11-12)
+
+- **사용자 최신 지시:** 공개 샘플 HTML의 저장·확인 위치를 `wonhwipark/L1Work` PUBLIC로 지정. 이전 PRIVATE Pages 제한을 우회하기 위한 무단 반출이 아니라, 사용자가 지정한 고정 공개 샘플에 한정한 게시.
+- `PUBLIC_HTML_FILE=PASS`, `GITHUB_REMOTE_READBACK=PASS`: `L1Work/main/docs/cowork-dashboard/index.html`, 4,765B, SHA-256 `40a33950e4fc37ed643522ed06b73ea89afdd9b4c0447417d67bc19501c82779`, commit `0a92951c114b014b40353c3351870e731ef55cb7`.
+- `PAGES_ROOT_ENTRY=PASS`: `L1Work/main/docs/index.html`에서 `cowork-dashboard/`로 이동하는 정적 진입 페이지, commit `f2957b91da454c3d218c2837e4fb897b48c35076`.
+- `PAGES_WEB_DEPLOY=NOT_VERIFIED`, `PUBLIC_HTTP_E2E=NOT_RUN`: L1Work에는 Pages Actions 실행 이력 없음. GitHub Pages 설정 UI `L1Work/settings/pages`에서 `Deploy from a branch → main /docs` 선택 필요. 설정 전 예상 도메인을 동작 완료로 보고하지 않음.
+- `DATA=SYNTHETIC_ONLY` 승인된 3단계 샘플만 공개. PRIVATE 협업 정보, 실제 REVIEW/RECEIPT/상태 JSON, Windows watcher·Dropbox LIVE·운영 DB·PUBLIC ZIP 배포 변경 없음.
+- **최신 결과:** [L1WORK_PUBLIC_HTML_UPLOAD_20261112.md](L1WORK_PUBLIC_HTML_UPLOAD_20261112.md) 원격 게시 및 내용 readback `PASS`.
+- **다음 한 동작:** GitHub Pages `main /docs` 활성화 후 실제 공개 URL·HTTP 200·HTML 본문 검증. `CUTOVER=MIGRATION_NOT_CUTOVER` 유지.
+
+
 ## 최신 상태 — 공개 샘플 Pages 업로드 시도 및 실제 차단 (2026-11-11 23:49 KST)
 - **사용자 승인:** 기존 합성 샘플 HTML GitHub Pages 공개 업로드 승인. 실제 협업/업무·리뷰 데이터 공개 승인은 아님.
 - **PUBLIC_SAMPLE_SOURCE=VERIFIED**: 원본 `collab/dashboard/public_preview/index.html` 4,754 bytes, SHA-256 `6acf4bc151dc292e32d97a03479784b26f0384c61aef59f99120867c1d239786`. 고정 SHA 일치일 때만 게시 후보로 허용.
