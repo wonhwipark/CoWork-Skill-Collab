@@ -3,13 +3,14 @@
 - Revision: `r0001` / 2026-11-11 KST
 - Location: GitHub PRIVATE `wonhwipark/CoWork-Skill-Collab`, branch `main`, `collab/knowledge/`
 - Classification: **NON_SENSITIVE_SHARED_CONTEXT / POINTER_ONLY + VERIFIED_ABSTRACTS**
+- Latest K5.8/K6 contract: `collab/projects/L1-WORKSPACE-RAG-20261111-001/L1_KNOWLEDGE_UPDATER_K58_K6_WORKFLOW_CONTRACT_r0004_20261111.md`; 최신 실행 상태는 프로젝트 `CURRENT.md` 마지막 절을 우선.
 - Scope: 새 GPT 대화·설계 리뷰·Claude 인계 시 재사용할 **공통 맥락**. 특정 프로젝트 최신 실행 상태나 승인·실제 구현 완료를 선언하는 정본이 아님.
 - Authoritative live status: `collab/projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md`의 **가장 최신 섹션** 및 실제 결과/영수증.
 - CoWork transport: **MIGRATION_NOT_CUTOVER / DROPBOX_LIVE**. 이 문서 게시만으로 GitHub watcher·Windows Claude Code·GPT가 자동 실행되지 않음.
 
 ## 1. 새 창·협업 공통 진입 규칙
 
-1. 이 문서와 프로젝트의 **최신** `CURRENT.md`를 순서대로 읽는다.
+1. 프로젝트의 **최신** `CURRENT.md`를 먼저 읽고 이 공통 문서를 재사용한다.
 2. RAG `r0002`, 최신 GPT 자체 구조적 리뷰, Claude Code 리뷰 인계서 및 이후 추가된 리뷰 결과·영수증을 확인한다.
 3. 새 요청이 기존 리뷰와 동일하다면 **완료된 자체 리뷰를 처음부터 반복하지 말고 델타·미해결 BLOCKING·추가 실측을 중심으로 처리**한다.
 4. `GPT_SELF_REVIEW`는 GPT 자체 리뷰이며 `CLAUDE_INDEPENDENT_REVIEW`와 별개. 문서 게시·인계서 작성·READY 준비·리뷰 호출·완료·승인 상태를 각각 구별한다.
@@ -192,3 +193,15 @@ Claude Code 독립 리뷰로 간주하지 마. 운영 watcher/DB/Job/Telegram,
 - **기존 문서:** r0001 아키텍처/인계·HTML r0001/r0002·RAG 설계 r0002 및 리뷰 결과 원본 보존. 새 설계는 Work 유형과 artifact 종류·기술 분류를 분리하는 기존 계약을 유지한다.
 - **운영:** `INHOUSE_G0=NOT_RUN`, `GROUP_PUBLISH=NOT_RUN`, `M1_RAG=BLOCKED`, `MCP_FEEDBACK=SPEC_ONLY/NO_EXPORT`, `INDEPENDENT_REVIEW=NOT_RUN`, `MIGRATION_NOT_CUTOVER / DROPBOX_LIVE`. 승인 없는 운영·지식 정본·사외 반출 변경 없음.
 - **LATEST SOURCE OF TRUTH:** 해당 프로젝트 `CURRENT.md` 최신 섹션과 실제 영수증/실측이 이 문서보다 우선.
+
+## 2026-11-11 — K5.8/K6 × Workflow 자체 리뷰·보완 계약 r0004 / PUBLIC G0 handoff
+
+- **REVIEW_KIND:** GPT_SELF_REVIEW / DESIGN_DELTA_REVIEW. r0003 판정 REVISE, BLOCKING 2 / MAJOR 11 / MINOR 1. 기존 RAG 리뷰의 5/8/3을 재실행하거나 신규 지적에 합산하지 않는다.
+- **REVIEW_RESULT:** `collab/projects/L1-WORKSPACE-RAG-20261111-001/GPT_SELF_REVIEW_K58_K6_WORKFLOW_r0001_ON_r0003_20261111.md`.
+- **REVISED_CONTRACT:** `collab/projects/L1-WORKSPACE-RAG-20261111-001/L1_KNOWLEDGE_UPDATER_K58_K6_WORKFLOW_CONTRACT_r0004_20261111.md`. 독립 검증 상태축, 원인만 검증된 이슈 조건, MSC 주장 근거, typed source 입력, Work/Evidence namespace·N:M·section write set, 승인 바인딩·CAS·영속 operation 복구, 역링크·정정/회수·RAG 자격·legacy 이행을 명시. 문서 보완은 실제 코드 수정·시험 PASS가 아님.
+- **LATEST POLICY:** 그룹은 HLD·상세설계·AS-IS MSC·승인 설계변경·재사용 가능한 기술 이슈 히스토리까지, 개인은 Work/진행·수정·시험·리뷰/Evidence 원장. 검증된 원인은 미수정 상태로 후보 가능하나 가설은 개인에 유지하고 수정·시험 완료로 승격하지 않는다. 이전 인계의 진행 중 이슈 일괄 미게시 해석은 이번 조건으로 대체.
+- **PUBLIC_HANDOFF:** 사용자가 본 대화에서 비민감 사내 GPT 인계 MD를 PUBLIC L1Work handoffs에 게시하라고 명시 승인한 범위만 적용. 일반 PUBLIC 스킬 ZIP·운영 배포 승인으로 확대하지 않는다. `wonhwipark/L1Work`, `main`, `handoffs/L1_KNOWLEDGE_UPDATER_WORKFLOW_INHOUSE_HANDOFF_r0004_1111.md`.
+- **PUBLIC_COMMIT/READBACK:** `cf13392bbf02a1d178f1cd3b83348a7321447c07`, UTF-8 원문·Git blob 일치 PASS. [사내 인계 고정본](https://github.com/wonhwipark/L1Work/blob/cf13392bbf02a1d178f1cd3b83348a7321447c07/handoffs/L1_KNOWLEDGE_UPDATER_WORKFLOW_INHOUSE_HANDOFF_r0004_1111.md). 기존 handoff r0002 보존.
+- **INHOUSE BOUNDARY:** PUBLIC 인계는 독립형 G0 READ_ONLY이며 PRIVATE 협업 서비스/경로/인증을 사내 실행 의존성으로 넣지 않는다. G01~G14 확인과 T01~T24 계획; 실제 사내 조사·시험·수정·그룹 write는 NOT_RUN. 원문·코드·MSC·내부 경로/로그는 사내 보관, 외부 회신 기본 NO_EXPORT.
+- **OPEN:** KR-05/06 writer/복구 검증, KR-04 tier 원문 매핑 AS_IS_NOT_VERIFIED. 기존 root/owner/Job/반출/M1 게이트 유지. G0_K58_K6_SOURCE=NOT_VERIFIED / INHOUSE_E3=NOT_RUN / RAG_M1=BLOCKED / INDEPENDENT_REVIEW=NOT_RUN / GROUP_WRITE=NOT_RUN / SKILL_PUBLIC_RELEASE=NOT_RUN / MIGRATION_NOT_CUTOVER / DROPBOX_LIVE.
+- **NEXT:** 새 handoff r0004로 사내 설치 K5.8/K6·I/O·writer의 읽기 전용 매핑만 수행. PRIVATE 결과의 게시/재조회 영수증은 CURRENT.md 최신 절을 따른다.
