@@ -15,6 +15,10 @@
 
 **자동 전달용 ZIP은 PRIVATE가 아니라 PUBLIC 루트에만.** 작업자가 PUBLIC 경로를 명시했다면 우선 해당 유효 배포 경로를 사용한다. 접근 제한·검증 미완료로 PUBLIC 게시가 불가능할 때 PRIVATE에 대신 게시하지 말고 **PUBLIC_RELEASE=BLOCKED/NOT_POSTED** 및 원인을 보고한다. PRIVATE 이력 관리 자체는 배송을 의미하지 않는다.
 
+## 실행용 프롬프트 용어 기본 규칙
+
+- [환경 중립 표현 계약](EXECUTION_PROMPT_TERMINOLOGY_V1.md)을 Job-list 요청·Job Worker용 프롬프트·Agent MCP 조회 프롬프트에 적용한다. 망 위치를 드러내는 구분 표현을 기본적으로 배제하고, 역할/호스트/승인된 스킬 경로를 기준으로 작성한다. 반복 요청 없이 신규 산출물에 자동 적용.
+
 ## 2. Job-list 버전 수명주기 (서로 다른 상태)
 
 1. **REQUEST_DESIGNED**: 사용자 조사 범위/대상 환경·스킬/완료 기준 정의.
