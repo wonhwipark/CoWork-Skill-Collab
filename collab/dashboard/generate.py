@@ -143,6 +143,41 @@ def render_summary(state: dict, repo: str = REPO) -> str:
     return "\n".join(lines)
 
 
+
+def render_direct_view(state: dict, repo: str = REPO) -> str:
+    """One-click, GitHub-rendered Markdown dashboard. No Pages/public hosting."""
+    project_count = len(state["projects"])
+    requests = state["transport"]["requests"]["files_observed"]
+    reviews = state["transport"]["reviews"]["files_observed"]
+    receipts = state["transport"]["receipts"]["files_observed"]
+    # Reuse the already escaped, source-linked summary and item-by-item feedback.
+    detail = render_summary(state, repo)
+    detail = detail.replace("# CoWork GitHub SHADOW 대시보드", "## 상세 현황", 1)
+    header = [
+        "# CoWork 협업 대시보드",
+        "",
+        "> **PRIVATE · GitHub에서 바로 보기 · MIGRATION_NOT_CUTOVER**",
+        ">",
+        "> 지금 운영은 Dropbox LIVE입니다. 이 화면은 GitHub 기록을 읽기 전용으로 표시합니다.",
+        "",
+        "## 한눈에 보기",
+        "",
+        "| 현재 프로젝트 | GitHub REQUEST | GitHub REVIEW | GitHub RECEIPT |",
+        "|:---:|:---:|:---:|:---:|",
+        f"| **{project_count}** | **{requests}** | **{reviews}** | **{receipts}** |",
+        "",
+        "**파일 수 = 검증 완료 건수 아님.** 아직 GitHub로 이관되지 않은 자료는 미확인입니다.",
+        "",
+        "**[원본 HTML 파일](index.html)** · **[자동 갱신 Actions](../../.github/workflows/cowork-dashboard.yml)** · **[설명](README.md)**",
+        "",
+        "HTML은 GitHub에서 소스로 표시되므로 다운로드 후 브라우저로 열 수 있습니다. 이 페이지는 GitHub에서 바로 렌더링됩니다.",
+        "",
+        "---",
+        "",
+    ]
+    return "\n".join(header) + detail
+
+
 def write_outputs(root: Path, repo: str = REPO) -> dict:
     state = build_state(root, repo)
     out = root / "collab" / "dashboard"
@@ -150,6 +185,7 @@ def write_outputs(root: Path, repo: str = REPO) -> dict:
     (out / "state.json").write_text(json.dumps(state, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     (out / "index.html").write_text(render_html(state, repo), encoding="utf-8")
     (out / "SUMMARY.md").write_text(render_summary(state, repo), encoding="utf-8")
+    (out / "VIEW.md").write_text(render_direct_view(state, repo), encoding="utf-8")
     return state
 
 
