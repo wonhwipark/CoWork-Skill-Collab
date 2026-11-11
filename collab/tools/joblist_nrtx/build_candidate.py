@@ -92,7 +92,7 @@ in-house provider wiring and Knowledge Updater contract before any promotion.
 
 """
     data["SKILL.md"] = skill.replace(b"# job-list v0.4.34", intro + b"# Historical v0.4.34", 1)
-    pre = b"""# job-list v0.4.35 — NR L1 Tx four-scenario research candidate
+    pre = """# job-list v0.4.35 — NR L1 Tx four-scenario research candidate
 
 Status: STAGED / DEVELOPMENT_NOT_FOR_DEPLOYMENT / zero active jobs.
 Preserves existing v0.4.34 history and records. New fixed Linux Profile:
@@ -103,7 +103,7 @@ Investigation: Init RACH, UL SCell configure, activation, deactivation.
 No automatic group knowledge publish, source modifications or external export.
 
 """
-    data["README.md"] = pre + data["README.md"]
+    data["README.md"] = pre.encode("utf8") + data["README.md"]
     for f in ("skillsilent/manifest.json", "skillsilent/contract.json"):
         d = json.loads(data[f])
         assert d.get("skill_version") == OLD
