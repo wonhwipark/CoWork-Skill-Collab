@@ -117,8 +117,8 @@ body{{margin:0;background:var(--bg);font:15px/1.6 system-ui,'Malgun Gothic',sans
 {flow_view.FLOW_CSS}</style></head><body><main>
 <div class="header"><div><div class="overline">COWORK · GITHUB PRIVATE / READ-ONLY DASHBOARD</div><h1>협업 진행 현황</h1><p class="sub">프로젝트 CURRENT.md와 GitHub에 게시된 파일 기준 · 운영 실행 근거와 구별</p></div><span class="pill warning">MIGRATION_NOT_CUTOVER</span></div>
 <section class="banner" aria-label="중요 운영 상태"><strong>기존 Dropbox LIVE 유지 · GitHub SHADOW</strong><span>이 화면은 코드 리뷰 실행·배포·LIVE 전환을 수행하지 않습니다. GitHub로 이관되지 않은 자료는 아직 확인할 수 없습니다.</span></section>
-{flow_view.render_html(state)}
 <section class="stats" aria-label="GitHub 관측 파일 수"><div class="stat"><strong>{count}</strong><span>현재 문서가 있는 프로젝트</span></div><div class="stat"><strong>{reqs}</strong><span>GitHub 요청 파일 수 (검증 아님)</span></div><div class="stat"><strong>{reviews}</strong><span>GitHub 결과 파일 수 (검증 아님)</span></div><div class="stat"><strong>{receipts}</strong><span>GitHub 영수증 파일 수 (검증 아님)</span></div></section>
+{flow_view.render_html(state)}
 <div class="toolbar"><h2>진행 중인 Work</h2><label>프로젝트 검색 <input id="search" type="search" placeholder="Work 이름 또는 키워드" autocomplete="off"></label></div>
 <div class="grid" id="cards">{grid}</div><p id="zero" class="empty" hidden>검색 결과가 없습니다.</p>
 {review_chain.render_html(state["review_chains"], repo)}
@@ -156,6 +156,8 @@ def render_direct_view(state: dict, repo: str = REPO) -> str:
     receipts = state["transport"]["receipts"]["files_observed"]
     # Reuse the already escaped, source-linked summary and item-by-item feedback.
     detail = render_summary(state, repo)
+    diagram = flow_view.render_markdown(state)
+    detail = detail.replace(diagram, "", 1)
     detail = detail.replace("# CoWork GitHub SHADOW 대시보드", "## 상세 현황", 1)
     header = [
         "# CoWork 협업 대시보드",
@@ -167,6 +169,8 @@ def render_direct_view(state: dict, repo: str = REPO) -> str:
         "## 리뷰 처리 흐름",
         "",
         "**REQUEST → READY → REVIEW → RECEIPT → GPT 판정**",
+        "",
+        diagram,
         "",
         "## 한눈에 보기",
         "",
