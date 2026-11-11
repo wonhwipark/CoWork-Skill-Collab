@@ -155,3 +155,19 @@
 - **STATUS DISTINCT:** User-described Knowledge Updater operation and target topology are **design evidence**, not actual E3 verification. `INHOUSE_G0=NOT_VERIFIED`, `RAG_M1=BLOCKED`, `MCP_FEEDBACK=SPEC_ONLY / NO_EXPORT`, `CLAUDE_INDEPENDENT_REVIEW=NOT_RUN`.
 - **UNCHANGED:** 기존 사내 스킬/Work/DB/Windows watcher/Job/Telegram, `REQUEST/READY`, GitHub PUBLIC 배포, Dropbox `MIGRATION_NOT_CUTOVER / DROPBOX_LIVE`, 운영 LIVE 전환 없음.
 - **NEXT:** r0002 HTML 전체 구조 확인 → 승인된 사내 GPT에 기존 상위 인계 MD로 G0 읽기 전용 실측 수행; MCP나 지식 정본 자동 쓰기/반출은 별도 승인 필요.
+
+
+## 2026-11-11 — 그룹 상세 지식 허용에 따른 r0002 아키텍처·사내 인계 / HTML r0003 (LATEST)
+
+- **CHANGE DRIVER:** 사용자 전달 2026-11-11 그룹 회의 결과: Eron Software Dev Knowledge에 모듈 상세 설계·검증된 AS-IS MSC까지 등록 가능. 이는 콘텐츠 범위 허용으로, 자동 게시·덮어쓰기/운영 권한 승인 아님.
+- **GPT DESIGN DISPOSITION:** `DESIGN_REVISION_ACCEPTED / INHOUSE_INTEGRATION_NOT_VERIFIED`. **개인 Eron Workspace는 Work/진행 상태·개발 이력·Evidence 정본**, **그룹 Eron Software Dev Knowledge는 검증된 상세 기술 지식 정본**으로 경계 재정의. Workflow는 작업 intent/분류·Kernel Work 연결, 기존 L1 Knowledge Updater는 지식 기술 분류·게시 후보/검증·승인 연계를 우선 설계 가설로 사용.
+- **CLASSIFICATION:** `work_category`(ISSUE/FEATURE/REFACTOR/DESIGN/CODE_ANALYSIS; 제안 메타데이터), `artifact_kind`(CODE_FACTS/MSC_AS_IS/MSC_TO_BE), `module→feature→scenario` 및 Kernel profile/work_purpose는 서로 다른 축. Work 유형 필드는 설치 실측 전 구현되었다고 주장하지 않음.
+- **GROUP PUBLICATION GATE:** Git/P4 immutable SourceSnapshot + 근거·검증·중복/충돌·정보등급/권한·Owner 승인 후 게시 및 commit/readback, Workspace Work↔지식 revision 링크. 그룹 허용만으로 자동 Write 허가 없음. 현행 CODE_FACTS/MSC Work evidence는 삭제/이관하지 않음.
+- **PRIVATE main NEW FILES (PR 없음):**
+  - `collab/projects/L1-WORKSPACE-RAG-20261111-001/L1_E2E_INHOUSE_OFFSITE_ARCHITECTURE_r0002_20261111.md` — 상위 신규 기준 및 인터페이스/승격 게이트.
+  - `collab/projects/L1-WORKSPACE-RAG-20261111-001/L1_INHOUSE_GPT_OPENCODE_HANDOFF_r0002_20261111.md` — 사내 GPT/인가된 OpenCode에 바로 제공할 G0 읽기 전용 연동 검토, 스킬 역할, S01~S09 및 출력 계약. **사외 서비스·경로/인증 의존성 없음**.
+  - `collab/projects/L1-WORKSPACE-RAG-20261111-001/L1_E2E_INHOUSE_OFFSITE_WORKFLOW_VISUAL_GUIDE_r0003_20261111.html` — r0002 상세 HTML 보존 + r0003 상단 역할·정본 재분류 대형 구조도와 기존 4 시나리오 유지.
+- **REMOTE FILE CREATE COMMITS:** architecture `1c07a4e55442c373859f268fdd9a236ea72010b6`; inhouse handoff `bbc0ca8d7c1a943e40218662af0381f1752dfdbb`; HTML `3c376db238f844510bc5dab74efa8779350b78d7`. 원격 파일 재조회 및 구조적 확인은 별도 readback 결과를 따른다.
+- **ACTUAL TEST STATE:** `DOCUMENT_PUBLISHED`; `INHOUSE_G0=NOT_RUN`; `UPDATER_WORKFLOW_E2E=NOT_RUN`; `HTML_BROWSER_QA_r0003=NOT_RUN` (기존 r0002 QA 결과를 신버전 PASS로 소급 금지); `GROUP_AUTO_PUBLISH=NOT_RUN`; `RAG_M1=BLOCKED`; `MCP_FEEDBACK=SPEC_ONLY/NO_EXPORT`; `CLAUDE_INDEPENDENT_REVIEW=NOT_RUN`.
+- **NO OPERATIONAL CHANGE:** 기존 Workflow/Kernel/Updater 설치·사내 repo/Work/DB/그룹 지식 정본/PUBLIC ZIP/REQUEST_READY/Watcher/Job/Telegram 변경 없음. `MIGRATION_NOT_CUTOVER / DROPBOX_LIVE` 유지.
+- **NEXT_ONE_ACTION:** 사내 GPT가 새 `L1_INHOUSE_GPT_OPENCODE_HANDOFF_r0002_20261111.md`를 받아 설치된 Workflow·Knowledge Updater 실제 I/O·중복 기능·역할을 읽기 전용 G0로 확인, `REUSE / CONNECT / EXTEND / DEFER`와 격리 합성 테스트 결과를 사내에 기록. 허가 없는 그룹 지식 게시·사외 반출 금지.
