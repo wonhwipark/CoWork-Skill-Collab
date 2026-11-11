@@ -1,5 +1,15 @@
 # COWORK-GITHUB-DASHBOARD-20261111-001 — CURRENT
 
+## 최신 게시 상태 — HTML 스냅샷 PRIVATE 업로드 (2026-11-12)
+- **사용자 지시:** 이전에 제공한 `CoWork_협업흐름_STATUS_20261112.html`을 GitHub에 업로드.
+- **UPLOAD=PASS / GITHUB_REMOTE_READBACK=PASS**: `collab/dashboard/snapshots/CoWork_협업흐름_STATUS_20261112.html`을 PRIVATE `main`에 새 파일로 게시. 원본/원격 본문 정확히 일치.
+- **실제 파일:** 20,943 bytes, SHA-256 `e2530c1062540e93191ca62bcf9dd0ece1d8cdac35e0903d8e6079c047f5d9e1`. Git blob SHA `df233dd31404735f2d41bdc0a6b0059a97d49494`. 원격 게시 commit `b7fe8f9342a355d6516296d62f0ecbb238c8a5df`.
+- **진입점:** PRIVATE 루트 `README.md`와 `collab/dashboard/README.md`에 HTML 스냅샷 바로가기 등록 및 원격 내용 재조회 PASS.
+- **구분:** 이 파일은 **고정 스냅샷**이며, 실제 자동 생성 정본은 `collab/dashboard/index.html`. GitHub PRIVATE의 HTML 링크는 소스를 표시하므로 다운로드하여 브라우저에서 열어야 함. L1Work PUBLIC 샘플은 미변경.
+- **운영 안전:** Dropbox LIVE/Windows watcher/운영 DB/예약 작업/Telegram 및 Claude 리뷰 호출 변화 없음. `INDEPENDENT_REVIEW=NOT_RUN`, `CUTOVER=MIGRATION_NOT_CUTOVER` 유지.
+- **다음 한 동작:** GitHub PRIVATE 루트 README에서 HTML을 다운로드해 화면 확인. 이후 자동 HTML을 기본으로 계속 사용.
+
+
 ## 최신 표시 방식 — HTML 우선 (2026-11-12)
 - **사용자 요청:** "앞으로는 대시보드는 HTML로 확인". 기본 화면은 `collab/dashboard/index.html` (PRIVATE), GitHub `VIEW.md`는 보조. 루트 `README.md` 및 `collab/dashboard/README.md`에 HTML 기본 표시로 갱신. GitHub 파일 화면은 HTML 소스가 보이므로 파일 다운로드→브라우저로 열기 방식이며, PRIVATE HTML의 익명 공개 URL은 제공하지 않음.
 - **HTML 단일파일 스냅샷 별도 제공:** `CoWork_협업흐름_STATUS_20261112.html` (현재 대화 첨부) 20,943B, SHA-256 `e2530c1062540e93191ca62bcf9dd0ece1d8cdac35e0903d8e6079c047f5d9e1`; 프로젝트 CURRENT 3, GitHub REQUEST/REVIEW/RECEIPT 관측 각 0, Windows Stage1 NOT_RUN, Claude 독립 리뷰 NOT_RUN, CUTOVER=MIGRATION_NOT_CUTOVER, L1Work 합성 샘플 Pages 배포 PASS 기록. 협업 관리 환경 / 업무 실행 환경 용어 사용.
