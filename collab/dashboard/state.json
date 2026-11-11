@@ -7,7 +7,7 @@
     "host_shadow": "NOT_OBSERVED",
     "independent_review": "NOT_RUN",
     "migration_source": true,
-    "pages_deployment": "PASS",
+    "pages_deployment": "NOT_OBSERVED",
     "windows_stage1": "NOT_RUN"
   },
   "phase": "MIGRATION_NOT_CUTOVER",
@@ -28,7 +28,7 @@
       "status": "전환 전",
       "title": "COWORK-GITHUB-DASHBOARD-20261111-001 — CURRENT",
       "tone": "warning",
-      "topic": "최신 업데이트 — 협업 흐름·현재 STATUS 도식화 (2026-11-12)"
+      "topic": "최신 표시 방식 — HTML 우선 (2026-11-12)"
     },
     {
       "id": "L1-WORKSPACE-RAG-20261111-001",
