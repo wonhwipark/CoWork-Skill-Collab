@@ -8,30 +8,6 @@
 
 **REQUEST → READY → REVIEW → RECEIPT → GPT 판정**
 
-## 한눈에 보기
-
-| 현재 프로젝트 | GitHub REQUEST | GitHub REVIEW | GitHub RECEIPT |
-|:---:|:---:|:---:|:---:|
-| **3** | **0** | **0** | **0** |
-
-**파일 수 = 검증 완료 건수 아님.** 아직 GitHub로 이관되지 않은 자료는 미확인입니다.
-
-**[원본 HTML 파일](index.html)** · **[자동 갱신 Actions](../../.github/workflows/cowork-dashboard.yml)** · **[설명](README.md)**
-
-HTML은 GitHub에서 소스로 표시되므로 다운로드 후 브라우저로 열 수 있습니다. 이 페이지는 GitHub에서 바로 렌더링됩니다.
-
----
-## 상세 현황
-
-> **MIGRATION_NOT_CUTOVER** — 운영은 Dropbox LIVE 유지. GitHub 데이터만 표시합니다.
-
-이 문서는 GitHub Actions가 생성하는 안내 화면이며 리뷰·설치·배포 승인이나 자동 실행 결과가 아닙니다.
-
-- 문서가 있는 프로젝트: **3개**
-- GitHub REQUEST 파일 관측: **0개** (검증 안 됨)
-- GitHub REVIEW 파일 관측: **0개** (검증 안 됨)
-- GitHub RECEIPT 파일 관측: **0개** (검증 안 됨)
-
 ## 협업 흐름과 상태 · 역할 기준
 
 **협업 관리 환경** — GPT · GitHub / **업무 실행 환경** — Windows 감시기 · Claude Code
@@ -68,6 +44,32 @@ flowchart TB
 | 공개 샘플 웹페이지 | **배포 성공 기록** | L1Work의 샘플만 PUBLIC, 실제 협업 현황 비공개 |
 
 [전환·Windows 원문](../projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) · [대시보드 원문](../projects/COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md)
+
+
+## 한눈에 보기
+
+| 현재 프로젝트 | GitHub REQUEST | GitHub REVIEW | GitHub RECEIPT |
+|:---:|:---:|:---:|:---:|
+| **3** | **0** | **0** | **0** |
+
+**파일 수 = 검증 완료 건수 아님.** 아직 GitHub로 이관되지 않은 자료는 미확인입니다.
+
+**[원본 HTML 파일](index.html)** · **[자동 갱신 Actions](../../.github/workflows/cowork-dashboard.yml)** · **[설명](README.md)**
+
+HTML은 GitHub에서 소스로 표시되므로 다운로드 후 브라우저로 열 수 있습니다. 이 페이지는 GitHub에서 바로 렌더링됩니다.
+
+---
+## 상세 현황
+
+> **MIGRATION_NOT_CUTOVER** — 운영은 Dropbox LIVE 유지. GitHub 데이터만 표시합니다.
+
+이 문서는 GitHub Actions가 생성하는 안내 화면이며 리뷰·설치·배포 승인이나 자동 실행 결과가 아닙니다.
+
+- 문서가 있는 프로젝트: **3개**
+- GitHub REQUEST 파일 관측: **0개** (검증 안 됨)
+- GitHub REVIEW 파일 관측: **0개** (검증 안 됨)
+- GitHub RECEIPT 파일 관측: **0개** (검증 안 됨)
+
 
 
 ### 프로젝트별 상태 원문
