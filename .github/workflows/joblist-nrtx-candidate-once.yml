@@ -80,7 +80,8 @@ jobs:
           "$RUNNER_TEMP/joblist-test-venv/bin/python" -m pytest -q \
             tests/test_v0434_dependency_gate.py \
             tests/test_v0432_knowledge_workflow_bridge.py \
-            tests/test_v0431_knowledge_input_stage.py
+            tests/test_v0431_knowledge_input_stage.py \
+            tests/test_v0435_nrtx_candidate.py
       - name: Upload PRIVATE review-only artifact
         if: success()
         uses: actions/upload-artifact@v4
