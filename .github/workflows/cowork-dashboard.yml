@@ -41,7 +41,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          git add -- collab/dashboard/index.html collab/dashboard/SUMMARY.md collab/dashboard/state.json
+          git add -- collab/dashboard/index.html collab/dashboard/SUMMARY.md collab/dashboard/state.json collab/dashboard/VIEW.md
           if git diff --cached --quiet; then
             echo 'UNCHANGED: no commit needed'
             exit 0
