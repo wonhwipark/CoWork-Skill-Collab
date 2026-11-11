@@ -75,15 +75,12 @@ jobs:
               else: raise AssertionError('must reject unsupported OS')
           print('WORKER_UNSUPPORTED_OS_FAIL_CLOSED_PASS',flush=True)
           PY
-          if python3 -m pytest --version >/dev/null 2>&1; then
-            python3 -m pytest -q \
-              tests/test_v0434_dependency_gate.py \
-              tests/test_v0432_knowledge_workflow_bridge.py \
-              tests/test_v0431_knowledge_input_stage.py
-          else
-            echo 'PYTEST_NOT_AVAILABLE: related regression NOT_RUN'
-            exit 1
-          fi
+          python3 -m venv "$RUNNER_TEMP/joblist-test-venv"
+          "$RUNNER_TEMP/joblist-test-venv/bin/python" -m pip install --quiet pytest
+          "$RUNNER_TEMP/joblist-test-venv/bin/python" -m pytest -q \
+            tests/test_v0434_dependency_gate.py \
+            tests/test_v0432_knowledge_workflow_bridge.py \
+            tests/test_v0431_knowledge_input_stage.py
       - name: Upload PRIVATE review-only artifact
         if: success()
         uses: actions/upload-artifact@v4
