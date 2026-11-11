@@ -4,6 +4,16 @@
 
 
 
+## 사용자 1차 승인 접수·Windows 실행 인계 (2026-11-11 KST)
+- 사용자 응답 `그래진행해줘`를 직전 GPT 1차 묶음 다섯 항목 승인으로 접수: `STAGE1_AUTHORIZED_WITH_GATES`. LIVE, F1 실제 처분, 운영 DB 이행, 기존 Dropbox LIVE watcher 작업·DB·예약 작업 변경 승인 아님.
+- **승인 기록:** `USER_STAGE1_APPROVAL_RECORD_r0001_20261111.md` PRIVATE `main`, commit `24337b8effef0b154790a0843d281bba502dbb72`, 원격 readback PASS.
+- **Windows 단일 실행 인계:** `WINDOWS_STAGE1_APPROVED_SECURITY_SHADOW_REVIEW_ONE_SHOT_r0001_20261111.md` PRIVATE `main`, commit `ae653ff69085586cbab17f2834b452e63a80346f`, 원격 readback PASS. 대상: 비관리자 시험 계정+관리자 전용 trust root ACL, 승인자 별도 장치 개인키, read-only 실제 호스트 SHADOW 3주기+I/O 실측, 파일별 반출 허가 후 PRIVATE ZIP, 유효 서명/비용 상한 `STATIC $1`의 정식 독립 리뷰 최대 1회.
+- 단계별 조건: 별도 승인자 장치 및 운영 signer·trusted ACL·소스 반출 정책·독립 리뷰 runner/영수증 계약이 충족 안 되면 해당 항목 `BLOCKED/NOT_RUN`으로 중단, 모델 호출 0. 70개 파일 자체 비밀 검사 PASS는 회사 반출 허가를 대신하지 않음. SHADOW는 모델 호출/Telegram/remote write 0, 기존 운영 SQLite main/WAL/SHM 접근 0.
+- Windows 실제 실행은 GitHub 문서 게시만으로 시작되지 않으므로 **`WINDOWS_STAGE1_EXECUTION=NOT_RUN`** (현재 관측). 결과 예정 `CLAUDE_STAGE1_APPROVED_HOST_SECURITY_RESULT_FOR_GPT_20261111.md`. 기존 v0.2.8 후보 ZIP 173615B, 보고 SHA256 `c6231cc329faff26c6e04a0ca454dec0d62a5eaaa0eb08edf9b6a57280f78daa`, 사용자 승인 실행 후 현장 검증 대기.
+- GPT 직접 실행 범위: 승인·인계 MD 게시/재조회만 PASS, 호스트 계정·키·토큰·SHADOW 설치/실행·실 리뷰는 **NOT_RUN**. `INDEPENDENT_REVIEW=NOT_RUN`, `CUTOVER=MIGRATION_NOT_CUTOVER`, 기존 Dropbox LIVE 유지.
+- **다음 한 동작:** Windows Claude Code 대화에서 새 원샷 인계서의 정확한 PRIVATE repo/main/상대 경로를 전달해 한 번 실행. 결과 MD 직접 게시·remote readback 후 GPT 판정. LIVE는 추후 별도 2차 명시 승인.
+
+
 ## GPT 최종 판정 — v0.2.8 전환 필수 게이트 (2026-11-11 KST)
 - **GPT_DISPOSITION=ACCEPT_WITH_CHANGE / PRE_CUTOVER_READINESS=PARTIAL / CUTOVER=MIGRATION_NOT_CUTOVER**. 상세 판정 `GPT_V0_2_8_FINAL_PRE_CUTOVER_DISPOSITION_r0001_20261111.md` PRIVATE main 신규 게시·원격 readback PASS (commit `70f015c38f0072c8082d4afaf1b9c6bbf21d257a`).
 - Claude 결과 `CLAUDE_CUTOVER_ESSENTIAL_GATES_RESULT_FOR_GPT_20261111.md`와 70개 파일 매니페스트 `REVIEW_INPUT_MANIFEST_v0_2_8_FOR_GPT_20261111.md`를 GPT가 원격 재조회. 최신 ZIP `skill-collab-watcher_v0_2_8_1111.zip` 보고 크기 173615B/SHA256 `c6231cc329faff26c6e04a0ca454dec0d62a5eaaa0eb08edf9b6a57280f78daa`. ZIP 로컬 보관/PRIVATE 미게시, GPT 원본 바이트 독립 검증 NOT_RUN.
