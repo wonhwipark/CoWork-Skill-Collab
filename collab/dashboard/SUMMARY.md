@@ -16,3 +16,13 @@
 | L1-WORKSPACE-RAG-20261111-001 | 문서상 진행 | [CURRENT.md](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md) |
 
 미이관 파일이나 승인·서명 검증 결과가 없어도, 이 화면은 이를 임의로 성공/0건 완료 처리하지 않습니다.
+
+## GitHub 리뷰·GPT 판정 연결
+
+문서 연결은 승인 서명·운영 실행 검증이 아닙니다.
+
+| 요청 | Work | 단계 | GPT 판정 |
+|---|---|---|---|
+| 미이관 | - | 미확인 | - |
+
+비차단 지적도 GPT 판정 기록 전에는 해결 처리하지 않습니다.

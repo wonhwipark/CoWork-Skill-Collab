@@ -31,7 +31,8 @@
       "topic": "Posted on GitHub PRIVATE main without PR"
     }
   ],
-  "schema": "COWORK_GITHUB_DASHBOARD_SHADOW_V1",
+  "review_chains": [],
+  "schema": "COWORK_GITHUB_DASHBOARD_SHADOW_V2",
   "source": "GITHUB_TRACKED_FILES_ONLY",
   "transport": {
     "receipts": {
