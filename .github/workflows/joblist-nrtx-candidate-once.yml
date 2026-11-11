@@ -1,0 +1,93 @@
+name: Build NR TX job-list v0.4.35 candidate (not deployable)
+on:
+  push:
+    paths:
+      - .github/workflows/joblist-nrtx-candidate-once.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build_candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout PRIVATE non-sensitive builder
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Read pinned PUBLIC baseline ZIP
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 2 --max-time 75 \
+            -o job-list_v0_4_34_1109.zip \
+            https://raw.githubusercontent.com/wonhwipark/L1Work/main/job-list_v0_4_34_1109.zip
+          test "$(wc -c < job-list_v0_4_34_1109.zip)" = "1551031"
+      - name: Build and byte-verify isolated candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 collab/tools/joblist_nrtx/build_candidate.py \
+            job-list_v0_4_34_1109.zip candidate
+          mkdir -p extracted
+          python3 - <<'PY'
+          import zipfile
+          with zipfile.ZipFile('candidate/job-list_v0_4_35_1112.zip') as z:
+              assert z.testzip() is None
+              z.extractall('extracted')
+          PY
+          python3 -m py_compile \
+            extracted/job-list_v0_4_35/scripts/nr_tx_knowledge_linux_job.py \
+            extracted/job-list_v0_4_35/scripts/job_core.py
+          python3 extracted/job-list_v0_4_35/scripts/job_core.py validate \
+            --root extracted/job-list_v0_4_35
+          python3 - <<'PY'
+          import json, pathlib
+          p=pathlib.Path('extracted/job-list_v0_4_35')
+          active=json.loads((p/'requests/one-shot-jobs.json').read_text())
+          staged=json.loads((p/'requests/staged/one-shot-v0.4.35-nr-l1tx-knowledge-research.json').read_text())
+          assert active['jobs']==[], 'no unattended execution of a candidate'
+          assert len(staged['jobs'])==1
+          assert staged['jobs'][0]['platform']=='linux'
+          s=(p/'references/NR_TX_KNOWLEDGE_RESEARCH_ORCHESTRATION_v0435.md').read_text()
+          for t in ('L2_L1_TX_REQ','PHY_CONFIG_REQ','SCELL_STATUS_IND','SOURCE_PARENT_DIR_V1','l1-knowledge-updater','code-analyzer','doc-converter'):
+              assert t in s,t
+          for f in (p/'references/NR_TX_KNOWLEDGE_RESEARCH_ORCHESTRATION_v0435.md',p/'scripts/nr_tx_knowledge_linux_job.py'):
+              assert '/home/whpark/' not in f.read_text(), 'host path must not ship in ZIP'
+          print('STATIC_PROFILE_AND_PROMPT_VALIDATION_PASS',flush=True)
+          PY
+      - name: Regression selected and safe failure tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd extracted/job-list_v0_4_35
+          python3 - <<'PY'
+          import importlib.util
+          from pathlib import Path
+          import unittest.mock as m
+          file=Path('scripts/nr_tx_knowledge_linux_job.py')
+          spec=importlib.util.spec_from_file_location('nr_tx_worker',file)
+          x=importlib.util.module_from_spec(spec);spec.loader.exec_module(x)
+          with m.patch.object(x.sys,'platform','darwin'):
+              try: x.preflight(Path('/no/such/joblist'),Path('/no/such/home'))
+              except ValueError as ex: assert str(ex)=='LINUX_NONROOT_REQUIRED'
+              else: raise AssertionError('must reject unsupported OS')
+          print('WORKER_UNSUPPORTED_OS_FAIL_CLOSED_PASS',flush=True)
+          PY
+          if python3 -m pytest --version >/dev/null 2>&1; then
+            python3 -m pytest -q \
+              tests/test_v0434_dependency_gate.py \
+              tests/test_v0432_knowledge_workflow_bridge.py \
+              tests/test_v0431_knowledge_input_stage.py
+          else
+            echo 'PYTEST_NOT_AVAILABLE: related regression NOT_RUN'
+            exit 1
+          fi
+      - name: Upload PRIVATE review-only artifact
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: job-list_v0_4_35_1112_DEVELOPMENT_NOT_FOR_DEPLOYMENT
+          path: candidate/job-list_v0_4_35_1112.zip
+          retention-days: 14
+          if-no-files-found: error
