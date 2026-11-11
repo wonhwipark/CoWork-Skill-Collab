@@ -1,5 +1,17 @@
 # COWORK-GITHUB-DASHBOARD-20261111-001 — CURRENT
 
+## 공개용 HTML 독립 후보 — 설계·구현·시험 (2026-11-11 KST)
+- **사용자 요청 범위:** 민감정보를 제거한 별도 공개용 HTML 설계·구현·시험. 실제 공개 게시/Pages/PUBLIC 배포는 별도 승인. 이번 작업은 PRIVATE `main`에서만 후보 제작 및 검증.
+- **현재 판정:** `DEVELOPMENT=IMPLEMENTED`, `SELF_TEST=PASS`, `ACTIONS_PRIVATE_RUN=PASS`, `INDEPENDENT_REVIEW=NOT_RUN`, `PUBLICATION_APPROVAL=NOT_GRANTED`, `PUBLIC_HOST_E2E=NOT_RUN`, `CUTOVER=MIGRATION_NOT_CUTOVER`.
+- **후보:** `collab/dashboard/public_preview/index.html` — **4754 bytes**, SHA-256 **`6acf4bc151dc292e32d97a03479784b26f0384c61aef59f99120867c1d239786`**. GitHub blob SHA `a83dab85bf7dbf6d98722b64d34d826b0d613660`; GPT가 만든 로컬 파일의 Git blob SHA-1과 원격 blob ID 일치 → 후보 실제 바이트 일치.
+- **개발:** `collab/dashboard/public_preview/build.py`는 `STATIC_SYNTHETIC_ONLY` 문구만 이용하는 정적 HTML 생성기. 실제 `CURRENT.md`, REQUEST/READY/REVIEW/RECEIPT, Work ID, 운영 이력/통계, 계정/경로/링크, 자격증명을 입력으로 사용하지 않음. 샘플 3단계와 `NOT_APPROVED` 표시.
+- **보안 게이트:** `collab/dashboard/public_preview/PUBLIC_RELEASE_GATE.md`; 실제 PUBLIC/Pages/외부 URL에 배포하는 단계는 명시 승인 전 금지. `collab/dashboard/public_preview/README.md`에 운영 범위 기록.
+- **시험:** PRIVATE GitHub Actions run `43039501201` `completed/success`, workflow 로그 **기존 18 PASS + 후보 보안 8 PASS = 26 PASS / 0 FAIL**. 후보 4754B; Action이 PRIVATE `main`에만 생성 파일 게시(commit `c764932`). GitHub 원격 fetch_file·blob SHA 검증 PASS. 보안 테스트는 외부 URL/스크립트/네트워크 요청, PRIVATE 파일 유출 sentinel, 실행 시각/결과 결정성, CSP 및 식별자 누출 방지를 포함.
+- **브라우저 시험:** 로컬 Chromium desktop 1280px 및 mobile 390px에서 HTML 렌더링, 카드 3개, 수평 overflow 0 확인. 실제 외부 공개 호스트/인증/브라우저 E2E는 `NOT_RUN`.
+- **기존 구성 불변:** PRIVATE 대시보드 `collab/dashboard/index.html`/VIEW/요약 유지, Dropbox LIVE, Windows watcher/Bridge/예약 작업/SQLite main·WAL·SHM/Telegram, Claude 모델 호출, PUBLIC `wonhwipark/L1Work`, GitHub Pages 및 LIVE 전환 변경 없음.
+- **다음 한 동작:** 사용자가 공개할 **정확한 후보 SHA 및 대상 호스팅 방식**을 승인하고 보안/반출 범위를 확정한 뒤에만 별도 공개 게시. 실제 정보 연동은 별도의 허용목록 데이터 계약과 추가 승인 필요.
+
+
 ## 클릭 한 번으로 보기 — PRIVATE GitHub 렌더링 (2026-11-11 KST)
 - 사용자 요청: GitHub HTML을 다운받지 않고 링크 클릭만으로 진행 현황을 보고 싶음. GitHub PRIVATE HTML blob은 브라우저 실행 화면이 아니므로, 공개 Pages를 열지 않고 **GitHub Markdown native VIEW**로 제공.
 - **직접 보기:** `collab/dashboard/VIEW.md` — PRIVATE 로그인 권한을 가진 사람에게 GitHub 화면에서 즉시 렌더링됨. 기존 `index.html`과 `SUMMARY.md`는 보존.
