@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - .github/workflows/joblist-nrtx-candidate-once.yml
+      - collab/tools/joblist_nrtx/**
   workflow_dispatch:
 permissions:
   contents: read
