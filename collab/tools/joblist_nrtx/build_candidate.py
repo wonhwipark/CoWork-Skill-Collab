@@ -126,6 +126,16 @@ No automatic group knowledge publish, source modifications or external export.
     )
     core = replace_one(core, anchor, anchor + profile, "PROFILE_INSERT")
     data["scripts/job_core.py"] = core
+    # Retire exact-version assertions in the two baseline release tests; keep
+    # their functional gates and all other checks unchanged.
+    data["tests/test_v0434_dependency_gate.py"] = replace_one(
+        data["tests/test_v0434_dependency_gate.py"],
+        b".read_text().strip()=='0.4.34'", b".read_text().strip()=='0.4.35'", "TEST_RELEASE_VERSION")
+    data["tests/test_v0431_knowledge_input_stage.py"] = replace_one(
+        data["tests/test_v0431_knowledge_input_stage.py"],
+        b"core.VERSION=='0.4.34'", b"core.VERSION=='0.4.35'", "TEST_CORE_VERSION")
+    data["tests/test_v0435_nrtx_candidate.py"] = (
+        tool_dir / "test_v0435_nrtx_candidate.py").read_bytes()
 
     for f in ("install.py",):
         if f in data:
