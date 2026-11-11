@@ -1,8 +1,10 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
-- Updated: 2026-11-11 KST — K5.8/K6 r0003 self-review, r0004 contract and approved PUBLIC G0 handoff
+- Updated: 2026-11-11 KST — r0005 G0 installed facts / G1 assumptions and reuse-first handoff
 - CoWork operating mode: `MIGRATION_NOT_CUTOVER / DROPBOX_LIVE`
-- Scope: design self-review, revised contract and user-approved non-sensitive PUBLIC G0 handoff documents only; no skill/runtime changes
+- Scope: collaboration/handoff documents only; G0 installed facts separated from G1 assumptions; no existing knowledge/metadata or runtime writes
+- G0_INSTALL_FACTS: NONE_CONFIRMED (inhouse G0 NOT_RUN)
+- G1_ASSUMPTIONS: PROVISIONAL / UNKNOWN_API_RECORD: ADDITIONAL_CHECK_REQUIRED_OR_BLOCKED
 - DEVELOPMENT: DESIGN_ONLY
 - SELF_TEST: document static QA and remote UTF-8/blob/hash readback PASS; prior Kernel E2 reports retained as historical; new skill/schema/host tests NOT_RUN
 - INDEPENDENT_REVIEW: NOT_RUN (GitHub documents posted; no Claude execution or valid LIVE REQUEST/READY witnessed)
@@ -200,3 +202,17 @@
 - **GATES:** G0_K58_K6_SOURCE=NOT_VERIFIED / INHOUSE_E3=NOT_RUN / TEST_T01_T24=NOT_RUN / RAG_M1=BLOCKED / INDEPENDENT_REVIEW=NOT_RUN / GROUP_WRITE=NOT_RUN / SOURCE_PATCH=NOT_RUN / SKILL_PUBLIC_RELEASE=NOT_RUN / HOST_INSTALL=NOT_RUN / REQUEST_READY=NOT_RUN / PAID_REVIEW=NOT_RUN / LIVE_CUTOVER=NOT_RUN. MIGRATION_NOT_CUTOVER / DROPBOX_LIVE 유지.
 - **READINESS:** r0003 원문 그대로 구현=REQUIRES_REVISION; r0004 독립 인계의 G0 읽기 전용 조사=READY_FOR_INHOUSE_G0; 실제 구현/그룹 게시/M1 해제=BLOCKED_AT_G0_AND_RELEVANT_VALIDATION.
 - **NEXT_ONE_ACTION:** 사내 GPT에 PUBLIC handoff r0004 파일을 첨부해 기존 K5.8/K6 전체 원문·실제 설치 I/O·writer 보장만 읽기 전용 매핑하고 사내 결과를 작성. 문서 취득을 실행 승인·외부 회신 요청으로 해석하지 않음. 원문·근거·상세 결과는 사내 보관, 외부 반출 기본 NO_EXPORT.
+
+## 2026-11-11 — r0005: G0 설치 사실 / G1 설계 가정 분리·기존 제공자 우선 재사용 (LATEST)
+
+- **USER_STEERING:** G0에서 확인한 설치 사실과 G1 설계 가정을 분리. K5.8 재분류는 Markdown 설계표만. 기존 knowledge/metadata 불변. SourceSnapshot/CAS/N:M/복구는 기존 Kernel/Updater/Git 제공자를 우선 재사용. 신규 엔진/schema 확장은 실제 gap이 확인된 최소 설계 범위로 제한. 미확인 API/record는 구현 대상으로 확정하지 않고 추가 확인 또는 BLOCKED.
+- **CURRENT_EVIDENCE:** 사내 G0=NOT_RUN, 이 작업에서 확보한 설치 사실=NONE_CONFIRMED. 공개 후보 E2/기존 E1/사용자 전제를 설치 사실로 승격하지 않음. G1 속성/역할/호출/복구는 PROVISIONAL이며 관련 G0 근거·미확인을 연결.
+- **OUTPUT:** G0 설치 사실표·G0 미확인표와 G1 가정표를 분리. 기존 기능 매핑/실제 gap 판정표, K5.8 재분류 설계표, 후속 시험 계획 작성. 함수 존재와 실제 API 성공을 구분하고 API 실행 없으면 NOT_RUN.
+- **NO_DATA_CHANGE:** 기존 knowledge 본문·tier/front matter·manifest/index·metadata·record/schema·Work/Evidence·경로 불변. sidecar/migration/backfill/재색인/rename/rollback 실행 없음. 이번 사외 수정도 설계·인계·상태 MD만이며 collab/knowledge 기존 문서는 변경하지 않음.
+- **REUSE_FIRST:** 기존 revision/Evidence 참조·provider guard·Work/knowledge 링크·receipt/history/commit/readback·유효한 수동 정산을 우선 매핑. 미조회 API/record는 실제 gap 확인이 아니며 추정 adapter/stub/schema·새 원장·복구 엔진을 구현 항목으로 확정하지 않음.
+- **LATEST_CONTRACT:** `collab/projects/L1-WORKSPACE-RAG-20261111-001/L1_KNOWLEDGE_UPDATER_K58_K6_WORKFLOW_CONTRACT_r0005_20261111.md`. 논리 속성은 새 필수 저장 필드가 아닌 G1 확인 목록. r0004 및 과거 자체 리뷰는 보존하며 신규 리뷰/호스트 검증 PASS로 간주하지 않음.
+- **PUBLIC_HANDOFF:** `wonhwipark/L1Work`, `main`, `handoffs/L1_KNOWLEDGE_UPDATER_WORKFLOW_INHOUSE_HANDOFF_r0005_1111.md`. [사내 GPT 인계 r0005](https://github.com/wonhwipark/L1Work/blob/a205efc2d24b93ad6c484273ac57db8af290425d/handoffs/L1_KNOWLEDGE_UPDATER_WORKFLOW_INHOUSE_HANDOFF_r0005_1111.md). handoffs/README.md 최신 링크 갱신, r0004/r0002 보존. 사외 PRIVATE 협업 경로/인증·사내 원문/코드/MSC/로그 없음.
+- **VERIFIED_CONTENT:** PUBLIC commit `a205efc2d24b93ad6c484273ac57db8af290425d`; PRIVATE content commit `75153a2975aa7bbce15add4b8683bd8f122a14ea`. 원격 UTF-8 전체·계산 Git blob 일치 PASS, 동일 바이트 SHA-256 확인. handoff 41825 bytes, SHA-256 `cec3b699b0c6b0e825016007965a512d8d766f14c1eef8977d651fbc0fc22be8`.
+- **RECEIPT:** `collab/projects/L1-WORKSPACE-RAG-20261111-001/K58_K6_R0005_SCOPE_AND_PUBLICATION_RECEIPT_20261111.md`. 위 검증 content commit을 기록. CURRENT/receipt 자체 metadata commit/readback은 게시 후 확인하며 자기 해시를 미리 기록하지 않음.
+- **GATES:** G0_K58_K6_SOURCE=NOT_VERIFIED / INHOUSE_E3=NOT_RUN / TEST_T01_T24=NOT_RUN / RAG_M1=BLOCKED / INDEPENDENT_REVIEW=NOT_RUN / GROUP_WRITE=NOT_RUN / EXISTING_KNOWLEDGE_WRITE=NOT_RUN / EXISTING_METADATA_WRITE=NOT_RUN / SOURCE_PATCH=NOT_RUN / NEW_ENGINE_OR_SCHEMA=DEFER_UNTIL_CONFIRMED_GAP / REQUEST_READY=NOT_RUN / PAID_REVIEW=NOT_RUN / SKILL_RELEASE=NOT_RUN / LIVE_CUTOVER=NOT_RUN. MIGRATION_NOT_CUTOVER / DROPBOX_LIVE 유지.
+- **NEXT_ONE_ACTION:** 사내 GPT에 r0005를 첨부해 G0 사실/미확인과 G1 가정·재사용 매핑·K5.8 설계표만 작성. 미확인 API/record는 추가 확인/BLOCKED. 구현/데이터 수정/외부 회신을 요구하지 않음.
