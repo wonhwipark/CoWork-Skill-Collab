@@ -1,9 +1,10 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
-- Updated: 2026-11-11 KST — r0005 G0 installed facts / G1 assumptions and reuse-first handoff
+- Updated: 2026-11-12 KST — follow-up memo registered, inhouse result pending (user-reported request)
 - CoWork operating mode: `MIGRATION_NOT_CUTOVER / DROPBOX_LIVE`
 - Scope: collaboration/handoff documents only; G0 installed facts separated from G1 assumptions; no existing knowledge/metadata or runtime writes
-- G0_INSTALL_FACTS: NONE_CONFIRMED (inhouse G0 NOT_RUN)
+- G0_INSTALL_FACTS: NONE_CONFIRMED (inhouse result not received; task USER_REPORTED_REQUESTED)
+- FOLLOWUP_NOTE_STATUS: PENDING_RESULT / INHOUSE_EXECUTION_RESULT: NOT_VERIFIED
 - G1_ASSUMPTIONS: PROVISIONAL / UNKNOWN_API_RECORD: ADDITIONAL_CHECK_REQUIRED_OR_BLOCKED
 - DEVELOPMENT: DESIGN_ONLY
 - SELF_TEST: document static QA and remote UTF-8/blob/hash readback PASS; prior Kernel E2 reports retained as historical; new skill/schema/host tests NOT_RUN
@@ -216,3 +217,25 @@
 - **RECEIPT:** `collab/projects/L1-WORKSPACE-RAG-20261111-001/K58_K6_R0005_SCOPE_AND_PUBLICATION_RECEIPT_20261111.md`. 위 검증 content commit을 기록. CURRENT/receipt 자체 metadata commit/readback은 게시 후 확인하며 자기 해시를 미리 기록하지 않음.
 - **GATES:** G0_K58_K6_SOURCE=NOT_VERIFIED / INHOUSE_E3=NOT_RUN / TEST_T01_T24=NOT_RUN / RAG_M1=BLOCKED / INDEPENDENT_REVIEW=NOT_RUN / GROUP_WRITE=NOT_RUN / EXISTING_KNOWLEDGE_WRITE=NOT_RUN / EXISTING_METADATA_WRITE=NOT_RUN / SOURCE_PATCH=NOT_RUN / NEW_ENGINE_OR_SCHEMA=DEFER_UNTIL_CONFIRMED_GAP / REQUEST_READY=NOT_RUN / PAID_REVIEW=NOT_RUN / SKILL_RELEASE=NOT_RUN / LIVE_CUTOVER=NOT_RUN. MIGRATION_NOT_CUTOVER / DROPBOX_LIVE 유지.
 - **NEXT_ONE_ACTION:** 사내 GPT에 r0005를 첨부해 G0 사실/미확인과 G1 가정·재사용 매핑·K5.8 설계표만 작성. 미확인 API/record는 추가 확인/BLOCKED. 구현/데이터 수정/외부 회신을 요구하지 않음.
+
+## 2026-11-12 — 후속 메모 GitHub 등록·운영지침 명확화 / 사내 결과 대기 (LATEST)
+
+- **REQUEST:** 사용자가 현재 GitHub 운영지침을 확인해 메모도 처리할 수 있도록 요청. 이 작업은 문서 기록·발견·후속 판정 절차이며 기술 설계/사내 실행 변경이 아님.
+- **RULES_CHECKED:** collab/START_HERE.md, collab/knowledge/OPERATING_BASELINE.md, collab/ops/CONTRACTS/NO_PR_COLLABORATION_V1.md 및 이관/본 프로젝트 CURRENT를 확인. PRIVATE 비민감 협업 자료의 직접 게시 규칙은 존재했으나 메모 경로·대기 상태·다음 상태확인 시 발견/판정 절차는 명시되지 않았음.
+- **GUIDANCE:** `collab/ops/CONTRACTS/FOLLOWUP_NOTES_V1.md` 신규 추가, START_HERE에 진입 링크·요약 반영. 기록 요청한 메모는 프로젝트 notes/에 보존하고 CURRENT에 상태·조건·다음 행동 연결. 최신 상태 요청 때 열린 메모와 관련 *_FOR_GPT_*/INTERACTIVE_ADDENDUM_*, 결과/영수증을 함께 판정. 자동 감시·모델 호출 없음.
+- **FOLLOWUP_NOTE:** `collab/projects/L1-WORKSPACE-RAG-20261111-001/notes/L1_KNOWLEDGE_R0005_FOLLOWUP_MEMO_20261112.md` ([메모](notes/L1_KNOWLEDGE_R0005_FOLLOWUP_MEMO_20261112.md)). 원문 내용 보존, LF/최종 newline 형태 확인. NOTE_STATUS=PENDING_RESULT. 기준 인계는 PUBLIC wonhwipark/L1Work main handoffs/L1_KNOWLEDGE_UPDATER_WORKFLOW_INHOUSE_HANDOFF_r0005_1111.md.
+- **USER_REPORTED_PROGRESS:** 사용자는 사내 GPT가 기존 r0005를 검토한 후 사내 저사양 LLM에 수행을 요청했다고 설명. 이는 USER_REPORTED_REQUESTED이며 완료·수행 범위 준수·API 호출·설치 사실·무쓰기 증거가 아님. 실제 결과/영수증은 아직 접수하지 않음.
+- **INHOUSE_STATUS:** INHOUSE_RESULT=NOT_RECEIVED / INHOUSE_EXECUTION=USER_REPORTED_REQUESTED / G0_INSTALL_FACTS=NONE_CONFIRMED / INHOUSE_E3=NOT_VERIFIED. 기존 이력의 NOT_RUN은 당시 외부 관찰 범위로 보존. 사내 실제 knowledge/metadata/Work/Evidence 쓰기 여부는 UNKNOWN_UNTIL_RESULT이며 '없음'으로 단정하지 않음.
+- **CHECK_ON_RESULT:** doc-converter의 기존 MSC/participant/가독형 변환 규칙을 문서에서 확인한 것·연결 설계·실제 호출로 구분. code-analyzer의 분석 근거와 표현 변환을 분리하고 실제 중복 구현/누락 연결만 확인. issue-analyzer/l1-github/P4/job-list 등은 관련 기존 계약을 확인해 재사용하며 미확인 API/record를 구현 대상으로 확정하지 않음.
+- **SUMMARY_ONLY:** 상세 보고·코드·MSC·로그·내부 경로는 사내 보관. 반출 허용이 확인된 경우 메모의 짧은 범주형 요약으로 후속 판단; 요약만으로 E3/통합 PASS 판정하지 않음. 원문 타이핑·무승인 반출을 요구하지 않음.
+- **PRESERVED:** 현재 사내 수행 요청과 PUBLIC r0005 handoff는 변경·취소·재실행하지 않음. 기존 knowledge/metadata·Kernel registry/schema·Work/Evidence·DB/Job/설치본에 이번 GPT 작업으로 쓴 것 없음. collab/knowledge 기존 문서·PUBLIC 저장소·watcher/운송/알림/자동화 변경 없음. 사내 작업의 실제 쓰기는 결과 접수까지 미확인.
+- **PUBLICATION_VERIFICATION:** PRIVATE main content commit `40cf3663c0e953de93982d5a35dca01da1dd9441`. 아래 3개 내용 전체 UTF-8와 계산 blob 일치 PASS, 동일 bytes SHA-256 확인. START_HERE는 main 경로 첫 조회에서 이전 blob을 반환해 동일 고정 commit 및 refs/heads/main으로 다시 확인했고 모두 일치; 재게시/실행 재호출 없음. 이 CURRENT의 후속 기록 commit/readback은 게시 후 별도 확인.
+
+| 문서 | UTF-8 bytes | SHA-256 | Git blob SHA | Readback |
+|---|---:|---|---|---|
+| `collab/projects/L1-WORKSPACE-RAG-20261111-001/notes/L1_KNOWLEDGE_R0005_FOLLOWUP_MEMO_20261112.md` | 6345 | `f282697ed4aa8944cc565340ac8fc7d339ba214f0d3fad8281f3517dce715000` | `b4962d5d5798776b6f3250d81c273fc9ff5d7030` | PASS |
+| `collab/ops/CONTRACTS/FOLLOWUP_NOTES_V1.md` | 5636 | `aadb68bcf0199d48e9b1fdb8060e60837638de4d2774a9dcd6f2d4b1061e4e21` | `06bf40d5bc567c05cc0efecd85d480aba2ea49fe` | PASS |
+| `collab/START_HERE.md` | 5195 | `7589c4c71af5c8d9a0ac93e8a3c5a6642f6df81596dc204cddee0d5aadca537b` | `a52affad673d3f904dc5f464d5e885a5a712cc58` | PASS |
+
+- **NO_EXECUTION:** REQUEST_READY/PAID_REVIEW/SOURCE_PATCH/SKILL_INSTALL/GROUP_WRITE/LIVE_CUTOVER=NOT_RUN. RAG_M1=BLOCKED / INDEPENDENT_REVIEW=NOT_RUN. 등록을 CLOSED/설계 구현 완료/백그라운드 예약으로 처리하지 않음. 기존 운영 상태는 변경하지 않음.
+- **NEXT_ONE_ACTION:** 사용자에게 사내 결과가 확보되면 허용된 범주형 요약만 전달받아 이 메모 항목별로 판정. 그때 필요한 doc-converter 등 기존 연결의 최소 보완만 결정하며 전체 설계 재작성·현재 요청 재실행은 자동 지시하지 않음.
