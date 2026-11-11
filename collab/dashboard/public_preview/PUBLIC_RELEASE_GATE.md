@@ -1,4 +1,14 @@
 # CoWork 공개 샘플 GitHub Pages 배포 게이트 — 최신 판정
+
+## 2026-11-12 갱신 — PUBLIC L1Work 명시 게시 승인 이행
+
+- 기존 "PUBLIC L1Work에 HTML을 올리지 않는다"는 보류 조건은 **사용자가 L1Work에 공개용 샘플 HTML 저장을 명시적으로 요청한 범위에서만 대체**된다. 내부 협업 데이터 또는 미래 변경본의 자동 공개 승인은 아님.
+- **PUBLIC FILE=POSTED / READBACK=PASS:** `wonhwipark/L1Work` `main` `docs/cowork-dashboard/index.html`; 승인된 고정 샘플의 공개 치환본 SHA-256 `40a33950e4fc37ed643522ed06b73ea89afdd9b4c0447417d67bc19501c82779`, 4,765 bytes; commit `0a92951c114b014b40353c3351870e731ef55cb7`.
+- Pages 사이트 **미검증**: L1Work `docs/index.html` 진입 페이지는 게시되었지만 GitHub Pages `main /docs` 설정 및 HTTP 200 E2E 미검증. `PAGES_SITE_PUBLISHED=NOT_VERIFIED`.
+- 새 LIVE/provider 전환 승인 없음. PRIVATE `CURRENT.md`, REQUEST/READY/REVIEW/RECEIPT, 내부 로그 또는 실제 통계 반출 금지 유지.
+- 최신 정본: `collab/projects/COWORK-GITHUB-DASHBOARD-20261111-001/L1WORK_PUBLIC_HTML_UPLOAD_20261112.md`.
+- 이 항목은 이전 2026-11-11의 호스팅 보류 상태를 **시간 순서상 보완**하며 원본 기록은 보존한다.
+
 기준: 2026-11-11 23:49 KST
 
 ## 승인 및 실제 상태
