@@ -31,6 +31,15 @@
       "topic": "최신 상태 — GitHub Pages HTML 기본화 및 공개 상태 요약 게시 (2026-11-12)"
     },
     {
+      "id": "JOBLIST-NRTX-20261112-001",
+      "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
+      "source": "collab/projects/JOBLIST-NRTX-20261112-001/CURRENT.md",
+      "status": "상태 확인 필요",
+      "title": "JOBLIST-NRTX-20261112-001 — CURRENT",
+      "tone": "neutral",
+      "topic": "Implemented candidate"
+    },
+    {
       "id": "L1-WORKSPACE-RAG-20261111-001",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md",
