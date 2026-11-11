@@ -4,6 +4,12 @@
 
 This repository is a **private collaboration workspace**, not a deployment repository and not an approved location for restricted corporate materials.
 
+## 대시보드 바로가기
+
+- **[CoWork 내부 진행 대시보드 (GitHub PRIVATE)](collab/dashboard/VIEW.md)** — GitHub 로그인·권한 필요, 프로젝트 진행과 리뷰/피드백 확인
+- **[CoWork 공개 샘플 대시보드 (웹페이지)](https://wonhwipark.github.io/L1Work/cowork-dashboard/)** — 브라우저에서 HTML 직접 보기, 실제 업무 데이터 없는 샘플
+- [대시보드 최신 작업 현황](collab/projects/COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md) — 개발·검증·공개 현황
+
 ## Start here
 - [운영 진입점](collab/START_HERE.md)
 - [이관 현재 상태](collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md)
@@ -16,7 +22,7 @@ This repository is a **private collaboration workspace**, not a deployment repos
 
 ## Repository roles
 - **PRIVATE here:** non-restricted design, candidate artifacts, reviews, receipts, status and dashboard — only after explicit source classification/approval.
-- **PUBLIC [L1Work](https://github.com/wonhwipark/L1Work):** verified, approved final ZIPs only, preserving existing anonymous download paths.
+- **PUBLIC [L1Work](https://github.com/wonhwipark/L1Work):** separately approved final ZIPs and the explicitly approved synthetic-only dashboard HTML sample, preserving existing anonymous ZIP download paths. PRIVATE collaboration files must not be published.
 
 ## Current safety status
 - Dropbox reviewer watcher and dashboard remain the existing LIVE system.
