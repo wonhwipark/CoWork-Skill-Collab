@@ -9,6 +9,13 @@
 - **업데이트:** `main`에 관련 입력/생성기 변경 시 push 이벤트, 또는 Actions 화면의 `Run workflow` 수동 실행
 - **이 Actions의 출력 영역:** GitHub PRIVATE만. L1Work 공개 샘플은 별도 게시된 정적 HTML이고, Windows 감시기·기존 LIVE 경로에는 쓰지 않음
 
+## HTML 기본 확인 방식 (2026-11-12)
+
+- **기본 산출물은 HTML:** [협업 흐름·현재 STATUS HTML](index.html) — PRIVATE GitHub의 HTML 원본. GitHub 코드 화면은 HTML을 렌더링하지 않으므로 **파일을 다운로드한 뒤 브라우저에서 열어** 실제 화면을 확인한다.
+- **HTML 자동 갱신:** `.github/workflows/cowork-dashboard.yml`이 `CURRENT.md`와 GitHub 리뷰 파일 변경을 감지하면 PRIVATE `index.html`을 재생성한다.
+- **보조 산출물:** [VIEW.md](VIEW.md)는 GitHub 자체 표시용이며, HTML을 다운로드하기 어려운 경우에만 사용한다.
+- **공개용 L1Work Pages는 합성 샘플 전용:** PRIVATE 실제 협업 현황을 PUBLIC으로 게시하거나 자동 동기화하지 않는다. 로컬 다운로드 HTML은 생성 당시 스냅샷이므로 새로고침만으로 갱신되지 않는다.
+
 ## 현재 협업 흐름 및 검증 상태 (2026-11-12)
 
 **[현재 협업 흐름 도식·상태표 바로 보기](VIEW.md)** — GitHub PRIVATE의 Markdown/Mermaid 렌더링을 이용하므로 HTML 다운로드 없이 확인할 수 있습니다.
