@@ -43,3 +43,14 @@ Use the already-built candidate for an approved, read-only in-house G0 check of 
 - **FINAL_SELF_TEST:** GitHub Actions run `43059239712` completed SUCCESS: baseline byte pin, ZIP CRC/manifest, Python compile, `job_core validate`, 33 pytest PASS/0 FAIL, unsupported-OS BLOCKED test, zero active jobs. This is a **development candidate**, NOT host E2E or independent review.
 - **PUBLIC_RELEASE=NOT_POSTED / INHOUSE_SKILL_UPDATER=NOT_RUN / JOB_ACTIVATION=NOT_RUN / GROUP_KNOWLEDGE_WRITE=NOT_RUN**. The requested automatic analysis has **not started**. This restriction avoids unwarranted auto-install/one-shot consumption while host approval, Knowledge Updater CLI and independent review remain unverified.
 - **NEXT_ONE_ACTION:** verify in-house installed Knowledge Updater invocation, owner-approved Work/SourceSnapshot and Skill-Updater activation contract, then request independent review and build a new explicitly active deployable release. Do not overwrite candidate ZIP, create a fake PASS, or treat GitHub PRIVATE posting as an in-house execution signal.
+
+## 2026-11-12 — PUBLIC 배송 개념 정정 및 정책 반영 (LATEST)
+
+- **USER_CORRECTION:** `job-list` 신규 ZIP을 사용자가 사내 Linux에 전달하는 유일한 실배포 경로는 **`wonhwipark/L1Work` `main` 루트 `job-list_v<version>_<MMDD>.zip` → 기존 사내 `skill-updater`**. PRIVATE 후보 ZIP만 게시하고 전달을 완료했다고 보고한 것은 경로 해석 오류.
+- **POLICY_APPLIED:** PRIVATE `collab/ops/CONTRACTS/JOBLIST_PUBLIC_DELIVERY_V1.md` 신규; `collab/ops/CONTRACTS/PUBLIC_RELEASE_GATE.md`, `collab/START_HERE.md`에 SSOT 링크와 active/staged/installed/executed 분리 규칙 반영. 각 파일 원격 전체 readback PASS. 이 정책 게시로 사내 host 동작이 변경되지 않음.
+- **MISROUTED_PRIVATE_ZIP_DELETED:** `collab/candidates/joblist_nrtx/job-list_v0_4_35_1112.zip`를 PRIVATE `main` HEAD에서 제거, commit `dd62696f76f6643456b5a44620e7f094abcb86cb`; GitHub 동일 path 재조회 `404 NOT_FOUND` PASS. Git 과거 commit history에는 기존 바이트가 남을 수 있으며, 삭제를 완전 소거로 주장하지 않는다.
+- **CANDIDATE_REPRODUCIBLE:** 비민감 빌드 소스와 33 PASS 시험 증거는 PRIVATE에 보존. 임시 Actions artifact(`43058706135`)는 만료될 수 있고 배송 채널이 아니다.
+- **PUBLIC_DESTINATION_APPROVAL:** 사용자는 최종 ZIP의 `L1Work/main` 루트 게시를 명시적으로 요청. 단 이 승인은 v0.4.35의 `development_not_for_deployment` 판단을 재분류하거나 미실행 사내 검증/독립 리뷰를 PASS로 만들지는 않는다.
+- **PUBLIC_ZIP:** `NOT_POSTED`. 새 버전 v0.4.35는 아직 `requests/one-shot-jobs.json = {"schema_version":1,"jobs":[]}`인 개발 후보. 자체시험 `33 PASS`, `INDEPENDENT_REVIEW=NOT_RUN`, `HOST_G0=NOT_RUN`, `L1_KNOWLEDGE_UPDATER_CALL=NOT_VERIFIED`, `ACTIVE_JOB=0`, `HOST_SKILL_UPDATER_INSTALL=NOT_RUN`, `NR_L1TX_ANALYSIS=NOT_RUN`; PUBLIC 루트에 지금 올리는 것은 무인 조사 요청을 전달하는 결과가 아니라 미준비 후보 자동설치 위험.
+- **PUBLIC_BASELINE:** `wonhwipark/L1Work/main` 기존 `job-list_v0_4_34_1109.zip`은 변경하지 않음.
+- **NEXT_ONE_ACTION:** 사내 G0 계약(설치된 `l1-knowledge-updater` 실제 action/스킬 호출, Work ID/승인, Linux source revision, Skill-Updater 활성화)을 증거로 확정하고, 활성 One-shot 및 독립 리뷰/실행 결과 확인 게이트를 통과한 **신규 배포 가능한 ZIP**만 `L1Work/main` 루트에 게시한 뒤 remote SHA-256 readback을 수행. PRIVATE ZIP을 배송 대체물로 사용하지 않는다.
