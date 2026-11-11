@@ -15,6 +15,15 @@
 
 이 링크는 GitHub가 직접 렌더링하는 Markdown 대시보드입니다. PRIVATE 저장소 권한이 있는 로그인 사용자만 확인할 수 있습니다. 기존 HTML 파일의 코드 화면을 여는 방식과 다릅니다. GitHub Pages나 PUBLIC 게시 없이 GitHub Actions가 `VIEW.md`를 함께 자동 갱신합니다.
 
+## 별도 공개 후보 HTML (미배포)
+
+**[공개용 후보 HTML 소스 — PRIVATE에서만 접근](public_preview/index.html)** · [생성기와 보안 기준](public_preview/README.md) · [PUBLIC 배포 승인 게이트](public_preview/PUBLIC_RELEASE_GATE.md)
+
+- 공개용 HTML을 별도로 구현하고 PRIVATE Actions에서 생성·보안 시험합니다.
+- 이 후보는 **정적 예시 화면**으로 실제 Work, REQUEST, REVIEW, RECEIPT, GPT 판정, 링크, 수치, 운영 현황을 읽거나 포함하지 않습니다.
+- 브라우저 화면 확인은 다운로드한 `public_preview/index.html`을 열어 실시합니다. 현재 공개 URL은 **없습니다**.
+- **실제 PUBLIC 게시/Pages·외부 호스팅 활성화는 별도 명시적 승인 전 금지**입니다.
+
 ## 사용자 확인 방법
 
 1. [클릭 한 번에 열리는 대시보드](VIEW.md) — GitHub 모바일/웹에서 바로 표시. [GitHub에서 읽는 요약](SUMMARY.md) — GitHub 모바일/웹에서 바로 확인할 Markdown.
