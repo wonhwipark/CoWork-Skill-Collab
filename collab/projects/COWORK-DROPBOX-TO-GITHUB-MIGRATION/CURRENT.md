@@ -4,6 +4,9 @@
 
 
 
+## STAGE1_APPROVED_HOST_RESULT: PARTIAL (Claude 자체 시험 보고, 2026-11-12 KST)
+- 결과: `CLAUDE_STAGE1_APPROVED_HOST_SECURITY_RESULT_FOR_GPT_20261111.md` (PRIVATE `main`, commit `221dd0f73f73f1d18bcc2b87f12f825e1631d12c`, 원격 readback 16115B 동일). A 비관리자 계정·ACL PASS(HOST_REAL); B 시험키 PASS / 실키 BLOCKED_SIGNER_DEVICE; C 비관리자 SHADOW 3주기 ETW 계측 PASS(운영 DB·WAL·SHM·lock 이벤트 0, GitHub 응답 SYNTHETIC, 실GitHub BLOCKED_CREDENTIAL); D ZIP BLOCKED_EXPORT_CLASSIFICATION(로컬 보존); E 독립 리뷰 BLOCKED/NOT_RUN(모델 호출 0). 33건 수집 차이=cryptography 의존 2개 모듈 35개 미수집−모듈 SKIP 2. 결함 3건 수정 → 후보 v0.2.10 (174745B, sha256 67ea7fc63ccc1de77a28025b7c4f1b701ee6f4fa387311bca3f3d2bc7432b108, 로컬). Dropbox LIVE 유지 / GitHub CUTOVER=NOT_RUN / INDEPENDENT_REVIEW=NOT_RUN.
+
 ## 사용자 1차 승인 접수·Windows 실행 인계 (2026-11-11 KST)
 - 사용자 응답 `그래진행해줘`를 직전 GPT 1차 묶음 다섯 항목 승인으로 접수: `STAGE1_AUTHORIZED_WITH_GATES`. LIVE, F1 실제 처분, 운영 DB 이행, 기존 Dropbox LIVE watcher 작업·DB·예약 작업 변경 승인 아님.
 - **승인 기록:** `USER_STAGE1_APPROVAL_RECORD_r0001_20261111.md` PRIVATE `main`, commit `24337b8effef0b154790a0843d281bba502dbb72`, 원격 readback PASS.
