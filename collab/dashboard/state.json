@@ -59,7 +59,7 @@
     }
   ],
   "review_chains": [],
-  "schema": "COWORK_GITHUB_DASHBOARD_SHADOW_V3",
+  "schema": "COWORK_GITHUB_DASHBOARD_SHADOW_V4",
   "source": "GITHUB_TRACKED_FILES_ONLY",
   "transport": {
     "receipts": {
@@ -78,5 +78,72 @@
       "verified": false
     }
   },
-  "visibility": "PRIVATE_REPO_ONLY"
+  "visibility": "PRIVATE_REPO_ONLY",
+  "work_items": [
+    {
+      "evidence": "CURRENT 문서 관측. 단계·진행률은 증명되지 않음",
+      "independent_review": "NOT_VERIFIED",
+      "next_action": "CURRENT.md 최신 상태 및 다음 담당 확인",
+      "owner": "미등록",
+      "phase": "UNKNOWN",
+      "record_source": "CURRENT_ONLY_UNSTRUCTURED",
+      "self_test": "NOT_VERIFIED",
+      "skill": "미지정",
+      "source": "collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md",
+      "title": "COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태",
+      "work_id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION"
+    },
+    {
+      "evidence": "CURRENT 문서 관측. 단계·진행률은 증명되지 않음",
+      "independent_review": "NOT_VERIFIED",
+      "next_action": "CURRENT.md 최신 상태 및 다음 담당 확인",
+      "owner": "미등록",
+      "phase": "UNKNOWN",
+      "record_source": "CURRENT_ONLY_UNSTRUCTURED",
+      "self_test": "NOT_VERIFIED",
+      "skill": "미지정",
+      "source": "collab/projects/COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md",
+      "title": "COWORK-GITHUB-DASHBOARD-20261111-001 — CURRENT",
+      "work_id": "COWORK-GITHUB-DASHBOARD-20261111-001"
+    },
+    {
+      "evidence": "CURRENT 문서 관측. 단계·진행률은 증명되지 않음",
+      "independent_review": "NOT_VERIFIED",
+      "next_action": "CURRENT.md 최신 상태 및 다음 담당 확인",
+      "owner": "미등록",
+      "phase": "UNKNOWN",
+      "record_source": "CURRENT_ONLY_UNSTRUCTURED",
+      "self_test": "NOT_VERIFIED",
+      "skill": "미지정",
+      "source": "collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md",
+      "title": "COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT",
+      "work_id": "COWORK-SKILL-DISCOVERY-20261112-001"
+    },
+    {
+      "evidence": "CURRENT 문서 관측. 단계·진행률은 증명되지 않음",
+      "independent_review": "NOT_VERIFIED",
+      "next_action": "CURRENT.md 최신 상태 및 다음 담당 확인",
+      "owner": "미등록",
+      "phase": "UNKNOWN",
+      "record_source": "CURRENT_ONLY_UNSTRUCTURED",
+      "self_test": "NOT_VERIFIED",
+      "skill": "미지정",
+      "source": "collab/projects/JOBLIST-NRTX-20261112-001/CURRENT.md",
+      "title": "JOBLIST-NRTX-20261112-001 — CURRENT",
+      "work_id": "JOBLIST-NRTX-20261112-001"
+    },
+    {
+      "evidence": "CURRENT 문서 관측. 단계·진행률은 증명되지 않음",
+      "independent_review": "NOT_VERIFIED",
+      "next_action": "CURRENT.md 최신 상태 및 다음 담당 확인",
+      "owner": "미등록",
+      "phase": "UNKNOWN",
+      "record_source": "CURRENT_ONLY_UNSTRUCTURED",
+      "self_test": "NOT_VERIFIED",
+      "skill": "미지정",
+      "source": "collab/projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md",
+      "title": "L1-WORKSPACE-RAG-20261111-001 — CURRENT",
+      "work_id": "L1-WORKSPACE-RAG-20261111-001"
+    }
+  ]
 }
