@@ -5,11 +5,11 @@
       "work_id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
       "skill": "cowork-review-watcher",
       "title": "cowork-review-watcher",
-      "phase": "DROPBOX_BRIDGE_UPDATER_DISABLED",
+      "phase": "BLOCKED",
       "owner": "GPT / Claude Code",
-      "self_test": "SELF_TEST_REPORTED",
+      "self_test": "PASS",
       "independent_review": "NOT_RUN",
-      "next_action": "GPT가 Bridge·Dashboard updater 중지(Disabled, 프로세스 0, 정의는 Enabled=false 한 줄만 변경, 알림기·감시기 상태 유지) 결과를 판정한다. 남은 Dropbox 의존 프로세스는 알림기뿐이며 GitHub 알림 경로 이행·유지는 사용자 별도 승인으로 결정한다. ACTIVE_PROVIDER=NONE, GitHub LIVE 전환은 미승인이다."
+      "next_action": "사용자 승인 패킷(B 서명자 기기·C 수락 방식·D 반출 확인·읽기 전용 토큰) 응답 대기. ACTIVE_PROVIDER=NONE, LIVE 미승인."
     }
   ]
 }
