@@ -56,3 +56,15 @@
 - DOCUMENTATION: 게시 후보 작성 시점. 원격 commit/readback/해시 확인은 게시 후 기록.
 - HOST_INSTALL / RUNTIME / INDEPENDENT_REVIEW / CODE_PATCH / PUBLIC_RELEASE / LIVE_CUTOVER: NOT_RUN. 기존 r0005 요청·Knowledge/metadata·스킬 원본·예약/DB 변경 없음.
 - NEXT: 실제 관련 작업에서 필요한 reference/policy/설치본만 추가 확인. 18개 밖 패키지로 자동 범위 확대하지 않음.
+
+### 게시 원격 검증 결과
+
+- CONTENT_COMMIT: `329372535f768bbca0986a882eadee7578cda3ea`. 대상 4개 원격 전체 본문·Git blob·동일 bytes SHA-256 일치 PASS. 17개 원본 ZIP도 고정 PUBLIC commit의 blob과 일치 확인.
+- DOCUMENTATION=POSTED_VERIFIED. 독립 리뷰/호스트·실행 시험은 NOT_RUN. 최종 CURRENT 추가 기록 자체는 후속 commit에 게시하고 다시 readback 확인한다.
+
+| 문서 | bytes | SHA-256 (위 content commit) |
+|---|---:|---|
+| `collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/SKILL_18_PACKAGE_AUDIT_20261112.md` | 8226 | `859fd987caccb2d8004ee81c88dd3b86e1cd7753d4c2458fb6a91bd743399f80` |
+| `collab/knowledge/SKILL_CAPABILITY_CATALOG.md` | 6977 | `1685b15f94efeafa64815b87175abb79983102e674130ab5d58419a7aa4faab9` |
+| `collab/START_HERE.md` | 7428 | `fd2419f8db2d3f3b09a9750a1fc985476545d7c963b9328bfee8a6a0b2ff217f` |
+| `collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md` | 5635 | `151e94cabc36b1ec6ae62f952c121bfd573022621a9cd08f89141c949ae5925b` |
