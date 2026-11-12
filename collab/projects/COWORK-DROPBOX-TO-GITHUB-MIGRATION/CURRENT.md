@@ -1,5 +1,13 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## DROPBOX_WATCHER_SAFE_DISABLE_RESULT: WATCHER_DISABLE=PASS / ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER (Claude 자체 보고, 2026-11-12 KST)
+- 결과: `CLAUDE_DROPBOX_WATCHER_SAFE_DISABLE_RESULT_FOR_GPT_20261112.md` (PRIVATE `main`, commit `e6e88524fc2bc562ed16966b8d15e5b7ae5ced1c`, 원격 readback은 이 절 게시 후 별도 확인). 자체 실측 보고이며 독립 리뷰가 아니다. GitHub LIVE 전환이 아니다.
+- 실행: Claude 세션(비관리자)의 `Disable-ScheduledTask`는 액세스 거부로 변경 없이 중단했고, 사용자가 관리자 셸에서 검증된 스크립트 1개를 실행했다(작업 이름·동작 일치, 프로세스 정확히 2개, 리뷰어 자식 0, 유휴 구간 확인 후 Disable → Stop).
+- 결과: 예약 작업 `Disabled`, 감시기 프로세스 0, 락 해제. 중지 전 진행 중·불확실·실패 작업 0, 모델 신규 호출 0(카운터 61 유지), 비용 $0. 중지 후 정지 상태에서 DB 일관 백업(main·WAL 해시 일치)과 복사본 복원 시험 통과(`integrity_check=ok`, 작업 COMPLETED 60·CONFLICT 1). 작업 정의 복원 시험은 새 작업 생성이라 SKIP(`RESTORE_READY=PARTIAL`).
+- 변경하지 않은 것: 대시보드 갱신기·Notifier·Bridge(작업 정의 해시 불변, 같은 프로세스), Dropbox 원본 요청·영수증·ZIP·운영 DB 데이터. 백업과 작업 정의는 로컬 보호 폴더에만 있고 게시하지 않았다.
+- 알아 둘 점: 새 Dropbox 요청은 자동 처리되지 않는다(`ACTIVE_PROVIDER=NONE`). 대시보드 갱신기는 계속 Dropbox에 게시하며 요청 상태는 더 이상 갱신되지 않는다. 복구는 작업 Enable 후 Start(관리자 권한, 별도 승인). ETW 게이트는 변경 없음(`C=PARTIAL`, `ETW=FAIL_UNTRUSTED_MEASUREMENT`).
+- 다음 한 동작: GPT가 결과를 판정하고, 남은 Dropbox 의존 구성요소 처리와 GitHub 리뷰 경로 준비는 사용자 별도 승인 후 결정.
+
 ## 사용자 승인 — Dropbox 리뷰 감시기 안전 Disable (2026-11-12 KST)
 - 사용자 “그래”를 직전 질문의 **Dropbox 리뷰 감시기만 안전 중지·기존 예약작업 Disable 및 DB/요청/리뷰/영수증 보존** 명시 승인으로 접수. 승인 기록 `USER_DROPBOX_WATCHER_SAFE_DISABLE_APPROVAL_r0001_20261112.md` (PRIVATE main, commit `ad300ef5f11c08224d4c48d9154d2306979dc8a0`, readback PASS).
 - **Windows 원샷 실행 인계** `WINDOWS_DROPBOX_WATCHER_SAFE_DISABLE_ONE_SHOT_r0001_20261112.md` (PRIVATE main, commit `48b9f10d3ffa17349159fe4a93804958a51e1ce7`, readback PASS). 단계: 실제 task·프로세스 확인 → 인플라이트/REQUEST/READY/영수증/비용 중복 위험 확인 → 데이터·task 원본 무손실 백업/rollback 준비 → watcher 1개만 Disabled+Stop → PID 0/자동 재시작 차단/모델 호출 0/다른 컴포넌트 무영향 검증 → 결과 PRIVATE 게시.
