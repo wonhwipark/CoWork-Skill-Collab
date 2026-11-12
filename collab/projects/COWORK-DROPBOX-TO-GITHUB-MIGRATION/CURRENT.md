@@ -1,5 +1,15 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## GPT 판정 — Bridge·Dropbox Dashboard updater 정리 후보 수용 (2026-11-13 KST)
+- GPT가 `CLAUDE_POST_DROPBOX_DISABLE_DEPENDENCY_AUDIT_RESULT_FOR_GPT_20261113.md` 및 CURRENT/TRACKER 원문 재조회. Claude `HOST_REAL_READ_ONLY / SELF_TEST_REPORTED` 결과를 **`DEPENDENCY_AUDIT=PASS_REPORTED`**로 수용. `ACTIVE_PROVIDER=NONE`, 호스트 감사 변경 0.
+- Bridge는 `HOST_APPLIED` 완료된 v0.1.9 1회 설치용 수신기, 5분 주기 `ALREADY_COMPLETED`, 제어 대상 갱신기만 → **`RETIRE_CANDIDATE` 1순위**. Dashboard updater는 Dropbox 폴더→Dropbox index.html 전용, 입력/출력 고정·GitHub Actions/Pages 독립 → **`RETIRE_CANDIDATE` 2순위**. Notifier는 `KEEP`(프로세스 별도 평가, 공용 Telegram 모듈·비밀/notify_note 삭제 금지).
+- 사용자 의도: Dropbox 대시보드를 현재 보지 않는 것으로 기존 대화에서 알려짐. 해당 사실을 Stop+Disable 실행 승인으로 확대하지 않음. 추가 중지 동작은 **`AWAITING_EXPLICIT_APPROVAL`**.
+- 원본 SHM 수정 시각 30초 주기는 notifier polling과 상관만 확인. 쓰기 주체/인과는 미입증. main/WAL 불변은 파일 메타데이터 관측 수준. 나머지 자동화 전체 디스크 검색은 수행하지 않음.
+- Bridge+갱신기 정리 계획 및 사전 안전조건: `GPT_RESIDUAL_DROPBOX_DEPENDENCY_DISPOSITION_AND_DISABLE_PLAN_r0001_20261113.md` PRIVATE main 게시/remote readback PASS. 승인 후 정체·백업→**Bridge 먼저** Disable/Stop(5분 재실행 차단)→갱신기 Disable/Stop(로그온 trigger, restart 3회/5분)→PID0·프로세스 재생성0·다른 작업 정의 해시 불변 확인. 알림기/공용 venv·인증/DB/원본 Dropbox 자료 불변.
+- `C_OVERALL=PARTIAL`, `INDEPENDENT_REVIEW=NOT_RUN`, `ACTIVE_PROVIDER=NONE`, `MIGRATION_NOT_CUTOVER` 유지. GitHub LIVE 전환이나 유료 독립 리뷰 실행 없음.
+- 다음 한 동작: 사용자에게 **Bridge와 Dropbox Dashboard updater만 Stop+Disable** 명시 승인 요청. 승인 전 Windows 작업 중지 0.
+
+
 ## POST_DROPBOX_DISABLE_DEPENDENCY_AUDIT: DEPENDENCY_AUDIT=PASS / DASHBOARD=RETIRE_CANDIDATE / NOTIFIER=KEEP / BRIDGE=RETIRE_CANDIDATE / HOST_CHANGES=0 (Claude 자체 보고, 2026-11-13 KST)
 - 결과: `CLAUDE_POST_DROPBOX_DISABLE_DEPENDENCY_AUDIT_RESULT_FOR_GPT_20261113.md` (PRIVATE `main`, commit `1dc9fb70deb1e18f5a7c7a59d3fe1c5f42c613c1`). 읽기 전용 감사이며 정리 실행이 아니다. 독립 리뷰가 아니다. GitHub LIVE 전환이 아니다.
 - 감시기: 감사 시점 Disabled·프로세스 0, 새 자동 재시작 경로 없음(`ACTIVE_PROVIDER=NONE`). 재부팅·재로그인 후 유지는 미검증(마지막 부팅 11-03).
