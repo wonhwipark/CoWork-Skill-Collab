@@ -3,7 +3,7 @@
 - Updated: 2026-11-12 KST
 - Scope: 비민감 공통 스킬 목록·발견/재사용 절차·진입 링크·저장소 AGENTS 문서.
 - USER_AUTHORIZATION: 공통 기능 목록을 보강하고 새 창 시작 절차에 연결. 18개 PRIVATE/원본 재확인은 다음 별도 작업으로 분리.
-- DOCUMENTATION: READY_FOR_PUBLICATION / REMOTE_READBACK=PENDING (이 게시 후보 작성 시점).
+- DOCUMENTATION: POSTED / CONTENT_REMOTE_READBACK=PASS (아래 고정 content commit 기준).
 - SKILL_18_DETAIL_RECHECK: PENDING_CHECK / NOT_RUN_THIS_TASK.
 - INDEPENDENT_REVIEW: NOT_RUN.
 - SKILL_CODE_CHANGE / HOST_INSTALL / JOB_RUN / SCHEDULER_CHANGE / REQUEST_READY / PAID_REVIEW / PUBLIC_POST / LIVE_CUTOVER: NOT_RUN.
@@ -31,9 +31,18 @@
 
 - 기존 문서·경로 조회: 수행. 파일 존재·내용을 직접 확인.
 - 변경 문서 UTF-8·내부 링크·시작 순서·미확인/승인 경계 점검: PASS (문서 정적 확인; 기능시험 아님).
-- 원격 commit/바이트 SHA-256/readback: 게시 후 확인 예정. 검증 후 별도 영수증과 최신 절을 추가.
+- 원격 content commit/바이트 SHA-256/readback: 7개 전체 PASS. 아래 검증 기록 참조. 이 최종 상태 추가 자체는 metadata commit 게시 후 다시 확인한다.
 - 실제 스킬 호출·호스트·통합시험: NOT_RUN. 문서 점검을 기능시험 PASS로 처리하지 않는다.
 
 ## 다음 별도 작업
 
 `SKILL_18_DETAIL_RECHECK=PENDING_CHECK`: 기존 18개 감사 자료와 PRIVATE 정본을 대조해 정확한 이름·원본 위치·역할/I/O·연결·근거 수준을 보강한다. 사용자가 정한 순서에 따라 현재 문서 연결 작업 완료 후 별도 진행하며, 이 기록으로 백그라운드 작업이나 유료 리뷰를 시작하지 않는다.
+
+## 2026-11-12 — 게시·원격 검증 완료 (LATEST)
+
+- CONTENT_COMMIT: `af8ea93ae0e31dc21b7c96311e45135307a3b1da` / PRIVATE main 직접 게시, PR 없음.
+- REMOTE_READBACK: 7개 전체 원격 본문·Git blob·동일 bytes SHA-256 일치 PASS. 변경 scope 7개와 내부 링크 29개 확인 PASS.
+- RECEIPT: [게시 검증 기록](PUBLICATION_RECEIPT_20261112.md). 각 파일의 bytes/SHA-256/blob와 검증 범위를 기록.
+- OUTCOME: 공통 스킬 후보 목록 → 새 창 시작 절차 → 관련 원문 확인 → REUSE/CONNECT/최소 확장/추가 확인의 발견 경로 연결 완료.
+- LIMITATION: 목록은 13개 언급 후보의 시작용 매핑이며 기존 18개 전체 감사·최신 설치본 확인이 아니다. GitHub/AGENTS 지침을 읽는 세션에 적용하며 ChatGPT 프로젝트 설정·자동 로드는 변경하지 않음.
+- PENDING: 18개 PRIVATE/원본 대조는 다음 별도 작업으로 유지. 현재 r0005 요청·열린 메모·운영 상태 변경 없음.
