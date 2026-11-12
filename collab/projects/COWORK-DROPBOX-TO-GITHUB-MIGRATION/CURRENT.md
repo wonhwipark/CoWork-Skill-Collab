@@ -1,5 +1,13 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 사용자 승인 — 기존 LIVE 운영 복구 + C ETW 재측정 (2026-11-12 KST)
+- 사용자가 **리뷰 감시기/대시보드 갱신기 기존 예약 작업 재시작 + 수정 ETW C 계측 재실행**을 하나의 작업으로 명시 승인. 작업 정의·구성·계정·인증·운영 DB·LIVE 제공자 변경이나 신규 유료 리뷰 호출 승인 아님.
+- 사용자 전달 호스트 보고: watcher 프로세스 0, 마지막 스캔 21:36 KST, updater 로그 11일 00:10 이후 없음, 두 작업 LastTaskResult 3221225786(0xC000013A; 콘솔 종료와 부합하나 인과 미확정), notifier/Bridge 정상. **호스트 실제 복구 여부는 아직 NOT_RUN/미확인**.
+- C 사용자 전달: 실 GitHub GET 3주기/7회(200×5, 304×2) 읽기 전용 PASS 보고, 모델·쓰기 0. ETW 70,669건 중 대상 PID 이벤트 0, 양성대조 이벤트 0 → **ETW=FAIL / C=PARTIAL**, 운용 DB main/WAL/SHM 무접근 PASS 선언 금지. PID 자동 인식 수정은 문법검사만 PASS이고 재계측 NOT_RUN.
+- GPT 원샷 Windows 인계: `GPT_WINDOWS_OPERATIONS_RECOVERY_AND_C_ETW_RERUN_ONE_SHOT_r0001_20261112.md` PRIVATE main PR 없이 게시 및 remote readback PASS. 사전 실행·중복 모델 호출 안전 확인 후 기존 작업 재시작(조건 불충족시 원상보존), 실제 새 scan/update 로그 확인, 양성대조 있는 ETW 실측, 결과 MD 및 CURRENT 갱신.
+- 결과 예정: `CLAUDE_OPERATIONS_RESTART_AND_C_ETW_RERUN_RESULT_FOR_GPT_20261112.md`. **현재 문서 게시만으로 Windows 호스트에 시작 명령이 전달되거나 운영이 복구된 것이 아님.** 실제 실행은 사용자 Windows Claude Code의 단일 인계서 호출 필요.
+- 기존 Dropbox LIVE 유지(`MIGRATION_NOT_CUTOVER`), GitHub 실제 REVIEW/READY·유료 reviewer·PUBLIC 배포 및 LIVE 전환 미승인.
+
 ## C_E_ONE_SHOT_RESULT: BLOCKED (Claude 자체 보고, 2026-11-12 KST)
 - 결과: `CLAUDE_C_SHADOW_AND_E_REVIEW_ONE_SHOT_RESULT_FOR_GPT_20261112.md` (PRIVATE `main`, commit `ecef1a1ac9aaaebbb4cc98c55033d4eddaf380af`, 원격 readback 일치). Gate 0: v0.2.10 ZIP 로컬 재해시 174745B/70항목/SHA 일치. C 실GitHub SHADOW=BLOCKED_CREDENTIAL(읽기 전용 토큰 미배치, 과권한 기존 자격 재활용 안 함), B=BLOCKED_SIGNER_DEVICE, D=BLOCKED_EXPORT_CLASSIFICATION, E=BLOCKED(REQUEST/READY 0, 모델 호출 0, USD 0). 호스트 운영 변경 0, 시험 계정 비활성·샌드박스 보존. ACTIVE_PROVIDER=Dropbox LIVE v0.1.5 / MIGRATION_NOT_CUTOVER.
 
