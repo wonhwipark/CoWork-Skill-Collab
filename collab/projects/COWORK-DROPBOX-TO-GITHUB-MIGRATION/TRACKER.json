@@ -5,11 +5,11 @@
       "work_id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
       "skill": "cowork-review-watcher",
       "title": "cowork-review-watcher",
-      "phase": "DROPBOX_WATCHER_DISABLED_ARCHIVED",
+      "phase": "DISPOSITION",
       "owner": "GPT / Claude Code",
-      "self_test": "SELF_TEST_REPORTED",
+      "self_test": "NOT_VERIFIED",
       "independent_review": "NOT_RUN",
-      "next_action": "GPT가 Dropbox 감시기 Disable 결과(예약 작업 Disabled, 프로세스 0, 모델 호출 0, DB 일관 백업·복사본 복원 시험 통과, 작업 정의 복원은 미시험)를 판정한다. ACTIVE_PROVIDER=NONE이며 GitHub LIVE 전환은 미승인이다. 남은 Dropbox 의존 구성요소(대시보드 갱신기·Bridge·알림기) 처리와 GitHub 리뷰 경로 준비는 사용자 별도 승인 후 결정한다."
+      "next_action": "Dropbox 리뷰 감시기 비활성화 수용(SELF_TEST_REPORTED), ACTIVE_PROVIDER=NONE; 남은 대시보드·알림기·Bridge 의존성 읽기전용 확인 후 별도 중지 승인 여부 결정. RESTORE_READY=PARTIAL, GitHub LIVE 미승인."
     }
   ]
 }
