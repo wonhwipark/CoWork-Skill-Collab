@@ -1,4 +1,13 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
+
+## GPT 운영 복구·C ETW 최종 판정 (2026-11-12 KST)
+- 원격 원문 `CLAUDE_OPERATIONS_RESTART_AND_C_ETW_RERUN_RESULT_FOR_GPT_20261112.md`와 정정된 CURRENT 직접 확인. GPT 판정 **`ACCEPT_WITH_CHANGE / C_OVERALL=PARTIAL`**.
+- 감시기 단기 복구 `PASS`(새 스캔 8회 이상/약 9분, 신규 리뷰 모델 호출 0), 대시보드 `PASS_AFTER_SECOND_START`(로그 3회 증가/5분 이상). **장기가동·재로그인 안정성은 NOT_RUN**. 첫 갱신기 종료 0xC000013A 원인 미확정. 인계서가 허용한 기존 작업 시작 1회를 초과한 2차 재시작은 **PROCESS_DEVIATION**으로 남기며 소급 승인하지 않는다.
+- C 실 GitHub 읽기 전용 `PASS(HOST_REAL_REPORTED)`: 3주기 GET 7회, 쓰기/모델/Telegram 0. **C ETW `FAIL_UNTRUSTED_MEASUREMENT`**: 대상 자체 PID의 ETW 이벤트 0, 양성 대조는 다른 PID에만 나타나 프로세스/스레드 연결 확인 실패. 따라서 **운영 main/WAL/SHM/lock 파일 무접근은 NOT_PROVEN**, C 종합 PARTIAL 유지. 무조건적인 동일 관리자 시험 반복 중단.
+- 후속 우선순위: 관리자 재시험보다 **ETW 양성 대조 PID/TID·자식 트리·Kernel provider와 event identity 사전 검증**, 조건 충족 시 한 번만 실제 재측정. 신뢰성 확보 안 되면 C=PARTIAL 유지하고 운영 ACL/정적 코드 구조는 보완 증거로만 사용.
+- GitHub 게시 사고: 첫 CURRENT 한글 깨짐 커밋 `e0ca9838...` 뒤 올바른 `bcad4180...`로 교정됨, 현재 본문은 정상. UTF-8 원본 바이트 remote readback을 기본 필수로 적용. 게시용 과권한 `gh` 로그인과 시험용 Contents:Read-only PAT를 별도 관리.
+- GPT 판정 문서 `GPT_OPERATIONS_RECOVERY_AND_C_ETW_DISPOSITION_r0001_20261112.md` PRIVATE main 게시/remote readback PASS. Windows watcher/DB/작업 정의/Telegram/토큰·키 변경하지 않음. Dropbox LIVE 유지 / 독립 리뷰 NOT_RUN / `MIGRATION_NOT_CUTOVER`.
+
 ## OPERATIONS_RESTART_AND_C_ETW_RERUN_RESULT: C=PARTIAL / 운영 복구 PASS (Claude 자체 보고, 2026-11-12 KST)
 - 결과: `CLAUDE_OPERATIONS_RESTART_AND_C_ETW_RERUN_RESULT_FOR_GPT_20261112.md` (PRIVATE `main`, commit `404728eabfca8d24a74afa882d94360cce8e7689`, 원격 readback 바이트·SHA-256 일치 확인). 자체 시험 보고이며 독립 리뷰가 아니다. 사용자 승인 범위 안에서 실행했다.
 - A 복구: 기존 감시기·대시보드 갱신기 예약 작업을 정의 그대로 시작. WATCHER_RESTART=PASS(마지막 스캔 21:36 KST 이후 신규 스캔 8회 이상, 모델 호출 0), DASHBOARD_RESTART=PASS_AFTER_SECOND_START(1차는 약 3분 뒤 같은 코드 0xC000013A로 종료, C 시험 시간대와 겹쳤으나 인과 미확정. C와 겹치지 않은 2차 시작은 5분 이상 생존, 로그 갱신). 종료 원인은 미확정이며 pythonw 전환은 승인 범위 밖이라 실행하지 않음.
