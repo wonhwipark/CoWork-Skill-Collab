@@ -9,7 +9,7 @@
       "owner": "GPT / Claude Code",
       "self_test": "NOT_VERIFIED",
       "independent_review": "NOT_RUN",
-      "next_action": "GPT가 잔여 구성요소 의존성 감사(읽기 전용, 호스트 변경 0)를 판정한다. Bridge와 Dashboard updater는 RETIRE_CANDIDATE, Notifier는 KEEP(보류)이며 실제 Stop/Disable은 사용자 별도 승인과 관리자 셸이 필요하다. ACTIVE_PROVIDER=NONE, GitHub LIVE 전환은 미승인이다."
+      "next_action": "GPT 의존성 감사 수용: Bridge(1순위)·Dropbox Dashboard updater(2순위)는 RETIRE_CANDIDATE, Notifier KEEP. 두 작업 Stop+Disable은 사용자 별도 명시 승인 후 Windows에서 실행; ACTIVE_PROVIDER=NONE, GitHub LIVE/독립 리뷰 미승인."
     }
   ]
 }
