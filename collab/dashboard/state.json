@@ -2,10 +2,10 @@
   "disclaimer": "GitHub SHADOW 현황. 미이관 자료는 0건이 아니라 미확인입니다.",
   "live_provider": "DROPBOX",
   "operations": {
-    "cutover": "MIGRATION_NOT_CUTOVER",
+    "cutover": "NOT_OBSERVED",
     "dashboard_source": true,
     "host_shadow": "NOT_OBSERVED",
-    "independent_review": "NOT_RUN",
+    "independent_review": "NOT_OBSERVED",
     "migration_source": true,
     "pages_deployment": "NOT_OBSERVED",
     "windows_stage1": "NOT_OBSERVED"
@@ -19,7 +19,7 @@
       "status": "전환 전",
       "title": "COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태",
       "tone": "warning",
-      "topic": "ETW_ATTRIBUTION_AND_C_FINAL_CHECK_RESULT: C=PARTIAL / ETW=FAIL_UNTRUSTED_MEASUREMENT (Claude 자체 보고, 2026-11-12 KST)"
+      "topic": "GPT 판정 — ETW 재분석 실패·Dropbox LIVE 존치 재평가 (2026-11-12 KST)"
     },
     {
       "id": "COWORK-GITHUB-DASHBOARD-20261111-001",
