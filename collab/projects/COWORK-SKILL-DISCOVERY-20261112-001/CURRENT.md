@@ -4,7 +4,7 @@
 - Scope: 비민감 공통 스킬 목록·발견/재사용 절차·진입 링크·저장소 AGENTS 문서.
 - USER_AUTHORIZATION: 공통 기능 목록을 보강하고 새 창 시작 절차에 연결. 18개 PRIVATE/원본 재확인은 다음 별도 작업으로 분리.
 - DOCUMENTATION: POSTED / CONTENT_REMOTE_READBACK=PASS (아래 고정 content commit 기준).
-- SKILL_18_DETAIL_RECHECK: PENDING_CHECK / NOT_RUN_THIS_TASK.
+- SKILL_18_DETAIL_RECHECK: PACKAGE_STATIC_REVIEW_COMPLETE_WITH_GAPS / 17_SKILL_READ / SKILLSILENT_SOURCE_PENDING.
 - INDEPENDENT_REVIEW: NOT_RUN.
 - SKILL_CODE_CHANGE / HOST_INSTALL / JOB_RUN / SCHEDULER_CHANGE / REQUEST_READY / PAID_REVIEW / PUBLIC_POST / LIVE_CUTOVER: NOT_RUN.
 - 기존 운영 상태는 START_HERE 및 이관 CURRENT를 따른다. 이 작업으로 LIVE를 변경하지 않음.
@@ -46,3 +46,13 @@
 - OUTCOME: 공통 스킬 후보 목록 → 새 창 시작 절차 → 관련 원문 확인 → REUSE/CONNECT/최소 확장/추가 확인의 발견 경로 연결 완료.
 - LIMITATION: 목록은 13개 언급 후보의 시작용 매핑이며 기존 18개 전체 감사·최신 설치본 확인이 아니다. GitHub/AGENTS 지침을 읽는 세션에 적용하며 ChatGPT 프로젝트 설정·자동 로드는 변경하지 않음.
 - PENDING: 18개 PRIVATE/원본 대조는 다음 별도 작업으로 유지. 현재 r0005 요청·열린 메모·운영 상태 변경 없음.
+
+## 2026-11-12 — 사용자 승인 18개 정적 확인·사내 스킬 분리 (LATEST)
+
+- USER_SCOPE: 1~18번 진행 승인. 19번은 사내 GPT 협업으로 l1sw-dev-knowledge 스킬을 업데이트하는 사내 스킬로 분리.
+- RESULT: 17개 ZIP 실제 bytes의 Git blob 일치·CRC 확인, SKILL 문서 정적 검토. skillsilent 독립 ZIP 미발견=ADDITIONAL_CHECK_REQUIRED. 설치 부재 판정 아님.
+- CATALOG: r0002로 18개 관리 후보+별도 사내 연동 1개 등록. 빠졌던 6개 보강, 원본 경로/해시는 [정적 확인 보고](SKILL_18_PACKAGE_AUDIT_20261112.md)에 기록.
+- FINDINGS: CL2Git ZIP/SKILL 버전 불일치, SAM 제목/provider 참조 노후화, Workflow/Kernel 개발 후보, Job-list 현재 1 Job과 과거 0 Job 문구 공존을 추가 확인으로 유지.
+- DOCUMENTATION: 게시 후보 작성 시점. 원격 commit/readback/해시 확인은 게시 후 기록.
+- HOST_INSTALL / RUNTIME / INDEPENDENT_REVIEW / CODE_PATCH / PUBLIC_RELEASE / LIVE_CUTOVER: NOT_RUN. 기존 r0005 요청·Knowledge/metadata·스킬 원본·예약/DB 변경 없음.
+- NEXT: 실제 관련 작업에서 필요한 reference/policy/설치본만 추가 확인. 18개 밖 패키지로 자동 범위 확대하지 않음.

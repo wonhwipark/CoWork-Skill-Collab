@@ -24,7 +24,7 @@
 2. 해당 프로젝트 CURRENT·열린 메모·최신 결과/영수증을 확인하고 관련 스킬 원문만 필요한 범위에서 읽는다.
 3. 새 기능 설계 전에 **기존 기능 재사용(REUSE) / 연결 보완(CONNECT) / 입증된 최소 확장(EXTEND) / 보류·추가 확인**을 판단한다. 미확인을 기능 부재로 취급하지 않는다.
 
-상세: [스킬 발견·재사용 시작 절차](ops/CONTRACTS/SKILL_DISCOVERY_AND_REUSE_V1.md) · [현재 보강 상태](projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md). 목록은 탐색 포인터이며 설치·호출 검증이 아니다. 18개 전체 재확인은 다음 별도 작업이다. 이 연결이 ChatGPT 프로젝트 설정이나 다른 창의 문서 자동 로드를 변경하지는 않는다.
+상세: [스킬 발견·재사용 시작 절차](ops/CONTRACTS/SKILL_DISCOVERY_AND_REUSE_V1.md) · [현재 보강 상태](projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md). 목록은 탐색 포인터이며 설치·호출 검증이 아니다. 사용자 확인한 18개는 패키지 정적 확인을 완료했고, 17개 SKILL 확인·skillsilent 원본 추가 확인으로 구분한다. 실제 설치·호스트 검증은 별도다. 이 연결이 ChatGPT 프로젝트 설정이나 다른 창의 문서 자동 로드를 변경하지는 않는다.
 
 ## 후속 메모·대화형 노트
 

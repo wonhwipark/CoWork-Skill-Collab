@@ -1,59 +1,48 @@
 # CoWork 공통 스킬 기능 목록
 
-- 개정: r0001 / 2026-11-12 KST
-- 목적: 사용자가 스킬명을 말하지 않아도 요청 기능에서 기존 재사용 후보를 찾는 시작용 목록.
-- 범위: 기존 비민감 GitHub 문서와 사용자 대화에서 언급된 후보의 연결. **18개 전체 확정 목록·최신 버전 감사·설치본 기능 검증은 아니다.**
-- 최신 작업 상태: [CURRENT](../projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md)
-- 적용 절차: [발견·재사용 계약](../ops/CONTRACTS/SKILL_DISCOVERY_AND_REUSE_V1.md)
-- 아래 입출력은 책임을 설명하는 요약이며 실제 함수명·CLI·API·저장 필드를 정의하지 않는다.
+- 개정: r0002 / 2026-11-12 KST
+- 대상: 사용자 확인한 관리 스킬 18개 + 별도 사내 연동 스킬 1개. 전체 보유 스킬의 완전성·최신 설치 버전을 뜻하지 않음.
+- [이번 패키지 정적 확인·SHA-256·원본 위치](../projects/COWORK-SKILL-DISCOVERY-20261112-001/SKILL_18_PACKAGE_AUDIT_20261112.md) · [최신 상태](../projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md) · [시작·재사용 절차](../ops/CONTRACTS/SKILL_DISCOVERY_AND_REUSE_V1.md)
+- 근거: 17개 실제 공개 ZIP의 SKILL 문서 정적 확인. 실제 구현/API/설치·호스트 실행은 미검증. 입출력은 책임 요약이며 새 함수·필드 정의가 아님.
 
-## 근거와 해석
+| 번호 | 스킬 / 검색용 별칭 | 입력 → 출력·기능 | 연동 후보 | 경계·미확인 |
+|---:|---|---|---|---|
+| 1 | `issue-analyzer` / 이슈 분석기 | SDM/TXT/로그·증상 → 원인 근거·분석 보고·승인 수정 인계 | code-analyzer, code-fix, 지식 provider | 로그 경로 요청·과거 사례 재사용; 변환/분석은 기존 pipeline |
+| 2 | `code-analyzer` / 코드 분석기 | 고정 소스·scope → CODE FACT·call flow·MSC/HLD 입력 | l1-github, p4-code-owner, hld-composer, doc-converter | 코드 사실의 책임자; 지식 링크 등록은 Provider 호출 성공 아님 |
+| 3 | `code-fix` / 코드 수정 | 분석 결과·CL·변경 요청 → 승인 계획·수정·shelve·as-built 보고 | issue-analyzer, code-analyzer, l1-github | 승인된 anchor 수정만; shelve와 submit 분리 |
+| 4 | `l1-fix-workflow` / 워크플로우 | 요청·기존 Work → Work 흐름·연속성·계획 조회 | work-ledger-kernel, analyzer, 지식 provider | 1.6.67 개발 후보 표기; 공개 ZIP 존재로 배포 적합 확정 금지 |
+| 5 | `work-ledger-kernel` / 작업 원장 | Work·Evidence·승인 → 결정형 상태·staleness·resume/transfer guard | l1-fix-workflow | SKILL 버전 0.7.37-dev.1; registry/schema 임의 확장 금지 |
+| 6 | `hld-composer` / HLD 작성 | 분석 결과·SRS/HLD → 통합/Target HLD·review ledger·gate | code-analyzer, doc-converter | 전진 설계와 코드 기반 역설계 분리; HLD gate는 실제 구현 검증과 별개 |
+| 7 | `doc-converter` / 문서·MSC 변환 | MD/HTML/XHTML·scenario IR → 변환 문서·PUML/SVG·검증/manifest | code-analyzer, hld-composer | SOURCE_PARENT_DIR_V1·stack_group·근거 trace 보존; AS-IS fact를 스스로 승인하지 않음 |
+| 8 | `hld-code-compare` / 설계 코드 비교 | 복수 HLD·소스/facts → gap_report.yaml·gap_summary.md | code-analyzer, hld-composer, hld-code-implement | MSC는 procedure evidence, draw.io는 supporting evidence; 동등 근거로 취급 금지 |
+| 9 | `hld-code-implement` / 설계 구현 | 승인된 gap → sealed scope·FU별 diff·impl_record·P4 shelve | hld-code-compare, hld-composer, doc-converter | G1/G2 승인·최종화 계약; 구현과 HLD 누락 보완 구분 |
+| 10 | `l1-github` / Git/GitHub | 저장소·branch/PR·요청 → Git 근거·안전 작업·command journal | code-analyzer, Workflow, l1-cl2git-merge | thin native read 우선; 단일 writer·fork 안전 경계 |
+| 11 | `p4-code-owner` / P4 이력 | 파일/API·Jira Fix CL 후보 → 실제 수정자·branch 반영·Postmortem 선별 | issue-analyzer, Workflow | 읽기 전용; 실제 수정자를 공식 module owner로 승격 금지 |
+| 12 | `l1-cl2git-merge` / CL→Git 충돌 처리 | 자동 생성된 upstream Open PR·P4 CL → 검증·충돌 해결·pre-push 결과 | l1-github, P4 provider | 일반 이관 엔진 아님; ZIP v0.3.5와 SKILL v0.3.4 불일치 추가 확인 |
+| 13 | `l1-sam-fixer` / SAM LOC/MCD | 공식 CSV/HTML → LOC/MCD 분석·수정 후보·보고·검증 shelve | code-analyzer, 지식 provider, P4, build provider | CC/동적 지표 범위 밖; 옛 knowledge-manager 참조와 현재 provider 매핑 추가 확인 |
+| 14 | `skill-updater` / 스킬 갱신 | 승인된 공개 ZIP·정책 → 격리 설치·자체시험·롤백 결과 | 기존 OS 예약·Bootstrap, job-list 승인 경로 | 스케줄·런타임 orchestration 미소유; 자체 갱신 별도 Bootstrap 승인 |
+| 15 | `skillsilent` / 실행 게이트 | 등록 action·정책 → 허용된 실행/차단 (독립 원문 미확인) | 각 패키지의 manifest/policy | 독립 ZIP 미발견; 패키지 내 policy 존재와 실제 gateway 설치는 별개 |
+| 16 | `job-list` / 잡리스트 | 승인 profile/Job → dispatcher·one-shot 결과/영수증 | skill-updater, 승인된 worker/driver | v0.4.36 Linux one-shot 1개; 과거 v0.4.34 jobs=[] 문구와 혼동 금지 |
+| 17 | `autotask-builder` / 예약 작업 | task YAML·일정 → 검증·OS 작업 정의·deploy/status | 공개 child launcher, skill-updater, l1-cleanup | Windows Task Scheduler/Linux user timer; OS 예약만 소유, Job queue/state 불변 |
+| 18 | `l1-cleanup` / 정리·보존 | 대상/정책 → audit·plan·HTML/JSON·승인 격리/복구 | autotask-builder, 유효 artifact receipt 제공자 | 기본 조회; OpenCode DB 삭제·purge는 별도 승인; receipt 자동 연동은 미구현 표기 |
+| 19 | `l1-knowledge-updater` / 사내 지식 Updater | 사내 GPT 협업을 통한 `l1sw-dev-knowledge` 스킬 업데이트 | 기존 analyzer·converter·Workflow/Kernel과 연동 검토 | 사용자 확인한 사내 스킬. 이번 외부 패키지 점검·수정 대상과 분리; 실제 I/O·원본은 사내 확인 |
 
-| 코드 | 이번에 읽은 근거 | 원본·검증 한계 |
-|---|---|---|
-| C1 | [L1 공통 참고](L1_WORKSPACE_RAG_COMMON_r0001_20261111.md) §3·5·7 | 기존 문서의 역할·과거 감사 요약. 이 회차에 18개 ZIP 또는 설치본을 다시 확인하지 않음 |
-| C2 | [r0005 후속 메모](../projects/L1-WORKSPACE-RAG-20261111-001/notes/L1_KNOWLEDGE_R0005_FOLLOWUP_MEMO_20261112.md) §2 | 재사용 책임의 검토 기준. 실제 호출 계약은 미확인 |
-| C3 | [Job-list/Skill-Updater 전달 계약](../ops/CONTRACTS/JOBLIST_PUBLIC_DELIVERY_V1.md) §1~3·6 | 전달·설치·Job·분석·게시 상태를 분리. 실제 호스트 성공 근거가 아님 |
-| U1 | 2026-11-12 사용자 대화의 autotask-builder 언급 | 명칭·별칭 발견 단서. 정식 SKILL 원문·원본 경로·OS별 지원은 미확인 |
+## 요청 기능에서 후보 찾기
 
-기준 조회 commit: `fb5402fdec4412703670a995f46fc9244170d710` (PRIVATE main의 조회 시점). C1~C3의 해당 commit 원문을 근거로 삼는다. 이후 기능·버전 판정에는 최신 원본과 해당 프로젝트 CURRENT를 다시 확인한다.
+| 요청 | 먼저 검토할 후보 |
+|---|---|
+| 로그·원인·수정 | issue-analyzer → code-analyzer/code-fix |
+| 현재 코드 동작·MSC | l1-github/P4 근거 → code-analyzer → doc-converter |
+| HLD·설계/구현 차이 | hld-composer → hld-code-compare → 승인된 hld-code-implement |
+| Work 재개·이력 | l1-fix-workflow + work-ledger-kernel |
+| P4 CL의 Git PR 충돌 | l1-cl2git-merge + l1-github |
+| SAM LOC/MCD | l1-sam-fixer |
+| 주기 실행·패키지 갱신 | autotask-builder의 OS 예약 / skill-updater의 설치 / job-list의 승인 Job을 구분 |
+| 산출물·디스크 정리 | l1-cleanup의 audit/plan부터 확인 |
+| 사내 지식 스킬 업데이트 | 사내 l1-knowledge-updater와 기존 분석·변환 기능의 연결 검토 |
 
-이 표의 한국어 이름은 검색용 설명이다. 패키지 공식 alias 등록이나 설치 여부를 뜻하지 않는다.
+## 재사용 판단
 
-## 기능·입출력·연결 후보
+요청 기능으로 후보를 찾고 프로젝트 CURRENT·열린 메모·관련 원문을 확인한다. REUSE / CONNECT / 입증된 최소 EXTEND / DEFER·추가 확인을 판단하며 사용자가 스킬명을 알려줄 때까지 기다리지 않는다. 미확인 API·record는 구현 대상으로 확정하지 않는다.
 
-| 스킬명 / 검색용 별칭 | 먼저 검토할 기능 | 입력 → 출력 요약 | 연동 후보·책임 경계 | 근거·원본 확인 상태 |
-|---|---|---|---|---|
-| `l1-fix-workflow` / Workflow, 워크플로우 | 요청 해석·기존 Work 선택/재개·분석 조율 | 작업 의도·기존 Work → 작업 흐름·분석 요청 | Kernel, analyzer, Knowledge Updater. 기존 순수 스터디 경로에 새 Work를 강제하지 않음 | C1/C2. 원본은 승인된 기존 패키지·설치 SKILL에서 확인 필요 |
-| `work-ledger-kernel` / Kernel, 작업 원장 | Work/Evidence 정본·허용 registry·파생 export | 허용된 작업/근거 → 원장·참조·파생 문서 | Workflow가 재사용. 새 원장·임의 kind/provider/schema 추가를 가정하지 않음 | C1/C2. registry·설치 API는 별도 확인 |
-| `code-analyzer` / 코드 분석기 | 고정 소스의 코드 사실·분석 근거·AS-IS MSC 후보 | source revision·scope → facts·anchor·분석 artifact | l1-github/P4, Workflow, doc-converter. 변환 출력만으로 분석 검증 PASS 아님 | C1/C2. 기존 CURRENT의 패키지 참고명 `code-analyzer_v0_15_2_1107.zip`; 최신/설치 버전 재확인 안 함 |
-| `issue-analyzer` / 이슈 분석기 | 이슈 원인·근거 정리의 기존 경로 | 이슈 자료·근거 → 분석 결과 | Workflow, code-analyzer, 기존 지식 검색. 상세 지원 I/O는 원문 확인 후 결정 | C1/C2. 원본 경로·API 미확인 |
-| `doc-converter` / 문서 변환기, MSC 변환기 | 기존 MSC 변환·표현·participant 가독성 규칙 | 분석 artifact·표현 규칙 → 변환 문서/MSC 표현 | code-analyzer의 사실·AS-IS/TO-BE·출처를 보존. Updater에 변환기를 중복 구현하기 전 검토 | C1/C2/C3. 정확한 규칙·설치 호출은 추가 확인 |
-| `hld-composer` / HLD 작성 | 기존 HLD 구성 기능 | 설계/분석 자료 → HLD 후보 | analyzer·doc-converter·Updater. 자동 호출 가능 여부는 원문 확인 | C1 §7의 후보. 실제 I/O·원본 경로 미확인 |
-| `l1-github` / GitHub, Git 기여 워크플로우 | 저장소 역할·branch/revision·변경 근거·기존 게시/조회 | 요청 scope·Git 상태 → 고정 소스/변경 근거·조회 결과 | analyzer, Kernel, 기존 writer. 단순 조회는 기존 thin path 우선; 기능명만 보고 CAS 지원 확정 금지 | C1/C2. 기존 CURRENT의 참고명 `l1-github_v0_3_56_1110.zip`; 최신/설치 버전 재확인 안 함 |
-| `p4-code-owner` / P4 근거·담당 분석 | P4 파일 revision·Fix CL·통합 귀속의 기존 근거 | 승인된 P4/Jira 자료 → 근거·귀속 후보 | analyzer, Workflow. owner/통합 판정을 원인·수정시험 PASS와 구분 | C1/C2 및 기존 CURRENT. 참고명 `p4-code-owner_v0_6_7_1012.zip`; 실제 설치 계약 미확인 |
-| `job-list` / Job, 잡리스트 | 승인된 작업 목록·실행 gate·결과/영수증 경로 | 유효 Job·profile·승인 → 실행 후보·결과/영수증 | 기존 driver·Skill-Updater. 예약 시점의 소유자와 작업 내용의 소유자를 구분 | C1/C2/C3. 이번 작업에서 Job/API 실행 없음 |
-| `skill-updater` / Skill-Updater, 패키지 갱신 | 승인된 ZIP 발견·다운로드·설치 경로 | 승인된 버전 ZIP·정책 → 설치 후보·호스트 설치 결과 | job-list·기존 OS 예약 경로. ZIP 게시와 설치/Job 실행은 별도 | C3. 원본 SKILL·OS별 hook·설치본 미확인 |
-| `autotask-builder` / 오토 타스크 빌더, 예약 작업 | 예약 실행이 필요한 요청의 우선 확인 후보 | 일정·실행 대상 → 예약 정의/검증 여부 확인 대상 | job-list, skill-updater와 연결 가능성 확인. 실제 등록·OS·지원 명령은 원문 전 확정 금지 | U1. 정식 명칭·원본 위치·I/O 미확인; 사용자에게 이름을 다시 묻기 전 기존 자료를 탐색 |
-| `skillsilent` / SkillSilent, 스킬 사일런트 | 기존 허용 action·실행 정책 관련 확인 후보 | 허용 action/정책 → 실행 가능 여부는 계약 확인 대상 | job-list·기존 driver. 승인 우회나 자동 허용의 근거로 사용 금지 | C1은 독립 ZIP 미발견, C3은 등록된 비파괴 action 언급. 설치 부재/기능 부재로 단정 금지 |
-| `l1-knowledge-updater` / L1 Knowledge Updater, 지식 Updater | 지식 분류·후보·중복/충돌·Preview·승인·writer 조율 | facts/기존 지식·근거 → 지식 후보·게시 판정 | Workflow/Kernel/analyzer/converter·기존 writer 재사용. `skill-updater`와 목적이 다름 | C2/C3 및 r0005 계약. 실제 설치 I/O·writer 보장 미확인 |
-
-원본 위치가 미확인인 행은 먼저 기존 목록·패키지·설치 문서를 필요한 범위에서 찾는다. 검색 실패를 기능 부재로 바꾸거나 임의 API/stub를 만들지 않는다. 이 목록은 원본을 대체하지 않는다.
-
-## 요청 표현에서 먼저 찾을 후보
-
-| 사용자 요청의 기능 | 우선 확인할 기존 후보 | 후속 확인 |
-|---|---|---|
-| 현재 브랜치 동작·MSC·시나리오 | l1-github/P4 → code-analyzer → doc-converter | source 적용성·분석 근거·participant/변환 규칙 |
-| 이슈 원인·수정 이력·기술 지식화 | issue-analyzer, Workflow/Kernel, Knowledge Updater | 원인 검증·수정·시험·게시 승인 상태를 분리 |
-| HLD·설계 설명·문서 출력 | hld-composer, doc-converter | 설치본 지원 형식·AS-IS/TO-BE·근거 보존 |
-| 정해진 시각/주기에 기존 작업 실행 | autotask-builder, job-list, skill-updater | 각 원문의 예약·실행·설치 책임과 승인. 이 표가 예약을 실행하지 않음 |
-| Work 재개·결과 추적·문서 탐색 | Workflow, Kernel | 기존 Work·원장·Exporter 재사용 |
-| 스킬 ZIP 갱신 | skill-updater 및 기존 배포 계약 | 최종 ZIP·공개 승인·호스트 설치 결과 |
-
-## 보강·유지 원칙
-
-- 새 작업은 요청 기능으로 후보를 고르고 관련 원문만 읽는다. 사용자가 모든 스킬명을 알려줘야 시작하는 방식으로 운영하지 않는다.
-- 문서 언급, 패키지 존재, 패키지 원문 확인, 격리 시험, 호스트 설치 사실, 실제 호출 성공을 별도로 기록한다. 근거가 없는 상태는 UNKNOWN/NOT_VERIFIED다.
-- 사용자 요청으로 **18개 전체 원문·PRIVATE 대조는 다음 별도 작업으로 보류**했다. 이 회차에 18개 전체 검증 완료·목록 완전성·최신 설치 버전을 주장하지 않는다.
-- 다음 대조에서는 기존 감사 자료와 허용된 정본을 사용해 정확한 이름/원본 위치/기능/버전 근거를 이 표에 보강한다. 별도 DB·엔진·자동 감시를 신설하지 않는다.
+G0 설치 사실과 G1 가정을 분리한다. SourceSnapshot·CAS·N:M·복구는 기존 Kernel/Updater/Git 제공자 우선. K5.8은 설계표만, 기존 Knowledge/metadata 변경 금지. 문서·ZIP 확인·호스트 설치·실호출·독립 리뷰를 구분한다. 기존 r0005 후속 메모는 결과 대기 상태를 유지한다.
