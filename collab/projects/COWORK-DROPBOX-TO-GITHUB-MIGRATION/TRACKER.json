@@ -5,11 +5,11 @@
       "work_id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
       "skill": "cowork-review-watcher",
       "title": "cowork-review-watcher",
-      "phase": "DISPOSITION",
+      "phase": "DEVELOPMENT",
       "owner": "GPT / Claude Code",
       "self_test": "NOT_VERIFIED",
       "independent_review": "NOT_RUN",
-      "next_action": "Dropbox watcher Disabled/ACTIVE_PROVIDER=NONE. Windows에서 Dashboard updater·Telegram notifier·Bridge의 공유 의존성 READ_ONLY 감사 후 GPT가 유지/중지 후보 판정; 운영 변경 및 GitHub LIVE 미승인."
+      "next_action": "Windows Claude Code 병렬 원샷: 잔여 Dropbox 의존성 감사, C ETW/격리 개선, B 운영 signer·D 반출·E 독립 리뷰 사전 게이트, LIVE/rollback 정적·격리 시험 → 단일 결과 및 승인 묶음 제출. ACTIVE_PROVIDER=NONE, 운영 변경/정식 LIVE 미승인."
     }
   ]
 }
