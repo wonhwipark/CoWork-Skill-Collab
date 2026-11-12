@@ -11,7 +11,7 @@ This repository is a **private collaboration workspace**, not a deployment repos
 - 공개 화면은 2026-11-12 기준 PRIVATE 기록에서 선별·검증한 상위 상태 요약입니다. 원문 요청·리뷰·영수증·식별자·비밀 정보는 게시하지 않습니다.
 - **[PRIVATE 상세 HTML](collab/dashboard/index.html)** — 최신 GitHub 기록을 Actions로 재생성. GitHub HTML blob은 다운로드 후 브라우저에서 확인할 수 있습니다.
 - [PRIVATE HTML 보존 스냅샷](collab/dashboard/snapshots/CoWork_협업흐름_STATUS_20261112.html) · [GitHub 네이티브 요약](collab/dashboard/VIEW.md)
-- **갱신 구분:** GitHub Pages는 PUBLIC HTML 변경 시 자동 배포되지만 PRIVATE 실무 데이터를 PUBLIC으로 자동 동기화하지 않습니다. 실제 상태는 공개 가능 항목 확인 후 갱신합니다.
+- **자동 갱신 상태:** PUBLIC HTML에서 공개용 `status.json`을 동적으로 표시합니다. PRIVATE 성공 Action → 허용목록 필터 → PUBLIC 단일 파일 자동 게시 코드는 구현했고 **최소권한 토큰 Secret 연결 전에는 게시 차단**. [1회 인증 설정](collab/dashboard/PUBLIC_AUTO_SYNC_SETUP.md).
 - [병렬 스킬별 Work ID 등록·자동 추적 계약](collab/dashboard/WORK_TRACKER_GUIDE.md) — l1-fix-workflow/l1-github 개별 진행 시 사용
 - [대시보드 최신 작업 현황](collab/projects/COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md)
 
