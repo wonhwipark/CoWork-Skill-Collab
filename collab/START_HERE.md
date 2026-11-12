@@ -18,6 +18,14 @@
 - PUBLIC: `wonhwipark/L1Work` — 승인된 최종 ZIP 다운로드 및 **별도 사용자 승인된 공개 허용 목록 기반 HTML Pages 상태 요약**. 개발 후보/REQUEST/영수증/PRIVATE 원문은 공개 금지. Pages 기본 URL: `https://wonhwipark.github.io/L1Work/cowork-dashboard/`. 공개 범위는 `collab/dashboard/PUBLIC_PAGES_DEFAULT_POLICY.md` 참조.
 - 기존 LIVE: Dropbox `/SKILL-COLLAB/` — **전환 명시 승인 전 운영 변경/중지하지 않는다**.
 
+## 새 창·새 기능 요청: 보유 스킬부터 확인
+
+1. 이 진입점과 적용 운영 계약을 읽은 뒤 [공통 스킬 기능 목록](knowledge/SKILL_CAPABILITY_CATALOG.md)에서 요청 기능에 맞는 기존 스킬을 먼저 찾는다. 사용자가 스킬명을 직접 말하지 않아도 수행한다.
+2. 해당 프로젝트 CURRENT·열린 메모·최신 결과/영수증을 확인하고 관련 스킬 원문만 필요한 범위에서 읽는다.
+3. 새 기능 설계 전에 **기존 기능 재사용(REUSE) / 연결 보완(CONNECT) / 입증된 최소 확장(EXTEND) / 보류·추가 확인**을 판단한다. 미확인을 기능 부재로 취급하지 않는다.
+
+상세: [스킬 발견·재사용 시작 절차](ops/CONTRACTS/SKILL_DISCOVERY_AND_REUSE_V1.md) · [현재 보강 상태](projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md). 목록은 탐색 포인터이며 설치·호출 검증이 아니다. 18개 전체 재확인은 다음 별도 작업이다. 이 연결이 ChatGPT 프로젝트 설정이나 다른 창의 문서 자동 로드를 변경하지는 않는다.
+
 ## 후속 메모·대화형 노트
 
 - [메모 처리 지침](ops/CONTRACTS/FOLLOWUP_NOTES_V1.md): 기록·후속 확인을 요청한 비민감 메모는 PRIVATE 프로젝트 `notes/`에 저장하고 해당 `CURRENT.md`에 대기 상태·조건·다음 행동을 연결한다. 이미 승인된 프로젝트 범위에서 문서만 처리하며 파일 사본 제공으로 정본 등록을 대신하지 않는다.

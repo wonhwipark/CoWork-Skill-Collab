@@ -20,3 +20,9 @@
 
 - [L1 Workspace RAG · Work 유형 · 브랜치별 AS-IS MSC 공통 컨텍스트](L1_WORKSPACE_RAG_COMMON_r0001_20261111.md) — 새 GPT 대화/리뷰/인계에서 재사용하는 **비민감 설계·검증 상태·정본 포인터**. 프로젝트별 최신 상태는 `collab/projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md`의 마지막 섹션을 우선한다.
 - 공통 문서 기록은 Dropbox LIVE 운영 규칙을 복제·수정하거나 REQUEST/READY, 독립 리뷰, 사내 배포·실행을 승인하지 않는다.
+
+## 새 작업의 보유 스킬 발견
+
+- [공통 스킬 기능 목록](SKILL_CAPABILITY_CATALOG.md)에서 요청 기능과 기존 스킬의 연결 후보를 먼저 확인한다.
+- [스킬 발견·재사용 절차](../ops/CONTRACTS/SKILL_DISCOVERY_AND_REUSE_V1.md)에 따라 프로젝트 CURRENT·열린 메모와 관련 원문을 확인한 뒤 REUSE/CONNECT/EXTEND/DEFER를 판단한다.
+- 기존 Dropbox LIVE 규칙·스킬 설치·승인 경계는 바꾸지 않는다. 목록과 시작 절차 연결만 수행했으며 18개 전체 재감사는 별도 대기다.

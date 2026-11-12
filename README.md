@@ -16,6 +16,8 @@ This repository is a **private collaboration workspace**, not a deployment repos
 
 ## Start here
 - [운영 진입점](collab/START_HERE.md)
+- [공통 스킬 기능 목록](collab/knowledge/SKILL_CAPABILITY_CATALOG.md) — 새 요청의 기존 기능·연결 가능성을 먼저 확인
+- [새 창 스킬 발견·재사용 절차](collab/ops/CONTRACTS/SKILL_DISCOVERY_AND_REUSE_V1.md)
 - [이관 현재 상태](collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md)
 - [운영 기준](collab/knowledge/OPERATING_BASELINE.md)
 - [GitHub 리뷰 운송 계약](collab/ops/CONTRACTS/REVIEW_TRANSPORT_V1.md)
