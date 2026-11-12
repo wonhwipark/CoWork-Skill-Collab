@@ -1,0 +1,72 @@
+name: CoWork PUBLIC Pages status sync (allowlist only)
+
+on:
+  workflow_run:
+    workflows:
+      - 'CoWork PRIVATE dashboard (read-only inputs)'
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+# The default GITHUB_TOKEN can read ONLY this PRIVATE repository.
+# A separate, repository-scoped PUBLIC write credential is optional,
+# configured ONLY in this PRIVATE repo's Actions secrets.
+permissions:
+  contents: read
+
+concurrency:
+  group: cowork-allowlisted-public-status-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    if: >-
+      github.repository == 'wonhwipark/CoWork-Skill-Collab' &&
+      (
+        github.event_name == 'workflow_dispatch' ||
+        (
+          github.event_name == 'workflow_run' &&
+          github.event.workflow_run.conclusion == 'success' &&
+          github.event.workflow_run.head_repository.full_name == 'wonhwipark/CoWork-Skill-Collab' &&
+          github.event.workflow_run.head_branch == 'main'
+        )
+      )
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout trusted PRIVATE main (not triggering workflow artifacts)
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: main
+          persist-credentials: false
+
+      - name: Validate exporter and test no confidential field escapes
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s collab/dashboard/tests -v
+          python3 -m unittest discover -s collab/dashboard/public_preview/tests -v
+          python3 collab/dashboard/public_sync.py prepare --root . --out "${RUNNER_TEMP}/cowork-public-status.json"
+          python3 -m json.tool "${RUNNER_TEMP}/cowork-public-status.json" >/dev/null
+
+      - name: Check separate PUBLIC-only write credential
+        id: credential
+        env:
+          PUBLIC_WRITE_TOKEN: ${{ secrets.COWORK_PUBLIC_DASHBOARD_WRITE_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "${PUBLIC_WRITE_TOKEN}" ]; then
+            echo "ready=false" >> "${GITHUB_OUTPUT}"
+            echo "PUBLIC_SYNC=BLOCKED_MISSING_SECRET (no remote write attempted)" >> "${GITHUB_STEP_SUMMARY}"
+            echo "Secret required in PRIVATE repo: COWORK_PUBLIC_DASHBOARD_WRITE_TOKEN" >> "${GITHUB_STEP_SUMMARY}"
+          else
+            echo "ready=true" >> "${GITHUB_OUTPUT}"
+          fi
+
+      - name: Publish ONLY allowlisted status.json to L1Work and verify readback
+        if: steps.credential.outputs.ready == 'true'
+        env:
+          COWORK_PUBLIC_DASHBOARD_WRITE_TOKEN: ${{ secrets.COWORK_PUBLIC_DASHBOARD_WRITE_TOKEN }}
+        run: |
+          set -euo pipefail
+          python3 collab/dashboard/public_sync.py publish --root . --file "${RUNNER_TEMP}/cowork-public-status.json"
+          echo "PUBLIC_SYNC=POSTED_OR_UNCHANGED · allowlisted status.json only" >> "${GITHUB_STEP_SUMMARY}"
