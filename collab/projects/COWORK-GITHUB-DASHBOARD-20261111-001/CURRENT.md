@@ -1,5 +1,17 @@
 # COWORK-GITHUB-DASHBOARD-20261111-001 — CURRENT
 
+## 최신 상태 — Executive 기본 채택·복수 Work Tracker 구현 (2026-11-12)
+- **USER_DECISION:** HTML 시안 01 Executive 선택, 개별 스킬 병렬 진행 카드 추적 승인. 기본 URL `https://wonhwipark.github.io/L1Work/cowork-dashboard/` 유지.
+- **PUBLIC_HTML_DEFAULT=POSTED / PUBLIC_REMOTE_READBACK=PASS / PAGES_DEPLOY=PASS**. L1Work `main/docs/cowork-dashboard/index.html`을 01 Executive 기반으로 교체하고 5개 비식별 상위 작업별 카드, 단계 막대, 담당, 자체시험/독립 리뷰 구분, 다음 조치 추가. commit `0dcb2ad62bd2310d691f1652bbe542679c6cfc89`; Git blob `c9d346c23a97a2671c3cd8b10fa2bc2a1f160173`. GitHub Pages Actions #43236158110 SUCCESS. 기존 2·3번 시안·ZIP 원본 보존.
+- **PRIVATE_MULTI_WORK_TRACKER=IMPLEMENTED**: `collab/dashboard/work_tracker.py` 신규, `generate.py`에 독립 Work 검색·카드·Markdown/JSON 통합, schema `COWORK_GITHUB_DASHBOARD_SHADOW_V4`. `collab/projects/<WORK_ID>/TRACKER.json`이 있으면 동일 프로젝트 내 여러 스킬도 Work ID별 독립 카드, 없으면 `CURRENT.md`별 1개 UNKNOWN 카드로 보수적으로 표시. GitHub Action의 `TRACKER.json` 변경 감지 추가.
+- **ACTUAL_PRIVATE_WORKS=5**, `work_tracker` 원격 state.json readback PASS. 각각 `cowork-review-watcher=BLOCKED`, `cowork-dashboard=DEVELOPMENT`, `skill-discovery=DISPOSITION`, `job-list=DEVELOPMENT`, `l1-knowledge-updater=REQUIREMENT` 메타데이터 등록. **단계는 문서 신고값이며 완료 검증 아님**, 모든 독립 리뷰 `NOT_RUN`으로 등록. `TRACKER.json` 5개를 PRIVATE에 신규 게시/재조회.
+- **USER_SKILL_EXAMPLES:** `l1-fix-workflow`, `l1-github`의 독립 실제 Work 등록은 아직 근거 미확인. PUBLIC에는 '미등록·현황 미확인' 예시로만 표시, Work 수에 합산하지 않음. 합성 회귀시험에서는 서로 다른 Work ID와 단계·담당·다음 조치의 독립성을 확인.
+- **TEST=PASS**: GitHub PRIVATE Actions [#43236621324](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43236621324) Python Work 포함 35 PASS + 공개 후보 보안 8 PASS = **43 PASS/0 FAIL**. Actions 결과 HTML/VIEW/state.json 갱신 및 원격 확인 PASS. PUBLIC Pages Actions #43236158110 SUCCESS. 실제 브라우저 시각적 E2E는 직접 실행하지 못해 NOT_RUN, HTTP 본문 응답 SHA는 NOT_VERIFIED.
+- **CONTRACT:** `collab/dashboard/WORK_TRACKER_GUIDE.md` 신규, `collab/START_HERE.md`에 새 작업의 Work ID·TRACKER.json 기본 등록 규칙, `PUBLIC_PAGES_DEFAULT_POLICY.md`에 공개 허용 필드/Work ID 차단 규칙. CoWork PRIVATE 및 L1Work PUBLIC README는 Executive 기본 링크로 갱신. PRIVATE→PUBLIC 상태 자동 동기화는 **NOT_IMPLEMENTED**, PUBLIC 갱신은 허용목록 점검·수동 게시.
+- **OPERATIONS:** Windows watcher/운영 DB/예약 작업/Bridge/Telegram 기존 LIVE 불변, `CUTOVER=MIGRATION_NOT_CUTOVER`; Claude 독립 리뷰 `INDEPENDENT_REVIEW=NOT_RUN`. 실제 Work 메타데이터 수정은 운영 실행이나 배포 승인이 아님.
+- **다음 한 동작:** 사용자가 기본 Pages URL에서 Executive Work Tracker 가독성·실제 두 스킬 등록 필요 여부를 확인. 추후 `l1-fix-workflow` 및 `l1-github` 업무 개시 시 서로 다른 Work ID/CURRENT/TRACKER 등록 후 PRIVATE 자동 갱신·PUBLIC 허용목록 재판정.
+
+
 ## 대시보드 현대화 HTML 시안 3종 — 선택 대기 (2026-11-12)
 - **사용자 요청:** 현재 GitHub Pages 대시보드의 그림 표현·모던한 UI를 개선해 서로 다른 HTML 시안 3종으로 보여주고 사용자 선택 후 최종 적용.
 - **DESIGN_OPTIONS=POSTED_FOR_USER_SELECTION / DEFAULT_PAGE=UNCHANGED**. 공개 Pages `L1Work/main/docs/cowork-dashboard/concepts/` 아래 비교 랜딩과 3개 별도 시안을 게시. 기존 `L1Work/main/docs/cowork-dashboard/index.html`의 기본 대시보드 HTML은 이 작업에서 변경하지 않음.
