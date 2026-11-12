@@ -1,0 +1,15 @@
+{
+  "schema": "COWORK_WORK_TRACKER_V1",
+  "works": [
+    {
+      "work_id": "COWORK-GITHUB-DASHBOARD-20261111-001",
+      "skill": "cowork-dashboard",
+      "title": "cowork-dashboard",
+      "phase": "DEVELOPMENT",
+      "owner": "GPT",
+      "self_test": "PASS",
+      "independent_review": "NOT_RUN",
+      "next_action": "Executive Work Tracker 화면·Pages 배포 검증 및 사용자 확인"
+    }
+  ]
+}
