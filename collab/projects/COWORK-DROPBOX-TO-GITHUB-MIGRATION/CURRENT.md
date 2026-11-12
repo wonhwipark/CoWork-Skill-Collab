@@ -1,5 +1,13 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## GPT 판정 — ETW 재분석 실패·Dropbox LIVE 존치 재평가 (2026-11-12 KST)
+- GPT가 최신 `CLAUDE_ETW_ATTRIBUTION_AND_C_FINAL_CHECK_RESULT_FOR_GPT_20261112.md` 및 CURRENT 원문 원격 재조회. 결과: `ACCEPT_WITH_CHANGE / C=PARTIAL_ACCEPTED / ETW=FAIL_UNTRUSTED_MEASUREMENT`. GPT 코드 9건 + 호스트 합성 22건 = **31 PASS(SELF_TEST_REPORTED)**, 실제 ETW time/ProcessStart 해석 실패로 C 실측 NOT_RUN. 운영 DB/WAL/SHM/lock 무접근 NOT_PROVEN.
+- 50~55분 감시기·갱신기 단기 동작 관측 수용, `LONG_RUN=PENDING`. 관리자 셸 총 3회(새 trace 1회) 기록. 동일 ETW 관리자 재시험 반복 보류. `mode=ro` 운영 DB 관찰의 WAL/SHM 영향 미측정 문제와 GPT 코드 수명 밖 이벤트 silent drop/8.3 alias 미보장 이슈 후속 개선.
+- 사용자 의견: Dropbox LIVE 협업 **실사용 종료**. GPT 권장 **운영 reviewer watcher Stop + Scheduled Task Disable, 로그/DB/WAL/SHM/요청/영수증/ZIP 보존**. 다만 사용자 명시 최종 중지 실행 승인 전 **`DROPBOX_DISABLE=PROPOSED_NOT_EXECUTED`**. Dashboard updater/Notifier/Bridge는 의존성 확인 전 자동 중지 금지.
+- 실제 Dropbox LIVE 중단 후 새 GitHub LIVE가 승인되기 전 `ACTIVE_PROVIDER=NONE`으로 자동 리뷰 서비스 공백 발생 가능. 운영 이력/미정산 요청 안전성·롤백 확인 후에만 disable. GitHub SHADOW≠LIVE. `MIGRATION_NOT_CUTOVER` 유지.
+- 상세 GPT 판정 `GPT_ETW_RESULT_AND_DROPBOX_LIVE_REEVALUATION_r0001_20261112.md`, PRIVATE main 직접 게시·remote readback PASS. 운영 호스트 변경/정식 독립 리뷰/새 토큰/키 발급/실 LIVE 전환 0. 다음 한 행동은 사용자 DropBox 감시기 안전 비활성화 승인 여부 확인.
+
+
 ## ETW_ATTRIBUTION_AND_C_FINAL_CHECK_RESULT: C=PARTIAL / ETW=FAIL_UNTRUSTED_MEASUREMENT (Claude 자체 보고, 2026-11-12 KST)
 - 결과: `CLAUDE_ETW_ATTRIBUTION_AND_C_FINAL_CHECK_RESULT_FOR_GPT_20261112.md` (PRIVATE `main`, commit `1e7e79ff63baa325164f020fd3e275459a6c3fc8`, 원격 readback 확인은 결과 문서 게시 후 별도 기록). 자체 보고이며 독립 리뷰가 아니다. 관리자 셸은 사용자가 실행했다.
 - 진단 코드: GPT 도구 SHA-256·Git blob 일치, GPT 9 PASS 재현. 호스트 정규화 도구와 시험을 추가해 합계 31 PASS(로컬 보존, 미게시).
