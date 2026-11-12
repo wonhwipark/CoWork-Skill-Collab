@@ -1,5 +1,15 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## GPT 실행 통합 — GitHub LIVE 최소 반복 마스터 (2026-11-13 KST)
+- 사용자 최우선 목표: **반복 최소화와 GitHub LIVE 신속 전환**. GPT는 여러 개로 분산된 Windows 실행 인계를 단일 기준 `GPT_GITHUB_LIVE_MINIMUM_REWORK_MASTER_r0001_20261113.md`로 통합. PRIVATE main commit `0ec5845aa8109eb6e3381dd16b629999f379d2f5`, 원격 전체 내용 readback PASS.
+- 새로운 master는 **증거 ledger 작성 → 기존 PASS/FAIL/NOT_RUN 재사용 → 불일치 delta만 격리 코드 수정·시험 → C/B/D/E·설치/롤백 승인 필요 항목을 최종 한 묶음으로 보고**. 이전 `GPT_GITHUB_LIVE_FAST_TRACK_PARALLEL_ONE_SHOT_r0001_20261113.md`, 잔여 서비스 감사/정리 인계서는 중복으로 실행하지 않고 참고 자료로 사용. Windows는 **단일 최신 마스터 인계서만** 실행 진입점.
+- 이미 완료되어 반복 불필요: Dropbox 감시기 Disable+DB 복사본 무결성(호스트 자체 보고), 잔여 Bridge/updater/notifier 의존성 감사 PASS, v0.2.10 synthetic 자체시험, 비관리자 ACL 실측, 실 GitHub GET-only PASS, ETW parser 실패 재현. 불확실/환경 변화시 해당 부분만 검증하며 이력 PASS를 무조건 운영 PASS로 승격하지 않음.
+- 우선 중요 게이트: **C=PARTIAL/ETW=FAIL_UNTRUSTED_MEASUREMENT**, **B=BLOCKED_SIGNER**, **D=BLOCKED_EXPORT_CLASSIFICATION(기존 34개 유래 소스)**, **E=NOT_RUN**, LIVE 설치/DB·알림 이행/롤백 NOT_RUN. 단일 승인 패킷으로 최종 정산하되 각각의 승인 행위는 독립. 승인되지 않은 운영 키 생성/파일 반출/유료 리뷰/READY/운영 변경 및 LIVE 전환은 실행하지 않는다.
+- Bridge·Dropbox Dashboard updater=RETIRE_CANDIDATE; Notifier=KEEP. **Bridge/updater Stop+Disable은 별도 승인 대기**, 하지만 GitHub LIVE 준비와 병렬 진행 가능하므로 비핵심 잔여 정리 때문에 개발을 중단하지 않는다. GitHub/Dropbox 자동 리뷰 **ACTIVE_PROVIDER=NONE** 유지.
+- 결과를 별도 새 문서로 계속 분기하지 않고 기발행 예정의 `CLAUDE_GITHUB_LIVE_FAST_TRACK_READINESS_RESULT_FOR_GPT_20261113.md` 하나에 통합. `CURRENT.md`와 `TRACKER.json` 동시에 갱신, PRIVATE main PR 없이 remote readback. 서명/반출/유료비용/LIVE 승인 필요 항목만 마지막에 모아 사용자에게 제시.
+- **현재 실행상태=`MASTER_HANDOFF_PREPARED / WINDOWS_EXECUTION_NOT_YET_OBSERVED / MIGRATION_NOT_CUTOVER`**. GitHub 인계 게시만으로 Windows/Claude 자동 실행되지 않음. 다음 한 동작: 사용자 Windows Claude Code에서 최신 마스터 정확 경로 1회 실행 후 GPT 결과 판정.
+
+
 ## GPT 판정 — Bridge·Dropbox Dashboard updater 정리 후보 수용 (2026-11-13 KST)
 - GPT가 `CLAUDE_POST_DROPBOX_DISABLE_DEPENDENCY_AUDIT_RESULT_FOR_GPT_20261113.md` 및 CURRENT/TRACKER 원문 재조회. Claude `HOST_REAL_READ_ONLY / SELF_TEST_REPORTED` 결과를 **`DEPENDENCY_AUDIT=PASS_REPORTED`**로 수용. `ACTIVE_PROVIDER=NONE`, 호스트 감사 변경 0.
 - Bridge는 `HOST_APPLIED` 완료된 v0.1.9 1회 설치용 수신기, 5분 주기 `ALREADY_COMPLETED`, 제어 대상 갱신기만 → **`RETIRE_CANDIDATE` 1순위**. Dashboard updater는 Dropbox 폴더→Dropbox index.html 전용, 입력/출력 고정·GitHub Actions/Pages 독립 → **`RETIRE_CANDIDATE` 2순위**. Notifier는 `KEEP`(프로세스 별도 평가, 공용 Telegram 모듈·비밀/notify_note 삭제 금지).
