@@ -8,8 +8,9 @@ on:
       - 'collab/dashboard/*.py'
       - 'collab/dashboard/tests/**'
       - 'collab/dashboard/public_preview/**'
-      - 'collab/projects/**/CURRENT.md'
-      - 'collab/projects/**/TRACKER.json'
+      # Any project document/feedback/handoff change: CURRENT, TRACKER, and addenda.
+      # The generator only projects approved structured state; unapproved text is not published.
+      - 'collab/projects/**'
       - 'collab/requests/**'
       - 'collab/reviews/**'
       - 'collab/receipts/**'
