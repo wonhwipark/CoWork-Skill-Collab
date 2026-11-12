@@ -1,5 +1,16 @@
 # COWORK-GITHUB-DASHBOARD-20261111-001 — CURRENT
 
+## 최신 상태 — PUBLIC Pages 자동 갱신 (허용목록·인증 게이트, 2026-11-12)
+- **사용자 승인:** "public page 로 자동으로 해줘". 기존 PUBLIC L1Work Executive 대시보드 주소 유지. 자동 공개 대상은 이전에 승인된 비식별 상위 업무 범주·상태·합계 수치만 해당. PRIVATE 전체 데이터를 게시하거나 기존 협업 LIVE를 전환한다는 뜻 아님.
+- **SOURCE_EXPORTER=IMPLEMENTED:** `collab/dashboard/public_sync.py`: PRIVATE state.json 재생성 비교·스키마·phase·상태 whitelist·최대 개수·고정 공개 작업 범주명·STATIC next_action 검증. 내부 Work ID/원문/담당 이름/영수증/실제 SHA/기밀 내용 복제 금지. 신규 미허용 스킬은 PUBLIC 제외. 상태 PASS는 증거 확인 없이 완료로 승격 금지.
+- **AUTO_TRIGGER=IMPLEMENTED:** `.github/workflows/cowork-public-status-sync.yml`은 PRIVATE dashboard workflow 성공 후 독립 실행, `main` 고정·기본 권한 `contents:read`·서명·실행과 무관한 PUBLIC 상태 전용. PUBLIC `docs/cowork-dashboard/status.json` 단일 파일 GitHub API update→원격 readback; 재시도 무한 반복 없음.
+- **PAGES_CLIENT=POSTED / BOOTSTRAP_STATUS=POSTED / REMOTE_READBACK=PASS:** PUBLIC `L1Work/main/docs/cowork-dashboard/status.js` · `index.html`의 same-origin JSON 연결/CSP 변경, PUBLIC `status.json` 초기 값 `BOOTSTRAP_NOT_AUTO`. L1Work GitHub Pages Actions #43242861283 SUCCESS. 초기 payload에는 5개 PUBLIC 범주 카드, GitHub REQUEST/REVIEW/RECEIPT 각 0 관측, CURRENT 5, 개인/내부 Work ID 없음.
+- **AUTO_CREDENTIAL=UNVERIFIED / AUTO_PUBLISH_E2E=NOT_RUN(연결 게이트)**: 자동 PUBLIC 게시에 필요한 Repo-only fine-grained `L1Work Contents Read/Write` 토큰은 GPT에게 제공하거나 파일에 저장하지 않고 PRIVATE Actions Secret `COWORK_PUBLIC_DASHBOARD_WRITE_TOKEN`에 사용자 직접 설치. Secret 없으면 `BLOCKED_MISSING_SECRET / PUBLIC_WRITE=0`. 사용자 설치 방법 [PUBLIC_AUTO_SYNC_SETUP.md](../../dashboard/PUBLIC_AUTO_SYNC_SETUP.md). 이 토큰은 GitHub 제약상 리포지토리 전체 Contents 쓰기 권한을 가지며 파일 단위 ACL은 불가.
+- **TEST:** PRIVATE dashboard Actions #43242260965 PASS: 기존 + 신규 PUBLIC exporter 테스트 47/47, 공개 후보 안전시험 8/8, 합계 **55 PASS/0 FAIL**. 권한 없을 때 미호출, stale 캐시·cutover 변경·비정상 데이터 fail-closed, 고정 PUBLIC 목적지, 원격 readback/idempotency 합성시험 포함. PUBLIC 실제 인증 후 API 쓰기 E2E와 브라우저 HTTP E2E는 별도로 검증 필요.
+- **보안·운영:** `collab/dashboard/PUBLIC_PAGES_DEFAULT_POLICY.md`, `PUBLIC_AUTO_SYNC_SETUP.md`, 루트 README, `START_HERE.md` 등에 공개 범위·설치·검증 절차 기록. Dropbox LIVE, Windows watcher, 운영 DB(WAL 포함), 예약 작업, Bridge, Telegram, Claude 리뷰 호출, PUBLIC ZIP 등은 **변경하지 않음**. `CUTOVER=MIGRATION_NOT_CUTOVER`.
+- **다음 한 동작:** PRIVATE Actions에서 새 PUBLIC 동기화 workflow의 토큰 미설치 차단/정책 시험 기록을 확인. 사용자 Secret 설치 후 동일 workflow 수동 실행 또는 다음 Work 갱신 시 실행→`PUBLIC_SYNC=POSTED_READBACK_PASS`→L1Work Pages 실제 SUCCESS 확인. 완료 전에는 자동 게시 성공으로 판정하지 않음.
+
+
 ## 최신 상태 — Executive 기본 채택·복수 Work Tracker 구현 (2026-11-12)
 - **USER_DECISION:** HTML 시안 01 Executive 선택, 개별 스킬 병렬 진행 카드 추적 승인. 기본 URL `https://wonhwipark.github.io/L1Work/cowork-dashboard/` 유지.
 - **PUBLIC_HTML_DEFAULT=POSTED / PUBLIC_REMOTE_READBACK=PASS / PAGES_DEPLOY=PASS**. L1Work `main/docs/cowork-dashboard/index.html`을 01 Executive 기반으로 교체하고 5개 비식별 상위 작업별 카드, 단계 막대, 담당, 자체시험/독립 리뷰 구분, 다음 조치 추가. commit `0dcb2ad62bd2310d691f1652bbe542679c6cfc89`; Git blob `c9d346c23a97a2671c3cd8b10fa2bc2a1f160173`. GitHub Pages Actions #43236158110 SUCCESS. 기존 2·3번 시안·ZIP 원본 보존.
