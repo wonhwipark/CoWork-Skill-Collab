@@ -13,7 +13,7 @@
 
 - 작업 시작 시 해당 작업의 고유 `Work ID`와 `CURRENT.md`를 확인하고, `collab/projects/<WORK_ID>/TRACKER.json`을 함께 등록·갱신한다. 서로 다른 스킬·이슈가 병렬 진행되면 개별 Work ID로 분리한다. 실제 미등록 작업을 진행 중으로 추정하지 않는다.
 - **계약과 예시:** [Work Tracker V1](dashboard/WORK_TRACKER_GUIDE.md), **PRIVATE 자동 상태:** [HTML](dashboard/index.html) / [VIEW](dashboard/VIEW.md). `TRACKER.json`과 `CURRENT.md` 변경 시 GitHub PRIVATE Action만 갱신.
-- **사용자 기본 대시보드:** [Executive HTML Pages](https://wonhwipark.github.io/L1Work/cowork-dashboard/) (클릭 즉시 열기). 공개 화면에는 허용 목록으로 선별한 상위 상태를 **수동 검증 후 게시**. PRIVATE 최신 데이터 자동 공개 동기화는 미승인·미구현.
+- **사용자 기본 대시보드:** [Executive HTML Pages](https://wonhwipark.github.io/L1Work/cowork-dashboard/) (클릭 즉시 열기). 공개 화면에는 승인된 상위 상태만 표시. PRIVATE → PUBLIC 상태 자동 게이트와 HTML 로드는 구현됐지만 **별도 PUBLIC 쓰기 인증 연결 전에는 자동 게시 BLOCKED**. [연결 인계](dashboard/PUBLIC_AUTO_SYNC_SETUP.md).
 - 단계, 테스트, 리뷰, 패키징, PUBLIC 게시, Windows 호스트 적용, LIVE 전환은 서로 다른 상태. 등록된 `PASS` 문자열만으로 독립 리뷰 또는 실제 운영 완료를 인정하지 않는다.
 
 ## 역할 및 저장소
