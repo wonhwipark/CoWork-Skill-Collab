@@ -5,11 +5,11 @@
       "work_id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
       "skill": "cowork-review-watcher",
       "title": "cowork-review-watcher",
-      "phase": "DISPOSITION",
+      "phase": "DEVELOPMENT",
       "owner": "GPT / Claude Code",
       "self_test": "NOT_VERIFIED",
       "independent_review": "NOT_RUN",
-      "next_action": "GPT 의존성 감사 수용: Bridge(1순위)·Dropbox Dashboard updater(2순위)는 RETIRE_CANDIDATE, Notifier KEEP. 두 작업 Stop+Disable은 사용자 별도 명시 승인 후 Windows에서 실행; ACTIVE_PROVIDER=NONE, GitHub LIVE/독립 리뷰 미승인."
+      "next_action": "단일 최신 master r0001 20261113에서 증거 재사용·delta 시험·C/B/D/E·롤백 준비 병렬 수행, 최종 승인 항목 일괄 정리. Bridge/Dropbox 갱신기 Stop 승인 대기. ACTIVE_PROVIDER=NONE, LIVE 미승인."
     }
   ]
 }
