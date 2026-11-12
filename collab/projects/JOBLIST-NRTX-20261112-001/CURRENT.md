@@ -114,3 +114,11 @@ Use the already-built candidate for an approved, read-only in-house G0 check of 
 - **Operational bottleneck:** Agent MCP returned status but could not inspect required installed source/logs. Avoid repeating same limited status-probe. Move to a trusted Linux-host execution session with explicitly authorized **read-only filesystem and command inspection**, or first add narrowly scoped read-only tool permissions (without live state changes).
 - **Next:** Resolve actual on-host `skill-updater` launcher/CWD/HOME/invoked version, installed `job-list` root/version/activation contract, activation run `auto_20261112_071000_6b537804` per-Job first-failure reason; then Registry/Queue/Run-ID and separately MCP result allowlist. Preserve existing DONE receipt; no relaunch/reenqueue, DB writes, OpenCode Web config changes, updater install, PUBLIC publish.
 - Status `ROOT_CAUSE=UNKNOWN`, `DIRECT_HOST_DEBUG=NOT_RUN`, `DEVELOPMENT=NOT_RUN`, `INDEPENDENT_REVIEW=NOT_RUN`, `LIVE=MIGRATION_NOT_CUTOVER`.
+
+
+## 2026-11-13 — Linux 경로 맵 (사용자 확인/검증 대기 구분)
+- **USER_CONFIRMED:** Project source/OpenCode Web `/home/whpark/Project/smp1900` (Web recovered, user report). MCP directory **`/home/whpark/whpark-mcp`** (user supplied exact location).
+- **RECOMMENDED_NOT_EXECUTED:** Linux local Agent may start with CWD `/home/whpark/Project/smp1900`; actual local launch not observed.
+- **EXPECTED_NOT_VERIFIED:** Skill-Updater `/home/whpark/l1sw-private-skills/skill-updater`; Job-list `/home/whpark/l1sw-private-skills/job-list`. Prior Agent MCP observed installed Job-list v0.4.36, but exact live invocation root/CWD/UID/HOME and archive byte identity remain **NOT_VERIFIED**.
+- Full path/verification matrix, safety constraints and diagnostics: `collab/projects/JOBLIST-NRTX-20261112-001/SKILL_UPDATER_TO_JOBLIST_PATH_DIAG_20261112.md`. PRIVATE only; no operational/local host changes, no Public artifact/ZIP changes.
+- NEXT_ONE_ACTION: In a trusted Linux-host session with read-only filesystem access, confirm actual Skill-Updater invocation → Job-list activation/Registry and separately MCP Wrapper in `/home/whpark/whpark-mcp`; preserve the consumed one-shot.
