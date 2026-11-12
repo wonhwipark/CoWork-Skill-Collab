@@ -10,6 +10,15 @@
 - **SOURCE_OF_TRUTH=PRIVATE_CURRENT_AND_VERIFIED_EVIDENCE:** 실제 진행 상태는 PRIVATE `CURRENT.md`, 리뷰·영수증 및 Actions 증거를 확인해 반영한다. 이전/미관측 정보는 PASS로 승격 금지.
 - **CUTOVER=MIGRATION_NOT_CUTOVER:** 기존 LIVE Windows watcher, DB, 예약 작업, Telegram, Claude 독립 리뷰 운송 및 GitHub 전환에는 변경이나 승인을 부여하지 않는다.
 
+## Executive Work Tracker 공개 적용 (2026-11-12)
+
+- 사용자 선택: 디자인 시안 **01 Executive**. 기본 공개 URL은 `https://wonhwipark.github.io/L1Work/cowork-dashboard/` 그대로 유지하며, 공개 HTML의 상단 KPI → 개별 Work Tracker → 협업 7단계 흐름 → 검증·다음 조치 순서.
+- **PUBLIC 승인 정보는 비식별·상위 범주만:** PRIVATE `CURRENT.md`가 존재하는 다섯 개 업무 범주(협업 운송, 대시보드, 스킬 탐색, 업무 자동화 후보, 지식 구조 설계)를 별도 카드로 표현한다. 내부 Work ID, PRIVATE 파일 링크, 상세 사내 환경/개발 소스/리뷰 요청 원문/영수증/토큰/고객 자료 공개 금지.
+- `l1-fix-workflow` 및 `l1-github`는 사용자가 예시로 든 공개 스킬명으로서 **미등록·상태 미확인 예시**로만 표시. 실제 진행·리뷰 대기·완료로 추정하거나 활성 Work 수에 합산하지 않는다.
+- GitHub PRIVATE `collab/dashboard/work_tracker.py`는 Work ID별 상태를 읽어 PRIVATE HTML/상태 JSON/VIEW를 갱신한다. 여기서 PUBLIC으로 자동 동기화하는 쓰기 권한/토큰/Actions는 추가하지 않는다.
+- `phase`, `self_test`, `independent_review`의 문서 기재는 자기 신고 수준이고, REVIEW/RECEIPT 무결성 검증 또는 실제 실행 완료를 뜻하지 않는다. 공개 단계 막대는 완료율이 아닌 등록된 단계 위치다.
+- PAGES 배포는 PUBLIC HTML 커밋 시 GitHub Pages가 자동 실행. `PAGES_AUTO_DEPLOY=PASS`와 `PRIVATE_STATUS_AUTO_SYNC=NOT_IMPLEMENTED`는 계속 분리 판정.
+
 ## 공개 허용 필드 (2026-11-12 사용자 Pages 게시 승인 범위)
 
 - 업무 흐름의 일반적인 **단계명·주체 역할** (GPT / GitHub 협업 관리 환경 / Windows watcher·Claude Code 업무 실행 환경).
