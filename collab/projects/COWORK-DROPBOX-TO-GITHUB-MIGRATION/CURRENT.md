@@ -1,5 +1,14 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## GPT ETW 귀속 보완 및 C 조건부 최종시험 인계 (2026-11-12 KST)
+- 상태: `GPT_DIAGNOSTIC_PREPARED / WINDOWS_HOST_NOT_YET_RUN / C_OVERALL=PARTIAL / MIGRATION_NOT_CUTOVER`. 사용자의 '진행' 요청을 ETW 사전검증·조건부 한 차례 실측·운영 지속성 읽기 전용 확인에 한정. 기존 Dropbox LIVE v0.1.5 유지.
+- GPT 직접 **정규화된 ETW 이벤트/프로세스 lineage 검증** 보조 Python 코드 및 단위시험 2개 신규 작성. `tools/etw_attribution_preflight_r0001.py`(SHA256 `443755937d9eef7a34b84166a75aee31bdcf94721a2fe3a3ec16eeaa5f25eda8`), `tools/test_etw_attribution_preflight_r0001.py`(SHA256 `cbba9cab12f81a8e7d77e7354c7e4d49efc7619c603062a46a0182e6a3035d19`). 로컬 Python 표준 라이브러리 unittest **9 PASS / 0 FAIL**, GitHub PRIVATE main 각 파일 원격 내용·Blob 해시 로컬 원본과 일치.
+- 테스트 내용: 같은 PID·입증된 자식 marker 정상, 다른 PID marker/무관한 subprocess/프로세스 PID 재사용/누락 provider·이벤트/시간 범위 오류는 fail-closed, 운영 경로 이벤트 있는 경우 차단. **실 Windows ETW 원본을 직접 해독한 것이 아니라 normalized 합성입력 시험**으로, 운영 SHADOW 무접근 PASS 증거 아님.
+- Windows 단일 인계: `GPT_ETW_ATTRIBUTION_C_FINAL_CHECK_ONE_SHOT_r0001_20261112.md`, PRIVATE main 직접 게시/원격 readback PASS. 첫 단계는 기존 6개 관리자 전용 ETW 추적 재분석(원본 비반출)과 PID/TID·Kernel Process/File provider·양성 대조 귀속 사전 증명, 조건 충족 시 **관리자 ETW 실측 단 1회**, 실패 시 C=PARTIAL 유지.
+- 기존 감시기/갱신기 안정성은 현장 조회 가능 시 읽기 전용으로 주기·로그 증가 확인, 장기(24h) 근거 없으면 PENDING; **재시작/예약작업 정의 변경/자동 감시 설정 미승인**. E 정식 독립 리뷰·키/토큰 발급·원본 ZIP 반출·운영 DB 이행·GitHub LIVE 전환은 NOT_RUN.
+- Windows Claude Code 실제 실행은 GitHub 문서 게시만으로 시작되지 않음. 결과 예정 `CLAUDE_ETW_ATTRIBUTION_AND_C_FINAL_CHECK_RESULT_FOR_GPT_20261112.md`. PR 불필요, 단일 인계 후 Windows 로컬 실행→PRIVATE MD/CURRENT 게시→remote readback.
+
+
 ## GPT 운영 복구·C ETW 최종 판정 (2026-11-12 KST)
 - 원격 원문 `CLAUDE_OPERATIONS_RESTART_AND_C_ETW_RERUN_RESULT_FOR_GPT_20261112.md`와 정정된 CURRENT 직접 확인. GPT 판정 **`ACCEPT_WITH_CHANGE / C_OVERALL=PARTIAL`**.
 - 감시기 단기 복구 `PASS`(새 스캔 8회 이상/약 9분, 신규 리뷰 모델 호출 0), 대시보드 `PASS_AFTER_SECOND_START`(로그 3회 증가/5분 이상). **장기가동·재로그인 안정성은 NOT_RUN**. 첫 갱신기 종료 0xC000013A 원인 미확정. 인계서가 허용한 기존 작업 시작 1회를 초과한 2차 재시작은 **PROCESS_DEVIATION**으로 남기며 소급 승인하지 않는다.
