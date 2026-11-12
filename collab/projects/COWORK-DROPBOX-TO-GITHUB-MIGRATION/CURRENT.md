@@ -1,5 +1,12 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## DROPBOX_BRIDGE_UPDATER_RETIRE_RESULT: BRIDGE=DISABLED_STOPPED / UPDATER=DISABLED_STOPPED / NOTIFIER=UNCHANGED_RUNNING / ACTIVE_PROVIDER=NONE (Claude 자체 보고, 2026-11-13 KST)
+- 결과: `CLAUDE_DROPBOX_BRIDGE_UPDATER_RETIRE_RESULT_FOR_GPT_20261113.md` (PRIVATE `main`, commit `195e79c33e6cf8c3d34bc7b0a4e861952890bca0`). 자체 실측 보고이며 독립 리뷰가 아니다. GitHub LIVE 전환이 아니다.
+- 근거: 의존성 감사 결론(Bridge·갱신기 RETIRE_CANDIDATE)과 사용자의 직접 지시(Dropbox 대시보드를 보지 않음). 사용자가 관리자 셸에서 검증된 스크립트 1개를 1회 실행해 Bridge Disable·Stop 후 갱신기(게시 중 아님 확인 후) Disable·Stop.
+- 결과: Bridge·갱신기 작업 `Disabled`, 프로세스 0. 두 작업 정의는 보존본 대비 `Enabled=false` 한 줄만 다름. 알림기는 정의 바이트 동일·같은 프로세스·워터마크 불변. 감시기는 Disabled·프로세스 0 유지. 운영 DB·설정·비밀·로그·Dropbox·Telegram·모델 호출 변경 0.
+- 알아 둘 점: 스크립트의 알림기 확인 줄은 변수명 대소문자 충돌로 잘못 출력됐으나(출력 오류) 사후 단독 확인으로 정상 확인. Dropbox `index.html`은 마지막 값(요청 65·결과 60)에 고정된다. 재부팅·재로그인 후 유지와 장기 안정은 미검증(`LONG_RUN=PENDING`). 복구는 관리자 셸에서 갱신기 → Bridge 순서로 Enable 후 Start.
+- 다음 한 동작: GPT가 판정하고, 알림기의 GitHub 알림 경로 이행·유지 여부는 사용자 별도 승인으로 결정.
+
 ## GPT 실행 통합 — GitHub LIVE 최소 반복 마스터 (2026-11-13 KST)
 - 사용자 최우선 목표: **반복 최소화와 GitHub LIVE 신속 전환**. GPT는 여러 개로 분산된 Windows 실행 인계를 단일 기준 `GPT_GITHUB_LIVE_MINIMUM_REWORK_MASTER_r0001_20261113.md`로 통합. PRIVATE main commit `0ec5845aa8109eb6e3381dd16b629999f379d2f5`, 원격 전체 내용 readback PASS.
 - 새로운 master는 **증거 ledger 작성 → 기존 PASS/FAIL/NOT_RUN 재사용 → 불일치 delta만 격리 코드 수정·시험 → C/B/D/E·설치/롤백 승인 필요 항목을 최종 한 묶음으로 보고**. 이전 `GPT_GITHUB_LIVE_FAST_TRACK_PARALLEL_ONE_SHOT_r0001_20261113.md`, 잔여 서비스 감사/정리 인계서는 중복으로 실행하지 않고 참고 자료로 사용. Windows는 **단일 최신 마스터 인계서만** 실행 진입점.
