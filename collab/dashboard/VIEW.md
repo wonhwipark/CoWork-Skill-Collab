@@ -78,7 +78,7 @@ HTML은 GitHub에서 소스로 표시되므로 다운로드 후 브라우저로 
 
 | Work ID | 스킬 | 진행 단계(신고) | 담당 | 시험(신고) | 독립 리뷰(신고) | 다음 조치 |
 |---|---|---|---|---|---|---|
-| [COWORK-DROPBOX-TO-GITHUB-MIGRATION](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) | cowork-review-watcher | GPT 판정 | GPT / Claude Code | NOT_VERIFIED | NOT_RUN | GPT가 잔여 구성요소 의존성 감사(읽기 전용, 호스트 변경 0)를 판정한다. Bridge와 Dashboard updater는 RETIRE_CANDIDATE, Notifier는 KEEP(보류)이며 실제 Stop/Disable은 사용자 별도 승인과 관리자 셸이 필요하다. ACTIVE_PROVIDE |
+| [COWORK-DROPBOX-TO-GITHUB-MIGRATION](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) | cowork-review-watcher | GPT 판정 | GPT / Claude Code | NOT_VERIFIED | NOT_RUN | GPT 의존성 감사 수용: Bridge(1순위)·Dropbox Dashboard updater(2순위)는 RETIRE_CANDIDATE, Notifier KEEP. 두 작업 Stop+Disable은 사용자 별도 명시 승인 후 Windows에서 실행; ACTIVE_PROVIDER=NONE, Git |
 | [COWORK-GITHUB-DASHBOARD-20261111-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md) | cowork-dashboard | 개발·시험 | GPT | PASS | NOT_RUN | Executive Work Tracker 화면·Pages 배포 검증 및 사용자 확인 |
 | [COWORK-SKILL-DISCOVERY-20261112-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md) | skill-discovery | GPT 판정 | GPT | NOT_VERIFIED | NOT_RUN | 스킬 18개 원본 대조 미확인 항목 판정 |
 | [JOBLIST-NRTX-20261112-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/JOBLIST-NRTX-20261112-001/CURRENT.md) | job-list | 개발·시험 | GPT | PASS | NOT_RUN | 호스트 G0 확인 전 후보 패키지 검증 범위 유지 |
