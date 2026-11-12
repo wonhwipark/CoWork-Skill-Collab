@@ -1,5 +1,12 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## GPT B·C·D·GitHub 인증 단일 승인 패킷 (2026-11-13 KST)
+- 사용자의 GitHub LIVE 최소 반복 진행 의사에 따라 **B 서명자 기기, C 대체 증거/ETL 선택, D 원 소스 반출 분류, GitHub Contents:Read-only 자격**을 한 번에 묻는 단일 패킷 작성. `GPT_BCD_TOKEN_SINGLE_APPROVAL_PACKET_r0001_20261113.md` PRIVATE main commit `2046f5b75f8b1574c9d35d53cd331a1966f60e7c`, 원격 원문 readback PASS.
+- B 별도 장치/운영키 생성, C 수락기준 변경/추가 실측, D 사외 유래 코드 반출, PAT 발급·배포는 각자 별도 승인·권한 경계. 이번 문서는 **DECISION_PACKET_READY**, Windows 미실행 및 유료 reviewer·REQUEST/READY·운영 watcher 설치·GitHub LIVE 미승인.
+- 기존 완료/자체보고 재활용: Dropbox 감시기·Bridge·갱신기 Disabled(Notifier KEEP), v0.2.10 로컬 후보, ETW r0002 합성 시험, C 실제 GET-only. **B=BLOCKED, C=PARTIAL, D=BLOCKED, E=NOT_RUN, ACTIVE_PROVIDER=NONE, MIGRATION_NOT_CUTOVER** 그대로.
+- 다음 한 동작: 사용자 Windows Claude Code에 정확한 PRIVATE main 패킷을 읽고 4개 게이트 준비/조건별 최소 작업을 한 번에 보고하도록 전달(운영 변경·키·반출·유료 reviewer 금지). 이후 사용자에게 4개 숫자 선택으로 동시 승인 여부 확인.
+
+
 ## GPT 판정 — LIVE 최소 반복 통합 결과 수용 (2026-11-13 KST)
 - GPT가 통합 Claude 결과 `CLAUDE_GITHUB_LIVE_FAST_TRACK_READINESS_RESULT_FOR_GPT_20261113.md`(Git blob `113583de3bf63a6de84c145bcd12410a1038a47d`), Bridge/updater 비활성화 결과 및 ETW r0002 도구·테스트 원문, TRACKER 원격 재조회. 판정서 `GPT_MINIMUM_REWORK_RESULT_DISPOSITION_r0001_20261113.md` PRIVATE main 직접 게시·readback PASS.
 - **`GPT_DISPOSITION=ACCEPT_WITH_LIMITATIONS`**. Dropbox 감시기·Bridge·갱신기 Disabled/PID0 호스트 자체보고 PASS 수용; Notifier는 Running/유지. Bridge/updater 종료는 별도 Windows 사용자 관리자 셸 1회, 통합 마스터 실행은 관리자 0·새 ETW 0·운영 DB 연결 0·모델 0·비용 $0. 실제 재부팅·재로그인 이후 지속 검증은 NOT_RUN.
