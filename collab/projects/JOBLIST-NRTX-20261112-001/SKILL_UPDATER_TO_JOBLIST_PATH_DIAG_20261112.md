@@ -68,3 +68,19 @@ PUBLIC `wonhwipark/L1Work/main` v0.4.36 생성 이력에서:
 8) 우선 수정 대상: `1=Skill-Updater, 2=Job-list, 3=MCP Wrapper, 4=Skill-Updater+Job-list, 5=복합, 6=미확정`
 
 숫자 자체는 원인과 증거를 대체하지 않는다. 호스트에 정확한 진단 근거가 없는 항목은 `3`으로 보고하고, 실제 원인 판정을 위해 비민감 reason code/검증 근거를 현장에 보존한다.
+
+
+## 2026-11-13 — Linux 경로 맵 (사용자 확인/검증 대기 구분)
+
+| 구성 | 경로 | 근거/검증 상태 |
+|---|---|---|
+| 작업 소스 및 OpenCode Web 프로젝트 | `/home/whpark/Project/smp1900` | **USER_CONFIRMED** — 기존 Web 장애 복구는 사용자 보고 |
+| 로컬 Agent 시작 작업 디렉터리(CWD) | `/home/whpark/Project/smp1900` | **RECOMMENDED_NOT_EXECUTED** — 이 디렉터리에서 실행 가능하나 실제 실행은 미관측 |
+| MCP 프로젝트 | `/home/whpark/whpark-mcp` | **USER_CONFIRMED_PATH** — 정확한 MCP 엔트리포인트·운영 상태는 미검증 |
+| Skill-Updater 예상 설치 루트 | `/home/whpark/l1sw-private-skills/skill-updater` | **EXPECTED_NOT_HOST_VERIFIED** — 실제 설치/실행 바이너리·버전/경로/CWD는 읽기 전용 확인 필요 |
+| Job-list 예상 설치 루트 | `/home/whpark/l1sw-private-skills/job-list` | **DESIGN_EXPECTED / INSTALLED_VERSION_REPORTED** — 0.4.36 설치 관찰, 실제 프로세스 경로·바이트 대조 미검증 |
+
+- `/home/whpark`는 경로 기준 `$HOME`의 예상값. 실제 Runner/Agent/Updater 서비스 계정의 `HOME`과 CWD가 다르면 정식 경로로 간주하지 말고 현장 실측해야 함.
+- MCP 경로와 소스 경로 분리는 정상 가능. v0.4.36 Worker 소스는 `$HOME/Project/smp1900`을 찾아 `opencode run --dir <source>`를 별도 subprocess로 호출하도록 설계됨; 실제 설치 버전/진입점 검증은 별개.
+- 진단은 `Skill-Updater invocation → Job-list activation/Registry → Queue/Runner → 별도 MCP Wrapper 결과 조회` 순으로 실시. 특히 `/home/whpark/whpark-mcp`의 **읽기 전용** Wrapper 조회 경로/allowlist를 확인.
+- 운영 Job 재실행·소스 수정·Web 설정 변경·운영 DB/Queue/Registry 변경은 승인 없이 금지. 위 정보는 PRIVATE 협업 문서에만 기록하며 PUBLIC 스킬 ZIP에는 주입하지 않음.
