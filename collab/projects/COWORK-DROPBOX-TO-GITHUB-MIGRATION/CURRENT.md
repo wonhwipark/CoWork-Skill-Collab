@@ -1,5 +1,13 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## GPT Fast Track 병렬 준비 인계 (2026-11-13 KST)
+- 사용자 지시: GitHub LIVE까지 **빠르게 진행**. 중간 핑퐁을 줄이기 위해 잔여 Dropbox 서비스 의존성(A), C 호스트·ETW 증거 보완(B), 운영 서명·ZIP 반출·독립 리뷰 준비(C), LIVE 검증·롤백 사전 설계(D)를 **병렬 작업으로 통합**. 운영 키 발급/설치, 사내 코드 반출, 정식 유료 reviewer, 운영 watcher 설치·운영 DB 이행 및 GitHub LIVE 전환을 승인한 것으로 해석하지 않음.
+- 최신 기준: `ACTIVE_PROVIDER=NONE / WATCHER_DISABLE=PASS_REPORTED`, `C_OVERALL=PARTIAL`(실GitHub GET-only PASS, ETW parser 신뢰 불가), `B_SIGNER=BLOCKED`, `D_EXPORT=BLOCKED`(v0.1.5 유래 34항목 소유·반출 분류 미완), `E_INDEPENDENT_REVIEW=NOT_RUN`, `MIGRATION_NOT_CUTOVER`. 현재 후보 v0.2.10 ZIP은 로컬 보존·development_not_for_deployment.
+- 신규 Windows 원샷 인계: `GPT_GITHUB_LIVE_FAST_TRACK_PARALLEL_ONE_SHOT_r0001_20261113.md` PRIVATE main, commit `820c73f2b28ff868f9171df6e50b57484e871a97`, 원격 원문 readback PASS. 이전 `WINDOWS_POST_DROPBOX_DISABLE_DEPENDENCY_AUDIT_ONE_SHOT_r0001_20261113.md`와 결과를 **재사용하고 이미 끝난 항목은 반복하지 않음**.
+- Windows에서 가능한 정적·합성 검증/격리 개발은 한 번에 마무리하고 모델 호출/추가 WATCHER/운영 DB 접근 없이 `CLAUDE_GITHUB_LIVE_FAST_TRACK_READINESS_RESULT_FOR_GPT_20261113.md` 및 CURRENT/TRACKER를 PRIVATE main에 게시·검증. ETW 동일 관리자 시험 무한 반복 금지. 기존 ETW 수락 조건을 임의로 해제하지 않으며 C 대체 증거는 **제안만** 준비.
+- **현재 단계는 `FAST_TRACK_HANDOFF_PREPARED_NOT_EXECUTED`**. 문서 게시만으로 Windows Claude Code가 실행되거나 GitHub LIVE로 전환되지 않는다. 다음 한 동작: Windows Claude Code가 정확한 PRIVATE repo/main/인계 경로를 읽고 병렬 원샷 수행, 최종 승인 묶음을 한 번에 보고 → GPT 종합 판정.
+
+
 ## GPT 후속 — Dropbox 잔여 서비스 의존성 READ_ONLY 감사 인계 (2026-11-13 KST)
 - 현재 `ACTIVE_PROVIDER=NONE / WATCHER_DISABLE=PASS_REPORTED / MIGRATION_NOT_CUTOVER` 유지. 기존 watcher 비활성화 GPT 판정 `GPT_DROPBOX_WATCHER_DISABLE_DISPOSITION_r0001_20261113.md` 및 `START_HERE.md` 최신 기준을 확인. 사용자 '다음 스텝 진행' 요청에 따라 **추가 서비스 중지 없이** 잔여 의존성 READ_ONLY 인벤토리 단계 준비.
 - 현재 PRIVATE `collab/dashboard/`와 `.github/workflows/cowork-dashboard.yml`는 GitHub에서 별도 자동 갱신. Windows의 Dropbox Dashboard updater와 구분. PUBLIC Pages는 `L1Work` 별도 배포·허용목록/토큰 게이트가 있으므로 완전 자동 동기화 여부는 별도 판단.
