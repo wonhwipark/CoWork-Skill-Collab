@@ -3,8 +3,7 @@
 ## C→E 원샷 후속 인계 준비 (2026-11-12 KST)
 - 사용자 요청: C 실제 GitHub Contents read-only SHADOW와 E 정식 독립 리뷰를 **중간 핑퐁 없이 하나의 작업 지시로, 단계별 승인 게이트 충족 시 순차 수행**. 문서 작성/게시에 대한 요청이며 토큰 발급·키 설치·소스 반출·유료 reviewer 호출 승인으로 해석하지 않음.
 - 새 Windows 실행 인계: `WINDOWS_C_SHADOW_TO_E_INDEPENDENT_REVIEW_ONE_SHOT_r0001_20261112.md` (PRIVATE main, commit `285efacbc4b53fc457599156f08ee3b5e5750250`, 원격 readback 내용 확인). 기존 Stage 1 A와 합성 C 시험을 재사용하고 v0.2.10(174745B; 보고 SHA-256 `67ea7fc63ccc1de77a28025b7c4f1b701ee6f4fa387311bca3f3d2bc7432b108`)을 리뷰 후보로 고정.
-- C 실제 GitHub SHADOW: `BLOCKED_CREDENTIAL / NOT_RUN` (해당 repo 한정 Contents:Read-only fine-grained 토큰 미확보 보고). E 정식 리뷰: `BLOCKED/NOT_RUN` (운영 승인자 별도 기기 실키·34개 v0.1.5 유래 소스 반출 허가·독립 reviewer 경로 및 STATIC # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
- 실제 승인 확인 전 실행 금지). 모델 호출 0으로 유지하며 READY 게시도 금지.
+- C 실제 GitHub SHADOW: `BLOCKED_CREDENTIAL / NOT_RUN` (해당 repo 한정 Contents:Read-only fine-grained 토큰 미확보 보고). E 정식 리뷰: `BLOCKED/NOT_RUN` (운영 승인자 별도 기기 실키·34개 v0.1.5 유래 소스 반출 허가·독립 reviewer 경로 및 STATIC $1 실제 승인 확인 전 실행 금지). 모델 호출 0으로 유지하며 READY 게시도 금지.
 - 현재 결과: `HANDOFF_PREPARED_NOT_EXECUTED`; `DEVELOPMENT=SELF_TEST_REPORTED`; `INDEPENDENT_REVIEW=NOT_RUN`; `CUTOVER=MIGRATION_NOT_CUTOVER`; ACTIVE LIVE는 Dropbox v0.1.5 보존. 운영 DB/F1/LIVE 전환/작업 스케줄/Telegram 변경 승인 없음.
 - 다음 한 동작: Windows Claude Code에 위 PRIVATE `main` 인계 경로를 명시하여 Stage 1 후속으로 실행. 승인/권한이 없는 단계는 BLOCKED, 허용된 작업은 진행; 신규 결과 MD 및 CURRENT 최신 기록을 직접 게시·원격 readback한 뒤 GPT가 결과 판정.
 
