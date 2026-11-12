@@ -8,10 +8,10 @@ This repository is a **private collaboration workspace**, not a deployment repos
 
 **[CoWork Executive · Work Tracker 기본 대시보드 열기](https://wonhwipark.github.io/L1Work/cowork-dashboard/)** — **기본 확인 경로**. PC·모바일에서 업무별 독립 카드, 검증 상태, 다음 조치 확인.
 
-- 공개 화면은 2026-11-12 기준 PRIVATE 기록에서 선별·검증한 상위 상태 요약입니다. 원문 요청·리뷰·영수증·식별자·비밀 정보는 게시하지 않습니다.
+- 공개 화면은 PRIVATE 최신 상태에서 **공개 허용목록으로 선별·검증한 상위 요약**을 자동 갱신합니다. 원문 요청·리뷰·영수증·식별자·비밀 정보는 게시하지 않습니다.
 - **[PRIVATE 상세 HTML](collab/dashboard/index.html)** — 최신 GitHub 기록을 Actions로 재생성. GitHub HTML blob은 다운로드 후 브라우저에서 확인할 수 있습니다.
 - [PRIVATE HTML 보존 스냅샷](collab/dashboard/snapshots/CoWork_협업흐름_STATUS_20261112.html) · [GitHub 네이티브 요약](collab/dashboard/VIEW.md)
-- **자동 갱신 상태:** PUBLIC HTML에서 공개용 `status.json`을 동적으로 표시합니다. PRIVATE 성공 Action → 허용목록 필터 → PUBLIC 단일 파일 자동 게시 코드는 구현했고 **최소권한 토큰 Secret 연결 전에는 게시 차단**. [1회 인증 설정](collab/dashboard/PUBLIC_AUTO_SYNC_SETUP.md).
+- **자동 갱신 검증 PASS:** 프로젝트/Work 변경 → PRIVATE 상태 생성·검증 → PUBLIC `status.json` 원격 게시 → GitHub Pages 자동 배포. 페이지를 열어둔 상태에서는 **2분마다 재확인**, 탭 복귀 시 즉시 확인. [실제 단계 변경 E2E 및 실패 복구 검증](collab/projects/COWORK-GITHUB-DASHBOARD-20261111-001/AUTO_PUBLIC_HTML_REFRESH_E2E_20261113.md).
 - [병렬 스킬별 Work ID 등록·자동 추적 계약](collab/dashboard/WORK_TRACKER_GUIDE.md) — l1-fix-workflow/l1-github 개별 진행 시 사용
 - [대시보드 최신 작업 현황](collab/projects/COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md)
 
