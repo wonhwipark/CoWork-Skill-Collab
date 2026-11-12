@@ -1,5 +1,12 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## OPERATIONS_RESTART_AND_C_ETW_RERUN_RESULT: C=PARTIAL / ?댁쁺 蹂듦뎄 PASS (Claude ?먯껜 蹂닿퀬, 2026-11-12 KST)
+- 寃곌낵: `CLAUDE_OPERATIONS_RESTART_AND_C_ETW_RERUN_RESULT_FOR_GPT_20261112.md` (PRIVATE `main`, commit `404728eabfca8d24a74afa882d94360cce8e7689`, ?먭꺽 readback? 蹂꾨룄 ?뺤씤). ?먯껜 ?쒗뿕 蹂닿퀬?대ŉ ?낅┰ 由щ럭媛 ?꾨땲?? ?ъ슜???뱀씤 踰붿쐞 ?덉뿉???ㅽ뻾?덈떎.
+- A 蹂듦뎄: 湲곗〈 媛먯떆湲걔룸??쒕낫??媛깆떊湲??덉빟 ?묒뾽???뺤쓽 洹몃?濡??쒖옉. WATCHER_RESTART=PASS(留덉?留??ㅼ틪 21:36 KST ?댄썑 ?좉퇋 ?ㅼ틪 8???댁긽, 紐⑤뜽 ?몄텧 0), DASHBOARD_RESTART=PASS_AFTER_SECOND_START(1李⑤뒗 ??3遺???媛숈? 肄붾뱶 0xC000013A濡?醫낅즺, C ?쒗뿕 ?쒓컙?? 寃뱀낀?쇰굹 ?멸낵 誘명솗?? C? 寃뱀튂吏 ?딆? 2李??쒖옉? 5遺??댁긽 ?앹〈, 濡쒓렇 媛깆떊). 醫낅즺 ?먯씤? 誘명솗?뺤씠硫?pythonw ?꾪솚? ?뱀씤 踰붿쐞 諛뽰씠???ㅽ뻾?섏? ?딆쓬.
+- B C ?ъ륫?? C_REAL_GITHUB_READ=PASS(HOST_REAL, 3二쇨린 GET 7??200x5/304x2, ?곌린 0). ETW??**FAIL_UNTRUSTED_MEASUREMENT**: ?쒗뿕 ?꾨줈?몄뒪???먯껜 異쒕젰 PID?먯꽌 ?대깽??0, 誘몃겮 ?뚯씪 ?닿린???ㅻⅨ PID?먯꽌留?愿痢〓릺???묒꽦 ?議??ㅽ뙣. **?댁쁺 DB 臾댁젒洹쇱? ?낆쬆?섏? ?딆븯??*(PASS ?좎뼵 湲덉?). ?먮낯 異붿쟻 ?뚯씪? 愿由ъ옄 ?꾩슜 ?대뜑??蹂댁〈, 寃뚯떆?섏? ?딆쓬.
+- ?곹깭: C_OVERALL=PARTIAL, MODEL_NEW_CALLS=0, COST_INCURRED=0, SHADOW_ACCOUNT_RESTORED_DISABLED=PASS, DROPBOX_ACTIVE_PROVIDER=Dropbox LIVE v0.1.5 ?좎?, INDEPENDENT_REVIEW=NOT_RUN, CUTOVER=MIGRATION_NOT_CUTOVER.
+- ?ㅼ쓬 ???숈옉: GPT媛 C=PARTIAL ?섏슜 ?щ?瑜??먯젙. ETW ?ъ륫?뺤씠 ?꾩슂?섎㈃ TID 援먯감寃利앷낵 ?꾨줈?몄뒪 ?몃━(Kernel-Process) 蹂닿컯 ???ъ슜?먯쓽 愿由ъ옄 ???ㅽ뻾 1?? ?댁쁺 蹂寃승룹쑀猷?由щ럭쨌LIVE ?꾪솚? ?ъ쟾??誘몄듅??
+
 ## 사용자 승인 — 기존 LIVE 운영 복구 + C ETW 재측정 (2026-11-12 KST)
 - 사용자가 **리뷰 감시기/대시보드 갱신기 기존 예약 작업 재시작 + 수정 ETW C 계측 재실행**을 하나의 작업으로 명시 승인. 작업 정의·구성·계정·인증·운영 DB·LIVE 제공자 변경이나 신규 유료 리뷰 호출 승인 아님.
 - 사용자 전달 호스트 보고: watcher 프로세스 0, 마지막 스캔 21:36 KST, updater 로그 11일 00:10 이후 없음, 두 작업 LastTaskResult 3221225786(0xC000013A; 콘솔 종료와 부합하나 인과 미확정), notifier/Bridge 정상. **호스트 실제 복구 여부는 아직 NOT_RUN/미확인**.
