@@ -2,7 +2,7 @@
   "disclaimer": "GitHub SHADOW 현황. 미이관 자료는 0건이 아니라 미확인입니다.",
   "live_provider": "DROPBOX",
   "operations": {
-    "cutover": "MIGRATION_NOT_CUTOVER",
+    "cutover": "NOT_OBSERVED",
     "dashboard_source": true,
     "host_shadow": "NOT_OBSERVED",
     "independent_review": "NOT_RUN",
@@ -19,7 +19,7 @@
       "status": "전환 전",
       "title": "COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태",
       "tone": "warning",
-      "topic": "GPT 최종 판정 — Dropbox 리뷰 감시기 비활성화 수용 (2026-11-13 KST)"
+      "topic": "GPT 후속 — Dropbox 잔여 서비스 의존성 READ_ONLY 감사 인계 (2026-11-13 KST)"
     },
     {
       "id": "COWORK-GITHUB-DASHBOARD-20261111-001",
