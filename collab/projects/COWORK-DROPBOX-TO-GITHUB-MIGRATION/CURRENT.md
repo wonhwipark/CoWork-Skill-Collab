@@ -1,5 +1,11 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## GITHUB_LIVE_MINIMUM_REWORK_RESULT: C/B/D/E 게이트 BLOCKED·PARTIAL, ACTIVE_PROVIDER=NONE (Claude 자체 보고, 2026-11-13 KST)
+- 결과: `CLAUDE_GITHUB_LIVE_FAST_TRACK_READINESS_RESULT_FOR_GPT_20261113.md` (PRIVATE `main`, commit `d80064781c7cbb12a382faadd2b24db2a5f09426`, 원격 readback 일치). 마스터 하나만 기준, 기존 증거 재사용, 관리자 셸·새 ETW 추적·운영 DB 열기·모델 호출·비용 모두 0. 독립 리뷰 아님, LIVE 전환 아님.
+- delta: ETW 사전검증 `r0002`(수명 밖 이벤트 오류화, 8.3 이름·파일 identity 방어; 원본 r0001 보존, 9 PASS 유지 + 신규 20 PASS, commit `9a89ae98d87ec9480f191c0b75986ba55b6b0bf2`). `TRACKER.json`의 허용 enum 밖 값(phase/self_test)으로 대시보드가 등록을 무시했을 가능성을 실제 검증기로 확인하고 정정(commit `046cca71144a40c05c54eb1ddde8eb0e4b557d4d`). v0.2.10 롤백 리허설은 스냅샷 사본에서 항목별 PASS(실운영 롤백 NOT_RUN).
+- 상태: C=PARTIAL(ETW FAIL_UNTRUSTED 유지, C_ALT_EVIDENCE=PROPOSED_ONLY), B=BLOCKED_SIGNER_DEVICE, D=BLOCKED_EXPORT_CLASSIFICATION(34 UNCHANGED+12 CHANGED는 v0.1.5 유래), E=NOT_RUN, 읽기 전용 토큰 BLOCKED_CREDENTIAL. v0.2.10 ZIP(174745B, sha256 `67ea7fc63ccc1de77a28025b7c4f1b701ee6f4fa387311bca3f3d2bc7432b108`)은 로컬 보존.
+- 다음 한 동작: 결과 §7 승인 패킷(B 서명자 기기, C 수락 방식, D 반출 확인, 읽기 전용 토큰)에 사용자가 한 번에 응답.
+
 ## DROPBOX_BRIDGE_UPDATER_RETIRE_RESULT: BRIDGE=DISABLED_STOPPED / UPDATER=DISABLED_STOPPED / NOTIFIER=UNCHANGED_RUNNING / ACTIVE_PROVIDER=NONE (Claude 자체 보고, 2026-11-13 KST)
 - 결과: `CLAUDE_DROPBOX_BRIDGE_UPDATER_RETIRE_RESULT_FOR_GPT_20261113.md` (PRIVATE `main`, commit `195e79c33e6cf8c3d34bc7b0a4e861952890bca0`). 자체 실측 보고이며 독립 리뷰가 아니다. GitHub LIVE 전환이 아니다.
 - 근거: 의존성 감사 결론(Bridge·갱신기 RETIRE_CANDIDATE)과 사용자의 직접 지시(Dropbox 대시보드를 보지 않음). 사용자가 관리자 셸에서 검증된 스크립트 1개를 1회 실행해 Bridge Disable·Stop 후 갱신기(게시 중 아님 확인 후) Disable·Stop.
