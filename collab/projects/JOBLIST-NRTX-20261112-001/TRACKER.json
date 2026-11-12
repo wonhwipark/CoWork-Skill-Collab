@@ -1,0 +1,15 @@
+{
+  "schema": "COWORK_WORK_TRACKER_V1",
+  "works": [
+    {
+      "work_id": "JOBLIST-NRTX-20261112-001",
+      "skill": "job-list",
+      "title": "job-list",
+      "phase": "DEVELOPMENT",
+      "owner": "GPT",
+      "self_test": "PASS",
+      "independent_review": "NOT_RUN",
+      "next_action": "호스트 G0 확인 전 후보 패키지 검증 범위 유지"
+    }
+  ]
+}
