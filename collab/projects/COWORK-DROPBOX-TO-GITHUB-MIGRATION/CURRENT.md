@@ -1,5 +1,12 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## ETW_ATTRIBUTION_AND_C_FINAL_CHECK_RESULT: C=PARTIAL / ETW=FAIL_UNTRUSTED_MEASUREMENT (Claude 자체 보고, 2026-11-12 KST)
+- 결과: `CLAUDE_ETW_ATTRIBUTION_AND_C_FINAL_CHECK_RESULT_FOR_GPT_20261112.md` (PRIVATE `main`, commit `1e7e79ff63baa325164f020fd3e275459a6c3fc8`, 원격 readback 확인은 결과 문서 게시 후 별도 기록). 자체 보고이며 독립 리뷰가 아니다. 관리자 셸은 사용자가 실행했다.
+- 진단 코드: GPT 도구 SHA-256·Git blob 일치, GPT 9 PASS 재현. 호스트 정규화 도구와 시험을 추가해 합계 31 PASS(로컬 보존, 미게시).
+- ETW: 사전검증 추적(새 추적 1회)은 수집 손실 0으로 수집됐으나 시간 열(`Clock-Time`)과 프로세스 시작 payload를 해석하지 못해 **POSITIVE_CONTROL_PREFLIGHT=FAIL_UNTRUSTED_MEASUREMENT**. 도구 결함과 실제 귀속 불일치를 구분하지 못함. 보존 원본 재분석(분류기 수정 후)도 FAIL. **C_FINAL_RERUN=NOT_RUN_PREFLIGHT_FAILED**, **C_ETW_OPERATING_FILE_ISOLATION=NOT_PROVEN**, **C_OVERALL=PARTIAL**. 관리자 셸 실행은 3회(1회차는 제 스크립트 버그로 P0에서 중단, 2회차 새 추적 1회, 3회차 새 추적 없는 재분석).
+- 운영 지속성(읽기 전용): 재시작 후 감시기 약 55분·갱신기 약 50분 동안 신규 스캔/로그 증가, 프로세스 불변, `0xC000013A` 재발 없음. 두 관측 사이 관리자 시험이 있었으나 영향 없음. LONG_RUN=PENDING. MODEL_CALLS_NEW=0, USD_SPEND=0, ACTIVE_PROVIDER=Dropbox LIVE v0.1.5, INDEPENDENT_REVIEW=NOT_RUN, CUTOVER=MIGRATION_NOT_CUTOVER.
+- 다음 한 동작: GPT가 C=PARTIAL 수용 및 보완 근거(비관리자 ACL 접근 거부 + SHADOW 코드 경로) 사용 여부를 판정하거나, 새 명시적 승인으로 보강 도구 1회 재분석(Clock-Time 자동 보정 또는 Get-WinEvent 직접 해독, 통과 시 C 실측 1회)을 허용. 승인 전 관리자 실행은 요청하지 않는다.
+
 ## GPT ETW 귀속 보완 및 C 조건부 최종시험 인계 (2026-11-12 KST)
 - 상태: `GPT_DIAGNOSTIC_PREPARED / WINDOWS_HOST_NOT_YET_RUN / C_OVERALL=PARTIAL / MIGRATION_NOT_CUTOVER`. 사용자의 '진행' 요청을 ETW 사전검증·조건부 한 차례 실측·운영 지속성 읽기 전용 확인에 한정. 기존 Dropbox LIVE v0.1.5 유지.
 - GPT 직접 **정규화된 ETW 이벤트/프로세스 lineage 검증** 보조 Python 코드 및 단위시험 2개 신규 작성. `tools/etw_attribution_preflight_r0001.py`(SHA256 `443755937d9eef7a34b84166a75aee31bdcf94721a2fe3a3ec16eeaa5f25eda8`), `tools/test_etw_attribution_preflight_r0001.py`(SHA256 `cbba9cab12f81a8e7d77e7354c7e4d49efc7619c603062a46a0182e6a3035d19`). 로컬 Python 표준 라이브러리 unittest **9 PASS / 0 FAIL**, GitHub PRIVATE main 각 파일 원격 내용·Blob 해시 로컬 원본과 일치.
