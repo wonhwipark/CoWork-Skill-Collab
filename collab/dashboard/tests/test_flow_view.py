@@ -97,7 +97,7 @@ class WorkflowDashboardTests(unittest.TestCase):
         page = (base / "index.html").read_text(encoding="utf-8")
         md = (base / "VIEW.md").read_text(encoding="utf-8")
         state = json.loads((base / "state.json").read_text(encoding="utf-8"))
-        self.assertEqual(state["schema"], "COWORK_GITHUB_DASHBOARD_SHADOW_V3")
+        self.assertEqual(state["schema"], "COWORK_GITHUB_DASHBOARD_SHADOW_V4")
         self.assertEqual(state["operations"]["windows_stage1"], "NOT_RUN")
         self.assertIn("업무 실행 환경", page)
         self.assertIn(chr(96)*3+"mermaid", md)
