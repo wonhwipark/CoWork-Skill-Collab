@@ -5,11 +5,11 @@
       "work_id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
       "skill": "cowork-review-watcher",
       "title": "cowork-review-watcher",
-      "phase": "BLOCKED",
+      "phase": "DISPOSITION",
       "owner": "GPT / Claude Code",
       "self_test": "NOT_VERIFIED",
       "independent_review": "NOT_RUN",
-      "next_action": "Windows 호스트 ETW 귀속 검증 결과 확인 후 C 게이트 판정"
+      "next_action": "Windows 승인된 Dropbox reviewer watcher 1개 안전 Stop+Disable (무손실·백업 게이트 후) 실측, PRIVATE 결과 게시; GitHub LIVE 전환 미승인"
     }
   ]
 }
