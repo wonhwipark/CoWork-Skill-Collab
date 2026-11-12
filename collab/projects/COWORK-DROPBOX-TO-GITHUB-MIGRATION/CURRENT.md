@@ -1,5 +1,15 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## GPT 판정 — LIVE 최소 반복 통합 결과 수용 (2026-11-13 KST)
+- GPT가 통합 Claude 결과 `CLAUDE_GITHUB_LIVE_FAST_TRACK_READINESS_RESULT_FOR_GPT_20261113.md`(Git blob `113583de3bf63a6de84c145bcd12410a1038a47d`), Bridge/updater 비활성화 결과 및 ETW r0002 도구·테스트 원문, TRACKER 원격 재조회. 판정서 `GPT_MINIMUM_REWORK_RESULT_DISPOSITION_r0001_20261113.md` PRIVATE main 직접 게시·readback PASS.
+- **`GPT_DISPOSITION=ACCEPT_WITH_LIMITATIONS`**. Dropbox 감시기·Bridge·갱신기 Disabled/PID0 호스트 자체보고 PASS 수용; Notifier는 Running/유지. Bridge/updater 종료는 별도 Windows 사용자 관리자 셸 1회, 통합 마스터 실행은 관리자 0·새 ETW 0·운영 DB 연결 0·모델 0·비용 $0. 실제 재부팅·재로그인 이후 지속 검증은 NOT_RUN.
+- 코드 delta: ETW 보조 r0002 별도 추가(기존 r0001 보존), 수명 외 이벤트 차단·8.3 확장·파일 identity 방어, **신규 20 PASS(Claude 자체 보고)**. 변환기 Clock-Time/PID 귀속 신뢰성은 미복구. 운영 DB 파일 무접근 ETW는 여전히 **`NOT_PROVEN`**, `C=PARTIAL`; 4요소 ACL/state isolation/file-ID/runtime call path의 **대체 수락안은 PROPOSED_ONLY**. 본 판정만으로 C 승인 변경/PASS 불가.
+- v0.2.10 후보 원본 ZIP(174745 B, SHA256 `67ea7fc63ccc1de77a28025b7c4f1b701ee6f4fa387311bca3f3d2bc7432b108`)은 Windows 로컬 보존만. 출처 분류 **34 UNCHANGED + 12 CHANGED = 기존 유래 46개**, NEW 24개. 기존 유래 파일 사외 반출 허가 미확인. 전체 원본 바이트 GPT 검증/PRIVATE 업로드/독립 리뷰 NOT_RUN.
+- 자체시험·합성 롤백 스냅샷 PASS는 실운영 이행·복구나 Claude 독립 리뷰 PASS와 구분. **`B=BLOCKED_SIGNER_DEVICE / C=PARTIAL / D=BLOCKED_EXPORT_CLASSIFICATION / E=NOT_RUN / GITHUB_LIVE=NOT_APPROVED / ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER`**. 비관리자 read-only 토큰의 실제 정식 보관처 설치는 미확인(과거 일시적으로 실 GitHub GET을 시험한 것과 별개).
+- 최소 반복: 앞으로 새 인계서 연속 생성/중복 테스트 대신 최신 마스터와 실제 delta만 확인. 사용자 승인 패킷 **B 별도 서명자 기기, C 대체기준 vs ETL 재분석 선택, D 46개 유래 소스+NEW 소유·반출 확인, repo Contents:Read-only 토큰 설치**를 한 번에 요청; E 유료 독립 리뷰와 최종 LIVE 설치/전환은 선행 요건 검증 후 별도 명시 승인.
+- 원격 결과 판정 문서 `GPT_MINIMUM_REWORK_RESULT_DISPOSITION_r0001_20261113.md`; 다음 한 동작: 사용자에게 B/C/D/토큰 승인 의사·제약을 묶어서 확인. 실제 키 생성/운영 DB 변경/업로드/유료 리뷰/READY/운영 설치/ LIVE 전환 0.
+
+
 ## GITHUB_LIVE_MINIMUM_REWORK_RESULT: C/B/D/E 게이트 BLOCKED·PARTIAL, ACTIVE_PROVIDER=NONE (Claude 자체 보고, 2026-11-13 KST)
 - 결과: `CLAUDE_GITHUB_LIVE_FAST_TRACK_READINESS_RESULT_FOR_GPT_20261113.md` (PRIVATE `main`, commit `d80064781c7cbb12a382faadd2b24db2a5f09426`, 원격 readback 일치). 마스터 하나만 기준, 기존 증거 재사용, 관리자 셸·새 ETW 추적·운영 DB 열기·모델 호출·비용 모두 0. 독립 리뷰 아님, LIVE 전환 아님.
 - delta: ETW 사전검증 `r0002`(수명 밖 이벤트 오류화, 8.3 이름·파일 identity 방어; 원본 r0001 보존, 9 PASS 유지 + 신규 20 PASS, commit `9a89ae98d87ec9480f191c0b75986ba55b6b0bf2`). `TRACKER.json`의 허용 enum 밖 값(phase/self_test)으로 대시보드가 등록을 무시했을 가능성을 실제 검증기로 확인하고 정정(commit `046cca71144a40c05c54eb1ddde8eb0e4b557d4d`). v0.2.10 롤백 리허설은 스냅샷 사본에서 항목별 PASS(실운영 롤백 NOT_RUN).
