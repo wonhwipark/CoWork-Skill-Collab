@@ -2,7 +2,7 @@
   "disclaimer": "GitHub SHADOW 현황. 미이관 자료는 0건이 아니라 미확인입니다.",
   "live_provider": "DROPBOX",
   "operations": {
-    "cutover": "NOT_RUN",
+    "cutover": "MIGRATION_NOT_CUTOVER",
     "dashboard_source": true,
     "host_shadow": "NOT_OBSERVED",
     "independent_review": "NOT_RUN",
@@ -16,10 +16,10 @@
       "id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md",
-      "status": "검증 진행 중",
+      "status": "전환 전",
       "title": "COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태",
       "tone": "warning",
-      "topic": "STAGE1_APPROVED_HOST_RESULT: PARTIAL (Claude 자체 시험 보고, 2026-11-12 KST)"
+      "topic": "C→E 원샷 후속 인계 준비 (2026-11-12 KST)"
     },
     {
       "id": "COWORK-GITHUB-DASHBOARD-20261111-001",
