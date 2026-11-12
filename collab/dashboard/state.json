@@ -16,10 +16,10 @@
       "id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md",
-      "status": "검증 진행 중",
+      "status": "전환 전",
       "title": "COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태",
       "tone": "warning",
-      "topic": "GITHUB_LIVE_MINIMUM_REWORK_RESULT: C/B/D/E 게이트 BLOCKED·PARTIAL, ACTIVE_PROVIDER=NONE (Claude 자체 보고, 2026-11-13 KST)"
+      "topic": "GPT 판정 — LIVE 최소 반복 통합 결과 수용 (2026-11-13 KST)"
     },
     {
       "id": "COWORK-GITHUB-DASHBOARD-20261111-001",
