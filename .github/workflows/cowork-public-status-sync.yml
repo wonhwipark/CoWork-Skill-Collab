@@ -45,6 +45,9 @@ jobs:
           set -euo pipefail
           python3 -m unittest discover -s collab/dashboard/tests -v
           python3 -m unittest discover -s collab/dashboard/public_preview/tests -v
+          # Source documents may advance after the trigger run, before this checkout.
+          # Regenerate from this trusted PRIVATE main snapshot locally, not remotely.
+          python3 collab/dashboard/generate.py
           python3 collab/dashboard/public_sync.py prepare --root . --out "${RUNNER_TEMP}/cowork-public-status.json"
           python3 -m json.tool "${RUNNER_TEMP}/cowork-public-status.json" >/dev/null
 
