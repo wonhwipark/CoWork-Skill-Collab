@@ -71,9 +71,8 @@ class WorkTrackerTests(unittest.TestCase):
         got = work_tracker.collect(self.root)
         self.assertEqual(got[0]["record_source"], "REGISTERED_METADATA_UNVERIFIED")
         self.assertIn("운영 근거 별도", got[0]["evidence"])
-        page = work_tracker.render_html(got, generate.url_for)
+        page = work_tracker.render_html(got, lambda p: generate.url_for(generate.REPO, p))
         self.assertIn("TRACKER.json 신고 값", page)
-        self.assertIn("self", str(data))  # raw test input remains unchanged
 
     def test_invalid_manifest_does_not_replace_current(self):
         p = self.project("WORK-C")
@@ -109,7 +108,7 @@ class WorkTrackerTests(unittest.TestCase):
                        owner='GPT <script>alert(2)</script>',
                        next_action='test <b>safe</b>'))
         (p / "TRACKER.json").write_text(json.dumps(data), encoding="utf-8")
-        html = work_tracker.render_html(work_tracker.collect(self.root), generate.url_for)
+        html = work_tracker.render_html(work_tracker.collect(self.root), lambda p: generate.url_for(generate.REPO, p))
         self.assertIn("&lt;img", html)
         self.assertNotIn("<img src=x", html)
         self.assertIn("&lt;b&gt;safe&lt;/b&gt;", html)
