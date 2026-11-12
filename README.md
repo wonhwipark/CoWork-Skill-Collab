@@ -6,12 +6,13 @@ This repository is a **private collaboration workspace**, not a deployment repos
 
 ## 기본 대시보드 — 클릭하면 바로 열리는 HTML (GitHub Pages)
 
-**[CoWork 협업 흐름·현재 STATUS 웹페이지 바로 열기](https://wonhwipark.github.io/L1Work/cowork-dashboard/)** — **기본 확인 경로**. PC·모바일 브라우저에서 즉시 HTML 화면으로 표시됩니다.
+**[CoWork Executive · Work Tracker 기본 대시보드 열기](https://wonhwipark.github.io/L1Work/cowork-dashboard/)** — **기본 확인 경로**. PC·모바일에서 업무별 독립 카드, 검증 상태, 다음 조치 확인.
 
 - 공개 화면은 2026-11-12 기준 PRIVATE 기록에서 선별·검증한 상위 상태 요약입니다. 원문 요청·리뷰·영수증·식별자·비밀 정보는 게시하지 않습니다.
 - **[PRIVATE 상세 HTML](collab/dashboard/index.html)** — 최신 GitHub 기록을 Actions로 재생성. GitHub HTML blob은 다운로드 후 브라우저에서 확인할 수 있습니다.
 - [PRIVATE HTML 보존 스냅샷](collab/dashboard/snapshots/CoWork_협업흐름_STATUS_20261112.html) · [GitHub 네이티브 요약](collab/dashboard/VIEW.md)
 - **갱신 구분:** GitHub Pages는 PUBLIC HTML 변경 시 자동 배포되지만 PRIVATE 실무 데이터를 PUBLIC으로 자동 동기화하지 않습니다. 실제 상태는 공개 가능 항목 확인 후 갱신합니다.
+- [병렬 스킬별 Work ID 등록·자동 추적 계약](collab/dashboard/WORK_TRACKER_GUIDE.md) — l1-fix-workflow/l1-github 개별 진행 시 사용
 - [대시보드 최신 작업 현황](collab/projects/COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md)
 
 ## Start here
