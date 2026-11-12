@@ -1,5 +1,14 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## GPT 최종 판정 — Dropbox 리뷰 감시기 비활성화 수용 (2026-11-13 KST)
+- GPT가 `CLAUDE_DROPBOX_WATCHER_SAFE_DISABLE_RESULT_FOR_GPT_20261112.md`, CURRENT.md, TRACKER.json을 PRIVATE main에서 직접 재조회. **GPT_DISPOSITION=ACCEPT_WITH_LIMITATIONS / WATCHER_DISABLE=PASS_REPORTED / ACTIVE_PROVIDER=NONE**. Windows 현장 증거는 Claude 및 사용자의 자체 실측 보고이며 GPT의 실제 호스트 검사와 구분.
+- 단일 Dropbox watcher 예약작업 Disabled, 런처·자식 PID 0, lock 해제, 중지 후 약 4분간 4개 지점 관측, 신규 모델/비용 0·누적 호출 카운터 61 유지. 기존 요청·결과·영수증 보존. 중지 후 DB main/WAL 복사 및 복사본 `integrity_check/quick_check=ok`, 진행 작업 0. **RESTORE_READY=PARTIAL**: 작업 정의 복원은 SKIP, 장기/재부팅/재로그인 확인 PENDING.
+- DB SHM 수정 시각 변화 원인은 notifier 읽기 폴링으로 추정되나 독립 확인되지 않음. Dashboard updater/Notifier/Bridge는 계속 동작 보고되며, 이들 운영 구성요소 변경은 **미승인**. 운영 DB 직접 `mode=ro` 관찰도 SHM 영향을 줄 수 있어 경로 분리 조사 필요.
+- `C_ETW=FAIL_UNTRUSTED_MEASUREMENT / C_OVERALL=PARTIAL`, `INDEPENDENT_REVIEW=NOT_RUN` 및 `CUTOVER=MIGRATION_NOT_CUTOVER` 유지. GitHub SHADOW는 자동 리뷰 LIVE가 아니며 지금은 provider 없음.
+- GPT 판정서 `GPT_DROPBOX_WATCHER_DISABLE_DISPOSITION_r0001_20261113.md`, PRIVATE main 게시 및 remote readback PASS. `TRACKER.json`의 schema 외 값(`phase=DROPBOX_WATCHER_DISABLED_ARCHIVED`, `self_test=SELF_TEST_REPORTED`)을 유효 값 `DISPOSITION`, `NOT_VERIFIED`로 수정; Windows 자체 보고는 CURRENT에 보존. `collab/START_HERE.md`의 오래된 'Dropbox LIVE 동작 중' 문구도 최신 ACTIVE_PROVIDER=NONE으로 정정·readback.
+- **다음 단계:** 남은 세 구성요소(Dashboard updater/Notifier/Bridge) 공용·Dropbox 전용 의존성 및 재기동 경로를 읽기전용 인벤토리화하고, 추가 Disable·삭제는 새로 명시 승인받기. 자동화/검증 외 GitHub LIVE 전환 금지.
+
+
 ## DROPBOX_WATCHER_SAFE_DISABLE_RESULT: WATCHER_DISABLE=PASS / ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER (Claude 자체 보고, 2026-11-12 KST)
 - 결과: `CLAUDE_DROPBOX_WATCHER_SAFE_DISABLE_RESULT_FOR_GPT_20261112.md` (PRIVATE `main`, commit `e6e88524fc2bc562ed16966b8d15e5b7ae5ced1c`, 원격 readback은 이 절 게시 후 별도 확인). 자체 실측 보고이며 독립 리뷰가 아니다. GitHub LIVE 전환이 아니다.
 - 실행: Claude 세션(비관리자)의 `Disable-ScheduledTask`는 액세스 거부로 변경 없이 중단했고, 사용자가 관리자 셸에서 검증된 스크립트 1개를 실행했다(작업 이름·동작 일치, 프로세스 정확히 2개, 리뷰어 자식 0, 유휴 구간 확인 후 Disable → Stop).
