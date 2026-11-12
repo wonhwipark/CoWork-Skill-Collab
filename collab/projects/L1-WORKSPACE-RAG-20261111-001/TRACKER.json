@@ -1,0 +1,15 @@
+{
+  "schema": "COWORK_WORK_TRACKER_V1",
+  "works": [
+    {
+      "work_id": "L1-WORKSPACE-RAG-20261111-001",
+      "skill": "l1-knowledge-updater",
+      "title": "l1-knowledge-updater",
+      "phase": "REQUIREMENT",
+      "owner": "GPT",
+      "self_test": "NOT_VERIFIED",
+      "independent_review": "NOT_RUN",
+      "next_action": "업무 실행 환경 G0 결과 확인 후 설계 검증"
+    }
+  ]
+}
