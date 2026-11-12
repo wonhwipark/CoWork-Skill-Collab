@@ -1,5 +1,15 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## POST_DROPBOX_DISABLE_DEPENDENCY_AUDIT: DEPENDENCY_AUDIT=PASS / DASHBOARD=RETIRE_CANDIDATE / NOTIFIER=KEEP / BRIDGE=RETIRE_CANDIDATE / HOST_CHANGES=0 (Claude 자체 보고, 2026-11-13 KST)
+- 결과: `CLAUDE_POST_DROPBOX_DISABLE_DEPENDENCY_AUDIT_RESULT_FOR_GPT_20261113.md` (PRIVATE `main`, commit `1dc9fb70deb1e18f5a7c7a59d3fe1c5f42c613c1`). 읽기 전용 감사이며 정리 실행이 아니다. 독립 리뷰가 아니다. GitHub LIVE 전환이 아니다.
+- 감시기: 감사 시점 Disabled·프로세스 0, 새 자동 재시작 경로 없음(`ACTIVE_PROVIDER=NONE`). 재부팅·재로그인 후 유지는 미검증(마지막 부팅 11-03).
+- Bridge: 갱신기 v0.1.9 1회 설치 수신기, 이미 `HOST_APPLIED`, 매 주기 즉시 반환, 대상은 갱신기 작업 하나뿐이며 감시기를 제어하는 경로 없음 → `RETIRE_CANDIDATE`(가장 먼저).
+- Dashboard updater: Dropbox 전용(감시기 DB를 읽지 않음), 입력이 늘지 않아 같은 값만 반복 확인, GitHub 대시보드와 독립 → `RETIRE_CANDIDATE`. Dropbox 화면을 실제로 보는지는 미확인이라 사용자 확인 필요.
+- Notifier: 프로세스는 감시기 전용이지만 Telegram 모듈·비밀을 노트 알림이 공유 → 프로세스 중지는 가능하나 `KEEP`(보류), 모듈·비밀 삭제 금지.
+- SHM: 수정 시각이 정확히 30초 간격으로 갱신되어 알림기 폴링과 일치(`CORRELATED_NOTIFIER`, 핸들·쓰기 인과는 미확정). main·WAL 불변.
+- 호스트 변경 0(작업 생성·Stop·Disable·DB 연결·발송·모델 호출 없음). 의존성 검색 범위는 이 PC의 사용자 작업·자동화 폴더이며 전 디스크가 아니다.
+- 다음 한 동작: GPT가 판정하고, 사용자가 Dropbox 대시보드 사용 여부를 답한 뒤 Bridge → 갱신기 순서의 Stop+Disable(관리자 셸)을 별도 승인으로 결정한다.
+
 ## GPT Fast Track 병렬 준비 인계 (2026-11-13 KST)
 - 사용자 지시: GitHub LIVE까지 **빠르게 진행**. 중간 핑퐁을 줄이기 위해 잔여 Dropbox 서비스 의존성(A), C 호스트·ETW 증거 보완(B), 운영 서명·ZIP 반출·독립 리뷰 준비(C), LIVE 검증·롤백 사전 설계(D)를 **병렬 작업으로 통합**. 운영 키 발급/설치, 사내 코드 반출, 정식 유료 reviewer, 운영 watcher 설치·운영 DB 이행 및 GitHub LIVE 전환을 승인한 것으로 해석하지 않음.
 - 최신 기준: `ACTIVE_PROVIDER=NONE / WATCHER_DISABLE=PASS_REPORTED`, `C_OVERALL=PARTIAL`(실GitHub GET-only PASS, ETW parser 신뢰 불가), `B_SIGNER=BLOCKED`, `D_EXPORT=BLOCKED`(v0.1.5 유래 34항목 소유·반출 분류 미완), `E_INDEPENDENT_REVIEW=NOT_RUN`, `MIGRATION_NOT_CUTOVER`. 현재 후보 v0.2.10 ZIP은 로컬 보존·development_not_for_deployment.
