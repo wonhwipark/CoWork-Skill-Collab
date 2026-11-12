@@ -9,7 +9,7 @@
       "owner": "GPT / Claude Code",
       "self_test": "NOT_VERIFIED",
       "independent_review": "NOT_RUN",
-      "next_action": "Dropbox 리뷰 감시기 비활성화 수용(SELF_TEST_REPORTED), ACTIVE_PROVIDER=NONE; 남은 대시보드·알림기·Bridge 의존성 읽기전용 확인 후 별도 중지 승인 여부 결정. RESTORE_READY=PARTIAL, GitHub LIVE 미승인."
+      "next_action": "Dropbox watcher Disabled/ACTIVE_PROVIDER=NONE. Windows에서 Dashboard updater·Telegram notifier·Bridge의 공유 의존성 READ_ONLY 감사 후 GPT가 유지/중지 후보 판정; 운영 변경 및 GitHub LIVE 미승인."
     }
   ]
 }
