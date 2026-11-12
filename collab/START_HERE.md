@@ -1,5 +1,5 @@
 # CoWork — GitHub 협업 진입점
-기준: 2026-11-10 KST | **MIGRATION_NOT_CUTOVER / DROPBOX_LIVE**
+기준: 2026-11-13 KST | **MIGRATION_NOT_CUTOVER / 활성 리뷰 provider는 각 프로젝트 CURRENT.md에서 확인**
 성격: **고정 진입점**. 특정 Phase, 요청자 전달 대기, ZIP PASS 등 수시 상태를 이 문서에 고정하지 않는다.
 
 ## 단일 최신 정본 위치
@@ -7,7 +7,7 @@
 2. **협업 안전 계약:** `collab/ops/CONTRACTS/NO_PR_COLLABORATION_V1.md`, `collab/ops/CONTRACTS/REVIEW_TRANSPORT_V1.md` (DRAFT, 실제 key/서명 세부는 최신 설계·판정을 우선).
 3. **현재 설계/시험:** `collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/GITHUB_ADAPTER_AND_REVIEW_FLOW_DESIGN_r0002_20261110.md`, `ACCEPTANCE_TEST_MATRIX_r0001_20261110.md`.
 4. **보안 기준:** `collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/GPT_B7_TRUST_ROOT_AND_APPROVAL_POLICY_DRAFT_r0001_20261110.md` (설계 초안, 운영 승인/설치 아님).
-5. **실제 운용 원본:** 기존 Dropbox `/SKILL-COLLAB/`의 LIVE 요청·결과·영수증·운영 규칙. GitHub에 전부 복제되지 않았고, 운영 실행 기준으로 계속 살아있다.
+5. **보존된 이력 원본:** 기존 Dropbox `/SKILL-COLLAB/`의 요청·결과·영수증·운영 규칙. GitHub에 전부 복제되지 않았음. **2026-11-12 감시기 Disable 실측 보고 후 `ACTIVE_PROVIDER=NONE`이며, 현재 상태는 프로젝트 `CURRENT.md` 최상단을 우선 확인.**
 
 ## 신규 Work/스킬별 병렬 작업 등록 (기본)
 
@@ -23,7 +23,7 @@
 - PRIVATE: `wonhwipark/CoWork-Skill-Collab` — 새 협업 문서/판정/인계/영수증의 기준 저장소. 민감/반출금지 자료는 PRIVATE에도 게시 불가.
 - **스킬 ZIP 전달 SSOT:** [Job-list/Skill-Updater PUBLIC 배송 계약](ops/CONTRACTS/JOBLIST_PUBLIC_DELIVERY_V1.md). 실제 사내 Skill-Updater가 받는 최종 ZIP은 **PUBLIC `wonhwipark/L1Work` `main` 루트**. PRIVATE 후보/문서 게시로 배송·사내 실행을 완료했다고 보고하지 않는다. 후보·독립 리뷰·호스트·배포 게이트 미충족 시 PUBLIC 게시 BLOCKED.
 - PUBLIC: `wonhwipark/L1Work` — 승인된 최종 ZIP 다운로드 및 **별도 사용자 승인된 공개 허용 목록 기반 HTML Pages 상태 요약**. 개발 후보/REQUEST/영수증/PRIVATE 원문은 공개 금지. Pages 기본 URL: `https://wonhwipark.github.io/L1Work/cowork-dashboard/`. 공개 범위는 `collab/dashboard/PUBLIC_PAGES_DEFAULT_POLICY.md` 참조.
-- 기존 LIVE: Dropbox `/SKILL-COLLAB/` — **전환 명시 승인 전 운영 변경/중지하지 않는다**.
+- 기존 Dropbox reviewer watcher: 2026-11-12 사용자 승인으로 예약작업 Disable·Stop 완료 보고, 이력 및 로컬 백업 보존. **ACTIVE_PROVIDER=NONE**, GitHub LIVE 승인·가동 아님. 다른 updater/notifier/Bridge는 변경 승인 전 유지.
 
 ## 새 창·새 기능 요청: 보유 스킬부터 확인
 
