@@ -9,6 +9,7 @@ on:
       - 'collab/dashboard/tests/**'
       - 'collab/dashboard/public_preview/**'
       - 'collab/projects/**/CURRENT.md'
+      - 'collab/projects/**/TRACKER.json'
       - 'collab/requests/**'
       - 'collab/reviews/**'
       - 'collab/receipts/**'
