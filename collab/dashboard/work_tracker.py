@@ -20,7 +20,7 @@ PHASES = {
     "DEVELOPMENT": ("개발·시험", 2),
     "REVIEW": ("독립 리뷰", 3),
     "DISPOSITION": ("GPT 판정", 4),
-    "COMPLETE": ("완료 기록", 5),
+    "COMPLETE": ("완료 신고 (검증 필요)", 5),
     "BLOCKED": ("차단·보류", 0),
     "UNKNOWN": ("단계 미확인", 0),
 }
@@ -237,8 +237,8 @@ def render_html(works: list[dict], url_for) -> str:
             '</h3><div class="tracker-id">Work ID: ' + esc(w["work_id"]) + '</div>' +
             '<div class="tracker-steps">' + stages + '</div>' +
             '<div class="tracker-meta"><p>담당: ' + esc(w["owner"]) +
-            '</p><p>자체시험: ' + esc(w["self_test"]) +
-            '</p><p>독립 리뷰: ' + esc(w["independent_review"]) +
+            '</p><p>자체시험: ' + esc(("자체보고 PASS" if w["self_test"] == "PASS" else w["self_test"])) +
+            '</p><p>독립 리뷰: ' + esc(("PASS 신고·영수증 미검증" if w["independent_review"] == "PASS" else w["independent_review"])) +
             '</p><p>근거: ' + esc(w["record_source"]) + '</p></div>' +
             '<div class="tracker-next"><b>다음 조치</b> · ' +
             esc(w["next_action"]) + '</div>' +
