@@ -15,7 +15,7 @@
 
 - 사용자가 선택한 **대시보드 기본값**. PC/모바일에서 GitHub HTML 소스를 내려받지 않고 바로 볼 수 있다.
 - 2026-11-12 실제 확인 기록을 공개 허용 목록으로 압축한 HTML 화면. 이전 정적 샘플을 교체했으며 **PRIVATE 상세 파일이나 식별자는 포함하지 않는다**.
-- Pages는 PUBLIC 파일 변경 시 자동 빌드·배포한다. PRIVATE 최신 상태를 **허용목록만 자동 게시하도록 구현**했지만 사용자 계정에서 [최소권한 Secret 연결](PUBLIC_AUTO_SYNC_SETUP.md) 전에는 `BLOCKED_MISSING_SECRET`이다. PUBLIC 현재 화면은 상태 JSON 초기 게시본을 읽는다.
+- **PUBLIC 자동 동기화 E2E PASS (2026-11-13):** 인증 설정 이후 실제 Work 단계 변경이 PRIVATE → 허용목록 `status.json` → Pages 배포로 반영됨. 공개 페이지는 2분마다 또는 탭 재활성 시 공개 데이터 확인. [최신 회귀·배포 결과](../projects/COWORK-GITHUB-DASHBOARD-20261111-001/AUTO_PUBLIC_HTML_REFRESH_E2E_20261113.md). 토큰 미설정 시 차단 정책은 그대로 유지.
 - [공개 허용목록·자동 반영 게이트](PUBLIC_PAGES_DEFAULT_POLICY.md) · [PRIVATE 상세 HTML](index.html) · [비공개 GitHub 요약](VIEW.md)
 - 아래 이전 기록의 '공개 샘플 전용/HTML 다운로드 기본' 설명보다 이 최신 운영 규칙을 우선한다. 기존 기록은 추적 목적으로 보존한다.
 
