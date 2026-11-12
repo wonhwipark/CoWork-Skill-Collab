@@ -2,6 +2,15 @@
 
 **정책 적용:** 2026-11-12 / **기본 URL:** https://wonhwipark.github.io/L1Work/cowork-dashboard/
 
+## 최신 확정 — 자동 갱신 E2E 성공 (2026-11-13)
+
+- **PAGES_DEFAULT=ENABLED / AUTO_PUBLISH_E2E=PASS**. 사용자가 공개 Pages HTML을 열어 둔 상태에서도 `status.js`가 `status.json`을 120초 간격과 포커스 복귀 시 확인. 실제 JSON 상태 변경의 UI 동적 표시가 목표이며 브라우저 실화면 E2E 자체는 `NOT_RUN`.
+- **SOURCE_TRIGGER=ENABLED:** PRIVATE `CURRENT.md`, `TRACKER.json`, `collab/projects/**` 내 인계·피드백, `collab/requests/**`, `collab/reviews/**`, `collab/receipts/**` 등의 변경 시 GitHub Actions 자동 검증. 상위 공개 허용 상태 변경이 없는 경우에는 `PUBLIC_SYNC=UNCHANGED`로 중복 게시하지 않음.
+- **PUBLIC_SYNC=POSTED_READBACK_PASS 실측:** PRIVATE Work 단계 2→4 입력 `88135a754efa8af2970127013aae879c82ae1431` → PRIVATE Actions [#43251843321](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43251843321) SUCCESS → PUBLIC sync [#43251880632](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43251880632) `POSTED_READBACK_PASS` → L1Work Pages [#43251906090](https://github.com/wonhwipark/L1Work/actions/runs/43251906090) SUCCESS. PUBLIC JSON `dashboard.phase_index=4` 원격 재조회 확인. [상세 검증](../projects/COWORK-GITHUB-DASHBOARD-20261111-001/AUTO_PUBLIC_HTML_REFRESH_E2E_20261113.md).
+- **연속 갱신 보완:** 과거 stale PRIVATE state 검사 오류를 차단하기 위해 PUBLIC sync Action이 신뢰된 현재 PRIVATE `main`을 checkout한 뒤 `generate.py`를 로컬 실행하고, 그 결과를 공개 허용목록으로 검증. 기존 인증·단일 파일 목적지·원격 readback·불일치 차단 계약 유지.
+- **보안 게이트 그대로:** PUBLIC에 추가되는 데이터는 기존 비식별 고정 범주·상태 enum·집계 수치에 한정. 새 미승인 스킬/문서 원문/내부 Work ID/리뷰 영수증/비밀 정보는 공개 금지. 토큰 범위는 L1Work Contents 권한뿐; 공개 `status.json` 단일 파일만 자동 갱신. 자격 증명 만료·삭제·API 실패 시 fail-closed.
+- **이하 2026-11-12 이전 섹션의 `BLOCKED_AUTH_PENDING`, `MANUAL_ALLOWLIST_ONLY`, `BOOTSTRAP_NOT_AUTO` 등은 당시 관측 이력**. 현재 자동 게시 판정은 이 최신 섹션을 우선하며, 인증 갱신이 실패하면 다시 BLOCKED로 판정.
+
 ## 2026-11-12 갱신 — PUBLIC 자동 요약 승인·인증 게이트
 
 **사용자 최신 지시:** PUBLIC Pages 자동 갱신 요청. 기존의 수동 게시 정책은 아래 **선별된 허용 정보에 한해** 자동 갱신 구현으로 보완. 이 승인으로 PRIVATE 전체 공개·운영 LIVE 전환·유료 리뷰/토큰 임의 발급을 허용하지 않음.
