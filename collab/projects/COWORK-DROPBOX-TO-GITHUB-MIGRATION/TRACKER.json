@@ -1,0 +1,15 @@
+{
+  "schema": "COWORK_WORK_TRACKER_V1",
+  "works": [
+    {
+      "work_id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
+      "skill": "cowork-review-watcher",
+      "title": "cowork-review-watcher",
+      "phase": "BLOCKED",
+      "owner": "GPT / Claude Code",
+      "self_test": "NOT_VERIFIED",
+      "independent_review": "NOT_RUN",
+      "next_action": "Windows 호스트 ETW 귀속 검증 결과 확인 후 C 게이트 판정"
+    }
+  ]
+}
