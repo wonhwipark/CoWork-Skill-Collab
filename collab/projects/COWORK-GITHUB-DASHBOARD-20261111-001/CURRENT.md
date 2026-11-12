@@ -1,5 +1,15 @@
 # COWORK-GITHUB-DASHBOARD-20261111-001 — CURRENT
 
+## 최신 실측 — PUBLIC 자동 게시 E2E 성공 (2026-11-13 KST)
+- **RUN_ID=43248348944:** GitHub PRIVATE `CoWork PUBLIC Pages status sync (allowlist only)`, `workflow_dispatch`, `completed/success`; 실행 기록 API 재조회 PASS. 검사 47 + 공개 보안 8 = **55 PASS / 0 FAIL**. `ALLOWLIST_BUILD=PASS`, 자격 증명 검사 PASS, PUBLIC 상태 게시 step SUCCESS, 로그에 **`PUBLIC_SYNC=POSTED_READBACK_PASS`** 확인.
+- **PUBLIC_STATUS=UPDATED:** `wonhwipark/L1Work/main/docs/cowork-dashboard/status.json` 원격 재조회 PASS, `sync_mode=AUTOMATED_ALLOWLIST`, `snapshot_date=2026-11-13`, WORK 5 / 프로젝트 5 / REQUEST 0 / REVIEW 0 / RECEIPT 0. Git blob `4a2c37f45701270f8bb575aba8f6d2fe1edb1bf7`. 공개 필드에서 PRIVATE Work ID 및 전환 내부 프로젝트 식별자 미노출 확인.
+- **PAGES_DEPLOY=PASS:** L1Work 공개 Pages Actions [#43248381246](https://github.com/wonhwipark/L1Work/actions/runs/43248381246) `completed/success`. PUBLIC GitHub 원격 파일/Actions 성공 확인. 별도 실제 브라우저 HTTP·동적 JS 표시 픽셀 검증은 `NOT_RUN`.
+- **AUTH_GATE=PASS / PUBLIC_AUTO_PUBLISH_E2E=PASS:** 이전 `BLOCKED_MISSING_SECRET` 해결됨; 사용자가 token Secret을 설치한 것으로 실행 성공 증거에서 확인. 토큰 실제 값을 읽거나 출력하지 않음. PUBLIC 쓰기 권한 범위는 L1Work 전체 Contents이므로 최소권한 및 회전 정책 유지.
+- **RUN_PAGE_404_USER_REPORT:** 사용자는 `https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43248348944`에서 404 관찰을 보고. 같은 URL의 GitHub API로 실행 ID 존재·success 확인. 브라우저 인증/접근 세션/일시적 문제 가능; **Metadata Read-only 설정은 정상이며 404 원인 아님**. 실제 화면 404의 구체 원인은 미확정.
+- **운영 영향:** 이 성공은 공개 HTML의 비식별 상태 자동 게시에 한정. Dropbox LIVE→GitHub LIVE 전환이나 Windows watcher/운영 DB/Claude 독립 리뷰 완료와 관계 없음. `CUTOVER=MIGRATION_NOT_CUTOVER` 유지.
+- **기본 확인 URL:** https://wonhwipark.github.io/L1Work/cowork-dashboard/
+
+
 ## 최신 상태 — PUBLIC Pages 자동 갱신 (허용목록·인증 게이트, 2026-11-12)
 - **사용자 승인:** "public page 로 자동으로 해줘". 기존 PUBLIC L1Work Executive 대시보드 주소 유지. 자동 공개 대상은 이전에 승인된 비식별 상위 업무 범주·상태·합계 수치만 해당. PRIVATE 전체 데이터를 게시하거나 기존 협업 LIVE를 전환한다는 뜻 아님.
 - **SOURCE_EXPORTER=IMPLEMENTED:** `collab/dashboard/public_sync.py`: PRIVATE state.json 재생성 비교·스키마·phase·상태 whitelist·최대 개수·고정 공개 작업 범주명·STATIC next_action 검증. 내부 Work ID/원문/담당 이름/영수증/실제 SHA/기밀 내용 복제 금지. 신규 미허용 스킬은 PUBLIC 제외. 상태 PASS는 증거 확인 없이 완료로 승격 금지.
