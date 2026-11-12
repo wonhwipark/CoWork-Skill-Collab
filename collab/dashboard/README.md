@@ -11,13 +11,16 @@
 
 ## 기본 확인 화면 — GitHub Pages HTML (2026-11-12)
 
-**[협업 흐름·현재 STATUS — 브라우저에서 바로 보기](https://wonhwipark.github.io/L1Work/cowork-dashboard/)**
+**[Executive · Work Tracker HTML — 브라우저에서 바로 보기](https://wonhwipark.github.io/L1Work/cowork-dashboard/)**
 
 - 사용자가 선택한 **대시보드 기본값**. PC/모바일에서 GitHub HTML 소스를 내려받지 않고 바로 볼 수 있다.
 - 2026-11-12 실제 확인 기록을 공개 허용 목록으로 압축한 HTML 화면. 이전 정적 샘플을 교체했으며 **PRIVATE 상세 파일이나 식별자는 포함하지 않는다**.
 - Pages는 PUBLIC 파일 변경 시 자동 빌드·배포한다. **PRIVATE 최신 상태의 PUBLIC 자동 동기화는 아직 미구현**이며 사용자 승인 없이는 구축하지 않는다. 화면은 마지막 검증·게시 시점의 스냅샷.
 - [공개 허용목록·자동 반영 게이트](PUBLIC_PAGES_DEFAULT_POLICY.md) · [PRIVATE 상세 HTML](index.html) · [비공개 GitHub 요약](VIEW.md)
 - 아래 이전 기록의 '공개 샘플 전용/HTML 다운로드 기본' 설명보다 이 최신 운영 규칙을 우선한다. 기존 기록은 추적 목적으로 보존한다.
+
+
+- [병렬 Work Tracker V1 등록·상태 계약](WORK_TRACKER_GUIDE.md) — 개별 Work ID, TRACKER.json, 자동 갱신, 독립 리뷰 근거 분리
 
 ## 최신 HTML 업로드 파일 (PRIVATE 스냅샷)
 
