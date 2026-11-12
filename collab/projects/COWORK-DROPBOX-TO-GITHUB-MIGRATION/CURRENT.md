@@ -1,5 +1,14 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## GPT 후속 — Dropbox 잔여 서비스 의존성 READ_ONLY 감사 인계 (2026-11-13 KST)
+- 현재 `ACTIVE_PROVIDER=NONE / WATCHER_DISABLE=PASS_REPORTED / MIGRATION_NOT_CUTOVER` 유지. 기존 watcher 비활성화 GPT 판정 `GPT_DROPBOX_WATCHER_DISABLE_DISPOSITION_r0001_20261113.md` 및 `START_HERE.md` 최신 기준을 확인. 사용자 '다음 스텝 진행' 요청에 따라 **추가 서비스 중지 없이** 잔여 의존성 READ_ONLY 인벤토리 단계 준비.
+- 현재 PRIVATE `collab/dashboard/`와 `.github/workflows/cowork-dashboard.yml`는 GitHub에서 별도 자동 갱신. Windows의 Dropbox Dashboard updater와 구분. PUBLIC Pages는 `L1Work` 별도 배포·허용목록/토큰 게이트가 있으므로 완전 자동 동기화 여부는 별도 판단.
+- Windows에서 실제 조사할 3개: **Dashboard updater / Telegram notifier / Bridge**. 각각 TASK/PID/재시작 경로·input/output 및 다른 실행 기능 의존성, SHM 변경 가설, 스케줄과 서비스 공유를 운영 DB 직접 SQLite 오픈 없이 점검. 분류 `DROPBOX_REVIEW_ONLY / SHARED_OTHER_WORK / INDEPENDENT_REQUIRED / UNKNOWN`, 결과 `KEEP / RETIRE_CANDIDATE / BLOCKED_UNKNOWN`. **이 단계의 운영 변경=0**.
+- 신규 Windows 단일 실행 인계: `WINDOWS_POST_DROPBOX_DISABLE_DEPENDENCY_AUDIT_ONE_SHOT_r0001_20261113.md` PRIVATE main 게시 및 remote readback PASS. 실행 보고 예정 `CLAUDE_POST_DROPBOX_DISABLE_DEPENDENCY_AUDIT_RESULT_FOR_GPT_20261113.md`.
+- GitHub 문서 게시 자체로 Windows 호스트 검사/중지/ETW 관리자 실행이 시작되는 것은 아니다. `READ_ONLY_HANDOFF_PREPARED / WINDOWS_AUDIT=NOT_RUN`. 사용자 Claude Code에서 해당 정확한 repo/main/경로를 지시한 뒤 실제 결과 판정. 중지·Disable·재활성화/키·토큰 변경/유료 리뷰/GitHub LIVE 전환은 별도 승인.
+- `C_OVERALL=PARTIAL`, `ETW=FAIL_UNTRUSTED_MEASUREMENT`, `RESTORE_READY=PARTIAL`, `INDEPENDENT_REVIEW=NOT_RUN` 유지. 이전 기록의 Dropbox LIVE 표현은 당시 이력이고 최신 ACTIVE_PROVIDER=NONE을 우선.
+
+
 ## GPT 최종 판정 — Dropbox 리뷰 감시기 비활성화 수용 (2026-11-13 KST)
 - GPT가 `CLAUDE_DROPBOX_WATCHER_SAFE_DISABLE_RESULT_FOR_GPT_20261112.md`, CURRENT.md, TRACKER.json을 PRIVATE main에서 직접 재조회. **GPT_DISPOSITION=ACCEPT_WITH_LIMITATIONS / WATCHER_DISABLE=PASS_REPORTED / ACTIVE_PROVIDER=NONE**. Windows 현장 증거는 Claude 및 사용자의 자체 실측 보고이며 GPT의 실제 호스트 검사와 구분.
 - 단일 Dropbox watcher 예약작업 Disabled, 런처·자식 PID 0, lock 해제, 중지 후 약 4분간 4개 지점 관측, 신규 모델/비용 0·누적 호출 카운터 61 유지. 기존 요청·결과·영수증 보존. 중지 후 DB main/WAL 복사 및 복사본 `integrity_check/quick_check=ok`, 진행 작업 0. **RESTORE_READY=PARTIAL**: 작업 정의 복원은 SKIP, 장기/재부팅/재로그인 확인 PENDING.
