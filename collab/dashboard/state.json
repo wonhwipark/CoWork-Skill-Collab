@@ -83,9 +83,9 @@
     {
       "evidence": "프로젝트 TRACKER.json 신고 값 · 운영 근거 별도 확인 필요",
       "independent_review": "NOT_RUN",
-      "next_action": "Windows 호스트 ETW 귀속 검증 결과 확인 후 C 게이트 판정",
+      "next_action": "Windows 승인된 Dropbox reviewer watcher 1개 안전 Stop+Disable (무손실·백업 게이트 후) 실측, PRIVATE 결과 게시; GitHub LIVE 전환 미승인",
       "owner": "GPT / Claude Code",
-      "phase": "BLOCKED",
+      "phase": "DISPOSITION",
       "record_source": "REGISTERED_METADATA_UNVERIFIED",
       "self_test": "NOT_VERIFIED",
       "skill": "cowork-review-watcher",
