@@ -1,5 +1,18 @@
 # COWORK-GITHUB-DASHBOARD-20261111-001 — CURRENT
 
+## 대시보드 현대화 HTML 시안 3종 — 선택 대기 (2026-11-12)
+- **사용자 요청:** 현재 GitHub Pages 대시보드의 그림 표현·모던한 UI를 개선해 서로 다른 HTML 시안 3종으로 보여주고 사용자 선택 후 최종 적용.
+- **DESIGN_OPTIONS=POSTED_FOR_USER_SELECTION / DEFAULT_PAGE=UNCHANGED**. 공개 Pages `L1Work/main/docs/cowork-dashboard/concepts/` 아래 비교 랜딩과 3개 별도 시안을 게시. 기존 `L1Work/main/docs/cowork-dashboard/index.html`의 기본 대시보드 HTML은 이 작업에서 변경하지 않음.
+- **시안 01 — Executive Flight Deck**: `concepts/01/index.html`. 밝은 카드형 운영 현황, 4 KPI, 가로 프로세스 7단계, 게이트 상태.
+- **시안 02 — System Topology**: `concepts/02/index.html`. 다크 UI, 고정 인라인 SVG로 현재 LIVE 운송과 GitHub 목표 경로, 신뢰·승인 게이트를 토폴로지 구성도로 표시.
+- **시안 03 — Process Journey**: `concepts/03/index.html`. 에디토리얼 UI, 7단계 세로 경로 타임라인, 역할·검증 상태·다음 조치.
+- **3개 비교 웹페이지:** `https://wonhwipark.github.io/L1Work/cowork-dashboard/concepts/`; 각 링크 `.../concepts/01/`, `.../02/`, `.../03/`. L1Work PUBLIC 루트 README에 미리보기 바로가기 등록.
+- **검증된 공개 데이터 경계:** PRIVATE `state.json` 관측은 2026-11-12 기준 프로젝트 CURRENT 4개/REQUEST 0/REVIEW 0/RECEIPT 0; `WINDOWS_STAGE1_EXECUTION=NOT_RUN`, `INDEPENDENT_REVIEW=NOT_RUN`, `CUTOVER=MIGRATION_NOT_CUTOVER`. 수치는 GitHub 문서 관측 수일 뿐 완료 건수가 아님. PUBLIC 시안에는 개인별·사내 자료 원문, 내부 프로젝트 ID, REQUEST/READY 상세, 영수증, 토큰/키 등 미포함.
+- **시험:** 세 시안 및 비교 HTML의 PRIVATE 링크/JS/자동 데이터 네트워크 미포함 사전 검사 PASS, 공개 원격 fetch_file 원문 일치 PASS. L1Work Pages 시안별 Actions 01: #43192319771 SUCCESS, 02: #43192585272 SUCCESS, 03: #43192851849 SUCCESS. 비교 페이지 최종 run은 별도 확인. 실브라우저 렌더링·픽셀 일치·모바일 실제 기기 시험은 NOT_RUN, HTML/CSS 반응형 규칙 포함. Claude 독립 리뷰 NOT_RUN.
+- **권한/운영:** 정적 시안 공개 범위 외 PRIVATE 자료 게시 없음. Windows watcher/기존 LIVE/운영 DB/GitHub LIVE 전환 변경 없음. 향후 기본 화면으로 채택할 시 **사용자가 01/02/03 중 하나를 선택한 후** 교체하고 실제 배포 및 README를 검증.
+- **다음 한 동작:** 사용자가 3개 HTML을 모바일/PC에서 보고 **1, 2, 3**으로 선택.
+
+
 ## 최신 상태 — GitHub Pages HTML 기본화 및 공개 상태 요약 게시 (2026-11-12)
 - **사용자 최신 지시:** `page 에 게시해서 링크클릭후 바로 볼 수 있도록, 항상 default`. 앞으로 CoWork 대시보드 기본 경로는 **`https://wonhwipark.github.io/L1Work/cowork-dashboard/`** (GitHub Pages HTML). Markdown/PRIVATE HTML blob 직접 열기를 기본값으로 삼지 않음.
 - **PUBLIC_HTML=POSTED, PRIVATE_TO_PUBLIC_FILTER=ALLOWLIST**: `wonhwipark/L1Work` PUBLIC `main/docs/cowork-dashboard/index.html`을 기존 합성 샘플에서 검증된 상태 요약·7단계 흐름·역할별 환경·검증 상태표로 교체. 직접 PRIVATE 파일 ID/원문/영수증/개인정보/토큰/비밀정보 반출 없음.
