@@ -1,0 +1,15 @@
+{
+  "schema": "COWORK_WORK_TRACKER_V1",
+  "works": [
+    {
+      "work_id": "COWORK-SKILL-DISCOVERY-20261112-001",
+      "skill": "skill-discovery",
+      "title": "skill-discovery",
+      "phase": "DISPOSITION",
+      "owner": "GPT",
+      "self_test": "NOT_VERIFIED",
+      "independent_review": "NOT_RUN",
+      "next_action": "스킬 18개 원본 대조 미확인 항목 판정"
+    }
+  ]
+}
