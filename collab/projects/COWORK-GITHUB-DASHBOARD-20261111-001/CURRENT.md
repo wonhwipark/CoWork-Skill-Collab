@@ -1,5 +1,16 @@
 # COWORK-GITHUB-DASHBOARD-20261111-001 — CURRENT
 
+## 최신 실측 — 신규 변경마다 PUBLIC HTML 상태 자동 갱신 (2026-11-13)
+- **AUTO_TRIGGER=PASS:** PRIVATE `collab/projects/**` (CURRENT·TRACKER·추가 피드백·인계) 및 REQUEST/REVIEW/RECEIPT 변경 감지. 성공한 PRIVATE dashboard Actions의 `workflow_run`으로 PUBLIC allowlist sync 자동 시작. 미승인 데이터 자체는 공개하지 않음.
+- **PUBLIC_AUTOPUBLISH_E2E=PASS:** 실제 `cowork-dashboard` Work `phase=DEVELOPMENT→DISPOSITION` 변경(자체시험 PASS 신고, 독립 리뷰 NOT_RUN 유지) → PRIVATE [#43251843321](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43251843321) SUCCESS → PUBLIC sync [#43251880632](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43251880632) `PUBLIC_SYNC=POSTED_READBACK_PASS` → L1Work Pages [#43251906090](https://github.com/wonhwipark/L1Work/actions/runs/43251906090) SUCCESS.
+- **PUBLIC_REMOTE_READBACK=PASS:** `L1Work/main/docs/cowork-dashboard/status.json`의 `dashboard.phase_index=4`, `phase_label=판정·보완 신고` 원격 확인. 실제 입력 Work ID/개발·리뷰 원문/토큰 등 비공개 내용은 PUBLIC에 미포함. 공개 범주 외 새 Work 이름은 자동 게시 금지.
+- **REFRESH_ON_OPEN_AND_RESUME=IMPLEMENTED:** `status.js`에 120초 주기 재확인, 탭 복귀·포커스 시 재조회, 중복 통신 제한, DATA가 바뀐 경우에만 DOM 갱신. 공개 상태 기반 날짜/호스트 검증·독립 리뷰 표기 수정. JS 구문검사 PASS, 실제 브라우저 HTTP·픽셀 E2E = NOT_RUN.
+- **RACE_FIXED:** 이전 PUBLIC sync 실패 [#43251033752](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43251033752)에서 `stale PRIVATE dashboard state` 확인. 별도 PUBLIC sync Action이 현재 PRIVATE `main`을 checkout하여 `generate.py`로 다시 생성 후 허용목록 검증하는 방식 적용. 재실행 [#43251569501](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43251569501) SUCCESS(`PUBLIC_SYNC=UNCHANGED`), 신규 Work E2E [#43251880632](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43251880632) POSTED PASS.
+- **SELF_TEST=PASS, PAGES_DEPLOY=PASS, INDEPENDENT_REVIEW=NOT_RUN, CUTOVER=MIGRATION_NOT_CUTOVER**. 47 Python 합성/회귀 + 8 공개 보안 = **55 PASS / 0 FAIL**(GitHub Actions 실측). 운영 Windows watcher·운영 DB·실서명/리뷰 호출·협업 LIVE 변경 없음.
+- **전체 보고:** [AUTO_PUBLIC_HTML_REFRESH_E2E_20261113.md](AUTO_PUBLIC_HTML_REFRESH_E2E_20261113.md) 원격 게시·재조회 확인. PRIMARY HTML: https://wonhwipark.github.io/L1Work/cowork-dashboard/
+- **다음 한 동작:** 사용자가 Pages를 열어둔 채 상태 카드의 `판정·보완 신고`와 자동 갱신 안내 확인. 이후 관련 PRIVATE 기록 변경 시 자동 검증·허용 상태 변경 때만 PUBLIC 게시·Pages 자동 배포. 브라우저 실제 환경 E2E는 후속 확인.
+
+
 ## 최신 실측 — PUBLIC 자동 게시 E2E 성공 (2026-11-13 KST)
 - **RUN_ID=43248348944:** GitHub PRIVATE `CoWork PUBLIC Pages status sync (allowlist only)`, `workflow_dispatch`, `completed/success`; 실행 기록 API 재조회 PASS. 검사 47 + 공개 보안 8 = **55 PASS / 0 FAIL**. `ALLOWLIST_BUILD=PASS`, 자격 증명 검사 PASS, PUBLIC 상태 게시 step SUCCESS, 로그에 **`PUBLIC_SYNC=POSTED_READBACK_PASS`** 확인.
 - **PUBLIC_STATUS=UPDATED:** `wonhwipark/L1Work/main/docs/cowork-dashboard/status.json` 원격 재조회 PASS, `sync_mode=AUTOMATED_ALLOWLIST`, `snapshot_date=2026-11-13`, WORK 5 / 프로젝트 5 / REQUEST 0 / REVIEW 0 / RECEIPT 0. Git blob `4a2c37f45701270f8bb575aba8f6d2fe1edb1bf7`. 공개 필드에서 PRIVATE Work ID 및 전환 내부 프로젝트 식별자 미노출 확인.
