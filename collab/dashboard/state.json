@@ -5,7 +5,7 @@
     "cutover": "NOT_OBSERVED",
     "dashboard_source": true,
     "host_shadow": "NOT_OBSERVED",
-    "independent_review": "NOT_OBSERVED",
+    "independent_review": "NOT_RUN",
     "migration_source": true,
     "pages_deployment": "NOT_OBSERVED",
     "windows_stage1": "NOT_OBSERVED"
@@ -16,10 +16,10 @@
       "id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md",
-      "status": "문서상 진행",
+      "status": "전환 전",
       "title": "COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태",
-      "tone": "neutral",
-      "topic": "POST_DROPBOX_DISABLE_DEPENDENCY_AUDIT: DEPENDENCY_AUDIT=PASS / DASHBOARD=RETIRE_CANDIDATE / NOTIFIER=KEEP / BRIDGE=RETIR"
+      "tone": "warning",
+      "topic": "GPT 판정 — Bridge·Dropbox Dashboard updater 정리 후보 수용 (2026-11-13 KST)"
     },
     {
       "id": "COWORK-GITHUB-DASHBOARD-20261111-001",
