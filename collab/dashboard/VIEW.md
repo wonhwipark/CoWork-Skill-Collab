@@ -37,9 +37,9 @@ flowchart TB
 | 구분 | 현재 상태 | 근거 범위 |
 |---|---|---|
 | 현재 운영 경로 | **기존 LIVE 유지 (문서 기준)** | GitHub 정식 전환과 별개 |
-| GitHub 전환 | **정식 전환 전** | 별도 명시적 승인 전 전환 금지 |
+| GitHub 전환 | **기록 미관측** | 별도 명시적 승인 전 전환 금지 |
 | Windows 실행·SHADOW | **기록 미관측** | 실제 호스트 실행 증거 필요 |
-| Claude Code 독립 리뷰 | **미실행** | 자체 시험과 구분 |
+| Claude Code 독립 리뷰 | **기록 미관측** | 자체 시험과 구분 |
 | GitHub 요청·결과·영수증 | **요청 0 · 결과 0 · 영수증 0** | PRIVATE 파일 관측 수일 뿐 완료 건수가 아님 |
 | 공개 샘플 웹페이지 | **기록 미관측** | L1Work의 샘플만 PUBLIC, 실제 협업 현황 비공개 |
 
@@ -78,7 +78,7 @@ HTML은 GitHub에서 소스로 표시되므로 다운로드 후 브라우저로 
 
 | Work ID | 스킬 | 진행 단계(신고) | 담당 | 시험(신고) | 독립 리뷰(신고) | 다음 조치 |
 |---|---|---|---|---|---|---|
-| [COWORK-DROPBOX-TO-GITHUB-MIGRATION](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) | cowork-review-watcher | GPT 판정 | GPT / Claude Code | NOT_VERIFIED | NOT_RUN | Windows 승인된 Dropbox reviewer watcher 1개 안전 Stop+Disable (무손실·백업 게이트 후) 실측, PRIVATE 결과 게시; GitHub LIVE 전환 미승인 |
+| [COWORK-DROPBOX-TO-GITHUB-MIGRATION](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) | 미지정 | 단계 미확인 | 미등록 | NOT_VERIFIED | NOT_VERIFIED | CURRENT.md 최신 상태 및 다음 담당 확인 |
 | [COWORK-GITHUB-DASHBOARD-20261111-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md) | cowork-dashboard | 개발·시험 | GPT | PASS | NOT_RUN | Executive Work Tracker 화면·Pages 배포 검증 및 사용자 확인 |
 | [COWORK-SKILL-DISCOVERY-20261112-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md) | skill-discovery | GPT 판정 | GPT | NOT_VERIFIED | NOT_RUN | 스킬 18개 원본 대조 미확인 항목 판정 |
 | [JOBLIST-NRTX-20261112-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/JOBLIST-NRTX-20261112-001/CURRENT.md) | job-list | 개발·시험 | GPT | PASS | NOT_RUN | 호스트 G0 확인 전 후보 패키지 검증 범위 유지 |
