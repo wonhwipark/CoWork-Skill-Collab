@@ -1,5 +1,14 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 사용자 승인 — Dropbox 리뷰 감시기 안전 Disable (2026-11-12 KST)
+- 사용자 “그래”를 직전 질문의 **Dropbox 리뷰 감시기만 안전 중지·기존 예약작업 Disable 및 DB/요청/리뷰/영수증 보존** 명시 승인으로 접수. 승인 기록 `USER_DROPBOX_WATCHER_SAFE_DISABLE_APPROVAL_r0001_20261112.md` (PRIVATE main, commit `ad300ef5f11c08224d4c48d9154d2306979dc8a0`, readback PASS).
+- **Windows 원샷 실행 인계** `WINDOWS_DROPBOX_WATCHER_SAFE_DISABLE_ONE_SHOT_r0001_20261112.md` (PRIVATE main, commit `48b9f10d3ffa17349159fe4a93804958a51e1ce7`, readback PASS). 단계: 실제 task·프로세스 확인 → 인플라이트/REQUEST/READY/영수증/비용 중복 위험 확인 → 데이터·task 원본 무손실 백업/rollback 준비 → watcher 1개만 Disabled+Stop → PID 0/자동 재시작 차단/모델 호출 0/다른 컴포넌트 무영향 검증 → 결과 PRIVATE 게시.
+- 백업 일관성·미정산 리뷰 안전성이 입증되지 않으면 fail-closed `BLOCKED`, 대상 watcher를 건드리지 않는다. 운영 DB main/WAL/SHM/로그/ZIP 원본·이력 삭제 및 PRIVATE 원본 반출 금지.
+- Dashboard updater/Notifier/Bridge/Dispatcher, 그 외 예약작업 및 GitHub LIVE 전환, watcher 버전 설치·DB 이행·pythonw 전환은 **미승인/변경 금지**. `C_ETW=FAIL_UNTRUSTED_MEASUREMENT`, `C_OVERALL=PARTIAL`, `INDEPENDENT_REVIEW=NOT_RUN` 그대로 보존.
+- 현재 **`WATCHER_DISABLE=APPROVED_NOT_YET_OBSERVED`**. 승인 문서 게시만으로 Windows 호스트 작업이 실행되지 않음. 성공 실측 후 `ACTIVE_PROVIDER=NONE`, `DROPBOX_WATCHER=DISABLED_ARCHIVED`, `CUTOVER=MIGRATION_NOT_CUTOVER` 기록 예정. 기존 실제 보고 마지막 LIVE는 Dropbox v0.1.5이며 현재 실행 여부 GPT 직접 미관측.
+- 다음 한 동작: Windows Claude Code가 위 정확한 PRIVATE/main 인계서를 읽고 단일 실행, 결과 `CLAUDE_DROPBOX_WATCHER_SAFE_DISABLE_RESULT_FOR_GPT_20261112.md` 및 CURRENT/TRACKER 직접 게시·remote readback → GPT 최종 판정.
+
+
 ## GPT 판정 — ETW 재분석 실패·Dropbox LIVE 존치 재평가 (2026-11-12 KST)
 - GPT가 최신 `CLAUDE_ETW_ATTRIBUTION_AND_C_FINAL_CHECK_RESULT_FOR_GPT_20261112.md` 및 CURRENT 원문 원격 재조회. 결과: `ACCEPT_WITH_CHANGE / C=PARTIAL_ACCEPTED / ETW=FAIL_UNTRUSTED_MEASUREMENT`. GPT 코드 9건 + 호스트 합성 22건 = **31 PASS(SELF_TEST_REPORTED)**, 실제 ETW time/ProcessStart 해석 실패로 C 실측 NOT_RUN. 운영 DB/WAL/SHM/lock 무접근 NOT_PROVEN.
 - 50~55분 감시기·갱신기 단기 동작 관측 수용, `LONG_RUN=PENDING`. 관리자 셸 총 3회(새 trace 1회) 기록. 동일 ETW 관리자 재시험 반복 보류. `mode=ro` 운영 DB 관찰의 WAL/SHM 영향 미측정 문제와 GPT 코드 수명 밖 이벤트 silent drop/8.3 alias 미보장 이슈 후속 개선.
