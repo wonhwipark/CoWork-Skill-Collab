@@ -5,7 +5,7 @@
     "cutover": "NOT_OBSERVED",
     "dashboard_source": true,
     "host_shadow": "NOT_OBSERVED",
-    "independent_review": "NOT_RUN",
+    "independent_review": "NOT_OBSERVED",
     "migration_source": true,
     "pages_deployment": "NOT_OBSERVED",
     "windows_stage1": "NOT_OBSERVED"
@@ -19,7 +19,7 @@
       "status": "전환 전",
       "title": "COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태",
       "tone": "warning",
-      "topic": "GPT 후속 — Dropbox 잔여 서비스 의존성 READ_ONLY 감사 인계 (2026-11-13 KST)"
+      "topic": "GPT Fast Track 병렬 준비 인계 (2026-11-13 KST)"
     },
     {
       "id": "COWORK-GITHUB-DASHBOARD-20261111-001",
