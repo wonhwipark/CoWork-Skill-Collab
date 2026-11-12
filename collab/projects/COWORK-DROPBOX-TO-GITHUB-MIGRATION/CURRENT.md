@@ -1,11 +1,11 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
-
-## OPERATIONS_RESTART_AND_C_ETW_RERUN_RESULT: C=PARTIAL / ?댁쁺 蹂듦뎄 PASS (Claude ?먯껜 蹂닿퀬, 2026-11-12 KST)
-- 寃곌낵: `CLAUDE_OPERATIONS_RESTART_AND_C_ETW_RERUN_RESULT_FOR_GPT_20261112.md` (PRIVATE `main`, commit `404728eabfca8d24a74afa882d94360cce8e7689`, ?먭꺽 readback? 蹂꾨룄 ?뺤씤). ?먯껜 ?쒗뿕 蹂닿퀬?대ŉ ?낅┰ 由щ럭媛 ?꾨땲?? ?ъ슜???뱀씤 踰붿쐞 ?덉뿉???ㅽ뻾?덈떎.
-- A 蹂듦뎄: 湲곗〈 媛먯떆湲걔룸??쒕낫??媛깆떊湲??덉빟 ?묒뾽???뺤쓽 洹몃?濡??쒖옉. WATCHER_RESTART=PASS(留덉?留??ㅼ틪 21:36 KST ?댄썑 ?좉퇋 ?ㅼ틪 8???댁긽, 紐⑤뜽 ?몄텧 0), DASHBOARD_RESTART=PASS_AFTER_SECOND_START(1李⑤뒗 ??3遺???媛숈? 肄붾뱶 0xC000013A濡?醫낅즺, C ?쒗뿕 ?쒓컙?? 寃뱀낀?쇰굹 ?멸낵 誘명솗?? C? 寃뱀튂吏 ?딆? 2李??쒖옉? 5遺??댁긽 ?앹〈, 濡쒓렇 媛깆떊). 醫낅즺 ?먯씤? 誘명솗?뺤씠硫?pythonw ?꾪솚? ?뱀씤 踰붿쐞 諛뽰씠???ㅽ뻾?섏? ?딆쓬.
-- B C ?ъ륫?? C_REAL_GITHUB_READ=PASS(HOST_REAL, 3二쇨린 GET 7??200x5/304x2, ?곌린 0). ETW??**FAIL_UNTRUSTED_MEASUREMENT**: ?쒗뿕 ?꾨줈?몄뒪???먯껜 異쒕젰 PID?먯꽌 ?대깽??0, 誘몃겮 ?뚯씪 ?닿린???ㅻⅨ PID?먯꽌留?愿痢〓릺???묒꽦 ?議??ㅽ뙣. **?댁쁺 DB 臾댁젒洹쇱? ?낆쬆?섏? ?딆븯??*(PASS ?좎뼵 湲덉?). ?먮낯 異붿쟻 ?뚯씪? 愿由ъ옄 ?꾩슜 ?대뜑??蹂댁〈, 寃뚯떆?섏? ?딆쓬.
-- ?곹깭: C_OVERALL=PARTIAL, MODEL_NEW_CALLS=0, COST_INCURRED=0, SHADOW_ACCOUNT_RESTORED_DISABLED=PASS, DROPBOX_ACTIVE_PROVIDER=Dropbox LIVE v0.1.5 ?좎?, INDEPENDENT_REVIEW=NOT_RUN, CUTOVER=MIGRATION_NOT_CUTOVER.
-- ?ㅼ쓬 ???숈옉: GPT媛 C=PARTIAL ?섏슜 ?щ?瑜??먯젙. ETW ?ъ륫?뺤씠 ?꾩슂?섎㈃ TID 援먯감寃利앷낵 ?꾨줈?몄뒪 ?몃━(Kernel-Process) 蹂닿컯 ???ъ슜?먯쓽 愿由ъ옄 ???ㅽ뻾 1?? ?댁쁺 蹂寃승룹쑀猷?由щ럭쨌LIVE ?꾪솚? ?ъ쟾??誘몄듅??
+## OPERATIONS_RESTART_AND_C_ETW_RERUN_RESULT: C=PARTIAL / 운영 복구 PASS (Claude 자체 보고, 2026-11-12 KST)
+- 결과: `CLAUDE_OPERATIONS_RESTART_AND_C_ETW_RERUN_RESULT_FOR_GPT_20261112.md` (PRIVATE `main`, commit `404728eabfca8d24a74afa882d94360cce8e7689`, 원격 readback 바이트·SHA-256 일치 확인). 자체 시험 보고이며 독립 리뷰가 아니다. 사용자 승인 범위 안에서 실행했다.
+- A 복구: 기존 감시기·대시보드 갱신기 예약 작업을 정의 그대로 시작. WATCHER_RESTART=PASS(마지막 스캔 21:36 KST 이후 신규 스캔 8회 이상, 모델 호출 0), DASHBOARD_RESTART=PASS_AFTER_SECOND_START(1차는 약 3분 뒤 같은 코드 0xC000013A로 종료, C 시험 시간대와 겹쳤으나 인과 미확정. C와 겹치지 않은 2차 시작은 5분 이상 생존, 로그 갱신). 종료 원인은 미확정이며 pythonw 전환은 승인 범위 밖이라 실행하지 않음.
+- B C 재측정: C_REAL_GITHUB_READ=PASS(HOST_REAL, 3주기 GET 7회 200x5/304x2, 쓰기 0). ETW는 **FAIL_UNTRUSTED_MEASUREMENT**: 시험 프로세스의 자체 출력 PID에서 이벤트 0, 미끼 파일 열기는 다른 PID에서만 관측되어 양성 대조 실패. **운영 DB 무접근은 입증되지 않았다**(PASS 선언 금지). 원본 추적 파일은 관리자 전용 폴더에 보존, 게시하지 않음.
+- 상태: C_OVERALL=PARTIAL, MODEL_NEW_CALLS=0, COST_INCURRED=0, SHADOW_ACCOUNT_RESTORED_DISABLED=PASS, DROPBOX_ACTIVE_PROVIDER=Dropbox LIVE v0.1.5 유지, INDEPENDENT_REVIEW=NOT_RUN, CUTOVER=MIGRATION_NOT_CUTOVER.
+- 게시 정정 기록: 이 절의 첫 게시본(commit `e0ca9838754c334e53ffbc29e42d0ad9c16bb9d2`)은 한글이 깨진 채 올라가 같은 날 바로 이 정정본으로 교체했다. 결과 문서 본문은 영향 없음.
+- 다음 한 동작: GPT가 C=PARTIAL 수용 여부를 판정. ETW 재측정이 필요하면 TID 교차검증과 프로세스 트리(Kernel-Process) 보강 후 사용자의 관리자 셸 실행 1회. 운영 변경·유료 리뷰·LIVE 전환은 여전히 미승인.
 
 ## 사용자 승인 — 기존 LIVE 운영 복구 + C ETW 재측정 (2026-11-12 KST)
 - 사용자가 **리뷰 감시기/대시보드 갱신기 기존 예약 작업 재시작 + 수정 ETW C 계측 재실행**을 하나의 작업으로 명시 승인. 작업 정의·구성·계정·인증·운영 DB·LIVE 제공자 변경이나 신규 유료 리뷰 호출 승인 아님.
