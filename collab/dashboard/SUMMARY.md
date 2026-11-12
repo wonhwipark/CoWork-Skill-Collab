@@ -53,7 +53,7 @@ flowchart TB
 
 | Work ID | 스킬 | 진행 단계(신고) | 담당 | 시험(신고) | 독립 리뷰(신고) | 다음 조치 |
 |---|---|---|---|---|---|---|
-| [COWORK-DROPBOX-TO-GITHUB-MIGRATION](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) | cowork-review-watcher | 개발·시험 | GPT / Claude Code | NOT_VERIFIED | NOT_RUN | Windows Claude Code 병렬 원샷: 잔여 Dropbox 의존성 감사, C ETW/격리 개선, B 운영 signer·D 반출·E 독립 리뷰 사전 게이트, LIVE/rollback 정적·격리 시험 → 단일 결과 및 승인 묶음 제출. ACTIVE_PROVIDER=NONE, 운영 변경/정식 |
+| [COWORK-DROPBOX-TO-GITHUB-MIGRATION](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) | cowork-review-watcher | GPT 판정 | GPT / Claude Code | NOT_VERIFIED | NOT_RUN | GPT가 잔여 구성요소 의존성 감사(읽기 전용, 호스트 변경 0)를 판정한다. Bridge와 Dashboard updater는 RETIRE_CANDIDATE, Notifier는 KEEP(보류)이며 실제 Stop/Disable은 사용자 별도 승인과 관리자 셸이 필요하다. ACTIVE_PROVIDE |
 | [COWORK-GITHUB-DASHBOARD-20261111-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md) | cowork-dashboard | 개발·시험 | GPT | PASS | NOT_RUN | Executive Work Tracker 화면·Pages 배포 검증 및 사용자 확인 |
 | [COWORK-SKILL-DISCOVERY-20261112-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md) | skill-discovery | GPT 판정 | GPT | NOT_VERIFIED | NOT_RUN | 스킬 18개 원본 대조 미확인 항목 판정 |
 | [JOBLIST-NRTX-20261112-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/JOBLIST-NRTX-20261112-001/CURRENT.md) | job-list | 개발·시험 | GPT | PASS | NOT_RUN | 호스트 G0 확인 전 후보 패키지 검증 범위 유지 |
@@ -66,7 +66,7 @@ flowchart TB
 
 | 프로젝트 | 문서상 상태 | 근거 |
 |---|---|---|
-| COWORK-DROPBOX-TO-GITHUB-MIGRATION | 전환 전 | [CURRENT.md](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) |
+| COWORK-DROPBOX-TO-GITHUB-MIGRATION | 문서상 진행 | [CURRENT.md](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) |
 | COWORK-GITHUB-DASHBOARD-20261111-001 | 전환 전 | [CURRENT.md](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md) |
 | COWORK-SKILL-DISCOVERY-20261112-001 | 상태 확인 필요 | [CURRENT.md](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md) |
 | JOBLIST-NRTX-20261112-001 | 상태 확인 필요 | [CURRENT.md](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/JOBLIST-NRTX-20261112-001/CURRENT.md) |

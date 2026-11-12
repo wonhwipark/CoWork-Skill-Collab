@@ -16,10 +16,10 @@
       "id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md",
-      "status": "전환 전",
+      "status": "문서상 진행",
       "title": "COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태",
-      "tone": "warning",
-      "topic": "GPT Fast Track 병렬 준비 인계 (2026-11-13 KST)"
+      "tone": "neutral",
+      "topic": "POST_DROPBOX_DISABLE_DEPENDENCY_AUDIT: DEPENDENCY_AUDIT=PASS / DASHBOARD=RETIRE_CANDIDATE / NOTIFIER=KEEP / BRIDGE=RETIR"
     },
     {
       "id": "COWORK-GITHUB-DASHBOARD-20261111-001",
@@ -83,9 +83,9 @@
     {
       "evidence": "프로젝트 TRACKER.json 신고 값 · 운영 근거 별도 확인 필요",
       "independent_review": "NOT_RUN",
-      "next_action": "Windows Claude Code 병렬 원샷: 잔여 Dropbox 의존성 감사, C ETW/격리 개선, B 운영 signer·D 반출·E 독립 리뷰 사전 게이트, LIVE/rollback 정적·격리 시험 → 단일 결과 및 승인 묶음 제출. ACTIVE_PROVIDER=NONE, 운영 변경/정식",
+      "next_action": "GPT가 잔여 구성요소 의존성 감사(읽기 전용, 호스트 변경 0)를 판정한다. Bridge와 Dashboard updater는 RETIRE_CANDIDATE, Notifier는 KEEP(보류)이며 실제 Stop/Disable은 사용자 별도 승인과 관리자 셸이 필요하다. ACTIVE_PROVIDE",
       "owner": "GPT / Claude Code",
-      "phase": "DEVELOPMENT",
+      "phase": "DISPOSITION",
       "record_source": "REGISTERED_METADATA_UNVERIFIED",
       "self_test": "NOT_VERIFIED",
       "skill": "cowork-review-watcher",
