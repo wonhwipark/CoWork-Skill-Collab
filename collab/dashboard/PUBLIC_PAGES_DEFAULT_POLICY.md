@@ -2,6 +2,19 @@
 
 **정책 적용:** 2026-11-12 / **기본 URL:** https://wonhwipark.github.io/L1Work/cowork-dashboard/
 
+## 2026-11-12 갱신 — PUBLIC 자동 요약 승인·인증 게이트
+
+**사용자 최신 지시:** PUBLIC Pages 자동 갱신 요청. 기존의 수동 게시 정책은 아래 **선별된 허용 정보에 한해** 자동 갱신 구현으로 보완. 이 승인으로 PRIVATE 전체 공개·운영 LIVE 전환·유료 리뷰/토큰 임의 발급을 허용하지 않음.
+
+- **AUTO_EXPORTER=IMPLEMENTED:** PRIVATE `public_sync.py`로 `state.json` 재생성 정합성·상태 스키마·전환 상태를 검증한 뒤, 승인된 업무 범주명·정형 phase/검증 요약·집계 수치만 출력한다.
+- **AUTO_TRIGGER=IMPLEMENTED:** 성공한 PRIVATE dashboard GitHub Actions 실행 뒤 `workflow_run`으로 별도의 `cowork-public-status-sync.yml` 시작. 독립 수동 재실행도 가능하다. SECRET 누락·정책 불일치 시 PUBLIC 쓰기 차단.
+- **PUBLIC_STATUS_JSON=BOOTSTRAP_POSTED:** `L1Work/main/docs/cowork-dashboard/status.json`은 현재 초기 스냅샷(`sync_mode=BOOTSTRAP_NOT_AUTO`)으로 게시됨. `status.js`가 same-origin JSON만 읽고 안전한 DOM API로 KPI·Work 카드를 갱신. GitHub Pages 자동 배포는 동작 중.
+- **AUTO_PUBLISH_E2E=BLOCKED_AUTH_PENDING:** 사용자 제공 최소 범위의 SECRET `COWORK_PUBLIC_DASHBOARD_WRITE_TOKEN`이 아직 설치·검증되지 않으면 PRIVATE→PUBLIC 자동 게시가 실행되지 않는다. [인증 설치·검증 인계](PUBLIC_AUTO_SYNC_SETUP.md) 참조. 모델 호출이나 무한 재시도로 우회 금지.
+- **승인된 출력 범위:** 기존 다섯 개 비식별 업무 범주 + 이미 공개한 스킬명 예시 `l1-fix-workflow`/`l1-github` (실제 등록된 Work일 때만). 추가 스킬과 내부 Work ID, 직접 FREE-TEXT next_action, PRIVATE 링크, 개인·고객정보, 영수증 등은 무조건 차단. 저장소 `L1Work`의 `status.json` 이외 경로 자동 쓰기는 금지.
+- **토큰 권한 제한:** PUBLIC `L1Work` 하나만 선택한 fine-grained token의 Contents read/write. PRIVATE Actions Secret에만 설치. GitHub의 repo 단위 권한이므로 단일 파일만 허용하는 **플랫폼 차원의 ACL은 불가능**하며, exporter 코드의 경로 고정과 원격 readback은 별도 방어 장치.
+- **상태 판정 원칙:** 문서에 표시된 `PASS`는 PUBLIC에 실운영 완료로 그대로 표기하지 않는다. 독립 검증·영수증/운영 판정은 별도 게이트. `MIGRATION_NOT_CUTOVER`에서 이탈하면 새 승인까지 PUBLIC 자동 게시 실패 차단.
+- **정식 전환 영향:** 기존 Dropbox LIVE/Windows watcher/운영 DB/예약 작업/Telegram/모델 리뷰 호출/협업 LIVE 전환에는 영향 없음.
+
 ## 현재 운영 결론
 
 - **PAGES_DEFAULT=ENABLED:** 사용자가 대시보드를 확인할 때 기본으로 열어야 할 화면은 위 GitHub Pages HTML이다. GitHub PRIVATE HTML 소스 링크나 Markdown VIEW를 기본 UI로 제시하지 않는다.
