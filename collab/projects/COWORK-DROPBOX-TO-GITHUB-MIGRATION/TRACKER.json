@@ -9,7 +9,7 @@
       "owner": "GPT / Claude Code",
       "self_test": "PASS",
       "independent_review": "NOT_RUN",
-      "next_action": "SU-SIMPLE GPT 재판정: 구형 6개 승인 요구는 기본 게이트에서 재분류. 기존 Claude 독립 리뷰 경로 우선, v0.2.13 자체시험 보존·제품 연동 NOT_RUN. CoWork watcher 코드 외부 Claude 전달 허용 범위 1회 확인 후 Windows 원샷 최소 delta·독립 리뷰 준비. 운영 변경·LIVE 미승인, ACTIVE_PROVIDER=NONE."
+      "next_action": "사용자가 CoWork 자체 소스/ZIP의 Claude 독립 리뷰용 GitHub PRIVATE 전송 및 L1Work 기존 공개 ZIP·handoffs MD 링크 리뷰 허용. Windows 로컬 v0.2.13의 review-inputs 업로드/원격 SHA·commit 검증 + manifest/실제 링크 준비 후 통합 결과 보고. 유료 리뷰/READY/운영·PUBLIC 신규 배포/LIVE는 별도 승인. ACTIVE_PROVIDER=NONE."
     }
   ]
 }
