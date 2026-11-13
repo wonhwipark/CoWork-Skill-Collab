@@ -1,6 +1,7 @@
 # CoWork 공통 스킬 기능 목록
 
-- 개정: r0003 / 2026-11-14 KST (역할·최신 피드백 포인터 정정; 패키지 재감사 아님)
+- 개정: r0004 / 2026-11-14 KST (통합 브리프 진입 연결; 패키지 재감사 아님)
+- 새 창은 [공통 맥락 브리프](../CONTEXT_BRIEF.md) → 해당 CURRENT를 먼저 읽고 필요한 상세 기능을 이 목록에서 확인.
 - 대상: 사용자 확인한 관리 스킬 18개 + 별도 업무용 연동 스킬 1개. 전체 보유 스킬의 완전성·최신 설치 버전을 뜻하지 않음.
 - [이번 패키지 정적 확인·SHA-256·원본 위치](../projects/COWORK-SKILL-DISCOVERY-20261112-001/SKILL_18_PACKAGE_AUDIT_20261112.md) · [최신 상태](../projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md) · [시작·재사용 절차](../ops/CONTRACTS/SKILL_DISCOVERY_AND_REUSE_V1.md)
 - 근거: 17개 실제 공개 ZIP의 SKILL 문서 정적 확인. 실제 구현/API/설치·호스트 실행은 미검증. 입출력은 책임 요약이며 새 함수·필드 정의가 아님.
@@ -47,4 +48,4 @@
 
 G0 설치 사실과 G1 가정을 분리한다. SourceSnapshot·CAS·N:M·복구는 기존 Kernel/Updater/Git 제공자 우선. K5.8은 설계표만, 기존 Knowledge/metadata 변경 금지. 문서·ZIP 확인·호스트 설치·실호출·독립 리뷰를 구분한다. [r0005 후속 최신 판정](../projects/L1-WORKSPACE-RAG-20261111-001/L1_KNOWLEDGE_FEEDBACK_DISPOSITION_r0001_20261114.md)은 G0 일부 확인 보고 수신을 반영한다. 실제 저장·source/MSC/Evidence·게시/AI 활용은 첫 승인된 분석 후속이며 현재 분류·연계 설계의 누락/완료 차단으로 취급하지 않는다. 전체 설치/API·독립 리뷰 PASS는 아님.
 
-[새 창 공통 맥락 파악 개선 검토](../projects/COWORK-SKILL-DISCOVERY-20261112-001/NEW_CHAT_CONTEXT_BOOTSTRAP_REVIEW_r0001_20261114.md): 기존 목록을 재사용하는 단일 브리프+관련 CURRENT 경로 제안. 실제 브리프/자동 로드는 아직 미적용.
+[개선 검토](../projects/COWORK-SKILL-DISCOVERY-20261112-001/NEW_CHAT_CONTEXT_BOOTSTRAP_REVIEW_r0001_20261114.md)의 통합 브리프·고정 진입 문서 경로 적용. 자동 로더·프로젝트 설정·스킬 원문 변경 없음.

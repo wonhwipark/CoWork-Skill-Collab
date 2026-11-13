@@ -1,8 +1,14 @@
 # CoWork Skill Collaboration (PRIVATE)
 
-**State: INITIALIZED / MIGRATION_NOT_CUTOVER — 2026-11-10**
+**협업 최신 상태·승인 범위는 각 프로젝트 CURRENT 기준.** 아래 공통 브리프에서 요청별 경로를 선택하세요.
 
 This repository is a **private collaboration workspace**, not a deployment repository and not an approved location for restricted corporate materials.
+
+## 새 창 시작 — 공통 맥락 한 번에 파악
+
+**[공통 맥락 브리프 열기](collab/CONTEXT_BRIEF.md)** → 요청별 **CURRENT** → 필요한 계약·스킬 원문. 협업 운용·L1 지식 방향·관리 스킬·현재 업무를 한 파일에서 먼저 읽습니다. 자료의 현재성은 브리프 source blob과 해당 CURRENT로 확인합니다.
+
+이 연결은 저장소 문서를 읽는 세션의 시작 경로입니다. 새 창의 자동 선조회나 ChatGPT 프로젝트 설정을 변경한 것은 아닙니다.
 
 ## 기본 대시보드 — 클릭하면 바로 열리는 HTML (GitHub Pages)
 
@@ -16,6 +22,7 @@ This repository is a **private collaboration workspace**, not a deployment repos
 - [대시보드 최신 작업 현황](collab/projects/COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md)
 
 ## Start here
+- [새 창 공통 맥락 브리프 — 먼저 읽기](collab/CONTEXT_BRIEF.md)
 - [운영 진입점](collab/START_HERE.md)
 - [공통 스킬 기능 목록](collab/knowledge/SKILL_CAPABILITY_CATALOG.md) — 새 요청의 기존 기능·연결 가능성을 먼저 확인
 - [새 창 스킬 발견·재사용 절차](collab/ops/CONTRACTS/SKILL_DISCOVERY_AND_REUSE_V1.md)

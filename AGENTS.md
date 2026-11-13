@@ -2,10 +2,11 @@
 
 이 저장소의 새 작업은 다음 순서로 진행한다.
 
-1. `collab/START_HERE.md`와 적용 운영 계약을 읽는다.
-2. `collab/knowledge/SKILL_CAPABILITY_CATALOG.md`에서 요청 기능과 관련된 기존 스킬 후보를 먼저 찾는다. 사용자가 스킬명을 알려줄 때까지 기다리지 않는다.
-3. 해당 프로젝트의 최신 `CURRENT.md`, 열린 메모, 관련 결과·영수증을 확인한다.
-4. 관련 스킬 원문만 필요한 범위에서 읽고 REUSE / CONNECT / EXTEND / DEFER·추가 확인을 판단한다. 정확한 절차는 `collab/ops/CONTRACTS/SKILL_DISCOVERY_AND_REUSE_V1.md`를 따른다.
+1. [공통 맥락 브리프](collab/CONTEXT_BRIEF.md)를 먼저 읽어 협업 운용·L1 지식·관리 스킬의 공통 방향을 파악한다.
+2. 브리프의 요청별 경로로 해당 프로젝트 `CURRENT.md`의 현재 요약·열린 메모·새 결과/영수증을 확인한다. source blob이 달라진 영역은 최신 원문으로 재확인한다.
+3. 브리프에서 기존 스킬 후보를 선택하고 필요한 상세 I/O는 `collab/knowledge/SKILL_CAPABILITY_CATALOG.md`와 해당 스킬 원문만 확인한다. 사용자에게 스킬명을 다시 묻거나 18개 감사를 반복하지 않는다.
+4. 실제 작업에 적용되는 `collab/START_HERE.md`의 계약을 필요한 범위에서 확인하고 REUSE / CONNECT / 입증된 최소 EXTEND / DEFER를 판단한다. 이미 읽은 브리프를 링크 때문에 반복 조회하지 않는다. 정확한 절차는 `collab/ops/CONTRACTS/SKILL_DISCOVERY_AND_REUSE_V1.md`를 따른다.
+5. CURRENT·정책·카탈로그 변경 작업은 브리프의 관련 요약·출처 blob·확인일도 함께 갱신하거나 확인 필요로 표시한다. 사용자 최신 지시와 최신 실제 근거가 요약보다 우선한다.
 
 확인되지 않은 원본·API·설치 기능을 구현 대상으로 확정하지 않는다. 문서 기록·패키지 검토·호스트 설치 사실·실제 호출·독립 리뷰는 서로 구분한다. 기존 제공자 재사용을 먼저 확인하고 새 엔진/schema는 입증된 gap의 최소 범위로 제한한다.
 

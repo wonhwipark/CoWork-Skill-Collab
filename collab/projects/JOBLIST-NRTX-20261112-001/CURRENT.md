@@ -1,5 +1,20 @@
 # JOBLIST-NRTX-20261112-001 — CURRENT
 
+## 현재 요약 — 2026-11-14 KST (기존 기록 정리)
+
+- Goal: NR L1 Tx Init RACH·UL SCell 구성/활성/비활성 분석과 MSC/지식 후보. 실제 그룹 게시와 구분.
+- PUBLIC release record: job-list_v0_4_36_1112.zip 게시·원격 검증 기록. v0.4.34/v0.4.35 개발 후보 상태는 아래 과거 이력.
+- Host observation: v0.4.36 설치 보고가 있으나 설치 ZIP bytes·Worker 실제 로드 동일성은 미검증.
+- Execution/result: 실제 분석·MSC·Run/Receipt·MCP 결과 조회 전체 완료 증거 미확보. 과거 Catalog/Registry/Queue/Run ID/allowlist 관측은 당시 기록이며 최신 실제 상태를 추정하지 않음.
+- MCP → Skill-Updater 1회 → 설치/활성화 → Runner/Worker → 결과 조회 경로는 실제 호출 계약·영수증으로 구분. CURRENT/SKIPPED가 Job 실행을 뜻하지 않음.
+- Queue DONE/Receipt SUCCESS·Run ID 파일 존재만으로 분석 완료 PASS 금지. 소비된 Job 재실행·재큐잉 금지.
+- Operating state: 이관 CURRENT 최신 근거 우선. 이 문서 정리로 서비스/DB/Queue/Registry/Job/설치·PUBLIC ZIP·LIVE 변경 없음.
+- NEXT: 기존 기록과 허용된 읽기 전용 도구로 실행·결과·첫 실패 지점만 확인. 새 분석 실행은 별도 승인 경로.
+- 새 창은 [공통 맥락 브리프](../../CONTEXT_BRIEF.md) → 이 요약 → 필요한 진단·결과 기록 순서로 확인.
+
+## 2026-11-12 — 초기 개발 후보 설명 (당시 기록 보존)
+
+
 - Date: 2026-11-12 KST
 - Goal: new Linux `job-list` One-shot for NR L1 Tx Init RACH and UL SCell configuration/activation/deactivation investigation; `l1-knowledge-updater` orchestrates `code-analyzer` and `doc-converter`; stage candidate AS-IS MSC & reusable NR Tx group-knowledge updates.
 - Current release: **`development_not_for_deployment`**; PUBLIC ZIP `NOT_POSTED`, `ACTIVE_JOBS=0`; existing PUBLIC `job-list_v0_4_34_1109.zip` intact; in-house source `NOT_ACCESSED`; no host install/Job execution/group knowledge write.

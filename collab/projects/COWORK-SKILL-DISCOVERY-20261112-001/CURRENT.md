@@ -2,17 +2,17 @@
 
 ## 현재 요약 — 2026-11-14 KST
 
-- Scope: 기존 스킬 발견/재사용 문서와 새 창 공통 맥락 파악 구조 검토.
-- Latest review: [새 창 통합 맥락 개선 검토](NEW_CHAT_CONTEXT_BOOTSTRAP_REVIEW_r0001_20261114.md).
-- Result: REVIEW_COMPLETE / MINIMUM_DOCUMENT_IMPROVEMENT_RECOMMENDED. 기존 진입·카탈로그·CURRENT 재사용, 브리프1개+관련 CURRENT 진입 권장.
-- Current corrections: 카탈로그의 r0005 일부 피드백 수신/첫 분석 후속 포인터, baseline의 현재/과거 상태 권위 정정. 스킬 코드·설치 재감사 아님.
-- Proposed bootstrap: collab/CONTEXT_BRIEF.md 신규 작성·진입 연결은 검토안. 이번 작업에서 파일/자동 로더/프로젝트 설정을 적용하지 않음.
-- Existing audit: 18개 관리 + 별도 업무용 연동1개, 17 ZIP SKILL 정적 확인·skillsilent 원본 추가 확인. 설치/실호출/독립 리뷰와 분리.
-- SELF_TEST: 문서 정적 검증·원격 readback만. 새 창 실제 로드/호스트/전체 통합 시험 NOT_RUN.
+- Scope: 새 창의 협업 운용·L1 지식·관리 스킬 공통 맥락 파악 경로를 문서로 적용.
+- Entry: [collab/CONTEXT_BRIEF.md](../../CONTEXT_BRIEF.md). README·AGENTS·START_HERE·baseline·카탈로그·기존 발견/재사용 절차가 같은 브리프를 연결.
+- Result: DOCUMENT_BOOTSTRAP_APPLIED. 공통 브리프 → 관련 CURRENT/메모 → 필요한 계약·스킬 원문.
+- Sources: 실제 PRIVATE main 문서·현재 프로젝트 기록을 기준으로 source blob을 표시. 원문 변경 시 해당 영역 요약/출처 갱신 또는 재확인 표시.
+- Current alignment: L1 CURRENT 최상단에 CL/PR 설계 리뷰 준비 상태 연결. Job CURRENT는 과거 후보와 v0.4.36 배포/미검증 상태를 첫 요약에서 구분. 실제 동작 변경 아님.
+- Existing audit: 18개 관리 + 별도 업무용 연동1개, 17 ZIP SKILL 정적 확인·skillsilent 추가 확인. 설치/API·실호출·독립 리뷰와 분리.
+- SELF_TEST: 문서 구조·내부 링크·브리프 크기·source blob·요청별 경로 검증 범위. 결과와 원격 검증은 아래 적용 기록 및 게시 영수증에서 확인.
 - INDEPENDENT_REVIEW: NOT_RUN.
-- Runtime/Job/스킬/운영 DB/예약/유료 리뷰/신규 PUBLIC 자료/LIVE 변경 없음.
-- NEXT: 검토안의 통합 브리프 원문·진입 경로를 문서 범위에서 구체화. 새 엔진·전체 스킬 재개발 기본 요구 없음.
-- 아래는 당시 기록. 과거 PENDING_CHECK/초기13개 언급을 현재 전체 감사 상태로 반복하지 않음.
+- ChatGPT 프로젝트 설정·백그라운드 자동 로더·새 엔진·스킬·호스트·Job·유료 리뷰·PUBLIC 신규 자료·LIVE 변경 없음.
+- NEXT: 실제 새 창에서 최소 시작 요청으로 이 경로를 사용하고 이후 정책/CURRENT 변경 시 브리프의 관련 줄만 함께 갱신.
+- 아래는 과거 감사/개선 검토 기록. 당시 “브리프 미적용/제안”을 현재 상태로 반복하지 않음.
 
 ## 변경 내용과 근거
 
@@ -81,3 +81,14 @@
 - 권장: 고정 진입 → 공통 브리프1개 → 관련 CURRENT → 필요한 스킬/계약만. 브리프는 기존 정본의 읽기용 파생 요약.
 - 자료 게시 자체는 새 창 선조회·프로젝트 설정 적용을 보장하지 않음. 해당 지침을 읽는 세션의 실제 GitHub 조회가 필요.
 - 이번 범위는 문서 정정과 검토. 통합 브리프 파일 생성·자동 생성기·운영 적용은 미실행.
+
+## 2026-11-14 — 공통 브리프·진입 문서 적용
+
+- 사용자 “그래 진행해줘”에 따라 기존 검토안의 최소 문서 경로를 적용.
+- 브리프에 협업·저장소·L1 합의/현재·관리18+별도1·요청별 CURRENT·최신성 확인·유지보수 규칙 포함.
+- root README/AGENTS, START_HERE, baseline, 카탈로그, 발견/재사용 절차에서 같은 브리프를 연결. 이미 읽은 문서의 순환 재조사 방지.
+- L1/Job CURRENT의 최상단 읽기만으로 현행 설계 준비·배포·실행 미검증을 구분하도록 문서 정합성 보완.
+- 브리프는 기존 정본의 읽기용 파생 요약. 별도 상태 DB·자동 생성기·LLM 호출·계정 설정 변경 없음.
+- 문서 검증·원격 readback은 실제 결과로만 기록하며 설치/API·실제 새 창 대화·Claude 독립 리뷰 PASS로 승격하지 않음.
+
+문서 적용·정적 확인 기록: [적용 결과](CONTEXT_BOOTSTRAP_APPLICATION_r0001_20261114.md). 원격 commit/readback은 게시 후 실제 결과로 확인하며 새 창 자동 로드 시험으로 소급하지 않음.

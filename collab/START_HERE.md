@@ -2,6 +2,10 @@
 기준: 2026-11-14 KST | **MIGRATION_NOT_CUTOVER / 활성 리뷰 provider는 각 프로젝트 CURRENT.md에서 확인**
 성격: **고정 진입점**. 특정 Phase, 요청자 전달 대기, ZIP PASS 등 수시 상태를 이 문서에 고정하지 않는다.
 
+## 새 창에서 먼저 읽을 한 파일
+
+**[공통 맥락 브리프](CONTEXT_BRIEF.md)**에서 협업 운용·L1 지식·관리 스킬을 먼저 파악하고 요청별 CURRENT로 이동한다. 이 파일은 상세 정책 진입점으로 유지한다. 브리프를 이미 읽었으면 반복 조회하지 않으며 실제 작업에 필요한 계약만 추가 확인한다. 문서 연결만으로 프로젝트 설정·백그라운드 선조회를 변경하지 않음.
+
 ## 공통 용어·저장소 접근 지침
 
 - [용어·저장소·실행 환경 표기 원칙](ops/CONTRACTS/TERMINOLOGY_AND_ACCESS_SCOPE_V1.md): 지역/망을 가르는 접두어 대신 실제 도구 이름, **GitHub PRIVATE/PUBLIC**, 작업 PC·Linux 실행 호스트, 업무용 Git 역할로 설명한다. 기존 경로·파일명·증거는 보존한다.
@@ -24,7 +28,7 @@
 - `ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER`는 기존 실측 상태이며, 이 문서 추가는 Windows 실행·모델 리뷰 호출·GitHub LIVE 전환이 아님.
 
 ## 단일 최신 정본 위치
-1. **프로젝트 실행 상태:** [`collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md`](projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) — 언제나 최신 상태가 기록된 마지막 섹션과 실측 증거를 우선한다. 오래된 이력 절의 NOT_STARTED/NOT_RUN은 당시 관찰값으로 보존.
+1. **프로젝트 실행 상태:** [`collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md`](projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) — 최상단 현재 요약·이후 새 결과/영수증을 우선한다. 끝에만 새 기록이 있는 과거 형식은 날짜·근거를 대조하며 과거 상태를 현재로 복사하지 않는다.
 2. **협업 안전 계약:** `collab/ops/CONTRACTS/NO_PR_COLLABORATION_V1.md`, `collab/ops/CONTRACTS/REVIEW_TRANSPORT_V1.md` (DRAFT, 실제 key/서명 세부는 최신 설계·판정을 우선).
 3. **현재 설계/시험:** `collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/GITHUB_ADAPTER_AND_REVIEW_FLOW_DESIGN_r0002_20261110.md`, `ACCEPTANCE_TEST_MATRIX_r0001_20261110.md`.
 4. **보안 기준:** `collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/GPT_B7_TRUST_ROOT_AND_APPROVAL_POLICY_DRAFT_r0001_20261110.md` (설계 초안, 운영 승인/설치 아님).
@@ -56,11 +60,12 @@
 
 ## 새 창·새 기능 요청: 보유 스킬부터 확인
 
-- [새 창 공통 맥락 파악 개선 검토](projects/COWORK-SKILL-DISCOVERY-20261112-001/NEW_CHAT_CONTEXT_BOOTSTRAP_REVIEW_r0001_20261114.md): 협업 운용·L1 지식·관리 스킬의 단일 브리프+관련 CURRENT 읽기 제안. 기존 시작 규칙을 대체·활성화한 상태는 아니며 프로젝트 설정/자동 로더는 변경하지 않음.
+- [개선 검토 원본](projects/COWORK-SKILL-DISCOVERY-20261112-001/NEW_CHAT_CONTEXT_BOOTSTRAP_REVIEW_r0001_20261114.md)의 최소 문서안을 적용: 공통 브리프 → 관련 CURRENT → 필요한 원문. 자동 로더/프로젝트 설정 변경과 구분.
 
-1. 이 진입점과 적용 운영 계약을 읽은 뒤 [공통 스킬 기능 목록](knowledge/SKILL_CAPABILITY_CATALOG.md)에서 요청 기능에 맞는 기존 스킬을 먼저 찾는다. 사용자가 스킬명을 직접 말하지 않아도 수행한다.
-2. 해당 프로젝트 CURRENT·열린 메모·최신 결과/영수증을 확인하고 관련 스킬 원문만 필요한 범위에서 읽는다.
-3. 새 기능 설계 전에 **기존 기능 재사용(REUSE) / 연결 보완(CONNECT) / 입증된 최소 확장(EXTEND) / 보류·추가 확인**을 판단한다. 미확인을 기능 부재로 취급하지 않는다.
+1. [공통 맥락 브리프](CONTEXT_BRIEF.md)의 역할·요청별 경로·source blob을 확인한다.
+2. 해당 CURRENT·열린 메모·새 결과/영수증을 확인하고, 요청에 관련된 [스킬 상세 목록](knowledge/SKILL_CAPABILITY_CATALOG.md)·실제 계약만 추가로 읽는다. 사용자에게 스킬명을 다시 요구하지 않는다.
+3. **REUSE / CONNECT / 입증된 최소 EXTEND / DEFER·추가 확인**을 판단한다. 미확인을 기능 부재로 취급하지 않고, 첫 분석 후속을 현재 설계 누락으로 승격하지 않는다.
+4. CURRENT·정책·카탈로그를 변경하면 브리프의 해당 요약·출처·확인일을 함께 갱신하거나 재확인 대상으로 표시한다.
 
 상세: [스킬 발견·재사용 시작 절차](ops/CONTRACTS/SKILL_DISCOVERY_AND_REUSE_V1.md) · [현재 보강 상태](projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md). 목록은 탐색 포인터이며 설치·호출 검증이 아니다. 사용자 확인한 18개는 패키지 정적 확인을 완료했고, 17개 SKILL 확인·skillsilent 원본 추가 확인으로 구분한다. 실제 설치·호스트 검증은 별도다. 이 연결이 ChatGPT 프로젝트 설정이나 다른 창의 문서 자동 로드를 변경하지는 않는다.
 

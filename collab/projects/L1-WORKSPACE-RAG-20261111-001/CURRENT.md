@@ -4,6 +4,8 @@
 
 - Updated: 2026-11-14 KST
 - Latest disposition: [피드백 판정·첫 분석 후 검증 범위](L1_KNOWLEDGE_FEEDBACK_DISPOSITION_r0001_20261114.md)
+- Related active design: [CL/PR 이슈 분석→Work 축적](CL_PR_ISSUE_ANALYSIS_DESIGN_BRIEF_r0001_20261114.md) · [독립 설계 리뷰 요청](CLAUDE_CL_PR_ISSUE_ANALYSIS_DESIGN_REVIEW_REQUEST_r0001_20261114.md). HANDOFF_POSTED / NOT_QUEUED / INDEPENDENT_REVIEW=NOT_RUN, 결과 미접수. 실제 분석·그룹 게시와 구분.
+- 새 창은 [공통 맥락 브리프](../../CONTEXT_BRIEF.md)에서 공통 정책을 읽고 이 현재 요약·열린 메모로 이어간다.
 - Scope: 비민감 문서·분류·연계 설계. 실제 기능 부재와 미실행 검증을 구분.
 - G0: PARTIAL_REPORTED — 사용자 제공 호스트 Agent 보고/업무용 GPT 검토 요약 수신. 원본 설치 소스·로그·영수증 직접 검증은 미수행.
 - Follow-up memo: PARTIAL_FEEDBACK_RECEIVED / TARGETED_CONTRACT_CHECKS_PENDING.
