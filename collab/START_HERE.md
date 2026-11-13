@@ -2,6 +2,11 @@
 기준: 2026-11-13 KST | **MIGRATION_NOT_CUTOVER / 활성 리뷰 provider는 각 프로젝트 CURRENT.md에서 확인**
 성격: **고정 진입점**. 특정 Phase, 요청자 전달 대기, ZIP PASS 등 수시 상태를 이 문서에 고정하지 않는다.
 
+## 공통 용어·저장소 접근 지침
+
+- [용어·저장소·실행 환경 표기 원칙](ops/CONTRACTS/TERMINOLOGY_AND_ACCESS_SCOPE_V1.md): 지역/망을 가르는 접두어 대신 실제 도구 이름, **GitHub PRIVATE/PUBLIC**, 작업 PC·Linux 실행 호스트, 업무용 Git 역할로 설명한다. 기존 경로·파일명·증거는 보존한다.
+- 표현 변경은 회사 코드·상세 MSC·인증정보의 게시 허용이나 설치·호출·PUBLIC 배포·LIVE 전환 승인이 아니다.
+
 ## 단일 최신 정본 위치
 1. **프로젝트 실행 상태:** [`collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md`](projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) — 언제나 최신 상태가 기록된 마지막 섹션과 실측 증거를 우선한다. 오래된 이력 절의 NOT_STARTED/NOT_RUN은 당시 관찰값으로 보존.
 2. **협업 안전 계약:** `collab/ops/CONTRACTS/NO_PR_COLLABORATION_V1.md`, `collab/ops/CONTRACTS/REVIEW_TRANSPORT_V1.md` (DRAFT, 실제 key/서명 세부는 최신 설계·판정을 우선).
@@ -21,15 +26,15 @@
 - Windows Claude Code: 독립 리뷰어가 기본이지만 필요한 로컬 개발 실행도 할 수 있음. **개발 세션 자기 시험 ≠ 독립 리뷰**. 토큰/연결 장애 시 GPT는 가능한 개발/시험/문서화를 계속하고 `INDEPENDENT_REVIEW=NOT_RUN/PENDING` 기록.
 - Python watcher: 유효한 승인 서명·파일·repo ID·정책·비용·중복 확인 후 **정식 REQUEST/READY**가 있을 때만 리뷰 호출. 파일 게시 자체는 실행 신호 아님.
 - PRIVATE: `wonhwipark/CoWork-Skill-Collab` — 새 협업 문서/판정/인계/영수증의 기준 저장소. 민감/반출금지 자료는 PRIVATE에도 게시 불가.
-- **스킬 ZIP 전달 SSOT:** [Job-list/Skill-Updater PUBLIC 배송 계약](ops/CONTRACTS/JOBLIST_PUBLIC_DELIVERY_V1.md). 실제 사내 Skill-Updater가 받는 최종 ZIP은 **PUBLIC `wonhwipark/L1Work` `main` 루트**. PRIVATE 후보/문서 게시로 배송·사내 실행을 완료했다고 보고하지 않는다. 후보·독립 리뷰·호스트·배포 게이트 미충족 시 PUBLIC 게시 BLOCKED.
+- **스킬 ZIP 전달 SSOT:** [Job-list/Skill-Updater PUBLIC 배송 계약](ops/CONTRACTS/JOBLIST_PUBLIC_DELIVERY_V1.md). 작업 PC의 Skill-Updater가 받는 최종 ZIP은 **PUBLIC `wonhwipark/L1Work` `main` 루트**. PRIVATE 후보/문서 게시로 배송·실행 호스트 동작을 완료했다고 보고하지 않는다. 후보·독립 리뷰·호스트·배포 게이트 미충족 시 PUBLIC 게시 BLOCKED.
 - PUBLIC: `wonhwipark/L1Work` — 승인된 최종 ZIP 다운로드 및 **별도 사용자 승인된 공개 허용 목록 기반 HTML Pages 상태 요약**. 개발 후보/REQUEST/영수증/PRIVATE 원문은 공개 금지. Pages 기본 URL: `https://wonhwipark.github.io/L1Work/cowork-dashboard/`. 공개 범위는 `collab/dashboard/PUBLIC_PAGES_DEFAULT_POLICY.md` 참조.
 - 기존 Dropbox reviewer watcher: 2026-11-12 사용자 승인으로 예약작업 Disable·Stop 완료 보고, 이력 및 로컬 백업 보존. **ACTIVE_PROVIDER=NONE**, GitHub LIVE 승인·가동 아님. 다른 updater/notifier/Bridge는 변경 승인 전 유지.
 
 ## L1 담당 모듈·이슈 분석 범위 공통 사전지식
 
 - [L1_CHANNEL 담당 4개 모듈 및 Knowledge 분류 공통 컨텍스트](knowledge/L1_CHANNEL_MODULE_SCOPE_COMMON_r0001_20261113.md) — NR BCH(= NR L1 Channel), NR L1 Tx, LTE ChCfg, LTE L1 Tx의 **사용자 확인 담당 범위**와 Procedure(A)/Technical(B) 분류. 지식 업데이트/모듈 간 이슈 조사 시작 시 관련 범위부터 확인.
-- [담당자 검토용 상세 분류표 v0.7](knowledge/references/L1_NR_LTE_OWNER_REVIEW_CLASSIFICATION_v0_7_20261113.md) — **A 97 + B 84 후보**; 담당자/사내 GPT 검토 전으로 구현·지원/누락 없음 확정 아님.
-- 범위를 확인할 때 **사용자 확인 담당 영역**과 **추후 코드 검증할 세부 시나리오**를 분리하고, 다른 모듈의 실제 알고리즘까지 자동 확대하지 않는다. GitHub 게시만으로 사내 분석·Job 실행·Knowledge write는 시작되지 않음.
+- [담당자 검토용 상세 분류표 v0.7](knowledge/references/L1_NR_LTE_OWNER_REVIEW_CLASSIFICATION_v0_7_20261113.md) — **A 97 + B 84 후보**; 담당자/업무용 GPT 검토 전으로 구현·지원/누락 없음 확정 아님.
+- 범위를 확인할 때 **사용자 확인 담당 영역**과 **추후 코드 검증할 세부 시나리오**를 분리하고, 다른 모듈의 실제 알고리즘까지 자동 확대하지 않는다. GitHub 게시만으로 코드 분석·Job 실행·Knowledge write는 시작되지 않음.
 
 ## 새 창·새 기능 요청: 보유 스킬부터 확인
 
@@ -58,5 +63,5 @@
 
 ## 금지 사항
 - `/AI-CONTINUITY/` 변경 금지. 실제 Windows watcher·운영 SQLite/WAL/SHM·예약작업·Bridge/Dashboard/Telegram 구성 승인 전 변경 금지.
-- 사내 전달물에 사외 협업 서비스 명칭·경로·토큰 의존성 주입 금지. 운영 신뢰키·개인키/토큰/회사 반출 금지 자료 저장소 업로드 금지.
+- 업무용 스킬·프롬프트·전달물에 협업 저장소 명칭·경로·토큰 의존성 주입 금지. 운영 신뢰키·개인키/토큰/회사 반출 금지 자료 저장소 업로드 금지.
 - GitHub PR은 정규 리뷰에 불필요. `MIGRATION_NOT_CUTOVER` 유지 중 Dropbox LIVE를 종료하지 않는다.
