@@ -3,7 +3,7 @@
   "live_provider": "NONE",
   "operations": {
     "active_provider": "NONE",
-    "cutover": "NOT_OBSERVED",
+    "cutover": "MIGRATION_NOT_CUTOVER",
     "dashboard_source": true,
     "host_shadow": "NOT_OBSERVED",
     "independent_review": "PENDING_APPROVAL",
@@ -17,10 +17,10 @@
       "id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md",
-      "status": "문서상 진행",
+      "status": "전환 전",
       "title": "COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태",
-      "tone": "neutral",
-      "topic": "GITHUB_LIVE_ONE_SHOT_PREFLIGHT_RESULT: REVIEW_INPUT_UPLOAD=PASS / INTEGRATION=HOST_ISOLATED_PASS / INDEPENDENT_REVIEW=PE"
+      "tone": "warning",
+      "topic": "GPT v0.2.14 원샷 프리플라이트 종합 판정 (2026-11-14 KST)"
     },
     {
       "id": "COWORK-GITHUB-DASHBOARD-20261111-001",
