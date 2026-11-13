@@ -318,6 +318,19 @@ def publish_public(payload: bytes, token: str) -> str:
     sha, existing = _read_public_existing(url, token)
     if existing == payload:
         return "UNCHANGED"
+    if existing is not None:
+        # A new run timestamp alone is not a meaningful PUBLIC status change.
+        # Preserve the prior verified generation time and avoid redundant Pages builds.
+        try:
+            previous = json.loads(existing)
+        except (ValueError, UnicodeError):
+            previous = None
+        if isinstance(previous, dict) and set(previous) in (
+                required, required | {"generated_at"}):
+            comparable_old = {k: v for k, v in previous.items() if k != "generated_at"}
+            comparable_new = {k: v for k, v in obj.items() if k != "generated_at"}
+            if comparable_old == comparable_new:
+                return "UNCHANGED"
     data = {
         "message": "docs(pages): auto-refresh approved CoWork status [allowlist-only]",
         "content": base64.b64encode(payload).decode("ascii"),
