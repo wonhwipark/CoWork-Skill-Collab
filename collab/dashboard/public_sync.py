@@ -94,7 +94,35 @@ def _count(state: dict, family: str) -> int:
     return value
 
 
-def build_payload(state: dict, date: str) -> dict:
+def _read_active_provider(root: Path) -> str:
+    """Read only a bounded latest CURRENT section; export a controlled status label."""
+    path = root / "collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md"
+    try:
+        if path.is_symlink() or not path.is_file() or path.stat().st_size > 220_000:
+            return "기록 미확인"
+        doc = path.read_text(encoding="utf-8")
+    except (OSError, UnicodeError):
+        return "기록 미확인"
+    if "\n## " not in doc:
+        return "기록 미확인"
+    head = doc.split("\n## ", 1)[1].split("\n## ", 1)[0][:16000]
+    found = set(re.findall(r"\bACTIVE_PROVIDER\s*=\s*([A-Z_]+)\b", head))
+    if not found:
+        return "기록 미확인"
+    if len(found) != 1:
+        raise SafetyBlock("conflicting provider reports in latest CURRENT section")
+    provider = found.pop()
+    if provider == "NONE":
+        return "활성 리뷰 제공자 없음"
+    if provider == "DROPBOX":
+        return "Dropbox 리뷰 제공자 (문서 기록)"
+    # Migration has NOT cut over; new/unknown provider needs separate approval.
+    raise SafetyBlock("unapproved active provider marker")
+
+
+def build_payload(state: dict, date: str, *,
+                  active_provider: str = "기록 미확인",
+                  generated_at: str | None = None) -> dict:
     """Only fixed text/enum labels and aggregate numbers cross PUBLIC boundary."""
     if not isinstance(state, dict) or state.get("schema") != PRIVATE_SCHEMA:
         raise SafetyBlock("unexpected PRIVATE state schema")
@@ -104,6 +132,17 @@ def build_payload(state: dict, date: str) -> dict:
         raise SafetyBlock("cutover state outside published approval")
     if not re.fullmatch(r"20[0-9]{2}-[01][0-9]-[0-3][0-9]", date):
         raise SafetyBlock("invalid date")
+    if active_provider not in {
+            "활성 리뷰 제공자 없음", "Dropbox 리뷰 제공자 (문서 기록)", "기록 미확인"}:
+        raise SafetyBlock("invalid public provider label")
+    if generated_at is not None:
+        if not isinstance(generated_at, str) or not re.fullmatch(
+                r"20\d\d-\d\d-\d\dT\d\d:\d\d:\d\dZ", generated_at):
+            raise SafetyBlock("invalid generated_at format")
+        try:
+            datetime.strptime(generated_at, "%Y-%m-%dT%H:%M:%SZ")
+        except ValueError as exc:
+            raise SafetyBlock("invalid generated_at time") from exc
     projects = state.get("projects")
     works = state.get("work_items")
     if not isinstance(projects, list) or not isinstance(works, list):
@@ -148,17 +187,22 @@ def build_payload(state: dict, date: str) -> dict:
         else:
             # New unapproved skill names remain PRIVATE.
             continue
+        action_kind = ("USER" if item_id == "COWORK-DROPBOX-TO-GITHUB-MIGRATION"
+                       and phase == "BLOCKED" else
+                       "REVIEW" if phase == "REVIEW" else
+                       "BLOCKED" if phase == "BLOCKED" else "OTHER")
         output.append({
             "title": title, "category": category, "owner": owner,
             "phase_label": PHASE_LABELS[phase],
             "phase_index": _phase_progress(phase),
+            "action_kind": action_kind,
             "review_label": "독립 리뷰 증거 미검증",
             "test_label": "자체시험 기록 · 별도 검증",
             "next_action": next_action,
         })
     if len(output) > MAX_PUBLIC_WORKS:
         raise SafetyBlock("too many public Work cards")
-    return {
+    payload = {
         "schema": PUBLIC_SCHEMA,
         "snapshot_date": date,
         "source": "APPROVED_AGGREGATE_ONLY",
@@ -174,9 +218,13 @@ def build_payload(state: dict, date: str) -> dict:
         "checks": {
             "independent_review": _reported_status(independent_review),
             "windows_stage1": _reported_status(windows_stage1),
+            "active_provider": active_provider,
         },
         "work_cards": output,
     }
+    if generated_at is not None:
+        payload["generated_at"] = generated_at
+    return payload
 
 
 def json_bytes(payload: dict) -> bytes:
@@ -197,7 +245,9 @@ def prepare(root: Path, date: str | None = None) -> bytes:
     if raw != rebuilt:
         raise SafetyBlock("stale PRIVATE dashboard state: run generator first")
     date = date or datetime.now(KST).date().isoformat()
-    return json_bytes(build_payload(raw, date))
+    return json_bytes(build_payload(
+        raw, date, active_provider=_read_active_provider(root),
+        generated_at=os.getenv("COWORK_STATUS_AT") or None))
 
 
 def _request(url: str, token: str, *, method: str = "GET", body: bytes | None = None) -> dict:
@@ -239,13 +289,26 @@ def publish_public(payload: bytes, token: str) -> str:
     except (ValueError, UnicodeError) as exc:
         raise SafetyBlock("invalid proposed JSON") from exc
     # Strict no extra sensitive/unapproved keys; reconstruct deterministic bytes.
-    if not isinstance(obj, dict) or set(obj) != {
-            "schema", "snapshot_date", "source", "sync_mode", "cutover", "counts", "checks", "work_cards"}:
+    required = {"schema", "snapshot_date", "source", "sync_mode", "cutover",
+                "counts", "checks", "work_cards"}
+    if not isinstance(obj, dict) or not (set(obj) == required or
+                                         set(obj) == required | {"generated_at"}):
         raise SafetyBlock("unexpected proposed public fields")
     if obj.get("schema") != PUBLIC_SCHEMA or obj.get("source") != "APPROVED_AGGREGATE_ONLY":
         raise SafetyBlock("invalid public schema")
     if len(payload) > 16000:
         raise SafetyBlock("public payload too large")
+    if obj.get("generated_at") is not None:
+        value = obj["generated_at"]
+        if not isinstance(value, str) or not re.fullmatch(
+                r"20\d\d-\d\d-\d\dT\d\d:\d\d:\d\dZ", value):
+            raise SafetyBlock("invalid publish timestamp")
+        try:
+            at = datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+        except ValueError as exc:
+            raise SafetyBlock("invalid publish timestamp") from exc
+        if abs((datetime.now(timezone.utc) - at).total_seconds()) > 1800:
+            raise SafetyBlock("stale/future publish timestamp")
     if not isinstance(obj.get("work_cards"), list) or len(obj["work_cards"]) > MAX_PUBLIC_WORKS:
         raise SafetyBlock("unapproved public card payload")
     # The emitted data was generated by build_payload; only canonical serialized form accepted.
