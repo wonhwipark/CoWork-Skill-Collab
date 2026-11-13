@@ -1,13 +1,18 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
-- Updated: 2026-11-12 KST
-- Scope: 비민감 공통 스킬 목록·발견/재사용 절차·진입 링크·저장소 AGENTS 문서.
-- USER_AUTHORIZATION: 공통 기능 목록을 보강하고 새 창 시작 절차에 연결. 18개 PRIVATE/원본 재확인은 다음 별도 작업으로 분리.
-- DOCUMENTATION: POSTED / CONTENT_REMOTE_READBACK=PASS (아래 고정 content commit 기준).
-- SKILL_18_DETAIL_RECHECK: PACKAGE_STATIC_REVIEW_COMPLETE_WITH_GAPS / 17_SKILL_READ / SKILLSILENT_SOURCE_PENDING.
+## 현재 요약 — 2026-11-14 KST
+
+- Scope: 기존 스킬 발견/재사용 문서와 새 창 공통 맥락 파악 구조 검토.
+- Latest review: [새 창 통합 맥락 개선 검토](NEW_CHAT_CONTEXT_BOOTSTRAP_REVIEW_r0001_20261114.md).
+- Result: REVIEW_COMPLETE / MINIMUM_DOCUMENT_IMPROVEMENT_RECOMMENDED. 기존 진입·카탈로그·CURRENT 재사용, 브리프1개+관련 CURRENT 진입 권장.
+- Current corrections: 카탈로그의 r0005 일부 피드백 수신/첫 분석 후속 포인터, baseline의 현재/과거 상태 권위 정정. 스킬 코드·설치 재감사 아님.
+- Proposed bootstrap: collab/CONTEXT_BRIEF.md 신규 작성·진입 연결은 검토안. 이번 작업에서 파일/자동 로더/프로젝트 설정을 적용하지 않음.
+- Existing audit: 18개 관리 + 별도 업무용 연동1개, 17 ZIP SKILL 정적 확인·skillsilent 원본 추가 확인. 설치/실호출/독립 리뷰와 분리.
+- SELF_TEST: 문서 정적 검증·원격 readback만. 새 창 실제 로드/호스트/전체 통합 시험 NOT_RUN.
 - INDEPENDENT_REVIEW: NOT_RUN.
-- SKILL_CODE_CHANGE / HOST_INSTALL / JOB_RUN / SCHEDULER_CHANGE / REQUEST_READY / PAID_REVIEW / PUBLIC_POST / LIVE_CUTOVER: NOT_RUN.
-- 기존 운영 상태는 START_HERE 및 이관 CURRENT를 따른다. 이 작업으로 LIVE를 변경하지 않음.
+- Runtime/Job/스킬/운영 DB/예약/유료 리뷰/신규 PUBLIC 자료/LIVE 변경 없음.
+- NEXT: 검토안의 통합 브리프 원문·진입 경로를 문서 범위에서 구체화. 새 엔진·전체 스킬 재개발 기본 요구 없음.
+- 아래는 당시 기록. 과거 PENDING_CHECK/초기13개 언급을 현재 전체 감사 상태로 반복하지 않음.
 
 ## 변경 내용과 근거
 
@@ -68,3 +73,11 @@
 | `collab/knowledge/SKILL_CAPABILITY_CATALOG.md` | 6977 | `1685b15f94efeafa64815b87175abb79983102e674130ab5d58419a7aa4faab9` |
 | `collab/START_HERE.md` | 7428 | `fd2419f8db2d3f3b09a9750a1fc985476545d7c963b9328bfee8a6a0b2ff217f` |
 | `collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md` | 5635 | `151e94cabc36b1ec6ae62f952c121bfd573022621a9cd08f89141c949ae5925b` |
+
+## 2026-11-14 — L1 업데이트 후 새 창 공통 맥락 개선 검토
+
+- 선행 L1 업데이트 commit e181df4bbf0b1aad118dda213a7f31f27525c732의 10개 문서 전체 원격 readback·Git blob·동일 bytes SHA-256 확인 PASS.
+- [개선 검토](NEW_CHAT_CONTEXT_BOOTSTRAP_REVIEW_r0001_20261114.md)에서 협업·L1·관리 스킬 자료 분산, 오래된 포인터/상태, CURRENT의 첫/마지막 절 선택 차이, 자동 로드 연결 부재를 구분.
+- 권장: 고정 진입 → 공통 브리프1개 → 관련 CURRENT → 필요한 스킬/계약만. 브리프는 기존 정본의 읽기용 파생 요약.
+- 자료 게시 자체는 새 창 선조회·프로젝트 설정 적용을 보장하지 않음. 해당 지침을 읽는 세션의 실제 GitHub 조회가 필요.
+- 이번 범위는 문서 정정과 검토. 통합 브리프 파일 생성·자동 생성기·운영 적용은 미실행.

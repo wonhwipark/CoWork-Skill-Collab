@@ -1,7 +1,7 @@
 # CoWork 공통 스킬 기능 목록
 
-- 개정: r0002 / 2026-11-12 KST
-- 대상: 사용자 확인한 관리 스킬 18개 + 별도 사내 연동 스킬 1개. 전체 보유 스킬의 완전성·최신 설치 버전을 뜻하지 않음.
+- 개정: r0003 / 2026-11-14 KST (역할·최신 피드백 포인터 정정; 패키지 재감사 아님)
+- 대상: 사용자 확인한 관리 스킬 18개 + 별도 업무용 연동 스킬 1개. 전체 보유 스킬의 완전성·최신 설치 버전을 뜻하지 않음.
 - [이번 패키지 정적 확인·SHA-256·원본 위치](../projects/COWORK-SKILL-DISCOVERY-20261112-001/SKILL_18_PACKAGE_AUDIT_20261112.md) · [최신 상태](../projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md) · [시작·재사용 절차](../ops/CONTRACTS/SKILL_DISCOVERY_AND_REUSE_V1.md)
 - 근거: 17개 실제 공개 ZIP의 SKILL 문서 정적 확인. 실제 구현/API/설치·호스트 실행은 미검증. 입출력은 책임 요약이며 새 함수·필드 정의가 아님.
 
@@ -25,7 +25,7 @@
 | 16 | `job-list` / 잡리스트 | 승인 profile/Job → dispatcher·one-shot 결과/영수증 | skill-updater, 승인된 worker/driver | v0.4.36 Linux one-shot 1개; 과거 v0.4.34 jobs=[] 문구와 혼동 금지 |
 | 17 | `autotask-builder` / 예약 작업 | task YAML·일정 → 검증·OS 작업 정의·deploy/status | 공개 child launcher, skill-updater, l1-cleanup | Windows Task Scheduler/Linux user timer; OS 예약만 소유, Job queue/state 불변 |
 | 18 | `l1-cleanup` / 정리·보존 | 대상/정책 → audit·plan·HTML/JSON·승인 격리/복구 | autotask-builder, 유효 artifact receipt 제공자 | 기본 조회; OpenCode DB 삭제·purge는 별도 승인; receipt 자동 연동은 미구현 표기 |
-| 19 | `l1-knowledge-updater` / 사내 지식 Updater | 사내 GPT 협업을 통한 `l1sw-dev-knowledge` 스킬 업데이트 | 기존 analyzer·converter·Workflow/Kernel과 연동 검토 | 사용자 확인한 사내 스킬. 이번 외부 패키지 점검·수정 대상과 분리; 실제 I/O·원본은 사내 확인 |
+| 19 | `l1-knowledge-updater` / 지식 Updater | 업무용 GPT 협업을 통한 `l1sw-dev-knowledge` 스킬 업데이트 | 기존 analyzer·converter·Workflow/Kernel과 연동 검토 | 업무용 연동 스킬로 분리. 2026-11-14 G0 일부 확인 보고 수신, 원본/API·전체 통합 직접 검증은 아님. 최신 L1 판정 참조 |
 
 ## 요청 기능에서 후보 찾기
 
@@ -39,10 +39,12 @@
 | SAM LOC/MCD | l1-sam-fixer |
 | 주기 실행·패키지 갱신 | autotask-builder의 OS 예약 / skill-updater의 설치 / job-list의 승인 Job을 구분 |
 | 산출물·디스크 정리 | l1-cleanup의 audit/plan부터 확인 |
-| 사내 지식 스킬 업데이트 | 사내 l1-knowledge-updater와 기존 분석·변환 기능의 연결 검토 |
+| 지식 스킬 업데이트 | l1-knowledge-updater와 기존 분석·변환 기능의 연결 검토 |
 
 ## 재사용 판단
 
 요청 기능으로 후보를 찾고 프로젝트 CURRENT·열린 메모·관련 원문을 확인한다. REUSE / CONNECT / 입증된 최소 EXTEND / DEFER·추가 확인을 판단하며 사용자가 스킬명을 알려줄 때까지 기다리지 않는다. 미확인 API·record는 구현 대상으로 확정하지 않는다.
 
-G0 설치 사실과 G1 가정을 분리한다. SourceSnapshot·CAS·N:M·복구는 기존 Kernel/Updater/Git 제공자 우선. K5.8은 설계표만, 기존 Knowledge/metadata 변경 금지. 문서·ZIP 확인·호스트 설치·실호출·독립 리뷰를 구분한다. 기존 r0005 후속 메모는 결과 대기 상태를 유지한다.
+G0 설치 사실과 G1 가정을 분리한다. SourceSnapshot·CAS·N:M·복구는 기존 Kernel/Updater/Git 제공자 우선. K5.8은 설계표만, 기존 Knowledge/metadata 변경 금지. 문서·ZIP 확인·호스트 설치·실호출·독립 리뷰를 구분한다. [r0005 후속 최신 판정](../projects/L1-WORKSPACE-RAG-20261111-001/L1_KNOWLEDGE_FEEDBACK_DISPOSITION_r0001_20261114.md)은 G0 일부 확인 보고 수신을 반영한다. 실제 저장·source/MSC/Evidence·게시/AI 활용은 첫 승인된 분석 후속이며 현재 분류·연계 설계의 누락/완료 차단으로 취급하지 않는다. 전체 설치/API·독립 리뷰 PASS는 아님.
+
+[새 창 공통 맥락 파악 개선 검토](../projects/COWORK-SKILL-DISCOVERY-20261112-001/NEW_CHAT_CONTEXT_BOOTSTRAP_REVIEW_r0001_20261114.md): 기존 목록을 재사용하는 단일 브리프+관련 CURRENT 경로 제안. 실제 브리프/자동 로드는 아직 미적용.
