@@ -53,7 +53,7 @@ flowchart TB
 
 | Work ID | 스킬 | 진행 단계(신고) | 담당 | 시험(신고) | 독립 리뷰(신고) | 다음 조치 |
 |---|---|---|---|---|---|---|
-| [COWORK-DROPBOX-TO-GITHUB-MIGRATION](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) | cowork-review-watcher | 개발·시험 | GPT / Claude Code | PASS | NOT_RUN | SU-SIMPLE GPT 재판정: 구형 6개 승인 요구는 기본 게이트에서 재분류. 기존 Claude 독립 리뷰 경로 우선, v0.2.13 자체시험 보존·제품 연동 NOT_RUN. CoWork watcher 코드 외부 Claude 전달 허용 범위 1회 확인 후 Windows 원샷 최소 delta· |
+| [COWORK-DROPBOX-TO-GITHUB-MIGRATION](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) | cowork-review-watcher | 개발·시험 | GPT / Claude Code | PASS | NOT_RUN | 사용자가 CoWork 자체 소스/ZIP의 Claude 독립 리뷰용 GitHub PRIVATE 전송 및 L1Work 기존 공개 ZIP·handoffs MD 링크 리뷰 허용. Windows 로컬 v0.2.13의 review-inputs 업로드/원격 SHA·commit 검증 + manifest/실제  |
 | [COWORK-GITHUB-DASHBOARD-20261111-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md) | cowork-dashboard | GPT 판정 | GPT | PASS | NOT_RUN | PUBLIC 자동 동기화 E2E 검증 완료 후 GPT 최종 판정 및 HTML 사용성 확인; 독립 리뷰 미실행 유지 |
 | [COWORK-SKILL-DISCOVERY-20261112-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md) | skill-discovery | GPT 판정 | GPT | NOT_VERIFIED | NOT_RUN | 스킬 18개 원본 대조 미확인 항목 판정 |
 | [JOBLIST-NRTX-20261112-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/JOBLIST-NRTX-20261112-001/CURRENT.md) | job-list | 개발·시험 | GPT | PASS | NOT_RUN | 호스트 G0 확인 전 후보 패키지 검증 범위 유지 |
