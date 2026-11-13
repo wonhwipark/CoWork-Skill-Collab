@@ -1,5 +1,14 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## GPT 판정 — LOCAL_ONLY 차단 delta / v2 정적 코드 위험 (2026-11-14 KST)
+- `CLAUDE_LOCAL_ONLY_BLOCKERS_DELTA_RESULT_FOR_GPT_20261114.md`(commit `596b6732c29149fedd2176879c17c2df88e3c043`), CURRENT/TRACKER, `tools/local_only_contract_r0002.py`, `tools/reviewer_isolation_probe_r0001.py` 원격 읽기 후 **`GPT_DISPOSITION=ACCEPT_WITH_CHANGE`**. 판정서 `GPT_LOCAL_ONLY_BLOCKERS_DELTA_DISPOSITION_r0001_20261114.md` PRIVATE main 게시/remote readback PASS.
+- 실측 자기보고: 기존 PC reviewer egress 5/5 연결 `NOT_ISOLATED`, 모델 런타임 없음. 격리 도구 12 PASS, v2 r0002 26 PASS/변이 10/10는 자체시험이고 실제 로컬 독립 리뷰·운영 승인 아님. 사람/온프레미스 모델 reviewer는 여전히 `BLOCKED_LOCAL_REVIEWER`.
+- GPT 정적 코드 검토에서 새로운 **운영 BLOCKING 위험 2개** 확인: (1) `State.save()`는 단일 `.tmp`+`os.replace`지만 멀티프로세스 원자 예약/동시성 락 없어 같은 nonce/receipt 이중 허용 가능. (2) 존재하지 않는 state 파일은 빈 `nonces/accepted`로 초기화해 장부 분실·삭제 후 replay FAIL_CLOSED 증명 안 됨. 동일 개발자 테스트 PASS=독립 리뷰 아님. **동시 실행 / state 삭제+재시작 / crash+rollback** delta 회귀시험을 정식 운영 전에 시행하고 별도 독립 보안 리뷰.
+- `reviewer_locality`/attestation digest 서명은 **ON_PREM 실행 사실을 직접 증명하지 못함**. DNS/TCP probe도 전체 네트워크 egress 무존재 증명 아님. 조직 승인 실행 환경·방화벽 등 독립 확인 필요.
+- B 별도 signer 기기·6개 키트 **내부 이동 정책**과 실제 로컬 reviewer/host의 존재는 현재 미확인. LIVE 전용 비관리자 계정·신규 최소권한 PAT·신뢰 root·v2 정식 계약 승인/운영 적용 미실행.
+- **`ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER / C=PARTIAL / D=LOCAL_ONLY / TOKEN=BLOCKED / E=NOT_RUN`** 유지. Dropbox watcher/Bridge/updater Disabled, notifier Running 자체보고. 사용자 두 핵심 사실을 한 번에 확인 후 후속 delta 묶음 진행. 실키·토큰·운영 계정/DB·READY/유료 reviewer/LIVE 변경 금지.
+
+
 ## LOCAL_ONLY_BLOCKERS_DELTA_RESULT: E=BLOCKED_LOCAL_REVIEWER / B=AVAILABLE_UNDESIGNATED / TOKEN=BLOCKED_OVERPRIVILEGED / PROTOCOL_V2=PROTOTYPE_ONLY / ACTIVE_PROVIDER=NONE (Claude 자체 보고, 2026-11-14 KST)
 - 결과: `CLAUDE_LOCAL_ONLY_BLOCKERS_DELTA_RESULT_FOR_GPT_20261114.md` (PRIVATE `main`, commit `596b6732c29149fedd2176879c17c2df88e3c043`, 원격 바이트·SHA-256 `3205074049b7db08a62f72b7cb71811a6c831c15084f57667618fbd92b66a234` 일치). 기존 시험 반복 0, 운영 키·토큰·계정·ACL·Task·DB·업로드·외부 모델·유료 리뷰·READY·LIVE·이력 변경 0, 모델 호출 0, 비용 $0. 독립 리뷰 아님.
 - **자동 리뷰 재개 임계 경로**: ①로컬 독립 리뷰어 실존과 ③별도 서명자 기기·키트 내부 이동 정책이 미확인이라 나머지가 준비돼도 재개되지 않음. 사용자 필수 확인은 이 두 가지.
