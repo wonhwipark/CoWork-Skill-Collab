@@ -84,3 +84,12 @@ B(별도 승인자 기기), C(별도 계정 SHADOW 대체 기준 검토 또는 E
 - GitHub [REST 오류 진단](https://docs.github.com/en/rest/using-the-rest-api/troubleshooting-the-rest-api): 403/429 rate limit 및 인증 오류. HTTP 403 단독은 쓰기 권한 부재의 충분조건이 아님.
 - GitHub [저장소 API](https://docs.github.com/en/rest/repos/repos#list-repositories-for-the-authenticated-user): private visibility·페이지네이션.
 - 운영 계약은 최신 CURRENT 실측을 우선. 예전 계약의 Dropbox LIVE 유지 문구를 현재 provider로 소급하지 않음.
+
+## 9. GPT 후속 판정 — r0002 Windows 토큰 자체시험 (2026-11-14 KST)
+- GPT는 최신 `CLAUDE_BCD_TOKEN_APPROVAL_PRECHECK_RESULT_FOR_GPT_20261113.md` F1~F6, CURRENT 최상단, `github_token_check_r0002.py` 및 시험 원문을 PRIVATE main에서 직접 재조회. 추가 결과가 사용자 보고대로 원격 게시됨을 확인. **GPT_DISPOSITION=ACCEPT_WITH_LIMITATIONS / SELF_TEST_REPORTED**.
+- r0002 23 PASS(Windows 시험 venv 및 운영 interpreter), 기존 r0001과 합계 34 PASS는 전부 mock HTTP 기반의 개발 자체시험. GPT Linux 동일 fixture 결과와 동일 숫자여도 독립적 실제 토큰/권한 검증 또는 정식 리뷰로 인정하지 않음. 실제 PAT·GitHub 네트워크·관리자 실행 모두 NOT_RUN.
+- 원본 `Install-ReadToken.ps1`에서 `r0001 --probe-write`, 종료코드 미해석, 무조건 `Token installed` 메시지 3건은 수정 필요성 수용. 원본 변경·실행하지 않았고 로컬 격리 r0002 사본 18 synthetic PASS, 원본 4건 정적 위반 검출 및 변이 1건 검출 보고. 코드 원문은 공유 제한 경로 포함으로 로컬 보존; GPT가 Windows 실행 재현하거나 정확한 사본 바이트 독립 검증한 것은 아님.
+- 판정 매핑: 종료 1=FAIL, 종료 2=NOT_PROVEN, 종료 0을 포함한 기타 종료=NOT_PROVEN. 잘못된 PUT의 HTTP 403만으로 읽기 전용 권한을 증명한다는 구형 주장 **REJECTED/WITHDRAWN**, `/user/repos`가 1개만 보인다는 결과로 PAT 권한을 확정한다는 주장 **REJECTED/WITHDRAWN**. GET-only 결과와 사용자 확인 GitHub 설정 8항목은 다른 증거 범주; 체크리스트는 사람 확인이지 API 독립 증명 아님.
+- 운영 안전: 실제 PAT 사용은 사용자 측 GitHub Fine-grained / selected repo `CoWork-Skill-Collab` 1개 / Contents Read-only / Metadata Read-only / 기타 grant 없음 / 만료 90일 이하를 별도로 확인한 뒤에만. 안전 설정 O/X와 실제 비밀 안전 설치가 끝나도 토큰 검증기의 `NOT_PROVEN`을 자동 PASS로 바꾸지 않음. 토큰 문자열 일부·파일해시·스크린샷을 채팅/PRIVATE에 올리지 않음.
+- 결과 상태 **`B=BLOCKED_SIGNER_DEVICE / C=PARTIAL / D=BLOCKED_EXPORT_CLASSIFICATION / CREDENTIAL=BLOCKED_CREDENTIAL / E=NOT_RUN / ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER`**. 새 ZIP/키/운영 설치/READY/유료 reviewer/LIVE 승인 없음.
+- 다음 단일 사용자 결정 패킷은 원 결과 §6의 네 선택: B 별도 기기(1/2/3), C 4축 대체 증거 검토 vs ETL(1/2/3), D 권한 확인 vs 로컬 전용 vs 허가 확보(1/2/3), 토큰 새 자격 설치 vs 기존 확인 vs 불가(1/2/3). 사용자의 답 없이 **추천을 임의 승인·적용하지 않음**. 이미 완료된 자체시험 재실행 지시 불필요.
