@@ -9,7 +9,7 @@
       "owner": "GPT / Claude Code",
       "self_test": "PASS",
       "independent_review": "NOT_RUN",
-      "next_action": "사용자가 필수 두 가지를 확인한다: 별도 회사 관리 서명자 PC와 키트 내부 이동 허용 여부, 조직 승인 온프레미스 모델 또는 사람 리뷰어의 실제 존재. 토큰 발급, LIVE 서비스 계정, v2 운영 적용, 기게시 식별자 처분은 각각 별도 승인. ACTIVE_PROVIDER=NONE."
+      "next_action": "GPT 판정 완료: v2 r0002 장부 프로세스 간 동시성 락·상태 파일 삭제 후 replay fail-closed 증명 필요. 사용자 핵심 사실 2가지(별도 회사 관리 서명자 PC 및 키트 내부 이동 정책, 조직 승인 로컬 독립 리뷰어 실제 가용성) 확인 후 delta 수정/독립 검증 묶음 실행. ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER."
     }
   ]
 }
