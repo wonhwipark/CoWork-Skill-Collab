@@ -16,10 +16,10 @@
       "id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md",
-      "status": "전환 전",
+      "status": "문서상 진행",
       "title": "COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태",
-      "tone": "warning",
-      "topic": "GPT 판정 — 로컬 전용 5개 결정 권고 (2026-11-14 KST)"
+      "tone": "neutral",
+      "topic": "LOCAL_ONLY_BLOCKERS_DELTA_RESULT: E=BLOCKED_LOCAL_REVIEWER / B=AVAILABLE_UNDESIGNATED / TOKEN=BLOCKED_OVERPRIVILEGED / P"
     },
     {
       "id": "COWORK-GITHUB-DASHBOARD-20261111-001",
@@ -92,7 +92,7 @@
     {
       "evidence": "프로젝트 TRACKER.json 신고 값 · 운영 근거 별도 확인 필요",
       "independent_review": "NOT_RUN",
-      "next_action": "GPT는 5항목 권고판정만 완료. 조직 관리 별도 signer 기기/키트 내부 이동 정책, 조직 승인 온프레미스 모델·사람 reviewer 가용성 확인 우선. 신규 최소권한 PAT 권장(미승인), 비관리자 LIVE 계정·v2 local-only 프로토콜·기게시 식별자 처리는 설계/정책 확인만. ",
+      "next_action": "사용자가 필수 두 가지를 확인한다: 별도 회사 관리 서명자 PC와 키트 내부 이동 허용 여부, 조직 승인 온프레미스 모델 또는 사람 리뷰어의 실제 존재. 토큰 발급, LIVE 서비스 계정, v2 운영 적용, 기게시 식별자 처분은 각각 별도 승인. ACTIVE_PROVIDER=NONE.",
       "owner": "GPT / Claude Code",
       "phase": "BLOCKED",
       "record_source": "REGISTERED_METADATA_UNVERIFIED",
