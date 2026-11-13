@@ -1,5 +1,14 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 사용자 보안 간소화 지시 — SU-SIMPLE (2026-11-14 KST)
+- 사용자 지시: CoWork 1인 협업에 대해 **별도 서명자 PC·로컬 LLM 의무화·과도한 보안통제**를 기본 협업 조건에서 제거하고, 불필요한 핑퐁을 줄일 것. Windows Claude Code/Watcher PC는 회사 L1 원본 코드에 접근할 수 없음. 모바일은 원격 조작 용도. 업무 PC 소스의 반출 제한은 그대로 존중.
+- 설계 원칙 `GPT_COWORK_SINGLE_USER_SIMPLIFIED_COLLAB_RULES_r0001_20261114.md` GitHub PRIVATE main에 게시(commit `68ecc9e23bc4c89103a6f5472f5fdbb1210dcc1b`, remote readback PASS). `ARCHITECTURE=SU-SIMPLE_DESIGN_SELECTED`. 과거 `GPT_SINGLE_USER_LOCAL_ONLY_LIVE_FASTTRACK_MASTER_r0001_20261114.md`의 별도 signer/온프레미스 reviewer/4축 입증/로컬 전용 v2 복잡도는 **일반 CoWork 자동 리뷰의 기본 필수 조건에서 재분류**. 이전 구현·계약·이력은 삭제하거나 임의 우회하지 않음.
+- 간소화된 실제 목표: GPT 한 번의 작업 정의 → Windows Claude Code 원샷 개발·자체시험 → **별도 세션/유효 요청의 Claude 독립 리뷰**(CoWork 코드의 외부 모델 전송 허용 조건과 비용 조건을 먼저 확인) → GPT 통합 판정 → `L1Work/main` **루트 최종 ZIP** + `L1Work/main/handoffs/` **업무 PC 인계 프롬프트 MD** → Skill-Updater/Agent는 설치/호스트 실행 영수증 별도. 회사 소스코드·고객자료·비밀은 PRIVATE/PUBLIC 모두 반출 금지.
+- 최소 유지: 유효 요청/사용자 승인된 호출·비용, 동일 요청 중복 0·중단 복구, 자격 비밀 미노출, 제품 ZIP 검증, 단일 LIVE·운영 DB/Task 보호. 실제 별도 signer PC·로컬 LLM·서비스 계정/네트워크 격리·4축 ETW 시험은 일반 CoWork 리뷰에 **기본 필수 아님**.
+- **중요 경계**: 사용자 발언이 Windows 기기의 회사 코드 접근 불가를 확인한 것이지, CoWork watcher 소스/ZIP 전량의 외부 전송을 명시 승인한 것은 아님. 기존 D2/운영 승인 계약은 실제 적용 전 변경 검토 및 명시적 범위 확인. `CODE_EXPORT=USER_SCOPE_CONFIRMATION_REQUIRED`; `REVIEW_TRANSPORT=REASSESS_LEGACY_CLAUDE_PATH`; `INDEPENDENT_REVIEW=NOT_RUN`; `ACTIVE_PROVIDER=NONE`; `MIGRATION_NOT_CUTOVER`.
+- 다음 한 동작: 실제 Windows 실행 인계는 새 SU-SIMPLE 설계 하나를 기준으로 작성, 기존 LOCAl_ONLY/2PC 필수 지침과 병렬로 전달하지 말 것. CoWork 소스의 독립 Claude 리뷰 가능 경로와 운영 minimal gate를 통합 조사한 뒤, 필요 승인만 모아 사용자에게 한 번에 요청. 이번은 **GitHub 문서·상태 갱신만**, 운영 변경/리뷰 호출/LIVE 전환 미실행.
+
+
 ## GPT 단일 사용자 SU-L1 LIVE 최소 핑퐁 원샷 설계 (2026-11-14 KST)
 - 사용자는 혼자 Windows Claude Code·Watcher를 운영하고 모바일은 단순 원격 조작 용도임을 확인. **단일 사용자 중심 보안 설계 간소화 + LIVE 목표까지 Claude Code/GPT 왕복 최소화**를 지시. 기존 외부 서명자 PC를 필수 요구하지 않는 별도 `SU-L1 LOCAL_ONLY` 모드를 설계 **후보**로 채택하되 기존 다중 사용자·유료 리뷰 서명 체계는 유지. 로컬 관리자 보호 실행정책, 비관리자 서비스 계정, 비용 0, 코드/ZIP 반출 0, 요청 식별·원자적 원장·재시작 중복 0, 자체 reviewer locality, kill switch 필수. **설계 승인 ≠ 운영 권한 설치·LIVE 승인**.
 - GitHub PRIVATE `wonhwipark/CoWork-Skill-Collab` `main`에 **단일 원샷 마스터** `collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/GPT_SINGLE_USER_LOCAL_ONLY_LIVE_FASTTRACK_MASTER_r0001_20261114.md`를 commit `1fc46533957cb7a8c2eb9677515481d621112660`로 직접 게시, 원격 본문 readback PASS. Windows 실행은 아직 요청 전달 전/관측되지 않음.
