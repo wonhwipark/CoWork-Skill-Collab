@@ -6,7 +6,7 @@
     "cutover": "MIGRATION_NOT_CUTOVER",
     "dashboard_source": true,
     "host_shadow": "NOT_OBSERVED",
-    "independent_review": "PENDING_APPROVAL",
+    "independent_review": "PENDING_EXECUTION",
     "migration_source": true,
     "pages_deployment": "PASS",
     "windows_stage1": "NOT_OBSERVED"
@@ -20,7 +20,7 @@
       "status": "전환 전",
       "title": "COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태",
       "tone": "warning",
-      "topic": "GPT v0.2.14 원샷 프리플라이트 종합 판정 (2026-11-14 KST)"
+      "topic": "사용자 A안 승인 + 리뷰 등급별 토큰 예산 (2026-11-14 KST)"
     },
     {
       "id": "COWORK-GITHUB-DASHBOARD-20261111-001",
