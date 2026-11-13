@@ -21,6 +21,9 @@
 - [L1 Workspace RAG · Work 유형 · 브랜치별 AS-IS MSC 공통 컨텍스트](L1_WORKSPACE_RAG_COMMON_r0001_20261111.md) — 새 GPT 대화/리뷰/인계에서 재사용하는 **비민감 설계·검증 상태·정본 포인터**. 프로젝트별 최신 상태는 `collab/projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md`의 마지막 섹션을 우선한다.
 - 공통 문서 기록은 Dropbox LIVE 운영 규칙을 복제·수정하거나 REQUEST/READY, 독립 리뷰, 사내 배포·실행을 승인하지 않는다.
 
+- [L1_CHANNEL 담당 모듈·분석 범위 공통 컨텍스트](L1_CHANNEL_MODULE_SCOPE_COMMON_r0001_20261113.md) — NR BCH/LTE ChCfg, NR/LTE L1 Tx의 담당 분야(사용자 확인) 및 분류표 후보; 이슈 분석·지식 갱신 요청 시 우선 조회.
+- [담당자 검토용 NR/LTE 분류표 v0.7](references/L1_NR_LTE_OWNER_REVIEW_CLASSIFICATION_v0_7_20261113.md) — 181개 A/B 검토 후보. 확정 코드 사실 아님.
+
 ## 새 작업의 보유 스킬 발견
 
 - [공통 스킬 기능 목록](SKILL_CAPABILITY_CATALOG.md)에서 요청 기능과 기존 스킬의 연결 후보를 먼저 확인한다.
