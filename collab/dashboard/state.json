@@ -1,13 +1,14 @@
 {
   "disclaimer": "GitHub SHADOW 현황. 미이관 자료는 0건이 아니라 미확인입니다.",
-  "live_provider": "DROPBOX",
+  "live_provider": "NONE",
   "operations": {
+    "active_provider": "NONE",
     "cutover": "NOT_OBSERVED",
     "dashboard_source": true,
     "host_shadow": "NOT_OBSERVED",
     "independent_review": "PASS",
     "migration_source": true,
-    "pages_deployment": "NOT_OBSERVED",
+    "pages_deployment": "PASS",
     "windows_stage1": "NOT_OBSERVED"
   },
   "phase": "MIGRATION_NOT_CUTOVER",
@@ -73,17 +74,17 @@
   "transport": {
     "receipts": {
       "files_observed": 0,
-      "note": "GitHub 문서만 집계 · Dropbox LIVE/서명/영수증 검증 아님",
+      "note": "GitHub 파일 관측 수 · 실제 리뷰 실행/서명/영수증 검증 아님",
       "verified": false
     },
     "requests": {
       "files_observed": 0,
-      "note": "GitHub 문서만 집계 · Dropbox LIVE/서명/영수증 검증 아님",
+      "note": "GitHub 파일 관측 수 · 실제 리뷰 실행/서명/영수증 검증 아님",
       "verified": false
     },
     "reviews": {
       "files_observed": 0,
-      "note": "GitHub 문서만 집계 · Dropbox LIVE/서명/영수증 검증 아님",
+      "note": "GitHub 파일 관측 수 · 실제 리뷰 실행/서명/영수증 검증 아님",
       "verified": false
     }
   },

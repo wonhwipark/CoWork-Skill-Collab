@@ -2,7 +2,7 @@
 
 > **PRIVATE · GitHub에서 바로 보기 · MIGRATION_NOT_CUTOVER**
 >
-> 지금 운영은 Dropbox LIVE입니다. 이 화면은 GitHub 기록을 읽기 전용으로 표시합니다.
+> 활성 리뷰 제공자 없음. 이 화면은 GitHub 기록을 읽기 전용으로 표시합니다.
 
 ## 리뷰 처리 흐름
 
@@ -14,10 +14,10 @@
 
 ```mermaid
 flowchart TB
-  subgraph LIVE["현재 운영 경로 · 변경 없음"]
-    L1["GPT 요구·판정"] --> L2["기존 LIVE 운송"]
-    L2 --> L3["Windows 감시기 / Claude Code"]
-    L3 --> L4["결과·영수증 / GPT"]
+  subgraph LIVE["현재 상태 · 활성 리뷰 제공자 없음"]
+    L1["GPT 작업·판정"] --> L2["GitHub PRIVATE 상태 기록"]
+    L2 --> L3["공개 허용 상태 검증"]
+    L3 --> L4["L1Work Pages 업무 현황"]
   end
   subgraph NEXT["GitHub 목표 경로 · 정식 전환 전"]
     A["GPT 요구·범위 확정"] --> B["GitHub PRIVATE / REQUEST·READY"]
@@ -27,7 +27,7 @@ flowchart TB
     E --> F["GPT / 판정·피드백"]
     F --> G["GitHub Actions / 대시보드"]
   end
-  L4 -. "필수 게이트 및 별도 LIVE 승인 이후" .-> A
+  %% 독립 리뷰 운송은 별도 유효 요청과 LIVE 승인 이후에만 실행
 ```
 
 > 화살표는 설계된 경로입니다. Windows 실행·서명 검증·독립 리뷰의 PASS를 뜻하지 않습니다.
@@ -36,12 +36,12 @@ flowchart TB
 
 | 구분 | 현재 상태 | 근거 범위 |
 |---|---|---|
-| 현재 운영 경로 | **기존 LIVE 유지 (문서 기준)** | GitHub 정식 전환과 별개 |
+| 현재 운영 경로 | **활성 리뷰 제공자 없음** | 최신 이관 CURRENT 기록 · 실제 호스트는 별도 검증 |
 | GitHub 전환 | **기록 미관측** | 별도 명시적 승인 전 전환 금지 |
 | Windows 실행·SHADOW | **기록 미관측** | 실제 호스트 실행 증거 필요 |
 | Claude Code 독립 리뷰 | **배포 성공 기록** | 자체 시험과 구분 |
 | GitHub 요청·결과·영수증 | **요청 0 · 결과 0 · 영수증 0** | PRIVATE 파일 관측 수일 뿐 완료 건수가 아님 |
-| 공개 샘플 웹페이지 | **기록 미관측** | L1Work의 샘플만 PUBLIC, 실제 협업 현황 비공개 |
+| 공개 Work 대시보드 | **배포 성공 기록** | L1Work에 승인된 비식별 상태만 자동 요약 · PRIVATE 원문은 비공개 |
 
 [전환·Windows 원문](../projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) · [대시보드 원문](../projects/COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md)
 
@@ -61,7 +61,7 @@ HTML은 GitHub에서 소스로 표시되므로 다운로드 후 브라우저로 
 ---
 ## 상세 현황
 
-> **MIGRATION_NOT_CUTOVER** — 운영은 Dropbox LIVE 유지. GitHub 데이터만 표시합니다.
+> **MIGRATION_NOT_CUTOVER** — 활성 리뷰 제공자 없음. GitHub 기록과 리뷰 실행은 별개입니다.
 
 이 문서는 GitHub Actions가 생성하는 안내 화면이며 리뷰·설치·배포 승인이나 자동 실행 결과가 아닙니다.
 
