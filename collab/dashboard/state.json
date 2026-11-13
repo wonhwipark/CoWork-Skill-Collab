@@ -5,7 +5,7 @@
     "cutover": "NOT_OBSERVED",
     "dashboard_source": true,
     "host_shadow": "NOT_OBSERVED",
-    "independent_review": "NOT_OBSERVED",
+    "independent_review": "NOT_RUN",
     "migration_source": true,
     "pages_deployment": "NOT_OBSERVED",
     "windows_stage1": "NOT_OBSERVED"
@@ -16,10 +16,10 @@
       "id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md",
-      "status": "검증 진행 중",
+      "status": "전환 전",
       "title": "COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태",
       "tone": "warning",
-      "topic": "SU_L1_FASTTRACK_RESULT: LANE_A=FIXED_AND_RETESTED / E=BLOCKED_LOCAL_REVIEWER / DEVELOPMENT_READY_NOT_FOR_DEPLOYMENT / AC"
+      "topic": "GPT 재판정 — SU-SIMPLE 이후 구형 6개 LIVE 승인 목록 정리 (2026-11-14 KST)"
     },
     {
       "id": "COWORK-GITHUB-DASHBOARD-20261111-001",
