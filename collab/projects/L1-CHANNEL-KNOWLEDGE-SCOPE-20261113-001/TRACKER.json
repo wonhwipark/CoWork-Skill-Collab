@@ -1,0 +1,15 @@
+{
+  "schema": "COWORK_WORK_TRACKER_V1",
+  "works": [
+    {
+      "work_id": "L1-CHANNEL-KNOWLEDGE-SCOPE-20261113-001",
+      "skill": "l1-knowledge-updater",
+      "title": "L1 NR/LTE Channel·Tx 담당범위 공통 지식",
+      "phase": "REVIEW",
+      "owner": "GPT",
+      "self_test": "PASS",
+      "independent_review": "NOT_RUN",
+      "next_action": "담당자·회의 분류표 검토 후 사내 GPT 항목 점검"
+    }
+  ]
+}
