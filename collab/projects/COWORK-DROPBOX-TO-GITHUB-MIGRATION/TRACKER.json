@@ -5,11 +5,11 @@
       "work_id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
       "skill": "cowork-review-watcher",
       "title": "cowork-review-watcher",
-      "phase": "DEVELOPMENT",
+      "phase": "BLOCKED",
       "owner": "GPT / Claude Code",
       "self_test": "PASS",
       "independent_review": "NOT_RUN",
-      "next_action": "사용자가 서명자 기기, 새 토큰 발급 여부, 로컬 독립 검토자, LIVE 계정 구성, 기게시 식별자 처리를 한 번에 결정한다(결과 §7). ACTIVE_PROVIDER=NONE, LIVE 미승인."
+      "next_action": "GPT는 5항목 권고판정만 완료. 조직 관리 별도 signer 기기/키트 내부 이동 정책, 조직 승인 온프레미스 모델·사람 reviewer 가용성 확인 우선. 신규 최소권한 PAT 권장(미승인), 비관리자 LIVE 계정·v2 local-only 프로토콜·기게시 식별자 처리는 설계/정책 확인만. ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER."
     }
   ]
 }
