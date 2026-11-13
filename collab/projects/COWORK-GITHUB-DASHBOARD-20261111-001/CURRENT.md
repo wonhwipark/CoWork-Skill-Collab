@@ -1,5 +1,16 @@
 # COWORK-GITHUB-DASHBOARD-20261111-001 — CURRENT
 
+## Executive v3 — 업무 목적 중심 가독성 개선 (2026-11-14 KST)
+- **사용자 문제:** 숫자·단계·상태 중심 화면이라 각 업무가 무엇을 해결하고 어떤 결과를 만들려는지 첫 화면에서 이해하기 어려움.
+- **개선 방향:** 사용자 기본 PUBLIC Executive URL 하나 유지. 화면 상단에 **업무별 목적 → 문서상 단계 → 다음 조치** 요약표(5개 공개 범주)를 배치하고, 상세 Work 카드에 **목적 및 목표 결과**를 강조. 모바일에서는 표를 세로형 요약 카드로 변환. 검색 대상에도 목적/목표 결과 포함.
+- **공개 데이터 경계:** 5개 승인 범주에 대한 **정적·고정된 공개용 목적/목표 설명만** `status.js`에 추가. PRIVATE 원문·내부 Work ID·리뷰 영수증·다른 신규 작업명은 PUBLIC에 자동 공개하지 않음. 기존 공개 `status.json` 형식과 PRIVATE `public_sync.py`는 변경 없음.
+- **PUBLIC 변경 위치:** `wonhwipark/L1Work/main/docs/cowork-dashboard/index.html`(commit `ba2747f20d9a979340ac35f310c9cffe24e89ba3`), `status.js`(commit `a8070d34f2bcf37a2bba20ae7928835544a27483`). L1Work README는 v3 소개로 수정(commit `573a4019e03b0f6a3f471ebac05ec4987891a978`); PRIVATE README도 공개 방식과 활성 provider 최신 상태에 맞춰 정정(commit `20783c87f892f885f819c3ecaa11fc543e90524b`).
+- **시험:** GitHub 원격 파일 **바이트 readback PASS**. JS 구문 검사 **PASS**; 합성 DOM/공개 스냅샷으로 표 **5행**, 상세 카드 **5개**, 목적 검색 결과 **1개**, 필터 초기화 후 **5개**, 공개 provider **NONE**, same-origin `status.json` 조회 **1회** 확인. 120초 polling, 탭 복귀 갱신, schema 검증 및 CSP 그대로 유지.
+- **배포:** L1Work Pages GitHub Actions run [#43479229063](https://github.com/wonhwipark/L1Work/actions/runs/43479229063) **completed/success** (v3 README commit). 직전 HTML/JS 커밋의 Pages run 또한 SUCCESS 이력 존재. 실제 모바일 기기·브라우저 시각·네트워크 E2E는 **NOT_RUN**.
+- **기존 운영:** `INDEPENDENT_REVIEW=NOT_RUN`, `CUTOVER=MIGRATION_NOT_CUTOVER`, `ACTIVE_PROVIDER=NONE` (최신 이관 CURRENT 기준). Windows watcher·운영 DB/Task·모델 호출·ZIP 배포 변경 없음.
+- **추가 확인:** PRIVATE 기존 `generate.py` 기반 VIEW/state에는 구형 `Dropbox LIVE` 고정 문구가 남아 있음. 최신 운영 사실과 모순되므로 별도 생성기 정합성 수정 필요. 이는 PUBLIC v3 기능 동작과 구별하며 완료로 보고하지 않음.
+- **다음 한 동작:** [Executive 기본 대시보드](https://wonhwipark.github.io/L1Work/cowork-dashboard/)에서 상단 목적 요약과 모바일 가독성 확인. 이후 PRIVATE 생성기의 구형 provider 표기와 회귀시험 정리.
+
 ## 최신 판정 — Executive v2 정확성·가독성 적용 및 Pages 배포 (2026-11-13 KST)
 - **현재 상태:** `DEVELOPMENT=IMPLEMENTED`, `SELF_TEST=PASS`, `PUBLIC_PAGES_DEPLOY=PASS`, `INDEPENDENT_REVIEW=NOT_RUN`, `CUTOVER=MIGRATION_NOT_CUTOVER`; 사용자 요청 범위는 공개 Executive HTML 대시보드의 정확성/가독성 개선.
 - **P0:** 실제 최신 이관 `CURRENT.md` `ACTIVE_PROVIDER=NONE`을 고정된 공개 enum만으로 표기; 오래된 `기존 운영 경로 유지` 삭제. PRIVATE Work 6 / PUBLIC 허용 Work 5 / 비공개·미승인 1 차이를 명확히 표시.
