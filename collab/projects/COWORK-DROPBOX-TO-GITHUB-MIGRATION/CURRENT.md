@@ -1,5 +1,14 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## SU_L1_FASTTRACK_RESULT: LANE_A=FIXED_AND_RETESTED / E=BLOCKED_LOCAL_REVIEWER / DEVELOPMENT_READY_NOT_FOR_DEPLOYMENT / ACTIVE_PROVIDER=NONE (Claude 자체 보고, 2026-11-14 KST)
+- 결과: `CLAUDE_SINGLE_USER_LIVE_FASTTRACK_RESULT_FOR_GPT_20261114.md` (PRIVATE `main`, commit `b949a1a93363588989a7209387e4ef6b6540387a`). 자체 시험 보고이며 독립 리뷰가 아니다. LIVE 전환·운영 변경 없음.
+- 원장: r0002의 두 위험(동시 2프로세스 중복 수락, 상태 파일 분실 후 replay)을 재현한 뒤 새 `local_only_contract_r0003`으로 수정. SQLite 원장+OS 잠금+앵커, 1회 bootstrap, 분실·과거 사본·손상은 FAIL_CLOSED, 리뷰 1회 예약·UNCERTAIN 봉인. 28 PASS×3, 변이 14/14 검출. 감시기 제품 경로 연결은 `CONTRACT_INTEGRATION=NOT_RUN`.
+- SU-L1: 관리자 보호 로컬 정책+OS 사용자+로컬 artifact 커밋먼트, 기능 플래그 기본 OFF, 별도 서명자 PC 불필요. 19개(1 SKIP)·변이 18/18 검출. 제품에 연결되지 않음.
+- 후보 v0.2.13은 로컬에만 보존(원시 해시·크기 비게시). 제품 전체 642 passed/13 skipped(시험 venv), 운영 인터프리터 536 passed/19 skipped.
+- 막힌 항목: 로컬 독립 리뷰어 없음(`E=BLOCKED_LOCAL_REVIEWER`, `AUTO_REVIEW=NOT_RUN`). 한계: 동일 PC 관리자 침해는 막지 못함, ETW 실 I/O 증거 NOT_PROVEN.
+- 게시 범위: 코드·ZIP은 마스터 §4에 따라 게시하지 않았다(로컬 보존). GPT의 소스 정적 검토는 사용자가 코드 게시를 별도 승인해야 가능하다(`NOT_AVAILABLE_TO_GPT`).
+- 다음 한 동작: GPT 통합 판정 후 결과 §7의 사용자 승인 묶음(리뷰어 유무, 신규 PAT, 서비스 계정·ACL, SU-L1 정책 활성화, 실제 리뷰·LIVE, 조직 정책 확인)을 사용자에게 한 번에 전달.
+
 ## 사용자 보안 간소화 지시 — SU-SIMPLE (2026-11-14 KST)
 - 사용자 지시: CoWork 1인 협업에 대해 **별도 서명자 PC·로컬 LLM 의무화·과도한 보안통제**를 기본 협업 조건에서 제거하고, 불필요한 핑퐁을 줄일 것. Windows Claude Code/Watcher PC는 회사 L1 원본 코드에 접근할 수 없음. 모바일은 원격 조작 용도. 업무 PC 소스의 반출 제한은 그대로 존중.
 - 설계 원칙 `GPT_COWORK_SINGLE_USER_SIMPLIFIED_COLLAB_RULES_r0001_20261114.md` GitHub PRIVATE main에 게시(commit `68ecc9e23bc4c89103a6f5472f5fdbb1210dcc1b`, remote readback PASS). `ARCHITECTURE=SU-SIMPLE_DESIGN_SELECTED`. 과거 `GPT_SINGLE_USER_LOCAL_ONLY_LIVE_FASTTRACK_MASTER_r0001_20261114.md`의 별도 signer/온프레미스 reviewer/4축 입증/로컬 전용 v2 복잡도는 **일반 CoWork 자동 리뷰의 기본 필수 조건에서 재분류**. 이전 구현·계약·이력은 삭제하거나 임의 우회하지 않음.
