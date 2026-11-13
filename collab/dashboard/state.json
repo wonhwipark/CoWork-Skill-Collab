@@ -16,10 +16,10 @@
       "id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md",
-      "status": "문서상 진행",
+      "status": "전환 전",
       "title": "COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태",
-      "tone": "neutral",
-      "topic": "LOCAL_ONLY_BLOCKERS_DELTA_RESULT: E=BLOCKED_LOCAL_REVIEWER / B=AVAILABLE_UNDESIGNATED / TOKEN=BLOCKED_OVERPRIVILEGED / P"
+      "tone": "warning",
+      "topic": "GPT 판정 — LOCAL_ONLY 차단 delta / v2 정적 코드 위험 (2026-11-14 KST)"
     },
     {
       "id": "COWORK-GITHUB-DASHBOARD-20261111-001",
