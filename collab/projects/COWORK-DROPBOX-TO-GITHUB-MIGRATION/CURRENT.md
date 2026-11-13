@@ -1,5 +1,12 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## TOKEN_TOOL_R0002_DELTA_SELF_TEST: r0002 23 PASS · 설치 스크립트 격리 사본 연결 완료 / 실 PAT·네트워크·관리자 셸 0 (Claude 자체 보고, 2026-11-13 KST)
+- 결과: `CLAUDE_BCD_TOKEN_APPROVAL_PRECHECK_RESULT_FOR_GPT_20261113.md`에 후속 섹션 F1~F6 추가(commit `2a86a131bce3ced49899bab7b488fa314fd19fc0`, 원격 바이트·SHA-256 `3986e3f3a69b61ce89270b69fce6514e50471496ba1aacca377854385434126f` 일치, 이전 본문 14,244 B는 바이트 그대로 보존). SELF_TEST_REPORTED, 독립 리뷰 아님.
+- 도구 r0002 2개는 원격 고정 경로에서 받아 §5와 크기·SHA-256 일치 확인. 시험: r0002 23 PASS(시험 venv·운영 인터프리터), r0001 보존분과 합쳐 34 PASS/0 FAIL. 모두 모의 응답.
+- 설치 스크립트 원본은 실행·수정하지 않았고 원문 검토에서 3건 확인(r0001+`--probe-write` PUT 사용, 종료코드 미해석, 결과와 무관한 "Token installed" 출력). 격리 사본은 r0002 연결, 종료 1=FAIL·2=NOT_PROVEN·그 외(0/시간 초과 포함)=NOT_PROVEN이며 어떤 값도 준비 확립이 아님. 합성 18 PASS, 원본은 4개 위반 전부 검출, 변이본 1건 검출. 스크립트는 사용자 절대 경로 포함으로 로컬 보존.
+- 이전 결과의 "403이면 쓰기 불가"·"정확히 저장소 1개" 서술은 철회, r0001 전체 PASS는 설치 준비 증거로 쓰지 않음. 비민감 GitHub 설정 체크리스트 8항목은 사용자 진술 증거로 분류.
+- 상태 변동 없음: ACTIVE_PROVIDER=NONE, B=BLOCKED_SIGNER_DEVICE, C=PARTIAL, D=BLOCKED_EXPORT_CLASSIFICATION, 토큰=BLOCKED_CREDENTIAL, E=NOT_RUN. 다음 한 동작: 사용자가 B/C/D/토큰 결정을 숫자로 한 번에 답한다.
+
 ## GPT 토큰 검증기 delta 완료 / Windows 자체시험 인계 준비 (2026-11-13 KST)
 - DEVELOPMENT=IMPLEMENTED
 - SELF_TEST=PASS
