@@ -7,6 +7,15 @@
 - [용어·저장소·실행 환경 표기 원칙](ops/CONTRACTS/TERMINOLOGY_AND_ACCESS_SCOPE_V1.md): 지역/망을 가르는 접두어 대신 실제 도구 이름, **GitHub PRIVATE/PUBLIC**, 작업 PC·Linux 실행 호스트, 업무용 Git 역할로 설명한다. 기존 경로·파일명·증거는 보존한다.
 - 표현 변경은 회사 코드·상세 MSC·인증정보의 게시 허용이나 설치·호출·PUBLIC 배포·LIVE 전환 승인이 아니다.
 
+## CoWork 단일 사용자 자동 리뷰 간소화 설계 (2026-11-14 / 설계 기준)
+
+- CoWork watcher를 **사용자 1명**이 운영하고, Windows Claude Code·Watcher PC에는 **회사 L1 소스코드 접근권이 없음**. 모바일은 해당 PC 원격 조작 용도.
+- 일반 CoWork 스킬 개발·독립 리뷰의 신규 설계 우선순위는 [SU-SIMPLE 간소화 규칙](projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/GPT_COWORK_SINGLE_USER_SIMPLIFIED_COLLAB_RULES_r0001_20261114.md). **별도 서명자 PC, 로컬 LLM 설치, ETW·네트워크 격리 4축 입증, 새로운 복잡한 서명 계약을 기본 필수 조건으로 요구하지 않음.** 기존 독립 Claude 리뷰 재사용과 원샷 협업 우선.
+- 이는 `REVIEW_TRANSPORT_V1`의 **운영 중 적용된 승인/검사 구현을 자동 해제하는 계약이 아님**. 실제 서명·요청 전송 규칙 변경이나 LIVE 전환은 별도 사용자 승인/host 검증 후. CoWork 코드의 외부 리뷰 전송 허용 범위도 확인 전에는 확대 금지.
+- 사용자/모델이 새 작업을 인계할 때는 단일 사용자 SU-SIMPLE 최신 `CURRENT.md`를 먼저 보고 과거 LOCAL_ONLY/별도 서명자 PC의 **설계 가정**을 현재 필수 승인 게이트라고 반복 요구하지 않음.
+- 회사 업무 코드/고객자료·비밀은 GitHub PRIVATE/PUBLIC 게시 금지. PUBLIC 최종 ZIP은 `L1Work/main` 루트, 업무용 GPT/Agent Handoff 프롬프트 MD는 `L1Work/main/handoffs/`로 구분.
+- 2026-11-14 당시 상태 `ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER`. 이 참고 추가는 Windows 시스템에 어떠한 변경·코드 업로드·모델 리뷰 요청도 실행하지 않음.
+
 ## 단일 최신 정본 위치
 1. **프로젝트 실행 상태:** [`collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md`](projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) — 언제나 최신 상태가 기록된 마지막 섹션과 실측 증거를 우선한다. 오래된 이력 절의 NOT_STARTED/NOT_RUN은 당시 관찰값으로 보존.
 2. **협업 안전 계약:** `collab/ops/CONTRACTS/NO_PR_COLLABORATION_V1.md`, `collab/ops/CONTRACTS/REVIEW_TRANSPORT_V1.md` (DRAFT, 실제 key/서명 세부는 최신 설계·판정을 우선).
