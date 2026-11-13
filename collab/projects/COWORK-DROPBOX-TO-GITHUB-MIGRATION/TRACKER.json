@@ -9,7 +9,7 @@
       "owner": "GPT / Claude Code",
       "self_test": "PASS",
       "independent_review": "NOT_RUN",
-      "next_action": "GPT 판정 완료(개발 자체시험·Bridge/updater 정리 PASS 보고 수용). 사용자 B 서명자 기기·C 대체증거 기준 또는 ETL·D 반출 허가·repo read-only 토큰을 한 번에 확인. ACTIVE_PROVIDER=NONE; E 독립 리뷰·LIVE 미승인."
+      "next_action": "사용자가 B·C·D·토큰 4개 결정을 숫자로 한 번에 답한다(결과 §6). ACTIVE_PROVIDER=NONE, LIVE 미승인."
     }
   ]
 }
