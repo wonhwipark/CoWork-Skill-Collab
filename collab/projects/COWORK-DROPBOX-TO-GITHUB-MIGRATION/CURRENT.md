@@ -1,5 +1,16 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## GPT v0.2.14 원샷 프리플라이트 종합 판정 (2026-11-14 KST)
+- `CLAUDE_GITHUB_LIVE_ONE_SHOT_PREFLIGHT_RESULT_FOR_GPT_20261114.md`(commit `ad411255ce2a6678aa0f47517a7f0f468439230e`), `review-inputs/REV-COWORK-V0214-20261114/REVIEW_MANIFEST.md` 및 실제 diff·`state_store.py`·`orchestrator.py`·`test_try_claim.py` 원격 조회 후 GPT `ACCEPT_WITH_CHANGE`.
+- 결함 원인·수정 직접 확인: 같은 processing_key에 2개 `scan`이 모두 무조건 `CLAIMED`로 갱신하며 리뷰를 2회 시작하는 경합을 `StateStore.try_claim`의 SQLite 단일 조건부 UPDATE (CAS)로 수정. 구조적으로 동일 키 1회 예약. E2E 9개×3 PASS, ZIP unpack/venv 제품 666 PASS·13 SKIP 등은 **Claude 자체 보고**로 기록. 실제 독립 리뷰 아님.
+- `v0.2.14` CoWork 소스/ZIP·diff·manifest는 PRIVATE review-inputs 게시 및 원격 해시 검증 **호스트 보고 PASS**. GPT는 diff/핵심 코드 직접 읽음; ZIP raw bytes 자체의 독립 해시/CRC/Windows 재시험은 이 세션에서 직접 미검증.
+- 독립 리뷰 체크 포인트 최소화: 새 `try_claim`과 `scan/watch`, policy revision 변동의 논리 중복, 동시 서로 다른 key의 daily cost/dispatch ceiling 검사가 `try_claim` 전이라 원자적으로 보호되는지 **리뷰에서 확인**. 아직 미확정 위험 후보로 보며 추가 설계 개발 강제하지 않음.
+- **미완료**: `INDEPENDENT_REVIEW=PENDING_APPROVAL`·`MODEL_CALLS=0`·`CREDENTIAL_MINIMUM=BLOCKED`(원문 토큰 형식 vs JSON file; 쓰기용 fine-grained PAT 없음)·운영 DB backup/restore·실 notifier 연결·GitHub 실제 SHADOW·윈도 런타임 crypto 선택 `NOT_RUN`. `ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER`.
+- GPT 판정 파일 `GPT_V0214_PREFLIGHT_DISPOSITION_AND_APPROVAL_GATE_r0001_20261114.md` PRIVATE main 게시(commit `212edc7987a4d2b64d4700e4eea8a8374fa1a805`, remote readback PASS).
+- **다음 사용자 승인 2개 한 번에**: (A) `REV-COWORK-V0214-20261114`에 대해 `POLICY-STATIC-V1`·effort medium·최대 $1 **실제 독립 리뷰 1회**, **동일 Windows PC에 1개 Ed25519 서명키/신뢰 루트 생성+암호화 보관 및 `trust_root_independence=warn` 간소화 예외**. (B) `CoWork-Skill-Collab` 한 저장소 Contents Read/Write fine-grained PAT 1개 발급·감시기 안전 설치와 토큰 JSON/원문 포맷 정합, 기존 classic 사용처 확인 후 대체. 실제 유료 리뷰/READY/키·토큰 생성은 사용자 승인 전 실행 금지. 별도 PC/로컬 LLM은 불요.
+- **LIVE 전환은 다음 별도 게이트**: 독립 리뷰·실 token·host SHADOW·운영 DB/알림·rollback 격리 리허설이 검증된 후 v0.1.5 교체/단일 GitHub LIVE 최종 명시 승인. 이 판정문 게시로 Windows watcher 자동 동작·운영 LIVE 상태 변경 없음.
+
+
 ## GITHUB_LIVE_ONE_SHOT_PREFLIGHT_RESULT: REVIEW_INPUT_UPLOAD=PASS / INTEGRATION=HOST_ISOLATED_PASS / INDEPENDENT_REVIEW=PENDING_APPROVAL / ACTIVE_PROVIDER=NONE (Claude 자체 보고, 2026-11-14 KST)
 - 결과: `CLAUDE_GITHUB_LIVE_ONE_SHOT_PREFLIGHT_RESULT_FOR_GPT_20261114.md` (PRIVATE `main`, commit `ad411255ce2a6678aa0f47517a7f0f468439230e`). 자체 시험 보고이며 독립 리뷰·LIVE 가 아니다.
 - 결함 1건 수정: 실제 CLI 진입점 2프로세스 동시 `scan` 이 같은 승인 요청에 reviewer 를 2회 시작 → `StateStore.try_claim`(원자적 compare-and-set)으로 수정, 후보 v0.2.14. 진입점 E2E 9개(실제 Ed25519·실제 CLI·네트워크와 `claude` 만 대체) ×3 PASS, 제품 전체 666 passed/13 skipped(원격에서 내려받은 ZIP 을 풀어도 동일).
