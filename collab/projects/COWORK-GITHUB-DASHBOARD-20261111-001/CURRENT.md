@@ -1,5 +1,17 @@
 # COWORK-GITHUB-DASHBOARD-20261111-001 — CURRENT
 
+## 최신 판정 — Executive v2 정확성·가독성 적용 및 Pages 배포 (2026-11-13 KST)
+- **현재 상태:** `DEVELOPMENT=IMPLEMENTED`, `SELF_TEST=PASS`, `PUBLIC_PAGES_DEPLOY=PASS`, `INDEPENDENT_REVIEW=NOT_RUN`, `CUTOVER=MIGRATION_NOT_CUTOVER`; 사용자 요청 범위는 공개 Executive HTML 대시보드의 정확성/가독성 개선.
+- **P0:** 실제 최신 이관 `CURRENT.md` `ACTIVE_PROVIDER=NONE`을 고정된 공개 enum만으로 표기; 오래된 `기존 운영 경로 유지` 삭제. PRIVATE Work 6 / PUBLIC 허용 Work 5 / 비공개·미승인 1 차이를 명확히 표시.
+- **P1:** 내 조치(현 공개 자료 기준 1개)와 단계별 카드 우선 정렬, 전체/내 조치/리뷰 대기/차단 필터, 검색, 사용자 조치 분류. 화면에 PRIVATE 원문·Work ID를 내보내지 않고 고정된 next_action만 사용.
+- **P2:** 3개 상태 요약패널, 모바일 큰 보조 글자/44px 버튼, 7단계 접힘형 구조, 단계 위치 ≠ 이전 단계 PASS 시각 표현. 시간은 PUBLIC `generated_at`와 브라우저 최근 수신으로 구분.
+- **중복 갱신 차단:** `generated_at`만 바뀐 PRIVATE 실행은 PUBLIC 의미 상태가 동일하면 `UNCHANGED`; 자동 출력을 무조건 매번 재배포하지 않음.
+- **실측 시험:** PRIVATE Actions [#43414643041](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43414643041) Python 51 PASS + 공개 보안 8 PASS = **59 PASS/0 FAIL**; PUBLIC auto sync [#43414675245](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43414675245) `PUBLIC_SYNC=UNCHANGED`; Pages 최신 빌드 [#43414793161](https://github.com/wonhwipark/L1Work/actions/runs/43414793161) SUCCESS.
+- **JS 스모크:** JS 구문 및 synthetic DOM 카드 5/USER=1/REVIEW=0/검색=1/초기화=5/PROVIDER=NONE PASS. 실제 모바일 브라우저 E2E는 `NOT_RUN`.
+- **정확한 산출물:** [통합 결과 및 결함·검증 범위](EXECUTIVE_V2_READABILITY_RESULT_20261113.md). PUBLIC HTML `https://wonhwipark.github.io/L1Work/cowork-dashboard/`. PRIVATE 원격 결과 MD readback PASS.
+- **다음 한 동작:** PUBLIC HTML을 모바일에서 확인하고 필요한 시각적 미세 조정만 후속 진행. 기존 운영 watcher/DB/Notifier/Telegram/ZIP·LIVE 전환 변경 0.
+
+
 ## 최신 실측 — 신규 변경마다 PUBLIC HTML 상태 자동 갱신 (2026-11-13)
 - **AUTO_TRIGGER=PASS:** PRIVATE `collab/projects/**` (CURRENT·TRACKER·추가 피드백·인계) 및 REQUEST/REVIEW/RECEIPT 변경 감지. 성공한 PRIVATE dashboard Actions의 `workflow_run`으로 PUBLIC allowlist sync 자동 시작. 미승인 데이터 자체는 공개하지 않음.
 - **PUBLIC_AUTOPUBLISH_E2E=PASS:** 실제 `cowork-dashboard` Work `phase=DEVELOPMENT→DISPOSITION` 변경(자체시험 PASS 신고, 독립 리뷰 NOT_RUN 유지) → PRIVATE [#43251843321](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43251843321) SUCCESS → PUBLIC sync [#43251880632](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43251880632) `PUBLIC_SYNC=POSTED_READBACK_PASS` → L1Work Pages [#43251906090](https://github.com/wonhwipark/L1Work/actions/runs/43251906090) SUCCESS.
