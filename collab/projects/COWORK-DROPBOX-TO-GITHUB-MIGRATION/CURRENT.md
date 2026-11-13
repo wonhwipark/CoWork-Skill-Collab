@@ -1,5 +1,15 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## GPT LIVE 직전 원샷 — GitHub 리뷰·감시기 제품 연동·전환 사전검증 (2026-11-14 KST)
+- 사용자 요청: **남은 1~3단계(리뷰 자료 게시·Claude 독립 리뷰·CoWork 감시기 실제 제품 경로 격리 시험)를 Windows Claude Code 한 번의 실행으로 준비·진행**. LIVE 전환은 최종 별도 승인.
+- PRIVATE main에 유일 실행 인계서 `collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/GPT_GITHUB_LIVE_ONE_SHOT_REVIEW_INTEGRATION_PREFLIGHT_r0001_20261114.md` 게시(commit `1a414a5282c2adcf62342acf096598c844cba756`; remote readback PASS). 사용자 제공 프롬프트는 이 경로 하나를 지정.
+- 실행 순서: (A) 기존 v0.2.13·Windows 상태·기존 이력 확인 → (B) **격리된 실제 watcher 진입점 E2E**, 중복 호출·재시작·영수증·rollback/notification delta 검증, 결함은 동일 작업에서 수정·재시험 → (C) 해당 **최종** CoWork 소스·ZIP PRIVATE review-inputs/<review_id>/ 원격 바이트 SHA·고정 commit 링크 검증 → (D) 해당 정확한 리뷰 대상에 대해 **유효한 별도 비용/모드 승인 있을 때만** 독립 Claude 리뷰 1회, 없으면 `PENDING_APPROVAL` → (E) 최종 LIVE 전환 승인 패킷/rollback 계획과 한 건의 통합 결과 MD 게시·readback.
+- 사용자 승인된 **자료 전달**과 **유료 리뷰 실행/READY/LIVE 변경**은 분리. 2번째 서명자 PC/로컬 LLM/ETW 4축/3종 PAT 강제는 일반 CoWork LIVE 사전검증에서 제거, 단 승인된 호출 한도·중복 방지·비밀/회사 코드 미노출·운영 이력 보존·단일 ACTIVE_PROVIDER·rollback 보호 유지.
+- 사용자의 회사 업무 PC/설치/Job 실행과 Windows CoWork watcher 시험은 분리. 별도 독립 리뷰 없이 같은 Claude 개발 세션 자체테스트를 `INDEPENDENT_REVIEW=PASS`로 승격하지 않음. ZIP 수정 후 기존 리뷰 PASS도 승계 금지.
+- **현재 실측/보고 상태**: 이 원샷은 Windows에 아직 전달·실행/완료된 것이 아님. `HANDOFF=POSTED`, `REVIEW_INPUT_UPLOAD=NOT_RUN`, `INTEGRATION_E2E=NOT_RUN`, `INDEPENDENT_REVIEW=NOT_RUN`, `GITHUB_LIVE=NOT_APPROVED`, `ACTIVE_PROVIDER=NONE`, `MIGRATION_NOT_CUTOVER`. 운영 DB/Task/Notifier/Bridge/PUBLIC 발행은 불변.
+- 다음 한 동작: 사용자가 **이 GitHub PRIVATE main 파일 경로**를 Windows Claude Code에 1번 전달하여 허용 작업을 끝까지 수행하게 함. 결과 `CLAUDE_GITHUB_LIVE_ONE_SHOT_PREFLIGHT_RESULT_FOR_GPT_20261114.md`를 GPT가 원격 확인하여 통합 판정 후 실제 남은 승인만 묶어 제시.
+
+
 ## 사용자 승인 — GitHub 링크 기반 CoWork 소스·ZIP 및 L1Work 리뷰 전달 (2026-11-14 KST)
 - 사용자가 **CoWork 감시기 자체 소스·ZIP을 기존 Claude 독립 리뷰에 전달하는 것**을 명시 허용. **L1Work의 스킬 ZIP 및 업무 PC용 Handoff MD 리뷰**도 명시 허용. 리뷰 대상은 실제 GitHub에 게시하고 저장소·branch·고정 commit·파일 링크를 Claude에게 전달하는 방식을 기본으로 합의.
 - **전송/게시 분류**: `CoWork-Skill-Collab` PRIVATE `review-inputs/<review_id>/`에 CoWork 후보 소스/ZIP·manifest를 게시 가능(내용·민감정보 검증, 실제 bytes SHA·size·commit 원격 readback 조건). `wonhwipark/L1Work` PUBLIC의 **기게시 스킬 ZIP**과 `handoffs/` 문서의 기존 링크를 리뷰 입력으로 사용 가능. 미승인 신규 ZIP을 PUBLIC 루트에 리뷰용으로 먼저 게시하는 것은 별도 공개 배포 승인이므로 금지. 최종 승인 ZIP은 L1Work/main 루트, Handoff MD는 main/handoffs.
