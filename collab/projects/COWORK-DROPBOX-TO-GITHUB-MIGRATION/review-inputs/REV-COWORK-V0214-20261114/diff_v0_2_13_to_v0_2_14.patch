@@ -1,0 +1,423 @@
+--- a/docs/CUTOVER_RUNBOOK.md
++++ b/docs/CUTOVER_RUNBOOK.md
+@@ -1,4 +1,4 @@
+-# Cutover runbook: Dropbox to GitHub (v0.2.13, development_not_for_deployment)
++# Cutover runbook: Dropbox to GitHub (v0.2.14, development_not_for_deployment)
+ 
+ Status: a design with isolated test evidence. Nothing here installs, starts or switches anything on the
+ operating host. Each step marked APPROVAL needs an explicit decision by the user.
+--- a/skill_collab_watcher/__init__.py
++++ b/skill_collab_watcher/__init__.py
+@@ -1 +1 @@
+-__version__ = "0.2.13"
++__version__ = "0.2.14"
+--- a/skill_collab_watcher/orchestrator.py
++++ b/skill_collab_watcher/orchestrator.py
+@@ -609,7 +609,11 @@
+             return GroupResult(retry=True)
+ 
+     # --- exactly one dispatch for this processing_key from here on ---
+-    store.update_job_state(final.processing_key, JobState.CLAIMED, bump_attempt=True)
++    if not store.try_claim(final.processing_key):
++        # Another process claimed it between our read and now (or this is a read-only store): no dispatch.
++        store.log_event_once("IN_PROGRESS_SKIPPED", processing_key=final.processing_key,
++                             detail=f"{request_id}: claim lost to another process")
++        return GroupResult()
+     store.record_claim(final.processing_key)
+     store.log_event("CLAIMED", processing_key=final.processing_key)
+ 
+--- a/skill_collab_watcher/state_store.py
++++ b/skill_collab_watcher/state_store.py
+@@ -217,6 +217,24 @@
+ 
+     # --- claims and sealing after a crash (B-3) ---------------------------------
+ 
++    _CLAIMABLE = ("DISCOVERED", "WAIT_INPUT", "VALIDATED", "AUTH_REQUIRED")
++
++    def try_claim(self, processing_key: str) -> bool:
++        """Atomic compare-and-set into CLAIMED: exactly one process wins a never-dispatched job. Two `scan`
++        processes (or a scan beside a running watch) used to both read VALIDATED and both start the reviewer
++        because the old claim was an unconditional UPDATE after a plain read. One UPDATE ... WHERE state IN
++        (never dispatched) is a single SQLite write transaction, so the loser sees rowcount 0 and must not dispatch.
++        A read-only (SHADOW) store never claims."""
++        if self._skip_write("TRY_CLAIM", processing_key, None):
++            return False
++        marks = ",".join("?" for _ in self._CLAIMABLE)
++        cur = self.conn.execute(
++            f"UPDATE jobs SET state='CLAIMED', updated_at=?, last_error=NULL, attempt_count=attempt_count+1 "
++            f"WHERE processing_key=? AND state IN ({marks})",
++            (_now(), processing_key, *self._CLAIMABLE),
++        )
++        return cur.rowcount == 1
++
+     def record_claim(self, processing_key: str) -> None:
+         if self._skip_write("CLAIM_OWNER", processing_key, None):
+             return
+--- /dev/null
++++ b/tests/e2e_claude_stub.py
+@@ -0,0 +1,19 @@
++"""Stand-in for the `claude` executable in the E2E tests. Never contacts a model.
++`auth status --json` answers logged-in; any other call is one 'model call': it appends one line to the counter file
++(E2E_COUNTER), optionally sleeps (E2E_STUB_SLEEP seconds, to widen a race window) and prints a CLI-shaped result."""
++import json
++import os
++import sys
++import time
++
++args = sys.argv[1:]
++if args[:2] == ["auth", "status"]:
++    print(json.dumps({"loggedIn": True}))
++    sys.exit(0)
++prompt = sys.stdin.read()
++with open(os.environ["E2E_COUNTER"], "a", encoding="utf-8") as fh:
++    fh.write(f"CALL pid={os.getpid()} prompt_chars={len(prompt)}\n")
++time.sleep(float(os.environ.get("E2E_STUB_SLEEP", "0")))
++print(json.dumps({"type": "result", "subtype": "success", "is_error": False,
++                  "result": "E2E STUB REVIEW (no model was called)", "total_cost_usd": 0.0,
++                  "usage": {"input_tokens": 1, "output_tokens": 1}}))
+--- /dev/null
++++ b/tests/e2e_launcher.py
+@@ -0,0 +1,37 @@
++"""Subprocess entry for the isolated entry-point E2E tests (test_cli_entrypoint_e2e.py).
++
++It runs the REAL `skill_collab_watcher.cli.main` (config load -> runtime -> trust root -> transport -> scan ->
++orchestrator -> RealReviewRunner -> publish). Only the network layer is replaced: GitHubTransport's HTTP object
++forwards every request to a local synthetic GitHub server (127.0.0.1). The reviewer executable is a stub that
++counts its own invocations. No real GitHub, no model, no Telegram."""
++import base64
++import json
++import os
++import sys
++import urllib.request
++from pathlib import Path
++
++sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
++
++from skill_collab_watcher import cli  # noqa: E402
++from skill_collab_watcher import github_transport as gt  # noqa: E402
++
++SERVER = os.environ["E2E_FAKE_GITHUB"]
++assert SERVER.startswith("http://127.0.0.1:"), "the E2E bridge only talks to loopback"
++
++
++class Bridge:
++    def request(self, method, url, headers, body=None):
++        env = {"method": method, "url": url, "headers": dict(headers),
++               "body": base64.b64encode(body).decode() if body is not None else None}
++        req = urllib.request.Request(SERVER, data=json.dumps(env).encode(), method="POST",
++                                     headers={"Content-Type": "application/json"})
++        with urllib.request.urlopen(req, timeout=60) as resp:
++            out = json.loads(resp.read())
++        if out.get("raise"):
++            raise OSError(out["raise"])
++        return out["status"], out["headers"], base64.b64decode(out["body"])
++
++
++gt.UrllibHttp = Bridge
++sys.exit(cli.main(sys.argv[1:]))
+--- /dev/null
++++ b/tests/test_cli_entrypoint_e2e.py
+@@ -0,0 +1,251 @@
++"""Isolated end-to-end tests that start the REAL command-line entry point as a separate process.
++
++What is real: cli.main, Config.load, runtime wiring, trust root pin/ACL/version, Ed25519 approval verification,
++GitHubTransport, the orchestrator, RealReviewRunner (argv, stdin, JSON parsing), the SQLite state store, the publish step.
++What is replaced: the network (a loopback synthetic GitHub server) and the `claude` executable (a counting stub).
++Everything lives in a temp folder; the operating database, tasks and notifier are never touched.
++Synthetic data and a throw-away signing key only. Label: HOST_ISOLATED (not LIVE E2E)."""
++from __future__ import annotations
++
++import base64
++import hashlib
++import json
++import os
++import subprocess
++import sys
++import threading
++import time
++from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
++from pathlib import Path
++
++import pytest
++
++pytest.importorskip("cryptography", reason="real Ed25519 approvals need the optional cryptography package")
++
++from cryptography.hazmat.primitives import serialization  # noqa: E402
++from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey  # noqa: E402
++
++from bundle import KEY_ID, REPO_ID, publish_bundle  # noqa: E402
++from conftest import BASELINE  # noqa: E402
++from fake_github import REPO, FakeGitHub, rp  # noqa: E402
++from skill_collab_watcher.approval import TRUST_ROOT_SCHEMA, fingerprint_of  # noqa: E402
++from skill_collab_watcher.models import JobState  # noqa: E402
++from skill_collab_watcher.notify_events import NotifyState, run_once  # noqa: E402
++from skill_collab_watcher.state_store import StateStore  # noqa: E402
++
++HERE = Path(__file__).resolve().parent
++LAUNCHER, STUB = HERE / "e2e_launcher.py", HERE / "e2e_claude_stub.py"
++PKEY = "REQ-1|1|{sha}|1"
++
++
++class _Server:
++    def __init__(self, fake: FakeGitHub):
++        self.fake, self.lock = fake, threading.Lock()
++        outer = self
++
++        class Handler(BaseHTTPRequestHandler):
++            def log_message(self, *a):           # silence
++                pass
++
++            def do_POST(self):
++                env = json.loads(self.rfile.read(int(self.headers["Content-Length"])))
++                body = base64.b64decode(env["body"]) if env.get("body") is not None else None
++                try:
++                    with outer.lock:
++                        status, hdrs, data = outer.fake.request(env["method"], env["url"], env["headers"], body)
++                    out = {"status": status, "headers": hdrs, "body": base64.b64encode(data).decode()}
++                except Exception as exc:         # an injected network failure
++                    out = {"raise": type(exc).__name__}
++                raw = json.dumps(out).encode()
++                self.send_response(200)
++                self.send_header("Content-Length", str(len(raw)))
++                self.end_headers()
++                self.wfile.write(raw)
++
++        self.httpd = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
++        self.url = f"http://127.0.0.1:{self.httpd.server_address[1]}/"
++        threading.Thread(target=self.httpd.serve_forever, daemon=True).start()
++
++    def stop(self):
++        self.httpd.shutdown()
++        self.httpd.server_close()
++
++
++class Env:
++    def __init__(self, tmp: Path):
++        self.tmp = tmp
++        self.fake = FakeGitHub()
++        self.server = _Server(self.fake)
++        self.counter = tmp / "model_calls.txt"
++        self.state_dir = tmp / "state"
++        self.key = Ed25519PrivateKey.generate()
++        raw = self.key.public_key().public_bytes(serialization.Encoding.Raw, serialization.PublicFormat.Raw)
++        self.public_b64 = base64.b64encode(raw).decode()
++        trust = tmp / "trust_root.json"
++        trust.write_text(json.dumps({"schema": TRUST_ROOT_SCHEMA, "repo_id": REPO_ID, "version": 1, "keys": [{
++            "key_id": KEY_ID, "algorithm": "ed25519", "public_key": self.public_b64,
++            "fingerprint": fingerprint_of(self.public_b64), "status": "ACTIVE"}]}), encoding="utf-8")
++        token = tmp / "token.txt"
++        token.write_text("synthetic-token-not-real", encoding="utf-8")
++        claude = tmp / "claude.cmd"
++        claude.write_text(f'@"{sys.executable}" "{STUB}" %*\r\n', encoding="utf-8")
++        self.cfg_path = tmp / "config.json"
++        self.cfg_path.write_text(json.dumps({
++            "schema_version": 1, "baseline_id": BASELINE, "transport": "github", "provider_mode": "LIVE",
++            "local_state_dir": str(self.state_dir), "claude_executable": str(claude),
++            "review_policy": {"enabled": True, "dry_run": False, "known_run_policy_refs": ["POLICY-STATIC-V1"],
++                              "timeout_sec": 120, "save_transcript": False},
++            "github": {"repo": REPO, "token_file": str(token), "trust_root_file": str(trust),
++                       "trust_root_sha256": hashlib.sha256(trust.read_bytes()).hexdigest(),
++                       "trust_root_independence": "warn"},   # single user: the operator's own account can reach the file
++        }), encoding="utf-8")
++        self.env = {**os.environ, "E2E_FAKE_GITHUB": self.server.url.rstrip("/"), "E2E_COUNTER": str(self.counter),
++                    "PYTHONDONTWRITEBYTECODE": "1"}
++
++    def sign(self, message: bytes) -> str:
++        return base64.b64encode(self.key.sign(message)).decode()
++
++    def publish(self, **kw):
++        return publish_bundle(self.fake, signer=self.sign, **kw)
++
++    def popen(self, *args, sleep="0"):
++        return subprocess.Popen([sys.executable, str(LAUNCHER), "--config", str(self.cfg_path), *args],
++                                env={**self.env, "E2E_STUB_SLEEP": sleep}, stdout=subprocess.PIPE,
++                                stderr=subprocess.PIPE, text=True, encoding="utf-8", errors="replace")
++
++    def scan(self, sleep="0"):
++        p = self.popen("scan", sleep=sleep)
++        out, err = p.communicate(timeout=180)
++        return p.returncode, out, err
++
++    @property
++    def model_calls(self) -> int:
++        return len(self.counter.read_text().splitlines()) if self.counter.exists() else 0
++
++    def store(self) -> StateStore:
++        return StateStore(next(self.state_dir.rglob("state.sqlite3")), read_only=True)
++
++    def events(self):
++        s = self.store()
++        try:
++            return [(e, d or "") for _t, e, _k, d in s.recent_events(500)]
++        finally:
++            s.close()
++
++    def repo_has(self, rel: str) -> bool:
++        return rp(rel) in self.fake.files()
++
++
++@pytest.fixture
++def e2e(tmp_path):
++    env = Env(tmp_path)
++    yield env
++    env.server.stop()
++
++
++def test_a_valid_signed_request_is_reviewed_once_and_published_by_the_real_entry_point(e2e):
++    sha = e2e.publish()
++    code, out, err = e2e.scan()
++    assert code == 0, (out, err)
++    assert e2e.model_calls == 1
++    assert "dispatched=1" in out
++    assert e2e.repo_has("reviews/REQ-1/REVIEW_RESULT_1.md") and e2e.repo_has("receipts/REQ-1/RECEIPT_1.md")
++    s = e2e.store()
++    assert s.get_job(PKEY.format(sha=sha)).state == JobState.COMPLETED
++    s.close()
++    assert any(e == "TRUST_ROOT_LOADED" for e, _ in e2e.events())
++
++
++def test_rescans_and_restarts_never_call_the_reviewer_again(e2e):
++    e2e.publish()
++    for _ in range(4):                       # each loop is a fresh process = a restart
++        assert e2e.scan()[0] == 0
++    assert e2e.model_calls == 1
++    names = [p for p in e2e.fake.files() if "/reviews/REQ-1/" in p or "/receipts/REQ-1/" in p]
++    assert len(names) == 2
++
++
++def test_two_processes_scanning_at_once_start_exactly_one_review(e2e):
++    e2e.publish()
++    a, b = e2e.popen("scan", sleep="1.5"), e2e.popen("scan", sleep="1.5")
++    results = [a.communicate(timeout=180), b.communicate(timeout=180)]
++    assert e2e.model_calls == 1, (results, e2e.counter.read_text() if e2e.counter.exists() else "")
++    s = e2e.store()
++    assert s.get_counter("model_calls") <= 1
++    s.close()
++
++
++def test_a_ready_without_a_valid_approval_costs_no_model_call(e2e):
++    e2e.publish(omit=("approval",))
++    assert e2e.scan()[0] == 0
++    e2e.publish(request_id="REQ-2", signature=base64.b64encode(b"\0" * 64).decode())
++    e2e.scan()
++    assert e2e.model_calls == 0
++    ev = e2e.events()
++    assert any(e == "APPROVAL_REJECTED" for e, _ in ev)
++
++
++def test_an_approval_signed_by_another_key_is_rejected(e2e):
++    other = Ed25519PrivateKey.generate()
++    publish_bundle(e2e.fake, signer=lambda m: base64.b64encode(other.sign(m)).decode())
++    e2e.scan()
++    assert e2e.model_calls == 0
++    assert any(e == "APPROVAL_REJECTED" and "BAD_SIGNATURE" in d for e, d in e2e.events())
++
++
++def test_a_failed_result_upload_never_recalls_the_reviewer_and_the_upload_is_retried(e2e):
++    sha = e2e.publish()
++    e2e.fake.inject("PUT", "/contents/", status=500, times=100)     # the result cannot be written
++    e2e.scan()
++    assert e2e.model_calls == 1
++    assert not e2e.repo_has("reviews/REQ-1/REVIEW_RESULT_1.md")
++    e2e.fake._inject.clear()
++    for _ in range(2):
++        e2e.scan()
++    assert e2e.model_calls == 1, "publishing is retried; the review is not"
++    assert e2e.repo_has("reviews/REQ-1/REVIEW_RESULT_1.md") and e2e.repo_has("receipts/REQ-1/RECEIPT_1.md")
++    s = e2e.store()
++    assert s.get_job(PKEY.format(sha=sha)).state == JobState.COMPLETED
++    s.close()
++
++
++def test_the_old_provider_history_is_kept_and_a_second_active_provider_is_refused(e2e, tmp_path):
++    db_dir = e2e.state_dir
++    db_dir.mkdir(parents=True, exist_ok=True)
++    old = StateStore(db_dir / "state.sqlite3")
++    old.check_provider("dropbox", "LIVE")                          # Dropbox was the active provider
++    old.log_event("COMPLETED", processing_key="OLD-1|1|abc|1")
++    before = len(old.recent_events(1000))
++    old.close()
++    e2e.publish()
++    code, out, err = e2e.scan()
++    assert code != 0 and e2e.model_calls == 0                       # GitHub may not run LIVE next to an active Dropbox
++    s = StateStore(db_dir / "state.sqlite3", read_only=True)
++    assert len(s.recent_events(1000)) >= before                     # history intact
++    assert any(ev for ev in s.recent_events(1000) if ev[2] == "OLD-1|1|abc|1")
++    s.close()
++
++
++def test_completion_and_uncertain_notifications_are_sent_once_across_restarts(e2e):
++    e2e.publish()
++    e2e.scan()
++    sent: list[str] = []
++    state = NotifyState()
++    s = StateStore(next(e2e.state_dir.rglob("state.sqlite3")))
++    state.bootstrap(s.conn, "github", 1)
++    s.log_event("REVIEW_UNCERTAIN", processing_key="REQ-9|1|abc|1", detail="sealed")
++    for _ in range(3):
++        run_once(s.conn, state, provider="github", repo=REPO, send=sent.append, epoch=1)
++    assert len(sent) == 1 and "REQ-9" in sent[0]                    # one message, not three
++    s.close()
++
++
++def test_the_operating_watcher_folder_is_only_stat_checked_never_opened(e2e):
++    """The test never opens the operating database; it compares metadata before and after a full run."""
++    live = Path(os.environ.get("LOCALAPPDATA", "")) / "skill-collab-watcher"
++    before = {p.name: (p.stat().st_size, p.stat().st_mtime_ns) for p in live.glob("state.sqlite3*")} if live.is_dir() else {}
++    e2e.publish()
++    e2e.scan()
++    after = {p.name: (p.stat().st_size, p.stat().st_mtime_ns) for p in live.glob("state.sqlite3*")} if live.is_dir() else {}
++    assert before.keys() == after.keys()
++    assert all(before[k][0] == after[k][0] for k in before), "size of an operating database file changed"
+--- /dev/null
++++ b/tests/test_try_claim.py
+@@ -0,0 +1,49 @@
++"""The claim of a never-dispatched job is an atomic compare-and-set (found by the entry-point E2E: two concurrent
++`scan` processes both started the reviewer)."""
++import pytest
++
++from skill_collab_watcher.models import JobState
++from skill_collab_watcher.state_store import StateStore
++
++
++def _job(store, key="REQ-1|1|abc|1", state=JobState.VALIDATED):
++    store.create_job(key, "REQ-1", "1", "abc", state)
++    return key
++
++
++def test_only_one_of_two_connections_wins_the_claim(tmp_path):
++    a, b = StateStore(tmp_path / "s.sqlite3"), StateStore(tmp_path / "s.sqlite3")
++    key = _job(a)
++    assert a.try_claim(key) is True
++    assert b.try_claim(key) is False
++    job = b.get_job(key)
++    assert job.state == JobState.CLAIMED and job.attempt_count == 1
++    a.close(); b.close()
++
++
++@pytest.mark.parametrize("state", [JobState.CLAIMED, JobState.REVIEW_RUNNING, JobState.RESULT_SAVED, JobState.UPLOAD_PENDING,
++                                   JobState.COMPLETED, JobState.FAILED, JobState.REVIEW_UNCERTAIN, JobState.CONFLICT, JobState.REJECTED])
++def test_a_job_that_was_ever_dispatched_or_closed_cannot_be_claimed_again(tmp_path, state):
++    s = StateStore(tmp_path / "s.sqlite3")
++    key = _job(s, state=state)
++    assert s.try_claim(key) is False
++    assert s.get_job(key).state == state
++    s.close()
++
++
++@pytest.mark.parametrize("state", [JobState.DISCOVERED, JobState.WAIT_INPUT, JobState.VALIDATED, JobState.AUTH_REQUIRED])
++def test_never_dispatched_states_can_be_claimed_once(tmp_path, state):
++    s = StateStore(tmp_path / "s.sqlite3")
++    key = _job(s, state=state)
++    assert s.try_claim(key) is True and s.try_claim(key) is False
++    s.close()
++
++
++def test_a_missing_job_and_a_read_only_store_never_claim(tmp_path):
++    rw = StateStore(tmp_path / "s.sqlite3")
++    key = _job(rw)
++    assert rw.try_claim("NOPE|1|x|1") is False
++    ro = StateStore(tmp_path / "s.sqlite3", read_only=True)
++    assert ro.try_claim(key) is False
++    assert rw.get_job(key).state == JobState.VALIDATED
++    rw.close(); ro.close()
