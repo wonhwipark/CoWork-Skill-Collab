@@ -9,7 +9,7 @@
       "owner": "GPT / Claude Code",
       "self_test": "PASS",
       "independent_review": "NOT_RUN",
-      "next_action": "사용자가 B·C·D·토큰 4개 결정을 숫자로 한 번에 답한다(결과 §6). ACTIVE_PROVIDER=NONE, LIVE 미승인."
+      "next_action": "Windows Claude Code가 GPT 토큰 delta 인계 §6 자체시험·격리 사본 연결만 수행. B/C/D/토큰 결정 대기; LIVE 미승인."
     }
   ]
 }

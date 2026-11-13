@@ -1,5 +1,18 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## GPT 토큰 검증기 delta 완료 / Windows 자체시험 인계 준비 (2026-11-13 KST)
+- DEVELOPMENT=IMPLEMENTED
+- SELF_TEST=PASS
+- INDEPENDENT_REVIEW=NOT_RUN
+- GPT_DISPOSITION=ACCEPT_WITH_CHANGE
+- ACTIVE_PROVIDER=NONE / CUTOVER=MIGRATION_NOT_CUTOVER. B=BLOCKED_SIGNER_DEVICE, C=PARTIAL, D=BLOCKED_EXPORT_CLASSIFICATION, CREDENTIAL=BLOCKED_CREDENTIAL 유지.
+- 판정·정확한 Windows delta 인계: `GPT_BCD_TOKEN_PRECHECK_DISPOSITION_AND_DELTA_r0001_20261113.md` §6. 기존 마스터/대규모 제품 시험을 반복하지 않고 토큰 도구와 설치 스크립트 격리 사본 연결만 확인.
+- GPT가 r0001 기본 실행의 잘못된 전체 PASS를 모의 응답으로 재현. r0002 2개 별도 추가(r0001 원본 보존): GET-only, 쓰기 probe 거부, 실제 저장소 선택/권한은 NOT_PROVEN; 종료1=실패, 종료2=부분확인. 도구만으로 설치 승인/읽기 전용 확정 불가.
+- GPT Linux 합성 자체시험: 기존11+신규23=34 PASS/0 FAIL/0 SKIP. 실제 PAT/Windows/운영 설치 NOT_RUN. v0.2.11 ZIP(175714B, sha256 174b9fd83361cc85ce3fb1b4b503335dc701bff9e38415ae23a11256ef8b6350)은 Claude SELF_TEST_REPORTED/로컬 보존; 원본 제품 코드 GPT 검증 NOT_RUN.
+- 사용자 B/C/D/토큰 응답 대기. 현재 지시는 개발/시험/PRIVATE 게시 후속 범위이며 키·토큰·반출·유료 리뷰·READY·운영 변경·LIVE 승인 아님.
+- 원격 게시: 이 후보 작성 시 readback 전. 게시 커밋·최종 바이트 확인은 후속 검증 기록으로 확정.
+- 다음 한 동작: Windows Claude Code에서 위 정확한 repo/main/인계서 §6을 1회 실행 → 기존 Claude 결과에 후속 섹션 추가·PRIVATE 원격 재검증. Windows 실행은 아직 관측되지 않음.
+
 ## BCD_TOKEN_APPROVAL_PRECHECK_RESULT: B·D·토큰 BLOCKED / C PARTIAL(대체 증거 4축 수집) / ACTIVE_PROVIDER=NONE (Claude 자체 보고, 2026-11-13 KST)
 - 결과: `CLAUDE_BCD_TOKEN_APPROVAL_PRECHECK_RESULT_FOR_GPT_20261113.md` (PRIVATE `main`, commit `8870f37a60eb2463fa6441314b141eac89791960`, 원격 바이트·SHA-256 `7b4f87dd54bdb160778c66d6d16fb93d547f1b13eb184c9398bc77e041666eaf` 일치). 관리자 셸·새 ETW·운영 DB 열기·모델 호출·비용 0, 키 생성·root 설치·업로드·READY·LIVE 0. 독립 리뷰 아님.
 - B: 승인자 기기용 **서명 키트 6개 파일**(v0.1.5 유래 코드 없음)을 구성하고 임시 시험 키로 keygen→sign→check→1바이트 변조 거부까지 시험. 운영 키는 BLOCKED_SIGNER_DEVICE. C: 대체 4축 증거(시험계정 SID 유효 권한 운영 폴더·DB·WAL·SHM 모두 0x0 / 경로 가드·identity / 라이브 폴더 참조 함수 전수 조사 6개 / 변이 시험 4종 전부 검출). 전수 조사에서 결함 1건 발견·수정(`config-check`·`auth-check`·`auth-init`이 SHADOW·GitHub에서도 라이브 폴더·비밀을 사용). 수락 기준 승인 전 C=PARTIAL. D: 유래 46(34+12)/신규 24, v0.1.5 유래 줄 약 52%, 대안 3종(전량 게시/신규 24만/사내 로컬 리뷰). 토큰: 검증기(시험 11 PASS)·설치 스크립트 준비, 발급은 사용자 몫.
