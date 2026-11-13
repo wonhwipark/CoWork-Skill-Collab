@@ -79,3 +79,61 @@ v0.2.11 ZIP 70항목을 v0.1.5와 해시·줄 단위로 비교: **UNCHANGED 34 +
 
 ## 7. 보호 범위
 운영 watcher·DB·작업·Bridge·알림기·인증·토큰·Dropbox history 변경 0. 추가물은 로컬 시험 도구·임시 시험 키(삭제)·이 결과·`tools/` 도구뿐. 시험 계정 비활성·샌드박스 보존 유지.
+
+
+---
+
+# 후속 섹션 — 토큰 도구 r0002 자체시험과 설치 스크립트 격리 사본 연결 (2026-11-13 KST)
+
+근거 인계서: `GPT_BCD_TOKEN_PRECHECK_DISPOSITION_AND_DELTA_r0001_20261113.md` §6. 위 본문(§0~§7)은 변경하지 않았고, 이 섹션만 추가했다. 성격: **SELF_TEST_REPORTED**, 독립 리뷰 아님. 이번 작업의 실 PAT 0, 네트워크 요청 0, 관리자 셸 0, 시험 계정 활성화 0, 운영 설정·DB·예약 작업·알림 변경 0, 모델 호출 0, 비용 $0. 이전 본문의 해시: 14,244 B / `7b4f87dd54bdb160778c66d6d16fb93d547f1b13eb184c9398bc77e041666eaf`(추가 직전 원격 재조회로 확인).
+
+## F1. 입력 대조
+- 실행 전 최신 CURRENT 최상단이 위 인계서를 가리키며 이후 지시로 대체되지 않았음을 확인.
+- 도구 2개를 원격 고정 경로에서 받아 §5와 대조: `github_token_check_r0002.py` 7,312 B / `2ab292aa…fccc4` **일치**, `test_github_token_check_r0002.py` 8,469 B / `36b14ff5…452bf` **일치**. 격리 개발 폴더에서만 사용했고 자격 파일·운영 설정은 읽지 않았다.
+
+## F2. 도구 자체시험 (Windows, 전부 모의 응답)
+| 명령/범위 | 결과 |
+|---|---|
+| `python -m unittest -v test_github_token_check_r0002` (시험 venv, 기대 23) | **23 PASS / 0 FAIL / 0 SKIP** |
+| 같은 시험, 운영 인터프리터(새 패키지 설치 없음) | **23 PASS** |
+| `r0001`(보존) + `r0002` 함께 | **34 PASS / 0 FAIL** (r0001 11은 기존 의미 검증만, 안전성 근거 아님) |
+| 실제 PAT·실 GitHub·운영 설치 | **NOT_RUN** |
+GPT의 Linux 결과(34 PASS)와 같은 개수·결과이며, 이는 독립 재현이 아니라 같은 파일을 다른 환경에서 돌린 자체시험이다.
+
+## F3. 설치 스크립트 원문 검토와 격리 사본
+원본(`Install-ReadToken.ps1`, 로컬, 해시 앞 16자 `67ed6c2d5517a3cf`)은 **실행하지 않았고 수정하지 않았다**. 원문 검토에서 확인한 문제:
+1. r0001 검증기를 호출하고 **`--probe-write`(PUT 요청)** 를 전달 — 이번 판정(쓰기 probe 금지, 403 추론 거절)과 충돌.
+2. 검증기 종료코드를 **해석하지 않고** 출력만 함 — 실패(1)와 미입증(2)을 구분하지 못함.
+3. 결과와 무관하게 마지막에 "Token installed"를 출력 — 준비 완료로 오해될 수 있음.
+
+격리 사본 3개(로컬 보존, 사용자 절대 경로를 포함하므로 **미게시**): `Install-ReadToken.r0002.ps1`(4,049 B, `45b6e65947a661b5`), `TokenVerdict.ps1`(937 B, `3c9642c73d5819f8`), `Test-InstallVerdict.ps1`(1,821 B, `093ab5048bab5f58`), 음성 대조용 `negative_control.ps1`.
+- r0002 검증기를 호출하고 `--probe-write`를 제거. 종료코드를 `Get-TokenVerdict`로 판정: **1 = FAIL**(사용 금지, 새 토큰 필요), **2 = NOT_PROVEN**(저장소 선택·권한 부여는 도구가 증명하지 못함, 승인 아님), 그 밖의 값(예상치 못한 0, 시간 초과 -999 포함) = NOT_PROVEN. **어떤 값도 `ReadinessEstablished=true`를 내지 않는다.**
+- 마지막 출력은 "Token installed" 대신 `CREDENTIAL_READINESS=<판정> (established: False)`와 GitHub 설정 체크리스트 확인 안내.
+- 합성 시험 `Test-InstallVerdict.ps1`: **18 PASS / 0 FAIL** (종료코드 0·1·2·3·-999·255 모두 준비 확립 아님, r0002 사용, r0001·probe-write·"Token installed" 부재, 종료코드의 판정 경유, 토큰 변수 비출력, 구문 오류 없음). 스크립트 자체는 실행하지 않았고(관리자·시험 계정 필요) 판정 함수와 원문 정적 검사만 수행.
+- **음성 대조**: 원본 스크립트에 같은 정적 검사를 적용하면 4개 위반(r0001 사용, 쓰기 probe, 판정 경유 없음, 단순 성공 출력)이 모두 검출되고, 종료코드 판정 경유를 일부러 끊은 변이본은 해당 검사가 **FAIL로 검출**(1건). 변이 파일은 삭제.
+
+## F4. 정정: 이전 본문 §5 중 철회하는 서술
+- "`--probe-write`에서 잘못된 PUT이 403이면 쓰기 불가" — **철회**. 403은 속도 제한 등으로도 발생하므로 읽기 전용의 증거가 아니다.
+- "`/user/repos`가 정확히 이 저장소 1개이면 통과" — **철회**. 공개 저장소는 기본 읽기 범위가 있고 관측은 설정된 권한 전체의 증거가 아니다. 저장소 선택·권한 부여는 도구로 증명할 수 없다.
+- r0001의 전체 PASS는 **설치 준비 증거로 사용하지 않는다**(GPT가 모의 응답으로 재현한 오판 가능성). r0001은 보존하되 설치 스크립트와 개발 인계 참조는 r0002로 연결했다.
+- 현재 호스트의 `gho_` OAuth 토큰이 이전 검증기에서 실패할 것이라는 서술은 예측이었고 실행으로 확인한 사실이 아니다(이번에도 실행하지 않음).
+
+## F5. 비민감 GitHub 설정 체크리스트 (사용자·담당자 진술 증거)
+토큰 발급 화면과 저장소 설정에서 담당자가 직접 확인하고 O/X만 기록한다. **이 확인은 사람의 진술이며 API 증명이나 서명 검증이 아니다.** 토큰 값, 토큰이 보이는 스크린샷, 파일 해시, 토큰 일부는 수집하지 않는다.
+
+| # | 확인 항목 | 기록 |
+|---|---|---|
+| 1 | Token type = Fine-grained personal access token | O/X |
+| 2 | Resource owner = 의도한 계정(저장소 소유자) | O/X |
+| 3 | Repository access = **Only select repositories**, 선택된 저장소 **정확히 1개** (`CoWork-Skill-Collab`) | O/X |
+| 4 | Repository permissions: **Contents = Read-only** | O/X |
+| 5 | Repository permissions: **Metadata = Read-only** (자동 필수) | O/X |
+| 6 | 그 밖의 repository permissions 없음, **Account permissions 없음** | O/X |
+| 7 | 만료 설정 있음, 발급일부터 **90일 이하** | O/X |
+| 8 | 값은 숨김 입력으로만 설치했고 채팅·문서·로그에 붙이지 않음 | O/X |
+설치 후 시험 계정으로 `github_token_check_r0002.py`를 실행해 **종료 1이면 중단**, **종료 2는 위 체크리스트가 모두 O일 때만 다음 단계 검토 대상**(그래도 승인 아님).
+
+## F6. 상태와 남은 결정 (변동 없음)
+- ACTIVE_PROVIDER=NONE / CUTOVER=MIGRATION_NOT_CUTOVER. B=BLOCKED_SIGNER_DEVICE, C=PARTIAL, D=BLOCKED_EXPORT_CLASSIFICATION, 토큰=BLOCKED_CREDENTIAL, E=NOT_RUN. v0.2.11 ZIP(175,714 B, `174b9fd83361cc85ce3fb1b4b503335dc701bff9e38415ae23a11256ef8b6350`)은 로컬 보존, 이번에 변경 없음. 대규모 제품 시험은 변경 근거가 없어 재실행하지 않았다.
+- **사용자 B/C/D/토큰 응답은 아직 없다.** 위 §6의 숫자 선택형 4문항 그대로 유지.
+- 다음 한 동작: 사용자가 B/C/D/토큰 결정을 한 번에 답한다. 토큰을 선택하면 F5 체크리스트 8항목을 사용자가 직접 확인하고 설치는 격리 사본 스크립트로 1회 수행한다.
