@@ -1,5 +1,14 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## LOCAL_ONLY_BLOCKERS_DELTA_RESULT: E=BLOCKED_LOCAL_REVIEWER / B=AVAILABLE_UNDESIGNATED / TOKEN=BLOCKED_OVERPRIVILEGED / PROTOCOL_V2=PROTOTYPE_ONLY / ACTIVE_PROVIDER=NONE (Claude 자체 보고, 2026-11-14 KST)
+- 결과: `CLAUDE_LOCAL_ONLY_BLOCKERS_DELTA_RESULT_FOR_GPT_20261114.md` (PRIVATE `main`, commit `596b6732c29149fedd2176879c17c2df88e3c043`, 원격 바이트·SHA-256 `3205074049b7db08a62f72b7cb71811a6c831c15084f57667618fbd92b66a234` 일치). 기존 시험 반복 0, 운영 키·토큰·계정·ACL·Task·DB·업로드·외부 모델·유료 리뷰·READY·LIVE·이력 변경 0, 모델 호출 0, 비용 $0. 독립 리뷰 아님.
+- **자동 리뷰 재개 임계 경로**: ①로컬 독립 리뷰어 실존과 ③별도 서명자 기기·키트 내부 이동 정책이 미확인이라 나머지가 준비돼도 재개되지 않음. 사용자 필수 확인은 이 두 가지.
+- **리뷰어 격리 입증 도구 신규**(시험 12 PASS, 루프백 양성·음성 대조 포함): 이 PC 실측은 `NOT_ISOLATED`(외부 엔드포인트 5/5 접속 가능, 프록시 없음) → 이 PC에서 외부 API 모델 사용은 LOCAL_ONLY가 아니며 로컬 모델 런타임도 없음. 후보 리뷰어 호스트가 정해지면 그 호스트에서 1회 실행. 통과해도 필요조건일 뿐.
+- **v2 계약 r0002**: 위협 모델 12개 기준 보강(재시작 후 유지되는 nonce·영수증 장부, 비용 상한 0.00 강제, 영수증에 런타임 격리 증명 다이제스트 필수, 영수증 기간 검사, 손상 상태 fail closed). 시험 26 PASS·변이 10/10 검출. **r0001 게시본의 간헐 시험 결함 공개**(크기 부분 문자열 검사, 약 20% 실패 가능) 후 r0002로 대체. 독립 보안 리뷰·운영 적용은 미승인.
+- **LIVE 서비스 계정 설계**(변경 0): 전용 비관리자·배치 로그온만·상태 폴더만 쓰기·trust 읽기·아카이브 권한 0, 승인 후 실측 7항목. 계정 구성이 토큰 설치의 선행 의존이 됨.
+- **기게시 식별자 노출 범위**(비파괴, 개수만): 이력 441커밋, 원시 다이제스트 10종/50커밋/HEAD 31파일, 크기 10종/37커밋/21파일, 유래 파일명 45종/14커밋/12파일. 현재 후보 v0.2.12의 다이제스트·크기는 이력에 없음. 추가 게시 중단, 이력 재작성·삭제 없음, 처분은 데이터 분류 소유자 승인 후.
+- 다음 한 동작: 사용자가 ①별도 회사 관리 서명자 PC·키트 내부 이동 허용 ②조직 승인 온프레미스 모델 또는 사람 리뷰어의 실존·호스트를 확인한다. 나머지는 각각 별도 승인.
+
 ## GPT 판정 — 로컬 전용 5개 결정 권고 (2026-11-14 KST)
 - GPT가 `CLAUDE_B1_C1_D2_TOKEN2_LOCAL_ONLY_RESULT_FOR_GPT_20261114.md` (원격 commit `615da26d0257cbb864689c1c3a52210f66f34265`) 원문 재확인. **`GPT_DISPOSITION=ACCEPT_AS_DESIGN_CANDIDATE_WITH_BLOCKERS`**. 사용자 질의 5개에 대해 권장 방향을 `GPT_LOCAL_ONLY_FIVE_DECISIONS_DISPOSITION_r0001_20261114.md`로 작성해 PRIVATE main 게시/readback PASS.
 - **권고 1 B**: 별도 조직 관리 Windows PC(실재·6개 키트 내부 이동 정책은 확인 필요), 암호화 키/개인키 호스트 분리. 운영키 생성·trust-root 설치 미승인.
