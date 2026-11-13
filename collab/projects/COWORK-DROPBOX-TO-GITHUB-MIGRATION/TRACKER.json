@@ -5,11 +5,11 @@
       "work_id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
       "skill": "cowork-review-watcher",
       "title": "cowork-review-watcher",
-      "phase": "SU_L1_DEVELOPMENT_CANDIDATE",
+      "phase": "DEVELOPMENT",
       "owner": "GPT / Claude Code",
-      "self_test": "SELF_TEST_REPORTED",
+      "self_test": "PASS",
       "independent_review": "NOT_RUN",
-      "next_action": "GPT가 CLAUDE_SINGLE_USER_LIVE_FASTTRACK_RESULT_FOR_GPT_20261114.md를 한 번에 판정한다. 원장 결함 2건 수정·재시험(r0003, 계약 연결 NOT_RUN), SU-L1 정책 엔진 프로토타입, 로컬 후보 v0.2.13 보존 완료. 막힌 것: 로컬 독립 리뷰어(E=BLOCKED_LOCAL_REVIEWER). 사용자 승인 묶음(결과 §7)이 오기 전까지 LIVE·운영 변경·키/토큰·유료 리뷰 없음. ACTIVE_PROVIDER=NONE, DEVELOPMENT_READY_NOT_FOR_DEPLOYMENT."
+      "next_action": "SU-SIMPLE GPT 재판정: 구형 6개 승인 요구는 기본 게이트에서 재분류. 기존 Claude 독립 리뷰 경로 우선, v0.2.13 자체시험 보존·제품 연동 NOT_RUN. CoWork watcher 코드 외부 Claude 전달 허용 범위 1회 확인 후 Windows 원샷 최소 delta·독립 리뷰 준비. 운영 변경·LIVE 미승인, ACTIVE_PROVIDER=NONE."
     }
   ]
 }
