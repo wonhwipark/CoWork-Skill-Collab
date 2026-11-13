@@ -16,10 +16,10 @@
       "id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md",
-      "status": "전환 전",
+      "status": "문서상 진행",
       "title": "COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태",
-      "tone": "warning",
-      "topic": "GPT B·C·D·GitHub 인증 단일 승인 패킷 (2026-11-13 KST)"
+      "tone": "neutral",
+      "topic": "BCD_TOKEN_APPROVAL_PRECHECK_RESULT: B·D·토큰 BLOCKED / C PARTIAL(대체 증거 4축 수집) / ACTIVE_PROVIDER=NONE (Claude 자체 보고, 2026-1"
     },
     {
       "id": "COWORK-GITHUB-DASHBOARD-20261111-001",
@@ -92,7 +92,7 @@
     {
       "evidence": "프로젝트 TRACKER.json 신고 값 · 운영 근거 별도 확인 필요",
       "independent_review": "NOT_RUN",
-      "next_action": "GPT 판정 완료(개발 자체시험·Bridge/updater 정리 PASS 보고 수용). 사용자 B 서명자 기기·C 대체증거 기준 또는 ETL·D 반출 허가·repo read-only 토큰을 한 번에 확인. ACTIVE_PROVIDER=NONE; E 독립 리뷰·LIVE 미승인.",
+      "next_action": "사용자가 B·C·D·토큰 4개 결정을 숫자로 한 번에 답한다(결과 §6). ACTIVE_PROVIDER=NONE, LIVE 미승인.",
       "owner": "GPT / Claude Code",
       "phase": "BLOCKED",
       "record_source": "REGISTERED_METADATA_UNVERIFIED",
