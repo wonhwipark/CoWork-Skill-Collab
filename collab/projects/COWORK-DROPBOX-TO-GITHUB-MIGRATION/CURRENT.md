@@ -1,5 +1,16 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## GPT 판정 — 로컬 전용 5개 결정 권고 (2026-11-14 KST)
+- GPT가 `CLAUDE_B1_C1_D2_TOKEN2_LOCAL_ONLY_RESULT_FOR_GPT_20261114.md` (원격 commit `615da26d0257cbb864689c1c3a52210f66f34265`) 원문 재확인. **`GPT_DISPOSITION=ACCEPT_AS_DESIGN_CANDIDATE_WITH_BLOCKERS`**. 사용자 질의 5개에 대해 권장 방향을 `GPT_LOCAL_ONLY_FIVE_DECISIONS_DISPOSITION_r0001_20261114.md`로 작성해 PRIVATE main 게시/readback PASS.
+- **권고 1 B**: 별도 조직 관리 Windows PC(실재·6개 키트 내부 이동 정책은 확인 필요), 암호화 키/개인키 호스트 분리. 운영키 생성·trust-root 설치 미승인.
+- **권고 2 Token**: 기존 과권한 OAuth 사용 금지, 사용자 직접 신규 단일 저장소 Contents read-only fine-grained 자격 준비. 기존 자격 미사용·신규 발급/설치 미승인.
+- **권고 3 E/v2**: 코드·ZIP은 LOCAL_ONLY 유지. 내부에서 진짜 사용 가능한 조직 승인 온프레미스 모델 또는 사람 독립 리뷰어부터 확인. v2 local artifact/solt commitment/GitHub control-plane 메타데이터 계약은 설계·독립 보안 리뷰 후보이며 정식 운영 적용 미승인. Windows 현재 PC에는 로컬 모델 런타임 미관측, 조직 전체의 부재는 증명되지 않음.
+- **권고 4 LIVE account**: 별도 비관리자 서비스 계정+GitHub 전용 state/ACL과 기존 Dropbox archive 접근 거부 제안. 실제 Task/run-as/ACL/DB 변경은 별도 운영 승인 후. 이전 SHADOW 계정 증거를 운영자 LIVE 계정에 소급하지 않음.
+- **권고 5 historical identifier**: 기존 기게시 ZIP SHA·크기·파일명은 당분간 제한 메타데이터로 취급해 추가 공개 중지·비파괴 인벤토리 후 조직 정책 판정. history force-push/삭제 금지, Git 이력 삭제만으로 완전 삭제 보장 없음.
+- **현재 수락·실행 경계**: GPT 권고가 사용자·조직 정책 승인 아님. `B=DEVICE_UNDESIGNATED / C=PARTIAL / D=LOCAL_ONLY / TOKEN=BLOCKED_OVERPRIVILEGED / E=BLOCKED_LOCAL_REVIEWER / ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER`. 새 모델 호출·유료 리뷰·READY·LIVE 미실행.
+- 다음 한 동작: 실제 별도 조직 관리 서명자 기기 존재/키트 내부 이동 정책과 조직 승인 로컬 리뷰어·모델의 사용 가능성을 **한 번에 확인**, 이후 B/C/E/v2 보안 게이트 승인 범위 안에서 delta 검증만 지속.
+
+
 ## B1_C1_D2_TOKEN2_LOCAL_ONLY_RESULT: B=AVAILABLE_UNDESIGNATED / C_ALT=PROPOSED(C=PARTIAL) / D=LOCAL_ONLY / TOKEN=OVERPRIVILEGED / E=NOT_RUN / ACTIVE_PROVIDER=NONE (Claude 자체 보고, 2026-11-14 KST)
 - 결과: `CLAUDE_B1_C1_D2_TOKEN2_LOCAL_ONLY_RESULT_FOR_GPT_20261114.md` (PRIVATE `main`, commit `615da26d0257cbb864689c1c3a52210f66f34265`, 원격 바이트·SHA-256 `ffb8ea548fc2c1ced1692d1a24c276dd3818b52856b9c11a7740352a5f450ad2` 일치). 운영 키·토큰 설치·운영 DB 열기·예약 작업 변경·업로드·유료 리뷰·READY·LIVE·시험 계정 활성화·모델 호출 0, 비용 $0. 독립 리뷰 아님.
 - **토큰**: 기존 GitHub 자격은 클래식 OAuth 계열 `repo`·`workflow`·`read:org`·`gist` 범위의 광역 권한 → `BLOCKED_OVERPRIVILEGED_EXISTING_CREDENTIAL`. 값·접두·경로 조회 0, 최소 권한 기존 PAT는 확인되지 않음.
