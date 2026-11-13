@@ -62,3 +62,10 @@ Job-list **한 버전에 활성 One-shot Job 최대 1건**. 이미 소비된 Job
 - 런타임 G0 미통과·허용 action 미확인 시 **BLOCKED/ANALYSIS_PARTIAL** 증거를 남기고 STOP; 스킬 업데이트·인증 발급·사내 데이터 변경으로 우회하지 않는다. 무인 실행이므로 사용자 질의로 멈추지 않고 허용 범위 내 결과를 최대한 취합.
 - 배포 성공과 사내 `SKILL_UPDATER_INSTALLED`·`JOB_ACTIVATED`·`KNOWLEDGE_UPDATER_CALL`·`MSC_READY`·`INDEPENDENT_REVIEW`는 서로 독립. 미수신 호스트 결과를 `NOT_VERIFIED` 또는 `NOT_RUN`으로 유지.
 - **특수 사례:** 사용자는 `JOBLIST-NRTX-20261112-001`의 조사/호출계약 검증을 PUBLIC 배송 후 사내에서 실행하라고 승인. `job-list_v0_4_36_1112.zip`을 활성 Job 1건의 read-only 조사 전달본으로 PUBLIC 게시. 정식 지식 정본 쓰기/무인 수정/독립 리뷰 PASS 승인은 **아님**.
+
+## 7. Issue Analyzer 1차 배포 경로 확정 (2026-11-14)
+
+- 사용자 명시 지시: `issue-analyzer`의 **1차 ZIP 배포도** GitHub PUBLIC `wonhwipark/L1Work` / `main` / **루트**를 사용한다. PRIVATE `wonhwipark/CoWork-Skill-Collab`은 비민감 협업 문서·상태·독립 리뷰 기록용이지 ZIP 전달 경로가 아니다.
+- 이전에 '우선 PRIVATE 후보 ZIP에 게시'하던 단계는 이 작업의 배포 절차에서 제거한다. 개발 작업공간의 임시 후보 ZIP은 배포가 아니며, 사용자에게 PRIVATE 다운로드로 공개 배송을 대체했다고 보고하지 않는다.
+- 첫 배포 위치 확정은 **독립 리뷰 PASS, 설치/실행 PASS, 자동 활성화 승인**을 뜻하지 않는다. 단계별 진위·금지된 정보 반출 검사·파일 바이트와 SHA-256 원격 재조회 등 기존 안전 게이트는 유지한다. 미충족이면 정확히 `PUBLIC_RELEASE=BLOCKED/NOT_POSTED`로 기록하며 임의 우회하지 않는다.
+- 이 결정의 근거·현황: [issue-analyzer Work CURRENT](../../projects/ISSUE-ANALYZER-20261114-001/CURRENT.md). 최초 후보 목표 파일 `issue-analyzer_v0_11_50_1114.zip`. GitHub 실제 게시/Skill-Updater 설치는 별도 확인 전까지 NOT_POSTED/NOT_RUN.
