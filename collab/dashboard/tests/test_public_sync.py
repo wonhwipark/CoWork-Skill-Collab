@@ -158,5 +158,56 @@ class AllowlistSyncTests(unittest.TestCase):
             public_sync.publish_public(public_sync.json_bytes(obj), "x"*30)
 
 
+    def test_public_provider_is_fixed_enum_and_does_not_leak_current(self):
+        import pathlib
+        with tempfile.TemporaryDirectory() as tmp:
+            path = pathlib.Path(tmp) / "collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md"
+            path.parent.mkdir(parents=True)
+            path.write_text(
+                "# Migration\n\n## 최신 상태\n- ACTIVE_PROVIDER=NONE / SECRET_PRIVATE_CONTEXT\n\n"
+                "## 오래된 상태\nACTIVE_PROVIDER=DROPBOX\n", encoding="utf-8")
+            self.assertEqual(public_sync._read_active_provider(pathlib.Path(tmp)),
+                             "활성 리뷰 제공자 없음")
+            self.state["work_items"][0]["phase"] = "BLOCKED"
+            self.state["work_items"][0]["work_id"] = "COWORK-DROPBOX-TO-GITHUB-MIGRATION"
+            obj = public_sync.build_payload(
+                self.state, "2026-11-13", active_provider="활성 리뷰 제공자 없음")
+            self.assertEqual(obj["checks"]["active_provider"], "활성 리뷰 제공자 없음")
+            self.assertEqual(obj["work_cards"][0]["action_kind"], "USER")
+            self.assertNotIn("SECRET_PRIVATE_CONTEXT",
+                             public_sync.json_bytes(obj).decode("utf-8"))
+            with self.assertRaises(public_sync.SafetyBlock):
+                public_sync.build_payload(
+                    self.state, "2026-11-13", active_provider="PRIVATE HACK")
+            path.write_text("# M\n\n## Latest\nACTIVE_PROVIDER=GITHUB\n", encoding="utf-8")
+            with self.assertRaises(public_sync.SafetyBlock):
+                public_sync._read_active_provider(pathlib.Path(tmp))
+
+    def test_generated_timestamp_publicly_validated(self):
+        from datetime import datetime, timedelta, timezone
+        now = datetime.now(timezone.utc)
+        generated = now.strftime("%Y-%m-%dT%H:%M:%SZ")
+        obj = public_sync.build_payload(
+            self.state, "2026-11-13", generated_at=generated)
+        self.assertEqual(obj["generated_at"], generated)
+        old = (now - timedelta(hours=2)).strftime("%Y-%m-%dT%H:%M:%SZ")
+        obj["generated_at"] = old
+        with self.assertRaisesRegex(public_sync.SafetyBlock, "stale"):
+            public_sync.publish_public(public_sync.json_bytes(obj), "x"*30)
+        with self.assertRaises(public_sync.SafetyBlock):
+            public_sync.build_payload(self.state, "2026-11-13",
+                                      generated_at="invalid")
+
+    def test_priority_is_not_inferred_from_unapproved_work(self):
+        self.state["work_items"].append({
+            "work_id": "INTERNAL-SECRET-ISSUE", "skill": "secret-module",
+            "title": "Top secret", "phase": "BLOCKED"})
+        obj = public_sync.build_payload(self.state, "2026-11-13")
+        self.assertEqual(len(obj["work_cards"]), 1)
+        self.assertEqual(obj["work_cards"][0]["action_kind"], "OTHER")
+        self.assertNotIn("INTERNAL-SECRET-ISSUE",
+                         public_sync.json_bytes(obj).decode("utf-8"))
+
+
 if __name__ == "__main__":
     unittest.main()
