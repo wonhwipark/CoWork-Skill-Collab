@@ -1,5 +1,14 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 사용자 승인 — GitHub 링크 기반 CoWork 소스·ZIP 및 L1Work 리뷰 전달 (2026-11-14 KST)
+- 사용자가 **CoWork 감시기 자체 소스·ZIP을 기존 Claude 독립 리뷰에 전달하는 것**을 명시 허용. **L1Work의 스킬 ZIP 및 업무 PC용 Handoff MD 리뷰**도 명시 허용. 리뷰 대상은 실제 GitHub에 게시하고 저장소·branch·고정 commit·파일 링크를 Claude에게 전달하는 방식을 기본으로 합의.
+- **전송/게시 분류**: `CoWork-Skill-Collab` PRIVATE `review-inputs/<review_id>/`에 CoWork 후보 소스/ZIP·manifest를 게시 가능(내용·민감정보 검증, 실제 bytes SHA·size·commit 원격 readback 조건). `wonhwipark/L1Work` PUBLIC의 **기게시 스킬 ZIP**과 `handoffs/` 문서의 기존 링크를 리뷰 입력으로 사용 가능. 미승인 신규 ZIP을 PUBLIC 루트에 리뷰용으로 먼저 게시하는 것은 별도 공개 배포 승인이므로 금지. 최종 승인 ZIP은 L1Work/main 루트, Handoff MD는 main/handoffs.
+- 이전 `D=2 LOCAL_ONLY` 범위는 **사용자가 명시한 CoWork 감시기 자체 코드의 리뷰 전달에 한해서 해소**. 이 승인으로 회사 L1 원본 코드·고객/기밀자료·토큰 등의 외부 게시가 허용되는 것은 아님. Windows Claude PC는 회사 L1 코드에 접근 불가. 기존 로컬 LLM/별도 서명자 PC·4축 격리 의무를 일반 CoWork 리뷰에 반복 요구하지 않음.
+- 기준 인계 `GPT_GITHUB_LINK_REVIEW_TRANSPORT_APPROVAL_AND_ONE_SHOT_r0001_20261114.md` PRIVATE main에 게시(commit `4d5c377dece1b0ae79a7505c7d886db18eb4d51d`, 원격 본문 readback PASS). 신규 CoWork 후보 v0.2.13은 **현재 Windows 로컬에만** 있고 GitHub source/ZIP 실제 업로드 `NOT_RUN`. 현 대화에서 원본 파일 바이트가 없어 업로드를 완료했다고 주장할 수 없음.
+- **구분**: 자료 업로드/링크 공유 **승인됨**. **유료 모델 리뷰 호출/READY, 기존 운영 감시기·DB·Task·토큰 변경, L1Work PUBLIC 신규 ZIP 배포, GitHub LIVE 전환은 미승인**. 개발 세션 자체시험과 별도 Claude 독립 리뷰의 결과·영수증을 구분. 현재 `INDEPENDENT_REVIEW=NOT_RUN / ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER`.
+- 다음 한 동작: Windows Claude Code가 로컬 v0.2.13의 콘텐츠 검증 후 PRIVATE review-inputs에 **실제 source/ZIP 원격 업로드/sha readback + 고정 GitHub 링크·manifest**를 묶어서 준비해 하나의 결과 MD로 보고. 그다음 사용자에게 실제 모델 리뷰 실행 비용·모드 승인만 요청. 이전 온프레미스 리뷰어/2PC/고급 격리 게이트 재요청 금지.
+
+
 ## GPT 재판정 — SU-SIMPLE 이후 구형 6개 LIVE 승인 목록 정리 (2026-11-14 KST)
 - 최신 `CLAUDE_SINGLE_USER_LIVE_FASTTRACK_RESULT_FOR_GPT_20261114.md`(commit `b949a1a93363588989a7209387e4ef6b6540387a`)를 재조회. **구형 LOCAL_ONLY/SU-L1 전제의 §7 6개 승인 목록은 최신 사용자의 SU-SIMPLE 기본 협업 요구에 그대로 적용하지 않는다.** 과거 결과는 삭제하지 않고 기준 변경만 기록.
 - **1 온프레미스 리뷰어:** 일반 CoWork 독립 리뷰의 필수 조건에서 제외; **기존 Claude 독립 리뷰 경로 우선**. 다만 CoWork watcher 소스·ZIP의 실제 외부 리뷰 전달 범위는 사용자가 확인하기 전 새 전송 실행하지 않음. 개발 세션 자기검토 `INDEPENDENT_REVIEW=NOT_RUN` 유지.
