@@ -5,11 +5,11 @@
       "work_id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
       "skill": "cowork-review-watcher",
       "title": "cowork-review-watcher",
-      "phase": "BLOCKED",
+      "phase": "DEVELOPMENT",
       "owner": "GPT / Claude Code",
       "self_test": "PASS",
       "independent_review": "NOT_RUN",
-      "next_action": "사용자가 B·C·D·토큰 결정을 숫자로 한 번에 답한다. 토큰 도구 r0002 자체시험과 설치 스크립트 격리 사본 연결 완료(실 PAT 미사용). ACTIVE_PROVIDER=NONE."
+      "next_action": "사용자 결정 B1(별도 signer 기기 가능), C1(4축 대체 증거 검토), D2(코드/ZIP LOCAL_ONLY 반출 금지), Token2(기존 least-privilege 확인). Windows 단일 delta 원샷: C 운영계정 수락조건, B 장치 계획, D 로컬 독립 리뷰·GitHub 메타데이터 전용 새 계약, 기존 토큰의 비밀 없는 권한 확인; 승인 없는 키/토큰/운영 변경·유료 리뷰/LIVE 금지. ACTIVE_PROVIDER=NONE."
     }
   ]
 }
