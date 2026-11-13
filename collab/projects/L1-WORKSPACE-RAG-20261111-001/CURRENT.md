@@ -251,3 +251,20 @@
 - v0.9 215개는 검토행이며 정본 반영/지원 기능/담당자 승인 아님. [범위 CURRENT](../L1-CHANNEL-KNOWLEDGE-SCOPE-20261113-001/CURRENT.md) 연결.
 - 기존 r0005·자체 리뷰·T01~T24·PUBLIC 인계·원장 이력 보존. 이번 GPT 작업은 PRIVATE 문서 업데이트만 수행.
 - NEXT: 기존 보고 재사용 → 정책 적합성·최소 전달·stage 호환의 미확인 계약만 점검. 첫 실제 분석 재실행/게시를 지금 요구하지 않음.
+
+## 2026-11-14 — CL/PR 이슈 분석 축적 독립 설계 리뷰 요청 준비 (LATEST)
+
+- **USER_SCOPE:** P4 submitted CL 및 GitHub merged PR 목록 → 변경 근거 수집·이슈 N:M 분류 → Problem/RootCause/Fix·독립 검증 상태 → 기존 `l1-workspace` Work/Evidence 축적 → 후일 `l1sw-dev-knowledge`에 검증된 지식 승격. 본 작업은 독립 **설계 리뷰 요청 준비**로, 코드·호스트 실제 분석 실행은 아님.
+- **REVIEW_REQUEST_ID:** `L1-CLPR-ISSUE-DESIGN-20261114-001` (부모 Work 유지; 신규 Kernel Work ID 아님).
+- **REVIEW_DESIGN:** [CL/PR 이슈 분석 설계안](CL_PR_ISSUE_ANALYSIS_DESIGN_BRIEF_r0001_20261114.md). CL-only P4 진입, Merged PR 실제 반영 SHA, 이슈 그룹핑, 근거 수준, Work Evidence 슬롯과 1차 파일럿 14개 반례 포함.
+- **CLAUDE_HANDOFF:** [독립 설계 리뷰 요청](CLAUDE_CL_PR_ISSUE_ANALYSIS_DESIGN_REVIEW_REQUEST_r0001_20261114.md). 정확한 PRIVATE repo `wonhwipark/CoWork-Skill-Collab`, branch `main`, 경로 `collab/projects/L1-WORKSPACE-RAG-20261111-001/CLAUDE_CL_PR_ISSUE_ANALYSIS_DESIGN_REVIEW_REQUEST_r0001_20261114.md`; 별도 Claude Code 세션에서 사용자가 해당 문서를 명시적으로 실행 요청해야 실제 리뷰 시작. 결과 예정 경로 `collab/projects/L1-WORKSPACE-RAG-20261111-001/CLAUDE_CL_PR_ISSUE_ANALYSIS_DESIGN_REVIEW_RESULT_FOR_GPT_r0001_20261114.md`.
+- **STATUS:** `DESIGN_REVIEW_HANDOFF_POSTED` / `INDEPENDENT_REVIEW=NOT_RUN` / `REVIEW_RESULT=NOT_RECEIVED` / `REQUEST_READY=NOT_RUN` / `PAID_REVIEW=NOT_RUN` / `ACTIVE_PROVIDER=NONE` / `MIGRATION_NOT_CUTOVER`. GitHub 문서 생성은 watcher/Claude 실행 신호가 아님.
+- **EVIDENCE_BOUNDARY:** 기존 패키지 E1/Kernel E2 및 11/14 호스트 G0 `PARTIAL_REPORTED`를 재사용. 실제 CL-only P4 진입·GitHub merge 적용·Analyzer P4 I/O·업무용 Kernel Evidence link의 실환경 E3 및 첫 분석/Provider RAG 본문은 `NOT_VERIFIED/NOT_RUN`. 기능 부재로 확정하지 않음.
+- **PRIVATE main 게시 후 원격 검증:** 두 신규 문서는 GitHub Contents readback으로 존재/원문 확인. 각 SHA-256은 원격 UTF-8 bytes 기준. 문서 이외 ZIP·코드·Knowledge·metadata·기존 운영 Work/DB/Job 변경 0.
+
+| 문서 | UTF-8 bytes | SHA-256 | Git blob |
+|---|---:|---|---|
+| `CL_PR_ISSUE_ANALYSIS_DESIGN_BRIEF_r0001_20261114.md` | 10821 | `80efd9de55f1069b34d4a260ef74123eb30baa09f6302a28c4e4d9e93d294ee5` | `b7838b5e86e3c88d322c5111ffccee0a4e835456` |
+| `CLAUDE_CL_PR_ISSUE_ANALYSIS_DESIGN_REVIEW_REQUEST_r0001_20261114.md` | 7947 | `6cdc674a027012b7b43cc22c65ff3b7d0c7c1b5cdb78319fcd0c823c43a38251` | `da8ea1bbea59f2a81c8ce7d8df0fabe1d0817183` |
+
+- **NEXT_ONE_ACTION:** 별도 Claude Code 독립 리뷰 세션에서 위 `CLAUDE_HANDOFF` 정확한 PRIVATE/main/path를 읽고 정적 설계 리뷰. 비민감 결과를 지정 결과 MD에 게시·원격 readback 후 GPT가 항목별 판정. 정식 REVIEW PASS·실행 이력·유료 호출을 소급하지 않음.
