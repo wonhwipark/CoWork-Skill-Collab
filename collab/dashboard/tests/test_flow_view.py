@@ -102,6 +102,17 @@ class WorkflowDashboardTests(unittest.TestCase):
         self.assertIn("업무 실행 환경", page)
         self.assertIn(chr(96)*3+"mermaid", md)
 
+    def test_negated_pass_does_not_override_actual_not_run(self):
+        self.current(flow_view.MIGRATION,
+                     "독립 리뷰 자체 시험을 INDEPENDENT_REVIEW=PASS로 승격하지 않음.\n"
+                     "- **현재 실측/보고 상태**: `INDEPENDENT_REVIEW=NOT_RUN`, "
+                     "`ACTIVE_PROVIDER=NONE`, `MIGRATION_NOT_CUTOVER`.")
+        ops = flow_view.snapshot(self.root)
+        self.assertEqual(ops["independent_review"], "NOT_RUN")
+        self.assertEqual(ops["active_provider"], "NONE")
+        self.assertEqual(ops["cutover"], "MIGRATION_NOT_CUTOVER")
+        self.assertNotIn("PASS", flow_view.render_markdown(generate.build_state(self.root)).split("### 운영·검증 상태", 1)[-1].split("###", 1)[0])
+
     def test_latest_provider_none_is_not_old_dropbox_live(self):
         self.current(flow_view.MIGRATION,
                      "ACTIVE_PROVIDER=NONE\nCUTOVER=MIGRATION_NOT_CUTOVER",

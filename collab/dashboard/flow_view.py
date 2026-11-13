@@ -69,10 +69,15 @@ def marker(section: str, field: str) -> str:
     if field not in ("WINDOWS_STAGE1_EXECUTION", "HOST_SHADOW", "INDEPENDENT_REVIEW",
                      "GITHUB_PAGES_DEPLOY", "PUBLIC_PAGES_DEPLOY", "ACTIVE_PROVIDER", "CUTOVER"):
         raise ValueError("unsupported field")
-    for match in FIELD_RE.finditer(section):
-        if match.group(1) == field:
-            return match.group(2)
-    return "NOT_OBSERVED"
+    # Prefer the latest explicit status report, not a negated/example PASS
+    # mentioned earlier in the same section (e.g. "do not promote ...=PASS").
+    for line in section.splitlines():
+        if any(label in line for label in ("현재 실측", "현재 상태", "현재 보고", "정형 상태")):
+            found = [m.group(2) for m in FIELD_RE.finditer(line) if m.group(1) == field]
+            if found:
+                return found[-1]
+    found = [m.group(2) for m in FIELD_RE.finditer(section) if m.group(1) == field]
+    return found[-1] if found else "NOT_OBSERVED"
 
 
 def snapshot(root: Path) -> dict:
@@ -81,6 +86,9 @@ def snapshot(root: Path) -> dict:
     provider = marker(m, "ACTIVE_PROVIDER")
     if provider not in {"NONE", "DROPBOX", "GITHUB"}:
         provider = "NOT_OBSERVED"
+    cutover = marker(m, "CUTOVER")
+    if cutover == "NOT_OBSERVED" and "MIGRATION_NOT_CUTOVER" in m:
+        cutover = "MIGRATION_NOT_CUTOVER"
     pages = marker(d, "GITHUB_PAGES_DEPLOY")
     if pages == "NOT_OBSERVED":
         pages = marker(d, "PUBLIC_PAGES_DEPLOY")
@@ -89,7 +97,7 @@ def snapshot(root: Path) -> dict:
         "windows_stage1": marker(m, "WINDOWS_STAGE1_EXECUTION"),
         "independent_review": marker(m, "INDEPENDENT_REVIEW"),
         "host_shadow": marker(m, "HOST_SHADOW"),
-        "cutover": marker(m, "CUTOVER"),
+        "cutover": cutover,
         "pages_deployment": pages,
         "migration_source": bool(m),
         "dashboard_source": bool(d),
