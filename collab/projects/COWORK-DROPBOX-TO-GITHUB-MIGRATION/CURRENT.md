@@ -1,5 +1,16 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 사용자 결정 반영 — B1/C1/D2/Token2 로컬 전용 경로 (2026-11-14 KST)
+- 사용자 의사결정 **`B=1 / C=1 / D=2 / TOKEN=2`**: B는 감시기 외 별도 승인자 기기 사용 가능(실기기 미지정·운영키 미발급), C는 4축 대체 안전성 기준 검토 선택(**C PASS 아님**), D는 **회사 원본·파생 및 신규 코드/ZIP 외부 반출 불가·LOCAL_ONLY**, 토큰은 기존 자격의 최소권한 확인 우선(신규 발급/설치 승인 아님).
+- GPT가 최신 `CURRENT.md`, BCD 자체 시험/토큰 F1~F6, B7 신뢰 루트 설계 및 review transport 계약을 확인하고 **단일 Windows delta 인계** `GPT_B1_C1_D2_TOKEN2_LOCAL_ONLY_DELTA_ONE_SHOT_r0001_20261114.md`를 PRIVATE main에 직접 게시(짧은 commit `f3d7cf86`), remote readback PASS. 기존 500+ 제품 시험/ETW/토큰 모의 시험 반복 금지.
+- **B 진행**: 운영 signer kit 6개 파일은 기존 자체시험 근거를 재사용하되 기기 지정·내부 이동 허가·저장 매체 보호·개인키 생성/공개 root 설치는 NOT_RUN. Key 값/원본 artifact PRIVATE 게시 금지.
+- **C 진행**: 별도 비관리자 SHADOW 계정의 효과적 ACL deny·분리 state 경로/identity·코드 call path·변이 대조의 4축 기준을 정식 수락 계약 **후보로 구체화**. 이전 SHADOW 계정 근거를 LIVE의 다른 계정에 소급하지 않음. `C=PARTIAL / ETW=FAIL_UNTRUSTED_MEASUREMENT / C_ALT=PROPOSED_ONLY` 유지.
+- **D 결론**: 로컬 소스/ZIP(현재 v0.2.11 175714B) 및 실제 리뷰 원문은 외부 업로드 금지. 기존 `Commit A ZIP raw SHA → signed READY` GitHub transport 계약은 **D2에서 그대로는 성립하지 않음**. 내부 독립 reviewer·로컬 artifact SHA 증명 + 정책상 허용된 비민감 메타데이터/receipt만 GitHub 게시하는 **새 계약 설계/리뷰 승인 필요**. `GITHUB_LOCAL_ONLY_REVIEW_TRANSPORT=DESIGN_REQUIRED / E=NOT_RUN`; 외부 Claude API가 로컬 환경에서 실행되어도 코드 반출로 이어질 수 있음.
+- **토큰 진행**: 기존 GitHub credential을 권한 근거로 실측 확인하되 값·prefix·경로/secret 절대 출력 금지. GitHub CLI 광역 OAuth를 least privilege라고 판단하지 않음. `github_token_check_r0002` GET-only 종료 2=NOT_PROVEN; 사용자 GitHub UI 8항목 O/X는 사람 증거. **`TOKEN_EXISTING_MIN_SCOPE=NOT_VERIFIED / CREDENTIAL=BLOCKED`** 유지.
+- **승인·운영 경계**: B1/C1/D2/token2는 준비 방향 선택일 뿐 실운영 키/root 생성·토큰 설치·외부 코드 리뷰 API·유료 reviewer/READY·운영 DB/예약 작업·LIVE 활성화 승인 아님. `ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER` 유지. 원본 Dropbox watcher·Bridge·updater Disabled, notifier Running 자체보고 기록 보존.
+- 다음 한 동작: Windows Claude Code가 위 단일 PRIVATE main 인계로 **허용된 로컬 delta 분석·합성 시험·비밀 없는 권한/계정 확인**을 수행 후 `CLAUDE_B1_C1_D2_TOKEN2_LOCAL_ONLY_RESULT_FOR_GPT_20261114.md`와 CURRENT/TRACKER만 원격 게시/readback → GPT가 남은 실제 승인 범위를 일괄 판정.
+
+
 ## GPT 판정 — 토큰 도구 r0002 Windows 자체시험 수용 (2026-11-14 KST)
 - GPT가 최신 `CLAUDE_BCD_TOKEN_APPROVAL_PRECHECK_RESULT_FOR_GPT_20261113.md` F1~F6 원문 및 r0002 도구·시험을 원격 확인. GPT 판정은 기존 `GPT_BCD_TOKEN_PRECHECK_DISPOSITION_AND_DELTA_r0001_20261113.md` §9에 **신규 후속 절만 추가**(과거 보고 보존), PRIVATE main 게시 및 remote readback PASS.
 - Windows 합성 자체시험: r0002 23 PASS(두 인터프리터), r0001 보존분 포함 34 PASS, 격리 설치 스크립트 18 PASS. 전부 모의 응답/코드 정적 검사이며 실제 PAT/네트워크/관리자 실행 0. 원본 설치 스크립트 변경·실행 0.
