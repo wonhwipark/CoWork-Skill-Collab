@@ -3,10 +3,10 @@
   "live_provider": "NONE",
   "operations": {
     "active_provider": "NONE",
-    "cutover": "NOT_OBSERVED",
+    "cutover": "MIGRATION_NOT_CUTOVER",
     "dashboard_source": true,
     "host_shadow": "NOT_OBSERVED",
-    "independent_review": "PASS",
+    "independent_review": "NOT_RUN",
     "migration_source": true,
     "pages_deployment": "PASS",
     "windows_stage1": "NOT_OBSERVED"
