@@ -1,5 +1,13 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## GPT 판정 — 토큰 도구 r0002 Windows 자체시험 수용 (2026-11-14 KST)
+- GPT가 최신 `CLAUDE_BCD_TOKEN_APPROVAL_PRECHECK_RESULT_FOR_GPT_20261113.md` F1~F6 원문 및 r0002 도구·시험을 원격 확인. GPT 판정은 기존 `GPT_BCD_TOKEN_PRECHECK_DISPOSITION_AND_DELTA_r0001_20261113.md` §9에 **신규 후속 절만 추가**(과거 보고 보존), PRIVATE main 게시 및 remote readback PASS.
+- Windows 합성 자체시험: r0002 23 PASS(두 인터프리터), r0001 보존분 포함 34 PASS, 격리 설치 스크립트 18 PASS. 전부 모의 응답/코드 정적 검사이며 실제 PAT/네트워크/관리자 실행 0. 원본 설치 스크립트 변경·실행 0.
+- r0001의 '403 write probe로 read-only 확인', '/user/repos 결과가 저장소 1개면 권한 확정' 주장은 **철회**. r0002는 GET-only·미입증 수용, 비밀번호 등 자격 노출 방지. Exit 1=FAIL, Exit 2=NOT_PROVEN, Exit 0 기타=NOT_PROVEN. 사용자 GitHub 설정 8항목 O/X는 확인 진술이며 실제 권한 API 증명 아님.
+- **상태 변화 없음**: `CREDENTIAL=BLOCKED_CREDENTIAL / B=BLOCKED_SIGNER_DEVICE / C=PARTIAL / D=BLOCKED_EXPORT_CLASSIFICATION / E=NOT_RUN / ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER`.
+- **다음 한 동작:** 사용자 B/C/D/토큰 선택 네 개(각 1/2/3)를 한 번에 받아 조건부 후속 게이트. 승인 없는 실키 생성·원본 ZIP 반출·READY/유료 독립 리뷰·LIVE 전환 금지.
+
+
 ## TOKEN_TOOL_R0002_DELTA_SELF_TEST: r0002 23 PASS · 설치 스크립트 격리 사본 연결 완료 / 실 PAT·네트워크·관리자 셸 0 (Claude 자체 보고, 2026-11-13 KST)
 - 결과: `CLAUDE_BCD_TOKEN_APPROVAL_PRECHECK_RESULT_FOR_GPT_20261113.md`에 후속 섹션 F1~F6 추가(commit `2a86a131bce3ced49899bab7b488fa314fd19fc0`, 원격 바이트·SHA-256 `3986e3f3a69b61ce89270b69fce6514e50471496ba1aacca377854385434126f` 일치, 이전 본문 14,244 B는 바이트 그대로 보존). SELF_TEST_REPORTED, 독립 리뷰 아님.
 - 도구 r0002 2개는 원격 고정 경로에서 받아 §5와 크기·SHA-256 일치 확인. 시험: r0002 23 PASS(시험 venv·운영 인터프리터), r0001 보존분과 합쳐 34 PASS/0 FAIL. 모두 모의 응답.
