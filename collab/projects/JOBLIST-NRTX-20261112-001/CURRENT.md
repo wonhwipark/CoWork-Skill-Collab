@@ -131,3 +131,10 @@ Use the already-built candidate for an approved, read-only in-house G0 check of 
 - **HISTORY_DOC:** `collab/projects/JOBLIST-NRTX-20261112-001/MCP_JOBLIST_RECOVERY_HISTORY_20261113.md` (PRIVATE `main`).
 - **STATUS:** `HANDOFF_PROMPT_DELIVERED=PASS`; `GITHUB_HISTORY=RECORDED`; `HOST_DIAG=NOT_VERIFIED`; `ISOLATED_FIX=NOT_RUN`; `HOST_E2E=NOT_RUN`; `INDEPENDENT_REVIEW=NOT_RUN`; `HOST_PROCESS_EXIT=NOT_VERIFIED`; `MIGRATION_NOT_CUTOVER`.
 - **NEXT_ONE_ACTION:** 현 작업 종료/보존. 추후 별도 실행 승인 시 Linux 로컬 Agent의 실제 소스 접근을 확인하고 기존 MCP 인터페이스 2개와 Job-list를 비교한 뒤 안전한 격리 시험 수행. 기존 소비된 One-shot 재실행 금지.
+
+## 2026-11-13 — Sanitized PUBLIC ho prompt posted (one-file exception)
+- **USER_APPROVAL:** PUBLIC `ho/`에 r0002 프롬프트의 **민감 운영 정보 제거본만** 게시하는 한 건의 명시적 예외 승인. 기존 'PUBLIC은 최종 ZIP만' 기본 원칙의 일반 변경/확대 승인 아님.
+- **PUBLIC_PATH:** `wonhwipark/L1Work` `main` `ho/MCP_JobList_Integrated_Analysis_Recovery_Prompt_r0002_PUBLIC_20261113.md`.
+- **CONTENT_POLICY:** 실행 기능 분석·격리 복구·숫자 12개 계약 유지; 실제 개인 Linux 절대 경로, PRIVATE repo 주소, 원본 Job ID, 특정 실행 로그 및 등록 정보 제거; 로컬 입력 자리표시자로 대체.
+- **REMOTE_FETCH=PASS:** PUBLIC `main` exact path 재조회 성공, 유해 문자열 점검 PASS. PUBLIC document publication is **not** host Agent execution, MCP deployment, Job reactivation, policy cutover or PUBLIC skill ZIP release.
+- **STATUS:** `PUBLIC_SANITIZED_MD_POSTED=PASS`; `PRIVATE_ORIGINAL_PRESERVED=PASS` (대화 첨부 변경 없음); `HOST_E2E=NOT_RUN`; `INDEPENDENT_REVIEW=NOT_RUN`; `OPERATIONS_UNCHANGED_BY_GPT`; `MIGRATION_NOT_CUTOVER`.
