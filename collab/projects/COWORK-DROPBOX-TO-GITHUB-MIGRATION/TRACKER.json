@@ -9,7 +9,7 @@
       "owner": "GPT / Claude Code",
       "self_test": "SELF_TEST_REPORTED",
       "independent_review": "PENDING_APPROVAL",
-      "next_action": "GPT가 CLAUDE_GITHUB_LIVE_ONE_SHOT_PREFLIGHT_RESULT_FOR_GPT_20261114.md를 판정한다. 리뷰 입력(v0.2.14, 동시 scan 중복 발송 결함 수정)은 PRIVATE에 게시·원격 검증 완료. 사용자 승인 대기: 독립 리뷰 1회(서명 방식 A/B), 감시기용 쓰기 fine-grained 토큰 1개, 이후 운영 전환. MODEL_CALLS=0, ACTIVE_PROVIDER=NONE, LIVE 미승인."
+      "next_action": "GPT v0.2.14 ACCEPT_WITH_CHANGE 판정 후 사용자 1회 묶음 승인 요청: (A) 동일 Windows PC Ed25519 키·trust warn + POLICY-STATIC-V1 최대 $1 독립 리뷰 딱 1회, (B) CoWork PRIVATE repo Contents R/W fine-grained PAT 1개 안전 설치 및 감시기 token_file 원문 형식 정합. 승인 전 모델 호출/READY/키·토큰 생성 0. 리뷰 후 실제 SHADOW·운영 DB 복원 리허설·알림 연결 확인, 최종 별도 GitHub LIVE 승인이 필요. ACTIVE_PROVIDER=NONE."
     }
   ]
 }
