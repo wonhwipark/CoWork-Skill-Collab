@@ -25,6 +25,12 @@
 - PUBLIC: `wonhwipark/L1Work` — 승인된 최종 ZIP 다운로드 및 **별도 사용자 승인된 공개 허용 목록 기반 HTML Pages 상태 요약**. 개발 후보/REQUEST/영수증/PRIVATE 원문은 공개 금지. Pages 기본 URL: `https://wonhwipark.github.io/L1Work/cowork-dashboard/`. 공개 범위는 `collab/dashboard/PUBLIC_PAGES_DEFAULT_POLICY.md` 참조.
 - 기존 Dropbox reviewer watcher: 2026-11-12 사용자 승인으로 예약작업 Disable·Stop 완료 보고, 이력 및 로컬 백업 보존. **ACTIVE_PROVIDER=NONE**, GitHub LIVE 승인·가동 아님. 다른 updater/notifier/Bridge는 변경 승인 전 유지.
 
+## L1 담당 모듈·이슈 분석 범위 공통 사전지식
+
+- [L1_CHANNEL 담당 4개 모듈 및 Knowledge 분류 공통 컨텍스트](knowledge/L1_CHANNEL_MODULE_SCOPE_COMMON_r0001_20261113.md) — NR BCH(= NR L1 Channel), NR L1 Tx, LTE ChCfg, LTE L1 Tx의 **사용자 확인 담당 범위**와 Procedure(A)/Technical(B) 분류. 지식 업데이트/모듈 간 이슈 조사 시작 시 관련 범위부터 확인.
+- [담당자 검토용 상세 분류표 v0.7](knowledge/references/L1_NR_LTE_OWNER_REVIEW_CLASSIFICATION_v0_7_20261113.md) — **A 97 + B 84 후보**; 담당자/사내 GPT 검토 전으로 구현·지원/누락 없음 확정 아님.
+- 범위를 확인할 때 **사용자 확인 담당 영역**과 **추후 코드 검증할 세부 시나리오**를 분리하고, 다른 모듈의 실제 알고리즘까지 자동 확대하지 않는다. GitHub 게시만으로 사내 분석·Job 실행·Knowledge write는 시작되지 않음.
+
 ## 새 창·새 기능 요청: 보유 스킬부터 확인
 
 1. 이 진입점과 적용 운영 계약을 읽은 뒤 [공통 스킬 기능 목록](knowledge/SKILL_CAPABILITY_CATALOG.md)에서 요청 기능에 맞는 기존 스킬을 먼저 찾는다. 사용자가 스킬명을 직접 말하지 않아도 수행한다.
