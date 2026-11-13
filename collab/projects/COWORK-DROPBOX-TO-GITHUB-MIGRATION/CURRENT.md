@@ -1,5 +1,12 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## GITHUB_LIVE_ONE_SHOT_PREFLIGHT_RESULT: REVIEW_INPUT_UPLOAD=PASS / INTEGRATION=HOST_ISOLATED_PASS / INDEPENDENT_REVIEW=PENDING_APPROVAL / ACTIVE_PROVIDER=NONE (Claude 자체 보고, 2026-11-14 KST)
+- 결과: `CLAUDE_GITHUB_LIVE_ONE_SHOT_PREFLIGHT_RESULT_FOR_GPT_20261114.md` (PRIVATE `main`, commit `ad411255ce2a6678aa0f47517a7f0f468439230e`). 자체 시험 보고이며 독립 리뷰·LIVE 가 아니다.
+- 결함 1건 수정: 실제 CLI 진입점 2프로세스 동시 `scan` 이 같은 승인 요청에 reviewer 를 2회 시작 → `StateStore.try_claim`(원자적 compare-and-set)으로 수정, 후보 v0.2.14. 진입점 E2E 9개(실제 Ed25519·실제 CLI·네트워크와 `claude` 만 대체) ×3 PASS, 제품 전체 666 passed/13 skipped(원격에서 내려받은 ZIP 을 풀어도 동일).
+- 리뷰 입력 게시: `review-inputs/REV-COWORK-V0214-20261114/` ZIP·diff·소스·`REVIEW_MANIFEST.md`, 원격 raw 바이트 SHA-256 일치, 파일별 고정 commit(결과 §5).
+- 독립 리뷰: 유효한 실행·비용 승인이 없어 `PENDING_APPROVAL`, `MODEL_CALLS=0`. 막힌 것: 이 PC 에 운영 서명키·신뢰 루트 없음, 감시기용 쓰기 가능 fine-grained 토큰 없음(`CREDENTIAL_MINIMUM=BLOCKED`).
+- 다음 한 동작: GPT 판정 후 사용자에게 승인 묶음(리뷰 1회 + 서명 방식 A/B, 쓰기 토큰 1개, 이후 운영 전환)을 한 번에 전달.
+
 ## GPT LIVE 직전 원샷 — GitHub 리뷰·감시기 제품 연동·전환 사전검증 (2026-11-14 KST)
 - 사용자 요청: **남은 1~3단계(리뷰 자료 게시·Claude 독립 리뷰·CoWork 감시기 실제 제품 경로 격리 시험)를 Windows Claude Code 한 번의 실행으로 준비·진행**. LIVE 전환은 최종 별도 승인.
 - PRIVATE main에 유일 실행 인계서 `collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/GPT_GITHUB_LIVE_ONE_SHOT_REVIEW_INTEGRATION_PREFLIGHT_r0001_20261114.md` 게시(commit `1a414a5282c2adcf62342acf096598c844cba756`; remote readback PASS). 사용자 제공 프롬프트는 이 경로 하나를 지정.
