@@ -1,5 +1,17 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## GPT 재판정 — SU-SIMPLE 이후 구형 6개 LIVE 승인 목록 정리 (2026-11-14 KST)
+- 최신 `CLAUDE_SINGLE_USER_LIVE_FASTTRACK_RESULT_FOR_GPT_20261114.md`(commit `b949a1a93363588989a7209387e4ef6b6540387a`)를 재조회. **구형 LOCAL_ONLY/SU-L1 전제의 §7 6개 승인 목록은 최신 사용자의 SU-SIMPLE 기본 협업 요구에 그대로 적용하지 않는다.** 과거 결과는 삭제하지 않고 기준 변경만 기록.
+- **1 온프레미스 리뷰어:** 일반 CoWork 독립 리뷰의 필수 조건에서 제외; **기존 Claude 독립 리뷰 경로 우선**. 다만 CoWork watcher 소스·ZIP의 실제 외부 리뷰 전달 범위는 사용자가 확인하기 전 새 전송 실행하지 않음. 개발 세션 자기검토 `INDEPENDENT_REVIEW=NOT_RUN` 유지.
+- **2 토큰:** 신규 읽기용 PAT·별도 결과 쓰기 토큰·개발자 `gh` 전면 교체 3종을 한 번에 강제하지 않는다. 기존 개발자 `gh` 로그인과 watcher 실행용 자격을 분리해 실제 요구 권한부터 파악. 최소 권한 권고와 비밀 노출 금지는 유지; 필요한 자격 설치/교체만 별도 승인.
+- **3 비관리자 서비스 계정:** LIVE의 무조건 선행요건에서 제외하고 기존 Windows watcher 권한·경로·DB 쓰기 영향을 **실측에 따라 최소 변경**. 운영 Task/ACL/DB 변경은 승인 전 불변.
+- **4 SU-L1:** `local_only_contract_r0003`와 `su_l1_policy_r0001`는 로컬 후보로 보존. **제품 통합 `NOT_RUN`**, 사용자가 요구하지 않은 별도 정책/원장으로 교체·활성화하지 않음. 기존 watcher 중복 0·재시작/영수증 기능 재사용 우선.
+- **5 리뷰/LIVE:** 유효한 별도 Claude 독립 리뷰는 허용된 코드 범위·모드·비용 승인을 확인한 후 실행. 최종 GitHub LIVE 활성화·구 운영 데이터/알림·복구 영향이 있는 행위는 결과 검증 뒤 사용자 명시 승인 필요. `ACTIVE_PROVIDER=NONE`, `MIGRATION_NOT_CUTOVER`.
+- **6 코드 분류:** Windows Claude Code PC는 회사 L1 원본에 접속 불가라는 사실 확인. 회사 코드·고객자료·비밀은 PRIVATE/PUBLIC/외부 모델로 반출 금지. CoWork watcher 자체 코드·합성 시험 코드는 구별하되, 이전 D2 요청을 자동으로 무효화한 것은 아니므로 **전송 범위 한 번의 사용자 확인**이 필요하다.
+- 자체시험 재사용: 호스트 보고 v0.2.13 로컬 후보(642 PASS/13 SKIP 시험 venv), 원장 r0003 28 PASS×3, 변이 14/14. GPT 원본 제품 ZIP·r0003 코드는 읽지 못했으며 수치는 `SELF_TEST_REPORTED`로 유지. 이전 기 구현 성과를 버리지 않고 SU-SIMPLE 목표에 유용한 부분만 통합. `SU_SIMPLE=DESIGN_SELECTED`, `REVIEWER_BLOCKER=RECLASSIFIED`, `INDEPENDENT_REVIEW=NOT_RUN`, `GITHUB_LIVE=NOT_APPROVED`.
+- 후속 **Windows 원샷 실행은 아직 요청하지 않음**. 다음 실행 시 정확한 PRIVATE repo/main의 최신 SU-SIMPLE 설계를 기준으로 기존 watcher 경로 재사용·최소 통합 delta만 수행. 이전 6개 질문 또는 LOCAL_ONLY 온프레미스 reviewer 필수 가정을 반복하지 않음.
+
+
 ## SU_L1_FASTTRACK_RESULT: LANE_A=FIXED_AND_RETESTED / E=BLOCKED_LOCAL_REVIEWER / DEVELOPMENT_READY_NOT_FOR_DEPLOYMENT / ACTIVE_PROVIDER=NONE (Claude 자체 보고, 2026-11-14 KST)
 - 결과: `CLAUDE_SINGLE_USER_LIVE_FASTTRACK_RESULT_FOR_GPT_20261114.md` (PRIVATE `main`, commit `b949a1a93363588989a7209387e4ef6b6540387a`). 자체 시험 보고이며 독립 리뷰가 아니다. LIVE 전환·운영 변경 없음.
 - 원장: r0002의 두 위험(동시 2프로세스 중복 수락, 상태 파일 분실 후 replay)을 재현한 뒤 새 `local_only_contract_r0003`으로 수정. SQLite 원장+OS 잠금+앵커, 1회 bootstrap, 분실·과거 사본·손상은 FAIL_CLOSED, 리뷰 1회 예약·UNCERTAIN 봉인. 28 PASS×3, 변이 14/14 검출. 감시기 제품 경로 연결은 `CONTRACT_INTEGRATION=NOT_RUN`.
