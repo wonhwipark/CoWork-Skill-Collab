@@ -9,7 +9,7 @@
       "owner": "GPT / Claude Code",
       "self_test": "PASS",
       "independent_review": "NOT_RUN",
-      "next_action": "사용자가 CoWork 자체 소스/ZIP의 Claude 독립 리뷰용 GitHub PRIVATE 전송 및 L1Work 기존 공개 ZIP·handoffs MD 링크 리뷰 허용. Windows 로컬 v0.2.13의 review-inputs 업로드/원격 SHA·commit 검증 + manifest/실제 링크 준비 후 통합 결과 보고. 유료 리뷰/READY/운영·PUBLIC 신규 배포/LIVE는 별도 승인. ACTIVE_PROVIDER=NONE."
+      "next_action": "LIVE 직전 원샷 인계서 GPT_GITHUB_LIVE_ONE_SHOT_REVIEW_INTEGRATION_PREFLIGHT_r0001_20261114.md PRIVATE/main 게시·재확인 PASS. 사용자가 Windows Claude Code에 1번 전달: 기존 v0.2.13 기반 격리 감시기 제품 연동 E2E·결함수정, 최종 CoWork source/ZIP PRIVATE 리뷰 입력 게시+remote raw SHA/link pin, 기존 유효 비용/모드 승인 있을 때만 독립 리뷰 1회(없으면 PENDING_APPROVAL), 통합 preflight report/CURRENT/TRACKER 게시. 운영 Task/DB/LIVE 변경 승인 전 불가, ACTIVE_PROVIDER=NONE."
     }
   ]
 }
