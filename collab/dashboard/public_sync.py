@@ -39,7 +39,7 @@ PHASE_LABELS = {
 PUBLIC_WORKS = {
     "COWORK-DROPBOX-TO-GITHUB-MIGRATION": (
         "협업 운송 전환", "review-watcher", "협업 관리·업무 실행",
-        "승인된 환경 검증 근거 확인 후 전환 게이트 판정",
+        "LIVE 전환 선행 조건에 대한 사용자 결정·검증 근거 확인",
     ),
     "COWORK-GITHUB-DASHBOARD-20261111-001": (
         "CoWork 대시보드", "dashboard", "GPT",
