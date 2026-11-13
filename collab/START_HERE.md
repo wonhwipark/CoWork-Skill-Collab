@@ -43,6 +43,7 @@
 - Python watcher: 유효한 승인 서명·파일·repo ID·정책·비용·중복 확인 후 **정식 REQUEST/READY**가 있을 때만 리뷰 호출. 파일 게시 자체는 실행 신호 아님.
 - PRIVATE: `wonhwipark/CoWork-Skill-Collab` — 새 협업 문서/판정/인계/영수증의 기준 저장소. 민감/반출금지 자료는 PRIVATE에도 게시 불가.
 - **스킬 ZIP 전달 SSOT:** [Job-list/Skill-Updater PUBLIC 배송 계약](ops/CONTRACTS/JOBLIST_PUBLIC_DELIVERY_V1.md). 작업 PC의 Skill-Updater가 받는 최종 ZIP은 **PUBLIC `wonhwipark/L1Work` `main` 루트**. PRIVATE 후보/문서 게시로 배송·실행 호스트 동작을 완료했다고 보고하지 않는다. 후보·독립 리뷰·호스트·배포 게이트 미충족 시 PUBLIC 게시 BLOCKED.
+- **Issue Analyzer 1차 PUBLIC 배포 지정:** [작업 CURRENT](projects/ISSUE-ANALYZER-20261114-001/CURRENT.md) 기준, 첫 ZIP도 PUBLIC `wonhwipark/L1Work/main` 루트에만 전달. PRIVATE ZIP으로 배송 대체 금지. v0.11.50은 로컬 패키지 검증 후보이며 GitHub ZIP 게시 `NOT_POSTED`, 전체 회귀·독립 리뷰·실호스트 검증 미완료로 구분. [전달 계약](ops/CONTRACTS/JOBLIST_PUBLIC_DELIVERY_V1.md) 7절 참조.
 - PUBLIC: `wonhwipark/L1Work` — 승인된 최종 ZIP 다운로드 및 **별도 사용자 승인된 공개 허용 목록 기반 HTML Pages 상태 요약**. 개발 후보/REQUEST/영수증/PRIVATE 원문은 공개 금지. Pages 기본 URL: `https://wonhwipark.github.io/L1Work/cowork-dashboard/`. 공개 범위는 `collab/dashboard/PUBLIC_PAGES_DEFAULT_POLICY.md` 참조.
 - 기존 Dropbox reviewer watcher: 2026-11-12 사용자 승인으로 예약작업 Disable·Stop 완료 보고, 이력 및 로컬 백업 보존. **ACTIVE_PROVIDER=NONE**, GitHub LIVE 승인·가동 아님. 다른 updater/notifier/Bridge는 변경 승인 전 유지.
 
