@@ -16,10 +16,10 @@
       "id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md",
-      "status": "검증 진행 중",
+      "status": "전환 전",
       "title": "COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태",
       "tone": "warning",
-      "topic": "B1_C1_D2_TOKEN2_LOCAL_ONLY_RESULT: B=AVAILABLE_UNDESIGNATED / C_ALT=PROPOSED(C=PARTIAL) / D=LOCAL_ONLY / TOKEN=OVERPRIVI"
+      "topic": "GPT 판정 — 로컬 전용 5개 결정 권고 (2026-11-14 KST)"
     },
     {
       "id": "COWORK-GITHUB-DASHBOARD-20261111-001",
