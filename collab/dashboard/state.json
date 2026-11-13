@@ -16,10 +16,10 @@
       "id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md",
-      "status": "검증 진행 중",
+      "status": "전환 전",
       "title": "COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태",
       "tone": "warning",
-      "topic": "TOKEN_TOOL_R0002_DELTA_SELF_TEST: r0002 23 PASS · 설치 스크립트 격리 사본 연결 완료 / 실 PAT·네트워크·관리자 셸 0 (Claude 자체 보고, 2026-11-13 KST"
+      "topic": "GPT 판정 — 토큰 도구 r0002 Windows 자체시험 수용 (2026-11-14 KST)"
     },
     {
       "id": "COWORK-GITHUB-DASHBOARD-20261111-001",
