@@ -6,7 +6,7 @@ This repository is a **private collaboration workspace**, not a deployment repos
 
 ## 기본 대시보드 — 클릭하면 바로 열리는 HTML (GitHub Pages)
 
-**[CoWork Executive · Work Tracker 기본 대시보드 열기](https://wonhwipark.github.io/L1Work/cowork-dashboard/)** — **기본 확인 경로**. PC·모바일에서 업무별 독립 카드, 검증 상태, 다음 조치 확인.
+**[CoWork Executive v3 · 진행 업무 목적·상태 기본 대시보드 열기](https://wonhwipark.github.io/L1Work/cowork-dashboard/)** — **기본 확인 경로**. PC·모바일에서 업무 목적·현재 단계·다음 조치를 먼저 요약하고, 카드별 목표 결과·검증 근거를 확인.
 
 - 공개 화면은 PRIVATE 최신 상태에서 **공개 허용목록으로 선별·검증한 상위 요약**을 자동 갱신합니다. 원문 요청·리뷰·영수증·식별자·비밀 정보는 게시하지 않습니다.
 - **[PRIVATE 상세 HTML](collab/dashboard/index.html)** — 최신 GitHub 기록을 Actions로 재생성. GitHub HTML blob은 다운로드 후 브라우저에서 확인할 수 있습니다.
@@ -29,10 +29,10 @@ This repository is a **private collaboration workspace**, not a deployment repos
 
 ## Repository roles
 - **PRIVATE here:** non-restricted design, candidate artifacts, reviews, receipts, status and dashboard — only after explicit source classification/approval.
-- **PUBLIC [L1Work](https://github.com/wonhwipark/L1Work):** separately approved final ZIPs and the explicitly approved synthetic-only dashboard HTML sample, preserving existing anonymous ZIP download paths. PRIVATE collaboration files must not be published.
+- **PUBLIC [L1Work](https://github.com/wonhwipark/L1Work):** separately approved final ZIPs and an approved allowlist-filtered, auto-updated public work-status HTML dashboard, preserving existing anonymous ZIP download paths. PRIVATE collaboration files must not be published.
 
 ## Current safety status
-- Dropbox reviewer watcher and dashboard remain the existing LIVE system.
-- GitHub reviewer transport, Claude independent review, SHADOW test, single pilot, and cutover: **NOT_RUN**.
-- No executable `REQUEST/READY`, real skill ZIP, sensitive source data or authentication secrets have been migrated.
+- 최신 이관 `CURRENT.md` 기준 `ACTIVE_PROVIDER=NONE` (2026-11-12 기존 reviewer watcher Disable·Stop 보고). PRIVATE 상태 생성기의 과거 LIVE 문구는 최신 운영 근거가 아닙니다.
+- PRIVATE → PUBLIC 허용 상태 요약의 자동 갱신은 E2E PASS 기록이 있습니다. 이는 리뷰 모델·Windows watcher GitHub LIVE 전환과 별개의 기능입니다. `MIGRATION_NOT_CUTOVER` 유지.
+- GitHub LIVE 운영 및 Claude 독립 리뷰 완료는 미검증/`NOT_RUN`; 민감 코드·고객정보·토큰을 저장소로 반출하지 않습니다. 실제 상세 상태는 [최신 이관 CURRENT](collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md)를 우선합니다.
 - GitHub branch protection and Windows reviewer GitHub authorization require separate verification before any LIVE workflow.
