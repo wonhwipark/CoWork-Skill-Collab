@@ -5,11 +5,11 @@
       "work_id": "L1-WORKSPACE-RAG-20261111-001",
       "skill": "l1-knowledge-updater",
       "title": "l1-knowledge-updater",
-      "phase": "REQUIREMENT",
+      "phase": "REVIEW",
       "owner": "GPT",
       "self_test": "NOT_VERIFIED",
       "independent_review": "NOT_RUN",
-      "next_action": "기존 G0 보고 재사용; 정책·최소 전달·stage 호환 점검, 실분석 검증은 첫 사례 후속"
+      "next_action": "CL/PR 이슈 분석 설계 요청서 PRIVATE 게시됨; Claude Code 별도 세션 독립 리뷰 실행·결과 원격 확인 대기"
     }
   ]
 }
