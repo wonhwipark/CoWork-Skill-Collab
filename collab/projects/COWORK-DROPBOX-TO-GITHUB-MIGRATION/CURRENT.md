@@ -1,5 +1,14 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 사용자 A안 승인 + 리뷰 등급별 토큰 예산 (2026-11-14 KST)
+- 사용자 **A안 명시 승인**: 리뷰 대상 `REV-COWORK-V0214-20261114`의 **기존 `POLICY-STATIC-V1` / R1 / 최대 $1 / 독립 Claude 리뷰 정확히 1회**, 동일 Windows PC Ed25519 단일 서명키/신뢰 루트 암호화 보관 및 `trust_root_independence=warn`까지 포함. **이미 승인된 한 건에 재승인 질문하지 말 것**.
+- 사용자는 리뷰당 토큰 사용량을 **단순 정합성(R0), 변경/결함(R1), 구조(R2), 심층(R3)** 등급으로 나눠 관리하도록 지시. `collab/ops/CONTRACTS/REVIEW_TIER_TOKEN_BUDGET_V1.md`(commit `e2a98b3dc2e2a3b08f47271c75610cb27d65ced7`; 이후 단일 사전승인 정책 반영 commit `39fdc6c073be9af96e88db38d6a10947f1dbd388`)에서 토큰 목표/최대 turns/기존 비용 정책 매핑을 정의. 정확한 total token HARD CAP 지원 여부는 Windows 실제 CLI 확인 전 **NOT_PROVEN**.
+- **승인 정책 재정리**: 사용자 목표는 매 리뷰마다 별도 비용 승인 요청이 아닌 **일회성 상시 정책 승인 → 승인된 Work·등급·요청 수/일일 비용 안에서 자동 실행**. 향후 상시 승인 자체는 아직 받지 않았으므로 기본 유료 리뷰 자동화를 즉시 활성화하지 않음. 승인 밖 새 비용·등급 상향·재리뷰는 예외.
+- Windows용 **A안 원샷 인계** `collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/GPT_A_APPROVED_V0214_SINGLE_REVIEW_AND_TIER_HANDOFF_r0001_20261114.md`를 PRIVATE main에 게시(commit `c221be18275af31962ccf2b417e062fc7248661a`, remote readback PASS). Windows Claude Code에 이 정확한 경로 하나만 전달하면 승인된 키/서명·R1 리뷰/영수증을 기존 계약에 따라 한 작업으로 추진. 권한/전송이 막히면 해당 부분만 BLOCKED, 그 외 작업은 계속.
+- **B안**(새 fine-grained PAT/토큰 포맷·폐기), LIVE 전환, 운영 DB/WAL/SHM·Task·Notifier/Bridge 변경, 신규 PUBLIC 릴리스, 추가 유료 리뷰/재리뷰는 미승인. 사용자의 이 발언은 해당 승인으로 확대 해석 금지.
+- **현재 실측**: 문서·설계/인계만 GitHub에 게시됨, Windows A안 실제 실행·키 생성/서명·모델 호출/영수증은 이 세션에서 **NOT_RUN**. `INDEPENDENT_REVIEW=PENDING_EXECUTION`(tracker에서는 `PENDING_APPROVAL` 기존 enum 보존 가능), `ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER`.
+
+
 ## GPT v0.2.14 원샷 프리플라이트 종합 판정 (2026-11-14 KST)
 - `CLAUDE_GITHUB_LIVE_ONE_SHOT_PREFLIGHT_RESULT_FOR_GPT_20261114.md`(commit `ad411255ce2a6678aa0f47517a7f0f468439230e`), `review-inputs/REV-COWORK-V0214-20261114/REVIEW_MANIFEST.md` 및 실제 diff·`state_store.py`·`orchestrator.py`·`test_try_claim.py` 원격 조회 후 GPT `ACCEPT_WITH_CHANGE`.
 - 결함 원인·수정 직접 확인: 같은 processing_key에 2개 `scan`이 모두 무조건 `CLAIMED`로 갱신하며 리뷰를 2회 시작하는 경합을 `StateStore.try_claim`의 SQLite 단일 조건부 UPDATE (CAS)로 수정. 구조적으로 동일 키 1회 예약. E2E 9개×3 PASS, ZIP unpack/venv 제품 666 PASS·13 SKIP 등은 **Claude 자체 보고**로 기록. 실제 독립 리뷰 아님.
