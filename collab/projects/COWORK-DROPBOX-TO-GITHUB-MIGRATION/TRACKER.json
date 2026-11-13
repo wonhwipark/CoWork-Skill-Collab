@@ -5,11 +5,11 @@
       "work_id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
       "skill": "cowork-review-watcher",
       "title": "cowork-review-watcher",
-      "phase": "BLOCKED",
+      "phase": "DEVELOPMENT",
       "owner": "GPT / Claude Code",
       "self_test": "PASS",
       "independent_review": "NOT_RUN",
-      "next_action": "GPT 판정 완료: v2 r0002 장부 프로세스 간 동시성 락·상태 파일 삭제 후 replay fail-closed 증명 필요. 사용자 핵심 사실 2가지(별도 회사 관리 서명자 PC 및 키트 내부 이동 정책, 조직 승인 로컬 독립 리뷰어 실제 가용성) 확인 후 delta 수정/독립 검증 묶음 실행. ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER."
+      "next_action": "SU-L1 단일 사용자 LOCAL_ONLY 신규 설계·원샷 인계 완료. Windows Claude Code에 GPT_SINGLE_USER_LOCAL_ONLY_LIVE_FASTTRACK_MASTER_r0001_20261114.md 하나만 실행: 동시성/장부 loss replay 보완, 로컬 승인정책 격리 개발·delta 시험·candidate ZIP 보존, 독립 로컬 reviewer 확인, 서비스 계정/PAT/LIVE 체크리스트. 결과 1개+CURRENT/TRACKER 게시. 별도 서명자 PC 필수는 설계 대체 검토, 원본 계약/LIVE 변경 없음; ACTIVE_PROVIDER=NONE."
     }
   ]
 }
