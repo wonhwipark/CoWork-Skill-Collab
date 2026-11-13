@@ -40,6 +40,9 @@ jobs:
           ref: main
           persist-credentials: false
 
+      - name: Set fixed UTC status generation timestamp
+        run: echo "COWORK_STATUS_AT=$(date -u '+%Y-%m-%dT%H:%M:%SZ')" >> "$GITHUB_ENV"
+
       - name: Validate exporter and test no confidential field escapes
         run: |
           set -euo pipefail
