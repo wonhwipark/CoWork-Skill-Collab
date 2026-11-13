@@ -6,6 +6,16 @@
 - 기준 인계: `wonhwipark/L1Work`, `main`, `handoffs/L1_KNOWLEDGE_UPDATER_WORKFLOW_INHOUSE_HANDOFF_r0005_1111.md`.
 - 이 메모는 별도 후속 점검 자료다. 기존 인계서나 현재 수행 요청을 변경하거나 재실행하지 않는다.
 
+## 2026-11-14 — 일부 피드백 수신 및 검증 시점 조정
+
+- NOTE_STATUS=PARTIAL_FEEDBACK_RECEIVED / TARGETED_CONTRACT_CHECKS_PENDING / FIRST_ANALYSIS_FOLLOWUP.
+- 사용자 첨부 업무용 GPT 화면을 통해 기존 기능의 G0 일부 확인 보고를 확보. 원본 설치/시험 영수증을 직접 확인한 것은 아님. 위 초기 미접수 문구와 아래 절차는 과거 기록으로 보존.
+- [최신 판정](../L1_KNOWLEDGE_FEEDBACK_DISPOSITION_r0001_20261114.md)을 우선 적용. 기존 G0를 재사용하며 누락을 미실행·미확인과 구분.
+- 지금은 정책 적합성·최소 전달·stage 호환만 점검. 실제 저장 위치·ID 매핑·source/MSC/Evidence·게시/역링크·Provider 본문 사용은 첫 승인된 실제 분석 후 검증.
+- 첫 분석 후 항목을 현재 분류·연계 설계 완료의 차단으로 사용하지 않음. 실제 운영 안전 조건과 E2E 미검증 상태는 유지.
+- doc-converter 실제 호출·원본/metadata 쓰기·전체 통합 결과는 이 화면만으로 PASS/무쓰기 확정하지 않음.
+- 기존 요청의 재실행·모델 호출·운영 쓰기·PUBLIC 게시 없음.
+
 ## 1. 먼저 확인할 사항
 
 1. 실제 수행 범위가 r0005의 G0 읽기 전용 조사·G1 설계표였는지, 사내에서 별도로 지시한 범위가 있었는지 구분한다.

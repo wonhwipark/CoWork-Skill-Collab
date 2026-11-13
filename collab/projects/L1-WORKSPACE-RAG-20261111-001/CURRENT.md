@@ -1,20 +1,22 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
-- Updated: 2026-11-12 KST — follow-up memo registered, inhouse result pending (user-reported request)
-- CoWork operating mode: `MIGRATION_NOT_CUTOVER / DROPBOX_LIVE`
-- Scope: collaboration/handoff documents only; G0 installed facts separated from G1 assumptions; no existing knowledge/metadata or runtime writes
-- G0_INSTALL_FACTS: NONE_CONFIRMED (inhouse result not received; task USER_REPORTED_REQUESTED)
-- FOLLOWUP_NOTE_STATUS: PENDING_RESULT / INHOUSE_EXECUTION_RESULT: NOT_VERIFIED
-- G1_ASSUMPTIONS: PROVISIONAL / UNKNOWN_API_RECORD: ADDITIONAL_CHECK_REQUIRED_OR_BLOCKED
-- DEVELOPMENT: DESIGN_ONLY
-- SELF_TEST: document static QA and remote UTF-8/blob/hash readback PASS; prior Kernel E2 reports retained as historical; new skill/schema/host tests NOT_RUN
-- INDEPENDENT_REVIEW: NOT_RUN (GitHub documents posted; no Claude execution or valid LIVE REQUEST/READY witnessed)
-- REVIEW_REQUEST: PREPARED_NOT_QUEUED (SEMI_AUTO; GitHub watcher NOT_ACTIVE)
-- INHOUSE_WORKSPACE_TREE: NOT_VERIFIED
-- RAG_PROVIDER_INPUT: BLOCKED / NOT_VERIFIED
-- CODE_OR_SKILL_MODIFICATION: NONE
-- PUBLIC_HANDOFF_DOCUMENT: POSTED / REMOTE_READBACK_PASS (specific user authorization)
-- SKILL_PUBLIC_RELEASE / HOST_INSTALL / LIVE_CUTOVER: NOT_RUN
+## 현재 요약 — 2026-11-14 KST
+
+- Updated: 2026-11-14 KST
+- Latest disposition: [피드백 판정·첫 분석 후 검증 범위](L1_KNOWLEDGE_FEEDBACK_DISPOSITION_r0001_20261114.md)
+- Scope: 비민감 문서·분류·연계 설계. 실제 기능 부재와 미실행 검증을 구분.
+- G0: PARTIAL_REPORTED — 사용자 제공 호스트 Agent 보고/업무용 GPT 검토 요약 수신. 원본 설치 소스·로그·영수증 직접 검증은 미수행.
+- Follow-up memo: PARTIAL_FEEDBACK_RECEIVED / TARGETED_CONTRACT_CHECKS_PENDING.
+- Current design checks: 기존 Tier/MSC 정책 적합성, Workflow↔Updater 최소 전달, Kernel 허용 stage 호환. 기존 기능 우선 재사용.
+- First-analysis follow-up: 저장 위치·실제 ID 연결·source/MSC/Evidence·게시/역링크·Provider 본문 입력은 NOT_RUN/NOT_VERIFIED. 첫 승인된 실제 분석 후 확인하며 현재 분류·연계 설계의 누락/완료 차단으로 취급하지 않음.
+- Runtime gate: 실제 게시/RAG E2E는 검증 전 PASS 금지. 접근·소스·owner/root·승인·중복 방지 등 안전 조건 유지.
+- Latest contract: r0005 보존 + 2026-11-14 범위 판정. 논리 필드/엔진을 확인 없이 신규 구현 명세로 확정하지 않음.
+- Classification: v0.9 215개 검토 후보(P120/F95), 담당자 검토·실제 코드/ID 매핑 완료는 아님.
+- DEVELOPMENT: DOCUMENTATION_ONLY. 이번 작업의 코드·스킬·지식/metadata·운영 데이터 변경 없음.
+- INDEPENDENT_REVIEW: NOT_RUN. 기존 GPT 자체 리뷰·피드백·호스트 Agent 보고와 분리.
+- PUBLIC_HANDOFF: 기존 L1Work/main/handoffs/r0005 유지, 이번 갱신으로 PUBLIC 재게시·기존 요청 재실행 없음.
+- CoWork operating state: MIGRATION_NOT_CUTOVER; ACTIVE_PROVIDER 등 실제 상태는 [이관 CURRENT](../COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) 최신 요약 기준.
+- Reading rule: 이 최상단 요약과 최신 판정을 먼저 읽는다. 아래는 날짜별 이력이며 과거 NONE_CONFIRMED/NOT_RUN/DROPBOX_LIVE를 현재 상태로 소급하지 않는다.
 
 ## Posted on GitHub PRIVATE main without PR
 
@@ -239,3 +241,13 @@
 
 - **NO_EXECUTION:** REQUEST_READY/PAID_REVIEW/SOURCE_PATCH/SKILL_INSTALL/GROUP_WRITE/LIVE_CUTOVER=NOT_RUN. RAG_M1=BLOCKED / INDEPENDENT_REVIEW=NOT_RUN. 등록을 CLOSED/설계 구현 완료/백그라운드 예약으로 처리하지 않음. 기존 운영 상태는 변경하지 않음.
 - **NEXT_ONE_ACTION:** 사용자에게 사내 결과가 확보되면 허용된 범주형 요약만 전달받아 이 메모 항목별로 판정. 그때 필요한 doc-converter 등 기존 연결의 최소 보완만 결정하며 전체 설계 재작성·현재 요청 재실행은 자동 지시하지 않음.
+
+## 2026-11-14 — G0 일부 보고 수신·첫 분석 후 검증 분리 (LATEST)
+
+- 사용자 첨부 피드백의 비민감 판정을 [새 결과 문서](L1_KNOWLEDGE_FEEDBACK_DISPOSITION_r0001_20261114.md)에 기록. 원본 사진/회사 코드/로그/설치 소스는 게시하지 않음.
+- 과거 G0 전체 미확인 상태에서 **G0 일부 확인 보고 확보**로 진전. 실제 설치본·API·독립 리뷰의 전체 PASS를 주장하지 않음.
+- 기존 역할·Source Revision/Evidence·Tier/MSC 정책 재사용. 신규 SourceSnapshot/CAS/복구/원장 기본 개발은 보류.
+- 사용자 확인에 따라 실제 저장 위치·source/MSC/Evidence·게시/readback·역링크·AI 본문 활용은 **미실행 — 첫 실제 분석 후 검증 예정**. 현재 분류/연계 설계 완료의 차단과 실제 E2E 완료 게이트를 분리.
+- v0.9 215개는 검토행이며 정본 반영/지원 기능/담당자 승인 아님. [범위 CURRENT](../L1-CHANNEL-KNOWLEDGE-SCOPE-20261113-001/CURRENT.md) 연결.
+- 기존 r0005·자체 리뷰·T01~T24·PUBLIC 인계·원장 이력 보존. 이번 GPT 작업은 PRIVATE 문서 업데이트만 수행.
+- NEXT: 기존 보고 재사용 → 정책 적합성·최소 전달·stage 호환의 미확인 계약만 점검. 첫 실제 분석 재실행/게시를 지금 요구하지 않음.

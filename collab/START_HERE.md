@@ -1,5 +1,5 @@
 # CoWork — GitHub 협업 진입점
-기준: 2026-11-13 KST | **MIGRATION_NOT_CUTOVER / 활성 리뷰 provider는 각 프로젝트 CURRENT.md에서 확인**
+기준: 2026-11-14 KST | **MIGRATION_NOT_CUTOVER / 활성 리뷰 provider는 각 프로젝트 CURRENT.md에서 확인**
 성격: **고정 진입점**. 특정 Phase, 요청자 전달 대기, ZIP PASS 등 수시 상태를 이 문서에 고정하지 않는다.
 
 ## 공통 용어·저장소 접근 지침
@@ -49,7 +49,8 @@
 ## L1 담당 모듈·이슈 분석 범위 공통 사전지식
 
 - [L1_CHANNEL 담당 4개 모듈 및 Knowledge 분류 공통 컨텍스트](knowledge/L1_CHANNEL_MODULE_SCOPE_COMMON_r0001_20261113.md) — NR BCH(= NR L1 Channel), NR L1 Tx, LTE ChCfg, LTE L1 Tx의 **사용자 확인 담당 범위**와 Procedure(A)/Technical(B) 분류. 지식 업데이트/모듈 간 이슈 조사 시작 시 관련 범위부터 확인.
-- [담당자 검토용 상세 분류표 v0.7](knowledge/references/L1_NR_LTE_OWNER_REVIEW_CLASSIFICATION_v0_7_20261113.md) — **A 97 + B 84 후보**; 담당자/업무용 GPT 검토 전으로 구현·지원/누락 없음 확정 아님.
+- [최신 Confluence 분류 검토표 v0.9](knowledge/references/L1_NR_LTE_Confluence_Module_Procedure_Feature_Table_v0_9_20261113_KST.md) — **P120/F95, 총215개 검토행**. 실제 ID·지원·구현·담당자 승인과 구분. [v0.7 181행 원본](knowledge/references/L1_NR_LTE_OWNER_REVIEW_CLASSIFICATION_v0_7_20261113.md)은 보존.
+- [L1 지식 최신 상태](projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md) · [2026-11-14 피드백 판정](projects/L1-WORKSPACE-RAG-20261111-001/L1_KNOWLEDGE_FEEDBACK_DISPOSITION_r0001_20261114.md): r0005 유지, G0 일부 확인 보고 확보. 실제 저장·source/MSC/Evidence·게시/역링크·RAG 입력은 첫 실제 분석 후 검증하며 현재 분류/연계 설계의 완료 차단으로 취급하지 않음.
 - 범위를 확인할 때 **사용자 확인 담당 영역**과 **추후 코드 검증할 세부 시나리오**를 분리하고, 다른 모듈의 실제 알고리즘까지 자동 확대하지 않는다. GitHub 게시만으로 코드 분석·Job 실행·Knowledge write는 시작되지 않음.
 
 ## 새 창·새 기능 요청: 보유 스킬부터 확인

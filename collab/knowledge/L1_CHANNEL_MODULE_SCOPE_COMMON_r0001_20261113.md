@@ -4,8 +4,17 @@
 - Repository: GitHub PRIVATE `wonhwipark/CoWork-Skill-Collab`, branch `main`, `collab/knowledge/`
 - Status: **USER_CONFIRMED_SCOPE + OWNER_REVIEW_CANDIDATE** — 실제 코드 사실·모든 3GPP 적합성·전체 항목 확정 아님
 - Purpose: 새로운 지식 업데이트, 모듈 간 이슈 조사, 분석 범위 설정, 담당자 회의 및 사내 GPT 검토 전에 참고할 **공통 사전 맥락**
-- Full review table: [L1 NR/LTE 담당자 검토용 v0.7 (A 97행, B 84행)](references/L1_NR_LTE_OWNER_REVIEW_CLASSIFICATION_v0_7_20261113.md)
+- Latest review table: [Confluence v0.9 — P120/F95, 총 215개 검토행](references/L1_NR_LTE_Confluence_Module_Procedure_Feature_Table_v0_9_20261113_KST.md)
+- Preserved baseline: [v0.7 — A97/B84, 총 181개 후보](references/L1_NR_LTE_OWNER_REVIEW_CLASSIFICATION_v0_7_20261113.md)
 - Provenance: 사용자가 정의·정정한 모듈 책임 및 대화에서 작성한 v0.6/v0.7 분류 초안. **v0.7 ↔ v0.6 완전 1:1 대조 미실시**; 실제 코드 증거와 담당자 검토 전까지 가설/후보로 처리
+
+## 2026-11-14 — 최신 분류·후속 시점
+
+- [범위 CURRENT](../projects/L1-CHANNEL-KNOWLEDGE-SCOPE-20261113-001/CURRENT.md)와 [피드백 판정](../projects/L1-WORKSPACE-RAG-20261111-001/L1_KNOWLEDGE_FEEDBACK_DISPOSITION_r0001_20261114.md)이 아래 과거 요약보다 우선.
+- 정본 탐색은 Module → Feature → Scenario 유지. Procedure/운용 맥락은 교차 탐색, ASPECT는 기존 Feature 설명 절 우선. 검토행 ID를 실제 ID로 등록하지 않음.
+- v0.9는 기존181행 + 신규 확인 후보34행. 검토/작성 진척·실제 코드 사실·게시를 분리.
+- 상세 Tier·MSC 정책/최소 전달/Kernel stage 호환은 현재 계약 점검. 저장 위치·실제 항목 ID/source/MSC/Evidence·게시/AI 활용은 첫 승인된 분석 후 검증하며 현재 분류 설계의 차단으로 취급하지 않음.
+- 기존 모듈 범위·소유 경계는 유지. 아래 과거 181행 분류명/목록은 계보 설명이며 항목별 최신 범례·조건은 v0.9를 참조.
 
 ## 1. 사용자 확인 담당 분야 — 향후 작업의 기본 조사 범위
 
@@ -27,13 +36,15 @@
 4. **코드 분석 전에 항목 확정하지 않음**: 표의 `미검토`는 적절성·지원여부·완전성 확정이 아니라 담당자 검토 대기 상태.
 5. **우선순위**: 담당자/회의에서 누락·분류 확인 → 사내 GPT 종합 점검 → 선정된 항목만 `l1-knowledge-updater`(+ 적합한 기존 `code-analyzer`, `doc-converter`) 분석 후보.
 
-| 모듈 | A 검토 세부 행 수 | B 검토 세부 행 수 | 구분 |
-|---|---:|---:|---|
-| NR BCH (L1 Channel) | 9개 | 7개 | NR L1 Channel |
-| NR L1 Tx | 10개 | 7개 | NR UL Tx |
-| LTE ChCfg (L1 Channel) | 8개 | 7개 | LTE L1 Channel |
-| LTE L1 Tx | 8개 | 7개 | LTE UL Tx |
-| **계** | **97** | **84** | **총 181개 검토 후보** |
+| 모듈 | v0.9 Procedure 검토행 | v0.9 Feature/공통기술 검토행 | 합계 |
+|---|---:|---:|---:|
+| NR BCH (L1 Channel) | 35 | 25 | 60 |
+| NR L1 Tx | 31 | 27 | 58 |
+| LTE ChCfg (L1 Channel) | 29 | 22 | 51 |
+| LTE L1 Tx | 25 | 21 | 46 |
+| **계** | **120** | **95** | **215** |
+
+행 수는 검토 후보 수이며 지원 기능 수·문서 수가 아니다. 과거 표의 대분류 개수(9/10/8/8 등)와 세부 행 수(97/84)가 혼용된 집계는 위 v0.9 행 수로 정정한다.
 
 ### 1. NR BCH (L1 Channel)
 

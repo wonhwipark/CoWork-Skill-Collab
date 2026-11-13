@@ -9,7 +9,7 @@
       "owner": "GPT",
       "self_test": "NOT_VERIFIED",
       "independent_review": "NOT_RUN",
-      "next_action": "업무 실행 환경 G0 결과 확인 후 설계 검증"
+      "next_action": "기존 G0 보고 재사용; 정책·최소 전달·stage 호환 점검, 실분석 검증은 첫 사례 후속"
     }
   ]
 }

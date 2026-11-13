@@ -3,10 +3,20 @@
 - Revision: `r0001` / 2026-11-11 KST
 - Location: GitHub PRIVATE `wonhwipark/CoWork-Skill-Collab`, branch `main`, `collab/knowledge/`
 - Classification: **NON_SENSITIVE_SHARED_CONTEXT / POINTER_ONLY + VERIFIED_ABSTRACTS**
-- Latest K5.8/K6 contract: `collab/projects/L1-WORKSPACE-RAG-20261111-001/L1_KNOWLEDGE_UPDATER_K58_K6_WORKFLOW_CONTRACT_r0004_20261111.md`; 최신 실행 상태는 프로젝트 `CURRENT.md` 마지막 절을 우선.
+- Latest K5.8/K6 contract: `collab/projects/L1-WORKSPACE-RAG-20261111-001/L1_KNOWLEDGE_UPDATER_K58_K6_WORKFLOW_CONTRACT_r0005_20261111.md`; 최신 실행 상태는 프로젝트 `CURRENT.md` 마지막 절을 우선.
 - Scope: 새 GPT 대화·설계 리뷰·Claude 인계 시 재사용할 **공통 맥락**. 특정 프로젝트 최신 실행 상태나 승인·실제 구현 완료를 선언하는 정본이 아님.
 - Authoritative live status: `collab/projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md`의 **가장 최신 섹션** 및 실제 결과/영수증.
-- CoWork transport: **MIGRATION_NOT_CUTOVER / DROPBOX_LIVE**. 이 문서 게시만으로 GitHub watcher·Windows Claude Code·GPT가 자동 실행되지 않음.
+- CoWork transport: **MIGRATION_NOT_CUTOVER**; 실제 ACTIVE_PROVIDER는 이관 CURRENT 최신 요약 우선. 이 문서 게시만으로 GitHub watcher·Windows Claude Code·GPT가 자동 실행되지 않음.
+
+## 2026-11-14 — 현재 유효한 요약 (아래 날짜별 과거 상태보다 우선)
+
+- 최신 계약은 **r0005**이며 [최신 CURRENT](../projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md)와 [피드백 판정](../projects/L1-WORKSPACE-RAG-20261111-001/L1_KNOWLEDGE_FEEDBACK_DISPOSITION_r0001_20261114.md)을 함께 확인.
+- 기존 지식/MSC·Work/Evidence·source revision 기능에 대한 **G0 일부 확인 보고** 확보. 원본 설치 증거의 직접 검증·전체 API/독립 리뷰 PASS 아님.
+- 그룹 지식은 검증된 상세 기술 정본, Workspace는 Work/진행·Evidence 이력 정본. module-library는 탐색/초안/참조 보조 후보이며 그룹의 복제 정본 아님.
+- 기존 Tier/MSC 정책 적합성·Workflow↔Updater 최소 전달·Kernel stage 호환을 지금 점검. 신규 원장/SourceSnapshot/CAS/복구 엔진을 기본 구현하지 않음.
+- 실제 지식 저장·기존 ID 매핑·source/MSC/Evidence·게시/readback·Work 링크·Provider 본문 소비는 **미실행 — 첫 승인된 실제 분석 후 검증**. 현재 분류·연계 설계의 누락/완료 차단으로 취급하지 않되 실제 실행·게시·RAG 완료 조건은 유지.
+- [최신 분류 검토표 v0.9](references/L1_NR_LTE_Confluence_Module_Procedure_Feature_Table_v0_9_20261113_KST.md)는 215개 검토행이며 담당자 승인·구현·전체 실제 ID 매핑은 아님.
+- 아래 과거 설계·시험·상태는 당시 기록으로 보존. DROPBOX_LIVE 및 G0 전체 미확인 문구를 현재 상태로 반복하지 않음.
 
 ## 1. 새 창·협업 공통 진입 규칙
 

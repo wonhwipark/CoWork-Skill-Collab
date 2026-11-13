@@ -9,7 +9,7 @@
       "owner": "GPT",
       "self_test": "PASS",
       "independent_review": "NOT_RUN",
-      "next_action": "담당자·회의 분류표 검토 후 사내 GPT 항목 점검"
+      "next_action": "v0.9 215행 담당자 검토; 실제 ID·산출물 검증은 첫 승인된 분석 후속"
     }
   ]
 }
