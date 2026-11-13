@@ -1,5 +1,14 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## B1_C1_D2_TOKEN2_LOCAL_ONLY_RESULT: B=AVAILABLE_UNDESIGNATED / C_ALT=PROPOSED(C=PARTIAL) / D=LOCAL_ONLY / TOKEN=OVERPRIVILEGED / E=NOT_RUN / ACTIVE_PROVIDER=NONE (Claude 자체 보고, 2026-11-14 KST)
+- 결과: `CLAUDE_B1_C1_D2_TOKEN2_LOCAL_ONLY_RESULT_FOR_GPT_20261114.md` (PRIVATE `main`, commit `615da26d0257cbb864689c1c3a52210f66f34265`, 원격 바이트·SHA-256 `ffb8ea548fc2c1ced1692d1a24c276dd3818b52856b9c11a7740352a5f450ad2` 일치). 운영 키·토큰 설치·운영 DB 열기·예약 작업 변경·업로드·유료 리뷰·READY·LIVE·시험 계정 활성화·모델 호출 0, 비용 $0. 독립 리뷰 아님.
+- **토큰**: 기존 GitHub 자격은 클래식 OAuth 계열 `repo`·`workflow`·`read:org`·`gist` 범위의 광역 권한 → `BLOCKED_OVERPRIVILEGED_EXISTING_CREDENTIAL`. 값·접두·경로 조회 0, 최소 권한 기존 PAT는 확인되지 않음.
+- **C 계정별 격리**: 운영 상태 폴더·DB·WAL·SHM 유효 권한은 운영자 계정·Administrators·SYSTEM만 전체, 시험 SHADOW 계정·Users·Everyone은 0. 운영 예약 작업 4개는 모두 운영자 계정 실행이라 **LIVE에는 ACL 축 적용 불가(`C_ALT_NOT_APPLICABLE_TO_LIVE`)**. 신규 `shadow.account_isolation=enforce`는 운영 데이터에 권한이 있는 계정으로 SHADOW 시작 시 거부(운영자 계정으로 실측 시 ACCESSIBLE 5건), 시험 17 PASS·변이 5/5 검출. ETW는 NOT_PROVEN 유지.
+- **B**: 서명 개인키 평문 저장을 해결(`--passphrase` scrypt+AES-GCM 암호화, Windows ACL 본인 제한, 평문은 `--allow-plaintext-key` 명시), 시험 13 PASS, 서명 키트 6개 파일 재시험. 실기기 미지정·운영 키 0.
+- **D2**: 로컬 전용 제어면·영수증 계약 프로토타입(솔트 커밋먼트, 서명 승인, 외부 API 리뷰어 영수증 거부, nonce·중복 거부) 19 PASS·변이 5/5 검출, `tools/`에 코드 없는 설계 증거로 게시. 이 PC에는 로컬 모델 런타임이 없어 `E=BLOCKED_LOCAL_REVIEWER`. 기게시된 ZIP 다이제스트·크기·일부 파일명의 소급 재점검이 사용자 결정 항목.
+- 후보 v0.2.12는 로컬 보존이며 **원시 SHA-256·크기는 게시하지 않음**: 불투명 ID `art-68c732d28afd8ceb`, 커밋먼트 `ac238d4d40fd362fb7a46ba80b48969a18f5c56aaae12ab4af0b74886a63f8e7`. 시험 venv 566 passed/12 skipped, 운영 인터프리터 518 passed/15 skipped ×3(수집 차이 45=cryptography 필요한 세 모듈). 이전 후보 ZIP 바이트 보존.
+- 다음 한 동작: 사용자가 결과 §7의 다섯 결정(서명자 기기, 새 토큰 발급 여부, 로컬 독립 검토자와 프로토콜 변경 승인, LIVE 계정 구성, 기게시 식별자 처리)을 한 번에 답한다.
+
 ## 사용자 결정 반영 — B1/C1/D2/Token2 로컬 전용 경로 (2026-11-14 KST)
 - 사용자 의사결정 **`B=1 / C=1 / D=2 / TOKEN=2`**: B는 감시기 외 별도 승인자 기기 사용 가능(실기기 미지정·운영키 미발급), C는 4축 대체 안전성 기준 검토 선택(**C PASS 아님**), D는 **회사 원본·파생 및 신규 코드/ZIP 외부 반출 불가·LOCAL_ONLY**, 토큰은 기존 자격의 최소권한 확인 우선(신규 발급/설치 승인 아님).
 - GPT가 최신 `CURRENT.md`, BCD 자체 시험/토큰 F1~F6, B7 신뢰 루트 설계 및 review transport 계약을 확인하고 **단일 Windows delta 인계** `GPT_B1_C1_D2_TOKEN2_LOCAL_ONLY_DELTA_ONE_SHOT_r0001_20261114.md`를 PRIVATE main에 직접 게시(짧은 commit `f3d7cf86`), remote readback PASS. 기존 500+ 제품 시험/ETW/토큰 모의 시험 반복 금지.
