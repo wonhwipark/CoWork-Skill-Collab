@@ -6,6 +6,8 @@
 - **공개 데이터 경계:** 5개 승인 범주에 대한 **정적·고정된 공개용 목적/목표 설명만** `status.js`에 추가. PRIVATE 원문·내부 Work ID·리뷰 영수증·다른 신규 작업명은 PUBLIC에 자동 공개하지 않음. 기존 공개 `status.json` 형식과 PRIVATE `public_sync.py`는 변경 없음.
 - **PUBLIC 변경 위치:** `wonhwipark/L1Work/main/docs/cowork-dashboard/index.html`(commit `ba2747f20d9a979340ac35f310c9cffe24e89ba3`), `status.js`(commit `a8070d34f2bcf37a2bba20ae7928835544a27483`). L1Work README는 v3 소개로 수정(commit `573a4019e03b0f6a3f471ebac05ec4987891a978`); PRIVATE README도 공개 방식과 활성 provider 최신 상태에 맞춰 정정(commit `20783c87f892f885f819c3ecaa11fc543e90524b`).
 - **시험:** GitHub 원격 파일 **바이트 readback PASS**. JS 구문 검사 **PASS**; 합성 DOM/공개 스냅샷으로 표 **5행**, 상세 카드 **5개**, 목적 검색 결과 **1개**, 필터 초기화 후 **5개**, 공개 provider **NONE**, same-origin `status.json` 조회 **1회** 확인. 120초 polling, 탭 복귀 갱신, schema 검증 및 CSP 그대로 유지.
+- **정형 상태:** `GITHUB_PAGES_DEPLOY=PASS`; `CUTOVER=MIGRATION_NOT_CUTOVER`. GitHub Pages UI 배포 성공과 리뷰 LIVE 전환은 독립.
+- **PRIVATE 화면 정합성 수정 후보:** `flow_view.py`/ `generate.py`의 구형 Dropbox LIVE 고정 표기를 최신 `ACTIVE_PROVIDER` 기준으로 교체하고, 공급자 미확인 시 `NOT_OBSERVED`로 fail-closed. 최신 섹션 우선·과거 이력 무시 회귀시험 추가. Actions 실측 전 `SELF_TEST=NOT_VERIFIED`.
 - **배포:** L1Work Pages GitHub Actions run [#43479229063](https://github.com/wonhwipark/L1Work/actions/runs/43479229063) **completed/success** (v3 README commit). 직전 HTML/JS 커밋의 Pages run 또한 SUCCESS 이력 존재. 실제 모바일 기기·브라우저 시각·네트워크 E2E는 **NOT_RUN**.
 - **기존 운영:** `INDEPENDENT_REVIEW=NOT_RUN`, `CUTOVER=MIGRATION_NOT_CUTOVER`, `ACTIVE_PROVIDER=NONE` (최신 이관 CURRENT 기준). Windows watcher·운영 DB/Task·모델 호출·ZIP 배포 변경 없음.
 - **추가 확인:** PRIVATE 기존 `generate.py` 기반 VIEW/state에는 구형 `Dropbox LIVE` 고정 문구가 남아 있음. 최신 운영 사실과 모순되므로 별도 생성기 정합성 수정 필요. 이는 PUBLIC v3 기능 동작과 구별하며 완료로 보고하지 않음.

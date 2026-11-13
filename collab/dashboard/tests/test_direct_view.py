@@ -35,7 +35,7 @@ class DirectViewTests(unittest.TestCase):
             self.assertEqual(view1, view2)
             self.assertIn(b"MIGRATION_NOT_CUTOVER", view1)
             self.assertNotIn(b"HOST_APPLIED=PASS", view1)
-            self.assertEqual(first["live_provider"], "DROPBOX")
+            self.assertEqual(first["live_provider"], "NOT_OBSERVED")
 
 
 if __name__ == "__main__":

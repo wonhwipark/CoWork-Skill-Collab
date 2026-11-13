@@ -102,6 +102,28 @@ class WorkflowDashboardTests(unittest.TestCase):
         self.assertIn("업무 실행 환경", page)
         self.assertIn(chr(96)*3+"mermaid", md)
 
+    def test_latest_provider_none_is_not_old_dropbox_live(self):
+        self.current(flow_view.MIGRATION,
+                     "ACTIVE_PROVIDER=NONE\nCUTOVER=MIGRATION_NOT_CUTOVER",
+                     "ACTIVE_PROVIDER=DROPBOX\nCUTOVER=PASS")
+        state = generate.build_state(self.root)
+        self.assertEqual(state["live_provider"], "NONE")
+        self.assertEqual(state["operations"]["active_provider"], "NONE")
+        view = generate.render_direct_view(state)
+        page = generate.render_html(state)
+        self.assertIn("활성 리뷰 제공자 없음", view)
+        self.assertIn("활성 리뷰 제공자 없음", page)
+        self.assertNotIn("기존 Dropbox LIVE 유지", view + page)
+        self.assertIn("L1Work Pages 업무 현황", view)
+        self.assertIn("정식 전환 전", view)
+
+    def test_public_pages_marker_and_unknown_provider(self):
+        self.current(flow_view.DASHBOARD, "PUBLIC_PAGES_DEPLOY=PASS")
+        ops = flow_view.snapshot(self.root)
+        self.assertEqual(ops["pages_deployment"], "PASS")
+        self.assertEqual(ops["active_provider"], "NOT_OBSERVED")
+        self.assertIn("기록 미확인", flow_view.provider_label({"operations": ops}))
+
     def test_deterministic_without_time_or_network(self):
         self.current(flow_view.MIGRATION, "INDEPENDENT_REVIEW=NOT_RUN")
         generate.write_outputs(self.root)
