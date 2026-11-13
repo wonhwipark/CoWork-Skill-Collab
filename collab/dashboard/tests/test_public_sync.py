@@ -209,5 +209,24 @@ class AllowlistSyncTests(unittest.TestCase):
                          public_sync.json_bytes(obj).decode("utf-8"))
 
 
+    def test_new_generation_time_alone_does_not_post(self):
+        from datetime import datetime, timedelta, timezone
+        now = datetime.now(timezone.utc)
+        new_at = now.strftime("%Y-%m-%dT%H:%M:%SZ")
+        old_at = (now - timedelta(seconds=20)).strftime("%Y-%m-%dT%H:%M:%SZ")
+        old = public_sync.build_payload(
+            self.state, "2026-11-13", generated_at=old_at)
+        current = public_sync.build_payload(
+            self.state, "2026-11-13", generated_at=new_at)
+        self.assertNotEqual(public_sync.json_bytes(old), public_sync.json_bytes(current))
+        with patch.object(public_sync, "_read_public_existing",
+                          return_value=("a"*40, public_sync.json_bytes(old))), \
+             patch.object(public_sync, "_request") as write:
+            result = public_sync.publish_public(
+                public_sync.json_bytes(current), "x"*30)
+            self.assertEqual(result, "UNCHANGED")
+            write.assert_not_called()
+
+
 if __name__ == "__main__":
     unittest.main()
