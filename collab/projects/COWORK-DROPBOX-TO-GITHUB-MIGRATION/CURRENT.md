@@ -1,5 +1,11 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## BCD_TOKEN_APPROVAL_PRECHECK_RESULT: B·D·토큰 BLOCKED / C PARTIAL(대체 증거 4축 수집) / ACTIVE_PROVIDER=NONE (Claude 자체 보고, 2026-11-13 KST)
+- 결과: `CLAUDE_BCD_TOKEN_APPROVAL_PRECHECK_RESULT_FOR_GPT_20261113.md` (PRIVATE `main`, commit `8870f37a60eb2463fa6441314b141eac89791960`, 원격 바이트·SHA-256 `7b4f87dd54bdb160778c66d6d16fb93d547f1b13eb184c9398bc77e041666eaf` 일치). 관리자 셸·새 ETW·운영 DB 열기·모델 호출·비용 0, 키 생성·root 설치·업로드·READY·LIVE 0. 독립 리뷰 아님.
+- B: 승인자 기기용 **서명 키트 6개 파일**(v0.1.5 유래 코드 없음)을 구성하고 임시 시험 키로 keygen→sign→check→1바이트 변조 거부까지 시험. 운영 키는 BLOCKED_SIGNER_DEVICE. C: 대체 4축 증거(시험계정 SID 유효 권한 운영 폴더·DB·WAL·SHM 모두 0x0 / 경로 가드·identity / 라이브 폴더 참조 함수 전수 조사 6개 / 변이 시험 4종 전부 검출). 전수 조사에서 결함 1건 발견·수정(`config-check`·`auth-check`·`auth-init`이 SHADOW·GitHub에서도 라이브 폴더·비밀을 사용). 수락 기준 승인 전 C=PARTIAL. D: 유래 46(34+12)/신규 24, v0.1.5 유래 줄 약 52%, 대안 3종(전량 게시/신규 24만/사내 로컬 리뷰). 토큰: 검증기(시험 11 PASS)·설치 스크립트 준비, 발급은 사용자 몫.
+- 후보 **v0.2.11** 로컬 ZIP 175714 B, sha256 `174b9fd83361cc85ce3fb1b4b503335dc701bff9e38415ae23a11256ef8b6350`(536 passed/12 skipped, 운영 인터프리터 501/14 x3, 간헐 시험 실패 원인 규명·수정). v0.2.10 ZIP은 바이트 보존. 둘 다 미게시.
+- 다음 한 동작: 사용자가 결과 §6의 B/C/D/토큰 숫자 선택으로 한 번에 응답.
+
 ## GPT B·C·D·GitHub 인증 단일 승인 패킷 (2026-11-13 KST)
 - 사용자의 GitHub LIVE 최소 반복 진행 의사에 따라 **B 서명자 기기, C 대체 증거/ETL 선택, D 원 소스 반출 분류, GitHub Contents:Read-only 자격**을 한 번에 묻는 단일 패킷 작성. `GPT_BCD_TOKEN_SINGLE_APPROVAL_PACKET_r0001_20261113.md` PRIVATE main commit `2046f5b75f8b1574c9d35d53cd331a1966f60e7c`, 원격 원문 readback PASS.
 - B 별도 장치/운영키 생성, C 수락기준 변경/추가 실측, D 사외 유래 코드 반출, PAT 발급·배포는 각자 별도 승인·권한 경계. 이번 문서는 **DECISION_PACKET_READY**, Windows 미실행 및 유료 reviewer·REQUEST/READY·운영 watcher 설치·GitHub LIVE 미승인.
