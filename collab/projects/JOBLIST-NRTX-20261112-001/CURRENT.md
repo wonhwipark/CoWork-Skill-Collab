@@ -122,3 +122,12 @@ Use the already-built candidate for an approved, read-only in-house G0 check of 
 - **EXPECTED_NOT_VERIFIED:** Skill-Updater `/home/whpark/l1sw-private-skills/skill-updater`; Job-list `/home/whpark/l1sw-private-skills/job-list`. Prior Agent MCP observed installed Job-list v0.4.36, but exact live invocation root/CWD/UID/HOME and archive byte identity remain **NOT_VERIFIED**.
 - Full path/verification matrix, safety constraints and diagnostics: `collab/projects/JOBLIST-NRTX-20261112-001/SKILL_UPDATER_TO_JOBLIST_PATH_DIAG_20261112.md`. PRIVATE only; no operational/local host changes, no Public artifact/ZIP changes.
 - NEXT_ONE_ACTION: In a trusted Linux-host session with read-only filesystem access, confirm actual Skill-Updater invocation → Job-list activation/Registry and separately MCP Wrapper in `/home/whpark/whpark-mcp`; preserve the consumed one-shot.
+
+## 2026-11-13 — MCP ↔ Job-list 요청 재정의·원샷 프롬프트 전달·중단 이력
+- **USER_REQ:** 이미 정상 이용한 `Run Error Fix Workflow` 및 `Skill-Updater`의 두 MCP 연결 패턴을 먼저 비교하여 Job-list 실행 요청·상태·결과 조회 인터페이스 재사용/신규 최소 연결 필요성을 판정하고, 독립적인 Registry/Runner 문제도 함께 분석하는 일괄 복구를 요청.
+- **WORK_OUTCOME:** Linux 호스트 MCP/Job-list 실제 소스·로그 접근 한계로 함수 수준 진단과 설치 복구, 운영 종단 실행은 **NOT_RUN / UNVERIFIED**. 이전 8자리·5자리 사용자 제공 숫자는 실제 결함 함수의 증거가 아님. 사용자는 6시간 이상의 미종료를 보고했으나 호스트 프로세스 실행·종료 상태는 **NOT_VERIFIED**.
+- **STOP_REQUEST:** 추가 확장 중지 요청 수용. 운영 MCP 서버·Job-list/Registry/Queue/DB·`smp1900`·PUBLIC ZIP·CoWork LIVE 변경 없음 (GPT 측). 별도 Agent/Work 실제 프로세스 종료를 주장하지 않음.
+- **DELIVERED_MD:** `MCP_JobList_Analysis_Recovery_OneShot_20261113.md` (`r0001`) 대화 첨부로 제공. 기존 MCP 2개 기준 비교, Job-list 인터페이스 및 활성화 경계 독립 판정, 허용된 격리 수정·시험, 로컬 증거 보고서, 최종 10자리 숫자(A~J) 계약 포함. 프롬프트의 45분 제한은 실행 지시이지 호스트 강제 종료 검증 결과가 아님. MD 원문 자체의 GitHub 업로드는 본 히스토리 게시와 별개.
+- **HISTORY_DOC:** `collab/projects/JOBLIST-NRTX-20261112-001/MCP_JOBLIST_RECOVERY_HISTORY_20261113.md` (PRIVATE `main`).
+- **STATUS:** `HANDOFF_PROMPT_DELIVERED=PASS`; `GITHUB_HISTORY=RECORDED`; `HOST_DIAG=NOT_VERIFIED`; `ISOLATED_FIX=NOT_RUN`; `HOST_E2E=NOT_RUN`; `INDEPENDENT_REVIEW=NOT_RUN`; `HOST_PROCESS_EXIT=NOT_VERIFIED`; `MIGRATION_NOT_CUTOVER`.
+- **NEXT_ONE_ACTION:** 현 작업 종료/보존. 추후 별도 실행 승인 시 Linux 로컬 Agent의 실제 소스 접근을 확인하고 기존 MCP 인터페이스 2개와 Job-list를 비교한 뒤 안전한 격리 시험 수행. 기존 소비된 One-shot 재실행 금지.
