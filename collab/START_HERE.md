@@ -16,6 +16,13 @@
 - 회사 업무 코드/고객자료·비밀은 GitHub PRIVATE/PUBLIC 게시 금지. PUBLIC 최종 ZIP은 `L1Work/main` 루트, 업무용 GPT/Agent Handoff 프롬프트 MD는 `L1Work/main/handoffs/`로 구분.
 - 2026-11-14 당시 상태 `ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER`. 이 참고 추가는 Windows 시스템에 어떠한 변경·코드 업로드·모델 리뷰 요청도 실행하지 않음.
 
+## GitHub 링크 기반 독립 리뷰 자료 전달 — 사용자 승인 (2026-11-14)
+
+- 사용자 승인: **CoWork 감시기 자체 소스·후보 ZIP**은 회사 L1 코드·고객자료·토큰을 제외하고 **CoWork PRIVATE**에 리뷰용 게시 가능. **L1Work PUBLIC에 이미 게시된 스킬 ZIP과 `handoffs/` MD**는 실제 GitHub 파일 링크를 Claude 독립 리뷰에 제공 가능. 사용자 지시한 링크 기반 전달 절차는 [상세 계약](projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/GPT_GITHUB_LINK_REVIEW_TRANSPORT_APPROVAL_AND_ONE_SHOT_r0001_20261114.md)을 기준으로 한다.
+- 별도 서명자 PC·로컬 LLM 확보는 일반 단일 사용자 CoWork 리뷰의 선행 의무가 아님. **실제 유료 리뷰 요청/READY·PUBLIC 신규 ZIP 게시·운영 watcher/LIVE 변경은 이 자료 전달 승인과 별개**. GitHub file URL이 곧 리뷰 실행 트리거가 아님.
+- 기존 공개 릴리스 ZIP은 `L1Work/main` **루트**에 유지. 배포되지 않은 후보 ZIP은 **PRIVATE 리뷰용으로만** 게시. 업무 PC용 Handoff MD 최종본은 `L1Work/main/handoffs/`. PRIVATE/PUBLIC 게시 시 실제 원격 commit·bytes/sha·파일 링크 검증, 업무 호스트 설치/Job 실행은 별도 영수증 필요.
+- `ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER`는 기존 실측 상태이며, 이 문서 추가는 Windows 실행·모델 리뷰 호출·GitHub LIVE 전환이 아님.
+
 ## 단일 최신 정본 위치
 1. **프로젝트 실행 상태:** [`collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md`](projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) — 언제나 최신 상태가 기록된 마지막 섹션과 실측 증거를 우선한다. 오래된 이력 절의 NOT_STARTED/NOT_RUN은 당시 관찰값으로 보존.
 2. **협업 안전 계약:** `collab/ops/CONTRACTS/NO_PR_COLLABORATION_V1.md`, `collab/ops/CONTRACTS/REVIEW_TRANSPORT_V1.md` (DRAFT, 실제 key/서명 세부는 최신 설계·판정을 우선).
