@@ -10,7 +10,7 @@
 - GPT가 r0001 기본 실행의 잘못된 전체 PASS를 모의 응답으로 재현. r0002 2개 별도 추가(r0001 원본 보존): GET-only, 쓰기 probe 거부, 실제 저장소 선택/권한은 NOT_PROVEN; 종료1=실패, 종료2=부분확인. 도구만으로 설치 승인/읽기 전용 확정 불가.
 - GPT Linux 합성 자체시험: 기존11+신규23=34 PASS/0 FAIL/0 SKIP. 실제 PAT/Windows/운영 설치 NOT_RUN. v0.2.11 ZIP(175714B, sha256 174b9fd83361cc85ce3fb1b4b503335dc701bff9e38415ae23a11256ef8b6350)은 Claude SELF_TEST_REPORTED/로컬 보존; 원본 제품 코드 GPT 검증 NOT_RUN.
 - 사용자 B/C/D/토큰 응답 대기. 현재 지시는 개발/시험/PRIVATE 게시 후속 범위이며 키·토큰·반출·유료 리뷰·READY·운영 변경·LIVE 승인 아님.
-- 원격 게시: 이 후보 작성 시 readback 전. 게시 커밋·최종 바이트 확인은 후속 검증 기록으로 확정.
+- REMOTE_READBACK=PASS — bundle commit `2d612a53e3e411e0367f47164b89c51ccb419d1e`의 5개 파일을 고정 커밋에서 재조회해 UTF-8 바이트·SHA-256 일치 확인. 도구 sha256: `2ab292aa63b23f010620548c91f43cb02a9b182fad10dc5122f63dc0e79fccc4`, 시험 sha256: `36b14ff5c2676df44542e66cacdd165e9ec399f936dc1a7e79a5bf69d50452bf`, 판정서 sha256: `4c4232342b50dd9d3bebf06a46a35689444eb73a06a8c71799e8603c1215e002`, TRACKER sha256: `a32cdf50405380bd777dbed3d87b5a8cf2f90f0b45a6f6cbdf6e6feb62bc3214`. 실제 대시보드 TRACKER 검증기 로컬 후보 수락 PASS. 이 검증은 Windows 실행/운영 승인과 별개.
 - 다음 한 동작: Windows Claude Code에서 위 정확한 repo/main/인계서 §6을 1회 실행 → 기존 Claude 결과에 후속 섹션 추가·PRIVATE 원격 재검증. Windows 실행은 아직 관측되지 않음.
 
 ## BCD_TOKEN_APPROVAL_PRECHECK_RESULT: B·D·토큰 BLOCKED / C PARTIAL(대체 증거 4축 수집) / ACTIVE_PROVIDER=NONE (Claude 자체 보고, 2026-11-13 KST)
