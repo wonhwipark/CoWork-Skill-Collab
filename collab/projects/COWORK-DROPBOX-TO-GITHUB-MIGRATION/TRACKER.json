@@ -9,7 +9,7 @@
       "owner": "GPT / Claude Code",
       "self_test": "PASS",
       "independent_review": "NOT_RUN",
-      "next_action": "사용자 결정 B1(별도 signer 기기 가능), C1(4축 대체 증거 검토), D2(코드/ZIP LOCAL_ONLY 반출 금지), Token2(기존 least-privilege 확인). Windows 단일 delta 원샷: C 운영계정 수락조건, B 장치 계획, D 로컬 독립 리뷰·GitHub 메타데이터 전용 새 계약, 기존 토큰의 비밀 없는 권한 확인; 승인 없는 키/토큰/운영 변경·유료 리뷰/LIVE 금지. ACTIVE_PROVIDER=NONE."
+      "next_action": "사용자가 서명자 기기, 새 토큰 발급 여부, 로컬 독립 검토자, LIVE 계정 구성, 기게시 식별자 처리를 한 번에 결정한다(결과 §7). ACTIVE_PROVIDER=NONE, LIVE 미승인."
     }
   ]
 }
