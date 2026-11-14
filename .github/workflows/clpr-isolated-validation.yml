@@ -90,5 +90,24 @@ jobs:
           run_suite analyzer-share "$CLPR_TEMP/code-analyzer/code-analyzer" 'test_share_export_v0143.py'
           run_suite kernel-work "$CLPR_TEMP/work-ledger-kernel" 'test_multi_work_ux_v070.py'
           run_suite kernel-core "$CLPR_TEMP/work-ledger-kernel" 'test_kernel.py'
-          echo "TARGETED_SUITE_FAILURES=$fail"
+          echo "CANDIDATE_TARGETED_SUITE_FAILURES=$fail"
+          echo "::group::PUBLIC BASELINE WORKFLOW (for comparison only)"
+          curl --fail --silent --show-error --location --max-time 60 --retry 1 \
+            --output "$CLPR_TEMP/baseline-workflow.zip" \
+            "https://raw.githubusercontent.com/wonhwipark/L1Work/main/l1-fix-workflow_v1_6_67_1110.zip"
+          python - <<'PY'
+          import pathlib,zipfile,hashlib,os
+          root=pathlib.Path(os.environ["CLPR_TEMP"])
+          raw=(root/"baseline-workflow.zip").read_bytes()
+          assert hashlib.sha256(raw).hexdigest()=="a3c5f055845a0711692afea5b09c0e53e93dfba89adc792c0f2e73385899b30a"
+          with zipfile.ZipFile(root/"baseline-workflow.zip") as z:
+            assert z.testzip() is None
+            z.extractall(root/"baseline-workflow")
+          print("BASELINE_READBACK_HASH_PASS",len(raw),flush=True)
+          PY
+          ln -s "$CLPR_TEMP/work-ledger-kernel" "$CLPR_TEMP/baseline-workflow/work-ledger-kernel"
+          echo "::endgroup::"
+          run_suite baseline-workflow-brief "$CLPR_TEMP/baseline-workflow/l1-fix-workflow" 'test_tl_issue_brief_v1611.py'
+          run_suite baseline-workflow-core "$CLPR_TEMP/baseline-workflow/l1-fix-workflow" 'test_workflow.py'
+          echo "CANDIDATE_AND_BASELINE_FAILURES_TOTAL=$fail"
           if [ "$fail" -ne 0 ]; then exit 1; fi
