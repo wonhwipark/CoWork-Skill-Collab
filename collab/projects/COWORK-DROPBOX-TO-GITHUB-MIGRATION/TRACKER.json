@@ -5,11 +5,11 @@
       "work_id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
       "skill": "cowork-review-watcher",
       "title": "cowork-review-watcher",
-      "phase": "REVIEW",
+      "phase": "BLOCKED",
       "owner": "GPT / Claude Code",
       "self_test": "PASS",
-      "independent_review": "PENDING",
-      "next_action": "2026-11-15 USER_APPROVED_A_AND_B: A v0.2.19 fixed SHA256 6e7fee3340cc6d0282d1c18fe3db42a90360259dd73fa6d7c0a7698af7afe5c0 independent R2 REQ-COWORK-V0219-R2-20261114, POLICY-STATIC-V1-LARGE exactly 1 call ≤$3; B authorized Windows operating Python cryptography, Notifier per-provider watermark, GitHub watcher separate state/Task + single LIVE. Hand-off GPT_V0219_R2_AND_GITHUB_LIVE_ACTIVATION_APPROVAL_AND_ONE_SHOT_r0001_20261115.md PRIVATE main/readback PASS. Windows actual run NOT_RUN; review NOT_RUN, operating install NOT_RUN, ACTIVE_PROVIDER=NONE/MIGRATION_NOT_CUTOVER. NEXT Windows Claude Code one-shot raw ZIP SHA/CRC verify→signed READY last→independent review max1→if PASS B1 B2 B3, verify 2 cycles+restart, pending 1 preserved, rollback ready; on FAIL stop without paid retry. Classic PAT decision remains."
+      "independent_review": "FAIL",
+      "next_action": "v0.2.19 독립 R2: BLOCKING 1건(N2 repo ID 캐시, 재현됨) → B1~B3·LIVE 미실행(ACTIVE_PROVIDER=NONE). 후보 v0.2.20 수정·자체시험 완료(미리뷰). 새 독립 리뷰 승인 후 운영 변경 3종 재개."
     }
   ]
 }
