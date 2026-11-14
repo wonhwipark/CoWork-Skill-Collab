@@ -1,0 +1,80 @@
+name: CLPR persist validated development-only candidates (one shot)
+on:
+  push:
+    branches: [clpr-e2-work-evidence-20261115]
+    paths: [.github/workflows/clpr-e2-private-candidate-persist.yml]
+permissions:
+  contents: write
+jobs:
+  persist:
+    if: github.repository == 'wonhwipark/CoWork-Skill-Collab' && github.ref == 'refs/heads/clpr-e2-work-evidence-20261115'
+    runs-on: ubuntu-22.04
+    timeout-minutes: 8
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONNOUSERSITE: '1'
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Recreate and verify development ZIPs in runner temp only
+        shell: bash
+        run: |
+          set -euo pipefail
+          export CLPR_TEMP="${RUNNER_TEMP}/clpr-private-persist"
+          mkdir -p "$CLPR_TEMP"
+          python - <<'PY'
+          import pathlib,zipfile,os
+          base=pathlib.Path('collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates')
+          out=pathlib.Path(os.environ['CLPR_TEMP'])
+          for name,dest in [('l1-fix-workflow_v1_6_68_1114.zip','workflow'),('work-ledger-kernel_v0_7_38_1114.zip','kernel')]:
+            with zipfile.ZipFile(base/name) as z:
+              assert z.testzip() is None
+              z.extractall(out/dest)
+          PY
+          python collab/projects/L1-WORKSPACE-RAG-20261111-001/devtools/apply_kernel_ref_find_patch.py "$CLPR_TEMP/kernel/work_ledger_kernel/kernel.py"
+          python collab/projects/L1-WORKSPACE-RAG-20261111-001/devtools/apply_workflow_cli_patch.py "$CLPR_TEMP/workflow/l1-fix-workflow/l1_fix_workflow/cli.py"
+          cp collab/projects/L1-WORKSPACE-RAG-20261111-001/devtools/clpr_existing_work_link.py "$CLPR_TEMP/workflow/l1-fix-workflow/l1_fix_workflow/clpr_existing_work_link.py"
+          export PYTHONPATH="$CLPR_TEMP/workflow/l1-fix-workflow:$CLPR_TEMP/kernel"
+          python -m unittest -v collab/projects/L1-WORKSPACE-RAG-20261111-001/devtools/test_clpr_existing_work_link.py
+          python collab/projects/L1-WORKSPACE-RAG-20261111-001/devtools/build_clpr_dev_candidates.py
+      - name: Persist exactly two pinned ZIPs to PRIVATE main with GitHub readback
+        shell: bash
+        env:
+          CLPR_TEMP: ${{ runner.temp }}/clpr-private-persist
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import base64,hashlib,json,os,pathlib,urllib.request,urllib.error,zipfile
+          base=pathlib.Path(os.environ['CLPR_TEMP'])/'dev-output'
+          root='collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates/'
+          fixed={
+          'l1-fix-workflow_v1_6_69_1115.zip':('d4ba119298cd5763fd18ace2d54223fff010a8d2a1703ebab80eb4fa1b35846b',866671),
+          'work-ledger-kernel_v0_7_39_1115.zip':('24184fe760c058a6fbc4f79c8d2d3e580978c05bde4597155e81fa3d6f23885a',409355),
+          }
+          token=os.environ['GH_TOKEN']
+          assert token
+          for name,(expected,size) in fixed.items():
+            raw=(base/name).read_bytes()
+            assert len(raw)==size and hashlib.sha256(raw).hexdigest()==expected,('PIN_FAIL',name)
+            with zipfile.ZipFile(base/name) as z:assert z.testzip() is None
+            url='https://api.github.com/repos/wonhwipark/CoWork-Skill-Collab/contents/'+root+name
+            headers={'Accept':'application/vnd.github+json','Authorization':'Bearer '+token,'X-GitHub-Api-Version':'2022-11-28'}
+            body=json.dumps({'message':'dev(clpr): preserve verified development-only candidate '+name,
+                             'content':base64.b64encode(raw).decode('ascii'),'branch':'main'}).encode()
+            req=urllib.request.Request(url,data=body,headers=headers,method='PUT')
+            with urllib.request.urlopen(req,timeout=60) as resp:
+              posted=json.load(resp)
+            csha=posted['commit']['sha']
+            with urllib.request.urlopen(urllib.request.Request(url+'?ref=main',headers=headers),timeout=60) as resp:
+              checked=json.load(resp)
+            got=base64.b64decode(checked['content'].replace('\n',''))
+            assert hashlib.sha256(got).hexdigest()==expected and len(got)==size,('READBACK_FAIL',name)
+            print('PRIVATE_DEV_ZIP_POSTED_AND_READBACK_PASS',name,size,expected,
+                  'blob_sha',checked['sha'],'commit',csha,flush=True)
+          print('PRIVATE_DEVELOPMENT_CANDIDATES_PERSISTED_NO_PUBLIC_NO_HOST',flush=True)
+          PY
