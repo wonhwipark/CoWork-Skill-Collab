@@ -1,5 +1,14 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 사용자 확정 — v0.2.20 독립 R1 1회($1) 승인·기존 B1~B3 및 GitHub LIVE 승인 유지 (2026-11-15 KST)
+- **단일 실행 정본:** [GPT_V0220_R1_APPROVAL_AND_GITHUB_LIVE_ONE_SHOT_r0001_20261115.md](GPT_V0220_R1_APPROVAL_AND_GITHUB_LIVE_ONE_SHOT_r0001_20261115.md), PRIVATE `wonhwipark/CoWork-Skill-Collab`/`main`, commit `ccab1cebb8f0226b94d786ce6ac2b807b9a19efd`, GitHub 원격 readback PASS. 사용자 `진행해 윈샷으로`까지 확인, **동일 승인 재질문 금지**.
+- **승인:** v0.2.20 **새 R1 `REQ-COWORK-V0220-R1-20261115` / `POLICY-STATIC-V1` / 최대 $1 / 1회**. 이전 v0.2.19 R2(`$0.9007163`, BLOCKING 1)는 완료·소진, 재호출 금지. B1 Windows 운영 Python `cryptography`, B2 Notifier provider별 워터마크, B3 GitHub watcher 설치/Task + 최종 단일 GitHub LIVE는 **기존 명시 승인 유지**, Classic PAT 정책 그대로.
+- **고정 후보(호스트 자체시험 보고):** `skill-collab-watcher_v0_2_20_1115_DEV_NOT_FOR_DEPLOYMENT.zip`, 239432 B, SHA-256 `6a8626375e5e711535abdd261ff48781114802bb345cabe2ed5940b75968f386`, venv `674 PASS / 12 SKIP`·운영 Python `607 PASS / 17 SKIP`. Windows 로컬에만 보관, **원격 ZIP raw-byte SHA/CRC와 독립 리뷰 아직 NOT_RUN**.
+- **원샷 Windows 실행 순서:** 로컬/원격 ZIP SHA/크기/CRC·비밀 검사→후보 ZIP+manifest+v0.2.19→20 diff PRIVATE 입력 게시·원격 readback→유효 서명 `REQUEST/READY`(READY 마지막)→독립 R1 **1회** 및 결과·영수증 확인→**리뷰 PASS인 경우에만** 기승인 B1→B2→B3 적용·2주기+재시작 검증→단일 GitHub LIVE. FAIL/불확실 상태는 fail-closed, 유료 재호출 0·원본 데이터 보존.
+- **레거시 이력 보존:** Dropbox 운영 DB 완료 60/CONFLICT 1/pending 1 및 main/WAL/SHM, 기존 Task/Notifier/워터마크 변경 시 백업·롤백·중복 알림 0 확인. 미정산 1건 자동 재실행 금지. GitHub LIVE 전환 성공은 **실제 Windows 호스트 Task/Process/Provider 검증** 이후에만 기록.
+- **이번 GPT 세션의 사실 상태:** `DOCUMENT_POSTED_AND_READBACK=PASS`; `WINDOWS_R1_MODEL_CALLS=NOT_RUN`; `WINDOWS_B1_B2_B3=NOT_RUN`; `HOST_LIVE_ACTIVATION=NOT_RUN`; **`ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER`** (마지막 호스트 보고 기준). 현재 GitHub 커넥터로 Windows Claude Code 호스트 실행을 직접 시작할 수 없음. **다음 한 동작은 Windows Claude Code에서 위 정본 인계서 1회 실행**. 출력 결과 경로 `CLAUDE_V0220_R1_AND_GITHUB_LIVE_ACTIVATION_RESULT_FOR_GPT_20261115.md`.
+- **기존 판정/이력:** 아래 날짜순 근거 원본은 그대로 보존. 이 문서는 REQUEST/READY가 아니며 자동 유료 실행 신호가 아님.
+
 ## GPT 공식 판정 — v0.2.19 R2 BLOCKING 수용, v0.2.20 R1 최소 재검토 제안 (2026-11-15 KST)
 - **정본 판정:** [GPT_V0219_R2_BLOCKING_DISPOSITION_AND_V0220_REVIEW_PLAN_r0001_20261115.md](GPT_V0219_R2_BLOCKING_DISPOSITION_AND_V0220_REVIEW_PLAN_r0001_20261115.md) (commit `43ad462f30cc7bee7e4e9069912ce06ab6a32d35`, 원격 readback PASS). `GPT_DISPOSITION=ACCEPT_BLOCKING_AND_FIX_PENDING_INDEPENDENT_REVIEW`; `ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER`.
 - **GPT 원격 직접 검증:** v0.2.19 reviewer 원문 `collab/reviews/REQ-COWORK-V0219-R2-20261114/REVIEW_RESULT_1.md`, `RECEIPT_1.md`, `USAGE_RECEIPT_1.json`, 호스트 결과 MD를 조회. reviewer 1회(`$0.9007163`, 승인 최대 $3) 완료, 결과 **BLOCKING 1**: 오래 살아 있는 `GitHubTransport.repository_id()` 캐시가 GitHub 저장소 numeric ID 변경 후 N2 검사 우회. 실제 WATCH에서 같은 transport 반복 사용, 독립 reviewer 지적을 GPT 수용. `INDEPENDENT_REVIEW_V0219=FAIL_BLOCKING`.
