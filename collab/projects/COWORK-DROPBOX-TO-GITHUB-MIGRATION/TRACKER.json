@@ -5,11 +5,11 @@
       "work_id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
       "skill": "cowork-review-watcher",
       "title": "cowork-review-watcher",
-      "phase": "LIVE_PREFLIGHT_REVIEW_PENDING_APPROVAL",
+      "phase": "DISPOSITION",
       "owner": "GPT / Claude Code",
-      "self_test": "SELF_TEST_REPORTED",
-      "independent_review": "PENDING_APPROVAL",
-      "next_action": "A안 사용자 승인 완료: 동일 Windows PC Ed25519+trust warn 및 REV-COWORK-V0214-20261114 R1/POLICY-STATIC-V1 독립 Claude 리뷰 1회 최대 $1. GPT_A_APPROVED_V0214_SINGLE_REVIEW_AND_TIER_HANDOFF_r0001_20261114.md 원샷 Windows 전달 대기. R0~R3 토큰·비용 목표 설계 게시, 향후 매번 승인 아닌 상시 정책 1회 승인 방식 제안(상시승인 자체는 미실시). B 토큰·LIVE·운영 변경 미승인; ACTIVE_PROVIDER=NONE."
+      "self_test": "PASS",
+      "independent_review": "FAIL",
+      "next_action": "GPT 판정: v0.2.14 R1 리뷰 지적 5건(후보 v0.2.17 수정·시험 644/578 PASS, 미리뷰). 사용자 결정: B안 쓰기 PAT, 재리뷰 1회, 상시 정책, SHADOW·백업 승인. LIVE 미승인."
     }
   ]
 }
