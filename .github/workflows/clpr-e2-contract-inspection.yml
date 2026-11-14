@@ -122,10 +122,13 @@ jobs:
             with zipfile.ZipFile(base/archive) as z: z.extractall(dest/sub)
           PY
           python collab/projects/L1-WORKSPACE-RAG-20261111-001/devtools/apply_kernel_ref_find_patch.py "$CLPR_TEMP/kernel/work_ledger_kernel/kernel.py"
+          python collab/projects/L1-WORKSPACE-RAG-20261111-001/devtools/apply_workflow_cli_patch.py "$CLPR_TEMP/workflow/l1-fix-workflow/l1_fix_workflow/cli.py"
           cp collab/projects/L1-WORKSPACE-RAG-20261111-001/devtools/clpr_existing_work_link.py "$CLPR_TEMP/workflow/l1-fix-workflow/l1_fix_workflow/clpr_existing_work_link.py"
           export PYTHONPATH="$CLPR_TEMP/workflow/l1-fix-workflow:$CLPR_TEMP/kernel"
           python -m unittest -v collab/projects/L1-WORKSPACE-RAG-20261111-001/devtools/test_clpr_existing_work_link.py
           echo "CLPR_WORK_REFS_SYNTHETIC_E2_PASS (no host/production writes)"
+          python collab/projects/L1-WORKSPACE-RAG-20261111-001/devtools/build_clpr_dev_candidates.py
+          echo "CLPR_CANDIDATE_PACKAGED_NOT_FOR_DEPLOYMENT"
       - name: Inspect packaging metadata schemas only
         shell: bash
         run: |
@@ -168,3 +171,11 @@ jobs:
                   for j in range(max(0,i-12),min(len(lines),i+22)):
                     print(str(j+1)+": "+lines[j][:180])
           PY
+      - name: Store development-only ZIPs as private Actions artifacts
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: clpr-development-only-python-${{ matrix.python-version }}
+          path: ${{ runner.temp }}/clpr-work-e2/dev-output/*.zip
+          if-no-files-found: error
+          retention-days: 7
