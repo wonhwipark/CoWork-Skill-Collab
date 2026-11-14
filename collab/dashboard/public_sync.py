@@ -68,6 +68,79 @@ PUBLIC_SKILL_EXAMPLES = {
 }
 MAX_PUBLIC_WORKS = 30
 
+# Fixed, user-approved PUBLIC handoff identity and source; no arbitrary links or text.
+PUBLIC_HANDOFFS = {
+    "msc-b-viewer": {
+        "title": "MSC B 뷰어 — 생성·축적·게시·열람",
+        "kind": "L1 지식 · 설계 리뷰",
+        "source_url": "https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_KNOWLEDGE_MSC_B_VIEWER_GPT_REVIEW_HANDOFF_r0001_20261114_KST.md",
+    }
+}
+HANDOFF_PHASES = {
+    "PUBLISHED": ("독립 리뷰 미실행", "설계 리뷰 수행 후 결과·판정 근거 연결"),
+    "REQUESTED": ("리뷰 요청 기록 · 실제 실행 미확인", "리뷰 실행 증거 및 결과 문서 확인"),
+    "RECEIVED": ("리뷰 결과 접수 기록 · 검증 별도", "GPT 항목별 판정 및 후속 범위 확정"),
+    "DECIDED": ("GPT 판정 기록 · 반영 미확인", "승인된 최소 보완과 회귀시험 확인"),
+    "APPLIED": ("후속 반영 기록 · 실사용 검증 별도", "실제 열람·연계·사용 증거 확인"),
+}
+MAX_PUBLIC_HANDOFFS = 8
+
+def _make_public_handoff(entry: dict) -> dict:
+    if not isinstance(entry, dict) or set(entry) != {"id", "stage", "updated_on"}:
+        raise SafetyBlock("invalid handoff registry fields")
+    ident, stage, updated = entry["id"], entry["stage"], entry["updated_on"]
+    if not isinstance(ident, str) or ident not in PUBLIC_HANDOFFS:
+        raise SafetyBlock("unapproved handoff ID")
+    if not isinstance(stage, str) or stage not in HANDOFF_PHASES:
+        raise SafetyBlock("unapproved handoff stage")
+    if not isinstance(updated, str) or not re.fullmatch(r"20\d\d-\d\d-\d\d", updated):
+        raise SafetyBlock("invalid handoff date")
+    try:
+        datetime.strptime(updated, "%Y-%m-%d")
+    except ValueError as exc:
+        raise SafetyBlock("invalid handoff date") from exc
+    return {"id": ident, **PUBLIC_HANDOFFS[ident], "stage": stage,
+            "updated_on": updated,
+            "review_label": HANDOFF_PHASES[stage][0],
+            "next_action": HANDOFF_PHASES[stage][1]}
+
+def _load_public_handoffs(root: Path) -> list[dict]:
+    """Read approved enums only. Invalid private registry blocks PUBLIC sync."""
+    f = root / "collab/dashboard/handoff_registry.json"
+    if not f.exists():
+        return []  # older/synthetic tests
+    if f.is_symlink() or not f.is_file() or f.stat().st_size > 8000:
+        raise SafetyBlock("unsafe handoff registry")
+    try:
+        record = json.loads(f.read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, ValueError) as exc:
+        raise SafetyBlock("unreadable handoff registry") from exc
+    if not isinstance(record, dict) or set(record) != {"schema", "handoffs"} or (
+            record["schema"] != "COWORK_HANDOFF_REGISTRY_V1"):
+        raise SafetyBlock("unexpected handoff registry schema")
+    items = record["handoffs"]
+    if not isinstance(items, list) or len(items) > MAX_PUBLIC_HANDOFFS:
+        raise SafetyBlock("unexpected handoff count")
+    result = [_make_public_handoff(x) for x in items]
+    if len({x["id"] for x in result}) != len(result):
+        raise SafetyBlock("duplicate handoff ID")
+    return result
+
+def _validate_public_handoffs(items: object) -> None:
+    if not isinstance(items, list) or len(items) > MAX_PUBLIC_HANDOFFS:
+        raise SafetyBlock("invalid exported handoffs")
+    seen = set()
+    for entry in items:
+        if not isinstance(entry, dict) or set(entry) != {
+                "id", "kind", "title", "stage", "updated_on",
+                "review_label", "next_action", "source_url"}:
+            raise SafetyBlock("unexpected exported handoff fields")
+        proposed = {k: entry[k] for k in ("id", "stage", "updated_on")}
+        if entry != _make_public_handoff(proposed) or entry["id"] in seen:
+            raise SafetyBlock("unapproved handoff metadata")
+        seen.add(entry["id"])
+
+
 
 class SafetyBlock(ValueError):
     """No public content produced or updated."""
@@ -122,7 +195,8 @@ def _read_active_provider(root: Path) -> str:
 
 def build_payload(state: dict, date: str, *,
                   active_provider: str = "기록 미확인",
-                  generated_at: str | None = None) -> dict:
+                  generated_at: str | None = None,
+                  handoffs: list[dict] | None = None) -> dict:
     """Only fixed text/enum labels and aggregate numbers cross PUBLIC boundary."""
     if not isinstance(state, dict) or state.get("schema") != PRIVATE_SCHEMA:
         raise SafetyBlock("unexpected PRIVATE state schema")
@@ -224,6 +298,9 @@ def build_payload(state: dict, date: str, *,
         },
         "work_cards": output,
     }
+    if handoffs is not None:
+        _validate_public_handoffs(handoffs)
+        payload["handoffs"] = handoffs
     if generated_at is not None:
         payload["generated_at"] = generated_at
     return payload
@@ -249,7 +326,8 @@ def prepare(root: Path, date: str | None = None) -> bytes:
     date = date or datetime.now(KST).date().isoformat()
     return json_bytes(build_payload(
         raw, date, active_provider=_read_active_provider(root),
-        generated_at=os.getenv("COWORK_STATUS_AT") or None))
+        generated_at=os.getenv("COWORK_STATUS_AT") or None,
+        handoffs=_load_public_handoffs(root)))
 
 
 def _request(url: str, token: str, *, method: str = "GET", body: bytes | None = None) -> dict:
@@ -293,9 +371,12 @@ def publish_public(payload: bytes, token: str) -> str:
     # Strict no extra sensitive/unapproved keys; reconstruct deterministic bytes.
     required = {"schema", "snapshot_date", "source", "sync_mode", "cutover",
                 "counts", "checks", "work_cards"}
-    if not isinstance(obj, dict) or not (set(obj) == required or
-                                         set(obj) == required | {"generated_at"}):
+    if not isinstance(obj, dict) or not (
+            required <= set(obj) and
+            set(obj) <= required | {"generated_at", "handoffs"}):
         raise SafetyBlock("unexpected proposed public fields")
+    if "handoffs" in obj:
+        _validate_public_handoffs(obj["handoffs"])
     if obj.get("schema") != PUBLIC_SCHEMA or obj.get("source") != "APPROVED_AGGREGATE_ONLY":
         raise SafetyBlock("invalid public schema")
     if len(payload) > 16000:
@@ -327,8 +408,8 @@ def publish_public(payload: bytes, token: str) -> str:
             previous = json.loads(existing)
         except (ValueError, UnicodeError):
             previous = None
-        if isinstance(previous, dict) and set(previous) in (
-                required, required | {"generated_at"}):
+        if isinstance(previous, dict) and required <= set(previous) and (
+                set(previous) <= required | {"generated_at", "handoffs"}):
             comparable_old = {k: v for k, v in previous.items() if k != "generated_at"}
             comparable_new = {k: v for k, v in obj.items() if k != "generated_at"}
             if comparable_old == comparable_new:
