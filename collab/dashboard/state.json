@@ -83,7 +83,7 @@
       "status": "검증 진행 중",
       "title": "L1-WORKSPACE-RAG-20261111-001 — CURRENT",
       "tone": "warning",
-      "topic": "CL/PR WorkReference E2 실제 구현 — 2026-11-15 KST (현재 이 범위의 최신 상태)"
+      "topic": "CL/PR 확대 회귀 최신 실측 — 2026-11-15 KST (PUBLIC 배포 차단 유지)"
     }
   ],
   "review_chains": [
