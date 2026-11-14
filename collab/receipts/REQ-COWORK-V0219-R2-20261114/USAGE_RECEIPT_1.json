@@ -1,0 +1,62 @@
+{
+  "schema": "COWORK_REVIEW_USAGE_RECEIPT_V1",
+  "request_id": "REQ-COWORK-V0219-R2-20261114",
+  "request_revision": "1",
+  "processing_key": "REQ-COWORK-V0219-R2-20261114|1|6e7fee3340cc6d0282d1c18fe3db42a90360259dd73fa6d7c0a7698af7afe5c0|1",
+  "target": {
+    "package_sha256": "6e7fee3340cc6d0282d1c18fe3db42a90360259dd73fa6d7c0a7698af7afe5c0",
+    "package_size_bytes": 239143,
+    "review_id": "REV-COWORK-V0219-20261114"
+  },
+  "review": {
+    "tier": "R2",
+    "policy": "POLICY-STATIC-V1-LARGE",
+    "effort": "medium",
+    "model_calls": 1,
+    "success": true,
+    "result_chars": 14037
+  },
+  "usage": {
+    "input_tokens": 20,
+    "cache_creation_input_tokens": 72770,
+    "cache_read_input_tokens": 489461,
+    "output_tokens": 20963,
+    "total_cost_usd": 0.9007163,
+    "num_turns": 27,
+    "subtype": "success"
+  },
+  "limits": {
+    "max_budget_usd": 3.0,
+    "budget_respected": true,
+    "max_turns": "NOT_SUPPORTED_BY_CLI_2.1.218",
+    "token_targets_for_R2": {
+      "input": 40000,
+      "output": 6000,
+      "turns": 5
+    },
+    "token_targets_met": false,
+    "note": "cost cap held; turn count and output tokens exceeded the R2 targets (targets are not enforceable by this CLI)"
+  },
+  "independence": {
+    "separate_process": true,
+    "started_by": "skill-collab-watcher engine 0.2.19 (the reviewed candidate itself, isolated state folder)",
+    "empty_working_directory": true,
+    "tools": [
+      "Read",
+      "Grep",
+      "Glob"
+    ],
+    "permission_mode": "dontAsk",
+    "mcp_servers": 0,
+    "session_persistence": false,
+    "project_settings_loaded": false,
+    "development_session_context_shared": false,
+    "claude_cli_version": "2.1.218"
+  },
+  "transport": {
+    "engine_reads_and_writes": "real GitHub with the Classic write token, automatic",
+    "automatic_puts": 3,
+    "job_state_in_engine": "COMPLETED",
+    "published_by": "the watcher itself (reservation, result, receipt); this usage receipt by the developer gh login"
+  }
+}
