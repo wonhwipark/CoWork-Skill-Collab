@@ -1,5 +1,14 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## CL/PR 최신 직접 검증 — 2026-11-14 KST (Python 3.10/3.11, 배포 차단 유지)
+
+- **검증 정본:** [실제 CI 결과/원본 baseline 비교](GPT_CLPR_ISOLATED_PY310_PY311_VALIDATION_RESULT_r0001_20261114.md). 실행 기록: [PRIVATE Actions run 43598489441](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43598489441), 격리 테스트 브랜치 `clpr-validation-20261114`, commit `9083a14befc4654a33813d05f79a321023822713`.
+- **실측:** 기존 5종 후보 ZIP SHA-256·크기·CRC·경로/심링크 PASS; 수정 후보 Python 415개 파일 `compile()` Python 3.10.22/3.11.18 PASS. 두 버전 모두 선택한 9개 기존 단위시험 suite 중 7 PASS / 2 FAIL. 합성 CL/PR grouping·UNLINKED·중복/잘못된 입력 차단 E2 PASS.
+- **기존 FAIL 비교:** Workflow issue brief의 `wrong match` 예상 문구 및 Work resume의 `WORK_NOT_FOUND` 두 실패가 PUBLIC 원본 `v1.6.67`과 수정 후보 `v1.6.68`에서 같은 조건으로 재현. **새 패치 유발 회귀로 판정하지 않으나 전체 회귀 PASS 아님.** CI 자체 conclusion=failure 보존.
+- **현재 소스:** 이번 검증에서는 기존 PRIVATE 5종 ZIP 추가 변경·정식 릴리스 승격 없음. `CLPR_PLAN=READ_ONLY`, 실제 Work/Evidence 저장·재조회/중복 Work0 통합 미구현·NOT_RUN. P4 historical per-file snapshot과 실제 Mango·업무 호스트 E3 미확인.
+- **판정:** `DEVELOPMENT=PARTIAL_PATCHED`, `STATIC_CHECK=PASS`, `TARGETED_SELF_TEST=PARTIAL`, `FULL_REGRESSION=FAIL/NOT_COMPLETE`, `HOST_E3=NOT_RUN`, `POST_PATCH_INDEPENDENT_REVIEW=NOT_RUN`, `PUBLIC_RELEASE=BLOCKED/NOT_POSTED`. 추가 유료 리뷰 0, PRIVATE 후보 유지, 운영 DB/Job/Watcher/Knowledge/LIVE 무변경.
+- **다음 한 동작:** 기존 Kernel 허용 API 기반 Work/Evidence 연결·중복/충돌 방지의 최소 구현/격리시험을 우선. 실제 E3/전체 회귀·보안·롤백 게이트가 충족되기 전 PUBLIC 최종 ZIP 게시 금지. `MIGRATION_NOT_CUTOVER` 유지.
+
 ## Work → Knowledge 독립 설계 리뷰 요청 — 2026-11-14 KST
 
 - **사용자 지시:** 새 Work→Knowledge 흐름 문서에 대한 Claude Code 독립 설계 리뷰 요청 및 실행 가능 여부 확인.
