@@ -192,10 +192,10 @@
   "work_items": [
     {
       "evidence": "프로젝트 TRACKER.json 신고 값 · 운영 근거 별도 확인 필요",
-      "independent_review": "NOT_RUN",
-      "next_action": "2026-11-15 GPT: v0.2.19 독립 R2 1회 실제 비용 $0.9007163, BLOCKING 1(N2 repository_id process-lifetime cache) 원격 리뷰/RECEIPT/USAGE로 직접 확인. v0.2.19 review=FAIL, 신규 v0.2.20 ca",
+      "independent_review": "PENDING",
+      "next_action": "2026-11-15 USER_APPROVED v0.2.20 independent R1 POLICY-STATIC-V1 $1 max, only 1 model call, new REQ-COWORK-V0220-R1-20261115. Prior B1 Windows cryptography, B2 Notif",
       "owner": "GPT / Claude Code",
-      "phase": "BLOCKED",
+      "phase": "REVIEW",
       "record_source": "REGISTERED_METADATA_UNVERIFIED",
       "self_test": "PASS",
       "skill": "cowork-review-watcher",
