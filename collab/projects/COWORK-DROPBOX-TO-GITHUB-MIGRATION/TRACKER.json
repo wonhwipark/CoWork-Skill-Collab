@@ -8,8 +8,8 @@
       "phase": "BLOCKED",
       "owner": "GPT / Claude Code",
       "self_test": "PASS",
-      "independent_review": "FAIL",
-      "next_action": "v0.2.19 독립 R2: BLOCKING 1건(N2 repo ID 캐시, 재현됨) → B1~B3·LIVE 미실행(ACTIVE_PROVIDER=NONE). 후보 v0.2.20 수정·자체시험 완료(미리뷰). 새 독립 리뷰 승인 후 운영 변경 3종 재개."
+      "independent_review": "NOT_RUN",
+      "next_action": "2026-11-15 GPT: v0.2.19 독립 R2 1회 실제 비용 $0.9007163, BLOCKING 1(N2 repository_id process-lifetime cache) 원격 리뷰/RECEIPT/USAGE로 직접 확인. v0.2.19 review=FAIL, 신규 v0.2.20 cache 제거 + same-transport multi-cycle 회귀 자체시험 674/12 및 607/17 HOST_PASS, ZIP 로컬만(239432 B, SHA256 6a8626375e5e711535abdd261ff48781114802bb345cabe2ed5940b75968f386), v0.2.20 independent_review=NOT_RUN. 다음은 v0.2.20 diff만 R1 POLICY-STATIC-V1 최대 $1 정확히 1회 신규 유료 리뷰 명시 승인 필요. 승인 후 원본/원격 raw ZIP 검증→signed READY 마지막→독립 리뷰 PASS 시 기존에 승인된 B1 운영 cryptography, B2 Notifier watermark, B3 GitHub watcher Task 및 LIVE를 원샷 재개. B와 GitHub LIVE는 이미 승인되어 재확인 금지. 실제 ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER. Classic PAT 계속 사용."
     }
   ]
 }
