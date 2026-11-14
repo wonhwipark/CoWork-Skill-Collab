@@ -80,10 +80,10 @@
       "id": "L1-WORKSPACE-RAG-20261111-001",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md",
-      "status": "검증 진행 중",
+      "status": "전환 전",
       "title": "L1-WORKSPACE-RAG-20261111-001 — CURRENT",
       "tone": "warning",
-      "topic": "Work → Knowledge 독립 설계 리뷰 요청 — 2026-11-14 KST"
+      "topic": "CL/PR 최신 직접 검증 — 2026-11-14 KST (Python 3.10/3.11, 배포 차단 유지)"
     }
   ],
   "review_chains": [
