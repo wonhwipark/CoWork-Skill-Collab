@@ -76,6 +76,21 @@ class AllowlistSyncTests(unittest.TestCase):
         self.assertEqual(obj["work_cards"][0]["phase_label"], "완료 신고 · 증빙 별도")
         self.assertEqual(obj["checks"]["independent_review"], "추가 증거 검증 필요")
 
+    def test_pending_execution_reports_pending_without_leaking_internal_marker(self):
+        for pending in ("PENDING_EXECUTION", "PENDING_APPROVAL"):
+            self.state["operations"]["independent_review"] = pending
+            self.state["operations"]["windows_stage1"] = pending
+            payload = public_sync.build_payload(self.state, "2026-11-14")
+            self.assertEqual(payload["checks"]["independent_review"], "미실행·대기")
+            self.assertEqual(payload["checks"]["windows_stage1"], "미실행·대기")
+            encoded = public_sync.json_bytes(payload).decode("utf-8")
+            self.assertNotIn(pending, encoded)
+
+    def test_unknown_pending_status_remains_fail_closed(self):
+        self.state["operations"]["independent_review"] = "PENDING_UNREVIEWED"
+        with self.assertRaisesRegex(public_sync.SafetyBlock, "unexpected independent review"):
+            public_sync.build_payload(self.state, "2026-11-14")
+
     def test_unknown_cutover_state_fails_closed(self):
         for x in ("GITHUB_LIVE", "LIVE_CUTOVER", "UNKNOWN"):
             self.state["phase"] = x

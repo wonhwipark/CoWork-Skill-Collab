@@ -110,7 +110,8 @@ def pretty(raw: str) -> str:
         "MIGRATION_NOT_CUTOVER": "정식 전환 전",
         "PASS": "배포 성공 기록", "PARTIAL": "일부 확인",
         "BLOCKED": "차단", "BLOCKED_TRUST": "신뢰 검증 차단",
-        "PENDING": "대기",
+        "PENDING": "대기", "PENDING_EXECUTION": "실행 대기",
+        "PENDING_APPROVAL": "승인 대기",
     }.get(raw, "원문 확인 필요")
 
 

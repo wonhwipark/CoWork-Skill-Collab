@@ -33,6 +33,15 @@ class WorkflowDashboardTests(unittest.TestCase):
         self.assertEqual(ops["independent_review"], "NOT_RUN")
         self.assertEqual(ops["cutover"], "MIGRATION_NOT_CUTOVER")
 
+    def test_pending_execution_is_not_a_review_pass(self):
+        self.current(flow_view.MIGRATION,
+                     "INDEPENDENT_REVIEW=PENDING_EXECUTION\nACTIVE_PROVIDER=NONE")
+        state = generate.build_state(self.root)
+        self.assertEqual(state["operations"]["independent_review"], "PENDING_EXECUTION")
+        self.assertEqual(flow_view.pretty("PENDING_EXECUTION"), "실행 대기")
+        self.assertIn("실행 대기", flow_view.render_markdown(state))
+        self.assertNotIn("독립 리뷰 **배포 성공 기록**", flow_view.render_markdown(state))
+
     def test_missing_document_is_unknown_not_pass(self):
         ops = flow_view.snapshot(self.root)
         self.assertEqual(ops["windows_stage1"], "NOT_OBSERVED")

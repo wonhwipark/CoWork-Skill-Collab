@@ -74,7 +74,7 @@ class SafetyBlock(ValueError):
 
 
 def _reported_status(value: str) -> str:
-    if value in ("NOT_RUN", "PENDING"):
+    if value in ("NOT_RUN", "PENDING", "PENDING_EXECUTION", "PENDING_APPROVAL"):
         return "미실행·대기"
     if value == "NOT_OBSERVED":
         return "기록 미관측"
@@ -154,9 +154,11 @@ def build_payload(state: dict, date: str, *,
         raise SafetyBlock("missing operations evidence")
     independent_review = operations.get("independent_review", "NOT_OBSERVED")
     windows_stage1 = operations.get("windows_stage1", "NOT_OBSERVED")
-    if independent_review not in {"NOT_RUN", "PENDING", "NOT_OBSERVED", "PASS", "FAIL", "PARTIAL"}:
+    if independent_review not in {"NOT_RUN", "PENDING", "PENDING_EXECUTION", "PENDING_APPROVAL",
+                                  "NOT_OBSERVED", "PASS", "FAIL", "PARTIAL"}:
         raise SafetyBlock("unexpected independent review marker")
-    if windows_stage1 not in {"NOT_RUN", "PENDING", "NOT_OBSERVED", "PASS", "FAIL", "PARTIAL"}:
+    if windows_stage1 not in {"NOT_RUN", "PENDING", "PENDING_EXECUTION", "PENDING_APPROVAL",
+                                  "NOT_OBSERVED", "PASS", "FAIL", "PARTIAL"}:
         raise SafetyBlock("unexpected host marker")
     output = []
     used_primary = set()
