@@ -9,7 +9,7 @@
       "owner": "GPT / Claude Code",
       "self_test": "PASS",
       "independent_review": "PASS",
-      "next_action": "PAT 보유 사용자 확인(2026-11-14): 기존 PAT를 우선 검증. PRIVATE wonhwipark/CoWork-Skill-Collab 단일 repo Contents Read/Write, 만료·형식·보안 저장 조건 충족 여부 아직 NOT_VERIFIED. 충족하면 재발급 없이 안전 설치·isolated write probe·기존 UPLOAD_PENDING publish-only(모델 재호출 0). 불충족 때만 필요한 토큰 조치 ACTION_REQUIRED. v0.2.17 R2 독립 정적 PASS_WITH_FINDINGS, SHADOW 부분 PASS, DB 격리 백업/복구 호스트 PASS. 기타 LIVE 게이트: 운영 cryptography, Notifier 프로세스 2개/연동, repo_id/N1 nonce replay, 분리계정 SHADOW·복합 E2E·pending 1건 이력 보존. 추가 비용·운영 변경/LIVE 미승인, ACTIVE_PROVIDER=NONE/MIGRATION_NOT_CUTOVER."
+      "next_action": "사용자 지시(2026-11-14) 기존 PAT 재사용 검증 진행: 원샷 GPT_EXISTING_PAT_VERIFY_AND_PUBLISH_ONLY_ONE_SHOT_r0001_20261114.md PRIVATE main 게시/readback. Windows Claude Code는 로컬 기존 PAT를 비밀 노출 없이 fine-grained/CoWork 단일 PRIVATE repo Contents R/W/만료 조건 검증. 적격이면 신규발급 없이 안전 설치·격리 임시브랜치 write/readback·기게시 R2/영수증 publish-only idempotent 정산(모델 호출 0). 부적격일 때만 ACTION_REQUIRED. HOST_EXECUTION_NOT_RUN, PAT_ELIGIBILITY_NOT_VERIFIED. v0.2.17 독립 R2 static PASS_WITH_FINDINGS; 운영 cryptography/Notifier/N1/N2/분리계정 SHADOW 및 LIVE 게이트 별개. ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER, LIVE 미승인."
     }
   ]
 }
