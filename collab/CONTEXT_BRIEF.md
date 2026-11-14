@@ -1,9 +1,17 @@
 # CoWork 공통 맥락 브리프
 
-- 개정: r0001 / 확인 기준 2026-11-14 KST
+- 개정: r0002 / 확인 기준 2026-11-14 KST (모바일 Agent·Linux MCP 운영 지도 및 역할 용어 보강)
 - 저장소: GitHub PRIVATE `wonhwipark/CoWork-Skill-Collab`, branch `main`
-- 출처 기준 commit: `fdea038df35eec7d102d703b46acdf3a31f3b0ae`. 아래는 이 시점의 읽기용 요약이며 설치·실행·승인 원장이 아님.
+- 최초 기준 commit: `fdea038df35eec7d102d703b46acdf3a31f3b0ae`; r0002는 2026-11-14의 운영 경로 보완. 아래는 출처별 최신 blob을 따라가는 **읽기용 파생 지도**이며 설치·실행·승인 원장이 아님.
 - 읽기 순서: **이 파일 → 아래 표의 관련 CURRENT → 필요한 계약·스킬 원문**. 브리프와 새 근거가 다르면 최신 근거를 따른다.
+
+## 0. L1 협업 역할 이름과 증거 책임
+
+- **설계 GPT:** 허용된 문서/비민감 상태를 바탕으로 L1 지식 상위 설계·스킬 책임·정합성/리뷰 판정. 실제 Linux 코드/호스트 시험을 직접 확인한 것으로 주장하지 않음.
+- **업무 GPT:** 실행 LLM 및 Agent의 원문 결과를 전달받아 분석·판정하고, L1 Knowledge Updater·지침·전체 지도·작업별 최신 상태의 정합성을 유지. 파일/코드/MCP 직접 접근은 확인 전 가정하지 않음.
+- **실행 LLM:** 허가된 도구/스킬로 분석·격리 구현·시험을 수행하고 Evidence를 보고. 자체 시험과 독립 리뷰는 분리.
+- **모바일 Agent:** 사용자 요청을 승인된 Linux MCP에 연결해 Work/Job 진행·조회와 결과 회수를 지원. 실제 도구 실행·결과 성공·Knowledge 게시를 Agent 사용만으로 추정하지 않음.
+- 새 문서는 망/위치 명칭 대신 위 역할명과 실제 도구명으로 표현. [역할·용어 계약](ops/CONTRACTS/EXECUTION_PROMPT_TERMINOLOGY_V1.md). 과거 파일명/기록은 추적성을 위해 유지.
 
 ## 1. 협업 운용·저장소
 
@@ -50,6 +58,29 @@
 
 [세부 기능·I/O·한계 카탈로그](knowledge/SKILL_CAPABILITY_CATALOG.md). 분석 결과와 지식 링크/변환 성공을 실제 Provider 입력 성공으로 대체하지 않음.
 
+## 3A. 모바일 Agent → Linux MCP → 기존 스킬 실행 경로
+
+```text
+사용자 → 모바일 Agent → Linux MCP
+                          ├─ A. Work 검색·재개 → l1-fix-workflow → Kernel Work/Evidence
+                          └─ B. 신규 Job-list 구성 필요
+                               ├─ 설치·갱신 필요 시 skill-updater 1회 수행 요청
+                               └─ 승인된 job-list 활성화·Runner/실행 LLM
+                                               ↓
+                                    상태·결과·영수증 조회
+                                               ↓
+                                     업무 GPT 검토·판정
+                                               ↓
+                                l1-workspace → Knowledge Updater
+                                               ↓ (별도 승인/검증 시)
+                                       l1sw-dev-knowledge
+```
+
+- **실제 기존 사용 경로는 사용자 보고**, 현재 MCP tool/API·권한·Updater 실제 적용·Job 활성화·최종 분석/MSC·영수증·E2E는 각각 검증 필요. 문서만으로 자동 호출, 성공 또는 신규 인터페이스 존재를 주장하지 않음.
+- `skill-updater`는 조건부 **1회 실행 요청** 대상이지 Job 스케줄러가 아님. 요청, 호출, 적용, Registry/Runner, 결과 읽기와 지식 게시를 구별. 소비된 one-shot은 임의 재실행 금지.
+- [스킬 카탈로그](knowledge/SKILL_CAPABILITY_CATALOG.md)는 책임과 후보 호출 관계, [Job CURRENT](projects/JOBLIST-NRTX-20261112-001/CURRENT.md)는 설치·Registry·MCP 결과 조회의 실제 진단/차단 이력, [L1 CURRENT](projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md)는 지식 연계의 검증 상태 정본.
+- **업무 GPT 초기 비교:** 시스템 지도와 업무 GPT의 실제 설치/실행 결과·기존 프로젝트 지침을 `CONFIRMED / USER_REPORTED / INFERRED / NOT_VERIFIED`로 대조. 지침(상시 운영 규칙)·지도(상위 구조)·CURRENT(진행/결정)·Work/Evidence(원본)·Knowledge 후보(검증된 사실)를 분리해 필요한 최소 문서 갱신안만 적용하고 설치/게시/운영 변경은 별도 승인.
+
 ## 4. 요청별 최신 위치·확인 시점의 상태
 
 | 요청/업무 | 읽을 정본 | 현재 요약·다음 조치 |
@@ -86,7 +117,8 @@ CL/PR: [설계안](projects/L1-WORKSPACE-RAG-20261111-001/CL_PR_ISSUE_ANALYSIS_D
 | projects/COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md | `debd9d81d1d4fd828139ec7e1197a47ec4c4de02` |
 | projects/L1-WORKSPACE-RAG-20261111-001/CL_PR_ISSUE_ANALYSIS_DESIGN_BRIEF_r0001_20261114.md | `b7838b5e86e3c88d322c5111ffccee0a4e835456` |
 | projects/ISSUE-ANALYZER-20261114-001/CURRENT.md | `466d4967b75074693a95797c47463f607767bdda` |
-| knowledge/SKILL_CAPABILITY_CATALOG.md (동시 문서 갱신) | `57dd6f388d76a103cc99b3ec920b82cc2154b90d` |
-| projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md (동시 요약 정정) | `6fd13bfc8e66e381ecedd0b39028e2f0ad13a972` |
+| knowledge/SKILL_CAPABILITY_CATALOG.md (r0005, 운영 경로 보강) | `483d62e2ad95ae074ab9119f2ec591331975639f` |
+| projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md (모바일 MCP 추가) | `28ae6059eda7a675987125d98ea1a3ad325befd7` |
 | projects/JOBLIST-NRTX-20261112-001/CURRENT.md (동시 요약 정정) | `c8f0c02f8a3825563f4389c68fbad9485d4dadcf` |
-| START_HERE.md (동시 진입 연결) | `0ea7951af62a1d90387b330181cc4304e1c4d99e` |
+| START_HERE.md (기존 진입 연결) | `0ea7951af62a1d90387b330181cc4304e1c4d99e` |
+| ops/CONTRACTS/EXECUTION_PROMPT_TERMINOLOGY_V1.md (r0002 역할 용어) | `8905149948a7021d1e7013b7d1ee85c87997d8a4` |
