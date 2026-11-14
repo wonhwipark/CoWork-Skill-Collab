@@ -1,5 +1,13 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## GPT 공식 판정 — A안 독립 리뷰 검증 및 v0.2.17 LIVE 게이트 (2026-11-14 KST)
+- **정본 판정:** [GPT_A_V0214_INDEPENDENT_REVIEW_DISPOSITION_r0001_20261114.md](GPT_A_V0214_INDEPENDENT_REVIEW_DISPOSITION_r0001_20261114.md) · `GPT_DISPOSITION=ACCEPT_WITH_CHANGE` · `INDEPENDENT_REVIEW_V0214=COMPLETED_WITH_BLOCKING_FINDINGS / RELEASE_GATE=FAIL`.
+- **원격 실물 확인:** `collab/reviews/REQ-COWORK-V0214-R1-20261114/REVIEW_RESULT_1.md`, `collab/receipts/REQ-COWORK-V0214-R1-20261114/RECEIPT_1.md`, `USAGE_RECEIPT_1.json`, REQUEST 및 READY 본문을 직접 조회. 비용 `$0.9695416`/1 모델 호출/18 turns/출력 21479 토큰 보고. 기존 R1 목표 3 turns/출력 3000 토큰 미충족(비용 상한 이내).
+- **지적별 판정:** F1(다른 정책 키 중복 리뷰), F2(scan/watch 상호배제), F3(일일 한도 비원자 예약)는 **LIVE BLOCKING**. F4(scan 크래시 잔류), F5(Windows 프로세스 트리 잔류)는 **MAJOR / LIVE 이전 검증 필수**. 리뷰에서 발견한 5개를 자체 재현·수정한 `v0.2.17`은 `SELF_TEST_REPORTED`(venv 644 PASS/12 SKIP, 운영 578 PASS/17 SKIP), **미게시·미리뷰·원본 바이트 GPT 미검증**.
+- **현재 미검증:** 엔진 결과 업로드 `HTTP 403 / UPLOAD_PENDING`이며 개발자 gh 수동 게시만 확인됨. GitHub 실 repo ID 결합, 실호스트 SHADOW, 운영 백업/복구, Notifier 연결, 암호 라이브러리/skip 원인, 수정본 재리뷰 미완료. `ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER`.
+- **다음 한 동작/승인:** (1) 감시기 전용 PRIVATE repo 쓰기 PAT (2) `v0.2.17` 신규 R2 독립 구조 리뷰 1회 최대 $3 (3) 실호스트 SHADOW 및 운영 DB 안전 백업·별도 사본 복구 리허설을 **사용자에게 통합 승인 요청**. R0~R3 상시 비용 정책은 **편의 기능, LIVE 필수 선행은 아님**. 세 승인 및 최종 LIVE 승인은 아직 주어지지 않았으며 어떤 실행도 자동 시작하지 않음.
+- **이력 보존:** 아래 Claude A안 보고·과거 인계/판정은 작성 당시 기록으로 유지하며 최신 실행판정은 본 최상단과 연결된 GPT 판정서를 우선.
+
 ## A안 실행 결과: v0.2.14 R1 독립 리뷰 1회 완료 — 지적 5건, 수정은 격리 후보 v0.2.17 (Claude 자체 보고, 2026-11-14 KST)
 - 결과: `CLAUDE_A_APPROVED_V0214_SINGLE_REVIEW_RESULT_FOR_GPT_20261114.md` (PRIVATE `main`, commit `4f5fd04fd74dbacdf853384e18f8d4e9ac626f32`, 원격 바이트·SHA-256 `6e9adee5c350fb2ee7c36512699fd8a6e473cec9b2c95b2f4ae790c609341b19` 일치).
 - 서명키: 단일 PC Ed25519, 개인키 scrypt+AES-GCM 암호화·비밀번호는 DPAPI 블롭만, trust_root_independence=warn. 지문 `9c6f650ce89d…`.
