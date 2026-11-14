@@ -70,6 +70,7 @@ jobs:
           export CLPR_TEMP="${RUNNER_TEMP}/clpr-isolated"
           export HOME="$CLPR_TEMP/home"
           export PYTHONPATH="$CLPR_TEMP/work-ledger-kernel:${PYTHONPATH:-}"
+          ln -s "$CLPR_TEMP/work-ledger-kernel" "$CLPR_TEMP/l1-fix-workflow/work-ledger-kernel"
           fail=0
           run_suite() {
             label="$1"; base="$2"; pattern="$3"
