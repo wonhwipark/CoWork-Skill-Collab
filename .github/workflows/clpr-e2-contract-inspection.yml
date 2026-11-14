@@ -127,6 +127,15 @@ jobs:
           export PYTHONPATH="$CLPR_TEMP/workflow/l1-fix-workflow:$CLPR_TEMP/kernel"
           python -m unittest -v collab/projects/L1-WORKSPACE-RAG-20261111-001/devtools/test_clpr_existing_work_link.py
           echo "CLPR_WORK_REFS_SYNTHETIC_E2_PASS (no host/production writes)"
+          python - <<'PY'
+          from l1_fix_workflow.cli import parser
+          p=parser()
+          a=p.parse_args(['clpr-existing-work-link','--input-json','/tmp/example.json','--issue-identity','jira:SOC-321'])
+          assert a.commit is False and a.issue_identity=='jira:SOC-321'
+          b=p.parse_args(['clpr-existing-work-link','--input-json','/tmp/example.json','--issue-identity','jira:SOC-321','--commit'])
+          assert b.commit is True
+          print('CLPR_CLI_PREVIEW_DEFAULT_AND_EXPLICIT_COMMIT_PARSE_PASS')
+          PY
           python collab/projects/L1-WORKSPACE-RAG-20261111-001/devtools/build_clpr_dev_candidates.py
           echo "CLPR_CANDIDATE_PACKAGED_NOT_FOR_DEPLOYMENT"
       - name: Inspect packaging metadata schemas only
