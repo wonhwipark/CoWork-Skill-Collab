@@ -121,6 +121,7 @@ jobs:
           for archive, sub in [('l1-fix-workflow_v1_6_68_1114.zip','workflow'),('work-ledger-kernel_v0_7_38_1114.zip','kernel')]:
             with zipfile.ZipFile(base/archive) as z: z.extractall(dest/sub)
           PY
+          python collab/projects/L1-WORKSPACE-RAG-20261111-001/devtools/apply_kernel_ref_find_patch.py "$CLPR_TEMP/kernel/work_ledger_kernel/kernel.py"
           cp collab/projects/L1-WORKSPACE-RAG-20261111-001/devtools/clpr_existing_work_link.py "$CLPR_TEMP/workflow/l1-fix-workflow/l1_fix_workflow/clpr_existing_work_link.py"
           export PYTHONPATH="$CLPR_TEMP/workflow/l1-fix-workflow:$CLPR_TEMP/kernel"
           python -m unittest -v collab/projects/L1-WORKSPACE-RAG-20261111-001/devtools/test_clpr_existing_work_link.py
