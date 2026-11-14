@@ -20,7 +20,7 @@
       "status": "전환 전",
       "title": "COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태",
       "tone": "warning",
-      "topic": "사용자 확인 — PAT 이미 보유 (2026-11-14 KST, 후속 정정)"
+      "topic": "기존 PAT 검증·publish-only 사용자 실행 지시 및 Windows 원샷 인계 (2026-11-14 KST)"
     },
     {
       "id": "COWORK-GITHUB-DASHBOARD-20261111-001",
