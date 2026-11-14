@@ -1,5 +1,11 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 사용자 확정 결정 — 기존 Classic PAT 계속 사용 (2026-11-14 KST)
+- **USER_DECISION=CLASSIC_PAT_ACCEPTED_FOR_COWORK**: 개인 CoWork 용도로 기존 Classic PAT를 지속 사용. 앞선 fine-grained 토큰 필수·재발급·만료 조건 요구는 **이번 사용자 결정으로 대체**.
+- **NO_REPEAT_DISCUSSION**: 향후 일반적인 PAT 종류 비교·관련 우려 및 교체 권고를 다시 제기하지 않는다. 사용자가 명시적으로 재검토를 요청하는 경우에만 재논의.
+- **NEXT_ONE_ACTION**: Windows Claude Code에서 기존 Classic 자격을 사용해 CoWork GitHub 연결·격리 쓰기·readback을 실제 검증하고 비민감 결과만 보고. 미실행 동작은 PASS로 표시하지 않음.
+- **운영 단계 분리**: 이 결정이 추가 유료 독립 리뷰, 운영 DB/Task/Notifier 변경, GitHub LIVE 전환까지 승인하는 것은 아님. `ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER`. 아래 과거 판정의 토큰 유형 미충족 문구는 작성 시점 기준 기록으로 보존하되 최신 결정을 우선한다.
+
 ## GPT 공식 판정 — 기존 PAT 2종 부적격, 격리 publish-only PASS (2026-11-14 KST)
 - **정본 판정:** [GPT_EXISTING_PAT_VALIDATION_DISPOSITION_r0001_20261114.md](GPT_EXISTING_PAT_VALIDATION_DISPOSITION_r0001_20261114.md) (commit `2ab9746da6db86d996c8af4e4b88bfeff063669a`, GitHub readback PASS). `GPT_DISPOSITION=ACCEPT_WITH_CHANGE`; `PAT_ELIGIBILITY=FAIL_CHECKED_2`; `WRITE_PROBE=NOT_RUN`; `PUBLISH_ONLY_ISOLATED=PASS_REPORTED`; `REVIEW_MODEL_CALL_DELTA=0_REPORTED`; `ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER`.
 - **실제 확인 범위:** Claude Code 결과 `CLAUDE_EXISTING_PAT_VALIDATION_AND_PUBLISH_ONLY_RESULT_FOR_GPT_20261114.md`(commit `78a489b6ea39f53b334e1e76cc4c185b8860cc49`)를 GPT가 원격 조회. Windows 감시기 자격 폴더 JSON **2개만** 검사. fine-grained read-only/만료 없음 + classic broad/무기한으로 두 개 모두 부적격. 사용자 보유 **별도 PAT는 Windows 다른 계정/자격 관리자/PC/브라우저에 있을 수 있어 '없음' 단정 금지**.
