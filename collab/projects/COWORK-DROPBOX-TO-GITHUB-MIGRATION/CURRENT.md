@@ -1,5 +1,14 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## GitHub LIVE 컷오버: 게이트 3개 BLOCKED로 **미전환**(ACTIVE_PROVIDER=NONE), N1 잔여 갭은 후보 v0.2.19로 수정 (Claude 자체 보고, 2026-11-14 KST)
+- 결과: `CLAUDE_GITHUB_LIVE_CUTOVER_EXECUTION_RESULT_FOR_GPT_20261114.md` (PRIVATE `main`, commit `ed007279b1fd56af24969c86817271adc2640c48`, 원격 바이트·SHA-256 `7c5295c7ec5511ef19c8b78cbe245274e33b34094fe68687e8efe0b79d93b26c` 일치). 사용자 LIVE 승인 반영·재질문 0. 모델 호출 0, 비용 $0, 운영 변경 0.
+- N1 잔여 갭(모델 호출 후 업로드 전 로컬 DB/결과 소실 시 2차 유료 호출) 재현 후 수정: 모델 시작 직전 원격 `dispatch/<요청ID>/DISPATCH_<rev>.md` 생성 전용 예약. 크래시 7지점×상태 유지/소실, 구 백업 복원, 예약 불가/타인 기록 19개 시험 통과(v0.2.18에서는 12개 실패). 원격 쓰기가 안 되면 유료 리뷰가 시작되지 않는 동작 변화.
+- 후보 `v0.2.19`(`development_not_for_deployment`) 239143 B, sha256 `6e7fee3340cc6d0282d1c18fe3db42a90360259dd73fa6d7c0a7698af7afe5c0`, 시험 venv 673/12·운영 인터프리터 606/17, 재빌드 바이트 동일, 비밀 스캔 0. 입력(ZIP·매니페스트·diff)만 `review-inputs/REV-COWORK-V0219-20261114/`에 게시(요청·READY 없음). **독립 리뷰 NOT_RUN**.
+- 차단 사유: ① v0.2.19 독립 리뷰 미승인(BLOCKED_PAID_REVIEW_APPROVAL), ② 운영 인터프리터 cryptography 없음·설치 미승인(BLOCKED_OPERATIONAL_APPROVAL), ③ 운영 Notifier 교체와 GitHub watcher Task/설정 설치 미승인.
+- Notifier 발견: 현재 Notifier는 DB 1개+`last_id` 1개라 GitHub 새 상태 DB로 바꾸면 새 알림이 조용히 누락됨(재현). DB별 워터마크 후보를 비발송 리허설로 검증(설치 안 함).
+- 호스트 기준선: 운영 DB main/WAL 해시 불변, pending 1건·완료 60·CONFLICT 1 보존(GitHub는 새 상태 폴더 사용 → 해당 Dropbox 시절 요청은 재제출 필요), Task 상태 불변(Notifier만 Running), 이번 셸은 관리자 권한.
+- 다음 사용자 결정(한 번에): v0.2.19 R2 리뷰 1회(권고 POLICY-STATIC-V1-LARGE, 최대 $3) + 운영 변경 승인 3종. 모두 승인되면 같은 인계로 [리뷰→설치→2주기+재시작 중복 0→전환] 진행.
+
 ## 사용자 GitHub LIVE 컷오버 최종 의사 승인 + 조건부 원샷 인계 (2026-11-14 KST)
 - **USER_APPROVED_GITHUB_LIVE_CUTOVER=YES**: 사용자 명시 지시 **"전환해줘"**. **다시 동일 LIVE 전환 승인을 묻지 않는다.** 기준: PRIVATE `main` [GPT_GITHUB_LIVE_CUTOVER_USER_APPROVAL_AND_GATED_ONE_SHOT_r0001_20261114.md](GPT_GITHUB_LIVE_CUTOVER_USER_APPROVAL_AND_GATED_ONE_SHOT_r0001_20261114.md), commit `3f967c985f380fa31412cca1334158194e010d36`, 원격 readback PASS.
 - **실제 운영 상태 별개:** `LIVE_ACTIVATED=NO`, `HOST_EXECUTION=NOT_RUN`(이번 GPT 세션), `ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER`. 이 문서 게시만으로 Windows watcher/Task/리뷰 시작되지 않음.
