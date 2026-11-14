@@ -1,0 +1,10 @@
+{
+  "schema": "COWORK_HANDOFF_REGISTRY_V1",
+  "handoffs": [
+    {
+      "id": "msc-b-viewer",
+      "stage": "PUBLISHED",
+      "updated_on": "2026-11-14"
+    }
+  ]
+}
