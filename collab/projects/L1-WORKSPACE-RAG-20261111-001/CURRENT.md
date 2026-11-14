@@ -2,6 +2,7 @@
 
 ## CL/PR 최신 직접 검증 — 2026-11-14 KST (Python 3.10/3.11, 배포 차단 유지)
 
+- **후속 실행용 인계 (아직 미실행):** [정확한 PRIVATE main/상대 경로 원샷 r0002](CLPR_REMAINING_IMPLEMENTATION_HOST_HANDOFF_r0002_20261114.md). 본 문서 게시 자체는 Windows Claude Code·Linux MCP·Job·Watcher 실행을 시작하지 않음.
 - **검증 정본:** [실제 CI 결과/원본 baseline 비교](GPT_CLPR_ISOLATED_PY310_PY311_VALIDATION_RESULT_r0001_20261114.md). 실행 기록: [PRIVATE Actions run 43598489441](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43598489441), 격리 테스트 브랜치 `clpr-validation-20261114`, commit `9083a14befc4654a33813d05f79a321023822713`.
 - **실측:** 기존 5종 후보 ZIP SHA-256·크기·CRC·경로/심링크 PASS; 수정 후보 Python 415개 파일 `compile()` Python 3.10.22/3.11.18 PASS. 두 버전 모두 선택한 9개 기존 단위시험 suite 중 7 PASS / 2 FAIL. 합성 CL/PR grouping·UNLINKED·중복/잘못된 입력 차단 E2 PASS.
 - **기존 FAIL 비교:** Workflow issue brief의 `wrong match` 예상 문구 및 Work resume의 `WORK_NOT_FOUND` 두 실패가 PUBLIC 원본 `v1.6.67`과 수정 후보 `v1.6.68`에서 같은 조건으로 재현. **새 패치 유발 회귀로 판정하지 않으나 전체 회귀 PASS 아님.** CI 자체 conclusion=failure 보존.
