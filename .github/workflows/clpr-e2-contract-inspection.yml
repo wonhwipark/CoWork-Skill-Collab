@@ -9,14 +9,18 @@ jobs:
   inspect:
     if: github.repository == 'wonhwipark/CoWork-Skill-Collab' && github.ref == 'refs/heads/clpr-e2-work-evidence-20261115'
     runs-on: ubuntu-22.04
-    timeout-minutes: 6
+    timeout-minutes: 7
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.10', '3.11']
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           persist-credentials: false
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: ${{ matrix.python-version }}
       - name: Inspect only public-contract AST and registry names, no source or secrets emitted
         shell: bash
         run: |
@@ -103,3 +107,21 @@ jobs:
                 for num in range(node.lineno,lim+1): print(f'{num:04d}: '+lines[num-1][:180])
                 print('REF_API_END',node.name)
           PY
+      - name: Run synthetic Work reference patch in temp-only ledger
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PYTHONDONTWRITEBYTECODE=1
+          export CLPR_TEMP="${RUNNER_TEMP}/clpr-work-e2"
+          mkdir -p "$CLPR_TEMP"
+          python - <<'PY'
+          import pathlib,zipfile,os
+          base=pathlib.Path("collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates")
+          dest=pathlib.Path(os.environ["CLPR_TEMP"])
+          for archive, sub in [('l1-fix-workflow_v1_6_68_1114.zip','workflow'),('work-ledger-kernel_v0_7_38_1114.zip','kernel')]:
+            with zipfile.ZipFile(base/archive) as z: z.extractall(dest/sub)
+          PY
+          cp collab/projects/L1-WORKSPACE-RAG-20261111-001/devtools/clpr_existing_work_link.py "$CLPR_TEMP/workflow/l1-fix-workflow/l1_fix_workflow/clpr_existing_work_link.py"
+          export PYTHONPATH="$CLPR_TEMP/workflow/l1-fix-workflow:$CLPR_TEMP/kernel"
+          python -m unittest -v collab/projects/L1-WORKSPACE-RAG-20261111-001/devtools/test_clpr_existing_work_link.py
+          echo "CLPR_WORK_REFS_SYNTHETIC_E2_PASS (no host/production writes)"
