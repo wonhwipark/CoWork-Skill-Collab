@@ -67,7 +67,10 @@ for kind,original,expected,new_name,version,prefix in cases:
                 out.writestr(zi,files[zi.filename])
                 consumed.add(zi.filename)
             for name in sorted(set(files)-consumed):
-                out.writestr(name,files[name])
+                info_new=zipfile.ZipInfo(name,date_time=(2026,11,15,0,0,0))
+                info_new.compress_type=zipfile.ZIP_DEFLATED
+                info_new.external_attr=(0o100644<<16)
+                out.writestr(info_new,files[name])
     with zipfile.ZipFile(archive_path) as verify:
         assert verify.testzip() is None
         names=verify.namelist()
