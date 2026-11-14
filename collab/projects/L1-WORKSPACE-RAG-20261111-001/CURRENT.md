@@ -1,5 +1,15 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## CL/PR 구현 최신 실측 — 2026-11-14 KST (이하 과거 상태보다 우선)
+
+- **정본 결과:** [GPT 실제 소스 수정·5종 후보 패키지·회귀 차단 보고](GPT_CLPR_IMPLEMENTATION_CANDIDATES_RESULT_r0001_20261114.md). PRIVATE `main` 게시, 원격 readback 별도 확인.
+- **실제 변경:** `p4-code-owner v0.6.9` CL-only Mango Evidence 입력, `l1-github v0.3.57` merged/landing SHA 구분, `l1-fix-workflow v1.6.68` 이슈 후보 그룹핑+기존 Work 조회, `code-analyzer v0.15.3` Python f-string 호환, `work-ledger-kernel v0.7.38-dev.1` Python f-string 호환. **원본 PUBLIC ZIP 그대로 유지.**
+- **결과:** `DEVELOPMENT=PARTIAL_PATCHED`, `PRIVATE_CANDIDATE_ZIPS=5_CREATED_REMOTE_SHA256_CRC_VERIFIED` (P4 v0.6.8 후보는 이전 이력/대체됨), `ZIP_PATH_SYMLINK_CHECK=PASS`, `KERNEL_WORKFLOW_MANIFEST_CHECK=PASS`. 각 후보의 **Python 회귀테스트 실행=NOT_RUN**, E3 호스트·통합 Work/Evidence=NOT_VERIFIED/NOT_RUN, 패치 후 독립 리뷰=NOT_RUN.
+- **배포:** `PUBLIC_L1WORK_ROOT_NEW_ZIP=BLOCKED/NOT_POSTED`. PUBLIC 최종 ZIP 조건 미충족. PRIVATE 후보를 PUBLIC 릴리스로 대체하거나 Skill-Updater를 실행하지 않음. 사용자 요청 추가 Claude 리뷰 0.
+- **남은 우선 작업:** 수정 소스를 Python 3.10/3.11 격리시험/기존 회귀 → P4 historical snapshot, Workflow→Kernel 실제 Evidence write/readback·idempotency 통합 보완 → 개발/운영 호환·보안·롤백 확인 → PASS한 최종 ZIP만 PUBLIC L1Work root 배포, SHA-256 재조회.
+- **협업 판정:** `CONCEPT_ALIGNED/PROCESS_PARTIAL/NOT_RELEASED`. GitHub 게시=실행/배포라는 오인 금지; watcher/DB/Job/Knowledge/LIVE 불변 `MIGRATION_NOT_CUTOVER`.
+
+
 ## 현재 요약 — 2026-11-14 KST
 
 - Updated: 2026-11-14 KST
