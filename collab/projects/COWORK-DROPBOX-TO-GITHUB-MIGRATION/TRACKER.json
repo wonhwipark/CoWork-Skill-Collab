@@ -5,11 +5,11 @@
       "work_id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
       "skill": "cowork-review-watcher",
       "title": "cowork-review-watcher",
-      "phase": "REVIEW",
+      "phase": "COMPLETE",
       "owner": "GPT / Claude Code",
       "self_test": "PASS",
-      "independent_review": "PENDING",
-      "next_action": "2026-11-15 USER_APPROVED v0.2.20 independent R1 POLICY-STATIC-V1 $1 max, only 1 model call, new REQ-COWORK-V0220-R1-20261115. Prior B1 Windows cryptography, B2 Notifier provider watermark, B3 GitHub watcher Task/single GitHub LIVE approvals all retained; do not re-ask. Classic PAT retained. Canonical one-shot GPT_V0220_R1_APPROVAL_AND_GITHUB_LIVE_ONE_SHOT_r0001_20261115.md posted PRIVATE main/readback PASS. Candidate v0.2.20 SHA256 6a8626375e5e711535abdd261ff48781114802bb345cabe2ed5940b75968f386 239432 B currently Windows-local (host self-tests 674/12 and 607/17), no independent review yet. Windows Claude Code must verify local/remote raw ZIP SHA/CRC, publish review input and signed REQUEST/READY last, call independent reviewer max1, if PASS apply approved B1 B2 B3 and verify 2 cycles+restart/rollback/pending preservation. New result CLAUDE_V0220_R1_AND_GITHUB_LIVE_ACTIVATION_RESULT_FOR_GPT_20261115.md. Actual Windows not started by GitHub document; last measured ACTIVE_PROVIDER=NONE/MIGRATION_NOT_CUTOVER. Failed review means STOP, zero repeat paid calls."
+      "independent_review": "PASS",
+      "next_action": "GitHub 단일 LIVE 운영 중(호스트 실측). 다음 정식 서명 REQUEST+READY가 첫 실전 사례. 모니터링: 감시기 Task·Notifier 워터마크. 롤백 스크립트 준비됨(미실행)."
     }
   ]
 }
