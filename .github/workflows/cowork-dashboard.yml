@@ -6,6 +6,7 @@ on:
     paths:
       - '.github/workflows/cowork-dashboard.yml'
       - 'collab/dashboard/*.py'
+      - 'collab/dashboard/handoff_registry.json'
       - 'collab/dashboard/tests/**'
       - 'collab/dashboard/public_preview/**'
       # Any project document/feedback/handoff change: CURRENT, TRACKER, and addenda.
