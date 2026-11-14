@@ -22,6 +22,11 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           persist-credentials: false
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: main
+          path: verified-main
+          persist-credentials: false
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
@@ -34,7 +39,7 @@ jobs:
           export HOME="$CLPR_TEMP/home"
           python - <<'PY'
           import zipfile,hashlib,pathlib,os,stat,sys,json
-          base=pathlib.Path('collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates')
+          base=pathlib.Path('verified-main/collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates')
           items=[
             ('p4-code-owner_v0_6_9_1114.zip','p4','51363124aad349dd01f7e21f471bff4ae4d41d33d221ed9e4fb84e4217aab5ba'),
             ('l1-github_v0_3_57_1114.zip','github','f1b8fb43d3af427f2c5d52864051c65894f3cb45969ab35ca502f344735611ce'),
