@@ -1,6 +1,6 @@
 # CoWork 공통 스킬 기능 목록
 
-- 개정: r0004 / 2026-11-14 KST (통합 브리프 진입 연결; 패키지 재감사 아님)
+- 개정: r0005 / 2026-11-14 KST (모바일 Agent ↔ Linux MCP 실제 운영 경로의 문서 매핑 추가; 패키지 재감사 아님)
 - 새 창은 [공통 맥락 브리프](../CONTEXT_BRIEF.md) → 해당 CURRENT를 먼저 읽고 필요한 상세 기능을 이 목록에서 확인.
 - 대상: 사용자 확인한 관리 스킬 18개 + 별도 업무용 연동 스킬 1개. 전체 보유 스킬의 완전성·최신 설치 버전을 뜻하지 않음.
 - [이번 패키지 정적 확인·SHA-256·원본 위치](../projects/COWORK-SKILL-DISCOVERY-20261112-001/SKILL_18_PACKAGE_AUDIT_20261112.md) · [최신 상태](../projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md) · [시작·재사용 절차](../ops/CONTRACTS/SKILL_DISCOVERY_AND_REUSE_V1.md)
@@ -27,6 +27,23 @@
 | 17 | `autotask-builder` / 예약 작업 | task YAML·일정 → 검증·OS 작업 정의·deploy/status | 공개 child launcher, skill-updater, l1-cleanup | Windows Task Scheduler/Linux user timer; OS 예약만 소유, Job queue/state 불변 |
 | 18 | `l1-cleanup` / 정리·보존 | 대상/정책 → audit·plan·HTML/JSON·승인 격리/복구 | autotask-builder, 유효 artifact receipt 제공자 | 기본 조회; OpenCode DB 삭제·purge는 별도 승인; receipt 자동 연동은 미구현 표기 |
 | 19 | `l1-knowledge-updater` / 지식 Updater | 업무용 GPT 협업을 통한 `l1sw-dev-knowledge` 스킬 업데이트 | 기존 analyzer·converter·Workflow/Kernel과 연동 검토 | 업무용 연동 스킬로 분리. 2026-11-14 G0 일부 확인 보고 수신, 원본/API·전체 통합 직접 검증은 아님. 최신 L1 판정 참조 |
+
+## 실제 운영 경로와 스킬의 역할 매핑 — 사용자 보고, 호스트 영수증 미검증
+
+```text
+모바일 Agent → Linux MCP
+  ├─ 기존 Work 검색·재개 요청 → l1-fix-workflow → work-ledger-kernel
+  └─ 신규 Job-list 구성 필요
+       ├─ 설치·갱신 필요 시 skill-updater 1회 수행 요청
+       └─ 승인된 job-list 등록/활성화/Runner/실행 LLM → 결과·영수증 조회
+                    ↳ 필요 시 업무 GPT의 검토 → l1-workspace Evidence
+                      → l1-knowledge-updater 지식 후보/Preview
+```
+
+- `모바일 Agent`는 요청·조회, `Linux MCP`는 인터페이스, `skill-updater`는 승인된 패키지 설치·검증, `job-list`는 승인 Job/Runner, `l1-fix-workflow`/Kernel은 Work·Evidence를 소유한다. **skill-updater가 Job을 직접 실행하거나 MCP가 자동 지식 게시한다고 가정하지 않는다.**
+- 신규 Job마다 무조건 Updater를 실행하는 규칙이 아니다. 필요 시 **단발 실행 요청**과 실제 적용 결과, Registry 활성화, Worker 시작, 분석 완료, 결과 조회를 별도 기록한다. 기존 소비된 one-shot은 임의 재실행하지 않는다.
+- 현재 Linux MCP의 정확한 tool 명칭/스키마·승인·실행 영수증은 `NOT_VERIFIED`. 기존 [Job-list 진단 CURRENT](../projects/JOBLIST-NRTX-20261112-001/CURRENT.md)에 기록된 Registry/결과 조회 미확인·차단 이력을 우선한다. 유사한 사용 경험을 현재 E2E PASS로 승격하지 않는다.
+- 공통 역할 표기는 **설계 GPT / 업무 GPT / 실행 LLM / 모바일 Agent**로 통일하고, [실행 프롬프트 용어 계약](../ops/CONTRACTS/EXECUTION_PROMPT_TERMINOLOGY_V1.md)을 따른다.
 
 ## 요청 기능에서 후보 찾기
 
