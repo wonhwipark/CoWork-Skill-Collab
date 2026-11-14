@@ -1,5 +1,19 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+
+## Work → Knowledge 전환 설계 보완 — 2026-11-14 KST (이번 범위: 문서)
+
+- **사용자 결정:** 개인 Work에서 지식 후보를 작성·검토하고, 부족 근거를 같은 Work에 돌려 보완한 뒤 승인된 범위만 그룹에 게시하며, 원격 확인·Work 역링크 결과까지 회수하는 흐름을 L1 설계에 반영.
+- **설계 정본:** [Work → Knowledge 전환 흐름 r0001](L1_WORK_TO_KNOWLEDGE_FLOW_r0001_20261114_KST.md). 기존 r0005와 11/14 피드백 판정을 유지하는 상세 연결 설계. **DESIGN=USER_APPROVED_DOCUMENTED / IMPLEMENTATION=NOT_VERIFIED / WORKFLOW_UPDATER_E2E=NOT_RUN**.
+- **책임:** Workflow=요청/Work 선택·재개·분석, Kernel=Work/Evidence/허용 기록, Updater=후보·중복/충돌·Preview·보완 인계·승인/기존 writer 조정·게시 결과 회수. 개인 자료의 재사용은 Work 연결이며 스킬 지침/코드를 매번 수정한다는 의미가 아님.
+- **현재 단계 보정:** NR BCH/Channel Controller·LTE ChCfg·LTE/NR Tx 분류 결과는 사용자 정상 확인 보고로 보존 `USER_REPORTED_CLASSIFICATION_CHECKED`. 이 분류를 사용한 실제 코드 분석은 미실행. 215행 전체 담당자 승인·코드 지원·실제 ID/원본 입력 연결·호스트 E2E로 확대하지 않음.
+- **개인/그룹:** 개인 후보는 미확정·출처·적용 조건을 유지해 Workflow에서 재사용. 그룹에는 검토·승인된 범위만 게시. Work 원본 보존, 게시 revision 연결. Work 종료·분석 저장·게시·역링크·RAG 활용은 각각 독립 상태.
+- **사용자 표시:** 접수/후보 검토/개인 유지/보완 필요/승인 대기/게시 원격 확인과 Work 연결 상태를 함께 보여주는 목표. 설명용 상태이며 Kernel enum/필드/schema 확정 아님.
+- **지금/후속:** 동일 Work 전달·보완 재개·결과 회수의 책임과 기존 기능 매핑은 지금 정리. 실제 저장·게시/readback·역링크·Provider 본문 소비는 첫 승인된 실제 분석에서 별도 검증. 기존 `RAG_M1` 게이트 유지.
+- **범위:** 이 PRIVATE 설계·CURRENT·공통 브리프·기존 Tracker 문서만 갱신. 새 스킬 구현·설치·시험·그룹 쓰기·PUBLIC 게시·Job/운영 변경·새 독립 리뷰는 수행하지 않음. 아래 CL/PR 실제 후보 및 기존 독립 설계 리뷰 상태는 별도 이력으로 보존.
+- **다음 한 동작:** 업무 GPT의 기존 결과로 Work 선택 → Updater 후보 입력 → 같은 Work 보완/재접수 → 게시·역링크 결과 반환의 실제 진입점·기록·조회 기능을 매핑. 미확인은 GAP으로 단정하지 않고 실제 코드 분석/Job을 재실행하지 않음.
+- **문서 게시 확인:** [원격 commit·바이트 해시 검증 기록](L1_WORK_TO_KNOWLEDGE_FLOW_PUBLICATION_RECEIPT_20261114_KST.md) 참조. 문서 게시와 실제 실행을 구분.
+
 ## CL/PR 구현 최신 실측 — 2026-11-14 KST (이하 과거 상태보다 우선)
 
 - **정본 결과:** [GPT 실제 소스 수정·5종 후보 패키지·회귀 차단 보고](GPT_CLPR_IMPLEMENTATION_CANDIDATES_RESULT_r0001_20261114.md). PRIVATE `main` 게시, 원격 readback 별도 확인.
@@ -297,3 +311,4 @@
 - **RELEASE_GATE:** 사용자의 PUBLIC 경로 지시는 수신했으나 `JOBLIST_PUBLIC_DELIVERY_V1` 및 `PUBLIC_RELEASE_GATE`상 개발 후보/호스트·회귀 증거 없는 ZIP을 PUBLIC final로 게시 불가. **추가 리뷰 미실시 ≠ 독립 코드 리뷰 PASS**. 실증되지 않은 단계를 완료로 기록하지 않음.
 - **NO_EXTRA_REVIEW:** REQUEST/READY, watcher 자동 모델 호출, 신규 유료 리뷰 0; LIVE/운영 DB/Task/Skill-Updater/Job/Knowledge/metadata 변경 0. `ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER`.
 - **NEXT_ONE_ACTION:** 코드·실제 Python 및 테스트 실행 환경이 있는 승인 호스트에서 **정확한 PUBLIC repo/main/handoffs 원샷 문서**를 실행, 리뷰 재요청 없이 해당 스킬 수정·회귀·ZIP 후보 생성·배포 게이트 확인. 시험 결과를 PRIVATE에 게시/readback 후 GPT가 코드·회귀·PUBLIC gate·협업 사후 감사 최종 판정. 접근 불가 항목은 개별 BLOCKED.
+
