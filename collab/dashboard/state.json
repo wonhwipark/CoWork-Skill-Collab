@@ -167,6 +167,30 @@
       "tone": "warning",
       "trust": "DOCUMENT_FIELDS_MATCH_ONLY_SIGNATURE_NOT_VERIFIED",
       "work_id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION"
+    },
+    {
+      "disposition": "NOT_VERIFIED",
+      "findings": [],
+      "flags": {
+        "gpt": false,
+        "ready": false,
+        "receipt": false,
+        "request": true,
+        "review": false
+      },
+      "id": "REQ-COWORK-V0220-R1-20261115",
+      "paths": {
+        "gpt": "",
+        "ready": "",
+        "receipt": "",
+        "request": "collab/requests/REQ-COWORK-V0220-R1-20261115/REQUEST.md",
+        "review": ""
+      },
+      "revision": "1",
+      "stage": "READY_NOT_OBSERVED",
+      "tone": "warning",
+      "trust": "DOCUMENT_FIELDS_MATCH_ONLY_SIGNATURE_NOT_VERIFIED",
+      "work_id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION"
     }
   ],
   "schema": "COWORK_GITHUB_DASHBOARD_SHADOW_V4",
@@ -178,7 +202,7 @@
       "verified": false
     },
     "requests": {
-      "files_observed": 3,
+      "files_observed": 4,
       "note": "GitHub 파일 관측 수 · 실제 리뷰 실행/서명/영수증 검증 아님",
       "verified": false
     },
