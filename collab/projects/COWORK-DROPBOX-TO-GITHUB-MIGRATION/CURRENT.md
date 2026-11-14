@@ -1,5 +1,13 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 사용자 GitHub LIVE 컷오버 최종 의사 승인 + 조건부 원샷 인계 (2026-11-14 KST)
+- **USER_APPROVED_GITHUB_LIVE_CUTOVER=YES**: 사용자 명시 지시 **"전환해줘"**. **다시 동일 LIVE 전환 승인을 묻지 않는다.** 기준: PRIVATE `main` [GPT_GITHUB_LIVE_CUTOVER_USER_APPROVAL_AND_GATED_ONE_SHOT_r0001_20261114.md](GPT_GITHUB_LIVE_CUTOVER_USER_APPROVAL_AND_GATED_ONE_SHOT_r0001_20261114.md), commit `3f967c985f380fa31412cca1334158194e010d36`, 원격 readback PASS.
+- **실제 운영 상태 별개:** `LIVE_ACTIVATED=NO`, `HOST_EXECUTION=NOT_RUN`(이번 GPT 세션), `ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER`. 이 문서 게시만으로 Windows watcher/Task/리뷰 시작되지 않음.
+- **원샷 작업:** Windows Claude Code는 (1) N1 디스패치 후 결과 업로드 전 DB/결과 소실 시 중복 유료 호출 0을 fail-closed로 입증하는 최소 수정·합성시험 (2) 최종 ZIP/실제 해시/CRC 고정 및 별도 독립 리뷰 상태 (3) 운영 `cryptography` 검증 (4) 기존 pending 1건/Notifier provider·워터마크 보존/단일 LIVE·롤백을 확인. 현재 v0.2.18은 `development_not_for_deployment`·독립 리뷰 NOT_RUN, 전환 대상 아님.
+- **조건부 전환:** 모든 필수 게이트 PASS와 운영 변경에 필요한 각 승인 확인 후 단일 GitHub LIVE 활성화 및 원격 영수증/상태/알림 중복 0 실측. 미승인 추가 유료 리뷰, 운영 DB 이행, Task/Notifier 설정 변경·crypto 설치·PUBLIC 게시 등은 **임의 실행 금지**. 미해결 시 `BLOCKED`로 분리·기존 provider NONE과 원본 불변 유지. 서명된 REQUEST/READY와 모델 비용 방어 우회 금지.
+- **사용자 확정 Classic PAT 지속 사용**. 유형 교체/만료 관련 일반 논의·신규 발급 요구 반복 금지.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 위 **정확한 인계서**를 1회 실행하여 개발·시험·허용된 준비/게시 완료 후 결과 `CLAUDE_GITHUB_LIVE_CUTOVER_EXECUTION_RESULT_FOR_GPT_20261114.md` 및 CURRENT/TRACKER 원격 readback을 남김. 그때 실제 LIVE 여부를 보고. 과거 기록은 아래 유지.
+
 ## GPT 공식 판정 — Classic PAT 쓰기 E2E PASS(격리), v0.2.18 독립 리뷰 전 보완 필요 (2026-11-14 KST)
 - **정본:** [GPT_CLASSIC_PAT_E2E_AND_V0218_DISPOSITION_r0001_20261114.md](GPT_CLASSIC_PAT_E2E_AND_V0218_DISPOSITION_r0001_20261114.md), commit `b04ff327a819edea802bb0a25eaedb906494abc5` / remote readback PASS. `GPT_DISPOSITION=ACCEPT_WITH_CHANGE`, `LIVE_READY=NO`, `ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER`.
 - **실제 원격 증거:** `CLAUDE_CLASSIC_PAT_GITHUB_WRITE_E2E_AND_LIVE_PREFLIGHT_RESULT_FOR_GPT_20261114.md` (commit `53d2abf12623f19169ed0bc5346e7f4a08a2ce2f`, Git blob `c0a6061eb13215076d612aed0577e78bd8923e56`), 최신 CURRENT/TRACKER 대조. Windows에서 Classic PAT GitHub 임시브랜치 create/update/readback·clean-up 및 Watcher `UPLOAD_PENDING→COMPLETED` PUT 2회, 멱등·충돌 fail-closed·모델 호출 0·운영 DB 불변 **호스트 보고 PASS**. GPT가 Windows 실행을 직접 재시험하거나 삭제된 임시 브랜치 로그를 독립 검증한 것은 아님.
