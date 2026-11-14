@@ -7,9 +7,9 @@
       "title": "l1-knowledge-updater",
       "phase": "BLOCKED",
       "owner": "GPT",
-      "self_test": "PY310_PY311_5ZIP_SHA_CRC_415_PY_PARSE_PASS_TARGETED_7_PASS_2_BASELINE_FAIL_EACH_SYNTHETIC_E2_PASS_FULL_REGRESSION_NOT_COMPLETE",
+      "self_test": "PY310_PY311_6_OF_6_SYNTHETIC_CLPR_WORK_REF_E2_PASS_CLI_PARSE_PASS_2_PRIVATE_DEV_ZIPS_SHA_CRC_MANIFEST_PASS_FULL_REGRESSION_NOT_COMPLETE",
       "independent_review": "DESIGN_REPORTED_COMPLETE_POST_PATCH_NOT_RUN",
-      "next_action": "CLPR candidate actual isolated tests 2026-11-14: Python 3.10/3.11 5ZIP SHA/CRC and 415 file parse PASS; targeted 7 suite PASS + 2 original baseline FAIL in both. CLPR source grouping/negative E2 PASS. Next: minimal Workflow→Kernel existing Work/Evidence safe write/readback and idempotency integration, P4 historical snapshot requirements/Mango capability check, full regression+host E3/security/rollback. PUBLIC ZIP BLOCKED; no new paid review/READY; MIGRATION_NOT_CUTOVER."
+      "next_action": "2026-11-15 CLPR WorkRef E2: missing Kernel.work_reference_find facade repaired in development; Workflow explicit preview/commit and unique existing Work link tested 6/6 Python 3.10+3.11. New PRIVATE main development_only ZIPs Workflow v1.6.69 and Kernel v0.7.39 with remote byte readback PASS. Next: broader regression/C01-C12 and actual code-analyzer Evidence write/readback; authorized Mango historical P4 and real host E3/serial race; security, rollback and patch independent review gates. PUBLIC ZIP blocked, no host/LIVE mutation."
     }
   ]
 }
