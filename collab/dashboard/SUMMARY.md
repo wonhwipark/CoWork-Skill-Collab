@@ -5,7 +5,7 @@
 이 문서는 GitHub Actions가 생성하는 안내 화면이며 리뷰·설치·배포 승인이나 자동 실행 결과가 아닙니다.
 
 - 문서가 있는 프로젝트: **7개**
-- GitHub REQUEST 파일 관측: **0개** (검증 안 됨)
+- GitHub REQUEST 파일 관측: **1개** (검증 안 됨)
 - GitHub REVIEW 파일 관측: **0개** (검증 안 됨)
 - GitHub RECEIPT 파일 관측: **0개** (검증 안 됨)
 
@@ -41,7 +41,7 @@ flowchart TB
 | GitHub 전환 | **정식 전환 전** | 별도 명시적 승인 전 전환 금지 |
 | Windows 실행·SHADOW | **기록 미관측** | 실제 호스트 실행 증거 필요 |
 | Claude Code 독립 리뷰 | **실행 대기** | 자체 시험과 구분 |
-| GitHub 요청·결과·영수증 | **요청 0 · 결과 0 · 영수증 0** | PRIVATE 파일 관측 수일 뿐 완료 건수가 아님 |
+| GitHub 요청·결과·영수증 | **요청 1 · 결과 0 · 영수증 0** | PRIVATE 파일 관측 수일 뿐 완료 건수가 아님 |
 | 공개 Work 대시보드 | **기록 미관측** | L1Work에 승인된 비식별 상태만 자동 요약 · PRIVATE 원문은 비공개 |
 
 [전환·Windows 원문](../projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) · [대시보드 원문](../projects/COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md)
@@ -84,6 +84,6 @@ flowchart TB
 
 | 요청 | Work | 단계 | GPT 판정 |
 |---|---|---|---|
-| 미이관 | - | 미확인 | - |
+| [REQ-COWORK-V0214-R1-20261114](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-COWORK-V0214-R1-20261114/REQUEST.md) | COWORK-DROPBOX-TO-GITHUB-MIGRATION | READY_NOT_OBSERVED | NOT_VERIFIED |
 
 비차단 지적도 GPT 판정 기록 전에는 해결 처리하지 않습니다.

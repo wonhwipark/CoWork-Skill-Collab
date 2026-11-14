@@ -77,7 +77,32 @@
       "topic": "현재 요약 — 2026-11-14 KST"
     }
   ],
-  "review_chains": [],
+  "review_chains": [
+    {
+      "disposition": "NOT_VERIFIED",
+      "findings": [],
+      "flags": {
+        "gpt": false,
+        "ready": false,
+        "receipt": false,
+        "request": true,
+        "review": false
+      },
+      "id": "REQ-COWORK-V0214-R1-20261114",
+      "paths": {
+        "gpt": "",
+        "ready": "",
+        "receipt": "",
+        "request": "collab/requests/REQ-COWORK-V0214-R1-20261114/REQUEST.md",
+        "review": ""
+      },
+      "revision": "1",
+      "stage": "READY_NOT_OBSERVED",
+      "tone": "warning",
+      "trust": "DOCUMENT_FIELDS_MATCH_ONLY_SIGNATURE_NOT_VERIFIED",
+      "work_id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION"
+    }
+  ],
   "schema": "COWORK_GITHUB_DASHBOARD_SHADOW_V4",
   "source": "GITHUB_TRACKED_FILES_ONLY",
   "transport": {
@@ -87,7 +112,7 @@
       "verified": false
     },
     "requests": {
-      "files_observed": 0,
+      "files_observed": 1,
       "note": "GitHub 파일 관측 수 · 실제 리뷰 실행/서명/영수증 검증 아님",
       "verified": false
     },
