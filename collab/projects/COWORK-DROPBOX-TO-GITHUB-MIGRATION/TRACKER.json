@@ -7,9 +7,9 @@
       "title": "cowork-review-watcher",
       "phase": "DISPOSITION",
       "owner": "GPT / Claude Code",
-      "self_test": "PASS",
+      "self_test": "SELF_TEST_REPORTED",
       "independent_review": "FAIL",
-      "next_action": "GPT 판정: v0.2.14 R1 리뷰 지적 5건(후보 v0.2.17 수정·시험 644/578 PASS, 미리뷰). 사용자 결정: B안 쓰기 PAT, 재리뷰 1회, 상시 정책, SHADOW·백업 승인. LIVE 미승인."
+      "next_action": "GPT ACCEPT_WITH_CHANGE: v0.2.14 독립 R1 리뷰 1회 완료, 지적 F1/F2/F3 LIVE BLOCKING, F4/F5 운영 검증 필수. v0.2.17 격리후보 자체시험 보고(644 PASS/12 SKIP, 578 PASS/17 SKIP), 미게시/미리뷰. 엔진 결과 upload 403/UPLOAD_PENDING; 개발자 gh 수동 게시만 확인. 다음 승인 묶음: 전용 쓰기 PAT, v0.2.17 신규 R2 리뷰 1회 최대 $3, 실호스트 SHADOW 및 운영 DB 안전 백업·별도 사본 복구 리허설. R0~R3 상시 자동 정책은 선택사항. ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER, LIVE 최종승인 별도."
     }
   ]
 }
