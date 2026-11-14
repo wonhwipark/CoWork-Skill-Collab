@@ -151,3 +151,20 @@ jobs:
                 except (ValueError,UnicodeDecodeError):
                   print('META_TEXT',n,z.read(n)[:250].decode('utf-8','replace'))
           PY
+      - name: Inspect CLI CLPR hook location only
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import pathlib,zipfile
+          base=pathlib.Path("collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates/l1-fix-workflow_v1_6_68_1114.zip")
+          with zipfile.ZipFile(base) as z:
+            for name in z.namelist():
+              if name.endswith("/l1_fix_workflow/cli.py"):
+                lines=z.read(name).decode("utf-8").splitlines()
+                ix=[i for i,line in enumerate(lines) if "clpr-issue-plan" in line or "lookup_clpr_existing_work" in line]
+                for i in ix[:12]:
+                  print("CLI_HOOK",name,i+1)
+                  for j in range(max(0,i-12),min(len(lines),i+22)):
+                    print(str(j+1)+": "+lines[j][:180])
+          PY
