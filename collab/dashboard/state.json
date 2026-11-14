@@ -160,7 +160,7 @@
     {
       "evidence": "프로젝트 TRACKER.json 신고 값 · 운영 근거 별도 확인 필요",
       "independent_review": "PASS",
-      "next_action": "GPT ACCEPT_WITH_CHANGE: Windows 기존 자격 폴더의 PAT 2개는 부적격(fine-grained read-only 무기한 / classic 광역 무기한), 적격 0; 사용자가 보유한 다른 PAT는 조사 범위 밖. 신규 발급 단정 금지. R2 결과 3개 ALREADY_PUB",
+      "next_action": "사용자 확정: 개인 CoWork 기존 Classic PAT 지속 사용. fine-grained 발급/교체 요구 및 관련 논의 반복 금지. 다음은 Windows Claude Code에서 기존 토큰으로 격리 GitHub write/readback과 자동 게시 동작을 검증하고 결과 MD·CURRENT",
       "owner": "GPT / Claude Code",
       "phase": "DISPOSITION",
       "record_source": "REGISTERED_METADATA_UNVERIFIED",
