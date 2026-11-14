@@ -1,5 +1,18 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## Work → Knowledge 독립 설계 리뷰 요청 — 2026-11-14 KST
+
+- **사용자 지시:** 새 Work→Knowledge 흐름 문서에 대한 Claude Code 독립 설계 리뷰 요청 및 실행 가능 여부 확인.
+- **Review ID:** `L1-WORK-KNOWLEDGE-DESIGN-20261114-001`. [정확한 요청서](CLAUDE_WORK_TO_KNOWLEDGE_DESIGN_REVIEW_REQUEST_r0001_20261114.md) / [입력 pin](INPUT_PIN_WORK_TO_KNOWLEDGE_REVIEW_20261114.json).
+- **진행:** `REQUEST_DOCUMENT=POSTED_ON_THIS_COMMIT / WINDOWS_DELIVERY=NOT_VERIFIED / INDEPENDENT_DESIGN_REVIEW=PENDING_EXECUTION / REVIEW_RESULT=NOT_RECEIVED / AUTOMATIC_QUEUE=NOT_QUEUED`. GitHub 문서 게시를 Claude 실행/완료로 보지 않음.
+- **경로:** 기존 별도 Claude Code 대화형 리뷰 세션. 자동 provider는 이관 CURRENT 최신 보고 `NONE`. 이 세션에는 Windows Claude 직접 실행 경로가 없어 사용자 전달용 단일 실행 문구를 요청서 §6에 수록. 추가 과금 호출·watcher/운영/LIVE 변경은 이 요청으로 시작하지 않음.
+- **범위:** 책임 경계·동일 Work 재사용·개인 후보·보완 인계·게시 승인·응답 유실/역링크 실패 복구·사용자 상태 표시·첫 사례 검증 경계. `IMPLEMENTATION=NOT_VERIFIED / WORKFLOW_UPDATER_E2E=NOT_RUN` 유지.
+- **결과 경로:** `CLAUDE_WORK_TO_KNOWLEDGE_DESIGN_REVIEW_RESULT_FOR_GPT_r0001_20261114.md`, 실행 근거 `CLAUDE_WORK_TO_KNOWLEDGE_DESIGN_REVIEW_RECEIPT_r0001_20261114.json`. 아직 결과/영수증 수신 전. 과거 CL/PR 리뷰 PASS를 이번 설계 리뷰로 소급하지 않음.
+- **보존:** 아래 기존 사용자 수용 설계 및 CL/PR 후보/회귀/배포 상태 전부 유지. 기존 "추가 리뷰 0"은 CL/PR 범위 이력이며 이번 Work→Knowledge 신규 리뷰 요청과 구분.
+- **다음 한 동작:** Windows Claude Code 별도 세션에 요청서 §6의 정확한 PRIVATE/main/경로 문구를 한 번 전달. 결과·실행 근거 게시/readback 후 GPT가 지적별 종합 판정. 업무 GPT의 설치/API 매핑은 그다음 확인할 후속으로 유지.
+- **게시 확인 기준:** 이번 요청·입력 pin·CURRENT·TRACKER·브리프의 동일 commit 및 원격 내용 일치 여부를 게시 후 별도로 검증. 리뷰 완료 상태는 결과·실행 근거 수신 전 변경하지 않음.
+
+
 
 ## Work → Knowledge 전환 설계 보완 — 2026-11-14 KST (이번 범위: 문서)
 

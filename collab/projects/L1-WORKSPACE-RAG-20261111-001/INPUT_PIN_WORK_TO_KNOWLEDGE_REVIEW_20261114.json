@@ -1,0 +1,20 @@
+{
+  "review_id": "L1-WORK-KNOWLEDGE-DESIGN-20261114-001",
+  "repository": "wonhwipark/CoWork-Skill-Collab",
+  "branch": "main",
+  "input_commit": "4f83ca9a83e6bb24f5828b83601f3b2df7e3e9fc",
+  "review_mode": "INTERACTIVE_INDEPENDENT_DESIGN_REVIEW",
+  "primary_input": {
+    "path": "collab/projects/L1-WORKSPACE-RAG-20261111-001/L1_WORK_TO_KNOWLEDGE_FLOW_r0001_20261114_KST.md",
+    "git_blob_sha": "fa6b02e1628186f38165bfee2e0699c6640bd6f0",
+    "utf8_size_bytes": 17861,
+    "sha256": "88cdacdd138d7208503f33284bcc7be010be0f28caa5044ca9f438fa17ad4d73"
+  },
+  "request_document": {
+    "path": "collab/projects/L1-WORKSPACE-RAG-20261111-001/CLAUDE_WORK_TO_KNOWLEDGE_DESIGN_REVIEW_REQUEST_r0001_20261114.md",
+    "git_blob_sha": "0c20e5f4605fafd76b0dfb39ff61452cb5e64dd1",
+    "utf8_size_bytes": 12038,
+    "sha256": "5afa15cc2cd998e6f9f235a4339abdae6ab29f701468b88542dc3d8b422ce239"
+  },
+  "note": "Document input pin only; not signed READY or execution receipt."
+}

@@ -8,8 +8,8 @@
       "phase": "BLOCKED",
       "owner": "GPT",
       "self_test": "PACKAGE_CRC_SHA_PASS_PYTHON_REGRESSION_NOT_RUN",
-      "independent_review": "DESIGN_REPORTED_COMPLETE_POST_PATCH_NOT_RUN",
-      "next_action": "PRIVATE 5종 최신 후보 ZIP 실제 코드 수정/무결성 검증 완료. Python 3.10/3.11 회귀 및 P4 snapshot·Work/Evidence E2E 보완 필요; 배포 게이트 PASS 후 L1Work PUBLIC 최종 ZIP 게시·원격 검증. 추가 리뷰 요청 0. 별도 Knowledge 연계 설계 반영: 기존 업무 GPT 결과로 동일 Work→후보→보완→게시·역링크 결과 회수의 실제 기능만 매핑; 신규 코드 분석/Job 실행 지시 아님."
+      "independent_review": "CLPR_DESIGN_REPORTED_COMPLETE_POST_PATCH_NOT_RUN; WORK_KNOWLEDGE_DESIGN_PENDING_EXECUTION",
+      "next_action": "PRIVATE 5종 최신 후보 ZIP 실제 코드 수정/무결성 검증 완료. Python 3.10/3.11 회귀 및 P4 snapshot·Work/Evidence E2E 보완 필요; 배포 게이트 PASS 후 L1Work PUBLIC 최종 ZIP 게시·원격 검증. CL/PR 추가 리뷰 요청 0. 별도 Knowledge 연계 설계 반영: 기존 업무 GPT 결과로 동일 Work→후보→보완→게시·역링크 결과 회수의 실제 기능만 매핑; 신규 코드 분석/Job 실행 지시 아님. 별도 Work→Knowledge 독립 설계 리뷰 1회 요청서 게시: CLAUDE_WORK_TO_KNOWLEDGE_DESIGN_REVIEW_REQUEST_r0001_20261114.md; Windows 대화형 세션 전달·실행 대기. 실제 구현/E2E 미확인 유지."
     }
   ]
 }
