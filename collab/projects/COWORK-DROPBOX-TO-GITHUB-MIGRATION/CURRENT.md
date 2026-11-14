@@ -1,5 +1,13 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## B안/R2/SHADOW 실행 결과: v0.2.17 R2 리뷰 BLOCKING 0건, SHADOW·DB 리허설 PASS, 쓰기 PAT는 ACTION_REQUIRED (Claude 자체 보고, 2026-11-14 KST)
+- 결과: `CLAUDE_B_R2_SHADOW_PREFLIGHT_RESULT_FOR_GPT_20261114.md` (PRIVATE `main`, commit `7968e14a3aed3363fd0fa0e5850d20655cb92a4c`, 원격 바이트·SHA-256 `91ee9613583129ca5b68f6d453344a2205597679546d00b2bb11bb787fe6e8fc` 일치).
+- 고정 v0.2.17 ZIP 232575 B, sha256 `824f26c4e28fcc804ed1dd3942a34408c54b9091be34ecb1693cc4cb9d46df03`(재빌드 바이트 동일, 비밀 스캔 0, 시험 venv 644 PASS/12 SKIP, 운영 인터프리터 578/17). review-inputs 게시·원격 CRC 확인.
+- R2 리뷰 `REQ-COWORK-V0217-R2-20261114`(POLICY-STATIC-V1-LARGE): 모델 호출 1회, $0.9946(상한 $3), 23 turns(목표 5 초과). BLOCKING 0, 비차단 N1(nonce 재사용 방지 저장소 없음, 확인)·N2(repo_id 라벨, 알려진 갭)·N3, 제안 2(데드코드·taskkill 반환값). 엔진 업로드는 읽기전용 토큰이라 403 `UPLOAD_PENDING`, 개발자 `gh`로 동일 바이트 게시(결과 `c2aeee1757d0`). 코드 수정 없음.
+- SHADOW(실호스트, 분리 상태 폴더): 모델 0·GitHub GET만·Telegram 0·라이브 DB main/WAL 불변. 별도 계정 enforce·네이티브 추적은 NOT_RUN. 운영 DB는 SQLite로 열지 않고 바이트 복사 → 복사본 무결성 ok, 격리 복구·건수 일치, v0.2.17 호환 확인.
+- ACTION_REQUIRED: 쓰기 토큰이 classic(만료 없음)이라 미사용. fine-grained(Contents R/W, 단일 저장소, 90일 이하) 발급은 사용자 웹 UI 조작 필수; 설치 스크립트·검증기 준비(실설치 NOT_RUN). 운영 인터프리터에 cryptography 없음 → 승인 검증 fail-closed 대기. Notifier 프로세스 2개 동시 실행 관측.
+- 미실행/미승인: 운영 DB·Task·Notifier 변경, 추가 유료 리뷰, R0~R3 상시 자동화, LIVE. ACTIVE_PROVIDER=NONE.
+
 ## 사용자 통합 승인 — B 쓰기 PAT · v0.2.17 R2 1회 · SHADOW/DB 격리 복구 (2026-11-14 KST)
 - **USER_APPROVED:** 사용자 "그래 승인해줘"는 GPT 직전 제안의 **3개 항목**에 대한 명시 승인. (1) CoWork PRIVATE 단일 repo 최소권한·만료형 쓰기 PAT 발급/보호 설치·검증 (2) 최종 고정 `v0.2.17` 독립 R2 구조 리뷰 **정확히 1회 / 최대 $3 / POLICY-STATIC-V1-LARGE** (3) 실호스트 **읽기전용 SHADOW** 및 운영 DB **원본 불변 백업·격리 복사본에만 복구 리허설**. GitHub `main` 인계: [GPT_B_R2_SHADOW_APPROVAL_AND_ONE_SHOT_r0001_20261114.md](GPT_B_R2_SHADOW_APPROVAL_AND_ONE_SHOT_r0001_20261114.md) (commit `5cc01a1cc0fe925bf8df0b8a8f0fadc0afc671cd`; remote readback PASS).
 - **권한 경계:** 서명/REQUEST/READY의 실행 검증은 별도 필수. 승인 MD 게시만으로 유료 reviewer/Windows watcher가 시작되지 않는다. 실제 PAT 생성에 사용자 GitHub UI 조치가 필요할 수 있고, 비밀값은 PRIVATE에도 게시하지 않음. SHADOW에서는 모델 호출·GitHub 쓰기·운영 DB/main-WAL-SHM 쓰기·Telegram·운영 Task 변경 각각 0. R2 리뷰 실행은 SHADOW와 별도 격리 수행.
