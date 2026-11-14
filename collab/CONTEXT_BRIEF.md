@@ -1,6 +1,6 @@
 # CoWork 공통 맥락 브리프
 
-- 개정: r0004 / 확인 기준 2026-11-14 KST (Work → Knowledge 독립 설계 리뷰 요청 연결)
+- 개정: r0005 / 확인 기준 2026-11-15 KST (Work → Knowledge 정식 REQUEST 보완)
 - 저장소: GitHub PRIVATE `wonhwipark/CoWork-Skill-Collab`, branch `main`
 - 최초 기준 commit: `fdea038df35eec7d102d703b46acdf3a31f3b0ae`; r0002는 운영 경로 보완, r0003는 Work → Knowledge 전환 설계 연결, r0004는 해당 설계의 별도 Claude 독립 리뷰 요청 연결. 아래는 출처별 최신 blob을 따라가는 **읽기용 파생 지도**이며 설치·실행·승인 원장이 아님.
 - 읽기 순서: **이 파일 → 아래 표의 관련 CURRENT → 필요한 계약·스킬 원문**. 브리프와 새 근거가 다르면 최신 근거를 따른다.
@@ -87,7 +87,7 @@
 | 요청/업무 | 읽을 정본 | 현재 요약·다음 조치 |
 |---|---|---|
 | 협업·독립 리뷰·LIVE | [이관 CURRENT](projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) | ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER. v0.2.14 GPT 판정 ACCEPT_WITH_CHANGE, 호스트 격리시험 PASS는 Claude 자체 보고. 독립 리뷰 PENDING_APPROVAL, 실제 비용·키/토큰·LIVE 승인 범위는 최신 판정에서 확인 |
-| L1 지식·RAG·연계 | [L1 CURRENT](projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md) | r0005와 Work→Knowledge 사용자 수용 설계 유지. 별도 Claude 대화형 독립 설계 리뷰 요청서 게시, 전달 미확인·실행 대기. 구현/E2E 미확인·첫 분석 후속. 별도 CL/PR 최신 후보/회귀·배포 상태는 CURRENT 최상단 실측을 확인 |
+| L1 지식·RAG·연계 | [L1 CURRENT](projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md) | r0005와 Work→Knowledge 사용자 수용 설계 유지. 정식 REQUEST REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-001로 보완. 승인 서명/READY/호스트 접수·실행 대기; 자동 큐 미등록. 구현/E2E 미확인·첫 분석 후속. 별도 CL/PR 최신 후보/회귀·배포 상태는 CURRENT 최상단 실측을 확인 |
 | 현재 코드 MSC·HLD | [L1 CURRENT](projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md) | code-analyzer 근거 → doc-converter 표현. 고정 source의 AS-IS와 승인 설계 TO-BE를 구분 |
 | 분류·SCell 등 담당 범위 | [범위 CURRENT](projects/L1-CHANNEL-KNOWLEDGE-SCOPE-20261113-001/CURRENT.md) | v0.9 215행 담당자 검토 대기. [분류표](knowledge/references/L1_NR_LTE_Confluence_Module_Procedure_Feature_Table_v0_9_20261113_KST.md)에서 포함/변경/제외부터 |
 | Job 요청·상태·결과 | [Job CURRENT](projects/JOBLIST-NRTX-20261112-001/CURRENT.md) | v0.4.36 PUBLIC 게시 기록. 실제 분석/MSC·MCP 결과 조회 완료 미확인. Queue DONE/Receipt SUCCESS만으로 완료 금지, 소비된 Job 재실행 금지 |
@@ -126,3 +126,8 @@ CL/PR: [설계안](projects/L1-WORKSPACE-RAG-20261111-001/CL_PR_ISSUE_ANALYSIS_D
 | START_HERE.md (기존 진입 연결) | `0ea7951af62a1d90387b330181cc4304e1c4d99e` |
 | ops/CONTRACTS/EXECUTION_PROMPT_TERMINOLOGY_V1.md (r0002 역할 용어) | `8905149948a7021d1e7013b7d1ee85c87997d8a4` |
 | projects/L1-WORKSPACE-RAG-20261111-001/L1_WORK_TO_KNOWLEDGE_FLOW_r0001_20261114_KST.md | `fa6b02e1628186f38165bfee2e0699c6640bd6f0` |
+
+## 2026-11-15 Work→Knowledge 요청 보완
+
+- [정식 REQUEST](requests/REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-001/REQUEST.md) 및 [호스트 접수 원샷](requests/REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-001/HOST_SUBMIT_ONESHOT.md). 입력·형식 보완이며 서명/READY/리뷰 실행 완료가 아님. 이전 대화형 요청은 이력으로 유지하되 중복 호출하지 않음.
+- L1 CURRENT와 이관 CURRENT의 위 source blob은 갱신되어 **재확인 대상**. 최신 상태는 각 CURRENT 최상단 및 이번 요청 SUBMISSION_STATUS.json을 확인.

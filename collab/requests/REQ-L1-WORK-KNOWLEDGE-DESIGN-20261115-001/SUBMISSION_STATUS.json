@@ -1,0 +1,27 @@
+{
+  "request_id": "REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-001",
+  "revision": 1,
+  "previous_review_id": "L1-WORK-KNOWLEDGE-DESIGN-20261114-001",
+  "request_document": "PREPARED_FOR_COMMIT_A",
+  "package_sha256": "4ccede070d03e497a8d821fcabc8092c0d46045b245b64dabf023abc83daa417",
+  "package_size_bytes": 28805,
+  "policy": "POLICY-STATIC-V1",
+  "policy_max_usd": 1,
+  "max_review_calls": 1,
+  "user_review_request": "AUTHORIZED_BY_CURRENT_USER_REQUEST",
+  "host_signed_approval": "PENDING_HOST_VERIFICATION",
+  "ready": "NOT_POSTED",
+  "source_pin": "PENDING_HOST_COMMIT_A_AND_REPO_ID_VERIFICATION",
+  "host_preflight": "NOT_RUN",
+  "automatic_queue": "NOT_QUEUED",
+  "independent_review": "NOT_RUN",
+  "result": "NOT_RECEIVED",
+  "blockers": [
+    "Existing host signer and per-request cost authority must be verified; no signer/execution interface in this GPT session.",
+    "Current long-running provider activation is not confirmed; reuse an existing authorized one-shot route without operational changes."
+  ],
+  "output_paths": {
+    "result": "collab/reviews/REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-001/REVIEW_RESULT_1.md",
+    "receipt": "collab/receipts/REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-001/RECEIPT_1.md"
+  }
+}

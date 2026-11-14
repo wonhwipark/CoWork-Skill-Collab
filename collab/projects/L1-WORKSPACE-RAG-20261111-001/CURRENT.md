@@ -1,5 +1,16 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## Work → Knowledge 정식 REQUEST 보완 — 2026-11-15 KST
+
+- 사용자 요청: 수동 인계의 누락을 보완해 정식 협업 요청으로 등록. 요청 ID `REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-001`, revision 1. 기존 대화형 리뷰 ID와 동일 검토 대상이며 중복 실행 금지.
+- [정식 REQUEST](../../requests/REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-001/REQUEST.md), [고정 입력 manifest](review-inputs/REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-001/REVIEW_MANIFEST.md), [호스트 접수·실행 원샷](../../requests/REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-001/HOST_SUBMIT_ONESHOT.md), [접수 상태](../../requests/REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-001/SUBMISSION_STATUS.json).
+- 실제 입력 ZIP: `collab/packages/work-to-knowledge-design_r0001_1115_REVIEW_INPUT.zip`, 28805 B, sha256 `4ccede070d03e497a8d821fcabc8092c0d46045b245b64dabf023abc83daa417`, ZIP CRC/경로/일반파일 검사 PASS. 비민감 설계 전용이며 설치·배포 패키지가 아님. 주 설계 원문 17861 B/고정 SHA 일치.
+- 정책 `POLICY-STATIC-V1`, 상한 $1/1회. 사용자 정식 리뷰 요청은 확인되었으나 정책 상한을 서명 승인으로 대체하지 않음. 이번 ID에 대한 유효 승인·비용 권한·기존 신뢰 서명자는 호스트에서 확인. 다른 v0.2.20 등의 승인을 재사용하지 않음.
+- 상태: `REQUEST=PREPARED_FOR_COMMIT_A / APPROVAL_SIG=PENDING_HOST / READY=NOT_POSTED / QUEUE=NOT_QUEUED / REVIEW=NOT_RUN / RESULT=NOT_RECEIVED`. 원격 게시·readback은 게시 후 확인하며 호스트 실행/접수와 구별. 이전 대화형 요청은 이력으로 보존; 앞으로 이번 ID의 실행 근거를 우선 확인.
+- 이 GPT 세션에는 Windows 서명·Claude 실행 인터페이스가 없음. 최신 이관 CURRENT의 마지막 관측 `ACTIVE_PROVIDER=NONE`을 자동 실행으로 오인하지 않음. 기존 승인된 격리 단발 경로 재사용 가능 여부를 호스트에서 검증하고, 불가한 항목만 정확히 BLOCKED. 본 요청으로 운영 watcher/DB/Task/LIVE·기존 Job/Knowledge를 변경하지 않음.
+- 다음 한 동작: 위 HOST_SUBMIT_ONESHOT을 Windows Claude Code에서 실행하여 raw bytes/실제 validator·중복 확인 → 승인 서명 → READY 마지막 게시 → 독립 리뷰 1회 → 엔진 결과/영수증 readback. 검토 내용/기존 설계/CLPR 후보·회귀·배포 상태는 아래 기록 그대로 보존.
+
+
 ## CL/PR 확대 회귀 최신 실측 — 2026-11-15 KST (PUBLIC 배포 차단 유지)
 
 - [확대 회귀·차단 정본](GPT_CLPR_EXPANDED_REGRESSION_AND_REMAINING_GATES_r0001_20261115.md); [CI 43610383804](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43610383804).
