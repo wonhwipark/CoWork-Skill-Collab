@@ -62,6 +62,30 @@ jobs:
             print("ARCHIVE_AND_PYTHON_PARSE_PASS",skill,len(data),flush=True)
           print("PYTHON_PARSE_TOTAL",total,sys.version,flush=True)
           PY
+      - name: Synthetic CLPR grouping and duplicate guard E2
+        shell: bash
+        run: |
+          set -euo pipefail
+          export CLPR_TEMP="${RUNNER_TEMP}/clpr-isolated"
+          export PYTHONPATH="$CLPR_TEMP/l1-fix-workflow/l1-fix-workflow:$CLPR_TEMP/work-ledger-kernel"
+          python - <<'PY'
+          from l1_fix_workflow.issue_brief import plan_clpr_issue_cases
+          p4=lambda n,j=None: {"type":"p4","server_alias":"TEST","cl":n,"jira_keys":([] if j is None else [j])}
+          pr=lambda n,j=None: {"type":"github_pr","url":f"https://github.com/example/repo/pull/{n}","jira_keys":([] if j is None else [j])}
+          a=plan_clpr_issue_cases({"changes":[p4(101,"SOC-321"),pr(11,"SOC-321"),p4(102)]})
+          assert a["ok"] and a["source_count"]==3 and a["group_count"]==2 and a["read_only"]
+          assert not a["workspace_written"] and not a["provider_executed"] and not a["knowledge_published"]
+          assert any(set(x["source_refs"])=={"p4:TEST:101","https://github.com/example/repo/pull/11"} for x in a["issue_cases"])
+          b=plan_clpr_issue_cases({"changes":[p4(105,"SOC-322"),pr(12,"SOC-323")]})
+          assert b["group_count"]==2, "Unrelated issues must not auto-merge"
+          c=plan_clpr_issue_cases({"changes":[p4(105),pr(12)]})
+          assert c["group_count"]==2, "Same module/time no evidence must remain unlinked"
+          for invalid in ({"changes":[p4(101),p4(101)]},{"changes":[{"type":"github_pr","url":"http://evil/r/pull/1"}]}):
+            try: plan_clpr_issue_cases(invalid)
+            except ValueError: pass
+            else: raise AssertionError("unsafe input not rejected")
+          print("CLPR_SYNTHETIC_GROUP_AND_GUARDS_PASS",flush=True)
+          PY
       - name: Run targeted existing and new-skill regressions
         shell: bash
         run: |
