@@ -1,5 +1,14 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## GPT 공식 판정 — v0.2.17 R2·SHADOW·DB 백업/복구 통합 검토 (2026-11-14 KST)
+- **정본 판정:** [GPT_B_R2_SHADOW_DISPOSITION_r0001_20261114.md](GPT_B_R2_SHADOW_DISPOSITION_r0001_20261114.md), commit `cbed319ee4753c34352fc7b3b79ef5ed7f8c9f82`, readback PASS. `GPT_DISPOSITION=ACCEPT_WITH_CHANGE`; `INDEPENDENT_REVIEW_V0217=COMPLETED_PASS_WITH_FINDINGS`(**정적 범위 한정**); `LIVE_READY=NO`, `ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER`.
+- **원격 실증:** Claude 결과 MD, `collab/reviews/REQ-COWORK-V0217-R2-20261114/REVIEW_RESULT_1.md`, `collab/receipts/REQ-COWORK-V0217-R2-20261114/{RECEIPT_1.md,USAGE_RECEIPT_1.json}`, REVIEW_MANIFEST 원격 조회. 모델 1회, $0.9945836≤$3, 23 turns/출력18029 (R2 토큰·턴 목표 미충족). R2 BLOCKING 0, N1/N2/N3/S1/S2 확인. 호스트 시험 644/12·578/17은 `SELF_TEST_REPORTED`; 실제 v0.2.17 바이너리 CRC/SHA는 호스트 보고이며 GPT 직접 raw ZIP 비교는 NOT_RUN.
+- **추가 LIVE 게이트:** N1 상태 DB 유실 후 승인 nonce 재사용에 따른 중복 유료 리뷰 위험, N2 `repo_id` 로컬 label-only 비교(원격 실제 GitHub repo ID `1451933830`은 라벨과 일치함을 GPT 확인했지만 실행 시 원격 결합 미구현). 동일 repo 고정 신뢰·이력 보존과 동등한 fail-closed 검증이 없으면 LIVE PASS 불가. N3 token `repo` 문자열은 보안 범위 근거가 아니며 실제 fine-grained 권한 검증 필요. Q8 복합 E2E·실 CLI usage-limit 메시지 미실증.
+- **원격 자동 게시:** 엔진 PAT read-only→403/`UPLOAD_PENDING`; `gh` 수동 대체 게시 ≠ watcher publish E2E PASS. 쓰기 토큰은 현재 classic/무기한이므로 미사용; **사용자 GitHub UI에서 PRIVATE repo 단일 Contents R/W, 만료 90일 이하 신규 PAT 발급 ACTION_REQUIRED**. 안전한 로컬 설치 도구를 사용하고 비밀 GitHub/채팅 노출 금지.
+- **SHADOW/백업:** SHADOW GET only·모델/Telegram/운영 DB write=0 및 원본 DB main/WAL 불변, 격리 백업 복원 무결성 PASS **호스트 자체 보고**. 단 분리 Windows 계정 enforce·네이티브 I/O·장기가동 NOT_RUN, pending_requests=1 무손실 보존/정산 필수.
+- **운영 차단:** Python 3.11.9 운영 interpreter에 `cryptography` 없어 승인 검증 불가(실행 fail-closed); 운영 설치 별도 승인 전 불변. Notifier 두 개의 `notify_reviews.py --watch` 동시 실행 관측, 중복 알림 가능성 및 GitHub Notifier 연결 미검증, 운영 Task/Notifier 변경 미승인.
+- **다음 한 동작:** 사용자 전용 최소권한 GitHub PAT 생성/Windows 보호 설치. 이어 Windows Claude Code가 원샷으로 엔진 publish-only E2E·운영 runtime 검증 준비·Notifier 중복 원인 읽기 전용 분석·N1/N2 보완안·Q8 격리 회귀시험. 추가 유료 모델 재리뷰/R0~R3 상시 정책/운영 변경/LIVE 최종 전환 **미승인**. 아래 기존 A·B 결과 및 승인 이력은 시점별 기록으로 보존.
+
 ## B안/R2/SHADOW 실행 결과: v0.2.17 R2 리뷰 BLOCKING 0건, SHADOW·DB 리허설 PASS, 쓰기 PAT는 ACTION_REQUIRED (Claude 자체 보고, 2026-11-14 KST)
 - 결과: `CLAUDE_B_R2_SHADOW_PREFLIGHT_RESULT_FOR_GPT_20261114.md` (PRIVATE `main`, commit `7968e14a3aed3363fd0fa0e5850d20655cb92a4c`, 원격 바이트·SHA-256 `91ee9613583129ca5b68f6d453344a2205597679546d00b2bb11bb787fe6e8fc` 일치).
 - 고정 v0.2.17 ZIP 232575 B, sha256 `824f26c4e28fcc804ed1dd3942a34408c54b9091be34ecb1693cc4cb9d46df03`(재빌드 바이트 동일, 비밀 스캔 0, 시험 venv 644 PASS/12 SKIP, 운영 인터프리터 578/17). review-inputs 게시·원격 CRC 확인.
