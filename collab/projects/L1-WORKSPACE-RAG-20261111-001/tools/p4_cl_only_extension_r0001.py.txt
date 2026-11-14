@@ -1,6 +1,6 @@
 # CL-only extension, inserted before execute() in jira_fix_cl_scan.py.
 CL_ONLY_SCHEMA = "p4-code-owner.cl-only.v1"
-_CL_NUMBER = re.compile(r"(?:CL[:#]?|P4-CL[:#]?)?([1-9][0-9]{0,10})\\Z", re.I)
+_CL_NUMBER = re.compile(r"(?:CL[:#]?|P4-CL[:#]?)?([1-9][0-9]{0,10})\Z", re.I)
 
 
 def parse_cl_only_input(text: str) -> list[str]:
@@ -108,7 +108,7 @@ def execute_cl_only(args: argparse.Namespace) -> dict[str, Any]:
              "CL metadata and L1 scope are not root-cause/test verification.", "",
              "| CL | Outcome | P4 state | Claim |", "|---|---|---|---|"]
     lines.extend(f"| {r['cl']} | {r['outcome']} | {r['p4_state']} | {r['claim_state']} |" for r in rows)
-    (folder / "CL_Screening.md").write_text("\\n".join(lines) + "\\n", encoding="utf-8")
+    (folder / "CL_Screening.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
     manifest["stage"] = "FINALIZED"
     save_json(folder / "run_manifest.json", manifest)
     return {"stage": "CL_FINALIZED", "run_id": args.run_id, "output_dir": str(folder),
