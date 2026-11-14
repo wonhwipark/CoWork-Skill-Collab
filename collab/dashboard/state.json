@@ -1,9 +1,9 @@
 {
   "disclaimer": "GitHub SHADOW 현황. 미이관 자료는 0건이 아니라 미확인입니다.",
-  "live_provider": "NONE",
+  "live_provider": "GITHUB",
   "operations": {
-    "active_provider": "NONE",
-    "cutover": "MIGRATION_NOT_CUTOVER",
+    "active_provider": "GITHUB",
+    "cutover": "NOT_OBSERVED",
     "dashboard_source": true,
     "host_shadow": "NOT_OBSERVED",
     "independent_review": "NOT_OBSERVED",
@@ -17,10 +17,10 @@
       "id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md",
-      "status": "전환 전",
+      "status": "문서상 진행",
       "title": "COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태",
-      "tone": "warning",
-      "topic": "사용자 확정 — v0.2.20 독립 R1 1회($1) 승인·기존 B1~B3 및 GitHub LIVE 승인 유지 (2026-11-15 KST)"
+      "tone": "neutral",
+      "topic": "GitHub 단일 LIVE 활성화 완료(호스트 실측): v0.2.20 독립 R1 PASS, B1~B3 적용, ACTIVE_PROVIDER=GITHUB (Claude 호스트 보고, 2026-11-15 KST)"
     },
     {
       "id": "COWORK-GITHUB-DASHBOARD-20261111-001",
@@ -216,10 +216,10 @@
   "work_items": [
     {
       "evidence": "프로젝트 TRACKER.json 신고 값 · 운영 근거 별도 확인 필요",
-      "independent_review": "PENDING",
-      "next_action": "2026-11-15 USER_APPROVED v0.2.20 independent R1 POLICY-STATIC-V1 $1 max, only 1 model call, new REQ-COWORK-V0220-R1-20261115. Prior B1 Windows cryptography, B2 Notif",
+      "independent_review": "PASS",
+      "next_action": "GitHub 단일 LIVE 운영 중(호스트 실측). 다음 정식 서명 REQUEST+READY가 첫 실전 사례. 모니터링: 감시기 Task·Notifier 워터마크. 롤백 스크립트 준비됨(미실행).",
       "owner": "GPT / Claude Code",
-      "phase": "REVIEW",
+      "phase": "COMPLETE",
       "record_source": "REGISTERED_METADATA_UNVERIFIED",
       "self_test": "PASS",
       "skill": "cowork-review-watcher",
