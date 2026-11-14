@@ -59,6 +59,15 @@
       "topic": "현재 요약 — 2026-11-14 KST (기존 기록 정리)"
     },
     {
+      "id": "JOBLIST-SMOKE-20261114-001",
+      "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
+      "source": "collab/projects/JOBLIST-SMOKE-20261114-001/CURRENT.md",
+      "status": "상태 확인 필요",
+      "title": "JOBLIST-SMOKE-20261114-001 — CURRENT",
+      "tone": "neutral",
+      "topic": "Packaging gate"
+    },
+    {
       "id": "L1-CHANNEL-KNOWLEDGE-SCOPE-20261113-001",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/L1-CHANNEL-KNOWLEDGE-SCOPE-20261113-001/CURRENT.md",
@@ -188,6 +197,19 @@
       "source": "collab/projects/JOBLIST-NRTX-20261112-001/CURRENT.md",
       "title": "job-list",
       "work_id": "JOBLIST-NRTX-20261112-001"
+    },
+    {
+      "evidence": "CURRENT 문서 관측. 단계·진행률은 증명되지 않음",
+      "independent_review": "NOT_VERIFIED",
+      "next_action": "CURRENT.md 최신 상태 및 다음 담당 확인",
+      "owner": "미등록",
+      "phase": "UNKNOWN",
+      "record_source": "CURRENT_ONLY_UNSTRUCTURED",
+      "self_test": "NOT_VERIFIED",
+      "skill": "미지정",
+      "source": "collab/projects/JOBLIST-SMOKE-20261114-001/CURRENT.md",
+      "title": "JOBLIST-SMOKE-20261114-001 — CURRENT",
+      "work_id": "JOBLIST-SMOKE-20261114-001"
     },
     {
       "evidence": "프로젝트 TRACKER.json 신고 값 · 운영 근거 별도 확인 필요",
