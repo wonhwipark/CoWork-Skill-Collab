@@ -5,9 +5,9 @@
       "work_id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
       "skill": "cowork-review-watcher",
       "title": "cowork-review-watcher",
-      "phase": "LIVE_PREFLIGHT_APPROVED_PENDING_EXECUTION",
+      "phase": "DISPOSITION",
       "owner": "GPT / Claude Code",
-      "self_test": "SELF_TEST_REPORTED",
+      "self_test": "NOT_VERIFIED",
       "independent_review": "FAIL",
       "next_action": "사용자 2026-11-14 승인 3종: (1) CoWork PRIVATE 단일 repo 만료형 최소권한 쓰기 PAT 발급·설치·검증 (2) 최종 고정 v0.2.17 R2/POLICY-STATIC-V1-LARGE 독립 리뷰 정확히 1회 최대 $3 (3) Windows 실호스트 read-only SHADOW+운영 DB 원본 불변 백업·격리 복사본 복구 리허설. 승인 인계 GPT_B_R2_SHADOW_APPROVAL_AND_ONE_SHOT_r0001_20261114.md. PAT/리뷰/SHADOW 실행 아직 NOT_RUN, ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER. R0~R3 상시 정책·운영 Task/Notifier/LIVE 전환 미승인. 다음은 Windows Claude Code 원샷 실행 및 결과 MD 게시/readback."
     }
