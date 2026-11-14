@@ -1,0 +1,1111 @@
+diff --git a/docs/CUTOVER_RUNBOOK.md b/docs/CUTOVER_RUNBOOK.md
+--- a/docs/CUTOVER_RUNBOOK.md	2026-11-14 14:53:48.449546400 +0900
++++ b/docs/CUTOVER_RUNBOOK.md	2026-11-14 21:51:52.208239700 +0900
+@@ -1,4 +1,4 @@
+-# Cutover runbook: Dropbox to GitHub (v0.2.14, development_not_for_deployment)
++# Cutover runbook: Dropbox to GitHub (v0.2.17, development_not_for_deployment)
+ 
+ Status: a design with isolated test evidence. Nothing here installs, starts or switches anything on the
+ operating host. Each step marked APPROVAL needs an explicit decision by the user.
+diff --git a/skill_collab_watcher/__init__.py b/skill_collab_watcher/__init__.py
+--- a/skill_collab_watcher/__init__.py	2026-11-14 14:53:48.452545500 +0900
++++ b/skill_collab_watcher/__init__.py	2026-11-14 21:51:52.211240300 +0900
+@@ -1 +1 @@
+-__version__ = "0.2.14"
++__version__ = "0.2.17"
+diff --git a/skill_collab_watcher/cli.py b/skill_collab_watcher/cli.py
+--- a/skill_collab_watcher/cli.py	2026-11-14 14:53:48.454542500 +0900
++++ b/skill_collab_watcher/cli.py	2026-11-14 21:51:52.213240700 +0900
+@@ -135,6 +135,9 @@
+         prompt_cache_ttl=cfg.review_policy.prompt_cache_ttl,
+         daily_budget_usd=cfg.review_policy.daily_budget_usd,
+         max_dispatches_per_day=cfg.review_policy.max_dispatches_per_day,
++        usage_limit_wait_sec=cfg.review_policy.usage_limit_wait_sec,
++        usage_limit_max_wait_sec=cfg.review_policy.usage_limit_max_wait_sec,
++        usage_limit_max_deferrals=cfg.review_policy.usage_limit_max_deferrals,
+     )
+ 
+ 
+@@ -152,6 +155,31 @@
+     )
+ 
+ 
++def read_github_token(token_file: str | None, repo: str | None = None) -> str:
++    """The token text from a plain one-line file, or from the JSON form this PC already uses
++    ({"token": "...", "repo": "...", "scope": "...", "expires": "..."}), so the existing file needs no copy.
++    A JSON file that names a different repository is refused. Error messages never contain file content."""
++    if not token_file:
++        raise AuthRequired("no GitHub token file is configured")
++    try:
++        text = Path(token_file).read_text(encoding="utf-8-sig").strip()
++    except OSError as exc:
++        raise AuthRequired("GitHub token file is unreadable") from exc
++    if text.startswith("{"):
++        try:
++            data = json.loads(text)
++        except ValueError:
++            raise AuthRequired("GitHub token file is not valid JSON") from None
++        value = data.get("token") if isinstance(data, dict) else None
++        if not isinstance(value, str) or not value.strip():
++            raise AuthRequired("GitHub token file has no token value")
++        named = data.get("repo")
++        if repo and isinstance(named, str) and named.strip() and named.strip().lower() != repo.lower():
++            raise AuthRequired("GitHub token file is for a different repository")
++        return value.strip()
++    return text
++
++
+ def _build_github_transport(cfg: Config) -> Transport:
+     from .github_transport import GitHubTransport
+ 
+@@ -161,12 +189,7 @@
+ 
+     def token() -> str:
+         # The credential is read only when a request needs it and is never printed.
+-        if not token_file:
+-            raise AuthRequired("no GitHub token file is configured")
+-        try:
+-            return Path(token_file).read_text(encoding="utf-8-sig").strip()
+-        except OSError as exc:
+-            raise AuthRequired("GitHub token file is unreadable") from exc
++        return read_github_token(token_file, cfg.github_repo)
+ 
+     return GitHubTransport(repo=cfg.github_repo, branch=cfg.github_branch,
+                            remote_root=cfg.remote_root, token_provider=token,
+@@ -446,13 +469,27 @@
+ 
+ 
+ def cmd_scan(args) -> int:
++    """One scan cycle. It takes the SAME single-instance lock as `watch`: a scan and a watch (or two scans) never run
++    beside each other, so (a) a watch starting later cannot mistake a live scan's model call for an interrupted one,
++    and (b) a scan that was killed mid-call is sealed REVIEW_UNCERTAIN by the next scan instead of staying CLAIMED
++    silently (independent review R1, findings 2 and 4). The OS releases the lock when a process dies."""
++    from .lock import SingleInstanceLock
++
+     cfg = _load(args.config)
+-    stop = threading.Event()
+-    rt = _open_runtime(cfg, args.dry_run, stop)
++    lock = SingleInstanceLock(_work_dir(cfg) / "watch.lock")
++    if not lock.acquire():
++        print(f"ERROR: another watcher instance already holds {lock.path}", file=sys.stderr)
++        return EXIT_LOCKED
+     try:
+-        return _exit_for(_one_cycle(rt).note)
++        stop = threading.Event()
++        rt = _open_runtime(cfg, args.dry_run, stop)
++        rt.exclusive = True
++        try:
++            return _exit_for(_one_cycle(rt).note)
++        finally:
++            rt.close()
+     finally:
+-        rt.close()
++        lock.release()
+ 
+ 
+ def cmd_watch(args) -> int:
+@@ -517,6 +554,8 @@
+             finally:
+                 signals.restore()
+                 rt.close()
++    except ShadowIsolationError:
++        raise                       # a SHADOW isolation refusal keeps its own message and exit code (main handles it)
+     except RuntimeError as exc:
+         print(f"ERROR: {exc}", file=sys.stderr)
+         return EXIT_LOCKED
+diff --git a/skill_collab_watcher/config.py b/skill_collab_watcher/config.py
+--- a/skill_collab_watcher/config.py	2026-11-14 14:53:48.455543600 +0900
++++ b/skill_collab_watcher/config.py	2026-11-14 21:51:52.214239600 +0900
+@@ -40,6 +40,12 @@
+     return value
+ 
+ 
++def _positive_int(value, name: str) -> int:
++    if isinstance(value, bool) or not isinstance(value, int) or value <= 0:
++        raise ConfigError(f"{name} must be a positive integer, got {value!r}")
++    return value
++
++
+ @dataclass
+ class ReviewPolicy:
+     enabled: bool = False
+@@ -58,6 +64,9 @@
+     enabled_source: str = "default (off)"
+     daily_budget_usd: float | None = None      # unattended spending ceiling over any rolling 24 h; null = off
+     max_dispatches_per_day: int | None = None  # unattended review-count ceiling over any rolling 24 h; null = off
++    usage_limit_wait_sec: int = 1800
++    usage_limit_max_wait_sec: int = 86400
++    usage_limit_max_deferrals: int = 12
+ 
+     @property
+     def dispatch_allowed(self) -> bool:
+@@ -209,6 +218,9 @@
+             daily_budget_usd=_optional_cap(rp.get("daily_budget_usd"), "review_policy.daily_budget_usd", float),
+             max_dispatches_per_day=_optional_cap(rp.get("max_dispatches_per_day"),
+                                                  "review_policy.max_dispatches_per_day", int),
++            usage_limit_wait_sec=_positive_int(rp.get("usage_limit_wait_sec", 1800), "review_policy.usage_limit_wait_sec"),
++            usage_limit_max_wait_sec=_positive_int(rp.get("usage_limit_max_wait_sec", 86400), "review_policy.usage_limit_max_wait_sec"),
++            usage_limit_max_deferrals=_positive_int(rp.get("usage_limit_max_deferrals", 12), "review_policy.usage_limit_max_deferrals"),
+         )
+         local_state_dir = raw.get("local_state_dir") or str(default_local_root())
+         github = raw.get("github") or {}
+diff --git a/skill_collab_watcher/models.py b/skill_collab_watcher/models.py
+--- a/skill_collab_watcher/models.py	2026-11-14 14:53:48.460053600 +0900
++++ b/skill_collab_watcher/models.py	2026-11-14 21:51:52.219241100 +0900
+@@ -52,6 +52,10 @@
+     model_calls: int
+     usage: dict[str, Any] | None
+     error: str | None = None
++    # Claude plan usage limit (the 5-hour / weekly window). "BEFORE_START": the CLI refused before any model work
++    # (no turns, no cost) so the review may be retried later; "DURING": work had started, outcome unknown.
++    usage_limit: str | None = None
++    retry_after_sec: int | None = None
+ 
+ 
+ @dataclass
+diff --git a/skill_collab_watcher/notify_events.py b/skill_collab_watcher/notify_events.py
+--- a/skill_collab_watcher/notify_events.py	2026-11-14 14:53:48.461053100 +0900
++++ b/skill_collab_watcher/notify_events.py	2026-11-14 21:51:52.219241100 +0900
+@@ -17,7 +17,7 @@
+ NOTIFY_EVENTS = (
+     "COMPLETED", "FAILED", "REVIEW_UNCERTAIN", "UPLOAD_FAILED", "CONFLICT",
+     "AUTH_REQUIRED", "REJECTED", "LEGACY_SIDECAR_BLOCKED", "PENDING_HELD",
+-    "CLAUDE_AUTH_REQUIRED", "DAILY_BUDGET_BLOCKED", "DAILY_LIMIT_BLOCKED",
++    "CLAUDE_AUTH_REQUIRED", "USAGE_LIMIT_DEFERRED", "DAILY_BUDGET_BLOCKED", "DAILY_LIMIT_BLOCKED",
+ )
+ 
+ 
+@@ -96,6 +96,9 @@
+     if event == "CLAUDE_AUTH_REQUIRED":
+         return ("[Claude 로그인 필요] 리뷰 대기열을 멈췄습니다. 요청은 소모하지 않았고 모델도 호출하지 않았습니다. "
+                 f"PC에서 Claude Code에 다시 로그인하면 자동으로 재개됩니다. ({detail or ''})")
++    if event == "USAGE_LIMIT_DEFERRED":
++        return ("[사용량 한도] Claude 사용량 한도에 걸려 리뷰를 시작하지 못했습니다. 모델 작업은 하지 않았고 요청은 대기합니다. "
++                f"한도가 풀리면 자동으로 이어서 실행합니다. ({detail or ''})")
+     if event == "DAILY_BUDGET_BLOCKED":
+         return "[일일 비용 상한] 오늘 한도에 도달해 새 리뷰를 시작하지 않습니다. 요청은 대기 상태로 보존됩니다."
+     if event == "DAILY_LIMIT_BLOCKED":
+diff --git a/skill_collab_watcher/orchestrator.py b/skill_collab_watcher/orchestrator.py
+--- a/skill_collab_watcher/orchestrator.py	2026-11-14 14:53:48.475925700 +0900
++++ b/skill_collab_watcher/orchestrator.py	2026-11-14 21:51:52.221241200 +0900
+@@ -5,6 +5,7 @@
+ import re
+ import shutil
+ import threading
++import time
+ import zipfile
+ from dataclasses import dataclass, replace
+ from datetime import datetime, timezone
+@@ -35,6 +36,7 @@
+ # READY_APPROVAL.json or APPROVAL_SIG.json never match (B-2).
+ ROLE_FILE = re.compile(r"(REQUEST|READY)(?:_r\d+)?\.md", re.IGNORECASE)
+ PAUSE_FILE = "PAUSE_REVIEWS"  # any writer may create it: pausing is the safe direction
++USAGE_HOLD_COUNTER = "usage_limit_hold_until"  # epoch seconds; set when the Claude usage window is exhausted
+ APPROVAL_FILE = "APPROVAL_SIG.json"
+ PIN_FILE = "SOURCE_PIN.json"
+ 
+@@ -518,9 +520,12 @@
+     # under any policy revision (B-5): a finished or in-flight job must not be
+     # repeated just because local_policy_revision changed.
+     existing = store.get_job(pre.processing_key)
+-    if existing is None:
+-        logical = store.find_logical_job(pre.request_id, pre.request_revision, pre.package_sha256)
+-        if logical is not None and logical.state in TERMINAL_STATES + IN_FLIGHT_STATES + RESUMABLE_PUBLISH_STATES:
++    dispatched_states = TERMINAL_STATES + IN_FLIGHT_STATES + RESUMABLE_PUBLISH_STATES
++    if existing is None or existing.state not in dispatched_states:
++        # Also when the exact key is a never-dispatched row: a different policy revision may already have reviewed it.
++        logical = store.find_dispatched_logical_job(pre.request_id, pre.request_revision, pre.package_sha256,
++                                                    tuple(s.value for s in dispatched_states))
++        if logical is not None:
+             existing = logical
+     if existing is not None:
+         early = _handle_existing_job(transport, store, allowed, remote_root, pre, existing)
+@@ -531,6 +536,14 @@
+                               detail=f"{request_id}: revision already bound to another package; original kept")
+         return GroupResult()
+ 
++    if allowed:
++        # While the Claude usage window is exhausted nothing is downloaded, verified or started: the request just waits.
++        hold_until = store.get_counter(USAGE_HOLD_COUNTER)
++        if hold_until and time.time() < hold_until:
++            store.log_event_once("USAGE_LIMIT_WAITING", processing_key=pre.processing_key,
++                                 detail="Claude usage window exhausted; the request stays pending and resumes by itself")
++            return GroupResult(retry=True)
++
+     try:
+         package_bytes, _meta = transport.download(pre.package_path)
+     except TransportError as exc:
+@@ -609,7 +622,18 @@
+             return GroupResult(retry=True)
+ 
+     # --- exactly one dispatch for this processing_key from here on ---
+-    if not store.try_claim(final.processing_key):
++    claim = store.claim(final.processing_key, max_dispatches=policy.max_dispatches_per_day,
++                        daily_budget_usd=policy.daily_budget_usd,
++                        this_run_usd=policy.run_budgets_usd.get(str(final.fields["request"]["run_policy_ref"]), 0.0))
++    if claim == "COUNT_CEILING":
++        store.log_event_once("DAILY_LIMIT_BLOCKED", processing_key=final.processing_key,
++                             detail="daily review count ceiling reached (reserved atomically); the request stays pending")
++        return GroupResult(retry=True)
++    if claim == "BUDGET_CEILING":
++        store.log_event_once("DAILY_BUDGET_BLOCKED", processing_key=final.processing_key,
++                             detail="daily spending ceiling would be exceeded (reserved atomically); the request stays pending")
++        return GroupResult(retry=True)
++    if claim != "CLAIMED":
+         # Another process claimed it between our read and now (or this is a read-only store): no dispatch.
+         store.log_event_once("IN_PROGRESS_SKIPPED", processing_key=final.processing_key,
+                              detail=f"{request_id}: claim lost to another process")
+@@ -657,6 +681,30 @@
+             "cache_read_tokens": usage.get("cache_read_input_tokens"),
+         }))
+ 
++    if not review_result.ok and review_result.usage_limit == "BEFORE_START":
++        # The CLI refused before any model work. Put the job back to a never-dispatched state and hold ALL dispatch
++        # until the window resets (the limit is account-wide). Capped so it can never wait or loop forever.
++        key = final.processing_key
++        stated = review_result.retry_after_sec
++        wait = max(60, (stated if stated is not None else policy.usage_limit_wait_sec) + 60)   # +60 s margin after the reset
++        truncated = wait > policy.usage_limit_max_wait_sec
++        wait = min(wait, policy.usage_limit_max_wait_sec)
++        # A probe made while the stated reset is still further away than the cap (weekly limit) is expected to be
++        # refused and does not count against the cap; a refusal at/after the stated or guessed time does.
++        count = store.get_counter(f"usage_limit_deferrals|{key}") if truncated else store.increment_counter(f"usage_limit_deferrals|{key}")
++        if count > policy.usage_limit_max_deferrals:
++            store.update_job_state(key, JobState.FAILED, last_error="usage limit: deferral cap reached")
++            store.log_event("FAILED", processing_key=key, detail="usage limit: deferral cap reached; not retried again")
++            return GroupResult(dispatched=True)
++        store.set_counter(USAGE_HOLD_COUNTER, int(time.time()) + wait)
++        store.update_job_state(key, JobState.VALIDATED, last_error=f"usage limit; resumes after about {wait} s")
++        store.log_event("USAGE_LIMIT_DEFERRED", processing_key=key, detail=f"deferral {count}; no model work was done; retry in about {wait} s")
++        return GroupResult(retry=True)
++    if not review_result.ok and review_result.usage_limit == "DURING":
++        store.update_job_state(final.processing_key, JobState.REVIEW_UNCERTAIN, last_error="usage limit reached during the review")
++        store.log_event("REVIEW_UNCERTAIN", processing_key=final.processing_key,
++                        detail="usage limit reached while the review was running; not retried automatically")
++        return GroupResult(dispatched=True)
+     if not review_result.ok:
+         if review_result.error and "timeout" in review_result.error:
+             store.update_job_state(final.processing_key, JobState.REVIEW_UNCERTAIN, last_error=review_result.error)
+diff --git a/skill_collab_watcher/review_runner.py b/skill_collab_watcher/review_runner.py
+--- a/skill_collab_watcher/review_runner.py	2026-11-14 14:53:48.476922500 +0900
++++ b/skill_collab_watcher/review_runner.py	2026-11-14 21:51:52.222241600 +0900
+@@ -2,7 +2,10 @@
+ 
+ import json
+ import os
++import re
+ import subprocess
++import time
++from datetime import datetime, timedelta
+ from pathlib import Path
+ from typing import Protocol
+ 
+@@ -47,6 +50,72 @@
+     return result
+ 
+ 
++# Message templates read from the installed CLI (claude 2.1.218, strings of the executable; no limit was provoked):
++#   `You've hit your ${label}${" · resets " + when}` with label in {session limit, weekly limit, Opus limit, Sonnet limit,
++#   Fable 5 limit, usage credit limit}; `when` is "3pm" / "3:30pm" (within 24 h) or "Nov 18, 3pm" (later), local time,
++#   usually followed by " (<time zone>)". Older builds print "Claude AI usage limit reached|<epoch>".
++# Limits that never reset by themselves (organisation spend cap, admin-disabled usage) are NOT retryable: ordinary FAILED.
++USAGE_LIMIT_RE = re.compile(
++    r"you['\u2019]ve hit your [^\n\u00b7|]{0,40}?limit|usage limit reached|(?:session|weekly|5-hour|five-hour|opus|sonnet) limit"
++    r"|out of (?:extra )?usage", re.IGNORECASE)
++NON_RETRYABLE_RE = re.compile(
++    r"spend limit|contact your admin|ask your admin|disabled by your admin|usage allocation has been disabled"
++    r"|usage limit is set to \$0|seat type doesn't include|org_level_disabled|org_spend_cap", re.IGNORECASE)
++_EPOCH_RE = re.compile(r"\|\s*(\d{10})\b")
++_RESET_RE = re.compile(
++    r"resets?\s+(?:at\s+)?(?:(?P<mon>[A-Za-z]{3})[a-z]*\.?\s+(?P<day>\d{1,2}),?\s+(?:(?P<year>\d{4}),?\s+)?)?"
++    r"(?P<h>\d{1,2})(?::(?P<m>\d{2}))?\s*(?P<ap>am|pm)", re.IGNORECASE)
++_MONTHS = {m: i for i, m in enumerate(["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"], 1)}
++BEFORE_START_MAX_ELAPSED_SEC = 120.0   # a refusal arrives within seconds; a process that ran longer had started working
++
++
++def _reset_wait_seconds(blob: str, now: float) -> int | None:
++    m = _EPOCH_RE.search(blob)
++    if m:
++        return max(0, int(m.group(1)) - int(now))
++    c = _RESET_RE.search(blob)
++    if not c:
++        return None
++    hour, minute, ap = int(c.group("h")), int(c.group("m") or 0), c.group("ap").lower()
++    if not (1 <= hour <= 12 and 0 <= minute < 60):
++        return None
++    hour = (hour % 12) + (12 if ap == "pm" else 0)
++    local_now = datetime.fromtimestamp(now)
++    try:
++        if c.group("mon"):
++            month = _MONTHS.get(c.group("mon").lower())
++            if month is None:
++                return None
++            year = int(c.group("year") or local_now.year)
++            target = datetime(year, month, int(c.group("day")), hour, minute)
++            if target <= local_now and not c.group("year"):
++                target = target.replace(year=year + 1)
++        else:
++            target = local_now.replace(hour=hour, minute=minute, second=0, microsecond=0)
++            if target <= local_now:
++                target += timedelta(days=1)
++    except ValueError:
++        return None
++    return max(0, int((target - local_now).total_seconds()))
++
++
++def detect_usage_limit(parsed: dict, stdout: str, stderr: str, now: float | None = None,
++                       elapsed_sec: float | None = None) -> tuple[str | None, int | None]:
++    """(kind, seconds until the window resets or None); kind is None for any other failure (including limits that never
++    reset by themselves). BEFORE_START only when nothing was billed (no cost, no output tokens) and the process was
++    short-lived; otherwise DURING, which is never retried automatically. `num_turns` is NOT used: a refused first request
++    can still be reported as one turn."""
++    blob = "\n".join([str(parsed.get("result") or ""), str(parsed.get("error") or ""), stdout or "", stderr or ""])
++    if not USAGE_LIMIT_RE.search(blob) or NON_RETRYABLE_RE.search(blob):
++        return None, None
++    now = time.time() if now is None else now
++    wait = _reset_wait_seconds(blob, now)
++    usage = parsed.get("usage") if isinstance(parsed.get("usage"), dict) else {}
++    billed = bool(parsed.get("total_cost_usd")) or bool(usage.get("output_tokens")) or bool(usage.get("cache_creation_input_tokens"))
++    slow = elapsed_sec is not None and elapsed_sec > BEFORE_START_MAX_ELAPSED_SEC
++    return ("DURING" if (billed or slow) else "BEFORE_START"), wait
++
++
+ def _cli_usage(parsed: dict) -> dict | None:
+     """Token usage plus the cost facts needed to size budgets later."""
+     usage = dict(parsed.get("usage") or {})
+@@ -118,6 +187,33 @@
+     return argv
+ 
+ 
++def _kill_tree(proc: "subprocess.Popen") -> None:
++    """subprocess.run's own timeout handling ends only the first process. A reviewer started through a .cmd wrapper
++    (or one that spawns helpers) would keep running beside a watcher that believes it ended."""
++    if os.name == "nt":
++        subprocess.run(["taskkill", "/F", "/T", "/PID", str(proc.pid)], capture_output=True, check=False)
++    try:
++        proc.kill()
++    except OSError:
++        pass
++
++
++def _run(argv, *, input=None, capture_output=True, encoding="utf-8", errors="replace", cwd=None, env=None,
++         shell=False, timeout=None):
++    """The one place that starts a process (tests replace this function). Same result as subprocess.run, but a
++    timeout ends the whole process tree."""
++    proc = subprocess.Popen(
++        argv, stdin=subprocess.PIPE if input is not None else None, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
++        encoding=encoding, errors=errors, cwd=cwd, env=env, shell=shell)
++    try:
++        out, err = proc.communicate(input=input, timeout=timeout)
++    except subprocess.TimeoutExpired:
++        _kill_tree(proc)
++        proc.communicate()
++        raise
++    return subprocess.CompletedProcess(argv, proc.returncode, out, err)
++
++
+ class RealReviewRunner:
+     """The only class in this project allowed to start a `claude` process.
+ 
+@@ -176,7 +272,7 @@
+         FAILED. Only a reason code is returned: the account details in the CLI's
+         answer are never kept."""
+         try:
+-            proc = subprocess.run(
++            proc = _run(
+                 [self.claude_exe, "auth", "status", "--json"],
+                 capture_output=True, encoding="utf-8", errors="replace",
+                 shell=False, timeout=PREFLIGHT_TIMEOUT_SEC,
+@@ -204,10 +300,11 @@
+         # the reviewer may read, so it must not hold results or state.
+         cwd = run_dir / CLAUDE_CWD_NAME
+         cwd.mkdir(parents=True, exist_ok=True)
++        started = time.monotonic()
+         try:
+             # encoding is explicit: text=True alone decodes with the Windows
+             # ANSI code page (cp949 here), but the CLI speaks UTF-8.
+-            proc = subprocess.run(
++            proc = _run(
+                 argv,
+                 input=prompt_text,
+                 capture_output=True,
+@@ -241,6 +338,12 @@
+         # Exit code 1 + subtype error_max_budget_usd was measured for a run that
+         # exceeded --max-budget-usd (result null, cost recorded). Say why, so an
+         # operator can tell a budget stop from any other failure.
++        limit_kind, limit_wait = detect_usage_limit(parsed, proc.stdout, proc.stderr, elapsed_sec=time.monotonic() - started)
++        if limit_kind:
++            return ReviewResult(
++                ok=False, output_text="", output_format="json", exit_code=proc.returncode, model_calls=0, usage=usage,
++                error=f"usage_limit {limit_kind}", usage_limit=limit_kind, retry_after_sec=limit_wait,
++            )
+         reason = f"claude_cli_failed exit={proc.returncode}"
+         if parsed.get("subtype"):
+             reason += f" subtype={parsed['subtype']}"
+diff --git a/skill_collab_watcher/state_store.py b/skill_collab_watcher/state_store.py
+--- a/skill_collab_watcher/state_store.py	2026-11-14 14:53:48.480098700 +0900
++++ b/skill_collab_watcher/state_store.py	2026-11-14 21:51:52.225239900 +0900
+@@ -220,20 +220,49 @@
+     _CLAIMABLE = ("DISCOVERED", "WAIT_INPUT", "VALIDATED", "AUTH_REQUIRED")
+ 
+     def try_claim(self, processing_key: str) -> bool:
++        """Atomic compare-and-set into CLAIMED (no ceilings): see `claim`."""
++        return self.claim(processing_key) == "CLAIMED"
++
++    def claim(self, processing_key: str, *, max_dispatches: int | None = None,
++              daily_budget_usd: float | None = None, this_run_usd: float = 0.0) -> str:
+         """Atomic compare-and-set into CLAIMED: exactly one process wins a never-dispatched job. Two `scan`
+         processes (or a scan beside a running watch) used to both read VALIDATED and both start the reviewer
+         because the old claim was an unconditional UPDATE after a plain read. One UPDATE ... WHERE state IN
+         (never dispatched) is a single SQLite write transaction, so the loser sees rowcount 0 and must not dispatch.
+-        A read-only (SHADOW) store never claims."""
++
++        The daily ceilings are checked INSIDE the same write transaction (BEGIN IMMEDIATE), and a job that another
++        process has claimed but not yet logged as dispatched counts as reserved. Without this, two processes could
++        both read 'under the ceiling' before either wrote its dispatch (independent review R1, finding 3).
++        Returns CLAIMED, LOST, COUNT_CEILING or BUDGET_CEILING. A read-only (SHADOW) store never claims."""
+         if self._skip_write("TRY_CLAIM", processing_key, None):
+-            return False
++            return "LOST"
+         marks = ",".join("?" for _ in self._CLAIMABLE)
+-        cur = self.conn.execute(
+-            f"UPDATE jobs SET state='CLAIMED', updated_at=?, last_error=NULL, attempt_count=attempt_count+1 "
+-            f"WHERE processing_key=? AND state IN ({marks})",
+-            (_now(), processing_key, *self._CLAIMABLE),
+-        )
+-        return cur.rowcount == 1
++        self.conn.execute("BEGIN IMMEDIATE")
++        try:
++            if max_dispatches is not None or daily_budget_usd is not None:
++                with closing(self.conn.execute(
++                    "SELECT COUNT(*) FROM jobs j WHERE j.state IN ('CLAIMED', 'REVIEW_RUNNING') AND j.processing_key <> ? "
++                    "AND NOT EXISTS (SELECT 1 FROM audit_log a WHERE a.event='REVIEW_DISPATCHED' "
++                    "AND a.processing_key=j.processing_key AND a.ts >= ?)", (processing_key, self._cutoff(24)),
++                )) as cur:
++                    reserved = cur.fetchone()[0]
++                if max_dispatches is not None and self.dispatches_since() + reserved >= max_dispatches:
++                    self.conn.execute("ROLLBACK")
++                    return "COUNT_CEILING"
++                if daily_budget_usd is not None and self.spend_since() + (reserved + 1) * this_run_usd > daily_budget_usd:
++                    self.conn.execute("ROLLBACK")
++                    return "BUDGET_CEILING"
++            cur = self.conn.execute(
++                f"UPDATE jobs SET state='CLAIMED', updated_at=?, last_error=NULL, attempt_count=attempt_count+1 "
++                f"WHERE processing_key=? AND state IN ({marks})",
++                (_now(), processing_key, *self._CLAIMABLE),
++            )
++            won = cur.rowcount == 1
++            self.conn.execute("COMMIT")
++        except Exception:
++            self.conn.execute("ROLLBACK")
++            raise
++        return "CLAIMED" if won else "LOST"
+ 
+     def record_claim(self, processing_key: str) -> None:
+         if self._skip_write("CLAIM_OWNER", processing_key, None):
+@@ -376,6 +405,20 @@
+             row = cur.fetchone()
+         return self.get_job(row[0]) if row else None
+ 
++    def find_dispatched_logical_job(self, request_id: str, request_revision: str, package_sha256: str,
++                                    states: tuple[str, ...]) -> JobRecord | None:
++        """A job for the same request revision and package, under ANY policy revision, that has already been
++        dispatched (or finished). Unlike find_logical_job it ignores never-dispatched rows, so an old pending row
++        cannot hide a reviewed request (independent review R1, finding 1)."""
++        marks = ",".join("?" for _ in states)
++        with closing(self.conn.execute(
++            f"SELECT processing_key FROM jobs WHERE request_id=? AND request_revision=? AND package_sha256=? "
++            f"AND state IN ({marks}) ORDER BY CASE state WHEN 'COMPLETED' THEN 0 ELSE 1 END, updated_at DESC LIMIT 1",
++            (request_id, request_revision, package_sha256, *states),
++        )) as cur:
++            row = cur.fetchone()
++        return self.get_job(row[0]) if row else None
++
+     def job_for_other_package(self, request_id: str, request_revision: str, package_sha256: str) -> JobRecord | None:
+         """A revision that is already bound to a different package (T08)."""
+         with closing(self.conn.execute(
+@@ -531,6 +574,14 @@
+ 
+     # --- counters ----------------------------------------------------------
+ 
++    def set_counter(self, name: str, value: int) -> None:
++        if self._skip_write("COUNTER_SET", None, name):
++            return
++        self.conn.execute(
++            "INSERT INTO counters (name, value) VALUES (?, ?) ON CONFLICT(name) DO UPDATE SET value = excluded.value",
++            (name, int(value)),
++        )
++
+     def increment_counter(self, name: str, by: int = 1) -> int:
+         if self._skip_write("COUNTER", None, name):
+             return self.get_counter(name)
+diff --git a/skill_collab_watcher/validator.py b/skill_collab_watcher/validator.py
+--- a/skill_collab_watcher/validator.py	2026-11-14 14:53:48.482104300 +0900
++++ b/skill_collab_watcher/validator.py	2026-11-14 21:51:52.227239900 +0900
+@@ -78,6 +78,9 @@
+     prompt_cache_ttl: str = "1h"
+     daily_budget_usd: float | None = None
+     max_dispatches_per_day: int | None = None
++    usage_limit_wait_sec: int = 1800        # used when the CLI does not say when the window resets
++    usage_limit_max_wait_sec: int = 86400   # never wait longer than this per deferral (24 h)
++    usage_limit_max_deferrals: int = 12     # per job; then the job is FAILED instead of waiting forever
+     require_approval: bool = False
+     trust_root: object | None = None
+     signature_backend: object | None = None
+diff --git a/tests/e2e_claude_stub.py b/tests/e2e_claude_stub.py
+--- a/tests/e2e_claude_stub.py	2026-11-14 14:53:48.496683200 +0900
++++ b/tests/e2e_claude_stub.py	2026-11-14 21:51:52.241242300 +0900
+@@ -11,8 +11,14 @@
+     print(json.dumps({"loggedIn": True}))
+     sys.exit(0)
+ prompt = sys.stdin.read()
+-with open(os.environ["E2E_COUNTER"], "a", encoding="utf-8") as fh:
++counter = os.environ["E2E_COUNTER"]
++first = not os.path.exists(counter) or not open(counter, encoding="utf-8").read().strip()
++with open(counter, "a", encoding="utf-8") as fh:
+     fh.write(f"CALL pid={os.getpid()} prompt_chars={len(prompt)}\n")
++if os.environ.get("E2E_STUB_MODE") == "limit_once" and first:   # the very first call is refused: plan usage window exhausted
++    print(json.dumps({"type": "result", "subtype": "error_during_execution", "is_error": True,
++                      "result": f"Claude AI usage limit reached|{int(time.time()) + 120}", "num_turns": 0, "total_cost_usd": 0}))
++    sys.exit(1)
+ time.sleep(float(os.environ.get("E2E_STUB_SLEEP", "0")))
+ print(json.dumps({"type": "result", "subtype": "success", "is_error": False,
+                   "result": "E2E STUB REVIEW (no model was called)", "total_cost_usd": 0.0,
+diff --git a/tests/e2e_tree_stub.py b/tests/e2e_tree_stub.py
+--- a/tests/e2e_tree_stub.py	1970-01-01 09:00:00.000000000 +0900
++++ b/tests/e2e_tree_stub.py	2026-11-14 21:51:52.243247000 +0900
+@@ -0,0 +1,16 @@
++"""Stand-in for `claude` that leaves a GRANDCHILD behind: used to check what happens to the process tree on a timeout.
++Never contacts a model. The grandchild writes a marker file after a delay if (and only if) it is still alive then."""
++import os
++import subprocess
++import sys
++import time
++
++if sys.argv[1:3] == ["auth", "status"]:
++    print('{"loggedIn": true}')
++    sys.exit(0)
++sys.stdin.read()
++code = ("import os, pathlib, time\n"
++        "time.sleep(float(os.environ['TREE_DELAY']))\n"
++        "pathlib.Path(os.environ['TREE_MARKER']).write_text('grandchild survived')\n")
++subprocess.Popen([sys.executable, "-c", code])
++time.sleep(60)
+diff --git a/tests/test_cli_entrypoint_e2e.py b/tests/test_cli_entrypoint_e2e.py
+--- a/tests/test_cli_entrypoint_e2e.py	2026-11-14 14:53:48.499682500 +0900
++++ b/tests/test_cli_entrypoint_e2e.py	2026-11-14 21:51:52.245240500 +0900
+@@ -249,3 +249,26 @@
+     after = {p.name: (p.stat().st_size, p.stat().st_mtime_ns) for p in live.glob("state.sqlite3*")} if live.is_dir() else {}
+     assert before.keys() == after.keys()
+     assert all(before[k][0] == after[k][0] for k in before), "size of an operating database file changed"
++
++
++def test_a_usage_limit_refusal_is_held_and_resumed_automatically_by_the_real_entry_point(e2e):
++    from skill_collab_watcher.orchestrator import USAGE_HOLD_COUNTER
++    e2e.env["E2E_STUB_MODE"] = "limit_once"
++    sha = e2e.publish()
++    assert e2e.scan()[0] == 0
++    assert e2e.model_calls == 1 and not e2e.repo_has("reviews/REQ-1/REVIEW_RESULT_1.md")
++    assert any(e == "USAGE_LIMIT_DEFERRED" for e, _ in e2e.events())
++    for _ in range(2):                                   # inside the hold: the reviewer is not started again
++        e2e.scan()
++    assert e2e.model_calls == 1
++    s = StateStore(next(e2e.state_dir.rglob("state.sqlite3")))
++    s.set_counter(USAGE_HOLD_COUNTER, 0)                 # the window has reset
++    s.close()
++    assert e2e.scan()[0] == 0
++    assert e2e.model_calls == 2
++    assert e2e.repo_has("reviews/REQ-1/REVIEW_RESULT_1.md") and e2e.repo_has("receipts/REQ-1/RECEIPT_1.md")
++    s = e2e.store()
++    assert s.get_job(PKEY.format(sha=sha)).state == JobState.COMPLETED
++    s.close()
++    e2e.scan()
++    assert e2e.model_calls == 2
+diff --git a/tests/test_phase4_unattended.py b/tests/test_phase4_unattended.py
+--- a/tests/test_phase4_unattended.py	2026-11-14 14:53:48.512778900 +0900
++++ b/tests/test_phase4_unattended.py	2026-11-14 21:51:52.256239000 +0900
+@@ -100,7 +100,7 @@
+             raise result
+         return result
+ 
+-    monkeypatch.setattr(review_runner.subprocess, "run", fake_run)
++    monkeypatch.setattr(review_runner, "_run", fake_run)
+     return seen
+ 
+ 
+diff --git a/tests/test_r1_findings.py b/tests/test_r1_findings.py
+--- a/tests/test_r1_findings.py	1970-01-01 09:00:00.000000000 +0900
++++ b/tests/test_r1_findings.py	2026-11-14 21:51:52.260241400 +0900
+@@ -0,0 +1,148 @@
++"""Regression tests for the five findings of the independent R1 review of v0.2.14 (REQ-COWORK-V0214-R1-20261114).
++Each test FAILED on v0.2.16 and passes with the fix. Synthetic data only; no model, no real GitHub."""
++from __future__ import annotations
++
++import os
++import subprocess
++import sys
++import time
++from pathlib import Path
++
++import pytest
++
++pytest.importorskip("cryptography", reason="the entry-point tests need real Ed25519 approvals")
++
++from bundle import github_policy, publish_bundle  # noqa: E402
++from conftest import make_package_zip  # noqa: E402
++from skill_collab_watcher import orchestrator  # noqa: E402
++from skill_collab_watcher.review_runner import RealReviewRunner  # noqa: E402
++from skill_collab_watcher.state_store import StateStore  # noqa: E402
++from test_cli_entrypoint_e2e import e2e  # noqa: E402,F401  (re-exported fixture)
++from test_phase1_github import run  # noqa: E402
++
++HERE = Path(__file__).resolve().parent
++
++
++def events_named(store, name):
++    return [d for _t, e, _k, d in store.recent_events(500) if e == name]
++
++
++# --- finding 1: a never-dispatched job under another policy revision must not allow a second review ------------------
++
++def test_f1_a_pending_job_under_an_old_policy_revision_cannot_dispatch_after_the_logical_request_was_reviewed(github_env):
++    publish_bundle(github_env.http)                                                     # approval bound to revision 1
++    run(github_env, policy=github_policy(local_policy_revision="1"), allowed=False)    # VALIDATED, never dispatched
++    publish_bundle(github_env.http, payload_changes={"local_policy_revision": "2"})    # operator re-signs for revision 2
++    run(github_env, policy=github_policy(local_policy_revision="2"))                    # reviewed once under revision 2
++    assert github_env.runner.calls == 1
++    # Rollback to the old policy revision with a lost cursor: the whole folder is listed again, the approval is valid again.
++    publish_bundle(github_env.http, payload_changes={"nonce": "synthetic-nonce-fresh-0003"})  # re-signed for revision 1: new nonce
++    github_env.store.conn.execute("DELETE FROM cursors")
++    run(github_env, policy=github_policy(local_policy_revision="1"))                    # the old pending row must stay unused
++    assert github_env.runner.calls == 1
++
++
++# --- finding 3: the daily ceiling must be reserved atomically -------------------------------------------------------
++
++def test_f3_two_requests_cannot_both_pass_a_one_per_day_ceiling(github_env, monkeypatch):
++    shared = make_package_zip("shared")                       # both requests point at the same package path
++    publish_bundle(github_env.http, request_id="REQ-1", package=shared)
++    publish_bundle(github_env.http, request_id="REQ-2", package=shared)
++    policy = github_policy(max_dispatches_per_day=1)
++    other = StateStore(github_env.tmp / "state.sqlite3")      # a second process: its own connection and owner
++    real_materialize, nested = orchestrator._materialize_snapshot, {"done": False}
++
++    def interleaved(*args, **kwargs):
++        if not nested["done"]:
++            nested["done"] = True                              # the other process runs between our claim and our dispatch
++            orchestrator.run_scan_cycle(
++                __import__("bundle").make_transport(github_env.http), other, policy, github_env.runner, allowed=True,
++                snapshot_root=github_env.snapshot_root, review_run_dir=github_env.review_run_dir,
++                remote_root=__import__("bundle").ROOT, exclusive=False)
++        return real_materialize(*args, **kwargs)
++
++    monkeypatch.setattr(orchestrator, "_materialize_snapshot", interleaved)
++    try:
++        run(github_env, policy=policy)
++    finally:
++        other.close()
++    assert github_env.runner.calls == 1
++
++
++# --- findings 2 and 4: scan and watch must not share a database without sharing the lock ----------------------------
++
++def _wait_for(e2e, name, seconds=40):
++    end = time.time() + seconds
++    while time.time() < end:
++        try:
++            if any(e == name for e, _ in e2e.events()):
++                return
++        except Exception:
++            pass
++        time.sleep(0.4)
++    raise AssertionError(f"event {name} never appeared")
++
++
++def test_f2_a_watch_starting_during_a_scans_model_call_does_not_seal_the_scans_job(e2e):
++    e2e.publish()
++    scan = e2e.popen("scan", sleep="7")
++    _wait_for(e2e, "CLAIMED")
++    watch = e2e.popen("watch", "--max-cycles", "1", "--poll-interval", "1")
++    watch.communicate(timeout=120)
++    scan.communicate(timeout=180)
++    names = [e for e, _ in e2e.events()]
++    assert "REVIEW_UNCERTAIN" not in names, "the live scan's job was reported as an interrupted model call"
++    assert e2e.model_calls == 1
++
++
++def test_f4_a_scan_killed_during_the_model_call_is_sealed_by_the_next_scan_and_never_re_run(e2e):
++    e2e.publish()
++    scan = e2e.popen("scan", sleep="40")
++    _wait_for(e2e, "CLAIMED")
++    subprocess.run(["taskkill", "/F", "/T", "/PID", str(scan.pid)], capture_output=True)
++    scan.communicate(timeout=60)
++    code, out, err = e2e.scan()
++    names = [e for e, _ in e2e.events()]
++    assert "REVIEW_UNCERTAIN" in names, "a crashed scan left the job CLAIMED silently"
++    assert e2e.model_calls == 1
++
++
++def test_a_second_scan_is_refused_while_another_scan_or_watch_holds_the_lock(e2e):
++    e2e.publish()
++    first = e2e.popen("scan", sleep="6")
++    _wait_for(e2e, "CLAIMED")
++    code, out, err = e2e.scan()
++    first.communicate(timeout=180)
++    assert code == 3 and "already holds" in (out + err).lower()
++    assert e2e.model_calls == 1
++
++
++# --- finding 5: a timeout must end the whole process tree -----------------------------------------------------------
++
++def test_f5_a_timeout_ends_the_reviewer_process_tree_not_only_its_first_process(tmp_path, monkeypatch):
++    marker = tmp_path / "marker.txt"
++    monkeypatch.setenv("TREE_MARKER", str(marker))
++    monkeypatch.setenv("TREE_DELAY", "4")
++    claude = tmp_path / "claude.cmd"
++    claude.write_text(f'@"{sys.executable}" "{HERE / "e2e_tree_stub.py"}" %*\r\n', encoding="utf-8")
++    runner = RealReviewRunner(str(claude), None, ["Read"], 1.0, 1)
++    snap, rundir = tmp_path / "snap", tmp_path / "run"
++    snap.mkdir()
++    rundir.mkdir()
++    result = runner.run(snap, "prompt", rundir)
++    assert result.ok is False and "timeout" in (result.error or "")
++    time.sleep(6)                                           # long enough for a surviving grandchild to write its marker
++    assert not marker.exists(), "a process of the reviewer's tree survived the timeout"
++
++
++# --- a SHADOW isolation refusal keeps its own exit code in scan and in watch (lock handlers must not swallow it) --------
++
++@pytest.mark.parametrize("command", [["scan"], ["watch", "--max-cycles", "1"]])
++def test_a_shadow_isolation_refusal_is_not_reported_as_a_lock_failure(tmp_path, command, capsys):
++    from skill_collab_watcher import cli
++    from test_phase5_shadow import write_config
++
++    (tmp_path / "live").mkdir()                                    # this account created it, so it can reach it
++    path = write_config(tmp_path, shadow={"state_dir": str(tmp_path / "shadow"), "account_isolation": "enforce"})
++    assert cli.main(["--config", str(path), *command]) == cli.EXIT_REFUSED
++    assert "SHADOW REFUSED" in capsys.readouterr().err
+diff --git a/tests/test_token_file_formats.py b/tests/test_token_file_formats.py
+--- a/tests/test_token_file_formats.py	1970-01-01 09:00:00.000000000 +0900
++++ b/tests/test_token_file_formats.py	2026-11-14 21:51:52.265242700 +0900
+@@ -0,0 +1,54 @@
++"""The GitHub token file may be one plain line or the JSON form already on this PC. Synthetic values only."""
++import json
++
++import pytest
++
++from skill_collab_watcher.cli import read_github_token
++from skill_collab_watcher.transport_base import AuthRequired
++
++SECRET = "synthetic-token-not-real-0123456789"
++
++
++def write(tmp_path, text, name="t.txt"):
++    p = tmp_path / name
++    p.write_text(text, encoding="utf-8")
++    return str(p)
++
++
++def test_a_plain_one_line_file_still_works(tmp_path):
++    assert read_github_token(write(tmp_path, SECRET + "\r\n"), "o/r") == SECRET
++
++
++def test_a_bom_and_whitespace_are_ignored(tmp_path):
++    p = tmp_path / "t.txt"
++    p.write_bytes(b"\xef\xbb\xbf  " + SECRET.encode() + b"  \n")
++    assert read_github_token(str(p), "o/r") == SECRET
++
++
++def test_the_existing_json_form_is_read_without_a_copy(tmp_path):
++    doc = {"token": SECRET, "repo": "Owner/Repo", "scope": "contents:write", "expires": "none"}
++    assert read_github_token(write(tmp_path, json.dumps(doc)), "owner/repo") == SECRET   # repo compared case-insensitively
++
++
++def test_json_without_a_repo_key_is_accepted(tmp_path):
++    assert read_github_token(write(tmp_path, json.dumps({"token": SECRET})), "o/r") == SECRET
++
++
++@pytest.mark.parametrize("text", ['{"token": ""}', '{"token": 5}', '{"other": "x"}', '{"token": "x"', '{ not json'])
++def test_unusable_json_is_refused_and_the_message_never_shows_the_content(tmp_path, text):
++    with pytest.raises(AuthRequired) as err:
++        read_github_token(write(tmp_path, text), "o/r")
++    assert "token\": " not in str(err.value) and SECRET not in str(err.value)
++
++
++def test_a_token_file_for_another_repository_is_refused(tmp_path):
++    with pytest.raises(AuthRequired, match="different repository") as err:
++        read_github_token(write(tmp_path, json.dumps({"token": SECRET, "repo": "other/repo"})), "o/r")
++    assert SECRET not in str(err.value)
++
++
++def test_missing_or_unset_file_is_auth_required(tmp_path):
++    with pytest.raises(AuthRequired):
++        read_github_token(str(tmp_path / "nope.txt"), "o/r")
++    with pytest.raises(AuthRequired):
++        read_github_token(None, "o/r")
+diff --git a/tests/test_usage_limit_resume.py b/tests/test_usage_limit_resume.py
+--- a/tests/test_usage_limit_resume.py	1970-01-01 09:00:00.000000000 +0900
++++ b/tests/test_usage_limit_resume.py	2026-11-14 21:51:52.266240000 +0900
+@@ -0,0 +1,226 @@
++"""Claude plan usage limit (5-hour window): a review the CLI refused BEFORE any model work is resumed automatically once the
++window is back; a review cut off DURING the work is sealed and never re-run. Synthetic CLI output only; no model, no network.
++The exact text of a real exhausted-account message was not observed, so the patterns are tested on the known phrasings."""
++from __future__ import annotations
++
++import time
++
++import pytest
++
++from bundle import github_policy, key_for, publish_bundle
++from skill_collab_watcher.fake_runner import FakeReviewRunner
++from skill_collab_watcher.models import JobState, ReviewResult
++from skill_collab_watcher.orchestrator import USAGE_HOLD_COUNTER
++from skill_collab_watcher.review_runner import detect_usage_limit
++from test_phase1_github import has_event, run
++
++NOW = 1_800_000_000
++
++
++def limited(kind="BEFORE_START", wait=120):
++    return ReviewResult(ok=False, output_text="", output_format="json", exit_code=1, model_calls=0, usage=None,
++                        error=f"usage_limit {kind}", usage_limit=kind, retry_after_sec=wait)
++
++
++class Sequence(FakeReviewRunner):
++    def __init__(self, results):
++        super().__init__()
++        self.results = list(results)
++
++    def run(self, *a, **k):
++        self.calls += 1
++        return self.results.pop(0) if self.results else self.canned_result
++
++
++def policy(**kw):
++    return github_policy(require_approval=False, trust_root=None, signature_backend=None, **kw)
++
++
++def go(env, **kw):
++    return run(env, policy=policy(**kw))
++
++
++def clear_hold(env):
++    env.store.set_counter(USAGE_HOLD_COUNTER, 0)
++
++
++# --- detection -------------------------------------------------------------------------------------------
++
++def test_epoch_reset_time_is_read_from_the_message():
++    kind, wait = detect_usage_limit({"result": f"Claude AI usage limit reached|{NOW + 600}", "is_error": True}, "", "", now=NOW)
++    assert (kind, wait) == ("BEFORE_START", 600)
++
++
++def test_clock_style_reset_time_gives_a_positive_wait_under_a_day():
++    kind, wait = detect_usage_limit({"result": "You've hit your limit · resets 3pm"}, "", "", now=NOW)
++    assert kind == "BEFORE_START" and 0 < wait <= 86400
++
++
++def test_a_limit_message_without_a_time_has_no_wait_and_the_default_applies_later():
++    assert detect_usage_limit({"result": "5-hour limit reached"}, "", "", now=NOW) == ("BEFORE_START", None)
++
++
++def test_the_message_may_arrive_on_stderr_or_plain_stdout():
++    assert detect_usage_limit({}, "", "Error: usage limit reached", now=NOW)[0] == "BEFORE_START"
++    assert detect_usage_limit({}, "weekly limit reached", "", now=NOW)[0] == "BEFORE_START"
++
++
++@pytest.mark.parametrize("parsed", [
++    {"result": "usage limit reached", "total_cost_usd": 0.4},
++    {"result": "You've hit your session limit", "usage": {"output_tokens": 120}},
++    {"result": "You've hit your session limit", "usage": {"cache_creation_input_tokens": 9000}},
++])
++def test_a_limit_after_work_was_billed_is_not_before_start(parsed):
++    assert detect_usage_limit(parsed, "", "", now=NOW)[0] == "DURING"
++
++
++def test_a_refused_first_request_counts_as_before_start_even_when_the_cli_reports_one_turn():
++    parsed = {"result": "You've hit your session limit · resets 3pm (Asia/Seoul)", "num_turns": 1, "total_cost_usd": 0,
++              "usage": {"input_tokens": 0, "output_tokens": 0}}
++    assert detect_usage_limit(parsed, "", "", now=NOW, elapsed_sec=4)[0] == "BEFORE_START"
++
++
++def test_a_process_that_ran_long_had_started_working_so_it_is_during():
++    assert detect_usage_limit({"result": "You've hit your session limit"}, "", "", now=NOW, elapsed_sec=600)[0] == "DURING"
++
++
++@pytest.mark.parametrize("label", ["session limit", "weekly limit", "Opus limit", "Sonnet limit", "Fable 5 limit", "usage credit limit"])
++def test_every_limit_label_of_the_installed_cli_is_recognised(label):
++    assert detect_usage_limit({"result": f"You've hit your {label} · resets 3pm"}, "", "", now=NOW)[0] == "BEFORE_START"
++
++
++@pytest.mark.parametrize("text", ["You've hit your org's monthly spend limit · ask your admin to raise it",
++                                  "Your usage allocation has been disabled by your admin",
++                                  "You've hit your monthly spend limit · contact your admin to increase it"])
++def test_limits_that_never_reset_by_themselves_are_not_retried(text):
++    assert detect_usage_limit({"result": text}, "", "", now=NOW) == (None, None)
++
++
++def test_the_cli_time_formats_are_parsed_in_local_time():
++    import datetime as dt
++    base = dt.datetime(2026, 11, 14, 12, 0, 0)
++    now = base.timestamp()
++    cases = {"resets 3pm (Asia/Seoul)": 3 * 3600, "resets 3:30pm": 3 * 3600 + 1800, "resets 12pm": 24 * 3600,
++             "resets 11am": 23 * 3600, "resets Nov 18, 3pm (Asia/Seoul)": 4 * 86400 + 3 * 3600, "resets Dec 2, 2027, 9am": None}
++    for text, expected in cases.items():
++        wait = detect_usage_limit({"result": "You've hit your weekly limit · " + text}, "", "", now=now)[1]
++        if expected is None:
++            assert wait is not None and wait > 365 * 86400
++        else:
++            assert wait == expected, (text, wait)
++
++
++@pytest.mark.parametrize("text", ["context window exceeded", "network error", "max budget exceeded", "permission denied", ""])
++def test_other_failures_are_not_usage_limits(text):
++    assert detect_usage_limit({"result": text, "is_error": True}, text, text, now=NOW) == (None, None)
++
++
++# --- orchestrator behaviour --------------------------------------------------------------------------------
++
++def test_a_refused_start_is_held_then_resumed_without_losing_or_duplicating_the_review(github_env):
++    github_env.runner = Sequence([limited(wait=120)])
++    pkg = publish_bundle(github_env.http)
++    go(github_env)
++    key = key_for(pkg)
++    assert github_env.runner.calls == 1
++    assert github_env.store.get_job(key).state == JobState.VALIDATED
++    assert has_event(github_env.store, "USAGE_LIMIT_DEFERRED")
++    hold = github_env.store.get_counter(USAGE_HOLD_COUNTER)
++    assert time.time() < hold <= time.time() + 200
++    for _ in range(3):                                   # still inside the window: no new call
++        go(github_env)
++    assert github_env.runner.calls == 1
++    assert has_event(github_env.store, "USAGE_LIMIT_WAITING")
++    clear_hold(github_env)                               # the window is back
++    go(github_env)
++    assert github_env.runner.calls == 2
++    assert github_env.store.get_job(key).state == JobState.COMPLETED
++    go(github_env)
++    assert github_env.runner.calls == 2                  # finished: never again
++
++
++def test_the_hold_applies_to_every_request_because_the_limit_is_account_wide(github_env):
++    github_env.runner = Sequence([limited(wait=600)])
++    publish_bundle(github_env.http, request_id="REQ-1")
++    publish_bundle(github_env.http, request_id="REQ-2")
++    go(github_env)
++    assert github_env.runner.calls == 1                  # REQ-2 was not even tried in the same cycle's hold
++    go(github_env)
++    assert github_env.runner.calls == 1
++
++
++def test_a_limit_during_the_review_is_sealed_uncertain_and_never_retried(github_env):
++    github_env.runner = Sequence([limited("DURING")])
++    pkg = publish_bundle(github_env.http)
++    go(github_env)
++    key = key_for(pkg)
++    assert github_env.store.get_job(key).state == JobState.REVIEW_UNCERTAIN
++    clear_hold(github_env)
++    for _ in range(3):
++        go(github_env)
++    assert github_env.runner.calls == 1
++
++
++def test_waiting_is_capped_per_job(github_env):
++    github_env.runner = Sequence([limited(wait=60)] * 5)
++    pkg = publish_bundle(github_env.http)
++    for _ in range(5):
++        go(github_env, usage_limit_max_deferrals=2)
++        clear_hold(github_env)
++    assert github_env.runner.calls == 3                  # two deferrals, the third refusal ends the job
++    assert github_env.store.get_job(key_for(pkg)).state == JobState.FAILED
++
++
++def test_a_weekly_limit_is_probed_at_the_cap_without_using_up_the_deferral_budget(github_env):
++    github_env.runner = Sequence([limited(wait=5 * 86400)] * 6)
++    pkg = publish_bundle(github_env.http)
++    for _ in range(5):
++        go(github_env, usage_limit_max_wait_sec=3600, usage_limit_max_deferrals=2)
++        clear_hold(github_env)
++    assert github_env.store.get_job(key_for(pkg)).state == JobState.VALIDATED     # still waiting, not FAILED
++    assert github_env.runner.calls == 5
++
++
++def test_while_held_the_package_is_not_downloaded_again(github_env):
++    github_env.runner = Sequence([limited(wait=600)])
++    publish_bundle(github_env.http)
++    go(github_env)
++    before = len([c for c in github_env.http.calls if "packages" in c[1]])
++    for _ in range(4):
++        go(github_env)
++    after = len([c for c in github_env.http.calls if "packages" in c[1]])
++    assert after == before
++
++
++def test_the_wait_is_bounded_even_if_the_reset_time_is_far_away(github_env):
++    github_env.runner = Sequence([limited(wait=10 * 86400)])
++    publish_bundle(github_env.http)
++    go(github_env, usage_limit_max_wait_sec=3600)
++    assert github_env.store.get_counter(USAGE_HOLD_COUNTER) <= time.time() + 3601
++
++
++def test_without_a_limit_nothing_changes(github_env):
++    pkg = publish_bundle(github_env.http)
++    go(github_env)
++    assert github_env.runner.calls == 1 and github_env.store.get_job(key_for(pkg)).state == JobState.COMPLETED
++    assert github_env.store.get_counter(USAGE_HOLD_COUNTER) == 0
++
++
++def test_a_deferred_review_is_announced_once(tmp_path):
++    from skill_collab_watcher.notify_events import NotifyState, run_once
++    from skill_collab_watcher.state_store import StateStore
++    s = StateStore(tmp_path / "s.sqlite3")
++    st, sent = NotifyState(), []
++    st.bootstrap(s.conn, "github", 1)
++    for _ in range(3):
++        s.log_event("USAGE_LIMIT_DEFERRED", processing_key="REQ-1|1|abc|1", detail="deferral 1")
++        run_once(s.conn, st, provider="github", repo="o/r", send=sent.append, epoch=1)
++    assert len(sent) == 1 and "자동으로 이어서" in sent[0]
++    s.close()
++
++
++def test_a_month_day_that_already_passed_this_year_means_next_year():
++    import datetime as dt
++    now = dt.datetime(2026, 11, 14, 12, 0, 0).timestamp()
++    wait = detect_usage_limit({"result": "You've hit your weekly limit \u00b7 resets Nov 10, 3pm"}, "", "", now=now)[1]
++    assert wait is not None and wait > 300 * 86400
+diff --git a/tests/test_v013_hardening.py b/tests/test_v013_hardening.py
+--- a/tests/test_v013_hardening.py	2026-11-14 14:53:48.521124300 +0900
++++ b/tests/test_v013_hardening.py	2026-11-14 21:51:52.267239200 +0900
+@@ -80,7 +80,7 @@
+         seen["argv"], seen["kwargs"] = argv, kwargs
+         return Done()
+ 
+-    monkeypatch.setattr(review_runner.subprocess, "run", fake_run)
++    monkeypatch.setattr(review_runner, "_run", fake_run)
+     runs = tmp_path / "runs"
+     runs.mkdir()
+     (runs / "secrets_like.txt").write_text("x")
+diff --git a/tests/test_v014_budget_tiers.py b/tests/test_v014_budget_tiers.py
+--- a/tests/test_v014_budget_tiers.py	2026-11-14 14:53:48.522159200 +0900
++++ b/tests/test_v014_budget_tiers.py	2026-11-14 21:51:52.267239200 +0900
+@@ -151,7 +151,7 @@
+         seen["argv"] = argv
+         return done
+ 
+-    monkeypatch.setattr(review_runner.subprocess, "run", fake_run)
++    monkeypatch.setattr(review_runner, "_run", fake_run)
+     runs = tmp_path / "runs"
+     runs.mkdir(exist_ok=True)
+     result = RealReviewRunner("claude", None, ["Read"], 1.0, 60).run(tmp_path / "s", "p", runs, max_budget_usd=budget)
+diff --git a/tests/test_v015_token_savings.py b/tests/test_v015_token_savings.py
+--- a/tests/test_v015_token_savings.py	2026-11-14 14:53:48.522159200 +0900
++++ b/tests/test_v015_token_savings.py	2026-11-14 21:51:52.268239200 +0900
+@@ -113,7 +113,7 @@
+         seen["argv"], seen["kwargs"] = argv, kwargs
+         return done
+ 
+-    monkeypatch.setattr(review_runner.subprocess, "run", fake_run)
++    monkeypatch.setattr(review_runner, "_run", fake_run)
+     runs = tmp_path / "runs"
+     runs.mkdir(parents=True, exist_ok=True)
+     snap = tmp_path / "snap_k"
