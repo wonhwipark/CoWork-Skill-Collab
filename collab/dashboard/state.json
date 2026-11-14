@@ -3,7 +3,7 @@
   "live_provider": "NONE",
   "operations": {
     "active_provider": "NONE",
-    "cutover": "NOT_OBSERVED",
+    "cutover": "MIGRATION_NOT_CUTOVER",
     "dashboard_source": true,
     "host_shadow": "NOT_OBSERVED",
     "independent_review": "NOT_OBSERVED",
@@ -17,10 +17,10 @@
       "id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md",
-      "status": "검증 진행 중",
+      "status": "전환 전",
       "title": "COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태",
       "tone": "warning",
-      "topic": "v0.2.19 독립 R2 완료: BLOCKING 1건(N2 repo ID 캐시) → 운영 변경 3종·LIVE **미실행**, ACTIVE_PROVIDER=NONE (Claude 자체 보고, 2026-11-15 KST"
+      "topic": "GPT 공식 판정 — v0.2.19 R2 BLOCKING 수용, v0.2.20 R1 최소 재검토 제안 (2026-11-15 KST)"
     },
     {
       "id": "COWORK-GITHUB-DASHBOARD-20261111-001",
