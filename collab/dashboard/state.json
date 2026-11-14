@@ -84,6 +84,15 @@
       "title": "L1-WORKSPACE-RAG-20261111-001 — CURRENT",
       "tone": "warning",
       "topic": "CL/PR 확대 회귀 최신 실측 — 2026-11-15 KST (PUBLIC 배포 차단 유지)"
+    },
+    {
+      "id": "NR-L1TX-CODE-ANALYSIS-20261115-001",
+      "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
+      "source": "collab/projects/NR-L1TX-CODE-ANALYSIS-20261115-001/CURRENT.md",
+      "status": "검증 진행 중",
+      "title": "NR-L1TX-CODE-ANALYSIS-20261115-001 — CURRENT",
+      "tone": "warning",
+      "topic": "# NR-L1TX-CODE-ANALYSIS-20261115-001 — CURRENT"
     }
   ],
   "review_chains": [
@@ -284,6 +293,19 @@
       "source": "collab/projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md",
       "title": "L1-WORKSPACE-RAG-20261111-001 — CURRENT",
       "work_id": "L1-WORKSPACE-RAG-20261111-001"
+    },
+    {
+      "evidence": "CURRENT 문서 관측. 단계·진행률은 증명되지 않음",
+      "independent_review": "NOT_VERIFIED",
+      "next_action": "CURRENT.md 최신 상태 및 다음 담당 확인",
+      "owner": "미등록",
+      "phase": "UNKNOWN",
+      "record_source": "CURRENT_ONLY_UNSTRUCTURED",
+      "self_test": "NOT_VERIFIED",
+      "skill": "미지정",
+      "source": "collab/projects/NR-L1TX-CODE-ANALYSIS-20261115-001/CURRENT.md",
+      "title": "NR-L1TX-CODE-ANALYSIS-20261115-001 — CURRENT",
+      "work_id": "NR-L1TX-CODE-ANALYSIS-20261115-001"
     }
   ]
 }
