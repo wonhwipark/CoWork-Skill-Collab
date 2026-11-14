@@ -1,0 +1,56 @@
+name: CLPR isolated Work Evidence contract inspection
+on:
+  push:
+    branches: [clpr-e2-work-evidence-20261115]
+    paths: [.github/workflows/clpr-e2-contract-inspection.yml]
+permissions:
+  contents: read
+jobs:
+  inspect:
+    if: github.repository == 'wonhwipark/CoWork-Skill-Collab' && github.ref == 'refs/heads/clpr-e2-work-evidence-20261115'
+    runs-on: ubuntu-22.04
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Inspect only public-contract AST and registry names, no source or secrets emitted
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PYTHONDONTWRITEBYTECODE=1
+          python - <<'PY'
+          import ast, hashlib, pathlib, zipfile, json
+          base=pathlib.Path('collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates')
+          targets=[
+            ('workflow','l1-fix-workflow_v1_6_68_1114.zip','046b7968ff552d590a72c4e7ebb0a29df6760b5a6d07196f17f6eef09770e31a'),
+            ('kernel','work-ledger-kernel_v0_7_38_1114.zip','6797f509d005377f9ba0d6312cc6cfb7017c7502cfcaab3ee61332c7f0a6e788'),
+          ]
+          needles=('reference_add','context_event','record_evidence','existing_work','plan_clpr','work_id','evidence','cli_main')
+          for label, filename, expected in targets:
+            raw=(base/filename).read_bytes()
+            assert hashlib.sha256(raw).hexdigest()==expected
+            print('ARCHIVE_SHA_PASS',label,len(raw))
+            with zipfile.ZipFile(base/filename) as z:
+              matches=0
+              for name in z.namelist():
+                if not name.endswith('.py'):continue
+                try: tree=ast.parse(z.read(name),filename=name)
+                except SyntaxError:continue
+                for n in ast.walk(tree):
+                  if not isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef)):continue
+                  if not any(x in n.name.lower() for x in needles):continue
+                  # Only signatures and callee names, never source text, string literals or credentials
+                  args=[a.arg for a in n.args.posonlyargs+n.args.args+n.args.kwonlyargs]
+                  if n.args.vararg:args.append('*'+n.args.vararg.arg)
+                  if n.args.kwarg:args.append('**'+n.args.kwarg.arg)
+                  calls=sorted({c.func.id if isinstance(c.func,ast.Name) else c.func.attr if isinstance(c.func,ast.Attribute) else '?' for c in ast.walk(n) if isinstance(c,ast.Call)})[:38]
+                  print('API',label,name,n.name,'args=',','.join(args),'calls=',','.join(calls))
+                  matches+=1
+              print('API_COUNT',label,matches)
+              print('TEST_FILES',label,json.dumps([n for n in z.namelist() if n.endswith('.py') and '/tests/' in n and any(t in n.lower() for t in ('evidence','reference','workflow','clpr'))][:25]))
+          print('INSPECTION_COMPLETE_NO_WORKSPACE_WRITES')
+          PY
