@@ -1,5 +1,14 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## GPT 공식 판정 — Classic PAT 쓰기 E2E PASS(격리), v0.2.18 독립 리뷰 전 보완 필요 (2026-11-14 KST)
+- **정본:** [GPT_CLASSIC_PAT_E2E_AND_V0218_DISPOSITION_r0001_20261114.md](GPT_CLASSIC_PAT_E2E_AND_V0218_DISPOSITION_r0001_20261114.md), commit `b04ff327a819edea802bb0a25eaedb906494abc5` / remote readback PASS. `GPT_DISPOSITION=ACCEPT_WITH_CHANGE`, `LIVE_READY=NO`, `ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER`.
+- **실제 원격 증거:** `CLAUDE_CLASSIC_PAT_GITHUB_WRITE_E2E_AND_LIVE_PREFLIGHT_RESULT_FOR_GPT_20261114.md` (commit `53d2abf12623f19169ed0bc5346e7f4a08a2ce2f`, Git blob `c0a6061eb13215076d612aed0577e78bd8923e56`), 최신 CURRENT/TRACKER 대조. Windows에서 Classic PAT GitHub 임시브랜치 create/update/readback·clean-up 및 Watcher `UPLOAD_PENDING→COMPLETED` PUT 2회, 멱등·충돌 fail-closed·모델 호출 0·운영 DB 불변 **호스트 보고 PASS**. GPT가 Windows 실행을 직접 재시험하거나 삭제된 임시 브랜치 로그를 독립 검증한 것은 아님.
+- **개발 후보:** `v0.2.18` N1(원격 리뷰 결과 존재 가드)·N2(원격 숫자 repo ID 확인)·S1/S2 수정·Q8 합성 회귀 `SELF_TEST_REPORTED`. venv **653 PASS/12 SKIP**, 운영 Python **587 PASS/17 SKIP**, Ed25519 68 PASS 보고. ZIP `skill-collab-watcher_v0_2_18_1114_DEV_NOT_FOR_DEPLOYMENT.zip`, **235650 B**, SHA-256 `519c70e3eabbe9722621afa5bf6365b93d99803c76fee2fe078722a0835522cd`는 **로컬 보관/미게시·독립 리뷰 NOT_RUN**, 기존 v0.2.17 R2 PASS 승계 금지.
+- **중요 잔여 결함 N1:** 원격 리뷰 결과/영수증이 생긴 **후** 로컬 DB 소실은 가드하지만, 이미 유료 호출됐으나 원격 업로드 **전** DB·결과 소실에서는 외부 이력이 없어 중복 유료 실행 가능. 원격 조회-디스패치 경합도 종합 확인 필요. `N1_LIVE_INVARIANT=NOT_PROVEN`, LIVE 전 영속 디스패치 이력/불확실 상태 fail-closed/재발 방지 합성시험 필요.
+- **Notifier 판정 정정:** 2개 `notify_reviews.py` 프로세스는 **venv launcher 부모 + Python 자식**이고 별도 중복 Notifier가 아님. 잠금/워터마크 실측으로 중복 전송 경로 우려 감소. 다만 GitHub Notifier 경로/워터마크 이행과 실제 알림은 NOT_RUN, 운영 변경 미승인.
+- **남은 LIVE 게이트:** 최종 N1·N2 포함 수정본의 독립 리뷰(별도 유료 승인 필요), 운영 Python cryptography 실서명 시험/설치(별도 승인), GitHub Notifier 이행·pending 1건 무손실, SHADOW 격리/롤백, 최종 사용자 LIVE 승인. 기존 Classic PAT 계속 사용 확정, 종류/교체 관련 논의 반복 금지.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 격리 후보에서 **N1 pre-publish 상태 소실 중복 호출 0** 증거 확보를 위한 최소 추가 보완·합성시험→최종 ZIP/diff/manifest 고정·PRIVATE 업로드/원격 SHA 확인(민감정보 제외). **추가 유료 독립 리뷰·운영 변경·LIVE 실행은 현재 승인하지 않음**. 과거 내용은 아래에 시점별 이력으로 보존.
+
 ## Classic PAT 실제 GitHub 쓰기·감시기 자동 게시 E2E PASS, N1/N2는 격리 후보 v0.2.18에서 수정 (Claude 자체 보고, 2026-11-14 KST)
 - 결과: `CLAUDE_CLASSIC_PAT_GITHUB_WRITE_E2E_AND_LIVE_PREFLIGHT_RESULT_FOR_GPT_20261114.md` (PRIVATE `main`, commit `53d2abf12623f19169ed0bc5346e7f4a08a2ce2f`, 원격 바이트·SHA-256 `8d447920ee4246dd096ad031f38919f317271856223adbaaebe7c9d7f35a5d1e` 일치).
 - 인증: 사용자 확정 기본 인증인 기존 Classic PAT 사용(값·접두·길이 비게시). 서버 repo ID `1451933830`=신뢰 루트 라벨. 임시 브랜치에서 create→readback→update→readback PASS, 임시 브랜치 2개 모두 삭제 확인. `main`·기존 REQUEST/READY/결과/영수증 불변.
