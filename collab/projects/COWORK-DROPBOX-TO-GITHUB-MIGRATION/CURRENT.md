@@ -1,5 +1,14 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## GPT 공식 판정 — v0.2.19 R2 BLOCKING 수용, v0.2.20 R1 최소 재검토 제안 (2026-11-15 KST)
+- **정본 판정:** [GPT_V0219_R2_BLOCKING_DISPOSITION_AND_V0220_REVIEW_PLAN_r0001_20261115.md](GPT_V0219_R2_BLOCKING_DISPOSITION_AND_V0220_REVIEW_PLAN_r0001_20261115.md) (commit `43ad462f30cc7bee7e4e9069912ce06ab6a32d35`, 원격 readback PASS). `GPT_DISPOSITION=ACCEPT_BLOCKING_AND_FIX_PENDING_INDEPENDENT_REVIEW`; `ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER`.
+- **GPT 원격 직접 검증:** v0.2.19 reviewer 원문 `collab/reviews/REQ-COWORK-V0219-R2-20261114/REVIEW_RESULT_1.md`, `RECEIPT_1.md`, `USAGE_RECEIPT_1.json`, 호스트 결과 MD를 조회. reviewer 1회(`$0.9007163`, 승인 최대 $3) 완료, 결과 **BLOCKING 1**: 오래 살아 있는 `GitHubTransport.repository_id()` 캐시가 GitHub 저장소 numeric ID 변경 후 N2 검사 우회. 실제 WATCH에서 같은 transport 반복 사용, 독립 reviewer 지적을 GPT 수용. `INDEPENDENT_REVIEW_V0219=FAIL_BLOCKING`.
+- **다음 후보 v0.2.20:** Windows Claude Code는 캐시 제거·same transport/2 cycles 회귀 추가 후 venv **674 PASS/12 SKIP**, 운영 Python **607 PASS/17 SKIP** 보고. ZIP `skill-collab-watcher_v0_2_20_1115_DEV_NOT_FOR_DEPLOYMENT.zip`, **239432 B**, sha256 `6a8626375e5e711535abdd261ff48781114802bb345cabe2ed5940b75968f386`, **Windows 로컬 보관·미게시·`INDEPENDENT_REVIEW_V0220=NOT_RUN`**. 수정 자체 시험을 독립 리뷰 PASS로 소급하지 않음.
+- **자동 리뷰 파이프라인 진전:** v0.2.19 독립 리뷰 호출 1회, Watcher가 예약/결과/RECEIPT를 실제 PRIVATE에 PUT, 영수증 readback. 별도 `USAGE_RECEIPT`는 개발자 gh 게시로 구분. 추가 유료 재호출 0.
+- **LIVE 상태:** B1 운영 `cryptography`, B2 Notifier provider별 워터마크, B3 GitHub watcher 설치·Task 및 단일 LIVE는 reviewer BLOCKING에 따라 **모두 NOT_RUN**, 승인 자체는 **기존 사용자 승인 유지(재질문 금지)**. 기존 Dropbox DB main/WAL 불변, pending 1/완료 60/CONFLICT 1 유지, Telegram 0(호스트 보고).
+- **단일 미승인 항목:** v0.2.20의 변경점만 대상으로 신규 독립 **R1 `POLICY-STATIC-V1`, 최대 $1, 정확히 1회** 제안. 예시 ID `REQ-COWORK-V0220-R1-20261115`. **이번 v0.2.19 R2 승인은 사용 완료**, v0.2.20 신규 호출은 명시적 별도 승인 전 `NOT_RUN`. 승인 시 Windows 로컬+PRIVATE 원시 ZIP SHA/CRC 고정→신규 서명 REQUEST/READY→독립 리뷰 1회→PASS일 때 **기승인 B1→B2→B3와 GitHub LIVE** 원샷 재개. 원본·이력·Classic PAT 정책 보존, 변경 승인 재요청 안 함.
+- **실제 이번 GPT 세션:** Windows 작업/유료 Claude 호출/운영 변경/LIVE 전환 0; GPT 판정서·CURRENT/TRACKER 기록만 수행. 아래 이전 호스트 결과/승인 역사는 변경 없이 보존.
+
 ## v0.2.19 독립 R2 완료: BLOCKING 1건(N2 repo ID 캐시) → 운영 변경 3종·LIVE **미실행**, ACTIVE_PROVIDER=NONE (Claude 자체 보고, 2026-11-15 KST)
 - 결과: `CLAUDE_V0219_R2_AND_GITHUB_LIVE_ACTIVATION_RESULT_FOR_GPT_20261115.md` (PRIVATE `main`, commit `39186ffdb301ed398a2beb8c3e2489ba350d2137`, 원격 바이트·SHA-256 `db8fa71e73456c28bf05d58d280768beb2caddbb3849018865af09f1eba49c06` 일치). 승인된 R2 1회만 사용: 모델 호출 1, $0.9007(상한 $3), 27 turns.
 - 리뷰: `REQ-COWORK-V0219-R2-20261114`, 대상 ZIP 6e7fee33…(원격 원시 바이트·CRC 재검증 일치). 리뷰어 감시기=v0.2.19 자신, **원격 예약·결과·영수증 PUT 3회 완전 자동**(첫 실전 자동 게시 성공). 결과 `9a151a4233d7`, 영수증 `d4c42710e385`, 예약 `19b6e54ba5af`, 사용영수증 `6247c0c034bc`.
