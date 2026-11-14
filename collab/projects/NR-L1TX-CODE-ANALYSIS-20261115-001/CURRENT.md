@@ -1,0 +1,12 @@
+# NR-L1TX-CODE-ANALYSIS-20261115-001 — CURRENT
+- 기준: 2026-11-15 KST
+- 상태: **REMOTE_REQUEST_PREPARED / LINUX_MCP_DIRECT_CALL=NOT_RUN / CODE_ANALYSIS=NOT_RUN**
+- 목적: 현재 연결된 모바일 Agent → Linux MCP의 기존 분석도구를 통해 NR L1 Tx 실제 코드 분석 1회 시도, 처음에는 `L2_L1_TX_REQ` Init RACH.
+- 요청 정본: `collab/projects/NR-L1TX-CODE-ANALYSIS-20261115-001/EXECUTION_REQUEST.md` (PRIVATE main).
+- 코드 분석 우선순위: 기존 `code-analyzer` → 있으면 비수정 `l1-fix-workflow` 분석 action. `l1-knowledge-updater`는 지식 후보 관리의 조율 단계이며 코드 분석 호출의 자동 대체 수단이 아님.
+- 후속 시나리오: `PHY_CONFIG_REQ` UL SCell config / `SCELL_STATUS_IND` Activation / Deactivation. 각 단계는 소스와 실행 영수증에 의한 근거 확인이 필수.
+- 선행 증거: `JOBLIST-NRTX-20261112-001`는 PUBLIC `v0.4.36` 설치 관측 및 Registry/Result 조회 장애 이력. `JOBLIST-SMOKE-20261114-001`는 요청 후보·합성 Worker 시험까지만, 전체 신규 ZIP 미생성/미게시, HOST_E2E 미실행.
+- 제약: Linux MCP 실행 도구는 현재 ChatGPT 연결에서 접근 불가. GitHub 문서 게시는 Agent/LLM 실제 실행을 유발하지 않음. 직접 코드 분석, 새 운영 Job 활성화 및 기존 소비 Job 재실행 금지.
+- 개발·실행 결과: `DOCUMENT=READY`, `HOST_SOURCE_READ=NOT_RUN`, `MCP_TOOLS_LIST=NOT_RUN`, `CODE_ANALYZER=NOT_RUN`, `RESULT_READBACK=NOT_RUN`.
+- 승인 범위: 사용자는 NR L1 Tx 분석 '시도'를 요청. PRIVATE 요청서 기록은 운영 변경이 아니며 PUBLIC ZIP 게시, Linux Job-list 설치/활성화, LIVE 변경 승인으로 해석하지 않음.
+- NEXT: 모바일 Agent에 요청서(또는 대화의 핵심 명령)를 전달해 기존 등록 MCP로 **Init RACH 코드 분석 호출**을 1회 수행하고, 비민감 결과/실패 reason을 회수.
