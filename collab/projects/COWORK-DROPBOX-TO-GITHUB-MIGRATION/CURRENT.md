@@ -1,5 +1,12 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## A안 실행 결과: v0.2.14 R1 독립 리뷰 1회 완료 — 지적 5건, 수정은 격리 후보 v0.2.17 (Claude 자체 보고, 2026-11-14 KST)
+- 결과: `CLAUDE_A_APPROVED_V0214_SINGLE_REVIEW_RESULT_FOR_GPT_20261114.md` (PRIVATE `main`, commit `4f5fd04fd74dbacdf853384e18f8d4e9ac626f32`, 원격 바이트·SHA-256 `6e9adee5c350fb2ee7c36512699fd8a6e473cec9b2c95b2f4ae790c609341b19` 일치).
+- 서명키: 단일 PC Ed25519, 개인키 scrypt+AES-GCM 암호화·비밀번호는 DPAPI 블롭만, trust_root_independence=warn. 지문 `9c6f650ce89d…`.
+- 리뷰: REQ-COWORK-V0214-R1-20261114, POLICY-STATIC-V1, 모델 호출 1회, $0.9695(상한 $1 준수), 18 turns(R1 목표 초과, CLI `--max-turns` 미지원). 엔진 쓰기는 읽기전용 토큰이라 `UPLOAD_PENDING`, 개발자 `gh`로 동일 바이트 게시(commit A `aedddc49bfdc`, B `2ed6dbafe23b`, 결과 `1df4fb8be6a1`).
+- 지적 5건 전부 재현(F1은 롤백·커서 유실 조건부) → 후보 v0.2.17 최소 수정, 시험 venv 644 passed/12 skipped, 운영 인터프리터 578/17. v0.2.17은 미리뷰·미게시, 자동 재리뷰 없음. v0.2.14 ZIP 불변.
+- 미실행/미승인: 운영 DB·Task, 새 PAT, 추가 유료 리뷰, LIVE. ACTIVE_PROVIDER=NONE. 남은 결정: B안 쓰기 PAT, 재리뷰 1회, R0~R3 상시 정책, SHADOW·백업/복구 실행.
+
 ## 사용자 A안 승인 + 리뷰 등급별 토큰 예산 (2026-11-14 KST)
 - 사용자 **A안 명시 승인**: 리뷰 대상 `REV-COWORK-V0214-20261114`의 **기존 `POLICY-STATIC-V1` / R1 / 최대 $1 / 독립 Claude 리뷰 정확히 1회**, 동일 Windows PC Ed25519 단일 서명키/신뢰 루트 암호화 보관 및 `trust_root_independence=warn`까지 포함. **이미 승인된 한 건에 재승인 질문하지 말 것**.
 - 사용자는 리뷰당 토큰 사용량을 **단순 정합성(R0), 변경/결함(R1), 구조(R2), 심층(R3)** 등급으로 나눠 관리하도록 지시. `collab/ops/CONTRACTS/REVIEW_TIER_TOKEN_BUDGET_V1.md`(commit `e2a98b3dc2e2a3b08f47271c75610cb27d65ced7`; 이후 단일 사전승인 정책 반영 commit `39fdc6c073be9af96e88db38d6a10947f1dbd388`)에서 토큰 목표/최대 turns/기존 비용 정책 매핑을 정의. 정확한 total token HARD CAP 지원 여부는 Windows 실제 CLI 확인 전 **NOT_PROVEN**.
