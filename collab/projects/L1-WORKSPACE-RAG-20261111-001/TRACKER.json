@@ -7,9 +7,9 @@
       "title": "l1-knowledge-updater",
       "phase": "BLOCKED",
       "owner": "GPT",
-      "self_test": "NOT_VERIFIED",
-      "independent_review": "NOT_VERIFIED",
-      "next_action": "GPT 판정/PUBLIC 인계 완료; 추가 리뷰 없이 기존 스킬 코드 수정·회귀·후보 ZIP 및 배포 게이트 검증 필요 (PUBLIC 신규 ZIP 미게시)"
+      "self_test": "PACKAGE_CRC_SHA_PASS_PYTHON_REGRESSION_NOT_RUN",
+      "independent_review": "DESIGN_REPORTED_COMPLETE_POST_PATCH_NOT_RUN",
+      "next_action": "PRIVATE 5종 최신 후보 ZIP 실제 코드 수정/무결성 검증 완료. Python 3.10/3.11 회귀 및 P4 snapshot·Work/Evidence E2E 보완 필요; 배포 게이트 PASS 후 L1Work PUBLIC 최종 ZIP 게시·원격 검증. 추가 리뷰 요청 0."
     }
   ]
 }
