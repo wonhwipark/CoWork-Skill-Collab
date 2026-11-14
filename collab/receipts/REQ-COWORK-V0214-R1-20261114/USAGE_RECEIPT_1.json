@@ -1,0 +1,67 @@
+{
+  "schema": "COWORK_REVIEW_USAGE_RECEIPT_V1",
+  "request_id": "REQ-COWORK-V0214-R1-20261114",
+  "request_revision": "1",
+  "processing_key": "REQ-COWORK-V0214-R1-20261114|1|3a221dcdb22ba75208a60ca555b0ee75866313a591148b1f482b7cbb6aa0b367|1",
+  "target": {
+    "package_sha256": "3a221dcdb22ba75208a60ca555b0ee75866313a591148b1f482b7cbb6aa0b367",
+    "package_size_bytes": 219663,
+    "review_id": "REV-COWORK-V0214-20261114"
+  },
+  "review": {
+    "tier": "R1",
+    "policy": "POLICY-STATIC-V1",
+    "effort": "medium",
+    "model_calls": 1,
+    "success": true,
+    "result_chars": 12352
+  },
+  "usage": {
+    "input_tokens": 16,
+    "cache_creation_input_tokens": 84836,
+    "cache_read_input_tokens": 452232,
+    "output_tokens": 21479,
+    "total_cost_usd": 0.9695416,
+    "num_turns": 18,
+    "subtype": "success"
+  },
+  "limits": {
+    "max_budget_usd": 1.0,
+    "budget_respected": true,
+    "max_turns": "NOT_SUPPORTED_BY_CLI_2.1.218",
+    "token_targets_for_R1": {
+      "input": 16000,
+      "output": 3000,
+      "turns": 3
+    },
+    "token_targets_met": false,
+    "note": "cost cap held; turn count and output tokens exceeded the R1 targets"
+  },
+  "independence": {
+    "separate_process": true,
+    "started_by": "skill-collab-watcher engine 0.2.16 (isolated state folder)",
+    "empty_working_directory": true,
+    "tools": [
+      "Read",
+      "Grep",
+      "Glob"
+    ],
+    "permission_mode": "dontAsk",
+    "mcp_servers": 0,
+    "session_persistence": false,
+    "project_settings_loaded": false,
+    "development_session_context_shared": false,
+    "claude_cli_version": "2.1.218"
+  },
+  "approval": {
+    "signed_with": "single-PC Ed25519 key, trust_root_independence=warn",
+    "approval_valid_hours": 2,
+    "source_commit_pin": "aedddc49bfdc13da4e961e2b337c51cb83ddbdbe"
+  },
+  "transport": {
+    "engine_reads": "real GitHub, existing read-only fine-grained token (GET only)",
+    "engine_writes": "refused with HTTP 403 as designed",
+    "job_state_in_engine": "UPLOAD_PENDING",
+    "published_by": "developer gh login, same bytes the engine would have uploaded"
+  }
+}
