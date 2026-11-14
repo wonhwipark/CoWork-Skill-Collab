@@ -1,5 +1,16 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## CL/PR WorkReference E2 실제 구현 — 2026-11-15 KST (현재 이 범위의 최신 상태)
+
+- **결과 정본:** [실제 새 개발 후보 2개 및 CI/P0 증거](GPT_CLPR_WORK_EVIDENCE_E2_DEVELOPMENT_RESULT_r0001_20261115.md). 기존 handoff r0002 및 2026-11-14 5종 후보·이력 보존.
+- **새로 발견한 실결함:** Workflow 기존 `lookup_clpr_existing_work`가 미존재 `Kernel.work_reference_find` 호출 → 합성 실제 실행 `AttributeError`; 기존 Kernel `WorkReferences.find` public facade로 최소 연결. 이 결함은 새 E2에서 수정·재시험.
+- **새 코드:** Workflow `clpr-existing-work-link` 별도 preview/명시 `--commit`, 기존 Work 고유 매칭·충돌/부분 조회 차단·중복 ref 0. Kernel 읽기 전용 find facade. 근거 없는 Evidence·새 Work·Knowledge 쓰기 금지.
+- **실측 E2:** PRIVATE 격리 브랜치 `clpr-e2-work-evidence-20261115`, Python 3.10/3.11 각각 6/6 synthetic Work refs integration PASS, CLI parsing PASS, ZIP CRC/manifest PASS, 두 버전 생성 ZIP SHA 동일. [CI](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43609598995).
+- **PRIVATE main 새 개발용 ZIP:** `candidates/l1-fix-workflow_v1_6_69_1115.zip` (866671 B / SHA256 `d4ba119298cd5763fd18ace2d54223fff010a8d2a1703ebab80eb4fa1b35846b`), `candidates/work-ledger-kernel_v0_7_39_1115.zip` (409355 B / SHA256 `24184fe760c058a6fbc4f79c8d2d3e580978c05bde4597155e81fa3d6f23885a`). PRIVATE CI commit 및 SHA readback PASS [영수증 CI](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43609821708). 두 ZIP **development_not_for_deployment**, 기존 5종 원본 보존.
+- **엄격한 제한:** 신규 ZIP의 전체 회귀 `NOT_COMPLETE`, 기존 Workflow baseline 2 FAIL 미해결, 분석 Evidence 등록·readback `NOT_RUN`, P4 historical Mango 호스트 `BLOCKED`, Host E3/보안·롤백/패치 후 독립 리뷰 `NOT_RUN`. 기존 refs 단일 Work lock은 Cross-Work 동시성 방지에 미충분; Host 직렬 처리 필요. 실제 Work/Job/DB/Watcher/Skill-Updater/Knowledge/LIVE 변경 없음.
+- **배포 판정:** `DEVELOPMENT=PARTIAL_PATCHED_NEW_DEV_ZIP_2`, `CLPR_REF_E2=PASS`, `FULL_REGRESSION=NOT_COMPLETE`, `E3=NOT_RUN`, `PUBLIC_RELEASE=BLOCKED_NOT_POSTED`. CLPR 작업에서 LIVE 상태를 전환/재판정하지 않음.
+- **NEXT_ONE_ACTION:** 새 두 개발 후보의 확대 회귀·Evidence 허용 API 통합 점검 → 별도 인가된 Host E3/P4 경로 확인 → 독립/보안/롤백 게이트 판정. 전 단계 PASS 전 PUBLIC ZIP 게시 금지.
+
 ## CL/PR 최신 직접 검증 — 2026-11-14 KST (Python 3.10/3.11, 배포 차단 유지)
 
 - **후속 실행용 인계 (아직 미실행):** [정확한 PRIVATE main/상대 경로 원샷 r0002](CLPR_REMAINING_IMPLEMENTATION_HOST_HANDOFF_r0002_20261114.md). 본 문서 게시 자체는 Windows Claude Code·Linux MCP·Job·Watcher 실행을 시작하지 않음.
