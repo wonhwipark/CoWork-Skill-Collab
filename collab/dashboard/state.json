@@ -3,7 +3,7 @@
   "live_provider": "NONE",
   "operations": {
     "active_provider": "NONE",
-    "cutover": "MIGRATION_NOT_CUTOVER",
+    "cutover": "NOT_OBSERVED",
     "dashboard_source": true,
     "host_shadow": "NOT_OBSERVED",
     "independent_review": "NOT_OBSERVED",
@@ -17,10 +17,10 @@
       "id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md",
-      "status": "전환 전",
+      "status": "검증 진행 중",
       "title": "COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태",
       "tone": "warning",
-      "topic": "사용자 A+B 통합 명시 승인 — v0.2.19 독립 R2 $3 + Windows 운영 변경 3종 + 단일 GitHub LIVE (2026-11-15 KST)"
+      "topic": "v0.2.19 독립 R2 완료: BLOCKING 1건(N2 repo ID 캐시) → 운영 변경 3종·LIVE **미실행**, ACTIVE_PROVIDER=NONE (Claude 자체 보고, 2026-11-15 KST"
     },
     {
       "id": "COWORK-GITHUB-DASHBOARD-20261111-001",
@@ -192,10 +192,10 @@
   "work_items": [
     {
       "evidence": "프로젝트 TRACKER.json 신고 값 · 운영 근거 별도 확인 필요",
-      "independent_review": "PENDING",
-      "next_action": "2026-11-15 USER_APPROVED_A_AND_B: A v0.2.19 fixed SHA256 6e7fee3340cc6d0282d1c18fe3db42a90360259dd73fa6d7c0a7698af7afe5c0 independent R2 REQ-COWORK-V0219-R2-20261114",
+      "independent_review": "FAIL",
+      "next_action": "v0.2.19 독립 R2: BLOCKING 1건(N2 repo ID 캐시, 재현됨) → B1~B3·LIVE 미실행(ACTIVE_PROVIDER=NONE). 후보 v0.2.20 수정·자체시험 완료(미리뷰). 새 독립 리뷰 승인 후 운영 변경 3종 재개.",
       "owner": "GPT / Claude Code",
-      "phase": "REVIEW",
+      "phase": "BLOCKED",
       "record_source": "REGISTERED_METADATA_UNVERIFIED",
       "self_test": "PASS",
       "skill": "cowork-review-watcher",
