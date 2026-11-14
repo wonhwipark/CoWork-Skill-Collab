@@ -159,8 +159,8 @@
   "work_items": [
     {
       "evidence": "프로젝트 TRACKER.json 신고 값 · 운영 근거 별도 확인 필요",
-      "independent_review": "PENDING",
-      "next_action": "GPT 판정: v0.2.17 R2 독립 리뷰 결과(BLOCKING 0, 비차단 3·제안 2). 사용자 조치: 감시기용 fine-grained 쓰기 PAT 발급(웹 UI)=ACTION_REQUIRED. 운영 변경·LIVE 미승인.",
+      "independent_review": "PASS",
+      "next_action": "GPT ACCEPT_WITH_CHANGE: v0.2.17 R2 독립 정적 리뷰 PASS_WITH_FINDINGS(BLOCKING 0, N1/N2 신뢰·replay 운영게이트 미해소); SHADOW 부분 PASS, 격리 DB 백업/복구 호스트 PASS, 1 pending_request 보존 필요.",
       "owner": "GPT / Claude Code",
       "phase": "DISPOSITION",
       "record_source": "REGISTERED_METADATA_UNVERIFIED",
