@@ -1,5 +1,15 @@
 # COWORK-GITHUB-DASHBOARD-20261111-001 — CURRENT
 
+## Executive v4 — 업무 중심 대시보드 변경 및 PUBLIC Pages 배포 (2026-11-14 KST)
+- **요청:** 현재 Executive 화면의 정보 우선순위를 재구성하고, 실제 GitHub Pages 배포까지 완료. 일반 프로젝트 관리 화면처럼 **업무 목적 → 확인 가능한 기록 → 남은 작업**을 먼저 표시.
+- **PUBLIC 경로:** `wonhwipark/L1Work` / `main/docs/cowork-dashboard/index.html` + `status.js`, 기존 URL `https://wonhwipark.github.io/L1Work/cowork-dashboard/` 유지. v4 HTML/JS/README **원샷 커밋** [`a448f468c6b69b892c60e80f9b6143404949d96f`](https://github.com/wonhwipark/L1Work/commit/a448f468c6b69b892c60e80f9b6143404949d96f). GitHub 원격 readback 3파일 blob SHA 일치.
+- **UI:** 큰 헤더 축소, KPI를 **전체 Work / 공개 업무 / 검토 단계 / 공개 차단 분류**로 전환, 공개 5개 작업 요약을 중심에 표시. 각 행의 **상세 보기**는 해당 업무 1개의 담당·목표 산출물·자체시험/독립 리뷰·다음 조치를 펼침. 검색·필터도 사용 가능. REQUEST/REVIEW/RECEIPT·호스트 진단은 **접힘형 운영 진단** 영역으로 이동.
+- **공개 근거와 한계:** `status.json` 기존 스키마 및 PRIVATE `public_sync.py` **변경 없음**. 정형 `test_label`, `review_label`, `next_action`만 표시. '확인된 기록'은 자체시험 **신고/기록 수준**이며 운영 완료를 뜻하지 않음. 명시적 차단 분류가 있을 때만 차단 표시, 자세한 사유·업무별 최종 변경일은 공개 데이터에 없어 추정/게시하지 않음. 공개 허용되지 않은 Work ID·PRIVATE 원문·리뷰 영수증·토큰은 미포함.
+- **실제 시험:** `status.js` JS 구문 PASS, 승인 JSON 합성 DOM 시험: 전체 7 / 공개 5 / 검토 단계 1 / 공개 차단 0; 요약 5행·상세 5카드·업무 선택 시 1카드 펼침·검토 필터 1·업무 검색 1·초기화 5 · initial same-origin fetch 1 PASS. 기존 120초 주기 polling, 탭 복귀 시 재조회, CSP, JSON 스키마/허용 필드 검증 유지.
+- **배포 확인:** GitHub Pages [run #43533031969](https://github.com/wonhwipark/L1Work/actions/runs/43533031969) `completed/success`, head SHA = 위 v4 commit. 실제 모바일 기기 브라우저 시각/상호작용 E2E 및 PUBLIC URL HTTP 본문 검증은 `NOT_RUN/NOT_VERIFIED` (환경 도구 접근 불가).
+- **운영 분리:** `DASHBOARD_DEPLOY=PASS`, `INDEPENDENT_REVIEW=NOT_RUN`, `ACTIVE_PROVIDER=NONE`, `MIGRATION_NOT_CUTOVER`. Windows watcher/운영 DB·예약 작업/Claude 유료 리뷰/운영 LIVE/스킬 ZIP 배포 영향 없음.
+- **다음 한 동작:** 사용자가 PUBLIC HTML을 모바일에서 열고 ① 업무 한눈에 ② 원하는 업무 상세 보기 ③ 운영 진단 접기/펼치기를 확인. 실제 업무별 '최근 주요 변경'을 추가하려면 별도의 근거 있는 정형 필드와 공개 허용 규칙 판정이 선행돼야 함.
+
 ## Executive v3 — 업무 목적 중심 가독성 개선 (2026-11-14 KST)
 - **사용자 문제:** 숫자·단계·상태 중심 화면이라 각 업무가 무엇을 해결하고 어떤 결과를 만들려는지 첫 화면에서 이해하기 어려움.
 - **개선 방향:** 사용자 기본 PUBLIC Executive URL 하나 유지. 화면 상단에 **업무별 목적 → 문서상 단계 → 다음 조치** 요약표(5개 공개 범주)를 배치하고, 상세 Work 카드에 **목적 및 목표 결과**를 강조. 모바일에서는 표를 세로형 요약 카드로 변환. 검색 대상에도 목적/목표 결과 포함.

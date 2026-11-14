@@ -12,7 +12,7 @@ This repository is a **private collaboration workspace**, not a deployment repos
 
 ## 기본 대시보드 — 클릭하면 바로 열리는 HTML (GitHub Pages)
 
-**[CoWork Executive v3 · 진행 업무 목적·상태 기본 대시보드 열기](https://wonhwipark.github.io/L1Work/cowork-dashboard/)** — **기본 확인 경로**. PC·모바일에서 업무 목적·현재 단계·다음 조치를 먼저 요약하고, 카드별 목표 결과·검증 근거를 확인.
+**[CoWork Executive v4 · 진행 업무 목적·상태 기본 대시보드 열기](https://wonhwipark.github.io/L1Work/cowork-dashboard/)** — **기본 확인 경로**. PC·모바일에서 업무 목적·확인 기록·남은 작업을 먼저 보고, 관심 업무만 상세 보기로 펼쳐 확인. 기술 진단은 하단에 분리.
 
 - 공개 화면은 PRIVATE 최신 상태에서 **공개 허용목록으로 선별·검증한 상위 요약**을 자동 갱신합니다. 원문 요청·리뷰·영수증·식별자·비밀 정보는 게시하지 않습니다.
 - **[PRIVATE 상세 HTML](collab/dashboard/index.html)** — 최신 GitHub 기록을 Actions로 재생성. GitHub HTML blob은 다운로드 후 브라우저에서 확인할 수 있습니다.
