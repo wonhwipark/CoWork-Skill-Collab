@@ -5,11 +5,11 @@
       "work_id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
       "skill": "cowork-review-watcher",
       "title": "cowork-review-watcher",
-      "phase": "BLOCKED",
+      "phase": "REVIEW",
       "owner": "GPT / Claude Code",
       "self_test": "PASS",
       "independent_review": "PENDING",
-      "next_action": "GPT 판정: v0.2.19 원격 예약 기반 N1 수정·673/12 자체시험 HOST_PASS, 개발 ZIP SHA256 6e7fee3340cc6d0282d1c18fe3db42a90360259dd73fa6d7c0a7698af7afe5c0·239143B 리뷰 입력 PRIVATE 게시, 독립 검토 NOT_RUN. LIVE 승인 이미 있음, 실제 미전환(ACTIVE_PROVIDER=NONE). 남은 합동 승인: A) REQ-COWORK-V0219-R2-20261114 독립 R2 1회 최대 $3 POLICY-STATIC-V1-LARGE(추가 유료 호출 승인 필요), B) Windows 운영 Python cryptography·Notifier provider별 워터마크·GitHub watcher 별도 상태/Task 설치/최종 LIVE 적용(운영 변경 승인 필요). 둘 다 승인되면 동일 해시 재확인→독립 리뷰→운영 검증→단일 GitHub LIVE; FAIL이면 NONE 유지. Classic PAT 확정, 재논의 금지."
+      "next_action": "2026-11-15 USER_APPROVED_A_AND_B: A v0.2.19 fixed SHA256 6e7fee3340cc6d0282d1c18fe3db42a90360259dd73fa6d7c0a7698af7afe5c0 independent R2 REQ-COWORK-V0219-R2-20261114, POLICY-STATIC-V1-LARGE exactly 1 call ≤$3; B authorized Windows operating Python cryptography, Notifier per-provider watermark, GitHub watcher separate state/Task + single LIVE. Hand-off GPT_V0219_R2_AND_GITHUB_LIVE_ACTIVATION_APPROVAL_AND_ONE_SHOT_r0001_20261115.md PRIVATE main/readback PASS. Windows actual run NOT_RUN; review NOT_RUN, operating install NOT_RUN, ACTIVE_PROVIDER=NONE/MIGRATION_NOT_CUTOVER. NEXT Windows Claude Code one-shot raw ZIP SHA/CRC verify→signed READY last→independent review max1→if PASS B1 B2 B3, verify 2 cycles+restart, pending 1 preserved, rollback ready; on FAIL stop without paid retry. Classic PAT decision remains."
     }
   ]
 }
