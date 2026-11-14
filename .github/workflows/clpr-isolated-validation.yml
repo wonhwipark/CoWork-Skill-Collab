@@ -1,0 +1,91 @@
+name: CLPR candidate isolated validation (one-shot)
+on:
+  push:
+    branches: [clpr-validation-20261114]
+    paths: [.github/workflows/clpr-isolated-validation.yml]
+permissions:
+  contents: read
+jobs:
+  test:
+    if: github.repository == 'wonhwipark/CoWork-Skill-Collab' && github.ref == 'refs/heads/clpr-validation-20261114'
+    runs-on: ubuntu-22.04
+    timeout-minutes: 8
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.10', '3.11']
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONNOUSERSITE: '1'
+      PIP_DISABLE_PIP_VERSION_CHECK: '1'
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Validate archived candidates without host mutation
+        shell: bash
+        run: |
+          set -euo pipefail
+          export CLPR_TEMP="${RUNNER_TEMP}/clpr-isolated"
+          mkdir -p "$CLPR_TEMP" "$CLPR_TEMP/home"
+          export HOME="$CLPR_TEMP/home"
+          python - <<'PY'
+          import hashlib, os, pathlib, stat, sys, zipfile
+          base=pathlib.Path("collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates")
+          files={
+            "p4-code-owner":("p4-code-owner_v0_6_9_1114.zip","51363124aad349dd01f7e21f471bff4ae4d41d33d221ed9e4fb84e4217aab5ba",152175),
+            "l1-github":("l1-github_v0_3_57_1114.zip","f1b8fb43d3af427f2c5d52864051c65894f3cb45969ab35ca502f344735611ce",602555),
+            "l1-fix-workflow":("l1-fix-workflow_v1_6_68_1114.zip","046b7968ff552d590a72c4e7ebb0a29df6760b5a6d07196f17f6eef09770e31a",859398),
+            "code-analyzer":("code-analyzer_v0_15_3_1114.zip","dbbd0f9fd4d5173b8f445aa2fabd9f7417593ecd996ac0e2f0ad10278f3626c2",574469),
+            "work-ledger-kernel":("work-ledger-kernel_v0_7_38_1114.zip","6797f509d005377f9ba0d6312cc6cfb7017c7502cfcaab3ee61332c7f0a6e788",409318),
+          }
+          root=pathlib.Path(os.environ['CLPR_TEMP'])
+          total=0
+          for skill,(name,sha,sz) in files.items():
+            data=(base/name).read_bytes()
+            assert len(data)==sz and hashlib.sha256(data).hexdigest()==sha, ("CANDIDATE_HASH_FAIL",skill)
+            dest=root/skill
+            dest.mkdir(exist_ok=True)
+            with zipfile.ZipFile(base/name) as z:
+              assert z.testzip() is None, ('CRC_FAIL',skill)
+              for zi in z.infolist():
+                pp=pathlib.PurePosixPath(zi.filename)
+                assert not pp.is_absolute() and '..' not in pp.parts and '\\' not in zi.filename, ('BAD_PATH',zi.filename)
+                assert not stat.S_ISLNK((zi.external_attr>>16)&0xffff), ('SYMLINK',zi.filename)
+                if zi.filename.endswith('.py'):
+                  compile(z.read(zi),zi.filename,'exec')
+                  total+=1
+              z.extractall(dest)
+            print("ARCHIVE_AND_PYTHON_PARSE_PASS",skill,len(data),flush=True)
+          print("PYTHON_PARSE_TOTAL",total,sys.version,flush=True)
+          PY
+      - name: Run targeted existing and new-skill regressions
+        shell: bash
+        run: |
+          set -uo pipefail
+          export CLPR_TEMP="${RUNNER_TEMP}/clpr-isolated"
+          export HOME="$CLPR_TEMP/home"
+          fail=0
+          run_suite() {
+            label="$1"; base="$2"; pattern="$3"
+            echo "::group::SUITE $label $pattern"
+            (cd "$base" && timeout 75s python -m unittest discover -s tests -p "$pattern" -v)
+            rc=$?
+            echo "::endgroup::"
+            echo "SUITE_RESULT $label $pattern RC=$rc"
+            if [ "$rc" -ne 0 ]; then fail=$((fail+1)); fi
+          }
+          run_suite p4-jira-cl "$CLPR_TEMP/p4-code-owner/p4-code-owner" 'test_jira_fix_cl_scan.py'
+          run_suite p4-scope "$CLPR_TEMP/p4-code-owner/p4-code-owner" 'test_safety.py'
+          run_suite github-pr "$CLPR_TEMP/l1-github" 'test_pr_code_analysis.py'
+          run_suite github-merge "$CLPR_TEMP/l1-github" 'test_merged_pr_history.py'
+          run_suite workflow-brief "$CLPR_TEMP/l1-fix-workflow/l1-fix-workflow" 'test_tl_issue_brief_v1611.py'
+          run_suite workflow-core "$CLPR_TEMP/l1-fix-workflow/l1-fix-workflow" 'test_workflow.py'
+          run_suite analyzer-share "$CLPR_TEMP/code-analyzer/code-analyzer" 'test_share_export_v0143.py'
+          run_suite kernel-work "$CLPR_TEMP/work-ledger-kernel" 'test_multi_work_ux_v070.py'
+          run_suite kernel-core "$CLPR_TEMP/work-ledger-kernel" 'test_kernel.py'
+          echo "TARGETED_SUITE_FAILURES=$fail"
+          if [ "$fail" -ne 0 ]; then exit 1; fi
