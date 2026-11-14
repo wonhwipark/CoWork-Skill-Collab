@@ -2,7 +2,7 @@
   "request_id": "REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-001",
   "revision": 1,
   "previous_review_id": "L1-WORK-KNOWLEDGE-DESIGN-20261114-001",
-  "request_document": "PREPARED_FOR_COMMIT_A",
+  "request_document": "POSTED_REMOTE_READBACK_PASS",
   "package_sha256": "4ccede070d03e497a8d821fcabc8092c0d46045b245b64dabf023abc83daa417",
   "package_size_bytes": 28805,
   "policy": "POLICY-STATIC-V1",
@@ -11,7 +11,7 @@
   "user_review_request": "AUTHORIZED_BY_CURRENT_USER_REQUEST",
   "host_signed_approval": "PENDING_HOST_VERIFICATION",
   "ready": "NOT_POSTED",
-  "source_pin": "PENDING_HOST_COMMIT_A_AND_REPO_ID_VERIFICATION",
+  "source_pin": "POSTED_DATA_ONLY_HOST_SIGNATURE_PENDING",
   "host_preflight": "NOT_RUN",
   "automatic_queue": "NOT_QUEUED",
   "independent_review": "NOT_RUN",
@@ -23,5 +23,9 @@
   "output_paths": {
     "result": "collab/reviews/REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-001/REVIEW_RESULT_1.md",
     "receipt": "collab/receipts/REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-001/RECEIPT_1.md"
-  }
+  },
+  "input_commit": "0a46fea5f7f63c68c5cb12cfa35bfaed00c2c1a3",
+  "publication_text_readback": "PASS",
+  "package_git_blob_readback": "PASS",
+  "package_remote_raw_bytes_rehash": "PENDING_HOST"
 }
