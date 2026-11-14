@@ -98,16 +98,16 @@ def build(base: Path, tool_dir: Path, out_dir: Path) -> Path:
     core = replace_one(core, b'VERSION = "0.4.36"', b'VERSION = "0.4.38"', "CORE_VERSION")
     anchor = b"BUILTIN_SAFE_PROFILES: dict[str, dict[str, Any]] = {\n"
     profile = (
-        b'    # v0.4.38 new bounded Linux NR Tx Init RACH read-only job.\\n'
-        b'    "nr-l1tx-init-rach-analysis-linux": {\\n'
-        b'        "enabled": True, "skill": "job-list",\\n'
-        b'        "entrypoint": "scripts/nrtx_init_rach_linux_job.py",\\n'
-        b'        "args": [], "timeout_sec": 3600, "retry": 0,\\n'
-        b'        "required_outputs": ["output/nr_tx_init_rach/latest_result.json"],\\n'
-        b'        "semantic_result_path": "output/nr_tx_init_rach/latest_result.json",\\n'
-        b'        "semantic_result_required": True, "env": {}, "parameters": {},\\n'
-        b'        "supersede_policy": {"enabled": False},\\n'
-        b'    },\\n'
+        b'    # v0.4.38 new bounded Linux NR Tx Init RACH read-only job.\n'
+        b'    "nr-l1tx-init-rach-analysis-linux": {\n'
+        b'        "enabled": True, "skill": "job-list",\n'
+        b'        "entrypoint": "scripts/nrtx_init_rach_linux_job.py",\n'
+        b'        "args": [], "timeout_sec": 3600, "retry": 0,\n'
+        b'        "required_outputs": ["output/nr_tx_init_rach/latest_result.json"],\n'
+        b'        "semantic_result_path": "output/nr_tx_init_rach/latest_result.json",\n'
+        b'        "semantic_result_required": True, "env": {}, "parameters": {},\n'
+        b'        "supersede_policy": {"enabled": False},\n'
+        b'    },\n'
     )
     core = replace_one(core, anchor, anchor + profile, "PROFILE_INSERT")
     data["scripts/job_core.py"] = core
