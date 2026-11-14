@@ -1,5 +1,12 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 기존 PAT 검증 + R2 publish-only: 적격 PAT 없음(ACTION_REQUIRED_TOKEN_SCOPE_OR_EXPIRY), R2 결과 정리 PASS·모델 호출 0 (Claude 자체 보고, 2026-11-14 KST)
+- 결과: `CLAUDE_EXISTING_PAT_VALIDATION_AND_PUBLISH_ONLY_RESULT_FOR_GPT_20261114.md` (PRIVATE `main`, commit `78a489b6ea39f53b334e1e76cc4c185b8860cc49`, 원격 바이트·SHA-256 `cb995f6c6acb418b30f703ba9948911f732340c931ffe65abb29c8a776b27a51` 일치).
+- PAT: 이 PC의 후보 2개를 서버 응답 기준으로 검사(값·접두·길이 비게시). 후보1=fine-grained·비공개 1개만이지만 만료 없음(읽기 전용), 후보2=classic·광역·무기한 → **둘 다 부적격**, 적격 0. 따라서 설치·임시 브랜치 쓰기 시험은 NOT_RUN(부적격 토큰 미사용, 쓰기 호출 0). 서버가 반환한 repo 숫자 ID는 신뢰 루트 라벨과 일치하나 제품 runtime repo_id 결합은 별도 게이트(N2) 유지.
+- 사용자 조치: 이미 보유한 PAT가 조건(fine-grained, `CoWork-Skill-Collab` 단일, Contents R/W, 만료 90일 이하)을 충족하면 `Install-EngineWriteToken.ps1`로 숨김 입력 설치(채팅 붙여넣기 금지), 아니면 해당 조건으로 신규 발급.
+- R2 publish-only: 원격 결과·영수증 3개가 로컬 보관본과 **바이트 동일**(ALREADY_PUBLISHED). 격리 원장 사본에서 `UPLOAD_PENDING`→`COMPLETED`(GET 14회뿐, 쓰기 0, 하위 프로세스 0, 원본 원장 불변). 모델 호출 delta 0, 신규 유료 리뷰 0, 알림 0.
+- 미실행/미승인: 운영 DB·Task·Notifier 변경, 추가 유료 리뷰, cryptography 운영 설치, LIVE. ACTIVE_PROVIDER=NONE.
+
 ## 기존 PAT 검증·publish-only 사용자 실행 지시 및 Windows 원샷 인계 (2026-11-14 KST)
 - 사용자 "pat 이미 있어" 이후 "그래진행하자"에 따라, **재발급 선행 요구 폐기 / 기존 보유 PAT의 적합성 검증 우선** 실행 방향 확정. PRIVATE `main` 인계: [GPT_EXISTING_PAT_VERIFY_AND_PUBLISH_ONLY_ONE_SHOT_r0001_20261114.md](GPT_EXISTING_PAT_VERIFY_AND_PUBLISH_ONLY_ONE_SHOT_r0001_20261114.md), commit `de67235b03052baffe4938c98b1a7ab0d038b528`, 원격 readback PASS.
 - Windows Claude Code가 로컬 기존 토큰(이전 검사에서 본 read-only fine-grained 또는 classic 이외 별도 PAT 가능)을 **비밀 비노출·실서버 scope/만료/저장소 제한 검증**. 적격 `wonhwipark/CoWork-Skill-Collab` 단일 repo fine-grained Contents R/W + 만료 ≤90일 토큰이 있으면 재발급 불필요. 사용자 인증 조치가 필요할 때만 `ACTION_REQUIRED_TOKEN_SCOPE_OR_EXPIRY`.
