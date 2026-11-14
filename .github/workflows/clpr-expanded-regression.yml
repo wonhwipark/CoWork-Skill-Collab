@@ -1,0 +1,95 @@
+name: CLPR expanded isolated regression on pinned development ZIPs
+on:
+  push:
+    branches: [clpr-e2-work-evidence-20261115]
+    paths: [.github/workflows/clpr-expanded-regression.yml]
+permissions:
+  contents: read
+jobs:
+  test:
+    if: github.repository == 'wonhwipark/CoWork-Skill-Collab' && github.ref == 'refs/heads/clpr-e2-work-evidence-20261115'
+    runs-on: ubuntu-22.04
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.10', '3.11']
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTHONNOUSERSITE: '1'
+      L1_WORKFLOW_MCP_READ_ONLY: '1'
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Verify exact dev ZIPs and unpack safely in ephemeral runner
+        shell: bash
+        run: |
+          set -euo pipefail
+          export CLPR_TEMP="${RUNNER_TEMP}/clpr-expanded"
+          mkdir -p "$CLPR_TEMP/home"
+          export HOME="$CLPR_TEMP/home"
+          python - <<'PY'
+          import zipfile,hashlib,pathlib,os,stat,sys,json
+          base=pathlib.Path('collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates')
+          items=[
+            ('p4-code-owner_v0_6_9_1114.zip','p4','51363124aad349dd01f7e21f471bff4ae4d41d33d221ed9e4fb84e4217aab5ba'),
+            ('l1-github_v0_3_57_1114.zip','github','f1b8fb43d3af427f2c5d52864051c65894f3cb45969ab35ca502f344735611ce'),
+            ('l1-fix-workflow_v1_6_69_1115.zip','workflow','d4ba119298cd5763fd18ace2d54223fff010a8d2a1703ebab80eb4fa1b35846b'),
+            ('code-analyzer_v0_15_3_1114.zip','analyzer','dbbd0f9fd4d5173b8f445aa2fabd9f7417593ecd996ac0e2f0ad10278f3626c2'),
+            ('work-ledger-kernel_v0_7_39_1115.zip','kernel','24184fe760c058a6fbc4f79c8d2d3e580978c05bde4597155e81fa3d6f23885a'),
+          ]
+          total=0
+          for name,kind,expect in items:
+            raw=(base/name).read_bytes()
+            assert hashlib.sha256(raw).hexdigest()==expect,('HASH_MISMATCH',name)
+            dest=pathlib.Path(os.environ['CLPR_TEMP'])/kind
+            with zipfile.ZipFile(base/name) as z:
+              assert z.testzip() is None
+              seen=set()
+              for entry in z.infolist():
+                p=pathlib.PurePosixPath(entry.filename)
+                assert p.as_posix() not in seen and '..' not in p.parts and not p.is_absolute()
+                assert not stat.S_ISLNK((entry.external_attr>>16)&0xffff)
+                seen.add(p.as_posix())
+                if entry.filename.endswith('.py'):
+                  compile(z.read(entry),entry.filename,'exec')
+                  total+=1
+              z.extractall(dest)
+            print('ZIP_VERIFIED',name,len(raw),flush=True)
+          print('PY_PARSE_TOTAL',total,sys.version,flush=True)
+          PY
+      - name: Expanded existing and new regressions; retain known fails
+        shell: bash
+        run: |
+          set -uo pipefail
+          export CLPR_TEMP="${RUNNER_TEMP}/clpr-expanded"
+          export HOME="$CLPR_TEMP/home"
+          export PYTHONPATH="$CLPR_TEMP/kernel:${PYTHONPATH:-}"
+          ln -s "$CLPR_TEMP/kernel" "$CLPR_TEMP/workflow/work-ledger-kernel"
+          fail=0
+          run_suite () {
+            label="$1"; root="$2"; pattern="$3"
+            echo "::group::SUITE $label $pattern"
+            rc=0
+            (cd "$root" && export PYTHONPATH="$PWD:$PWD/scripts:$PWD/src:$PWD/l1_fix_workflow:${PYTHONPATH:-}" && timeout 100s python -m unittest discover -s tests -p "$pattern" -v) || rc=$?
+            echo "::endgroup::"
+            echo "EXPANDED_SUITE_RESULT $label $pattern RC=$rc"
+            if [ "$rc" -ne 0 ]; then fail=$((fail+1)); fi
+          }
+          run_suite p4-jira-cl "$CLPR_TEMP/p4/p4-code-owner" 'test_jira_fix_cl_scan.py'
+          run_suite p4-scope "$CLPR_TEMP/p4/p4-code-owner" 'test_safety.py'
+          run_suite github-pr "$CLPR_TEMP/github" 'test_pr_code_analysis.py'
+          run_suite github-merge "$CLPR_TEMP/github" 'test_merged_pr_history.py'
+          run_suite analyzer-share "$CLPR_TEMP/analyzer/code-analyzer" 'test_share_export_v0143.py'
+          run_suite kernel-work "$CLPR_TEMP/kernel" 'test_multi_work_ux_v070.py'
+          run_suite kernel-core "$CLPR_TEMP/kernel" 'test_kernel.py'
+          run_suite workflow-clpr-new "$CLPR_TEMP/workflow/l1-fix-workflow" 'test_clpr_existing_work_link.py'
+          run_suite workflow-resume "$CLPR_TEMP/workflow/l1-fix-workflow" 'test_resume_tl_summary_v1643.py'
+          run_suite workflow-brief "$CLPR_TEMP/workflow/l1-fix-workflow" 'test_tl_issue_brief_v1611.py'
+          run_suite workflow-core "$CLPR_TEMP/workflow/l1-fix-workflow" 'test_workflow.py'
+          echo "EXPANDED_SUITES_TOTAL=11 EXPANDED_FAILURE_COUNT=$fail"
+          if [ "$fail" -ne 0 ]; then exit 1; fi
