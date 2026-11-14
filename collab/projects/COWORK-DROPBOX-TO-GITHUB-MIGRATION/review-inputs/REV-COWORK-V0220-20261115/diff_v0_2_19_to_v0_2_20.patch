@@ -1,0 +1,77 @@
+diff --git a/docs/CUTOVER_RUNBOOK.md b/docs/CUTOVER_RUNBOOK.md
+--- a/docs/CUTOVER_RUNBOOK.md
++++ b/docs/CUTOVER_RUNBOOK.md
+@@ -1,4 +1,4 @@
+-# Cutover runbook: Dropbox to GitHub (v0.2.19, development_not_for_deployment)
++# Cutover runbook: Dropbox to GitHub (v0.2.20, development_not_for_deployment)
+ 
+ Status: a design with isolated test evidence. Nothing here installs, starts or switches anything on the
+ operating host. Each step marked APPROVAL needs an explicit decision by the user.
+diff --git a/skill_collab_watcher/__init__.py b/skill_collab_watcher/__init__.py
+--- a/skill_collab_watcher/__init__.py
++++ b/skill_collab_watcher/__init__.py
+@@ -1 +1 @@
+-__version__ = "0.2.19"
++__version__ = "0.2.20"
+diff --git a/skill_collab_watcher/github_transport.py b/skill_collab_watcher/github_transport.py
+--- a/skill_collab_watcher/github_transport.py
++++ b/skill_collab_watcher/github_transport.py
+@@ -75,7 +75,6 @@
+         self._etag_sha: str | None = None
+         self._pin: str | None = None
+         self._server_date: str | None = None
+-        self._repo_id: str | None = None
+ 
+     @property
+     def provider_name(self) -> str:
+@@ -156,17 +155,16 @@
+             raise AuthRequired("repository is not visible to this credential") from exc
+ 
+     def repository_id(self) -> str:
+-        """The numeric repository id as GitHub's server reports it (cached: it never changes for a repository)."""
+-        if self._repo_id is None:
+-            try:
+-                _, _, body = self._get(f"/repos/{self.repo}")
+-            except RemoteNotFound as exc:
+-                raise AuthRequired("repository is not visible to this credential") from exc
+-            value = self._json(body).get("id")
+-            if isinstance(value, bool) or not isinstance(value, (int, str)) or not str(value).strip():
+-                raise TransportError("GitHub returned no repository id")
+-            self._repo_id = str(value).strip()
+-        return self._repo_id
++        """The numeric repository id as GitHub's server reports it NOW. Never cached: the watch process lives for days while the
++        name `owner/name` can be repointed to another repository (deleted and recreated), which gets a new id."""
++        try:
++            _, _, body = self._get(f"/repos/{self.repo}")
++        except RemoteNotFound as exc:
++            raise AuthRequired("repository is not visible to this credential") from exc
++        value = self._json(body).get("id")
++        if isinstance(value, bool) or not isinstance(value, (int, str)) or not str(value).strip():
++            raise TransportError("GitHub returned no repository id")
++        return str(value).strip()
+ 
+     def head_sha(self) -> str:
+         extra = {"If-None-Match": self._etag} if self._etag else None
+diff --git a/tests/test_v018_gates.py b/tests/test_v018_gates.py
+--- a/tests/test_v018_gates.py
++++ b/tests/test_v018_gates.py
+@@ -143,3 +143,19 @@
+     publish_bundle(github_env.http, payload_changes={"nonce": "synthetic-nonce-q8-last-0003"})
+     run(github_env, policy=github_policy(local_policy_revision="1"))
+     assert github_env.runner.calls == 2
++
++
++# --- R2 review of v0.2.19, BLOCKING finding: the repository id was cached for the life of a long-running transport ---------------
++
++def test_n2_the_identity_is_checked_again_on_every_approval_check_of_a_long_lived_transport(github_env):
++    from conftest import make_package_zip
++
++    shared = make_transport(github_env.http)                       # one transport object, as the real watch loop uses it
++    publish_bundle(github_env.http)
++    run(github_env, policy=github_policy(), transport=shared)
++    assert github_env.runner.calls == 1
++    github_env.http.repo_id = "the-repository-was-replaced"        # the name now points at another repository
++    publish_bundle(github_env.http, request_id="REQ-2", package=make_package_zip("second"))
++    run(github_env, policy=github_policy(), transport=shared)
++    assert github_env.runner.calls == 1, "a request approved for another repository must not be reviewed"
++    assert has_event(github_env.store, "APPROVAL_REPO_ID_REMOTE_MISMATCH")
