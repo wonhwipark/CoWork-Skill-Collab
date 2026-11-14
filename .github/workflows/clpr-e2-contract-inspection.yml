@@ -82,3 +82,24 @@ jobs:
                     print(f'{no:04d}: '+lines[no-1][:180])
                   print('SOURCE_END',node.name)
           PY
+      - name: Inspect WorkReference add and find guards
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import ast, pathlib, zipfile
+          p=pathlib.Path('collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates/work-ledger-kernel_v0_7_38_1114.zip')
+          with zipfile.ZipFile(p) as z:
+            for name in z.namelist():
+              if name not in ('work_ledger_kernel/work_refs.py','work_ledger_kernel/kernel.py'):continue
+              lines=z.read(name).decode('utf-8-sig').splitlines()
+              tree=ast.parse('\n'.join(lines))
+              for node in ast.walk(tree):
+                if not isinstance(node,(ast.FunctionDef,ast.AsyncFunctionDef)):continue
+                if node.name not in ('add','find','__init__','work_reference_find'):continue
+                if node.name=='__init__' and name.endswith('work_refs.py'):continue
+                lim=min(node.end_lineno or node.lineno,node.lineno+115)
+                print('REF_API_BEGIN',name,node.name,node.lineno,lim)
+                for num in range(node.lineno,lim+1): print(f'{num:04d}: '+lines[num-1][:180])
+                print('REF_API_END',node.name)
+          PY
