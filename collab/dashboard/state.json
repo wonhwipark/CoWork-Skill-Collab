@@ -3,7 +3,7 @@
   "live_provider": "NONE",
   "operations": {
     "active_provider": "NONE",
-    "cutover": "NOT_OBSERVED",
+    "cutover": "MIGRATION_NOT_CUTOVER",
     "dashboard_source": true,
     "host_shadow": "NOT_OBSERVED",
     "independent_review": "NOT_OBSERVED",
@@ -17,10 +17,10 @@
       "id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md",
-      "status": "검증 진행 중",
+      "status": "전환 전",
       "title": "COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태",
       "tone": "warning",
-      "topic": "기존 PAT 검증 + R2 publish-only: 적격 PAT 없음(ACTION_REQUIRED_TOKEN_SCOPE_OR_EXPIRY), R2 결과 정리 PASS·모델 호출 0 (Claude 자체 보고, 2026"
+      "topic": "GPT 공식 판정 — 기존 PAT 2종 부적격, 격리 publish-only PASS (2026-11-14 KST)"
     },
     {
       "id": "COWORK-GITHUB-DASHBOARD-20261111-001",
