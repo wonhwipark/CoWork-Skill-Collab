@@ -5,11 +5,11 @@
       "work_id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
       "skill": "cowork-review-watcher",
       "title": "cowork-review-watcher",
-      "phase": "DEVELOPMENT",
+      "phase": "DISPOSITION",
       "owner": "GPT / Claude Code",
       "self_test": "PASS",
-      "independent_review": "PASS",
-      "next_action": "CLASSIC_PAT_POLICY=USER_APPROVED. Windows Claude Code 최신 원샷 GPT_CLASSIC_PAT_REAL_WRITE_AND_LIVE_PREFLIGHT_ONE_SHOT_r0001_20261114.md를 실행: 기존 Classic PAT로 GitHub PRIVATE 격리 브랜치 write/readback/cleanup 및 모델 호출 0인 watcher 최초 자동 게시 E2E, 이미 완료된 R2 결과 멱등 정산 확인. N1/N2/Q8는 격리 합성 시험 및 필요한 최소 개발 후보 보완, crypto 격리 venv/Notifier 읽기 전용 점검 후 한 번에 결과 MD·CURRENT·TRACKER 게시. Windows host 실행 아직 NOT_RUN. 추가 유료 리뷰·운영 DB/Task/Notifier 변경·PUBLIC ZIP·GitHub LIVE 전환 금지. ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER."
+      "independent_review": "PENDING",
+      "next_action": "GPT 판정: Classic PAT 실제 쓰기·감시기 자동 게시 E2E PASS(모델 0). 후보 v0.2.18(N1/N2 수정, 자체시험 653/587 PASS)은 미리뷰·미게시 → 재리뷰 승인 필요. 운영 cryptography·계정 격리 SHADOW·Notifier 이행은 별도 승인. LIVE 미승인."
     }
   ]
 }
