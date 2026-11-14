@@ -1,5 +1,13 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## GPT 정본 판정 — v0.2.19 개발 PASS·LIVE 미전환, 마지막 별도 승인 항목 명시 (2026-11-14 KST)
+- **정본:** [GPT_V0219_LIVE_CUTOVER_DISPOSITION_AND_FINAL_APPROVAL_BUNDLE_r0001_20261114.md](GPT_V0219_LIVE_CUTOVER_DISPOSITION_AND_FINAL_APPROVAL_BUNDLE_r0001_20261114.md), commit `66dfbbfaeb8549dc906637031f86c7a517045a92`, 원격 readback PASS. `GPT_DISPOSITION=ACCEPT_PREPARATION_CUTOVER_BLOCKED`; `USER_LIVE_APPROVAL=ALREADY_APPROVED`; `ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER`.
+- **근거:** Claude Code 결과 `CLAUDE_GITHUB_LIVE_CUTOVER_EXECUTION_RESULT_FOR_GPT_20261114.md` GitHub blob `bc0c7b3f90c919e31de485182ade6a94f8ecb0b6` 및 manifest 조회. N1 원격 create-only 디스패치 예약을 모델 실행 전 기록하고 소실 시 `REVIEW_UNCERTAIN`으로 차단하는 `v0.2.19` 개발·합성시험 완료 호스트 보고(venv `673 PASS / 12 SKIP`, 운영 Python `606 PASS / 17 SKIP`); 코드 독립 리뷰 아직 `NOT_RUN`.
+- **고정 후보:** `skill-collab-watcher_v0_2_19_1114_DEV_NOT_FOR_DEPLOYMENT.zip`, 호스트 보고 **239143 B**, SHA-256 `6e7fee3340cc6d0282d1c18fe3db42a90360259dd73fa6d7c0a7698af7afe5c0`. PRIVATE `review-inputs/REV-COWORK-V0219-20261114/`의 `REVIEW_MANIFEST.md`는 GPT 직접 조회, 실제 ZIP raw-byte SHA/CRC는 GitHub 텍스트 조회 오류로 **GPT NOT_RUN**. 리뷰 실행 전 Windows에서 실바이트 고정 재검증 필요.
+- **추가 발견:** 현재 Notifier는 단일 `last_id`여서 GitHub 새 DB로 옮기면 새 알림 누락 위험이 실측됨. provider별 워터마크 후보 비발송 회귀 11건 호스트 보고 PASS, 실제 설치·실알림은 NOT_RUN. 기존 Dropbox pending 1건은 레거시 DB에 무손실 보존되었으나 GitHub로 자동 이관/완료되지 않음.
+- **마지막 분리 승인 묶음:** (A) 확정 SHA v0.2.19 독립 Claude R2 1회, `REQ-COWORK-V0219-R2-20261114`, `POLICY-STATIC-V1-LARGE`, **최대 $3** (현재 승인 전/호출 금지) + (B) Windows 운영 변경 세 가지(운영 Python `cryptography` 설치·실검증, Notifier provider별 watermark 후보 설치, GitHub watcher 별도 상태폴더/Task 설치 및 단일 LIVE 활성화). 사용자는 일반 LIVE 전환을 **이미 승인**했으므로 이 승인만 묶어서 한 번에 받을 수 있음.
+- **현재 미실행:** 유료 리뷰 0, 운영 Python/Notifier/Task 변경 0, 실제 LIVE 0. 승인 부재는 `BLOCKED`로 유지. Classic PAT 기본 인증은 확정이며 관련 재논의 불필요. `ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER`. 과거 기록 아래 보존.
+
 ## GitHub LIVE 컷오버: 게이트 3개 BLOCKED로 **미전환**(ACTIVE_PROVIDER=NONE), N1 잔여 갭은 후보 v0.2.19로 수정 (Claude 자체 보고, 2026-11-14 KST)
 - 결과: `CLAUDE_GITHUB_LIVE_CUTOVER_EXECUTION_RESULT_FOR_GPT_20261114.md` (PRIVATE `main`, commit `ed007279b1fd56af24969c86817271adc2640c48`, 원격 바이트·SHA-256 `7c5295c7ec5511ef19c8b78cbe245274e33b34094fe68687e8efe0b79d93b26c` 일치). 사용자 LIVE 승인 반영·재질문 0. 모델 호출 0, 비용 $0, 운영 변경 0.
 - N1 잔여 갭(모델 호출 후 업로드 전 로컬 DB/결과 소실 시 2차 유료 호출) 재현 후 수정: 모델 시작 직전 원격 `dispatch/<요청ID>/DISPATCH_<rev>.md` 생성 전용 예약. 크래시 7지점×상태 유지/소실, 구 백업 복원, 예약 불가/타인 기록 19개 시험 통과(v0.2.18에서는 12개 실패). 원격 쓰기가 안 되면 유료 리뷰가 시작되지 않는 동작 변화.
