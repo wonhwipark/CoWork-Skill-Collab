@@ -109,6 +109,6 @@ HTML은 GitHub에서 소스로 표시되므로 다운로드 후 브라우저로 
 
 | 요청 | Work | 단계 | GPT 판정 |
 |---|---|---|---|
-| [REQ-COWORK-V0214-R1-20261114](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-COWORK-V0214-R1-20261114/REQUEST.md) | COWORK-DROPBOX-TO-GITHUB-MIGRATION | READY_NOT_OBSERVED | NOT_VERIFIED |
+| [REQ-COWORK-V0214-R1-20261114](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-COWORK-V0214-R1-20261114/REQUEST.md) | COWORK-DROPBOX-TO-GITHUB-MIGRATION | REVIEW_NOT_OBSERVED | NOT_VERIFIED |
 
 비차단 지적도 GPT 판정 기록 전에는 해결 처리하지 않습니다.
