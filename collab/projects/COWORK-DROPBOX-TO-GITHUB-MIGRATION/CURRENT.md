@@ -1,5 +1,12 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 사용자 확인 — PAT 이미 보유 (2026-11-14 KST, 후속 정정)
+- **사용자 확인:** "pat 이미 있어". GPT는 이전의 **'새 PAT를 반드시 생성해야 함' 안내를 정정**하고, **기존 PAT 검증을 우선**한다. `PAT_EXISTENCE=USER_REPORTED`, `PAT_ELIGIBILITY=NOT_VERIFIED`, `ENGINE_WRITE_TOKEN_INSTALLED=NOT_VERIFIED`.
+- **호스트 이전 관찰과 구분:** 2026-11-14 Claude B 결과에선 감시기 read-only fine-grained PAT와 classic/무기한 쓰기 토큰만 관측됐으므로, 사용자 보유 토큰이 **동일한 토큰인지 / 별도 fine-grained 쓰기 PAT인지 / 현재 권한·만료·스코프가 충족되는지**를 Windows에서 값 비노출 검증할 것. 기존 토큰이 PRIVATE 단일 repo `wonhwipark/CoWork-Skill-Collab` Contents Read/Write, 허용 만료, 안전 로컬 보관 조건을 만족하면 **새 발급 불필요**. 기존 classic 광역 토큰을 조건 검증 없이 엔진에 쓰거나 새 발급을 강요하지 말 것.
+- **다음 한 동작:** Windows Claude Code는 기존 PAT에 대해 비밀 내용·접두·경로를 출력하지 않는 로컬 권한/범위/만료 검증 → 조건 PASS 시 기존 `Install-EngineWriteToken.ps1`, `verify_engine_write_token.py --live`로 안전 설치 및 격리 원격 쓰기 프로브 → 이미 수행한 `REQ-COWORK-V0217-R2-20261114`의 `UPLOAD_PENDING`에 대해 **publish-only 재게시/재조회**(모델 추가 호출 0). 조건 FAIL이면 `ACTION_REQUIRED_TOKEN_SCOPE_OR_EXPIRY`로 정확한 차이만 보고.
+- **기타 불변:** 운영 `cryptography` 미설치, Notifier 중복/연동, N1/N2·복합 E2E·SHADOW 격리는 별도 게이트. 추가 유료 리뷰, R0~R3 상시 정책, 운영 Task/DB/Notifier 변경, LIVE 활성화는 승인된 것으로 해석하지 않음. `ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER`.
+- **이력:** 아래 "새 PAT 발급 필요"는 토큰 적합성 확인 전 작성 당시 보고이며, 우선순위는 본 최상단의 "기존 토큰 검증 우선"으로 정정. 과거 사실과 시험 기록은 삭제하지 않음.
+
 ## GPT 공식 판정 — v0.2.17 R2·SHADOW·DB 백업/복구 통합 검토 (2026-11-14 KST)
 - **정본 판정:** [GPT_B_R2_SHADOW_DISPOSITION_r0001_20261114.md](GPT_B_R2_SHADOW_DISPOSITION_r0001_20261114.md), commit `cbed319ee4753c34352fc7b3b79ef5ed7f8c9f82`, readback PASS. `GPT_DISPOSITION=ACCEPT_WITH_CHANGE`; `INDEPENDENT_REVIEW_V0217=COMPLETED_PASS_WITH_FINDINGS`(**정적 범위 한정**); `LIVE_READY=NO`, `ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER`.
 - **원격 실증:** Claude 결과 MD, `collab/reviews/REQ-COWORK-V0217-R2-20261114/REVIEW_RESULT_1.md`, `collab/receipts/REQ-COWORK-V0217-R2-20261114/{RECEIPT_1.md,USAGE_RECEIPT_1.json}`, REVIEW_MANIFEST 원격 조회. 모델 1회, $0.9945836≤$3, 23 turns/출력18029 (R2 토큰·턴 목표 미충족). R2 BLOCKING 0, N1/N2/N3/S1/S2 확인. 호스트 시험 644/12·578/17은 `SELF_TEST_REPORTED`; 실제 v0.2.17 바이너리 CRC/SHA는 호스트 보고이며 GPT 직접 raw ZIP 비교는 NOT_RUN.
