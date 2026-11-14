@@ -46,6 +46,12 @@
 5. **차단:** 업무 실행/수정/회귀시험 증거 없이 `development_not_for_deployment` ZIP을 PUBLIC 게시. 사용자의 추가 리뷰 생략 요청은 기술적 게이트를 우회하는 PASS가 아님.
 6. **보강:** 사용자 최종 성공 기준의 1차 완료는 "CL/PR 결과를 실제 기존 Work에 저장·재조회하고 중복 0"; RAG/그룹 Knowledge 승격은 그 이후 후속.
 
+## 4.1. 후속 합성 계약 20개 검증 (실제 스킬 회귀와 별개)
+
+- [검증 결과](GPT_CLPR_SYNTHETIC_CONTRACT_TEST_RESULT_r0001_20261114.md): 범용 CL/PR 정규화·Evidence 기반 그룹핑·Merged PR 상태 분리·Evidence 용도 위반 차단·원인/수정/시험 상태 분리 **합성 계약 20개 PASS / 0 FAIL**, Python 3.13.5.
+- 이 증거는 새 분석 스킬/Engine을 개발한 것이 아닌 **참고 규칙·격리 테스트**이며, 기존 5개 실제 스킬 수정/회귀·3.10/3.11 호환성·Git/P4/MCP/Workspace E3에 대한 검증 **아님**. PACKAGE/RELEASE 상태는 미변경.
+- 따라서 `CONCEPT_ALIGNED=YES / PROCESS_COMPLIANCE=PARTIAL / OVERALL_COMPLETE=NO` 판정 유지. 추가 Claude 리뷰 요청하지 않음.
+
 ## 5. 판정 및 다음 단일 동작
 
 - `CONCEPT_ALIGNED=YES` (설계/협업 역할 수준).
