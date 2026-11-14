@@ -1,5 +1,15 @@
 # COWORK-GITHUB-DASHBOARD-20261111-001 — CURRENT
 
+## 사용자 피드백 반영 — 인계 5단계 추적 대신 최근 문서 3건 (2026-11-14 KST)
+- **판정:** 다른 GPT에 전달하는 공개 인계서의 피드백은 현재 대시보드가 자동 관측할 수 없음. 이전 5단계 '게시→리뷰 요청→접수→판정→반영'은 자동 진행 추적으로 오해할 수 있으므로 **공개 UI에서 제거**. 이제 `최근 핸드오프 이력`으로 공개 인계 문서명·최초 Git 게시일·원문 바로가기 최신 **3건만** 표시.
+- **원본/자동화:** PUBLIC `wonhwipark/L1Work/main/handoffs/*.md`의 HANDOFF 문서만 읽음. 새 PUBLIC 문서가 커밋되면 `.github/workflows/handoff-history.yml` → `scripts/build_handoff_history.py` → `docs/cowork-dashboard/handoffs.json` (최신 3건) 자동 재생성. PUBLIC 정적 Pages HTML은 해당 JSON을 같은 출처에서 읽고 열람 시/120초마다 갱신. 모든 과거 문서는 그대로 유지하며 전체 폴더 링크 제공. 문서 제목은 텍스트로만 렌더링하고 파일명은 고정 GitHub PUBLIC 경로로 제한.
+- **구현 커밋:** script `06ac5441fb9ef6e389592fd6a8d3633840fb0e45`, workflow `e3bc06643f7ca2a5a8e598f88bf9ce616f31da01`, 자동 JSON 생성 `e8504e7b2ad99646be51f68b01eab76bd797f5fd`, UI HTML `96ed6686aa7e57adfbc783f93919c01e4e76761d`, JS `f8d7bc9586180907022312b547cc43832f1f36fb` + 정규식 수정 `1d4df6f3f552b07b0d599bc82e08800d4ccd6421`, README `0ae368f099213e9cb33d410a12695d5b31c871b7`.
+- **실제 확인:** PUBLIC `handoffs.json` GitHub 원격 재조회 결과 스키마 `L1WORK_HANDOFF_HISTORY_V1`, 3건/게시일 `2026-11-14, 2026-11-13, 2026-11-11` 확인. 자동 생성용 JSON만 변경한 bot 커밋 확인. PUBLIC JS `new Function` 구문 PASS. PUBLIC `status.json` 기존 Work/운영 내용은 변경하지 않았음.
+- **미검증:** GitHub Pages 배포/실제 HTTP 본문 및 모바일 시각·터치 검증은 도구에서 수행하지 못해 `NOT_VERIFIED/NOT_RUN`. 자동 JSON 커밋에 따른 후속 Pages 반영도 실제 HTTP로 미검증. PUBLIC 레거시 `status.json.handoffs` 및 PRIVATE registry는 기존 호환 목적으로 유지하지만 **현 화면에서는 리뷰 단계로 표시하지 않음**.
+- **운영 영향:** watcher, DB, READY, 유료 리뷰, PRIVATE 출처 공개 규칙, 스킬 ZIP, LIVE 전환 변경 없음. `MIGRATION_NOT_CUTOVER` 유지.
+- **다음 한 동작:** Pages `https://wonhwipark.github.io/L1Work/cowork-dashboard/#handoff-status`에서 최근 인계 3건과 원문 링크를 모바일 브라우저로 확인. 피드백을 실제 수동 접수·판정하기 전에는 단계 표시 금지.
+
+
 ## 인계·리뷰 분리 표시 / MSC B 첫 등록 (2026-11-14 KST)
 - **CURRENT:** PUBLIC Executive v4에 별도 인계·리뷰 섹션 구현. 첫 항목: 공개 MSC B 뷰어 r0001 설계 인계. `HANDOFF_STAGE=PUBLISHED`, `INDEPENDENT_REVIEW=NOT_RUN`; 실제 리뷰 실행·결과·판정·후속 반영은 완료로 간주하지 않음.
 - **표시 구조:** 업무별 Work 요약은 유지. 그 아래 독립된 인계 패널에서 제목, 현재 단계, 5단계 흐름, 근거 기준일, 리뷰 상태, 다음 조치, 정확한 PUBLIC 원문 링크를 표시. 모바일 1열 적응형 및 44px 이상 링크 터치 영역 지원. 원문 URL: https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_KNOWLEDGE_MSC_B_VIEWER_GPT_REVIEW_HANDOFF_r0001_20261114_KST.md
