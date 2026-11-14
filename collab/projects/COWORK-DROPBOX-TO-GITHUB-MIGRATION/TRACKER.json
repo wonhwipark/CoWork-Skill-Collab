@@ -9,7 +9,7 @@
       "owner": "GPT / Claude Code",
       "self_test": "PASS",
       "independent_review": "PENDING",
-      "next_action": "USER_APPROVED_GITHUB_LIVE_CUTOVER(2026-11-14 '전환해줘') — 최종 LIVE 의사 재확인 금지. GPT_GITHUB_LIVE_CUTOVER_USER_APPROVAL_AND_GATED_ONE_SHOT_r0001_20261114.md PRIVATE main 게시 및 remote readback PASS. 실제 HOST_CUTOVER=NOT_RUN, ACTIVE_PROVIDER=NONE/MIGRATION_NOT_CUTOVER. Windows Claude Code 원샷: N1 pre-publish crash 중복 호출 0 minimal fix/test, 고정 신규 ZIP, 해당 SHA 독립 리뷰(PENDING; 추가 유료 리뷰 미승인), 운영 cryptography, pending 요청 1건/Notifier 워터마크, 단일 provider/rollback 게이트. 필요한 별도 유료 리뷰/운영 변경 승인 없으면 BLOCKED 유지, 결코 LIVE로 표기하지 않음. Classic PAT 장기 사용 확정."
+      "next_action": "컷오버 미실행(ACTIVE_PROVIDER=NONE): v0.2.19 독립 리뷰 승인(SHA·ID·예산)과 운영 변경 승인 3종(cryptography·Notifier 교체·GitHub watcher 설치) 필요. 후보·입력·Notifier 후보 준비 완료."
     }
   ]
 }
