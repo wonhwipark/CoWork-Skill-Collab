@@ -1,5 +1,12 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 사용자 통합 승인 — B 쓰기 PAT · v0.2.17 R2 1회 · SHADOW/DB 격리 복구 (2026-11-14 KST)
+- **USER_APPROVED:** 사용자 "그래 승인해줘"는 GPT 직전 제안의 **3개 항목**에 대한 명시 승인. (1) CoWork PRIVATE 단일 repo 최소권한·만료형 쓰기 PAT 발급/보호 설치·검증 (2) 최종 고정 `v0.2.17` 독립 R2 구조 리뷰 **정확히 1회 / 최대 $3 / POLICY-STATIC-V1-LARGE** (3) 실호스트 **읽기전용 SHADOW** 및 운영 DB **원본 불변 백업·격리 복사본에만 복구 리허설**. GitHub `main` 인계: [GPT_B_R2_SHADOW_APPROVAL_AND_ONE_SHOT_r0001_20261114.md](GPT_B_R2_SHADOW_APPROVAL_AND_ONE_SHOT_r0001_20261114.md) (commit `5cc01a1cc0fe925bf8df0b8a8f0fadc0afc671cd`; remote readback PASS).
+- **권한 경계:** 서명/REQUEST/READY의 실행 검증은 별도 필수. 승인 MD 게시만으로 유료 reviewer/Windows watcher가 시작되지 않는다. 실제 PAT 생성에 사용자 GitHub UI 조치가 필요할 수 있고, 비밀값은 PRIVATE에도 게시하지 않음. SHADOW에서는 모델 호출·GitHub 쓰기·운영 DB/main-WAL-SHM 쓰기·Telegram·운영 Task 변경 각각 0. R2 리뷰 실행은 SHADOW와 별도 격리 수행.
+- **명시적 미승인:** `R0~R3` 상시 자동 비용 정책, 추가 유료 리뷰/재리뷰, `v0.2.17` 후속 새 ZIP 공개, 기존 운영 DB 복원/이행, 운영 Task/Notifier 변경 및 실 알림, **최종 GitHub LIVE 활성화**. `ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER`.
+- **실행 실측:** 이 문서 시점 `APPROVAL_RECORDED / HANDOFF_POSTED`이며 `PAT_CREATED=NOT_VERIFIED`, `R2_MODEL_CALLS=0` (이번 세션), `SHADOW_HOST_TEST=NOT_RUN`, `DB_REHEARSAL=NOT_RUN`, `v0.2.17 ZIP=LOCAL_ONLY_UNREVIEWED`. 호스트 Claude Code 실행/결과 보고 대기. 기존 A안 R1 결과/영수증과 GPT 판정은 아래 보존.
+- **NEXT_ONE_ACTION:** Windows Claude Code에 위 PRIVATE `main` 정확 경로 하나를 전달해 승인된 작업을 원샷 수행. 이후 `CLAUDE_B_R2_SHADOW_PREFLIGHT_RESULT_FOR_GPT_20261114.md`·영수증·CURRENT/TRACKER 원격 확인 → GPT 최종 LIVE 가능성 판정 → 별도 사용자 LIVE 승인.
+
 ## GPT 공식 판정 — A안 독립 리뷰 검증 및 v0.2.17 LIVE 게이트 (2026-11-14 KST)
 - **정본 판정:** [GPT_A_V0214_INDEPENDENT_REVIEW_DISPOSITION_r0001_20261114.md](GPT_A_V0214_INDEPENDENT_REVIEW_DISPOSITION_r0001_20261114.md) · `GPT_DISPOSITION=ACCEPT_WITH_CHANGE` · `INDEPENDENT_REVIEW_V0214=COMPLETED_WITH_BLOCKING_FINDINGS / RELEASE_GATE=FAIL`.
 - **원격 실물 확인:** `collab/reviews/REQ-COWORK-V0214-R1-20261114/REVIEW_RESULT_1.md`, `collab/receipts/REQ-COWORK-V0214-R1-20261114/RECEIPT_1.md`, `USAGE_RECEIPT_1.json`, REQUEST 및 READY 본문을 직접 조회. 비용 `$0.9695416`/1 모델 호출/18 turns/출력 21479 토큰 보고. 기존 R1 목표 3 turns/출력 3000 토큰 미충족(비용 상한 이내).
