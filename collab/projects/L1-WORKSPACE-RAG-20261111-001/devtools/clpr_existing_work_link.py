@@ -76,7 +76,7 @@ def link_clpr_existing_work(plan: dict, kernel, *, issue_identity: str, commit: 
     # Refuse any partial result, match on another Work or non-exact match type.
     missing = []
     for ref_type, value in refs:
-        found = kernel.work_reference_find(value, include_archived=False, limit=200)
+        found = kernel.work_reference_find(value, include_archived=True, limit=200)
         matches = found.get("matches") or []
         if not isinstance(matches, list) or found.get("count", 0) > len(matches):
             return {"ok": False, "action": "LINK_BLOCKED", "reason": "PARTIAL_LOOKUP",
@@ -100,7 +100,7 @@ def link_clpr_existing_work(plan: dict, kernel, *, issue_identity: str, commit: 
             raise RuntimeError("CLPR_REF_WRITE_FAILED")
         if not result.get("already_present"):
             writes += 1
-        check = kernel.work_reference_find(value, include_archived=False, limit=200)
+        check = kernel.work_reference_find(value, include_archived=True, limit=200)
         exact = [row for row in check.get("matches", []) if row.get("match_type") in ("jira", "external_ref")]
         if check.get("count", 0) > len(check.get("matches", [])) or {row["work_id"] for row in exact} != {work_id}:
             raise RuntimeError("CLPR_REF_READBACK_UNVERIFIED")
