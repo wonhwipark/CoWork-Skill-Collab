@@ -1,5 +1,13 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## v0.2.19 독립 R2 완료: BLOCKING 1건(N2 repo ID 캐시) → 운영 변경 3종·LIVE **미실행**, ACTIVE_PROVIDER=NONE (Claude 자체 보고, 2026-11-15 KST)
+- 결과: `CLAUDE_V0219_R2_AND_GITHUB_LIVE_ACTIVATION_RESULT_FOR_GPT_20261115.md` (PRIVATE `main`, commit `39186ffdb301ed398a2beb8c3e2489ba350d2137`, 원격 바이트·SHA-256 `db8fa71e73456c28bf05d58d280768beb2caddbb3849018865af09f1eba49c06` 일치). 승인된 R2 1회만 사용: 모델 호출 1, $0.9007(상한 $3), 27 turns.
+- 리뷰: `REQ-COWORK-V0219-R2-20261114`, 대상 ZIP 6e7fee33…(원격 원시 바이트·CRC 재검증 일치). 리뷰어 감시기=v0.2.19 자신, **원격 예약·결과·영수증 PUT 3회 완전 자동**(첫 실전 자동 게시 성공). 결과 `9a151a4233d7`, 영수증 `d4c42710e385`, 예약 `19b6e54ba5af`, 사용영수증 `6247c0c034bc`.
+- BLOCKING 1: `repository_id()`가 transport 수명 동안 캐시되어 장기 watch 중 저장소가 바뀌어도 N2 통과 → **합성 재현 후** 후보 v0.2.20에서 캐시 제거. 비차단: GitHub 생성 전용 원자성은 실서버 6 동시 쓰기×4회로 보강 검증(승자 1, 나머지 409/422).
+- 후보 `v0.2.20`(`development_not_for_deployment`) 239432 B, sha256 `6a8626375e5e711535abdd261ff48781114802bb345cabe2ed5940b75968f386`, 시험 venv 674/12·운영 인터프리터 607/17, 로컬 보관·미게시, **독립 리뷰 NOT_RUN**(이번 승인은 소진, v0.2.19 결과 소급 불가).
+- 미실행(STOP): B1 cryptography 설치, B2 Notifier 워터마크 교체, B3 GitHub watcher Task·LIVE. 운영 DB main/WAL 해시·Task 상태 불변, pending/완료 이력 보존, Telegram 0. B1 격리 리허설(임시 venv, 해시 고정 설치·Ed25519 확인)은 PASS.
+- 다음: v0.2.20 새 독립 리뷰 승인(소규모 diff 리뷰 권고는 GPT 판단) 후, B 승인이 유효함을 명시하면 B1→B2→B3 재개.
+
 ## 사용자 A+B 통합 명시 승인 — v0.2.19 독립 R2 $3 + Windows 운영 변경 3종 + 단일 GitHub LIVE (2026-11-15 KST)
 - **승인 확정:** 사용자 문구 `A안 v0.2.19 독립 R2 리뷰 1회(최대 $3)와 B안 Windows 운영 변경 3종을 모두 승인해. 기존 GitHub LIVE 전환 승인 유지. 필수 검증 통과 후 원샷으로 전환해줘.` 이번 승인에 따라 더 이상의 **동일 승인 재질문 금지**. `PAID_REVIEW_APPROVED=YES`; `OPERATING_CHANGES_APPROVED=YES`; `LIVE_CUTOVER_APPROVED=YES`. Classic PAT 지속 사용 결정 유지.
 - **승인·실행 정본:** [GPT_V0219_R2_AND_GITHUB_LIVE_ACTIVATION_APPROVAL_AND_ONE_SHOT_r0001_20261115.md](GPT_V0219_R2_AND_GITHUB_LIVE_ACTIVATION_APPROVAL_AND_ONE_SHOT_r0001_20261115.md), commit `16a4406d623dc1d74b8c2786ed54304d6733534d`, GitHub remote readback PASS. Windows 실행/서명/READY·실 리뷰·설치 자체는 **이 GitHub 문서 게시만으로 자동 시작하지 않는다**.
