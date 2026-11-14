@@ -1,5 +1,7 @@
 # NR-L1TX-CODE-ANALYSIS-20261115-001 — CURRENT
 - 기준: 2026-11-15 KST
+- 목표 패키지: `job-list_v0_4_38_1115.zip` (요청 버전, `NOT_BUILT/NOT_POSTED`). 기존 `v0.4.37`은 Smoke 후보 구상이며 본 분석 Job의 배포본이 아님.
+- **사용자 확인 코드 경로: `/home/whpark/Project/smp1900`** (Linux 호스트의 실제 소스 checkout, Git SHA·브랜치는 실행 시 확인).
 - 상태: **REMOTE_REQUEST_PREPARED / LINUX_MCP_DIRECT_CALL=NOT_RUN / CODE_ANALYSIS=NOT_RUN**
 - 목적: 현재 연결된 모바일 Agent → Linux MCP의 기존 분석도구를 통해 NR L1 Tx 실제 코드 분석 1회 시도, 처음에는 `L2_L1_TX_REQ` Init RACH.
 - 요청 정본: `collab/projects/NR-L1TX-CODE-ANALYSIS-20261115-001/EXECUTION_REQUEST.md` (PRIVATE main).
@@ -9,4 +11,4 @@
 - 제약: Linux MCP 실행 도구는 현재 ChatGPT 연결에서 접근 불가. GitHub 문서 게시는 Agent/LLM 실제 실행을 유발하지 않음. 직접 코드 분석, 새 운영 Job 활성화 및 기존 소비 Job 재실행 금지.
 - 개발·실행 결과: `DOCUMENT=READY`, `HOST_SOURCE_READ=NOT_RUN`, `MCP_TOOLS_LIST=NOT_RUN`, `CODE_ANALYZER=NOT_RUN`, `RESULT_READBACK=NOT_RUN`.
 - 승인 범위: 사용자는 NR L1 Tx 분석 '시도'를 요청. PRIVATE 요청서 기록은 운영 변경이 아니며 PUBLIC ZIP 게시, Linux Job-list 설치/활성화, LIVE 변경 승인으로 해석하지 않음.
-- NEXT: 모바일 Agent에 요청서(또는 대화의 핵심 명령)를 전달해 기존 등록 MCP로 **Init RACH 코드 분석 호출**을 1회 수행하고, 비민감 결과/실패 reason을 회수.
+- NEXT: 기존 Job-list의 설치·활성화/Runner 복구 여부 및 신규 v0.4.38 프로필 적합성 확인 후, 신규 One-shot 패키지를 격리 빌드·시험. 모바일 Agent에 요청서(또는 대화의 핵심 명령)를 전달해 기존 등록 MCP로 **Init RACH 코드 분석 호출**을 1회 수행하고, 비민감 결과/실패 reason을 회수.
