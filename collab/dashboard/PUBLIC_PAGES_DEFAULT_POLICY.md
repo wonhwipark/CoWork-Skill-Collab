@@ -2,6 +2,13 @@
 
 **정책 적용:** 2026-11-12 / **기본 URL:** https://wonhwipark.github.io/L1Work/cowork-dashboard/
 
+## 인계·리뷰 추적 확장 — 공개 승인 범위 (2026-11-14 KST)
+- **분리된 사용자 흐름:** Work 카드는 업무 목적·진행을, 인계 카드는 문서 게시 → 리뷰 요청 → 결과 접수 → GPT 판정 → 후속 반영을 표시. 단계를 완료율이나 실행/독립 리뷰 PASS로 해석하지 않음.
+- **승인된 공개 인계 1건:** L1Work PUBLIC `main/handoffs/L1_KNOWLEDGE_MSC_B_VIEWER_GPT_REVIEW_HANDOFF_r0001_20261114_KST.md` (MSC B 뷰어 설계 리뷰). 초기 단계 `PUBLISHED`, 독립 리뷰 미실행. 이 문서는 실제 Work ID가 아니며 별도 Work를 자동 생성하지 않음.
+- **정본과 갱신:** PRIVATE `collab/dashboard/handoff_registry.json`의 승인된 식별자·정형 단계·기준일을 PUBLIC exporter가 엄격 검증하여 `status.json.handoffs`에 고정 제목·문서 URL·상태 라벨·후속 조치만 출력. Registry 변경 → PRIVATE Action → 기존 allowlist PUBLIC sync → Pages; 브라우저 120초/복귀 갱신 재사용. 등록 내용은 실제 인계/리뷰 결과 증거를 확인한 뒤 명시적으로 수정해야 하며 원문 스캔만으로 리뷰 완료를 추정하지 않음.
+- **안전:** 새 PUBLIC 링크는 미리 승인된 정확한 L1Work PUBLIC 문서 주소만 허용. 자유 입력 URL/문서 내용/PRIVATE 작업 ID/리뷰 원문/영수증/고객정보는 미출력. 알 수 없는 ID·단계·필드·중복·날짜·변조된 URL이면 fail-closed. 미등록 인계는 PUBLIC로 자동 노출하지 않음.
+- **독립 상태:** `ACTIVE_PROVIDER=NONE`, `CUTOVER=MIGRATION_NOT_CUTOVER`; 이번 변경은 watcher/운영 DB/REQUEST/READY/모델 호출/ZIP 게시·LIVE 승인과 무관. 코드 정적/합성시험과 GitHub 원격 readback의 증거는 `COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md`에 기록. 실제 모바일 브라우저 시각 시험은 별도.
+
 ## 최신 확정 — 자동 갱신 E2E 성공 (2026-11-13)
 
 - **PAGES_DEFAULT=ENABLED / AUTO_PUBLISH_E2E=PASS**. 사용자가 공개 Pages HTML을 열어 둔 상태에서도 `status.js`가 `status.json`을 120초 간격과 포커스 복귀 시 확인. 실제 JSON 상태 변경의 UI 동적 표시가 목표이며 브라우저 실화면 E2E 자체는 `NOT_RUN`.
