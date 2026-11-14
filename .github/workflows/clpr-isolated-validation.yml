@@ -66,14 +66,15 @@ jobs:
         shell: bash
         run: |
           set -uo pipefail
+          set +e
           export CLPR_TEMP="${RUNNER_TEMP}/clpr-isolated"
           export HOME="$CLPR_TEMP/home"
           fail=0
           run_suite() {
             label="$1"; base="$2"; pattern="$3"
             echo "::group::SUITE $label $pattern"
-            (cd "$base" && timeout 75s python -m unittest discover -s tests -p "$pattern" -v)
-            rc=$?
+            rc=0
+            (cd "$base" && export PYTHONPATH="$PWD:$PWD/scripts:$PWD/src:$PWD/l1_fix_workflow:${PYTHONPATH:-}" && timeout 75s python -m unittest discover -s tests -p "$pattern" -v) || rc=$?
             echo "::endgroup::"
             echo "SUITE_RESULT $label $pattern RC=$rc"
             if [ "$rc" -ne 0 ]; then fail=$((fail+1)); fi
