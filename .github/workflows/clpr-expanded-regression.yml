@@ -30,6 +30,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+      - name: Install isolated pytest runner dependency
+        shell: bash
+        run: python -m pip install --disable-pip-version-check --no-input pytest==8.4.2
       - name: Verify exact dev ZIPs and unpack safely in ephemeral runner
         shell: bash
         run: |
@@ -93,7 +96,12 @@ jobs:
           run_suite kernel-work "$CLPR_TEMP/kernel" 'test_multi_work_ux_v070.py'
           run_suite kernel-core "$CLPR_TEMP/kernel" 'test_kernel.py'
           run_suite workflow-clpr-new "$CLPR_TEMP/workflow/l1-fix-workflow" 'test_clpr_existing_work_link.py'
-          run_suite workflow-resume "$CLPR_TEMP/workflow/l1-fix-workflow" 'test_resume_tl_summary_v1643.py'
+          echo "::group::SUITE workflow-resume pytest"
+          rc=0
+          (cd "$CLPR_TEMP/workflow/l1-fix-workflow" && export PYTHONPATH="$PWD:$PWD/scripts:$PWD/src:$PWD/l1_fix_workflow:${PYTHONPATH:-}" && timeout 100s python -m pytest -q tests/test_resume_tl_summary_v1643.py) || rc=$?
+          echo "::endgroup::"
+          echo "EXPANDED_SUITE_RESULT workflow-resume test_resume_tl_summary_v1643.py RC=$rc"
+          if [ "$rc" -ne 0 ]; then fail=$((fail+1)); fi
           run_suite workflow-brief "$CLPR_TEMP/workflow/l1-fix-workflow" 'test_tl_issue_brief_v1611.py'
           run_suite workflow-core "$CLPR_TEMP/workflow/l1-fix-workflow" 'test_workflow.py'
           echo "EXPANDED_SUITES_TOTAL=11 EXPANDED_FAILURE_COUNT=$fail"
