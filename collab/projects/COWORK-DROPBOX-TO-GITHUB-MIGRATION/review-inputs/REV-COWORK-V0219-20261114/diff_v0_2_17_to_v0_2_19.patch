@@ -1,0 +1,647 @@
+diff --git a/docs/CUTOVER_RUNBOOK.md b/docs/CUTOVER_RUNBOOK.md
+--- a/docs/CUTOVER_RUNBOOK.md	2026-11-14 21:51:52.208239700 +0900
++++ b/docs/CUTOVER_RUNBOOK.md	2026-11-14 23:23:33.230992300 +0900
+@@ -1,4 +1,4 @@
+-# Cutover runbook: Dropbox to GitHub (v0.2.17, development_not_for_deployment)
++# Cutover runbook: Dropbox to GitHub (v0.2.19, development_not_for_deployment)
+ 
+ Status: a design with isolated test evidence. Nothing here installs, starts or switches anything on the
+ operating host. Each step marked APPROVAL needs an explicit decision by the user.
+diff --git a/skill_collab_watcher/__init__.py b/skill_collab_watcher/__init__.py
+--- a/skill_collab_watcher/__init__.py	2026-11-14 21:51:52.211240300 +0900
++++ b/skill_collab_watcher/__init__.py	2026-11-14 23:23:33.233992000 +0900
+@@ -1 +1 @@
+-__version__ = "0.2.17"
++__version__ = "0.2.19"
+diff --git a/skill_collab_watcher/github_transport.py b/skill_collab_watcher/github_transport.py
+--- a/skill_collab_watcher/github_transport.py	2026-11-14 21:51:52.217244000 +0900
++++ b/skill_collab_watcher/github_transport.py	2026-11-14 23:23:33.238005500 +0900
+@@ -75,6 +75,7 @@
+         self._etag_sha: str | None = None
+         self._pin: str | None = None
+         self._server_date: str | None = None
++        self._repo_id: str | None = None
+ 
+     @property
+     def provider_name(self) -> str:
+@@ -154,6 +155,19 @@
+         except RemoteNotFound as exc:
+             raise AuthRequired("repository is not visible to this credential") from exc
+ 
++    def repository_id(self) -> str:
++        """The numeric repository id as GitHub's server reports it (cached: it never changes for a repository)."""
++        if self._repo_id is None:
++            try:
++                _, _, body = self._get(f"/repos/{self.repo}")
++            except RemoteNotFound as exc:
++                raise AuthRequired("repository is not visible to this credential") from exc
++            value = self._json(body).get("id")
++            if isinstance(value, bool) or not isinstance(value, (int, str)) or not str(value).strip():
++                raise TransportError("GitHub returned no repository id")
++            self._repo_id = str(value).strip()
++        return self._repo_id
++
+     def head_sha(self) -> str:
+         extra = {"If-None-Match": self._etag} if self._etag else None
+         status, hdrs, body = self._get(f"/repos/{self.repo}/commits/{self.branch}", extra)
+diff --git a/skill_collab_watcher/orchestrator.py b/skill_collab_watcher/orchestrator.py
+--- a/skill_collab_watcher/orchestrator.py	2026-11-14 21:51:52.221241200 +0900
++++ b/skill_collab_watcher/orchestrator.py	2026-11-14 23:23:33.243042300 +0900
+@@ -437,6 +437,18 @@
+         store.log_event_once("APPROVAL_UNBOUND", processing_key=final.processing_key,
+                               detail="this transport has no pinned source revision")
+         return GroupResult(retry=True)
++    trust = policy.trust_root
++    if trust is not None:
++        try:
++            remote_repo_id = transport.repository_id()
++        except (TransportError, AuthRequired) as exc:
++            store.log_event_once("APPROVAL_REPO_ID_UNVERIFIABLE", processing_key=final.processing_key,
++                                 detail=f"the repository identity could not be read from the provider: {_describe(exc)}")
++            return GroupResult(retry=True)
++        if remote_repo_id is not None and remote_repo_id != str(trust.repo_id):
++            store.log_event_once("APPROVAL_REPO_ID_REMOTE_MISMATCH", processing_key=final.processing_key,
++                                 detail="the repository served by the provider is not the repository this trust root was issued for")
++            return GroupResult(retry=True)
+     try:
+         provider_time = transport.server_time()
+         check_clock(provider_time, datetime.now(timezone.utc))
+@@ -474,6 +486,71 @@
+     return None
+ 
+ 
++def _read_if_present(transport: Transport, path: str) -> bytes | None:
++    """Existence is asked with get_metadata (every transport answers None for a missing file); only then is it read."""
++    if transport.get_metadata(path) is None:
++        return None
++    return transport.download(path)[0]
++
++
++def _remote_result_published(transport: Transport, remote_root: str, final: ValidationResult) -> bool:
++    """True when the remote already holds a receipt or a result for THIS request id, revision and package. This is
++    independent of the local database: after the state is lost, an old approval would otherwise start the review again."""
++    root = remote_root.rstrip("/")
++    rid, rev = str(final.request_id), str(final.request_revision)
++    if not (SAFE_NAME.fullmatch(rid) and SAFE_NAME.fullmatch(rev)):
++        return False
++    receipt = _read_if_present(transport, f"{root}/receipts/{rid}/RECEIPT_{rev}.md")
++    if receipt is not None:
++        try:
++            data = json.loads(receipt.decode("utf-8"))
++        except (ValueError, UnicodeDecodeError):
++            data = None
++        if (isinstance(data, dict) and data.get("request_id") == rid and data.get("request_revision") == rev
++                and data.get("package_sha256") == final.package_sha256):
++            return True
++    result = _read_if_present(transport, f"{root}/reviews/{rid}/REVIEW_RESULT_{rev}.md")
++    if result is not None:
++        text = result.decode("utf-8", "replace")
++        return (f"package_sha256: {_yaml(final.package_sha256)}\n" in text
++                and f"responds_to_request_id: {_yaml(rid)}\n" in text)
++    return False
++
++
++def _reserve_dispatch(transport: Transport, store: StateStore, remote_root: str, final: ValidationResult) -> str:
++    """Write the durable remote record that a paid review is about to start for THIS request id and revision.
++    RESERVED: written now. ALREADY_OURS: the record exists, names this very job, and the local history shows an earlier
++    attempt that was refused before any work (the usage-limit retry). FOREIGN: a record exists that this watcher has no
++    history of (the local state was lost): the earlier run may have been paid, so no model is started. ERROR: the record
++    could not be written or read, so no model is started either."""
++    rid, rev = str(final.request_id), str(final.request_revision)
++    if not (SAFE_NAME.fullmatch(rid) and SAFE_NAME.fullmatch(rev)):
++        return "ERROR"
++    path = f"{remote_root.rstrip('/')}/dispatch/{rid}/DISPATCH_{rev}.md"
++    record = json.dumps({"schema": "COWORK_DISPATCH_RESERVATION_V1", "processing_key": final.processing_key,
++                         "request_id": rid, "request_revision": rev, "package_sha256": final.package_sha256,
++                         "reserved_at": datetime.now(timezone.utc).isoformat(), "watcher_version": __version__},
++                        ensure_ascii=False)
++    try:
++        if transport.get_metadata(path) is None:
++            try:
++                transport.upload(path, record.encode("utf-8"), mode="add")
++                return "RESERVED"
++            except UploadConflict:
++                pass                                   # written by someone between our check and our write: judge it below
++        data = transport.download_latest(path)[0]
++    except (TransportError, AuthRequired):
++        return "ERROR"
++    try:
++        marker = json.loads(data.decode("utf-8"))
++    except (ValueError, UnicodeDecodeError):
++        return "FOREIGN"
++    job = store.get_job(final.processing_key)
++    ours = (isinstance(marker, dict) and marker.get("processing_key") == final.processing_key
++            and marker.get("package_sha256") == final.package_sha256 and job is not None and job.attempt_count >= 2)
++    return "ALREADY_OURS" if ours else "FOREIGN"
++
++
+ def _check_ceilings(store: StateStore, policy: LocalPolicy, final: ValidationResult) -> GroupResult | None:
+     """Rolling 24 h ceilings for unattended use. Dispatches whose cost was never
+     recorded count at their cap (see StateStore.spend_since)."""
+@@ -572,6 +649,16 @@
+         if gate is not None:
+             return gate
+ 
++    try:
++        already_published = _remote_result_published(transport, remote_root, final)
++    except TransportError as exc:
++        store.log_event_once("TRANSPORT_ERROR", processing_key=final.processing_key, detail=_describe(exc))
++        return GroupResult(retry=True)
++    if already_published:
++        store.log_event_once("REMOTE_RESULT_EXISTS", processing_key=final.processing_key,
++                             detail=f"{request_id}: a result for this exact request and package is already published; not reviewed again")
++        return GroupResult()
++
+     if existing is not None:
+         if existing.package_sha256 != final.package_sha256:
+             store.update_job_state(final.processing_key, JobState.CONFLICT,
+@@ -653,6 +740,20 @@
+         store.log_event("FAILED", processing_key=final.processing_key, detail=f"snapshot: {_describe(exc)}")
+         return GroupResult()
+ 
++    reservation = _reserve_dispatch(transport, store, remote_root, final)
++    if reservation == "ERROR":
++        store.update_job_state(final.processing_key, JobState.VALIDATED, last_error="dispatch reservation could not be written")
++        store.log_event_once("DISPATCH_RESERVATION_FAILED", processing_key=final.processing_key,
++                             detail="the remote dispatch record could not be written or read; no model is started and the request waits")
++        return GroupResult(retry=True)
++    if reservation == "FOREIGN":
++        store.update_job_state(final.processing_key, JobState.REVIEW_UNCERTAIN,
++                               last_error="a remote dispatch record exists without local history")
++        store.log_event("REVIEW_UNCERTAIN", processing_key=final.processing_key,
++                        detail="a dispatch record for this request already exists remotely but this watcher has no history of it; "
++                               "the earlier review may have run and been paid, so no model is started")
++        return GroupResult()
++
+     run_policy_ref = str(final.fields["request"]["run_policy_ref"])
+     budget = policy.run_budgets_usd.get(run_policy_ref)
+     effort = policy.run_efforts.get(run_policy_ref)
+diff --git a/skill_collab_watcher/review_runner.py b/skill_collab_watcher/review_runner.py
+--- a/skill_collab_watcher/review_runner.py	2026-11-14 21:51:52.222241600 +0900
++++ b/skill_collab_watcher/review_runner.py	2026-11-14 23:23:33.244042200 +0900
+@@ -191,7 +191,10 @@
+     """subprocess.run's own timeout handling ends only the first process. A reviewer started through a .cmd wrapper
+     (or one that spawns helpers) would keep running beside a watcher that believes it ended."""
+     if os.name == "nt":
+-        subprocess.run(["taskkill", "/F", "/T", "/PID", str(proc.pid)], capture_output=True, check=False)
++        killed = subprocess.run(["taskkill", "/F", "/T", "/PID", str(proc.pid)], capture_output=True, check=False)
++        if killed.returncode not in (0, 128):          # 128: the process had already exited
++            import logging
++            logging.getLogger(__name__).warning("taskkill of the reviewer process tree returned %s", killed.returncode)
+     try:
+         proc.kill()
+     except OSError:
+diff --git a/skill_collab_watcher/state_store.py b/skill_collab_watcher/state_store.py
+--- a/skill_collab_watcher/state_store.py	2026-11-14 21:51:52.225239900 +0900
++++ b/skill_collab_watcher/state_store.py	2026-11-14 23:23:33.247042300 +0900
+@@ -392,23 +392,10 @@
+             keys = [r[0] for r in cur.fetchall()]
+         return [j for k in keys if (j := self.get_job(k)) is not None]
+ 
+-    def find_logical_job(self, request_id: str, request_revision: str, package_sha256: str) -> JobRecord | None:
+-        """Policy-independent duplicate lookup (B-5). The processing key keeps
+-        its local_policy_revision suffix for compatibility, so a policy change
+-        yields a new key; this finds the earlier job for the same request
+-        revision and package, preferring COMPLETED."""
+-        with closing(self.conn.execute(
+-            "SELECT processing_key FROM jobs WHERE request_id=? AND request_revision=? AND package_sha256=? "
+-            "ORDER BY CASE state WHEN 'COMPLETED' THEN 0 ELSE 1 END, updated_at DESC LIMIT 1",
+-            (request_id, request_revision, package_sha256),
+-        )) as cur:
+-            row = cur.fetchone()
+-        return self.get_job(row[0]) if row else None
+-
+     def find_dispatched_logical_job(self, request_id: str, request_revision: str, package_sha256: str,
+                                     states: tuple[str, ...]) -> JobRecord | None:
+         """A job for the same request revision and package, under ANY policy revision, that has already been
+-        dispatched (or finished). Unlike find_logical_job it ignores never-dispatched rows, so an old pending row
++        dispatched (or finished). Unlike a plain lookup it ignores never-dispatched rows, so an old pending row
+         cannot hide a reviewed request (independent review R1, finding 1)."""
+         marks = ",".join("?" for _ in states)
+         with closing(self.conn.execute(
+diff --git a/skill_collab_watcher/transport_base.py b/skill_collab_watcher/transport_base.py
+--- a/skill_collab_watcher/transport_base.py	2026-11-14 21:51:52.226240300 +0900
++++ b/skill_collab_watcher/transport_base.py	2026-11-14 23:23:33.247042300 +0900
+@@ -106,6 +106,11 @@
+         what this watcher just wrote."""
+         return self.download(path)
+ 
++    def repository_id(self) -> str | None:
++        """The provider's own identifier of the repository (GitHub: the numeric id), or None for a provider that has no
++        such concept. Approvals are only honoured when this equals the id the trust root was issued for."""
++        return None
++
+     def pin_current(self) -> str | None:
+         """Freeze reads to one revision until unpin(). Providers without
+         revisions (Dropbox) keep this no-op."""
+diff --git a/tests/fake_github.py b/tests/fake_github.py
+--- a/tests/fake_github.py	2026-11-14 21:51:52.243247000 +0900
++++ b/tests/fake_github.py	2026-11-14 23:23:33.262412800 +0900
+@@ -33,6 +33,7 @@
+         self._head: str | None = None
+         self._count = 0
+         self.calls: list[tuple[str, str]] = []
++        self.repo_id = "repo-synthetic-1"
+         self._inject: list[dict] = []
+         self._corrupt: set[str] = set()
+         self.commit({})
+@@ -101,7 +102,7 @@
+             return 404, {}, j({})
+         rest = path[len(base):]
+         if method == "GET" and rest == "":
+-            return 200, {}, j({"full_name": REPO})
++            return 200, {}, j({"full_name": REPO, "id": self.repo_id} if self.repo_id is not None else {"full_name": REPO})
+         if method == "GET" and rest.startswith("/commits/"):
+             etag = f'"{self._head}"'
+             if headers.get("If-None-Match") == etag:
+diff --git a/tests/test_cli_entrypoint_e2e.py b/tests/test_cli_entrypoint_e2e.py
+--- a/tests/test_cli_entrypoint_e2e.py	2026-11-14 21:51:52.245240500 +0900
++++ b/tests/test_cli_entrypoint_e2e.py	2026-11-14 23:23:33.264382100 +0900
+@@ -195,7 +195,7 @@
+ 
+ def test_a_failed_result_upload_never_recalls_the_reviewer_and_the_upload_is_retried(e2e):
+     sha = e2e.publish()
+-    e2e.fake.inject("PUT", "/contents/", status=500, times=100)     # the result cannot be written
++    e2e.fake.inject("PUT", "/contents/collab/reviews/", status=500, times=100)     # the result cannot be written
+     e2e.scan()
+     assert e2e.model_calls == 1
+     assert not e2e.repo_has("reviews/REQ-1/REVIEW_RESULT_1.md")
+@@ -209,6 +209,18 @@
+     s.close()
+ 
+ 
++def test_when_nothing_can_be_written_no_model_is_started_and_the_request_waits(e2e):
++    """v0.2.19: the remote dispatch reservation is written before the model starts; no write access means no paid review."""
++    e2e.publish()
++    e2e.fake.inject("PUT", "/contents/", status=403, times=100)
++    for _ in range(2):
++        e2e.scan()
++    assert e2e.model_calls == 0
++    e2e.fake._inject.clear()
++    e2e.scan()
++    assert e2e.model_calls == 1
++
++
+ def test_the_old_provider_history_is_kept_and_a_second_active_provider_is_refused(e2e, tmp_path):
+     db_dir = e2e.state_dir
+     db_dir.mkdir(parents=True, exist_ok=True)
+diff --git a/tests/test_no_model_calls.py b/tests/test_no_model_calls.py
+--- a/tests/test_no_model_calls.py	2026-11-14 21:51:52.249243300 +0900
++++ b/tests/test_no_model_calls.py	2026-11-14 23:23:33.267381800 +0900
+@@ -187,6 +187,8 @@
+     original_upload = transport.upload
+ 
+     def failing_upload(path, data, mode="add"):
++        if "/dispatch/" in path:
++            return original_upload(path, data, mode)      # the reservation must succeed, or no model starts at all
+         raise TransportError("simulated upload failure")
+ 
+     transport.upload = failing_upload
+diff --git a/tests/test_phase5_signer.py b/tests/test_phase5_signer.py
+--- a/tests/test_phase5_signer.py	2026-11-14 21:51:52.258239100 +0900
++++ b/tests/test_phase5_signer.py	2026-11-14 23:23:33.276412800 +0900
+@@ -164,6 +164,7 @@
+     """Commit A holds REQUEST and package; the tool signs against that commit; commit B holds READY, approval
+     and pin. The watcher, with the trust root the tool built, runs the review once and never again."""
+     http = FakeGitHub()
++    http.repo_id = REPO          # the server's repository id must equal the id the signer's trust root was issued for
+     commit_a = http.commit({rp("requests/REQ-1/REQUEST.md"): kit.request, rp("packages/test.zip"): kit.package})
+     assert kit.sign(**{"source-commit": commit_a}) == 0
+     http.commit({rp("requests/REQ-1/READY.md"): kit.ready,
+diff --git a/tests/test_v018_gates.py b/tests/test_v018_gates.py
+--- a/tests/test_v018_gates.py	1970-01-01 09:00:00.000000000 +0900
++++ b/tests/test_v018_gates.py	2026-11-14 23:23:33.285381500 +0900
+@@ -0,0 +1,145 @@
++"""v0.2.18 gates (synthetic data; no model, no real GitHub):
++N1  a result already published for this exact request and package is never reviewed again, even after the local state was lost;
++N2  an approval is only honoured when the provider's own repository id equals the id the trust root was issued for (fail closed);
++Q8  usage-limit wait -> restart -> other policy revision -> rollback -> cursor loss -> a second process -> state loss: one review."""
++from __future__ import annotations
++
++import pytest
++
++
++from bundle import ROOT, github_policy, make_transport, publish_bundle  # noqa: E402
++from skill_collab_watcher import orchestrator  # noqa: E402
++from skill_collab_watcher.models import JobState  # noqa: E402
++from skill_collab_watcher.state_store import StateStore  # noqa: E402
++from skill_collab_watcher.transport_base import AuthRequired, TransportError  # noqa: E402
++from test_phase1_github import has_event, run  # noqa: E402
++from test_usage_limit_resume import Sequence, clear_hold, limited  # noqa: E402
++
++
++def lose_state(env):
++    env.store.close()
++    for suffix in ("", "-wal", "-shm"):
++        p = env.tmp / f"state.sqlite3{suffix}"
++        if p.exists():
++            p.unlink()
++    env.store = StateStore(env.tmp / "state.sqlite3")
++
++
++def published(env):
++    files = env.http.files()
++    return [p for p in files if p.endswith("RECEIPT_1.md") or p.endswith("REVIEW_RESULT_1.md")]
++
++
++# --- N1 -------------------------------------------------------------------------------------------------------------------
++
++def test_n1_after_total_state_loss_a_published_result_is_not_reviewed_again(github_env):
++    publish_bundle(github_env.http)
++    run(github_env, policy=github_policy())
++    assert github_env.runner.calls == 1 and len(published(github_env)) == 2
++    lose_state(github_env)                                          # new machine / wiped database / restored old backup
++    run(github_env, policy=github_policy())
++    assert github_env.runner.calls == 1
++    assert has_event(github_env.store, "REMOTE_RESULT_EXISTS")
++
++
++def test_n1_a_result_without_its_receipt_(github_env):
++    """The watcher uploads the result first and the receipt second: a crash in between, then state loss, must not start a review."""
++    publish_bundle(github_env.http)
++    run(github_env, policy=github_policy())
++    for path in [p for p in published(github_env) if p.endswith("RECEIPT_1.md")]:
++        github_env.http.files().pop(path)
++    lose_state(github_env)
++    run(github_env, policy=github_policy())
++    assert github_env.runner.calls == 1
++    assert has_event(github_env.store, "REMOTE_RESULT_EXISTS")
++
++
++def test_n1_a_failure_reading_the_remote_leaves_the_request_waiting_without_a_review(github_env, monkeypatch):
++    publish_bundle(github_env.http)
++
++    def boom(*a, **k):
++        raise TransportError("synthetic outage")
++
++    monkeypatch.setattr(orchestrator, "_remote_result_published", boom)
++    run(github_env, policy=github_policy())
++    assert github_env.runner.calls == 0
++
++
++# --- N2 -------------------------------------------------------------------------------------------------------------------
++
++def test_n2_a_matching_server_repository_id_lets_the_review_run(github_env):
++    publish_bundle(github_env.http)
++    run(github_env, policy=github_policy())
++    assert github_env.runner.calls == 1
++
++
++def test_n2_another_repository_id_blocks_the_review(github_env):
++    publish_bundle(github_env.http)
++    github_env.http.repo_id = "some-other-repository"
++    run(github_env, policy=github_policy())
++    assert github_env.runner.calls == 0
++    assert has_event(github_env.store, "APPROVAL_REPO_ID_REMOTE_MISMATCH")
++
++
++def test_n2_a_server_that_reports_no_id_blocks_the_review(github_env):
++    publish_bundle(github_env.http)
++    github_env.http.repo_id = None
++    run(github_env, policy=github_policy())
++    assert github_env.runner.calls == 0
++    assert has_event(github_env.store, "APPROVAL_REPO_ID_UNVERIFIABLE")
++
++
++@pytest.mark.parametrize("error", [AuthRequired("403 for this credential"), TransportError("timeout")])
++def test_n2_an_unreadable_identity_blocks_the_review(github_env, monkeypatch, error):
++    from skill_collab_watcher.github_transport import GitHubTransport
++
++    publish_bundle(github_env.http)
++
++    def fail(self):
++        raise error
++
++    monkeypatch.setattr(GitHubTransport, "repository_id", fail)
++    run(github_env, policy=github_policy())
++    assert github_env.runner.calls == 0
++    assert has_event(github_env.store, "APPROVAL_REPO_ID_UNVERIFIABLE")
++
++
++# --- Q8 -------------------------------------------------------------------------------------------------------------------
++
++def test_q8_usage_limit_restart_policy_change_rollback_cursor_loss_second_process_and_state_loss_give_one_review(github_env):
++    github_env.runner = Sequence([limited("BEFORE_START", 120)])
++    publish_bundle(github_env.http)                                             # approval for policy revision 1
++    run(github_env, policy=github_policy(local_policy_revision="1"))
++    assert github_env.runner.calls == 1                                         # refused before any model work
++    assert github_env.store.get_counter(orchestrator.USAGE_HOLD_COUNTER) > 0
++
++    github_env.store.close()                                                    # restart while the window is exhausted
++    github_env.store = StateStore(github_env.tmp / "state.sqlite3")
++    run(github_env, policy=github_policy(local_policy_revision="1"))
++    assert github_env.runner.calls == 1
++
++    publish_bundle(github_env.http, payload_changes={"local_policy_revision": "2", "nonce": "synthetic-nonce-q8-rev2-0001"})
++    run(github_env, policy=github_policy(local_policy_revision="2"))            # operator moved to another policy revision
++    assert github_env.runner.calls == 1
++
++    publish_bundle(github_env.http, payload_changes={"nonce": "synthetic-nonce-q8-back-0002"})   # and back
++    github_env.store.conn.execute("DELETE FROM cursors")                        # with a lost cursor
++    other = StateStore(github_env.tmp / "state.sqlite3")                       # a second process on the same database
++    try:
++        orchestrator.run_scan_cycle(make_transport(github_env.http), other, github_policy(local_policy_revision="1"), github_env.runner,
++                                    allowed=True, snapshot_root=github_env.snapshot_root, review_run_dir=github_env.review_run_dir,
++                                    remote_root=ROOT, exclusive=False)
++    finally:
++        other.close()
++    run(github_env, policy=github_policy(local_policy_revision="1"))
++    assert github_env.runner.calls == 1                                         # still waiting: nothing started in the meantime
++
++    clear_hold(github_env)                                                      # the window is back
++    run(github_env, policy=github_policy(local_policy_revision="1"))
++    assert github_env.runner.calls == 2                                         # exactly one real review
++    assert [j for (j,) in github_env.store.conn.execute("select state from jobs where state=?", (JobState.COMPLETED.value,))] == [JobState.COMPLETED.value]
++
++    lose_state(github_env)                                                      # finally: everything local is gone
++    publish_bundle(github_env.http, payload_changes={"nonce": "synthetic-nonce-q8-last-0003"})
++    run(github_env, policy=github_policy(local_policy_revision="1"))
++    assert github_env.runner.calls == 2
+diff --git a/tests/test_v019_crash_matrix.py b/tests/test_v019_crash_matrix.py
+--- a/tests/test_v019_crash_matrix.py	1970-01-01 09:00:00.000000000 +0900
++++ b/tests/test_v019_crash_matrix.py	2026-11-14 23:23:33.286381400 +0900
+@@ -0,0 +1,184 @@
++"""v0.2.19: a durable REMOTE dispatch reservation is written before the model starts. Crash injection at every step of a dispatch,
++combined with what happens to the local state afterwards (kept, lost completely, or an OLD backup restored). The invariant:
++the model is never started a second time for one request id and revision, and no job disappears. Synthetic only: no model, no GitHub."""
++from __future__ import annotations
++
++import shutil
++import sqlite3
++
++import pytest
++
++from bundle import github_policy, publish_bundle
++from skill_collab_watcher import orchestrator
++from skill_collab_watcher.fake_runner import FakeReviewRunner
++from skill_collab_watcher.models import JobState
++from skill_collab_watcher.state_store import StateStore
++from skill_collab_watcher.transport_base import TransportError
++from test_phase1_github import has_event, run
++
++
++class Crash(BaseException):
++    """The process dies here (BaseException: no `except Exception` in the watcher may absorb it)."""
++
++
++class CrashingRunner(FakeReviewRunner):
++    def __init__(self):
++        super().__init__()
++        self.crash_in_run = False
++
++    def run(self, *a, **k):
++        self.calls += 1
++        if self.crash_in_run:
++            raise Crash("died during the model call")
++        return self.canned_result
++
++
++def lose_state(env):
++    env.store.close()
++    for suffix in ("", "-wal", "-shm"):
++        p = env.tmp / f"state.sqlite3{suffix}"
++        if p.exists():
++            p.unlink()
++    env.store = StateStore(env.tmp / "state.sqlite3")
++
++
++def restart(env):
++    env.store.close()
++    env.store = StateStore(env.tmp / "state.sqlite3")
++
++
++def remote_files(env):
++    return [p for p in env.http.files() if "REQ-1" in p]
++
++
++# (name, how the crash is injected, model starts at the moment of the crash)
++POINTS = ["before_reservation", "after_reservation", "during_model", "before_result_saved", "before_publish", "publish_fails", "completed"]
++EXPECTED_STARTS = {  # total model starts after the crash and the recovery scans: (state kept, state lost)
++    "before_reservation": (0, 1),   # nothing was recorded anywhere and no model ran: a fresh dispatch is correct after state loss
++    "after_reservation": (0, 0),
++    "during_model": (1, 1),
++    "before_result_saved": (1, 1),
++    "before_publish": (1, 1),
++    "publish_fails": (1, 1),
++    "completed": (1, 1),
++}
++
++
++def inject(point, env, monkeypatch):
++    if point == "before_reservation":
++        def boom(*a, **k):
++            raise Crash
++        monkeypatch.setattr(orchestrator, "_reserve_dispatch", boom)
++    elif point == "after_reservation":
++        real = orchestrator._reserve_dispatch
++
++        def after(*a, **k):
++            real(*a, **k)
++            raise Crash
++        monkeypatch.setattr(orchestrator, "_reserve_dispatch", after)
++    elif point == "during_model":
++        env.runner.crash_in_run = True
++    elif point == "before_result_saved":
++        def boom(*a, **k):
++            raise Crash
++        monkeypatch.setattr(orchestrator, "_save_result_locally", boom)
++    elif point == "before_publish":
++        def boom(*a, **k):
++            raise Crash
++        monkeypatch.setattr(orchestrator, "_publish_result", boom)
++    elif point == "publish_fails":
++        def fail(*a, **k):
++            raise TransportError("synthetic outage while publishing")
++        monkeypatch.setattr(orchestrator, "_publish_result", fail)
++
++
++@pytest.mark.parametrize("state_after", ["kept", "lost"])
++@pytest.mark.parametrize("point", POINTS)
++def test_a_crash_at_any_step_never_starts_the_model_twice(github_env, monkeypatch, point, state_after):
++    github_env.runner = CrashingRunner()
++    publish_bundle(github_env.http)
++    inject(point, github_env, monkeypatch)
++    if point in ("publish_fails", "completed"):
++        run(github_env, policy=github_policy())                       # no crash: the cycle ends normally
++    else:
++        with pytest.raises(Crash):
++            run(github_env, policy=github_policy())
++    monkeypatch.undo()
++    github_env.runner.crash_in_run = False
++
++    if state_after == "lost":
++        lose_state(github_env)
++    else:
++        restart(github_env)
++    for _ in range(3):                                                # recovery: several scans, as a restarted watcher would do
++        run(github_env, policy=github_policy(), exclusive=True)
++        restart(github_env) if state_after == "kept" else None
++
++    assert github_env.runner.calls == EXPECTED_STARTS[point][0 if state_after == "kept" else 1]
++    jobs = github_env.store.conn.execute("select state from jobs").fetchall()
++    if state_after == "kept" and point in ("during_model", "before_result_saved", "after_reservation", "before_reservation"):
++        assert [j[0] for j in jobs] == [JobState.REVIEW_UNCERTAIN.value], "an interrupted job is sealed, never lost and never repeated"
++    if state_after == "kept" and point in ("before_publish", "publish_fails"):
++        # the result is published or stays publishable; either way no second model start (asserted above)
++        assert [j[0] for j in jobs] in ([JobState.UPLOAD_PENDING.value], [JobState.COMPLETED.value], [JobState.RESULT_SAVED.value])
++    if state_after == "lost" and point in ("after_reservation", "during_model", "before_result_saved", "before_publish", "publish_fails"):
++        assert has_event(github_env.store, "REVIEW_UNCERTAIN") or has_event(github_env.store, "REMOTE_RESULT_EXISTS"), "the doubt is recorded"
++
++
++def test_restoring_an_old_backup_after_the_review_does_not_repeat_it(github_env):
++    publish_bundle(github_env.http)
++    github_env.store.conn.commit()
++    backup = github_env.tmp / "old_backup.sqlite3"
++    src, dst = sqlite3.connect(github_env.tmp / "state.sqlite3"), sqlite3.connect(backup)
++    src.backup(dst)                                                   # a backup taken BEFORE the review
++    src.close(), dst.close()
++    run(github_env, policy=github_policy())
++    assert github_env.runner.calls == 1
++    github_env.store.close()
++    for suffix in ("-wal", "-shm"):
++        p = github_env.tmp / f"state.sqlite3{suffix}"
++        if p.exists():
++            p.unlink()
++    shutil.copyfile(backup, github_env.tmp / "state.sqlite3")         # the isolated restore of the old backup
++    github_env.store = StateStore(github_env.tmp / "state.sqlite3")
++    run(github_env, policy=github_policy(), exclusive=True)
++    run(github_env, policy=github_policy(), exclusive=True)
++    assert github_env.runner.calls == 1
++
++
++def test_a_reservation_that_cannot_be_written_starts_no_model_and_the_request_waits(github_env, monkeypatch):
++    publish_bundle(github_env.http)
++    github_env.http.inject("PUT", "/contents/collab/dispatch/", status=403, times=100)
++    run(github_env, policy=github_policy())
++    assert github_env.runner.calls == 0
++    assert has_event(github_env.store, "DISPATCH_RESERVATION_FAILED")
++    assert [j[0] for j in github_env.store.conn.execute("select state from jobs").fetchall()] == [JobState.VALIDATED.value]
++    github_env.http._inject.clear()
++    run(github_env, policy=github_policy())
++    assert github_env.runner.calls == 1                               # once writing works, the one review runs
++
++
++def test_a_reservation_that_cannot_be_read_back_starts_no_model(github_env, monkeypatch):
++    publish_bundle(github_env.http)
++    github_env.http.inject("PUT", "/contents/collab/dispatch/", status=422, times=100)   # "already exists" but unreadable by this watcher
++    github_env.http.inject("GET", "/contents/collab/dispatch/", status=500, times=100)
++    run(github_env, policy=github_policy())
++    assert github_env.runner.calls == 0
++
++
++def test_a_foreign_reservation_seals_the_request_as_uncertain_without_a_model_call(github_env):
++    publish_bundle(github_env.http)
++    from fake_github import rp
++    github_env.http.commit({rp("dispatch/REQ-1/DISPATCH_1.md"): b'{"processing_key": "someone-else", "package_sha256": "x"}'})
++    run(github_env, policy=github_policy())
++    assert github_env.runner.calls == 0
++    assert has_event(github_env.store, "REVIEW_UNCERTAIN")
++    assert [j[0] for j in github_env.store.conn.execute("select state from jobs").fetchall()] == [JobState.REVIEW_UNCERTAIN.value]
++
++
++def test_the_reservation_is_written_exactly_once_per_review(github_env):
++    publish_bundle(github_env.http)
++    run(github_env, policy=github_policy())
++    run(github_env, policy=github_policy())
++    puts = [u for m, u in github_env.http.calls if m == "PUT" and "/dispatch/" in u]
++    assert len(puts) == 1 and any(p.endswith("DISPATCH_1.md") for p in remote_files(github_env))
