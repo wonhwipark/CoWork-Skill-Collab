@@ -1,5 +1,12 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 기존 PAT 검증·publish-only 사용자 실행 지시 및 Windows 원샷 인계 (2026-11-14 KST)
+- 사용자 "pat 이미 있어" 이후 "그래진행하자"에 따라, **재발급 선행 요구 폐기 / 기존 보유 PAT의 적합성 검증 우선** 실행 방향 확정. PRIVATE `main` 인계: [GPT_EXISTING_PAT_VERIFY_AND_PUBLISH_ONLY_ONE_SHOT_r0001_20261114.md](GPT_EXISTING_PAT_VERIFY_AND_PUBLISH_ONLY_ONE_SHOT_r0001_20261114.md), commit `de67235b03052baffe4938c98b1a7ab0d038b528`, 원격 readback PASS.
+- Windows Claude Code가 로컬 기존 토큰(이전 검사에서 본 read-only fine-grained 또는 classic 이외 별도 PAT 가능)을 **비밀 비노출·실서버 scope/만료/저장소 제한 검증**. 적격 `wonhwipark/CoWork-Skill-Collab` 단일 repo fine-grained Contents R/W + 만료 ≤90일 토큰이 있으면 재발급 불필요. 사용자 인증 조치가 필요할 때만 `ACTION_REQUIRED_TOKEN_SCOPE_OR_EXPIRY`.
+- 적격 시 기존 로컬 설치 도구 점검→Windows 보호 설치(운영 watcher Task/계정/DB 불변)→격리 GitHub 임시 브랜치에서 write/readback/cleanup→이미 원격 게시된 `REQ-COWORK-V0217-R2-20261114` 리뷰·영수증의 **동일 바이트/idempotent publish-only 상태 정산**. **모델 호출 신규 0, 중복 게시/덮어쓰기 0**을 확인해야 함.
+- **이 세션의 실제 Windows 실행 상태:** `PAT_ELIGIBILITY=NOT_VERIFIED`, `HOST_INSTALL=NOT_RUN`, `WRITE_PROBE=NOT_RUN`, `PUBLISH_ONLY_RECONCILE=NOT_RUN`, `WINDOWS_HANDOFF=POSTED`. 이 GitHub 문서 작성만으로 Windows Claude Code/감시기/유료 리뷰가 자동 시작하지 않음.
+- v0.2.17 R2 정적 리뷰 PASS_WITH_FINDINGS, SHADOW 부분 PASS, DB 백업/격리 복구 호스트 보고 유지. 남은 운영 `cryptography`, Notifier 중복, N1/N2, 복합 시험, 미정산 요청 및 최종 LIVE 승인 별개. `ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER`. 기존 보고의 "새 PAT 필요"는 당시 호스트가 검출한 자격의 부적합 진술이며 최신 사용자 보유 PAT에 대한 실측은 아님. 이전 이력은 아래 보존.
+
 ## 사용자 확인 — PAT 이미 보유 (2026-11-14 KST, 후속 정정)
 - **사용자 확인:** "pat 이미 있어". GPT는 이전의 **'새 PAT를 반드시 생성해야 함' 안내를 정정**하고, **기존 PAT 검증을 우선**한다. `PAT_EXISTENCE=USER_REPORTED`, `PAT_ELIGIBILITY=NOT_VERIFIED`, `ENGINE_WRITE_TOKEN_INSTALLED=NOT_VERIFIED`.
 - **호스트 이전 관찰과 구분:** 2026-11-14 Claude B 결과에선 감시기 read-only fine-grained PAT와 classic/무기한 쓰기 토큰만 관측됐으므로, 사용자 보유 토큰이 **동일한 토큰인지 / 별도 fine-grained 쓰기 PAT인지 / 현재 권한·만료·스코프가 충족되는지**를 Windows에서 값 비노출 검증할 것. 기존 토큰이 PRIVATE 단일 repo `wonhwipark/CoWork-Skill-Collab` Contents Read/Write, 허용 만료, 안전 로컬 보관 조건을 만족하면 **새 발급 불필요**. 기존 classic 광역 토큰을 조건 검증 없이 엔진에 쓰거나 새 발급을 강요하지 말 것.
