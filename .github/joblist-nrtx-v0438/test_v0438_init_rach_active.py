@@ -7,7 +7,7 @@ import tempfile
 from unittest import mock
 
 ROOT = Path(__file__).resolve().parents[1]
-WORKER = ROOT / "scripts" / "nr_tx_knowledge_linux_job.py"
+WORKER = ROOT / "scripts" / "nrtx_init_rach_linux_job.py"
 spec = importlib.util.spec_from_file_location("nr_tx_knowledge_worker", WORKER)
 worker = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(worker)
