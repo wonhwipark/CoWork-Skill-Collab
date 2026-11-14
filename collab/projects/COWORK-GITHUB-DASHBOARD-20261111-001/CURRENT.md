@@ -1,5 +1,15 @@
 # COWORK-GITHUB-DASHBOARD-20261111-001 — CURRENT
 
+## 인계·리뷰 분리 표시 / MSC B 첫 등록 (2026-11-14 KST)
+- **CURRENT:** PUBLIC Executive v4에 별도 인계·리뷰 섹션 구현. 첫 항목: 공개 MSC B 뷰어 r0001 설계 인계. `HANDOFF_STAGE=PUBLISHED`, `INDEPENDENT_REVIEW=NOT_RUN`; 실제 리뷰 실행·결과·판정·후속 반영은 완료로 간주하지 않음.
+- **표시 구조:** 업무별 Work 요약은 유지. 그 아래 독립된 인계 패널에서 제목, 현재 단계, 5단계 흐름, 근거 기준일, 리뷰 상태, 다음 조치, 정확한 PUBLIC 원문 링크를 표시. 모바일 1열 적응형 및 44px 이상 링크 터치 영역 지원. 원문 URL: https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_KNOWLEDGE_MSC_B_VIEWER_GPT_REVIEW_HANDOFF_r0001_20261114_KST.md
+- **데이터 경로:** PRIVATE `collab/dashboard/handoff_registry.json` → `public_sync.py`의 정형 ID/단계·고정 PUBLIC 허용목록 검증 → 기존 PUBLIC `status.json.handoffs` → `status.js` 검증·동적 표시. PRIVATE registry만 변경해도 Action이 재생성하도록 workflow path 등록. 미승인 인계 자동 공개/Work 자동 생성 금지.
+- **PUBLIC UI 커밋:** HTML `9dd9bda1114ca63ed65c430014bd5591117cfa44`, JS `37fff3b68af81d7a2fd1e88b329a2fdcbe3a48ba` + JS 날짜 검증 수정 `1613434a1c930718f284ee8ae3f2665fd92924b3`.
+- **PRIVATE 구현 커밋:** exporter `3958f19954fbb5b52591b092f1b63ca5cde10433`, registry `0b6b23cbbf828f6a87382a9cc85040d0d6f6d8c0`, workflow `a2040e0647c1710f2fe9a74f7a4b3077e87a796a`, 테스트 `7cc69716a0b68c126d4c4f9b51dbb681b03ecee8`.
+- **원격 검증:** PUBLIC HTML 파일 인계 패널 존재 PASS; JS `new Function` 구문 검사 PASS; PUBLIC `status.json` 원격 재조회 PASS — Git blob `76a2e66aa16108b949e7772b8b1a92a2f23713e6`, `handoffs`에 승인된 1건 `PUBLISHED`/독립 리뷰 미실행/정확한 공개 문서 URL 확인, 기존 PUBLIC Work 5개 유지. Registry/workflow/exporter/tests도 원격 readback 확인. 동적 실브라우저 UI·모바일 터치 E2E는 `NOT_RUN`, GitHub Pages URL HTTP 열람은 도구에서 접근 실패로 `NOT_VERIFIED`.
+- **안전/검증 경계:** 새 테스트 3건은 소스 등록 완료; Actions 전체 새 회귀 PASS와 Pages 최신 배포 결과는 실행 기록 별도 확인 전 `NOT_VERIFIED`. `ACTIVE_PROVIDER=NONE`, `CUTOVER=MIGRATION_NOT_CUTOVER`; 실제 reviewer/READY/운영 watcher/DB/스킬 ZIP 변경 없음.
+- **다음 한 동작:** 모바일에서 기본 Pages의 '인계·리뷰' 링크 및 MSC B 원문 열기 확인. 설계 리뷰 결과가 실제 접수·판정되면 증거 확인 후 registry 단계를 갱신하며 PUBLIC 자동 동기화.
+
 ## Executive v4 최종 배포 및 상태 자동 동기화 복구 검증 (2026-11-14 KST)
 - **현재 상태:** `DASHBOARD_UI=DEPLOYED`, `DASHBOARD_PAGES=PASS`, `PUBLIC_STATUS_SYNC=PASS`. 별개로 CoWork reviewer watcher는 `ACTIVE_PROVIDER=NONE`, 독립 리뷰는 현재 `PENDING_EXECUTION`, `CUTOVER=MIGRATION_NOT_CUTOVER`; 모델 호출·LIVE 변경 없음.
 - **PUBLIC Executive v4:** `wonhwipark/L1Work/main/docs/cowork-dashboard/index.html` / `status.js` / `README.md`; commit `a448f468c6b69b892c60e80f9b6143404949d96f`, [Pages #43533031969](https://github.com/wonhwipark/L1Work/actions/runs/43533031969) SUCCESS. 업무 목적·정형 자체시험/리뷰 상태·남은 작업을 먼저 표시하고 선택형 상세와 접힘형 진단을 적용.
