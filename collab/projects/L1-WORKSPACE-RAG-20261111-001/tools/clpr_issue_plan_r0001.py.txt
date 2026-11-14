@@ -1,0 +1,135 @@
+
+# CL/PR source grouping: read-only, fail-closed, no new Work or analyzer engine.
+_CLPR_ISSUE_KEY = re.compile(r"[A-Z][A-Z0-9]{1,14}-[0-9]{1,12}\Z")
+_CLPR_P4_REF = re.compile(r"p4:([A-Za-z0-9][A-Za-z0-9_-]{0,63}):([1-9][0-9]{0,10})\Z")
+_CLPR_PR_REF = re.compile(r"https://[A-Za-z0-9.-]+/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+/pull/[1-9][0-9]*\Z", re.I)
+
+
+def _clpr_ref(item: dict) -> str:
+    if not isinstance(item, dict):
+        raise ValueError("Change must be an object")
+    kind = item.get("type")
+    if kind == "p4":
+        authority, cl = item.get("server_alias"), str(item.get("cl") or "")
+        ref = f"p4:{authority}:{cl}"
+        if not _CLPR_P4_REF.fullmatch(ref):
+            raise ValueError("P4 source requires a safe server alias and positive CL")
+        return ref
+    if kind == "github_pr":
+        url = str(item.get("url") or "").rstrip("/")
+        if not _CLPR_PR_REF.fullmatch(url):
+            raise ValueError("GitHub PR must be a canonical HTTPS URL without credentials or extra path")
+        return url.lower()
+    raise ValueError("Source type must be p4 or github_pr")
+
+
+def plan_clpr_issue_cases(payload: dict) -> dict:
+    """Existing-work lookup is a separate read-only step; no implicit Work creation.
+
+    Group ONLY explicit Jira IDs and independently evidenced source cross-links.
+    Same module, author, filenames and close timestamps never imply same issue.
+    """
+    if not isinstance(payload, dict) or not isinstance(payload.get("changes"), list):
+        raise ValueError("Input must contain changes array")
+    changes = payload["changes"]
+    if not 1 <= len(changes) <= 200:
+        raise ValueError("Provide 1..200 source changes per plan")
+    entries: dict[str, dict] = {}
+    for item in changes:
+        ref = _clpr_ref(item)
+        if ref in entries:
+            raise ValueError("Duplicate source reference: " + ref)
+        jira = item.get("jira_keys", [])
+        if not isinstance(jira, list) or any(not isinstance(k, str) or
+                not _CLPR_ISSUE_KEY.fullmatch(k) for k in jira):
+            raise ValueError("Jira keys must be an explicit array of canonical issue IDs")
+        link_items = item.get("source_links", [])
+        if not isinstance(link_items, list):
+            raise ValueError("source_links must be an array")
+        links = []
+        for link in link_items:
+            if not isinstance(link, dict) or link.get("verified") is not True:
+                continue
+            other = str(link.get("ref") or "")
+            evidence = str(link.get("evidence_ref") or "")
+            if not evidence or len(evidence) > 512 or any(x in evidence for x in "\r\n"):
+                continue
+            if not (other.startswith("p4:") and _CLPR_P4_REF.fullmatch(other) or
+                    other.startswith("https://") and _CLPR_PR_REF.fullmatch(other)):
+                continue
+            links.append({"ref": other.lower() if other.startswith("https://") else other,
+                          "evidence_ref": evidence})
+        entries[ref] = {"ref": ref, "jira_keys": sorted(set(jira)), "source_links": links,
+                        "source_kind": item["type"], "claim_state": "UNKNOWN",
+                        "verification": "NOT_RUN", "landing_verified": False}
+    groups: list[dict] = []
+    assigned: set[str] = set()
+    jira_index: dict[str, set[str]] = {}
+    for ref, e in entries.items():
+        for key in e["jira_keys"]:
+            jira_index.setdefault(key, set()).add(ref)
+    # Explicit cross-reference may connect a Jira-less change, but never bridge two
+    # distinct Jira IDs. Multiple Jira groups can reference the same source.
+    for key in sorted(jira_index):
+        refs = set(jira_index[key])
+        for ref in list(refs):
+            for link in entries[ref]["source_links"]:
+                if link["ref"] in entries and not entries[link["ref"]]["jira_keys"]:
+                    refs.add(link["ref"])
+        for ref, row in entries.items():
+            if row["jira_keys"] or ref in refs:
+                continue
+            if any(link["ref"] in refs for link in row["source_links"]):
+                refs.add(ref)
+        groups.append({"issue_identity": "jira:" + key, "grouping": "EXPLICIT_JIRA_CANDIDATE",
+                       "source_refs": sorted(refs), "jira_keys": [key]})
+        assigned.update(refs)
+    # Verified cross-reference groups for Jira-less changes.
+    pending = set(entries) - assigned
+    while pending:
+        seed = sorted(pending)[0]
+        component = {seed}
+        # Deliberately only direct links; no loose transitive same-module inference.
+        for ref in sorted(pending - {seed}):
+            if (any(x["ref"] == ref for x in entries[seed]["source_links"]) or
+                    any(x["ref"] == seed for x in entries[ref]["source_links"])):
+                component.add(ref)
+        group_type = "EXPLICIT_LINK_CANDIDATE" if len(component) > 1 else "UNLINKED"
+        groups.append({"issue_identity": group_type.lower() + ":" + "|".join(sorted(component)),
+                       "grouping": group_type, "source_refs": sorted(component), "jira_keys": []})
+        pending -= component
+    for group in groups:
+        group.update({"problem": "UNKNOWN", "root_cause": "UNKNOWN",
+                      "fix_mechanism": "UNKNOWN", "verification": "NOT_RUN",
+                      "current_applicability": "NOT_VERIFIED",
+                      "existing_work_lookup": "NOT_RUN", "new_work_created": False,
+                      "evidence_registration": "NOT_RUN",
+                      "source_trace": [{k: v for k, v in entries[ref].items() if k != "source_links"}
+                                       for ref in group["source_refs"]]})
+    return {"ok": True, "action": "CLPR_ISSUE_CANDIDATE_PLAN", "read_only": True,
+            "grouping_is_confirmed_fix": False, "auto_merge": False,
+            "work_created": False, "provider_executed": False,
+            "workspace_written": False, "knowledge_published": False,
+            "source_count": len(entries), "group_count": len(groups),
+            "issue_cases": groups}
+
+
+def lookup_clpr_existing_work(plan: dict, kernel) -> dict:
+    """Existing Kernel WorkReferences only. Ambiguous matches are never merged."""
+    for group in plan["issue_cases"]:
+        matches: dict[str, dict] = {}
+        query_refs = group["jira_keys"] + group["source_refs"]
+        for ref in query_refs:
+            out = kernel.work_reference_find(ref, include_archived=False, limit=200)
+            if out.get("count", 0) > len(out.get("matches", [])):
+                group["existing_work_lookup"] = "PARTIAL_MORE_MATCHES"
+                break
+            for row in out.get("matches", []):
+                if row.get("match_type") in ("jira", "external_ref", "work_id"):
+                    matches[row["work_id"]] = row
+        else:
+            group["existing_work_lookup"] = ("NOT_FOUND" if not matches else
+                    "UNIQUE_CANDIDATE" if len(matches) == 1 else "CONFLICT_MULTIPLE_WORKS")
+        group["work_candidates"] = sorted(matches)
+        group["new_work_created"] = False
+    return plan
