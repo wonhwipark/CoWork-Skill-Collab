@@ -1,0 +1,118 @@
+# CL-only extension, inserted before execute() in jira_fix_cl_scan.py.
+CL_ONLY_SCHEMA = "p4-code-owner.cl-only.v1"
+_CL_NUMBER = re.compile(r"(?:CL[:#]?|P4-CL[:#]?)?([1-9][0-9]{0,10})\\Z", re.I)
+
+
+def parse_cl_only_input(text: str) -> list[str]:
+    """Accept explicit CL numbers only. Never infer Jira IDs from free text."""
+    result: list[str] = []
+    for line in text.splitlines():
+        content = line.split("# ", 1)[0].strip()
+        if not content:
+            continue
+        for field in content.split(","):
+            item = field.strip()
+            if not item:
+                raise ValueError("Empty CL token")
+            match = _CL_NUMBER.fullmatch(item)
+            if not match:
+                raise ValueError("Expected explicit CL number or CL:<number>, not prose/Jira")
+            if match.group(1) not in result:
+                result.append(match.group(1))
+            if len(result) > 100:
+                raise ValueError("CL list capped at 100")
+    if not result:
+        raise ValueError("No CL numbers")
+    return result
+
+
+def execute_cl_only(args: argparse.Namespace) -> dict[str, Any]:
+    """Read-only, two-stage Mango MCP evidence consumer; no Jira/P4 CLI calls."""
+    if args.stage == "cl-prepare":
+        if not args.input:
+            raise ValueError("--input is required for cl-prepare")
+        input_path = Path(args.input).expanduser().resolve()
+        if not input_path.is_file() or input_path.is_symlink() or input_path.stat().st_size > 65536:
+            raise ValueError("CL input must be a small regular file")
+        cls = parse_cl_only_input(input_path.read_text(encoding="utf-8-sig"))
+        run_id = args.run_id or ("cl_only_" + datetime.now(KST).strftime("%Y%m%d_%H%M%S"))
+        folder = canonical_output(run_id)
+        if folder.exists():
+            raise FileExistsError("CL run already exists")
+        folder.mkdir(parents=True)
+        save_json(folder / "run_manifest.json", {
+            "schema": CL_ONLY_SCHEMA, "version": VERSION, "run_id": run_id,
+            "stage": "PREPARED", "cl_list": cls, "input_file": str(input_path),
+            "provider": "mango_mcp_only", "jira_required": False})
+        save_json(folder / "p4_requests.json", {
+            "schema": CL_ONLY_SCHEMA, "provider": "mango_mcp_only",
+            "requests": [{"cl": cl, "operations": ["describe -s", "integration provenance if applicable"]}
+                         for cl in cls],
+            "p4_evidence_requirements": ["cl", "status", "submitted", "files",
+                                         "files_complete", "change_kind", "origin_confirmed"]})
+        return {"stage": "CL_PREPARED", "run_id": run_id,
+                "unique_cls": len(cls), "output_dir": str(folder),
+                "next_action": "Approved agent: obtain read-only CL evidence with Mango MCP, then cl-finalize."}
+
+    if not args.run_id:
+        raise ValueError("--run-id required for cl-finalize")
+    folder = canonical_output(args.run_id)
+    manifest = read_json(folder / "run_manifest.json")
+    if manifest.get("schema") != CL_ONLY_SCHEMA or manifest.get("stage") not in ("PREPARED", "FINALIZED"):
+        raise ValueError("CL run manifest absent/invalid")
+    cls = manifest["cl_list"]
+    p4_path = Path(args.p4_evidence).expanduser() if args.p4_evidence else folder / "p4_evidence.json"
+    if p4_path.is_symlink() or not p4_path.is_file() or p4_path.stat().st_size > 1048576:
+        raise ValueError("Unsafe or missing Mango MCP evidence file")
+    p4 = read_json(p4_path)
+    if not isinstance(p4, dict) or not isinstance(p4.get("changes"), list):
+        raise ValueError("Expected Mango MCP evidence changes array")
+    by_cl: dict[str, dict[str, Any]] = {}
+    for record in p4["changes"]:
+        if not isinstance(record, dict) or not isinstance(record.get("cl"), (int, str)):
+            raise ValueError("Malformed P4 evidence")
+        cl = str(record["cl"]).strip()
+        if cl not in cls or cl in by_cl:
+            raise ValueError("Duplicate or unrequested CL evidence: " + cl)
+        by_cl[cl] = record
+    scope_path = (Path(args.scope_config).expanduser() if args.scope_config else
+                  Path.home() / "l1sw-private-skills" / "p4-code-owner" / "data" / "config" / "jira_l1_scope.json")
+    scope = load_scope(scope_path)
+    rows = []
+    for cl in cls:
+        record = by_cl.get(cl)
+        checked = validated_change(record, scope)
+        state = checked["state"]
+        complete = bool(record and record.get("files_complete") is True)
+        outcome = ("INCLUDED_L1" if state == "L1_VERIFIED" and complete else
+                   "EXCLUDED_NON_L1" if state == "NON_L1_VERIFIED" and complete else "PENDING")
+        file_refs = []
+        for item in (record.get("files", []) if isinstance(record, dict) else []):
+            if not isinstance(item, dict):
+                continue
+            file_refs.append({"path": item.get("path"), "action": item.get("action"),
+                              "rev": item.get("rev"), "from_rev": item.get("from_rev")})
+        rows.append({"cl": cl, "outcome": outcome, "p4_state": state,
+                     "origin_confirmed": bool(record and record.get("origin_confirmed") is True),
+                     "source_cls": checked.get("source_cls", []),
+                     "l1_files": checked.get("l1_files", []), "file_revisions": file_refs,
+                     "claim_state": "INFERENCE" if outcome == "INCLUDED_L1" else "UNKNOWN",
+                     "root_cause": "NOT_ESTABLISHED", "test_status": "NOT_RUN",
+                     "work_write": False})
+    counts = {k: sum(x["outcome"] == k for x in rows)
+              for k in ("INCLUDED_L1", "EXCLUDED_NON_L1", "PENDING")}
+    save_json(folder / "cl_screening.json", {"schema": CL_ONLY_SCHEMA, "results": rows,
+                                            "scope_configured": bool(scope and scope["l1_include_paths"]),
+                                            "counts": counts})
+    lines = ["# P4 CL-only screening (Mango MCP evidence)", "",
+             "CL metadata and L1 scope are not root-cause/test verification.", "",
+             "| CL | Outcome | P4 state | Claim |", "|---|---|---|---|"]
+    lines.extend(f"| {r['cl']} | {r['outcome']} | {r['p4_state']} | {r['claim_state']} |" for r in rows)
+    (folder / "CL_Screening.md").write_text("\\n".join(lines) + "\\n", encoding="utf-8")
+    manifest["stage"] = "FINALIZED"
+    save_json(folder / "run_manifest.json", manifest)
+    return {"stage": "CL_FINALIZED", "run_id": args.run_id, "output_dir": str(folder),
+            "counts": counts, "report_path": str(folder / "CL_Screening.md"),
+            "next_action": "Use source revision evidence for code analysis; never mark a fix/test PASS from CL submission."}
+
+
