@@ -1,5 +1,14 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## CL/PR 확대 회귀 최신 실측 — 2026-11-15 KST (PUBLIC 배포 차단 유지)
+
+- [확대 회귀·차단 정본](GPT_CLPR_EXPANDED_REGRESSION_AND_REMAINING_GATES_r0001_20261115.md); [CI 43610383804](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43610383804).
+- Python 3.10.22 및 3.11.18 각각 **5종 ZIP 실제 SHA/CRC·경로·심링크 PASS, Python 417개 구문 PASS, 확대 11 suite 중 9 PASS / 2 FAIL**. 추가 Workflow resume pytest suite는 환경 모듈 보정 후 5 tests PASS.
+- 잔여 2 FAIL은 기존 PUBLIC Workflow v1.6.67 vs 후보 v1.6.68에서도 동일 재현: issue brief wrong match 문구, gs10 resume WORK_NOT_FOUND. 신규 CLPR v1.6.69 변경 유발 회귀 근거 없음. CI **conclusion=failure 보존**, FULL_REGRESSION=NOT_COMPLETE.
+- 앞서 확인된 CLPR WorkReference E2(6/6 Python 3.10/3.11 PASS) 및 신규 개발 후보 Workflow v1.6.69, Kernel v0.7.39 PRIVATE SHA readback 유지. 실제 analyzer Evidence 등록/write/readback, Mango P4 historical per-file source, Host E3, 직렬화, 보안·롤백·독립 패치 리뷰는 NOT_RUN/BLOCKED.
+- **판정:** DEVELOPMENT=PARTIAL_PATCHED; CLPR_REF_E2=PASS; EXPANDED_TESTS=PARTIAL_9_PASS_2_KNOWN_FAIL; PUBLIC_RELEASE=BLOCKED/NOT_POSTED. 운영 설치·DB/Job/Watcher/Knowledge/LIVE 변경 0, 새 유료 리뷰 0.
+- **다음 한 동작:** 인가된 Mango MCP/업무 호스트에서 historical revision/허용 Evidence 슬롯 preflight → 실제 Evidence E3 → 완전 회귀/보안·롤백 판정. 실행에 필요한 호스트 권한 없이 PASS/배포로 승격 금지.
+
 ## CL/PR WorkReference E2 실제 구현 — 2026-11-15 KST (현재 이 범위의 최신 상태)
 
 - **결과 정본:** [실제 새 개발 후보 2개 및 CI/P0 증거](GPT_CLPR_WORK_EVIDENCE_E2_DEVELOPMENT_RESULT_r0001_20261115.md). 기존 handoff r0002 및 2026-11-14 5종 후보·이력 보존.
