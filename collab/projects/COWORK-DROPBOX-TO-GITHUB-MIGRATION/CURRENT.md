@@ -1,5 +1,13 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## GitHub 단일 LIVE 활성화 완료(호스트 실측): v0.2.20 독립 R1 PASS, B1~B3 적용, ACTIVE_PROVIDER=GITHUB (Claude 호스트 보고, 2026-11-15 KST)
+- 결과: `CLAUDE_V0220_R1_AND_GITHUB_LIVE_ACTIVATION_RESULT_FOR_GPT_20261115.md` (PRIVATE `main`, commit `0b0dc5ff24424c835bc2c6a12bbace6cd1af89a0`, 원격 바이트·SHA-256 `89546954852ad1c38bb1be0475a1859861796da4963bf18046fcf0c5e0d476ee` 일치).
+- 독립 R1: `REQ-COWORK-V0220-R1-20261115`(POLICY-STATIC-V1), 모델 호출 1, **$0.3769**(상한 $1), **BLOCKING 0**·비차단 1(의도된 `is not None` 가드를 죽은 코드로 지적, 코드 불변). ZIP `6a8626375e5e…`(239432 B) 원격 원시 바이트·CRC 일치, 설치본 바이트 동일. 감시기가 예약·결과·영수증을 자동 게시(결과 `ceff4d145c78`, 영수증 `0f79cd65c9e8`, 예약 `ae7e1213e3b7`, 사용영수증 `3bc7d3a5caa4`).
+- B1: 운영 Python 3.11.9에 `cryptography 50.0.2`·`cffi`·`pycparser`만 해시 고정 설치, 운영 인터프리터 674 passed/12 skipped(서명·위조·변조·만료·다른 저장소·핀 불일치 포함). B2: Notifier에 DB 목록+DB별 워터마크(`3bd19b01…`), 비발송 12/12·재기동 후 `last_id 22907` 유지·발송 0. B3: 승인 ZIP 바이트 그대로 `skill-collab-watcher-github`에 설치, 별도 상태 폴더, Task `SKILL-COLLAB-GitHub-Watcher` 단독 기동.
+- 실측: `ACTIVE_PROVIDER=GITHUB`, `provider_lease=github` 1행, Dropbox 감시기 Disabled·프로세스 0, 30초 주기 7주기 전부 정상, Stop→Start 재시작 정상, 두 번째 Start 무시(`IgnoreNew`)·두 번째 watch는 잠금으로 종료코드 3, 모델 호출 delta 0(R1 1회 제외), 알림 대상 이벤트 0·Telegram 중복 0 근거(워터마크).
+- 보존: 운영 Dropbox DB main/WAL sha256 `4e8bc33a…`/`59de7507…` 작업 전후 동일, pending 1·COMPLETED 60·CONFLICT 1 보존(미이관). 이전 승인 요청 4건은 만료로 재디스패치 불가. 롤백 `rollback_github_live.ps1` 준비(미실행, 격리 리허설 PASS).
+- 한계: 신규 유료 요청의 첫 실전 처리 흐름·Telegram 실제 수신·실 CLI 사용량 한도 문자열·별도 계정 SHADOW는 미검증. 다음 정식 서명 REQUEST+READY가 첫 실전 사례.
+
 ## 사용자 확정 — v0.2.20 독립 R1 1회($1) 승인·기존 B1~B3 및 GitHub LIVE 승인 유지 (2026-11-15 KST)
 - **단일 실행 정본:** [GPT_V0220_R1_APPROVAL_AND_GITHUB_LIVE_ONE_SHOT_r0001_20261115.md](GPT_V0220_R1_APPROVAL_AND_GITHUB_LIVE_ONE_SHOT_r0001_20261115.md), PRIVATE `wonhwipark/CoWork-Skill-Collab`/`main`, commit `ccab1cebb8f0226b94d786ce6ac2b807b9a19efd`, GitHub 원격 readback PASS. 사용자 `진행해 윈샷으로`까지 확인, **동일 승인 재질문 금지**.
 - **승인:** v0.2.20 **새 R1 `REQ-COWORK-V0220-R1-20261115` / `POLICY-STATIC-V1` / 최대 $1 / 1회**. 이전 v0.2.19 R2(`$0.9007163`, BLOCKING 1)는 완료·소진, 재호출 금지. B1 Windows 운영 Python `cryptography`, B2 Notifier provider별 워터마크, B3 GitHub watcher 설치/Task + 최종 단일 GitHub LIVE는 **기존 명시 승인 유지**, Classic PAT 정책 그대로.
