@@ -1,0 +1,67 @@
+{
+  "schema": "COWORK_REVIEW_USAGE_RECEIPT_V1",
+  "request_id": "REQ-COWORK-V0217-R2-20261114",
+  "request_revision": "1",
+  "processing_key": "REQ-COWORK-V0217-R2-20261114|1|824f26c4e28fcc804ed1dd3942a34408c54b9091be34ecb1693cc4cb9d46df03|1",
+  "target": {
+    "package_sha256": "824f26c4e28fcc804ed1dd3942a34408c54b9091be34ecb1693cc4cb9d46df03",
+    "package_size_bytes": 232575,
+    "review_id": "REV-COWORK-V0217-R2-20261114"
+  },
+  "review": {
+    "tier": "R2",
+    "policy": "POLICY-STATIC-V1-LARGE",
+    "effort": "medium",
+    "model_calls": 1,
+    "success": true,
+    "result_chars": 18804
+  },
+  "usage": {
+    "input_tokens": 20,
+    "cache_creation_input_tokens": 89330,
+    "cache_read_input_tokens": 617912,
+    "output_tokens": 18029,
+    "total_cost_usd": 0.9945836,
+    "num_turns": 23,
+    "subtype": "success"
+  },
+  "limits": {
+    "max_budget_usd": 3.0,
+    "budget_respected": true,
+    "max_turns": "NOT_SUPPORTED_BY_CLI_2.1.218",
+    "token_targets_for_R2": {
+      "input": 40000,
+      "output": 6000,
+      "turns": 5
+    },
+    "token_targets_met": false,
+    "note": "cost cap held; turn count and output tokens exceeded the R2 targets (targets are not enforceable by this CLI)"
+  },
+  "independence": {
+    "separate_process": true,
+    "started_by": "skill-collab-watcher engine 0.2.16 (isolated state folder)",
+    "empty_working_directory": true,
+    "tools": [
+      "Read",
+      "Grep",
+      "Glob"
+    ],
+    "permission_mode": "dontAsk",
+    "mcp_servers": 0,
+    "session_persistence": false,
+    "project_settings_loaded": false,
+    "development_session_context_shared": false,
+    "claude_cli_version": "2.1.218"
+  },
+  "approval": {
+    "signed_with": "single-PC Ed25519 key, trust_root_independence=warn",
+    "approval_valid_hours": 2,
+    "source_commit_pin": "af9b0a89cd053ef854c0d0611dcc000cf72af74f"
+  },
+  "transport": {
+    "engine_reads": "real GitHub, existing read-only fine-grained token (GET only)",
+    "engine_writes": "refused with HTTP 403 as designed",
+    "job_state_in_engine": "UPLOAD_PENDING",
+    "published_by": "developer gh login, same bytes the engine would have uploaded"
+  }
+}
