@@ -5,11 +5,11 @@
       "work_id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
       "skill": "cowork-review-watcher",
       "title": "cowork-review-watcher",
-      "phase": "DISPOSITION",
+      "phase": "BLOCKED",
       "owner": "GPT / Claude Code",
       "self_test": "PASS",
       "independent_review": "PENDING",
-      "next_action": "GPT ACCEPT_WITH_CHANGE: Classic PAT 사용 확정, GitHub 임시 브랜치 write/readback 및 watcher 최초 게시 PUT2/멱등/충돌 방지 HOST_PASS, 모델 추가 0. Notifier 2 프로세스는 부모 launcher+Python 자식으로 정상 쌍임을 확인(중복 실행 오판 정정). v0.2.18 로컬 DEV ZIP (235650 B, SHA256 519c70e3eabbe9722621afa5bf6365b93d99803c76fee2fe078722a0835522cd): N1/N2/S1/S2 수정, venv 653/12·운영587/17 SELF_TEST_REPORTED, INDEPENDENT_REVIEW=NOT_RUN. 핵심 남은 N1: 유료 실행 후 원격 업로드 전에 DB/결과 소실 시 중복 호출 차단 미증명. 다음은 격리 수정·합성시험으로 fail-closed 검증, 최종 ZIP/manifest/diff 고정, 허용된 PRIVATE 리뷰 자료 게시. 신규 유료 리뷰·운영 cryptography 설치/DB/Task/Notifier 변경·PUBLIC·LIVE는 별도 승인. ACTIVE_PROVIDER=NONE/MIGRATION_NOT_CUTOVER."
+      "next_action": "USER_APPROVED_GITHUB_LIVE_CUTOVER(2026-11-14 '전환해줘') — 최종 LIVE 의사 재확인 금지. GPT_GITHUB_LIVE_CUTOVER_USER_APPROVAL_AND_GATED_ONE_SHOT_r0001_20261114.md PRIVATE main 게시 및 remote readback PASS. 실제 HOST_CUTOVER=NOT_RUN, ACTIVE_PROVIDER=NONE/MIGRATION_NOT_CUTOVER. Windows Claude Code 원샷: N1 pre-publish crash 중복 호출 0 minimal fix/test, 고정 신규 ZIP, 해당 SHA 독립 리뷰(PENDING; 추가 유료 리뷰 미승인), 운영 cryptography, pending 요청 1건/Notifier 워터마크, 단일 provider/rollback 게이트. 필요한 별도 유료 리뷰/운영 변경 승인 없으면 BLOCKED 유지, 결코 LIVE로 표기하지 않음. Classic PAT 장기 사용 확정."
     }
   ]
 }
