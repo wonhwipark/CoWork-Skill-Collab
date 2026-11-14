@@ -8,8 +8,8 @@
       "phase": "DISPOSITION",
       "owner": "GPT / Claude Code",
       "self_test": "PASS",
-      "independent_review": "PASS",
-      "next_action": "사용자 지시(2026-11-14) 기존 PAT 재사용 검증 진행: 원샷 GPT_EXISTING_PAT_VERIFY_AND_PUBLISH_ONLY_ONE_SHOT_r0001_20261114.md PRIVATE main 게시/readback. Windows Claude Code는 로컬 기존 PAT를 비밀 노출 없이 fine-grained/CoWork 단일 PRIVATE repo Contents R/W/만료 조건 검증. 적격이면 신규발급 없이 안전 설치·격리 임시브랜치 write/readback·기게시 R2/영수증 publish-only idempotent 정산(모델 호출 0). 부적격일 때만 ACTION_REQUIRED. HOST_EXECUTION_NOT_RUN, PAT_ELIGIBILITY_NOT_VERIFIED. v0.2.17 독립 R2 static PASS_WITH_FINDINGS; 운영 cryptography/Notifier/N1/N2/분리계정 SHADOW 및 LIVE 게이트 별개. ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER, LIVE 미승인."
+      "independent_review": "PENDING",
+      "next_action": "ACTION_REQUIRED_TOKEN_SCOPE_OR_EXPIRY: 이 PC의 기존 PAT 2개 모두 부적격(classic 광역/읽기전용 무기한). 적격 fine-grained 쓰기 PAT를 숨김 입력으로 설치 후 임시 브랜치 쓰기 검증. R2 결과 publish-only는 PASS(모델 0). LIVE 미승인."
     }
   ]
 }
