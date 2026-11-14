@@ -1,5 +1,14 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## Classic PAT 실제 GitHub 쓰기·감시기 자동 게시 E2E PASS, N1/N2는 격리 후보 v0.2.18에서 수정 (Claude 자체 보고, 2026-11-14 KST)
+- 결과: `CLAUDE_CLASSIC_PAT_GITHUB_WRITE_E2E_AND_LIVE_PREFLIGHT_RESULT_FOR_GPT_20261114.md` (PRIVATE `main`, commit `53d2abf12623f19169ed0bc5346e7f4a08a2ce2f`, 원격 바이트·SHA-256 `8d447920ee4246dd096ad031f38919f317271856223adbaaebe7c9d7f35a5d1e` 일치).
+- 인증: 사용자 확정 기본 인증인 기존 Classic PAT 사용(값·접두·길이 비게시). 서버 repo ID `1451933830`=신뢰 루트 라벨. 임시 브랜치에서 create→readback→update→readback PASS, 임시 브랜치 2개 모두 삭제 확인. `main`·기존 REQUEST/READY/결과/영수증 불변.
+- 감시기 E2E(실제 GitHub, 임시 브랜치, 모델 호출 0): `UPLOAD_PENDING`→`COMPLETED`(PUT 2), 재실행·재시작 쓰기 0, 이미 게시됨 readback 정산, 원격 내용 충돌은 `CONFLICT` fail-closed·덮어쓰기 0. 운영 DB main/WAL 해시 불변, Task 상태 불변, Telegram 0.
+- 후보 v0.2.18(`development_not_for_deployment`, 235650 B, sha256 `519c70e3eabbe9722621afa5bf6365b93d99803c76fee2fe078722a0835522cd`, 로컬 보관·미게시·**독립 리뷰 NOT_RUN**): N1 재현(상태 소실 후 2차 호출)→원격 결과 가드, N2 서버 숫자 ID 결합(fail-closed), S1/S2 적용. 시험 venv 653 passed/12 skipped, 운영 인터프리터 587/17. v0.2.17 리뷰 PASS를 소급 적용하지 않음.
+- Q8 복합 합성: v0.2.17은 상태 소실 단계 전까지 통과(N1과 동일 원인), v0.2.18 전 단계 통과; 실제 CLI 한도 메시지는 NOT_VERIFIED. 실서명 시험 68개 PASS. 운영 인터프리터 `cryptography` 없음(fail-closed)·별도 계정 SHADOW는 NOT_RUN.
+- 정정: Notifier `--watch` 2개는 독립 인스턴스가 아니라 venv 런처(부모)+기본 인터프리터(자식) 쌍. 단일 인스턴스 잠금·워터마크 있어 중복 전송 경로 가능성 낮음. 변경 0.
+- 미실행/미승인: 기존 리뷰 재실행·추가 유료 호출, 운영 DB·Task·Notifier 변경, 운영 cryptography 설치, PUBLIC 배포, LIVE. ACTIVE_PROVIDER=NONE.
+
 ## Classic PAT 실제 GitHub 쓰기 E2E + LIVE 준비 검증 원샷 인계 (2026-11-14 KST)
 - **사용자 승인 방향:** 개인 CoWork에서 기존 Classic PAT를 계속 사용. 일반적 PAT 종류/교체 논의 반복 금지. PRIVATE `main`에 [GPT_CLASSIC_PAT_REAL_WRITE_AND_LIVE_PREFLIGHT_ONE_SHOT_r0001_20261114.md](GPT_CLASSIC_PAT_REAL_WRITE_AND_LIVE_PREFLIGHT_ONE_SHOT_r0001_20261114.md) (commit `59cf229fe38a2f1191fb1e39bec7cc60e1a14c20`, remote readback PASS) 게시.
 - **지금 할 일:** Windows Claude Code가 기존 토큰으로 GitHub `CoWork-Skill-Collab`의 **격리 임시 브랜치**에서 실제 write→GET readback→정리, 모델 실행 없는 watcher `RESULT_SAVED/UPLOAD_PENDING/COMPLETED` 초기 자동 게시 E2E·멱등·충돌 fail-closed 시험. 기존 R2 유료 리뷰 재호출 **0**, 기존 REVIEW/RECEIPT 불변.
