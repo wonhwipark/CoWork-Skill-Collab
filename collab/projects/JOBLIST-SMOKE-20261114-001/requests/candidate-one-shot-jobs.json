@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "jobs": [
+    {
+      "job_id": "JOB-20261114-JOBLIST-E2E-SMOKE-01",
+      "profile": "joblist-e2e-smoke-linux",
+      "platform": "linux",
+      "priority": 65,
+      "expires_at": "2026-11-17T23:59:59+09:00",
+      "params": {}
+    }
+  ]
+}
