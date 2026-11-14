@@ -5,7 +5,7 @@ on:
       - .github/workflows/joblist-v0438-candidate-once.yml
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
 jobs:
   isolated_candidate:
     runs-on: ubuntu-latest
@@ -14,7 +14,7 @@ jobs:
       - name: Checkout PRIVATE builder only
         uses: actions/checkout@v4
         with:
-          persist-credentials: false
+          persist-credentials: true
       - name: Fetch and pin immutable PUBLIC v0.4.36 baseline
         shell: bash
         run: |
@@ -79,6 +79,49 @@ jobs:
             tests/test_v0431_knowledge_input_stage.py \
             tests/test_v0436_nrtx_active.py \
             tests/test_v0438_init_rach_active.py
+      - name: Record actual build evidence (even on failure)
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          RESULT="collab/projects/NR-L1TX-CODE-ANALYSIS-20261115-001/BUILD_RESULT_FOR_GPT_20261115.md"
+          mkdir -p "$(dirname "$RESULT")"
+          STATUS="${{ job.status }}"
+          ZIP=".github/joblist-nrtx-v0438/candidate/job-list_v0_4_38_1115.zip"
+          if [ -s "$ZIP" ]; then
+            BYTES=$(wc -c < "$ZIP")
+            SHA=$(sha256sum "$ZIP" | awk '{print $1}')
+            PACKAGE="CANDIDATE_CREATED"
+          else
+            BYTES="NOT_BUILT"
+            SHA="NOT_BUILT"
+            PACKAGE="NOT_BUILT"
+          fi
+          {
+            echo "# Job-list v0.4.38 GitHub isolated build result"
+            echo "- Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            echo "- Workflow status before report: $STATUS"
+            echo "- Candidate ZIP: job-list_v0_4_38_1115.zip"
+            echo "- Candidate package: $PACKAGE"
+            echo "- Candidate bytes: $BYTES"
+            echo "- Candidate SHA-256: $SHA"
+            echo "- Unit and regression tests: see exact workflow run step status and logs; don't assume PASS from ZIP existence."
+            echo "- INDEPENDENT_REVIEW: NOT_RUN"
+            echo "- HOST_G0: NOT_VERIFIED"
+            echo "- PUBLIC_RELEASE: NOT_POSTED"
+            echo "- HOST_EXECUTION: NOT_RUN"
+            echo "- Important: temporary artifact is NOT an installable approved release. No old One-shot requeue."
+          } > "$RESULT"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- "$RESULT"
+          git diff --cached --check
+          if git diff --cached --quiet; then
+            echo "NO_CHANGE_TO_BUILD_RESULT"
+          else
+            git commit -m "test(job-list): record v0.4.38 isolated candidate build evidence"
+            git push origin HEAD:main
+          fi
       - name: Archive development-only candidate
         uses: actions/upload-artifact@v4
         with:
