@@ -7,6 +7,9 @@
 - Related active design: [CL/PR 이슈 분석→Work 축적](CL_PR_ISSUE_ANALYSIS_DESIGN_BRIEF_r0001_20261114.md) · [독립 설계 리뷰 요청](CLAUDE_CL_PR_ISSUE_ANALYSIS_DESIGN_REVIEW_REQUEST_r0001_20261114.md). HANDOFF_POSTED / NOT_QUEUED / INDEPENDENT_REVIEW=NOT_RUN, 결과 미접수. 실제 분석·그룹 게시와 구분.
 - 새 창은 [공통 맥락 브리프](../../CONTEXT_BRIEF.md)에서 공통 정책을 읽고 이 현재 요약·열린 메모로 이어간다.
 - Scope: 비민감 문서·분류·연계 설계. 실제 기능 부재와 미실행 검증을 구분.
+- **운영 경로 보강 (2026-11-14):** 사용자 보고상 **모바일 Agent → Linux MCP → `l1-fix-workflow` (기존 Work 검색·재개)**를 사용. 신규 Job-list 구성 시 필요한 경우 **`skill-updater` 1회 수행 요청 → 설치/활성화 상태 확인 → 승인된 Job 요청/결과 조회**를 연결해 왔다고 설명. 이 경로를 전체 시스템 지도에 추가하되 **현재 MCP tool/API·권한·실행 영수증·E2E 성공은 `NOT_VERIFIED`**로 구분.
+- **실행 단계 구분:** 모바일 Agent는 요청/조회 인터페이스, Linux MCP는 진입 경계, `skill-updater`는 설치/갱신, `job-list`는 Job 및 Runner, Workflow/Kernel은 Work/Evidence를 담당. `Updater 1회 요청` ≠ `호스트 실행 PASS` ≠ `Job 활성화` ≠ `MSC/분석 결과` ≠ `Knowledge 게시`. 과거 소비된 one-shot 재실행 금지. [Job CURRENT](../JOBLIST-NRTX-20261112-001/CURRENT.md)의 2026-11-12~13 Registry/결과 조회 장애와 미확인 상태를 유지.
+- **업무 GPT 전달 기준:** 설계 GPT·업무 GPT·실행 LLM·모바일 Agent를 역할명으로 구분. 기존 GPT 프로젝트 지침과 실제 분석 보고를 전체 지도와 항목별 비교해 `CONFIRMED / USER_REPORTED / INFERRED / NOT_VERIFIED`로 구분하고 지침·지도·CURRENT·Work/Knowledge 후보에 필요한 최소 변경만 반영. [역할·용어 계약](../../ops/CONTRACTS/EXECUTION_PROMPT_TERMINOLOGY_V1.md) 참고.
 - G0: PARTIAL_REPORTED — 사용자 제공 호스트 Agent 보고/업무용 GPT 검토 요약 수신. 원본 설치 소스·로그·영수증 직접 검증은 미수행.
 - Follow-up memo: PARTIAL_FEEDBACK_RECEIVED / TARGETED_CONTRACT_CHECKS_PENDING.
 - Current design checks: 기존 Tier/MSC 정책 적합성, Workflow↔Updater 최소 전달, Kernel 허용 stage 호환. 기존 기능 우선 재사용.
