@@ -71,10 +71,10 @@
       "id": "L1-WORKSPACE-RAG-20261111-001",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md",
-      "status": "전환 전",
+      "status": "검증 진행 중",
       "title": "L1-WORKSPACE-RAG-20261111-001 — CURRENT",
       "tone": "warning",
-      "topic": "CL/PR 구현 최신 실측 — 2026-11-14 KST (이하 과거 상태보다 우선)"
+      "topic": "Work → Knowledge 전환 설계 보완 — 2026-11-14 KST (이번 범위: 문서)"
     }
   ],
   "review_chains": [
