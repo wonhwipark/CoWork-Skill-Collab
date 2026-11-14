@@ -54,3 +54,31 @@ jobs:
               print('TEST_FILES',label,json.dumps([n for n in z.namelist() if n.endswith('.py') and '/tests/' in n and any(t in n.lower() for t in ('evidence','reference','workflow','clpr'))][:25]))
           print('INSPECTION_COMPLETE_NO_WORKSPACE_WRITES')
           PY
+      - name: Inspect narrowly scoped Work and CLPR linking implementation contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import ast, pathlib, zipfile
+          base=pathlib.Path('collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates')
+          cfg=[
+            ('l1-fix-workflow_v1_6_68_1114.zip',('issue_brief.py', 'cli.py'),('plan_clpr_issue_cases','lookup_clpr_existing_work','_clpr_ref')),
+            ('work-ledger-kernel_v0_7_38_1114.zip',('kernel.py','work_refs.py','work_references.py'),('work_reference_add','work_reference_find','work_create','_work_refs')),
+          ]
+          for filename, suffixes, targets in cfg:
+            with zipfile.ZipFile(base/filename) as z:
+              for name in z.namelist():
+                if not name.endswith(suffixes):continue
+                src=z.read(name).decode('utf-8-sig')
+                try: tree=ast.parse(src)
+                except SyntaxError:continue
+                lines=src.splitlines()
+                for node in ast.walk(tree):
+                  if not isinstance(node,(ast.FunctionDef,ast.AsyncFunctionDef)):continue
+                  if node.name not in targets:continue
+                  lim=min(node.end_lineno or node.lineno,node.lineno+110)
+                  print('SOURCE_BEGIN',filename,name,node.name,node.lineno,lim)
+                  for no in range(node.lineno,lim+1):
+                    print(f'{no:04d}: '+lines[no-1][:180])
+                  print('SOURCE_END',node.name)
+          PY
