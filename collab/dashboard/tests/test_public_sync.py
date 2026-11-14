@@ -243,5 +243,49 @@ class AllowlistSyncTests(unittest.TestCase):
             write.assert_not_called()
 
 
+
+    def test_handoff_registry_exports_only_approved_public_metadata(self):
+        registry = {"schema": "COWORK_HANDOFF_REGISTRY_V1", "handoffs": [
+            {"id": "msc-b-viewer", "stage": "PUBLISHED", "updated_on": "2026-11-14"}]}
+        with tempfile.TemporaryDirectory() as tmp:
+            p = Path(tmp) / "collab/dashboard/handoff_registry.json"
+            p.parent.mkdir(parents=True)
+            p.write_text(json.dumps(registry), encoding="utf-8")
+            cards = public_sync._load_public_handoffs(Path(tmp))
+        obj = public_sync.build_payload(self.state, "2026-11-14", handoffs=cards)
+        self.assertEqual(len(obj["handoffs"]), 1)
+        self.assertEqual(obj["handoffs"][0]["stage"], "PUBLISHED")
+        self.assertIn("L1Work/blob/main/handoffs/", obj["handoffs"][0]["source_url"])
+        self.assertNotIn("PRIVATE_SECRET_TITLE",
+                         public_sync.json_bytes(obj).decode("utf-8"))
+
+    def test_handoff_registry_blocks_unapproved_or_duplicate_entries(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            p = Path(tmp) / "collab/dashboard/handoff_registry.json"
+            p.parent.mkdir(parents=True)
+            for entries in (
+                [{"id": "internal-secret", "stage": "PUBLISHED", "updated_on": "2026-11-14"}],
+                [{"id": "msc-b-viewer", "stage": "COMPLETE", "updated_on": "2026-11-14"}],
+                [{"id": "msc-b-viewer", "stage": "PUBLISHED", "updated_on": "2026-99-14"}],
+                [{"id": "msc-b-viewer", "stage": "PUBLISHED", "updated_on": "2026-11-14",
+                  "raw_private_note": "SECRET"}],
+                [{"id": "msc-b-viewer", "stage": "PUBLISHED", "updated_on": "2026-11-14"}] * 2,
+            ):
+                p.write_text(json.dumps({"schema": "COWORK_HANDOFF_REGISTRY_V1",
+                                         "handoffs": entries}), encoding="utf-8")
+                with self.assertRaises(public_sync.SafetyBlock):
+                    public_sync._load_public_handoffs(Path(tmp))
+
+    def test_forged_public_handoff_link_fails_without_network(self):
+        card = public_sync._make_public_handoff(
+            {"id": "msc-b-viewer", "stage": "PUBLISHED", "updated_on": "2026-11-14"})
+        obj = public_sync.build_payload(self.state, "2026-11-14", handoffs=[card])
+        obj["handoffs"][0]["source_url"] = "https://attacker.example/private"
+        with patch.object(public_sync, "_request") as network:
+            with self.assertRaises(public_sync.SafetyBlock):
+                public_sync.publish_public(public_sync.json_bytes(obj), "x" * 30)
+            network.assert_not_called()
+
+
 if __name__ == "__main__":
     unittest.main()
