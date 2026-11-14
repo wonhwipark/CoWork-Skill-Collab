@@ -1,0 +1,88 @@
+name: Build/test NR L1 Tx Job-list v0.4.38 candidate once
+on:
+  push:
+    paths:
+      - .github/workflows/joblist-v0438-candidate-once.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  isolated_candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout PRIVATE builder only
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Fetch and pin immutable PUBLIC v0.4.36 baseline
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 2 -sS --max-time 75 -o baseline.zip "https://raw.githubusercontent.com/wonhwipark/L1Work/main/job-list_v0_4_36_1112.zip"
+          test "$(wc -c < baseline.zip)" -eq 1563658
+          echo 'cbe17dc15199593e2a9bce6aa2b8857c1f011336ebd2cd3d4c8ee3cce0eee3f6  baseline.zip' | sha256sum -c -
+      - name: Build candidate (never publish)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 .github/joblist-nrtx-v0438/build_candidate.py baseline.zip .github/joblist-nrtx-v0438/candidate
+          python3 - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile
+          p=Path('.github/joblist-nrtx-v0438/candidate/job-list_v0_4_38_1115.zip')
+          assert p.is_file()
+          with ZipFile(p) as z:
+              assert z.testzip() is None
+              z.extractall('staging')
+          PY
+          python3 -m py_compile staging/job-list_v0_4_38/scripts/job_core.py staging/job-list_v0_4_38/scripts/nrtx_init_rach_linux_job.py
+          python3 staging/job-list_v0_4_38/scripts/job_core.py validate --root staging/job-list_v0_4_38
+      - name: Verify active request, baseline preservation, no secrets and no source writes
+        shell: python
+        run: |
+          from pathlib import Path
+          import json,hashlib,zipfile
+          r=Path('staging/job-list_v0_4_38')
+          p=Path('.github/joblist-nrtx-v0438/candidate/job-list_v0_4_38_1115.zip')
+          a=json.loads((r/'requests/one-shot-jobs.json').read_text())['jobs']
+          assert len(a)==1
+          assert a[0]['job_id']=='JOB-20261115-NR-L1TX-INIT-RACH-EXEC-01'
+          assert a[0]['profile']=='nr-l1tx-init-rach-analysis-linux'
+          assert a[0]['params']=={}
+          script=(r/'scripts/nrtx_init_rach_linux_job.py').read_text()
+          prompt=(r/'references/NR_TX_INIT_RACH_CODE_ANALYSIS_v0438.md').read_text()
+          for s in ('code-analyzer','L2_L1_TX_REQ','PHY IPC'):
+              assert s in prompt
+          for banned in ('/home/whpark','CoWork-Skill-Collab','PRIVATE_TOKEN'):
+              assert banned not in script and banned not in prompt
+          for s in ('"edit": "deny"','"write": "deny"','"webfetch": "deny"'):
+              assert s in script, s
+          with zipfile.ZipFile(p) as z:
+              assert z.testzip() is None
+              for i in z.infolist():
+                  assert not ((i.external_attr >> 16) & 0o170000 == 0o120000)
+                  assert '..' not in Path(i.filename).parts
+                  assert i.filename.startswith('job-list_v0_4_38/')
+          print('STATIC_SAFETY=PASS ACTIVE_JOBS=1 BYTES=',p.stat().st_size)
+          print('CANDIDATE_SHA256=',hashlib.sha256(p.read_bytes()).hexdigest())
+      - name: Targeted baseline and v0.4.38 regression
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m venv "$RUNNER_TEMP/test-venv"
+          "$RUNNER_TEMP/test-venv/bin/python" -m pip install -q pytest
+          cd staging/job-list_v0_4_38
+          "$RUNNER_TEMP/test-venv/bin/python" -m pytest -q \
+            tests/test_v0434_dependency_gate.py \
+            tests/test_v0432_knowledge_workflow_bridge.py \
+            tests/test_v0431_knowledge_input_stage.py \
+            tests/test_v0436_nrtx_active.py \
+            tests/test_v0438_init_rach_active.py
+      - name: Archive development-only candidate
+        uses: actions/upload-artifact@v4
+        with:
+          name: job-list-v0438-not-for-deployment
+          path: .github/joblist-nrtx-v0438/candidate/job-list_v0_4_38_1115.zip
+          if-no-files-found: error
+          retention-days: 7
