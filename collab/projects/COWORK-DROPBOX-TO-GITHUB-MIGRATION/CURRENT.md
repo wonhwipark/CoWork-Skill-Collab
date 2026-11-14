@@ -1,5 +1,12 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## Classic PAT 실제 GitHub 쓰기 E2E + LIVE 준비 검증 원샷 인계 (2026-11-14 KST)
+- **사용자 승인 방향:** 개인 CoWork에서 기존 Classic PAT를 계속 사용. 일반적 PAT 종류/교체 논의 반복 금지. PRIVATE `main`에 [GPT_CLASSIC_PAT_REAL_WRITE_AND_LIVE_PREFLIGHT_ONE_SHOT_r0001_20261114.md](GPT_CLASSIC_PAT_REAL_WRITE_AND_LIVE_PREFLIGHT_ONE_SHOT_r0001_20261114.md) (commit `59cf229fe38a2f1191fb1e39bec7cc60e1a14c20`, remote readback PASS) 게시.
+- **지금 할 일:** Windows Claude Code가 기존 토큰으로 GitHub `CoWork-Skill-Collab`의 **격리 임시 브랜치**에서 실제 write→GET readback→정리, 모델 실행 없는 watcher `RESULT_SAVED/UPLOAD_PENDING/COMPLETED` 초기 자동 게시 E2E·멱등·충돌 fail-closed 시험. 기존 R2 유료 리뷰 재호출 **0**, 기존 REVIEW/RECEIPT 불변.
+- **추가 가능 범위:** 격리 환경에서 N1(중복 재실행), N2(원격 repo ID), Q8 복합 시나리오를 synthetic 회귀·필요 최소 코드 보완으로 묶어 검증, 운영 `cryptography`는 설치 없이 격리 venv 검증, Notifier 두 프로세스는 읽기 전용 관계 분석만. 새 후보 발생 시 개발용 `v0.2.18`과 자체시험/독립 리뷰 상태 구분. 운영 DB/WAL/SHM·Task·Notifier/실 알림 변경, 추가 유료 리뷰, PUBLIC 배포는 **미승인**.
+- **현재 이 세션 실측:** `CLASSIC_PAT_POLICY=USER_APPROVED`, `WINDOWS_CLASSIC_WRITE_PROBE=NOT_RUN`, `WATCHER_NEW_UPLOAD_E2E=NOT_RUN`, `HOST_CODE_FIX=NOT_RUN`, `MODEL_CALL_DELTA=0`(이번 GPT 세션), `HANDOFF_POSTED_AND_READBACK=PASS`.
+- **최종 LIVE:** `ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER`. 실제 Windows 시험 결과 판정 후에도 GitHub LIVE 전환은 별도 사용자 승인. 이전 Claude/ GPT 기록은 아래 순서대로 보존.
+
 ## 사용자 확정 결정 — 기존 Classic PAT 계속 사용 (2026-11-14 KST)
 - **USER_DECISION=CLASSIC_PAT_ACCEPTED_FOR_COWORK**: 개인 CoWork 용도로 기존 Classic PAT를 지속 사용. 앞선 fine-grained 토큰 필수·재발급·만료 조건 요구는 **이번 사용자 결정으로 대체**.
 - **NO_REPEAT_DISCUSSION**: 향후 일반적인 PAT 종류 비교·관련 우려 및 교체 권고를 다시 제기하지 않는다. 사용자가 명시적으로 재검토를 요청하는 경우에만 재논의.
