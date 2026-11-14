@@ -1,5 +1,13 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## GPT 공식 판정 — 기존 PAT 2종 부적격, 격리 publish-only PASS (2026-11-14 KST)
+- **정본 판정:** [GPT_EXISTING_PAT_VALIDATION_DISPOSITION_r0001_20261114.md](GPT_EXISTING_PAT_VALIDATION_DISPOSITION_r0001_20261114.md) (commit `2ab9746da6db86d996c8af4e4b88bfeff063669a`, GitHub readback PASS). `GPT_DISPOSITION=ACCEPT_WITH_CHANGE`; `PAT_ELIGIBILITY=FAIL_CHECKED_2`; `WRITE_PROBE=NOT_RUN`; `PUBLISH_ONLY_ISOLATED=PASS_REPORTED`; `REVIEW_MODEL_CALL_DELTA=0_REPORTED`; `ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER`.
+- **실제 확인 범위:** Claude Code 결과 `CLAUDE_EXISTING_PAT_VALIDATION_AND_PUBLISH_ONLY_RESULT_FOR_GPT_20261114.md`(commit `78a489b6ea39f53b334e1e76cc4c185b8860cc49`)를 GPT가 원격 조회. Windows 감시기 자격 폴더 JSON **2개만** 검사. fine-grained read-only/만료 없음 + classic broad/무기한으로 두 개 모두 부적격. 사용자 보유 **별도 PAT는 Windows 다른 계정/자격 관리자/PC/브라우저에 있을 수 있어 '없음' 단정 금지**.
+- **정산 결과:** 기게시 R2 결과·영수증 3개 원격/로컬 바이트 동일 보고. 격리 원장에서 `UPLOAD_PENDING→COMPLETED`, HTTP GET 14·모델/쓰기/Telegram 0, 원본 원장 불변(호스트 자체 보고). **실제 엔진 최초 업로드 write E2E 미실행**, 운영 원장 정산·운영 변경 미실행.
+- **다음 한 동작:** 사용자가 이미 보유한 별도 적격 fine-grained Contents R/W, CoWork 단일 PRIVATE repo, 만료 ≤90일 PAT를 Windows 보호된 숨김 입력으로 제공/설치할 수 있는지 확인. 조건 충족 시 재발급 없이 테스트용 임시 브랜치 write/readback/cleanup. 조건 미충족일 경우에만 신규 발급 또는 scope/expiry 보완을 요청, 비밀 절대 GitHub/채팅에 게시하지 않음.
+- **남은 LIVE 차단:** 운영 `cryptography` 미설치, Notifier 프로세스 2개·GitHub 미연동, N1 nonce/DB 유실 replay, N2 runtime repo ID 결합, 별도 계정 SHADOW·복합 E2E·pending 1건 보존. 추가 유료 리뷰, 운영 DB·Task·Notifier 변경, 실제 LIVE 최종 전환 미승인.
+- **이력:** 아래 Claude 자체 결과와 과거 승인·판정은 시점별 근거로 그대로 보존하며 본 판정을 최신 정본으로 우선 적용.
+
 ## 기존 PAT 검증 + R2 publish-only: 적격 PAT 없음(ACTION_REQUIRED_TOKEN_SCOPE_OR_EXPIRY), R2 결과 정리 PASS·모델 호출 0 (Claude 자체 보고, 2026-11-14 KST)
 - 결과: `CLAUDE_EXISTING_PAT_VALIDATION_AND_PUBLISH_ONLY_RESULT_FOR_GPT_20261114.md` (PRIVATE `main`, commit `78a489b6ea39f53b334e1e76cc4c185b8860cc49`, 원격 바이트·SHA-256 `cb995f6c6acb418b30f703ba9948911f732340c931ffe65abb29c8a776b27a51` 일치).
 - PAT: 이 PC의 후보 2개를 서버 응답 기준으로 검사(값·접두·길이 비게시). 후보1=fine-grained·비공개 1개만이지만 만료 없음(읽기 전용), 후보2=classic·광역·무기한 → **둘 다 부적격**, 적격 0. 따라서 설치·임시 브랜치 쓰기 시험은 NOT_RUN(부적격 토큰 미사용, 쓰기 호출 0). 서버가 반환한 repo 숫자 ID는 신뢰 루트 라벨과 일치하나 제품 runtime repo_id 결합은 별도 게이트(N2) 유지.
