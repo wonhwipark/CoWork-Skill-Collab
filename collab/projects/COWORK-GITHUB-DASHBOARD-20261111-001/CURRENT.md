@@ -1,5 +1,15 @@
 # COWORK-GITHUB-DASHBOARD-20261111-001 — CURRENT
 
+## Executive v4 최종 배포 및 상태 자동 동기화 복구 검증 (2026-11-14 KST)
+- **현재 상태:** `DASHBOARD_UI=DEPLOYED`, `DASHBOARD_PAGES=PASS`, `PUBLIC_STATUS_SYNC=PASS`. 별개로 CoWork reviewer watcher는 `ACTIVE_PROVIDER=NONE`, 독립 리뷰는 현재 `PENDING_EXECUTION`, `CUTOVER=MIGRATION_NOT_CUTOVER`; 모델 호출·LIVE 변경 없음.
+- **PUBLIC Executive v4:** `wonhwipark/L1Work/main/docs/cowork-dashboard/index.html` / `status.js` / `README.md`; commit `a448f468c6b69b892c60e80f9b6143404949d96f`, [Pages #43533031969](https://github.com/wonhwipark/L1Work/actions/runs/43533031969) SUCCESS. 업무 목적·정형 자체시험/리뷰 상태·남은 작업을 먼저 표시하고 선택형 상세와 접힘형 진단을 적용.
+- **UI 시험:** JS 구문, 승인 JSON 가상 DOM 5행/5카드, KPI 7/5/1/0, 상세 선택 1, 검토 단계 필터 1, 검색 1, 초기화 5, CSP와 120초 polling 보존 PASS. 실제 모바일 브라우저/공개 URL HTTP 본문 E2E는 `NOT_RUN/NOT_VERIFIED`.
+- **동기화 오류 원인:** 이전 PRIVATE→PUBLIC Actions [#43533246438](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43533246438) 실패는 새 `INDEPENDENT_REVIEW=PENDING_EXECUTION` 상태를 `public_sync.py`가 허용하지 않아 발생한 `unexpected independent review marker`. 오작동 당시 모델·PUBLIC 쓰기는 실행하지 않았음.
+- **최소 수정:** PRIVATE `public_sync.py`, `flow_view.py` 및 테스트를 commit `ceb2e784364e30d49367e31e12bf116633edeacf`로 수정. `PENDING_EXECUTION`/`PENDING_APPROVAL`은 승인된 공개 enum `미실행·대기`로 매핑, 미정의 상태는 계속 fail-closed. PUBLIC 스키마·허용 데이터 범위는 변경하지 않음.
+- **복구 실측:** PRIVATE Actions [#43533487530](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43533487530) SUCCESS; PUBLIC sync [#43533508078](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43533508078) SUCCESS (시험/자격/게시·readback 단계 모두 성공); PUBLIC status.json blob `7cd2e50ece6f33f336f04373a5ac954d1d5c84d6` 원격 재조회 PASS. 현재 공개 `independent_review=미실행·대기`, `active_provider=활성 리뷰 제공자 없음`, 전체 Work 7, PUBLIC 5. 최신 Pages [#43533533419](https://github.com/wonhwipark/L1Work/actions/runs/43533533419) `completed/success`.
+- **운영 영향:** Windows watcher/운영 DB·예약 작업/Claude 유료 리뷰·READY·LIVE 전환·스킬 ZIP 공개 배포 변경 없음.
+- **다음 한 동작:** 사용자가 모바일 Pages에서 업무 요약→상세 펼침→운영 진단 접힘 UX를 확인. 공개 근거 없는 업무별 최종 변경일 및 완료 결과는 임의 생성하지 않음.
+
 ## Executive v4 — 업무 중심 대시보드 변경 및 PUBLIC Pages 배포 (2026-11-14 KST)
 - **요청:** 현재 Executive 화면의 정보 우선순위를 재구성하고, 실제 GitHub Pages 배포까지 완료. 일반 프로젝트 관리 화면처럼 **업무 목적 → 확인 가능한 기록 → 남은 작업**을 먼저 표시.
 - **PUBLIC 경로:** `wonhwipark/L1Work` / `main/docs/cowork-dashboard/index.html` + `status.js`, 기존 URL `https://wonhwipark.github.io/L1Work/cowork-dashboard/` 유지. v4 HTML/JS/README **원샷 커밋** [`a448f468c6b69b892c60e80f9b6143404949d96f`](https://github.com/wonhwipark/L1Work/commit/a448f468c6b69b892c60e80f9b6143404949d96f). GitHub 원격 readback 3파일 blob SHA 일치.
