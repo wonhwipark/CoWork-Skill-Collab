@@ -74,7 +74,7 @@
       "status": "전환 전",
       "title": "L1-WORKSPACE-RAG-20261111-001 — CURRENT",
       "tone": "warning",
-      "topic": "현재 요약 — 2026-11-14 KST"
+      "topic": "CL/PR 구현 최신 실측 — 2026-11-14 KST (이하 과거 상태보다 우선)"
     }
   ],
   "review_chains": [
