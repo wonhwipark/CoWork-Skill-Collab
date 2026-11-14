@@ -5,11 +5,11 @@
       "work_id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
       "skill": "cowork-review-watcher",
       "title": "cowork-review-watcher",
-      "phase": "BLOCKED",
+      "phase": "REVIEW",
       "owner": "GPT / Claude Code",
       "self_test": "PASS",
-      "independent_review": "NOT_RUN",
-      "next_action": "2026-11-15 GPT: v0.2.19 독립 R2 1회 실제 비용 $0.9007163, BLOCKING 1(N2 repository_id process-lifetime cache) 원격 리뷰/RECEIPT/USAGE로 직접 확인. v0.2.19 review=FAIL, 신규 v0.2.20 cache 제거 + same-transport multi-cycle 회귀 자체시험 674/12 및 607/17 HOST_PASS, ZIP 로컬만(239432 B, SHA256 6a8626375e5e711535abdd261ff48781114802bb345cabe2ed5940b75968f386), v0.2.20 independent_review=NOT_RUN. 다음은 v0.2.20 diff만 R1 POLICY-STATIC-V1 최대 $1 정확히 1회 신규 유료 리뷰 명시 승인 필요. 승인 후 원본/원격 raw ZIP 검증→signed READY 마지막→독립 리뷰 PASS 시 기존에 승인된 B1 운영 cryptography, B2 Notifier watermark, B3 GitHub watcher Task 및 LIVE를 원샷 재개. B와 GitHub LIVE는 이미 승인되어 재확인 금지. 실제 ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER. Classic PAT 계속 사용."
+      "independent_review": "PENDING",
+      "next_action": "2026-11-15 USER_APPROVED v0.2.20 independent R1 POLICY-STATIC-V1 $1 max, only 1 model call, new REQ-COWORK-V0220-R1-20261115. Prior B1 Windows cryptography, B2 Notifier provider watermark, B3 GitHub watcher Task/single GitHub LIVE approvals all retained; do not re-ask. Classic PAT retained. Canonical one-shot GPT_V0220_R1_APPROVAL_AND_GITHUB_LIVE_ONE_SHOT_r0001_20261115.md posted PRIVATE main/readback PASS. Candidate v0.2.20 SHA256 6a8626375e5e711535abdd261ff48781114802bb345cabe2ed5940b75968f386 239432 B currently Windows-local (host self-tests 674/12 and 607/17), no independent review yet. Windows Claude Code must verify local/remote raw ZIP SHA/CRC, publish review input and signed REQUEST/READY last, call independent reviewer max1, if PASS apply approved B1 B2 B3 and verify 2 cycles+restart/rollback/pending preservation. New result CLAUDE_V0220_R1_AND_GITHUB_LIVE_ACTIVATION_RESULT_FOR_GPT_20261115.md. Actual Windows not started by GitHub document; last measured ACTIVE_PROVIDER=NONE/MIGRATION_NOT_CUTOVER. Failed review means STOP, zero repeat paid calls."
     }
   ]
 }
