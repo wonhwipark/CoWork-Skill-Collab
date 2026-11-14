@@ -1,0 +1,23 @@
+{
+  "key_id": "cowork-approver-1",
+  "payload": {
+    "expires_at": "2026-11-14T18:18:16.542205+00:00",
+    "issued_at": "2026-11-14T16:18:16.542205+00:00",
+    "knowledge_refs_hash": "748421ecde26d875db3ac2940894ca758b5f15b0f8b2d34e97d73f0f3142ef41",
+    "local_policy_revision": "1",
+    "nonce": "9854b87e2808887b70b61852c0fd53b9",
+    "package_path": "/SKILL-COLLAB/packages/skill-collab-watcher_v0_2_20_1115_DEV_NOT_FOR_DEPLOYMENT.zip",
+    "package_sha256": "6a8626375e5e711535abdd261ff48781114802bb345cabe2ed5940b75968f386",
+    "package_size_bytes": 239432,
+    "ready_sha256": "c5fb70faa22b92f4add4a9ab704240b969f32adff658d6d21f144ce5b6093f4f",
+    "repo_id": "1451933830",
+    "request_id": "REQ-COWORK-V0220-R1-20261115",
+    "request_revision": "1",
+    "request_sha256": "7719cebfed84f2dbb3c85054adffbfebd6c41c91564a23be17735b118a851f4a",
+    "run_policy_ref": "POLICY-STATIC-V1",
+    "schema": "SKILL_COLLAB_APPROVAL_PAYLOAD_V1",
+    "source_commit": "e63321c4f7a0ffd43bac3f62127d709df80ed446"
+  },
+  "schema": "SKILL_COLLAB_APPROVAL_SIG_V1",
+  "signature": "THXExeCp7GfQWCsWBZuyTvanKQvchIsCGNrjeIW5m+Y/hiFo7+K7fBhO9OrkjO7md5p7WidOaQUbw62jQAgmDw=="
+}
