@@ -7,7 +7,8 @@
 - **설계 정본:** [두 진입·Workspace 보존·그룹 반영 r0002](L1_WORK_TO_KNOWLEDGE_FLOW_r0002_20261115_KST.md). r0001의 게시·복구·역링크 경계 유지. 기존 고정 리뷰 REQUEST/ZIP/manifest/SOURCE_PIN은 변경하지 않으며 r0002를 기존 리뷰 PASS로 취급하지 않음.
 - **실제 상태:** `DESIGN=USER_REQUIREMENT_DOCUMENTED`; `UPDATER_TO_WORKSPACE_SAVE=NOT_VERIFIED`; `WORKFLOW_UPDATER_E2E=NOT_RUN`; `INDEPENDENT_REVIEW_R0002=NOT_RUN`. 문서 반영과 실제 업무 호스트 저장·그룹 게시를 구분.
 - **범위:** 비민감 PRIVATE 설계·연결 문서 및 기존 TRACKER의 다음 조치. PUBLIC 표시 결과는 [대시보드 CURRENT](../COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md)에서 확인. 기존 CL/PR·고정 리뷰 이력 보존.
-- **다음 한 행동:** 업무 GPT가 기존 설치 원문/결과로 두 진입의 Work 선택·Workspace 저장/readback·그룹 반영 경로를 매핑하고 확인/미확인/GAP을 회신.
+- **열린 메모 — MSC 바로 열람:** [구조·B HTML+SVG 열람 검토](notes/MSC_WORKSPACE_VIEW_STRUCTURE_REVIEW_r0001_20261115_KST.md). 기존 문서/안내를 유지하며 분석 문서의 MSC 미리보기 + HTML 확대 링크를 추천. 실제 업무용 tree·호스팅·열람 E2E는 미확인.
+- **다음 한 행동:** 업무 GPT/로컬 Agent가 기존 Work 하나로 두 스킬의 Workspace 갱신 경로와 분석 문서→HTML→MSC의 실제 파일·열람 URL을 읽기 전용 매핑하고 확인/미확인/GAP을 회신.
 
 ---
 

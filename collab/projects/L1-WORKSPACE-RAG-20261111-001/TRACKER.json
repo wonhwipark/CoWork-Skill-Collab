@@ -9,7 +9,7 @@
       "owner": "GPT",
       "self_test": "NOT_VERIFIED",
       "independent_review": "NOT_RUN",
-      "next_action": "업무 GPT: Updater 직접 분석과 Workflow 결과의 같은 Work 저장·재조회 및 그룹 반영 경로를 기존 설치본으로 매핑."
+      "next_action": "업무 GPT: 기존 Work 하나의 Workspace 저장 경로·분석 문서→HTML→MSC 열람 경로와 호스팅을 읽기 전용 매핑."
     }
   ]
 }
