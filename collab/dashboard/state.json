@@ -322,7 +322,7 @@
     {
       "evidence": "프로젝트 TRACKER.json 신고 값 · 운영 근거 별도 확인 필요",
       "independent_review": "PENDING",
-      "next_action": "2026-11-15 사용자의 '그래 자동승인까지 진행해줘'에 따라 v0.2.23 고정 R2 신규 요청 REQ-COWORK-AUTO-APPROVAL-V023-R2-20261115 (POLICY-STATIC-V1-LARGE 최대 USD 3 1회)을 PRIVATE Commit A 8c90827ea6f",
+      "next_action": "2026-11-16 NEW USER REQUEST: strengthened R0~R3 evidence-based critical evaluation + improvement proposals must be integrated into actual Claude auto-review prompt. ",
       "owner": "GPT / Windows Claude Code",
       "phase": "REVIEW",
       "record_source": "REGISTERED_METADATA_UNVERIFIED",
