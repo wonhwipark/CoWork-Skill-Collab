@@ -7,7 +7,8 @@
 - **설계 변경분:** [Procedure/Feature MSC 링크 제안 r0002](MSC_MD_LINK_SKILL_SUPPORT_REVIEW_AND_PROPOSAL_r0002_20261116_KST.md) 새 파일로 정리. **기존 고정 r0001/REQUEST/ZIP/SOURCE_PIN, 과거 비용 승인·영수증 이력 불변**. `PASS`는 이 대화형 문서 회수·설계 보완 판정 범위에 한정.
 - **정식 리뷰 상태 조회:** `collab/reviews/REQ-L1-MSC-MD-LINK-STRUCTURE-20261115-001/REVIEW_RESULT_1.md`, receipt, READY 각각 2026-11-16 조회 시 **NOT_FOUND**. 따라서 `FORMAL_INDEPENDENT_REVIEW=NOT_RUN/NOT_RECEIVED`; 새 유료 호출·서명/READY 시작하지 않음. 실제 설치 Updater/그룹 writer, 수정 코드·회귀, 업무 Workspace·그룹 게시/HTML E2E 모두 `NOT_RUN/NOT_VERIFIED`.
 - **변경 범위:** PRIVATE 비민감 문서·CURRENT·TRACKER 상태 연결만. 운영 LIVE/provider/호스트·모델 실행·PUBLIC·업무 지식 데이터 변경 0.
-- **다음 한 행동:** 업무 GPT/허용 로컬 Agent가 **기존 설치본·G0를 읽기 전용**으로 확인해 Updater/그룹 writer, converter MSC 입력, Kernel export/marker, 실제 호스팅/열람 제약을 이 Work에 회신; 검증된 gap만 후속 최소 개발 후보로 판정.
+- **스킬 공개본 소스 정정(사용자 확인/2026-11-16 KST):** 공개 [wonhwipark/L1Work/main](https://github.com/wonhwipark/L1Work) 루트에서 `code-analyzer_v0_15_2_1107.zip`(513,811 B), `doc-converter_v0_2_21_1106.zip`(155,012 B), `l1-fix-workflow_v1_6_67_1110.zip`(749,307 B), `work-ledger-kernel_v0_7_37_1103.zip`(318,845 B)의 **존재·파일 크기·Git blob 메타를 직접 확인**. 이 4개는 GPT가 공개 패키지 정적 근거로 사용하고 업무 GPT에 중복 소스 조회를 요구하지 않음. 공개 ZIP과 실제 업무 설치본의 revision/동작 동일성은 미확인. `l1-knowledge-updater`의 실제 설치 스킬 원문/I/O와 그룹 `l1sw-dev-knowledge` writer·게시 권한/호스팅은 별도 확인 필요. L1Work 루트에서 그룹 스킬 ZIP이 확인됐다는 주장 아님.
+- **다음 한 행동:** GPT가 확인한 L1Work 4종 공개 baseline의 정적 근거를 그대로 재사용하고, **업무 GPT/허용 로컬 Agent는 `l1-knowledge-updater`의 실제 I/O 및 그룹 writer·업무 설치본 차이·호스팅 접근만** 기존 G0 기록과 대조해 이 Work에 회신; 중복 분석/재실행 없이 검증된 gap만 후속 최소 개발 후보로 판정.
 
 ---
 
