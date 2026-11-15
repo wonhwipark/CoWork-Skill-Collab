@@ -194,7 +194,7 @@ def verify(zippath: Path, data: dict, oldroot: str, newroot: str) -> None:
             sha, rel = rec.split("  ", 1)
             assert hashlib.sha256(z.read(newroot + rel)).hexdigest() == sha, rel
         assert len(manifest) == sum(1 for p in data if p and not p.endswith("/") and p != "PACKAGE_CONTENTS.sha256")
-        assert b"CoWork-Skill-Collab" not in z.read(newroot + "references/NR_TX_INIT_RACH_CODE_ANALYSIS_v0438.md")
+        assert b"github.com/wonhwipark/" not in z.read(newroot + "references/NR_TX_INIT_RACH_CODE_ANALYSIS_v0438.md")
     print("ZIP_CRC=PASS", "MANIFEST=PASS", "ACTIVE_JOBS=1",
           "VERSION=" + NEW, "PACKAGE_BYTES=" + str(zippath.stat().st_size),
           "PACKAGE_SHA256=" + hashlib.sha256(zippath.read_bytes()).hexdigest(), flush=True)
