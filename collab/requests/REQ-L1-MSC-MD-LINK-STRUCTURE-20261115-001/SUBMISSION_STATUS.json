@@ -1,0 +1,36 @@
+{
+  "request_id": "REQ-L1-MSC-MD-LINK-STRUCTURE-20261115-001",
+  "revision": 1,
+  "work_id": "L1-WORKSPACE-RAG-20261111-001",
+  "purpose": "MSC_MD_LINK_INDEPENDENT_STRUCTURE_REVIEW",
+  "request_document": "PREPARED_NOT_POSTED",
+  "user_review_request": "EXPLICIT_2026_11_15",
+  "package_sha256": "90bb61a0e7c3b429942c620480ad9a079980d2a3432b72cea8ba80a4b915907d",
+  "package_size_bytes": 38132,
+  "policy": "POLICY-STATIC-V1",
+  "policy_max_usd": 1,
+  "max_review_calls": 1,
+  "paid_review_authorization": "NOT_CONFIRMED_FOR_THIS_NEW_ID",
+  "standing_auto_approval": "OFF_LAST_VERIFIED_CURRENT_NOT_RETROACTIVE",
+  "host_signed_approval": "NOT_POSTED",
+  "ready": "NOT_POSTED",
+  "source_pin": "TO_BE_POSTED_AFTER_COMMIT_A_READBACK",
+  "local_input_qa": "PASS_BYTE_IDENTITY_CRC_PATH_REGULAR_FILE_SCOPE",
+  "host_validator": "NOT_RUN",
+  "automatic_queue": "NOT_QUEUED_READY_MISSING",
+  "independent_review": "NOT_RUN",
+  "actual_model_calls_this_request": 0,
+  "execution_observation": "NO_DISPATCH_RESULT_RECEIPT_AT_PREPARATION",
+  "result": "NOT_RECEIVED",
+  "active_provider": "GITHUB_LIVE_HOST_REPORTED_MIGRATION_CURRENT",
+  "blockers": [
+    "현재 GPT 도구에는 Windows Claude Code 호스트/보호 승인 경로를 직접 시작할 수단이 없어요.",
+    "이번 새 요청의 실제 유료 실행 권한은 미확인이고 APPROVAL_SIG·READY가 없어요. 이전 요청 승인이나 아직 OFF인 자동 위임 설계를 재사용하지 않아요."
+  ],
+  "output_paths": {
+    "result": "collab/reviews/REQ-L1-MSC-MD-LINK-STRUCTURE-20261115-001/REVIEW_RESULT_1.md",
+    "receipt": "collab/receipts/REQ-L1-MSC-MD-LINK-STRUCTURE-20261115-001/RECEIPT_1.md",
+    "dispatch": "collab/dispatch/REQ-L1-MSC-MD-LINK-STRUCTURE-20261115-001/DISPATCH_1.md"
+  },
+  "next_action": "Windows Claude Code: collab/requests/REQ-L1-MSC-MD-LINK-STRUCTURE-20261115-001/HOST_SUBMIT_ONESHOT.md로 현재 권한·호스트 validator·중복 확인 후 허용된 1회 독립 리뷰 결과/receipt 또는 차단 이유를 게시해요."
+}

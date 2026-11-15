@@ -1,0 +1,207 @@
+{
+  "request_id": "REQ-L1-MSC-MD-LINK-STRUCTURE-20261115-001",
+  "request_revision": 1,
+  "source_documents": [
+    {
+      "file": "02_PROPOSAL.md",
+      "repository": "wonhwipark/CoWork-Skill-Collab",
+      "ref": "b3f207728867ad9fad5d06d0ad8d3ff244106b06",
+      "path": "collab/projects/L1-WORKSPACE-RAG-20261111-001/MSC_MD_LINK_SKILL_SUPPORT_REVIEW_AND_PROPOSAL_r0001_20261115_KST.md",
+      "git_blob_sha1": "c8782768abab3377e30bdf10bc18d23ea20037b3",
+      "size_bytes": 18401,
+      "sha256": "b4f64584c0edf48921f77c0930b520e438b14d6299dd8aa49da5f9ef86ee290a"
+    },
+    {
+      "file": "04_ACCEPTED_TWO_ENTRY_FLOW.md",
+      "repository": "wonhwipark/CoWork-Skill-Collab",
+      "ref": "b3f207728867ad9fad5d06d0ad8d3ff244106b06",
+      "path": "collab/projects/L1-WORKSPACE-RAG-20261111-001/L1_WORK_TO_KNOWLEDGE_FLOW_r0002_20261115_KST.md",
+      "git_blob_sha1": "ba546d265511e7fafb1073c1d63472f57cd3f51b",
+      "size_bytes": 9372,
+      "sha256": "2e4f186ae4868a63132fb337027341fd7b30a32474ead6f4bfa0e63934fac43f"
+    },
+    {
+      "file": "05_SAMPLE_VERIFICATION_RESULT.md",
+      "repository": "wonhwipark/CoWork-Skill-Collab",
+      "ref": "b3f207728867ad9fad5d06d0ad8d3ff244106b06",
+      "path": "collab/projects/L1-WORKSPACE-RAG-20261111-001/MSC_WORKSPACE_PUBLIC_SAMPLE_RESULT_r0001_20261115_KST.md",
+      "git_blob_sha1": "ec6a2cce3069121057b769311073b5aa8d07145d",
+      "size_bytes": 7720,
+      "sha256": "ebcd009811a6ff7cae3c0d3c0417005802d737b50bbb5bc71ec2192b5ff5ee73"
+    },
+    {
+      "file": "07_WORKSPACE_VIEW_STRUCTURE.md",
+      "repository": "wonhwipark/CoWork-Skill-Collab",
+      "ref": "b3f207728867ad9fad5d06d0ad8d3ff244106b06",
+      "path": "collab/projects/L1-WORKSPACE-RAG-20261111-001/notes/MSC_WORKSPACE_VIEW_STRUCTURE_REVIEW_r0001_20261115_KST.md",
+      "git_blob_sha1": "01e1b8c4cd0befe7bd91477fd21da1405bbe5c88",
+      "size_bytes": 6591,
+      "sha256": "47efe75530ff172697cc3d35457b9f0f18a234c5bfe9168131f6084dc1e7bfc7"
+    }
+  ],
+  "public_baseline": [
+    {
+      "skill": "code-analyzer",
+      "public_zip": "code-analyzer_v0_15_2_1107.zip",
+      "bytes": 513811,
+      "git_blob": "6017f81f51e9747286825648599fc13770cb8903",
+      "sha256": "9786bb0deb86fe5faed69f7e0c5a343e661af195d745a63e759b577c8b39a669",
+      "crc": "PASS",
+      "static_read": "PASS",
+      "host_install": "NOT_VERIFIED",
+      "actual_invocation": "NOT_RUN"
+    },
+    {
+      "skill": "doc-converter",
+      "public_zip": "doc-converter_v0_2_21_1106.zip",
+      "bytes": 155012,
+      "git_blob": "bd5192c802fcc28d21f75ead81fb4cffc10d8470",
+      "sha256": "ef5d1d9e0b8847d2732d13ae387dc842bb8e90765952bc170345ea0a7b51039a",
+      "crc": "PASS",
+      "static_read": "PASS",
+      "host_install": "NOT_VERIFIED",
+      "actual_invocation": "NOT_RUN"
+    },
+    {
+      "skill": "l1-fix-workflow",
+      "public_zip": "l1-fix-workflow_v1_6_67_1110.zip",
+      "bytes": 749307,
+      "git_blob": "6a1dc5c85d63ee70a35ed3af024852879c7d33fd",
+      "sha256": "a3c5f055845a0711692afea5b09c0e53e93dfba89adc792c0f2e73385899b30a",
+      "crc": "PASS",
+      "static_read": "PASS",
+      "host_install": "NOT_VERIFIED",
+      "actual_invocation": "NOT_RUN"
+    },
+    {
+      "skill": "work-ledger-kernel",
+      "public_zip": "work-ledger-kernel_v0_7_37_1103.zip",
+      "bytes": 318845,
+      "git_blob": "dd1fc06fb318be2072613839634a485faacb83a2",
+      "sha256": "8cf53c9ba14aed97b9be7b00db39ca5458ba0127ba00b9a1eef3533aba3a06a5",
+      "crc": "PASS",
+      "static_read": "PASS",
+      "host_install": "NOT_VERIFIED",
+      "actual_invocation": "NOT_RUN"
+    }
+  ],
+  "source_files": [
+    {
+      "extracted_path": "code-analyzer/code-analyzer/SKILL.md",
+      "size_bytes": 67397,
+      "sha256": "5f81664560feab1a024e57c13cc3611491d9d786fe7049aa0f41e918c993eef2",
+      "included_ranges": [
+        [
+          78,
+          89
+        ]
+      ]
+    },
+    {
+      "extracted_path": "code-analyzer/code-analyzer/references/code_analyzer_msc_contract.md",
+      "size_bytes": 1596,
+      "sha256": "5a0910245bd8c82ed32f729e8caed093e687b45719d67903abe552541eeb8935",
+      "included_ranges": [
+        [
+          1,
+          44
+        ]
+      ]
+    },
+    {
+      "extracted_path": "doc-converter/doc-converter/scripts/msc_tool.py",
+      "size_bytes": 61105,
+      "sha256": "b55b022db60220fa3ce6ae65dc36b63ed557f09b293509b89b69c88ecaa6cd44",
+      "included_ranges": [
+        [
+          287,
+          332
+        ],
+        [
+          829,
+          903
+        ],
+        [
+          995,
+          1032
+        ]
+      ]
+    },
+    {
+      "extracted_path": "doc-converter/doc-converter/scripts/doc_converter.py",
+      "size_bytes": 65026,
+      "sha256": "51fab4de2ff6d785e39d416da716a70605f85f85b47fc2607c2f34c2f441edc9",
+      "included_ranges": [
+        [
+          476,
+          496
+        ],
+        [
+          978,
+          1003
+        ]
+      ]
+    },
+    {
+      "extracted_path": "l1-fix-workflow/l1-fix-workflow/l1_fix_workflow/scenario_msc.py",
+      "size_bytes": 4941,
+      "sha256": "cd669af77700c37acbf115a9cb4a906c13329d2f3e4b4ba830d9ca183eca92ff",
+      "included_ranges": [
+        [
+          40,
+          74
+        ]
+      ]
+    },
+    {
+      "extracted_path": "l1-fix-workflow/l1-fix-workflow/l1_fix_workflow/msc_view.py",
+      "size_bytes": 19150,
+      "sha256": "df5c9bc3d4c1c804dabfdfe2554995487f1374e4181d7b30ba6fabd976015006",
+      "included_ranges": [
+        [
+          298,
+          324
+        ]
+      ]
+    },
+    {
+      "extracted_path": "l1-fix-workflow/l1-fix-workflow/SKILL.md",
+      "size_bytes": 37460,
+      "sha256": "9b13fa463ac0e69e1faf936afde24b0c78ca43ad23f869d54f5407f33cc58faf",
+      "included_ranges": [
+        [
+          14,
+          24
+        ]
+      ]
+    },
+    {
+      "extracted_path": "work-ledger-kernel/work_ledger_kernel/work_ux.py",
+      "size_bytes": 82800,
+      "sha256": "61f597a11bc797972a434bc684d814774797a333b2fcc4abb69198c46611f747",
+      "included_ranges": [
+        [
+          815,
+          868
+        ],
+        [
+          1021,
+          1038
+        ]
+      ]
+    },
+    {
+      "extracted_path": "work-ledger-kernel/contracts/registry_v1.json",
+      "size_bytes": 5690,
+      "sha256": "246b25f888c202ec2825e223236d2f3f766379985800aae355862ee12fc586ea",
+      "included_ranges": [
+        [
+          45,
+          76
+        ]
+      ]
+    }
+  ],
+  "evidence_scope": "PINNED_PUBLIC_BASELINE_ONLY_NOT_INSTALLED_HOST",
+  "actual_updater_group_source": "NOT_ACCESSED"
+}
