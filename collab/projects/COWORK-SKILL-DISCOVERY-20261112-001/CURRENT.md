@@ -1,5 +1,15 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## TD-003 후속 — 기존 NR Work에 호스트 E2E one-shot 인계 게시 / 직접 Linux MCP 미접근 (2026-11-15 KST)
+
+- 사용자 '끝까지 이어서 진행'에 따라 기존 NR 분석 Work와 [EXECUTION_REQUEST](../NR-L1TX-CODE-ANALYSIS-20261115-001/EXECUTION_REQUEST.md), 기존 JOBLIST 배포 계약·PUBLIC v0.4.38 검증 결과를 다시 조회. **같은 CoWork/NR Work 재사용**, 신규 Work·Job ID·유료 리뷰 REQUEST/READY 추가 없음.
+- **호스트 직접 호출=BLOCKED:** 현재 GPT 연결에서 모바일 Agent/Linux MCP 호출 도구를 제공하지 않음. NR Work의 GitHub PRIVATE 폴더에서 아직 실 Linux Run/Result/Receipt 보고를 확인하지 못해 `TD003_REAL_MULTI_SKILL_E2E=NOT_RUN` 유지. 문서 기록과 실제 사용자 호스트 실행을 구분.
+- **운영 가능한 단일 인계:** [NR Work의 기존 Job readback 원샷](../NR-L1TX-CODE-ANALYSIS-20261115-001/TD003_LINUX_MCP_E2E_ONE_SHOT_HANDOFF_r0001_20261115_KST.md)을 PRIVATE 게시·본문 readback. 먼저 설치 SHA·Catalog/Registry/Run/Worker/Result/Receipt·MCP readback **기존 데이터만 정산**, 사용 가능한 기존 승인 경로로 미실행 신규 Job 최대 1회, 이미 소비·불명확한 실행 재큐잉 금지. Knowledge writer/RAG는 별도 검증.
+- **변경 범위:** 기존 NR Work의 `CURRENT.md`와 호스트 인계서, 맥락 Work의 이 현재 요약 및 GPT_TODO 상태 링크만. `NEW_PAID_CALLS/REQUEST_READY/PUBLIC_RELEASE/LINUX_JOB_TRIGGER/HOST_OPERATION_CHANGE/GROUP_WRITE=0` (이번 GPT 실행 범위).
+- **NEXT_ONE_ACTION:** 기존 모바일 Agent/Linux MCP의 신규 Job `JOB-20261115-NR-L1TX-INIT-RACH-EXEC-01`에 대해 정상 설치 SHA와 실제 Run/Receipt/MCP 결과를 **동일 ID로** 회수한 후, NR Work 판정 근거에 따라 TD-003의 실제 다중 스킬 인계 검증 상태를 재판정.
+
+---
+
 ## 현재 요약 — TD-002 V07 PASS → TD-001 문서 반영 → TD-003 실제 E2E 대기 (2026-11-15 KST)
 
 - **사용자 실행 순서:** `TD-002 → TD-001 → TD-003`. 모두 **기존** `COWORK-SKILL-DISCOVERY-20261112-001` Work에서 진행, 새 CoWork Work/별도 원장 생성 없음. 후보 상태의 단일 정본은 [GPT 공통 투두](../../GPT_TODO.md).
