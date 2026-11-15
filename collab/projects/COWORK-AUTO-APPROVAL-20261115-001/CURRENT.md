@@ -1,5 +1,14 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## R2 v0.2.23 공식 REQUEST·ZIP·SOURCE_PIN 게시 완료, 호스트 처리 대기 (2026-11-15 KST)
+
+- **사용자 최신 실행 지시:** “그래 자동승인까지 진행해줘” — 기존 통합 R2 1회/최대 $3, 승인된 보호 Windows 사전 위임 범위, 독립 리뷰+GPT PASS 조건부 운영 활성화에 대한 진행 의사 확인. 새 대상은 **v0.2.23**(원래 v0.2.22에서 접두사 호환성만 보완, GPT 정적 PASS).
+- **GPT 직접 게시·원격 readback PASS:** 신규 정식 R2 `collab/requests/REQ-COWORK-AUTO-APPROVAL-V023-R2-20261115/REQUEST.md`와 원본 ZIP `collab/packages/skill-collab-watcher_v0_2_23_1115_DEV_NOT_FOR_DEPLOYMENT.zip` 및 승인 범위 참고 `OWNER_SCOPE_RECORD.md`를 **Commit A `8c90827ea6f0771331937d81c719697b322d4039`**에 함께 저장. ZIP은 기존 Git blob `0d7001798d402e5545833e6aaf8c5f4b9d2b8fbf` 그대로 복사, **282340 B, SHA-256 `f941be8a6b53d00baa10a9b097f234b159470e2aa1242ecc33bcf0bdee080ea7`**(이전 직접 검증과 동일). REQUEST `SKILL_COLLAB_REVIEW_REQUEST_V1`/`SUBMITTED`/`POLICY-STATIC-V1-LARGE`/max $3×1, knowledge_refs 3개 각각 원시 SHA-256 확인.
+- **SOURCE_PIN:** `collab/requests/REQ-COWORK-AUTO-APPROVAL-V023-R2-20261115/SOURCE_PIN.json` **Commit B `e0e144cc56215b9d5d95cab77714186db6bf6662`**, `source_commit=8c90827e…` / `repo_id=1451933830` / `SKILL_COLLAB_SOURCE_PIN_V1`, 원격 readback PASS.
+- **호스트 원샷 정본:** [GPT_R2_V023_HOST_ONE_SHOT_AND_LIVE_GATE_r0001_20261115.md](GPT_R2_V023_HOST_ONE_SHOT_AND_LIVE_GATE_r0001_20261115.md), commit `49caa963cbad9106874b70ba416a72ea964f7c41`, remote readback PASS. 현재 운영 v0.2.20은 READY 없이 REQUEST만으로 모델 호출 불가. 현재 이 채팅의 GitHub 도구는 Windows 호스트 작업/키/프로세스를 직접 실행할 수 없어 **R2 모델/READY/조건부 설치를 실제로 실행했다고 보고하지 않음**.
+- **직접 원격 상태 조회:** `REQUEST=POSTED`, `ZIP=POSTED`, `SOURCE_PIN=POSTED`, `APPROVAL_SIG=NOT_POSTED`, `READY=NOT_POSTED`, `DISPATCH/REVIEW_RESULT/RECEIPT=NOT_POSTED`. 따라서 `INDEPENDENT_REVIEW=NOT_RUN`, `AUTO_SIGNING=OFF`, `OPERATING_GITHUB_LIVE=v0.2.20_UNCHANGED`, `NEW_PAID_CALLS_THIS_REQUEST=0`.
+- **NEXT_ONE_ACTION:** 실제 Windows 실행 주체가 위 ONE_SHOT 문서로 기존 호스트 검증 절차를 마치고 유효한 READY LAST → 승인된 R2 1회/영수증을 게시하도록 연결. GPT는 R2 검증·판정 후 **차단 결함 0 및 동일 바이트 PASS** 조건으로 앞서 승인된 v0.2.23 설치/30일 보호 위임 자동 승인 LIVE 적용 검증 진행. 이전 요청/승인 반복 금지. 신뢰된 승인 수단 미확인/한도 초과는 `BLOCKED`, 모델 호출 0.
+
 ## GPT v0.2.23 최종 정적 PASS — R2 대상 변경 확인만 대기 (2026-11-15 KST)
 
 - **GPT 결정:** [GPT_V0223_PREFIX_COMPAT_FINAL_DISPOSITION_r0001_20261115.md](GPT_V0223_PREFIX_COMPAT_FINAL_DISPOSITION_r0001_20261115.md), commit `d4ad638fc6af0151166cf466601fc1620c91b9d3`, remote readback PASS. `PASS_FOR_INDEPENDENT_R2_CANDIDATE_ONLY`. 운영 배포 PASS/독립 리뷰 PASS 아님.
