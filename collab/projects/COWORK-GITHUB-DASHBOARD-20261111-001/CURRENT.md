@@ -1,5 +1,15 @@
 # COWORK-GITHUB-DASHBOARD-20261111-001 — CURRENT
 
+## 현재 요약 — ⑦ Updater → ⑥ Workspace 화살표 수정 (2026-11-15 KST)
+
+- **사용자 지적 수용:** 이전에는 역할 설명만 반영하고 실제 역방향 연결선을 누락. ⑦ 카드 → ⑥ 카드의 녹색 실선·도착 화살촉과 ‘분석·초안·결정 저장/갱신’ 라벨을 추가.
+- **실제 상태:** PUBLIC UI 게시/readback PASS, Pages #43717660361 SUCCESS, 실제 Cloud Chrome 1363×936에서 연결선·라벨 클릭·화면 왕복·13카드/3분기·가로 overflow 0 확인. 실제 출발/도착 좌표 오차 0.
+- **결과 정본:** [변경·시험·전체 SHA-256](L1_UPDATER_7_TO_6_ARROW_FIX_RESULT_r0001_20261115_KST.md). PUBLIC commit `41d151e54651cc030e6ef66c94a7d62f654aec2b`.
+- **한계:** 모바일 실제 viewport·resize E2E NOT_RUN. 업무 호스트 저장 기능은 기존 NOT_VERIFIED/NOT_RUN 유지. 새 독립 리뷰·설치·Job·그룹 게시 없음.
+- **다음 한 행동:** 기존 [L1 화면](https://wonhwipark.github.io/L1Work/cowork-dashboard/#l1)을 새로고침해 ⑦ → ⑥ 연결 확인.
+
+---
+
 ## 현재 요약 — Updater 분석의 개인 저장 경로 반영 (2026-11-15 KST)
 
 - **사용자 요구 반영:** A Updater의 Procedure/Feature 직접 분석 / B Workflow 업무 결과 지식화를 구분하고, 두 진입 모두 개인 업무용 `l1-workspace`에 분석·초안·Evidence를 보존. 그룹 공용 `l1sw-dev-knowledge`에는 검증·승인된 공유 지식을 반영.
