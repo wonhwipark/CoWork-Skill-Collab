@@ -5,11 +5,11 @@
       "work_id": "COWORK-AUTO-APPROVAL-20261115-001",
       "skill": "cowork-review-watcher",
       "title": "GPT→GitHub REQUEST 자동 서명·READY (제한된 사전 위임)",
-      "phase": "DISPOSITION",
+      "phase": "BLOCKED",
       "owner": "GPT / Windows Claude Code",
       "self_test": "PASS",
       "independent_review": "NOT_RUN",
-      "next_action": "후보 v0.2.21(자체시험 817/817 PASS, 변이 16/17, 격리 SHADOW 8/8, 롤백 리허설 PASS, 운영·키·DB 불변, 모델 0) 완료. GPT 단일 판정: 독립 리뷰 요청(권고 R2/LARGE $3 1회)+사용자 위임 범위 1회 확정 → 승인 후 설치·위임 OFF 1주기·enabled 전환. AUTO_SIGNING=OFF 유지."
+      "next_action": "2026-11-15 GPT DIRECT STATIC: v0.2.21 candidate actual ZIP 272839B SHA256 16921bf4021714345cabc78de5e2e8a6882891615f90b5747622570ca4465d8b verified; Windows SELF_TEST_REPORTED 817 PASS/12 SKIP, SHADOW 8/8; independent review NOT_RUN. GPT review BLOCKING=2: B1 auto_claim max(auto reserved,manual dispatched) undercounts disjoint request identities and may sign outside daily/monthly delegation; B2 _still_allowed fails to recheck narrowed protected project/skill/budget scope before signer/READY. MAJOR=2: intermittent first failure identity unknown and exact Work allowlist new-Work automation compatibility. NEXT Windows Claude Code one-shot GPT_V0221_STATIC_DISPOSITION_AND_SINGLE_FIX_HANDOFF_r0001_20261115.md: isolated B1/B2 fix+negative regression and M1/M2 disposition, full tests/SHADOW/rollback, new dev ZIP and CLAUDE_V0221_GPT_FINDINGS_FIX_RESULT_FOR_GPT_20261115.md PRIVATE readback. Existing GitHub LIVE v0.2.20 unchanged, AUTO_SIGNING OFF, paid calls 0, operating approvals not granted. After fix GPT may bundle one R2 LARGE up to $3 + bounded delegation scope + conditional installation approval; not before patch."
     }
   ]
 }
