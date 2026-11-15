@@ -1,5 +1,14 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## GPT v0.2.23 최종 정적 PASS — R2 대상 변경 확인만 대기 (2026-11-15 KST)
+
+- **GPT 결정:** [GPT_V0223_PREFIX_COMPAT_FINAL_DISPOSITION_r0001_20261115.md](GPT_V0223_PREFIX_COMPAT_FINAL_DISPOSITION_r0001_20261115.md), commit `d4ad638fc6af0151166cf466601fc1620c91b9d3`, remote readback PASS. `PASS_FOR_INDEPENDENT_R2_CANDIDATE_ONLY`. 운영 배포 PASS/독립 리뷰 PASS 아님.
+- **규칙 판단:** `_FAMILY.fullmatch` 정규식 `[A-Za-z][A-Za-z0-9]*(?:-[A-Za-z0-9]+)*-`, 최소 7자. 보호된 로컬 위임의 owner-listed `COWORK-`(7자)와 `L1-WORKSPACE-`만 자동 프로젝트 가족으로 인정 가능하며 7자 하한 자체는 실행 권한이 아님. 스킬 exact allowlist/비용·중복·서명·READY 조건 불변. v0.2.22가 승인 입력을 거절했던 호환성 문제 수정 수용.
+- **GPT 원격 ZIP 실제 bytes 직접 검증 PASS:** `artifacts/v0_2_23/skill-collab-watcher_v0_2_23_1115_DEV_NOT_FOR_DEPLOYMENT.zip` 282340 B, SHA-256 `f941be8a6b53d00baa10a9b097f234b159470e2aa1242ecc33bcf0bdee080ea7`, ZIP central-directory 102개, Git blob `0d7001798d402e5545833e6aaf8c5f4b9d2b8fbf`; diff 직접 검토. ZIP full CRC/Windows 실측은 호스트 보고 구분.
+- **Windows 자체시험:** 구 v0.2.22에 신규 회귀 적용 시 5 FAIL/19 PASS, v0.2.23은 890 PASS/12 SKIP Windows venv+운영 Python 3.11.9 각, 격리 SHADOW 8/8, rollback PASS(호스트 자체 보고). `INDEPENDENT_R2=NOT_RUN`, `REAL_KEY_SIGNING=0`, `READY=NOT_POSTED`, `NEW_PAID_CALLS=0`, `AUTO_SIGNING=OFF`. 기존 GitHub LIVE v0.2.20 변경 없음.
+- **변경점 확인만 대기:** 앞선 통합 사용자 승인은 R2 LARGE 최대 $3/1회, 지정 위임 범위/한도/30일 및 리뷰 PASS 조건부 설치까지 확보했으나 **R2 동결 ZIP은 v0.2.22**였음. v0.2.23 SHA `f941be8a…80ea7`로 **리뷰 입력만 바꾸는 것**에 대한 좁은 사용자 확인 후 R2 정식 신규 REQUEST/고정 ZIP/Commit A/SOURCE_PIN → Windows 기존 signer/READY LAST → 독립 리뷰/영수증→GPT 판정. 승인 범위 전체 반복 요청·추가 비용·모델 재호출 금지.
+- **NEXT_ONE_ACTION:** 사용자에게 **v0.2.23 바이트에 한하여 기존 $3/1회 R2 적용 가능 여부**만 확인. 변경 승인 전 모델 0, 서명 0, READY 0.
+
 ## 승인 접두사 호환성 수정 완료: 후보 v0.2.23 (COWORK-/L1-WORKSPACE- 승인 범위 통과, 옛 후보 거부 재현, 자체시험 890/890, 독립 R2 NOT_RUN, 운영 불변) (Claude 호스트 보고, 2026-11-15 KST)
 - 결과: `CLAUDE_V0222_APPROVED_PREFIX_COMPAT_FIX_RESULT_FOR_GPT_20261115.md` (PRIVATE `main`, commit `30e6b7fed42a886fb8f8e3bd10ba671683209c61`, 원격 바이트·SHA-256 `bb4c71d40c2b6064ba48e2df663a18be3350a6db6ca7e0d95e9019eb5a0220a9` 일치).
 - 원인: v0.2.22 접두사 최소 길이 8자 → 승인된 `COWORK-`(7자) 거부로 위임 전체 로드 실패. 수정: 영숫자 단어와 `-`로 끝나는 접두사, 최소 7자, 와일드카드·공백·구분자 없는 단어 거부. 매칭·스킬 정확 일치는 불변.
