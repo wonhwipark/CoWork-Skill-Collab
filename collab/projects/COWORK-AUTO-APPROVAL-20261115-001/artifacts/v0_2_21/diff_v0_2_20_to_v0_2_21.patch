@@ -1,0 +1,2408 @@
+diff --git a/docs/AUTO_APPROVAL.md b/docs/AUTO_APPROVAL.md
+--- a/docs/AUTO_APPROVAL.md
++++ b/docs/AUTO_APPROVAL.md
+@@ -0,0 +1,65 @@
++# Bounded automatic approval (v0.2.21, development_not_for_deployment)
++
++Goal: a REQUEST that GPT publishes to the PRIVATE repository gets its `APPROVAL_SIG.json` and `READY.md` from the existing Windows signer without a
++Telegram button or a manual Claude Code step, and the SAME single GitHub LIVE watcher then runs exactly one independent review.
++
++**Default: the feature does not exist.** Without an `auto_approval` section in the watcher config nothing changes. With the section but the protected
++delegation file saying `enabled: false` (the default), nothing is signed. **Nothing written to GitHub can enable, widen or extend it.**
++
++## What it may do, and what it may never do
++- May: for a REQUEST that has no READY yet, inside a local delegation, publish `APPROVAL_SIG.json` (create-only, read back) and then `READY.md`
++  (create-only, LAST, read back). The existing `SOURCE_PIN.json` that GPT published is used as it is and never overwritten.
++- Never: start a review (the unchanged READY checks, the N1 remote dispatch reservation and the single model call stay as they are), change a key,
++  the trust root, a ceiling or a policy, or retry blindly after a doubt.
++
++## Order of every decision (all read-only until the reservation)
++1. Delegation file readable, ACL protected (no Everyone/Users/Authenticated Users write on the file or its folder; read through the Win32 DACL, SID
++   based), schema `AUTO_DELEGATION_V1`, `enabled: true`, not expired.
++2. The REQUEST was FIRST SEEN while the delegation was enabled, and its pinned commit A is not older than `enabled_at` (no retroactive start; a
++   request seen while the feature was off stays excluded forever).
++3. Repository: the numeric id the server reports now = `SOURCE_PIN.repo_id` = `delegation.repo_id`; `SOURCE_PIN` schema/commit well formed.
++4. Package: size and sha256 equal the REQUEST, ZIP CRC, the engine's credential scan, `safe_extract`, size limit 5 MiB.
++5. Commit A: the REQUEST and the package bytes at the pinned commit equal the bytes on `main` today.
++6. No earlier history: no APPROVAL_SIG/READY/dispatch/receipt/result on the remote, no local job, no earlier reservation.
++7. The pure gate `auto_policy.assess` (GPT prototype, byte-identical): scope allow-lists, `POLICY-STATIC-V1` only, 1 call, attempt 1, per request <= $1,
++   day <= 2 calls / $3, month <= $10 (limits can only be equal to or stricter than the product ceilings), counting the watcher's own recorded dispatches.
++8. The official validator on the READY text that WILL be published (bytes fixed before signing).
++9. Atomic reservation (`BEGIN IMMEDIATE`, one row per request and revision, day/month ceilings inside the same transaction).
++10. Re-check (delegation still enabled and unexpired, repository id unchanged) -> sign with the existing `tools.approval_signer` -> verify with the
++    watcher's own `verify_approval` -> store the approval and READY bytes -> re-check -> publish approval -> re-check -> publish READY last.
++
++## Stops
++Any failure after the reservation ends in `UNCERTAIN` (event `AUTO_SIGNING_UNCERTAIN`, listed in the notification events): no automatic retry, no
++re-signature. The only automatic resumes: a reservation without a stored signature may sign ONE more time (nothing was ever published); a stored,
++unexpired approval or READY is published with the same bytes. An expired stored approval is never re-signed.
++
++## Configuration (example, nothing secret)
++```json
++"auto_approval": {
++  "delegation_file": "C:/ProgramData/cowork/auto_delegation.json",
++  "valid_hours": 2,
++  "signer": {"private_key_file": "...approver.key.enc", "key_id": "cowork-approver-1", "repo_id": "1451933830",
++             "passphrase_dpapi_file": "...approver.pass.dpapi", "dpapi_entropy": "cowork-approver-v1"}
++}
++```
++`delegation_file` (protected, written by the user, never by GitHub or this program):
++```json
++{"schema": "AUTO_DELEGATION_V1", "enabled": false, "repo_id": "1451933830", "branch": "main",
++ "projects": ["<explicit work ids>"], "skills": ["<explicit skill ids>"], "policy": "POLICY-STATIC-V1",
++ "enabled_at": "2026-11-16T00:00:00+09:00", "expires_at": "2026-12-16T00:00:00+09:00",
++ "max_request_usd": 1.0, "max_day_calls": 2, "max_day_usd": 3.0, "max_month_usd": 10.0}
++```
++`config-check` prints the state without any path of a secret. `acl_check: "skip"` exists for isolated tests only and is printed as a warning.
++
++## Enabling procedure (after an explicit user approval; not part of this candidate)
++install with `enabled: false` -> let one watch cycle pass (every pending REQUEST is recorded as "seen while off") -> set `enabled: true` and
++`enabled_at` to now. Revoke by setting `enabled: false` (takes effect at the next check, also between signing and publishing).
++
++## Rollback
++Remove the `auto_approval` section (or keep `enabled: false`) and restart; the two new tables stay unused. Restore the previous package folder from
++its ZIP (byte copy). Nothing else of the operating watcher, database, Task, Notifier or key is changed by this feature.
++
++## Known limits (see the result document)
++The signing capability runs inside the watcher process of the same Windows account that reads GitHub-controlled input; the protection is the
++delegation gate plus the fail-closed order above, not a separate trust domain. The installed Notifier has its own event list: add
++`AUTO_SIGNING_UNCERTAIN` there when the feature is enabled.
+diff --git a/docs/CUTOVER_RUNBOOK.md b/docs/CUTOVER_RUNBOOK.md
+--- a/docs/CUTOVER_RUNBOOK.md
++++ b/docs/CUTOVER_RUNBOOK.md
+@@ -1,4 +1,4 @@
+-# Cutover runbook: Dropbox to GitHub (v0.2.20, development_not_for_deployment)
++# Cutover runbook: Dropbox to GitHub (v0.2.21, development_not_for_deployment)
+ 
+ Status: a design with isolated test evidence. Nothing here installs, starts or switches anything on the
+ operating host. Each step marked APPROVAL needs an explicit decision by the user.
+diff --git a/skill_collab_watcher/__init__.py b/skill_collab_watcher/__init__.py
+--- a/skill_collab_watcher/__init__.py
++++ b/skill_collab_watcher/__init__.py
+@@ -1 +1 @@
+-__version__ = "0.2.20"
++__version__ = "0.2.21"
+diff --git a/skill_collab_watcher/auto_approval.py b/skill_collab_watcher/auto_approval.py
+--- a/skill_collab_watcher/auto_approval.py
++++ b/skill_collab_watcher/auto_approval.py
+@@ -0,0 +1,647 @@
++"""Bounded automatic approval (v0.2.21, development_not_for_deployment).
++
++A REQUEST that GPT publishes to the PRIVATE repository gets an APPROVAL_SIG.json and a READY.md from THIS watcher, but only inside a delegation that
++the user stored in a PROTECTED local file (AUTO_DELEGATION_V1, default enabled=false). Nothing in GitHub can enable it, widen it or extend it.
++
++What this module never does: start a review (the unchanged READY checks, the N1 remote reservation and the single model call stay in the
++orchestrator), change a key, a trust root, a ceiling or a policy, or retry blindly. Every doubt stops with an event; a stop after the local
++reservation is final until a human looks (SIGNING_UNCERTAIN)."""
++from __future__ import annotations
++
++import contextlib
++import hashlib
++import io
++import json
++import math
++import re
++import sys
++import tempfile
++import threading
++import time
++import zipfile
++from dataclasses import dataclass
++from datetime import datetime, timedelta, timezone
++from pathlib import Path
++
++from . import auto_policy
++from .approval import ApprovalRejected, NotConfigured, check_clock, verify_approval
++from .transport_base import AuthRequired, RemoteNotFound, TransportError, UploadConflict
++from .validator import SAFE_NAME, ValidationOutcome, parse_front_matter, validate
++from .zip_safety import UnsafeZip, package_secret_findings, safe_extract
++
++DELEGATION_SCHEMA = "AUTO_DELEGATION_V1"
++KST = timezone(timedelta(hours=9))
++PIN_SCHEMA = "SKILL_COLLAB_SOURCE_PIN_V1"
++MAX_PACKAGE_BYTES = 5 * 1024 * 1024         # a review input, never a deployment: a bigger package is not eligible for automatic approval
++
++
++# ---- settings ---------------------------------------------------------------------------------------------------------------------------
++
++
++@dataclass
++class AutoSettings:
++    delegation_file: Path
++    valid_hours: int = 2
++    acl_check: str = "windows"                      # windows | skip  (skip exists for isolated tests only and is printed by config-check)
++    signer: dict | None = None
++    race_retries: int = 2
++
++    @classmethod
++    def from_config(cls, section) -> "AutoSettings":
++        if not isinstance(section, dict) or not isinstance(section.get("delegation_file"), str) or not section["delegation_file"].strip():
++            raise ValueError("auto_approval needs a delegation_file path")
++        hours = section.get("valid_hours", 2)
++        if isinstance(hours, bool) or not isinstance(hours, int) or not 1 <= hours <= 12:
++            raise ValueError("auto_approval.valid_hours must be an integer from 1 to 12")
++        acl = section.get("acl_check", "windows")
++        if acl not in ("windows", "skip"):
++            raise ValueError("auto_approval.acl_check must be windows or skip")
++        signer = section.get("signer")
++        if signer is not None and not isinstance(signer, dict):
++            raise ValueError("auto_approval.signer must be an object")
++        return cls(Path(section["delegation_file"]), hours, acl, signer)
++
++
++def describe_for_config_check(section) -> list[str]:
++    """Lines for `config-check`: never a path of a secret, never a key value."""
++    try:
++        s = AutoSettings.from_config(section)
++    except ValueError as exc:
++        return [f"auto_approval: INVALID CONFIG ({exc})"]
++    lines = [f"auto_approval: configured; acl_check={s.acl_check}; valid_hours={s.valid_hours}"]
++    if s.acl_check == "skip":
++        lines.append("auto_approval: WARNING acl_check=skip is for isolated tests only")
++    d, reason = load_delegation(s.delegation_file, time.time(), s.acl_check)
++    if d is None:
++        lines.append(f"auto_approval: delegation not usable ({reason}) -> AUTO_SIGNING stays OFF")
++    else:
++        lines.append(f"auto_approval: delegation file readable; enabled={d.enabled}; projects={len(d.projects)}; skills={len(d.skills)}; "
++                     f"limits: per request {d.max_request_cents} c, day {d.max_day_calls} calls/{d.max_day_cents} c, month {d.max_month_cents} c")
++    lines.append(f"auto_approval: signer {'configured' if s.signer else 'NOT configured -> nothing can be signed'}")
++    return lines
++
++
++# ---- the protected local delegation -----------------------------------------------------------------------------------------------------
++
++
++# Access-mask bits that let a principal change a file or its permissions (FILE_WRITE_DATA, FILE_APPEND_DATA, FILE_WRITE_EA, FILE_DELETE_CHILD,
++# FILE_WRITE_ATTRIBUTES, DELETE, WRITE_DAC, WRITE_OWNER, GENERIC_ALL, GENERIC_WRITE).
++_WRITE_MASK = 0x2 | 0x4 | 0x10 | 0x40 | 0x100 | 0x10000 | 0x40000 | 0x80000 | 0x10000000 | 0x40000000
++_BROAD_SIDS = {"S-1-1-0": "Everyone", "S-1-5-32-545": "Users", "S-1-5-11": "Authenticated Users", "S-1-5-32-546": "Guests", "S-1-5-7": "Anonymous"}
++
++
++def aces_allow_broad_write(aces) -> bool:
++    """aces: iterable of (ace_type, sid_string, access_mask). True when a broad group is ALLOWED a write-capable right. Deny entries are ignored
++    on purpose (a file is only called protected when no broad group is allowed to write at all)."""
++    return any(ace_type == 0 and sid in _BROAD_SIDS and (mask & _WRITE_MASK) for ace_type, sid, mask in aces)
++
++
++def read_dacl(path: Path):
++    """The DACL of a file or folder as (ace_type, sid_string, access_mask) tuples, through the Win32 API (no external process, SID based so it works
++    on any Windows language). Raises OSError when it cannot be read."""
++    import ctypes
++    from ctypes import wintypes
++
++    adv, k32 = ctypes.WinDLL("advapi32", use_last_error=True), ctypes.WinDLL("kernel32", use_last_error=True)
++    adv.GetNamedSecurityInfoW.argtypes = [wintypes.LPWSTR, ctypes.c_int, wintypes.DWORD, ctypes.c_void_p, ctypes.c_void_p,
++                                          ctypes.POINTER(ctypes.c_void_p), ctypes.c_void_p, ctypes.POINTER(ctypes.c_void_p)]
++    adv.GetNamedSecurityInfoW.restype = wintypes.DWORD
++    adv.GetAclInformation.argtypes = [ctypes.c_void_p, ctypes.c_void_p, wintypes.DWORD, ctypes.c_int]
++    adv.GetAce.argtypes = [ctypes.c_void_p, wintypes.DWORD, ctypes.POINTER(ctypes.c_void_p)]
++    adv.ConvertSidToStringSidW.argtypes = [ctypes.c_void_p, ctypes.POINTER(wintypes.LPWSTR)]
++    k32.LocalFree.argtypes = [ctypes.c_void_p]
++
++    class _AclSize(ctypes.Structure):
++        _fields_ = [("AceCount", wintypes.DWORD), ("AclBytesInUse", wintypes.DWORD), ("AclBytesFree", wintypes.DWORD)]
++
++    dacl, sd = ctypes.c_void_p(), ctypes.c_void_p()
++    rc = adv.GetNamedSecurityInfoW(str(path), 1, 4, None, None, ctypes.byref(dacl), None, ctypes.byref(sd))   # SE_FILE_OBJECT, DACL_SECURITY_INFORMATION
++    if rc != 0:
++        raise OSError(f"GetNamedSecurityInfo failed ({rc})")
++    try:
++        if not dacl.value:
++            return [(0, "S-1-1-0", 0x10000000)]                       # a NULL DACL grants everyone everything
++        info = _AclSize()
++        if not adv.GetAclInformation(dacl, ctypes.byref(info), ctypes.sizeof(info), 2):
++            raise OSError("GetAclInformation failed")
++        out = []
++        for i in range(info.AceCount):
++            ace = ctypes.c_void_p()
++            if not adv.GetAce(dacl, i, ctypes.byref(ace)):
++                raise OSError("GetAce failed")
++            ace_type = ctypes.c_ubyte.from_address(ace.value).value
++            mask = ctypes.c_uint32.from_address(ace.value + 4).value
++            sid_text = wintypes.LPWSTR()
++            if not adv.ConvertSidToStringSidW(ace.value + 8, ctypes.byref(sid_text)):
++                raise OSError("ConvertSidToStringSid failed")
++            try:
++                out.append((ace_type, sid_text.value, mask))
++            finally:
++                k32.LocalFree(ctypes.cast(sid_text, ctypes.c_void_p))
++        return out
++    finally:
++        k32.LocalFree(sd)
++
++
++def windows_acl_ok(path: Path) -> tuple[bool, str]:
++    """The delegation file AND its folder must not be writable by broad groups (Everyone, Users, Authenticated Users, Guests, Anonymous).
++    Fail closed: when the ACL cannot be read, the file is not protected."""
++    if sys.platform != "win32":
++        return False, "ACL_CHECK_UNSUPPORTED_PLATFORM"
++    try:
++        for target in (path, path.parent):
++            if aces_allow_broad_write(read_dacl(target)):
++                return False, "ACL_BROAD_WRITE"
++    except OSError:
++        return False, "ACL_UNREADABLE"
++    return True, "ok"
++
++
++def _iso(value, name):
++    try:
++        t = datetime.fromisoformat(str(value))
++    except ValueError as exc:
++        raise ValueError(f"{name} is not an ISO time") from exc
++    if t.tzinfo is None:
++        raise ValueError(f"{name} has no time zone")
++    return int(t.timestamp())
++
++
++def _cents(value, name):
++    if isinstance(value, bool) or not isinstance(value, (int, float)) or value <= 0:
++        raise ValueError(f"{name} must be a positive number")
++    return int(round(float(value) * 100))
++
++
++def load_delegation(path: Path, now: float, acl_check: str = "windows"):
++    """(Delegation | None, reason). None means: nothing may be signed. A disabled delegation is returned as such (enabled=False)."""
++    try:
++        if acl_check == "windows":
++            ok, why = windows_acl_ok(path)
++            if not ok:
++                return None, why
++        raw = json.loads(Path(path).read_text(encoding="utf-8-sig"))
++        if not isinstance(raw, dict) or raw.get("schema") != DELEGATION_SCHEMA:
++            return None, "POLICY_SCHEMA"
++        enabled = raw.get("enabled")
++        if not isinstance(enabled, bool):
++            return None, "POLICY_ENABLED_NOT_BOOLEAN"
++        projects, skills = raw.get("projects"), raw.get("skills")
++        if not (isinstance(projects, list) and isinstance(skills, list) and all(isinstance(x, str) and x for x in projects + skills)):
++            return None, "POLICY_SCOPE_FORMAT"
++        if raw.get("policy", "POLICY-STATIC-V1") != "POLICY-STATIC-V1":
++            return None, "POLICY_NOT_STATIC_V1"
++        d = auto_policy.Delegation(
++            enabled=enabled, repo_id=str(raw["repo_id"]), branch=str(raw["branch"]), projects=frozenset(projects), skills=frozenset(skills),
++            expires_at=_iso(raw["expires_at"], "expires_at"), earliest_request_at=_iso(raw["enabled_at"], "enabled_at"),
++            max_request_cents=_cents(raw.get("max_request_usd", 1.0), "max_request_usd"), max_day_calls=int(raw.get("max_day_calls", 2)),
++            max_day_cents=_cents(raw.get("max_day_usd", 3.0), "max_day_usd"), max_month_cents=_cents(raw.get("max_month_usd", 10.0), "max_month_usd"))
++        return d, "ok"
++    except (OSError, ValueError, KeyError, TypeError):
++        return None, "POLICY_UNREADABLE"
++
++
++# ---- the existing signer, called as a library -------------------------------------------------------------------------------------------
++
++
++def dpapi_passphrase_provider(blob_file: Path, entropy: bytes):
++    """The passphrase of the encrypted approver key exists only as a Windows DPAPI blob bound to THIS account (the existing host design)."""
++    import ctypes
++    from ctypes import wintypes
++
++    class _Blob(ctypes.Structure):
++        _fields_ = [("cbData", wintypes.DWORD), ("pbData", ctypes.POINTER(ctypes.c_byte))]
++
++    def make(data):
++        buf = ctypes.create_string_buffer(data, len(data))
++        return _Blob(len(data), ctypes.cast(buf, ctypes.POINTER(ctypes.c_byte))), buf
++
++    def ask(_prompt: str) -> str:
++        crypt32, kernel32 = ctypes.WinDLL("crypt32", use_last_error=True), ctypes.WinDLL("kernel32", use_last_error=True)
++        kernel32.LocalFree.argtypes = [ctypes.c_void_p]
++        inb, k1 = make(Path(blob_file).read_bytes())
++        ent, k2 = make(entropy)
++        out = _Blob()
++        if not crypt32.CryptUnprotectData(ctypes.byref(inb), None, ctypes.byref(ent), None, None, 1, ctypes.byref(out)):
++            raise OSError("DPAPI could not open the passphrase blob")
++        try:
++            return ctypes.string_at(out.pbData, out.cbData).decode("utf-8")
++        finally:
++            kernel32.LocalFree(ctypes.cast(out.pbData, ctypes.c_void_p))
++    return ask
++
++
++class ToolSigner:
++    """The existing `tools.approval_signer` (the same code the host used for every approval so far), called in-process. The private key file
++    stays where it is; nothing is copied, no key or passphrase is returned, logged or put in a message."""
++    _lock = threading.Lock()
++
++    def __init__(self, private_key_file, key_id: str, repo_id: str, passphrase_provider=None, allow_plaintext_key: bool = False):
++        self.private_key_file, self.key_id, self.repo_id = Path(private_key_file), key_id, str(repo_id)
++        self.passphrase_provider, self.allow_plaintext_key = passphrase_provider, allow_plaintext_key
++
++    @classmethod
++    def from_config(cls, cfg: dict) -> "ToolSigner":
++        provider = None
++        if cfg.get("passphrase_dpapi_file"):
++            provider = dpapi_passphrase_provider(Path(cfg["passphrase_dpapi_file"]), str(cfg.get("dpapi_entropy", "cowork-approver-v1")).encode())
++        return cls(cfg["private_key_file"], cfg["key_id"], cfg["repo_id"], provider, bool(cfg.get("allow_plaintext_key", False)))
++
++    @staticmethod
++    def _tool():
++        root = Path(__file__).resolve().parents[1]
++        if str(root) not in sys.path:
++            sys.path.insert(0, str(root))
++        from tools import approval_signer
++        return approval_signer
++
++    def trusts_key(self, trust_root) -> bool:
++        key = getattr(trust_root, "keys", {}).get(self.key_id) if trust_root is not None else None
++        return key is not None and getattr(key, "status", None) == "ACTIVE"
++
++    def sign(self, request_raw: bytes, ready_raw: bytes, package_raw: bytes, package_path: str, source_commit: str, policy_revision: str,
++             valid_hours: int) -> bytes:
++        """APPROVAL_SIG.json bytes bound to exactly these request/READY/package bytes (the signed payload carries ready_sha256)."""
++        tool = self._tool()
++        header = self.private_key_file.read_text(encoding="ascii").splitlines()[0] if self.private_key_file.exists() else ""
++        encrypted = header.startswith(tool.ENC_HEADER)
++        if encrypted and self.passphrase_provider is None:
++            raise PermissionError("the key is encrypted and no passphrase provider is configured")
++        if not encrypted and not self.allow_plaintext_key:
++            raise PermissionError("a plaintext key is refused")
++        with self._lock, tempfile.TemporaryDirectory(prefix="auto_sign_") as tmp:
++            tmp = Path(tmp)
++            (tmp / "REQUEST.md").write_bytes(request_raw)
++            (tmp / "READY.md").write_bytes(ready_raw)
++            (tmp / "package.zip").write_bytes(package_raw)
++            old_ask = tool._ask
++            if self.passphrase_provider is not None:
++                tool._ask = self.passphrase_provider
++            try:
++                with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
++                    rc = tool.main(["sign", "--private-key", str(self.private_key_file), "--key-id", self.key_id, "--repo-id", self.repo_id,
++                                    "--request", str(tmp / "REQUEST.md"), "--ready", str(tmp / "READY.md"), "--package", str(tmp / "package.zip"),
++                                    "--package-path", package_path, "--source-commit", source_commit, "--policy-revision", str(policy_revision),
++                                    "--out-dir", str(tmp / "out"), "--valid-hours", str(valid_hours)])
++            finally:
++                tool._ask = old_ask
++            if rc != 0:
++                raise RuntimeError("the signer refused")
++            return (tmp / "out" / "APPROVAL_SIG.json").read_bytes()
++
++    def verify(self, approval_raw: bytes, pin_raw: bytes, request_raw: bytes, ready_raw: bytes, package_raw: bytes, package_path: str,
++               policy_revision: str, trust_root, backend) -> None:
++        """The same checks the watcher makes (the signer tool's own `expected_fields` + the watcher's verify_approval). Raises on any failure."""
++        tool = self._tool()
++        with tempfile.TemporaryDirectory(prefix="auto_check_") as tmp:
++            tmp = Path(tmp)
++            (tmp / "REQUEST.md").write_bytes(request_raw)
++            (tmp / "READY.md").write_bytes(ready_raw)
++            (tmp / "package.zip").write_bytes(package_raw)
++            expected = tool.expected_fields(tmp / "REQUEST.md", tmp / "READY.md", tmp / "package.zip", package_path, policy_revision)
++            verify_approval(approval_raw, pin_raw, trust=trust_root, backend=backend, expected=expected, now=datetime.now(timezone.utc))
++
++
++# ---- the approver ----------------------------------------------------------------------------------------------------------------------
++
++
++@dataclass
++class AutoResult:
++    status: str
++    detail: str = ""
++
++
++def _kst_keys(now: float) -> tuple[str, str]:
++    t = datetime.fromtimestamp(now, KST)
++    return t.strftime("%Y-%m-%d"), t.strftime("%Y-%m")
++
++
++def _ready_text(rid: str, rev: str, request_sha: str, package_sha: str, baseline: str) -> str:
++    return (f"---\nschema: SKILL_COLLAB_READY_V1\nstate: READY\nrequest_id: {rid}\nrequest_revision: {rev}\n"
++            f"request_path: /SKILL-COLLAB/requests/{rid}/REQUEST.md\nrequest_sha256: {request_sha}\npackage_sha256: {package_sha}\n"
++            f"baseline_id: {baseline}\n---\n\n# ready\n")
++
++
++class AutoApprover:
++    def __init__(self, settings: AutoSettings, store, signer=None, now_fn=time.time, sleep=time.sleep):
++        self.s, self.store, self.now_fn, self.sleep = settings, store, now_fn, sleep
++        self.signer = signer if signer is not None else (ToolSigner.from_config(settings.signer) if settings.signer else None)
++        store.ensure_auto_tables()
++
++    # -- events --
++    def _once(self, event, key, detail):
++        self.store.log_event_once(event, processing_key=key, detail=detail)
++
++    def _event(self, event, key, detail):
++        self.store.log_event(event, processing_key=key, detail=detail)
++
++    # -- remote helpers --
++    def _exists(self, transport, path) -> bool:
++        return transport.get_metadata(path) is not None
++
++    def _post_create_only(self, transport, path: str, data: bytes) -> str:
++        """POSTED | EXISTS_SAME | EXISTS_DIFFERENT | ABSENT_AFTER_RACES | ERROR. A branch-head race (the file is not there after a conflict) is retried a
++        bounded number of times; anything else is a stop."""
++        for attempt in range(self.s.race_retries + 1):
++            try:
++                transport.upload(path, data, mode="add")
++            except UploadConflict:
++                try:
++                    back = transport.download_latest(path)[0]
++                except RemoteNotFound:
++                    self.sleep(0.4 * (attempt + 1))
++                    continue
++                except (TransportError, AuthRequired):
++                    return "ERROR"
++                return "EXISTS_SAME" if back == data else "EXISTS_DIFFERENT"
++            except (TransportError, AuthRequired):
++                try:                                                   # maybe it was written and only the answer was lost
++                    return "POSTED" if transport.download_latest(path)[0] == data else "ERROR"
++                except (TransportError, AuthRequired):
++                    return "ERROR"
++            try:
++                return "POSTED" if transport.download_latest(path)[0] == data else "EXISTS_DIFFERENT"
++            except (TransportError, AuthRequired):
++                return "ERROR"
++        return "ABSENT_AFTER_RACES"
++
++    # -- the entry point --
++    def process(self, transport, store, policy, remote_root: str, request_id: str, request_text: str, request_raw: bytes) -> AutoResult:
++        self.store = store                                             # always the store of the cycle in progress (it is replaced on a restart)
++        if store.read_only:
++            return AutoResult("READ_ONLY")
++        try:
++            return self._process(transport, store, policy, remote_root, request_id, request_text, request_raw)
++        except Exception as exc:                                       # noqa: BLE001  one bad request must not stop the others
++            claim = None
++            try:
++                rev = str(parse_front_matter(request_text).get("request_revision"))
++                claim = store.auto_get_claim(request_id, rev)
++                if claim and claim["stage"] not in ("READY_POSTED", "UNCERTAIN"):
++                    store.auto_update(request_id, rev, int(self.now_fn()), stage="UNCERTAIN", detail=f"unexpected {type(exc).__name__}")
++            except Exception:                                          # noqa: BLE001
++                claim = claim or None
++            if claim is not None:
++                self._event("AUTO_SIGNING_UNCERTAIN", request_id, f"unexpected {type(exc).__name__}: no further automatic action for this request")
++                return AutoResult("UNCERTAIN", type(exc).__name__)
++            # nothing was reserved or signed: a plain log line, not an alert
++            self._once("AUTO_ERROR", request_id, f"unexpected {type(exc).__name__} before any reservation; nothing was signed")
++            return AutoResult("ERROR", type(exc).__name__)
++
++    def _process(self, transport, store, policy, remote_root, rid, request_text, request_raw) -> AutoResult:
++        now = int(self.now_fn())
++        front = parse_front_matter(request_text)
++        rev = str(front.get("request_revision"))
++        root = remote_root.rstrip("/")
++        base = f"{root}/requests/{rid}"
++        delegation, why = load_delegation(self.s.delegation_file, now, self.s.acl_check)
++        enabled = bool(delegation and delegation.enabled)
++        seen_at, seen_enabled = store.auto_note_seen(rid, rev, enabled, now)
++        if delegation is None:
++            self._once("AUTO_POLICY_PROBLEM", rid, f"delegation unusable: {why}")
++            return AutoResult("POLICY_PROBLEM", why)
++        if not enabled:
++            return AutoResult("DISABLED")
++        if not seen_enabled:
++            self._once("AUTO_PRE_EXISTING_REQUEST", rid, "seen while automatic approval was off: never started automatically")
++            return AutoResult("PRE_EXISTING_REQUEST")
++
++        claim = store.auto_get_claim(rid, rev)
++        if claim is not None:
++            return self._resume(transport, store, policy, base, rid, rev, claim, delegation, front, request_raw)
++
++        # ---- read-only checks, in this order; nothing is reserved or signed until all hold ---------------------------------------------------
++        try:
++            provider_time = transport.server_time()
++            check_clock(provider_time, datetime.now(timezone.utc))
++            server_repo = transport.repository_id()
++            pin_raw = transport.download(f"{base}/SOURCE_PIN.json")[0]
++        except RemoteNotFound:
++            self._once("AUTO_NOT_ELIGIBLE", rid, "SOURCE_PIN.json is missing")
++            return AutoResult("PIN_MISSING")
++        except Exception as exc:                                       # noqa: BLE001  clock, repository id or read failure: wait, sign nothing
++            self._once("AUTO_NOT_ELIGIBLE", rid, f"identity or pin unreadable: {type(exc).__name__}")
++            return AutoResult("IDENTITY_UNREADABLE")
++        try:
++            pin = json.loads(pin_raw)
++        except ValueError:
++            pin = {}
++        commit = str(pin.get("commit", ""))
++        pins_ok = (pin.get("schema") == PIN_SCHEMA and re.fullmatch(r"[0-9a-f]{40}", commit) is not None
++                   and str(pin.get("repo_id")) == server_repo == delegation.repo_id)
++
++        project = str(front.get("project_id") or front.get("work_id") or "")
++        if front.get("project_id") and front.get("work_id") and front["project_id"] != front["work_id"]:
++            project = ""
++        run_policy = str(front.get("run_policy_ref", ""))
++        package_path = str(front.get("package_path", ""))
++        budget = policy.run_budgets_usd.get(run_policy)
++        estimated = int(round(budget * 100)) if isinstance(budget, (int, float)) else 0
++
++        package_raw, bytes_ok, commit_ok, created_at = b"", False, False, 0
++        if pins_ok and SAFE_NAME.fullmatch(rid) and package_path.startswith("/SKILL-COLLAB/packages/") and package_path.lower().endswith(".zip"):
++            try:
++                package_raw = transport.download(package_path)[0]
++                bytes_ok = (len(package_raw) <= MAX_PACKAGE_BYTES and len(package_raw) == int(front.get("package_size_bytes", -1))
++                            and hashlib.sha256(package_raw).hexdigest() == str(front.get("package_sha256")) and self._package_clean(package_raw))
++                req_at_a = transport.download_at_commit(f"{base}/REQUEST.md", commit)[0]
++                pkg_at_a = transport.download_at_commit(package_path, commit)[0]
++                commit_ok = req_at_a == request_raw and pkg_at_a == package_raw
++                created_at = int(transport.commit_time(commit))
++            except (TransportError, AuthRequired, ValueError, TypeError) as exc:
++                self._once("AUTO_NOT_ELIGIBLE", rid, f"commit-pinned bytes unreadable: {type(exc).__name__}")
++                return AutoResult("COMMIT_UNREADABLE")
++
++        prior = self._prior_state(transport, store, root, rid, rev)
++        day_key, month_key = _kst_keys(now)
++        real_calls = store.dispatches_since(24)
++        real_day = int(math.ceil(store.spend_since(24) * 100))
++        real_month = int(math.ceil(store.spend_since(24 * 31) * 100))
++        signer_ok = bool(self.signer is not None and policy.trust_root is not None and policy.signature_backend is not None
++                         and (not hasattr(self.signer, "trusts_key") or self.signer.trusts_key(policy.trust_root)))
++        cand = auto_policy.Candidate(
++            request_id=rid, revision=int(rev) if rev.isdigit() else 0, project=project, skill=str(front.get("skill_id", "")), repo_id=str(server_repo),
++            branch=str(getattr(transport, "branch", "main")), created_at=created_at, commit_a=commit,
++            request_sha256=hashlib.sha256(request_raw).hexdigest(), zip_sha256=str(front.get("package_sha256", "")), policy=run_policy,
++            estimated_cents=estimated, max_calls=1, attempt=1, state=str(front.get("state", "")))
++        month_used = real_month
++        # specific, honest reasons for the three input checks (the pure gate would only say INPUT_OR_TRUST)
++        if not pins_ok:
++            self._once("AUTO_NOT_ELIGIBLE", rid, "PIN_MISMATCH: SOURCE_PIN schema, commit or repository id do not match the server and the delegation")
++            return AutoResult("PIN_MISMATCH")
++        if not bytes_ok:
++            self._once("AUTO_NOT_ELIGIBLE", rid, "PACKAGE_INVALID: size, sha256, CRC, safety scan or size limit failed")
++            return AutoResult("PACKAGE_INVALID")
++        if not commit_ok:
++            self._once("AUTO_NOT_ELIGIBLE", rid, "COMMIT_A_MISMATCH: the pinned commit does not hold the same REQUEST and package bytes")
++            return AutoResult("COMMIT_A_MISMATCH")
++        ev = auto_policy.Evidence(now=now, pins_verified=pins_ok and commit_ok, bytes_and_crc_verified=bytes_ok, signer_and_trust_root_valid=signer_ok,
++                                  prior_state=prior, day_calls_used_or_reserved=real_calls, day_cents_used_or_reserved=real_day,
++                                  month_cents_used_or_reserved=month_used, atomic_claim_available=True)
++        ok, reason = auto_policy.assess(delegation, cand, ev)
++        if not ok:
++            ev_name = "AUTO_DUPLICATE_BLOCKED" if reason == "DUPLICATE_OR_UNCERTAIN" else "AUTO_NOT_ELIGIBLE"
++            self._once(ev_name, rid, reason)
++            return AutoResult(reason)
++        # the request's own creation time (the pinned commit) must not precede the delegation: no retroactive start
++        if created_at < delegation.earliest_request_at or seen_at < delegation.earliest_request_at:
++            self._once("AUTO_NOT_ELIGIBLE", rid, "RETROACTIVE_OR_FUTURE_REQUEST")
++            return AutoResult("RETROACTIVE_OR_FUTURE_REQUEST")
++
++        # ---- the official validator on the READY that will be published (bytes fixed BEFORE signing) -------------------------------------------
++        ready = _ready_text(rid, rev, cand.request_sha256, cand.zip_sha256, policy.active_baseline_id)
++        ready_raw = ready.encode("utf-8")
++        check = validate(request_text, ready, (len(package_raw), cand.zip_sha256), policy, expected_request_id=rid, request_bytes=request_raw)
++        if check.outcome != ValidationOutcome.VALIDATED:
++            self._once("AUTO_NOT_ELIGIBLE", rid, f"validator: {check.outcome.value}: {check.reason[:100]}")
++            return AutoResult("VALIDATOR_" + check.outcome.value)
++
++        # ---- atomic reservation -------------------------------------------------------------------------------------------------------------
++        verdict = store.auto_claim(rid, rev, cand.zip_sha256, estimated, day_key, month_key, now,
++                                   max_day_calls=delegation.max_day_calls, max_day_cents=delegation.max_day_cents,
++                                   max_month_cents=delegation.max_month_cents, extra_day_calls=real_calls, extra_day_cents=real_day,
++                                   extra_month_cents=real_month)
++        if verdict != "CLAIMED":
++            self._once("AUTO_LIMIT_BLOCKED" if verdict.endswith("LIMIT") else "AUTO_DUPLICATE_BLOCKED", rid, verdict)
++            return AutoResult(verdict)
++        store.auto_update(rid, rev, now, detail="request_sha256=" + cand.request_sha256)
++        self._event("AUTO_RESERVED", rid, f"{estimated} cents reserved for {day_key}/{month_key}; signing follows")
++        return self._sign_and_post(transport, store, policy, base, rid, rev, delegation, front, request_raw, ready_raw, package_raw, pin_raw, commit)
++
++    # -- helpers --
++    @staticmethod
++    def _package_clean(package_raw: bytes) -> bool:
++        try:
++            if zipfile.ZipFile(io.BytesIO(package_raw)).testzip() is not None:
++                return False
++            if package_secret_findings(package_raw):
++                return False
++            with tempfile.TemporaryDirectory(prefix="auto_pkg_") as tmp:
++                safe_extract(package_raw, Path(tmp) / "x")
++            return True
++        except (zipfile.BadZipFile, UnsafeZip, ValueError, OSError):
++            return False
++
++    def _prior_state(self, transport, store, root, rid, rev) -> str:
++        paths = (f"{root}/requests/{rid}/APPROVAL_SIG.json", f"{root}/requests/{rid}/READY.md", f"{root}/dispatch/{rid}/DISPATCH_{rev}.md",
++                 f"{root}/receipts/{rid}/RECEIPT_{rev}.md", f"{root}/reviews/{rid}/REVIEW_RESULT_{rev}.md")
++        try:
++            if any(self._exists(transport, p) for p in paths):
++                return "REMOTE_HISTORY"
++        except (TransportError, AuthRequired):
++            return "UNREADABLE"
++        if store.auto_jobs_for(rid, rev) or store.auto_get_claim(rid, rev) is not None:
++            return "LOCAL_HISTORY"
++        return "NEW"
++
++    def _still_allowed(self, transport, delegation_expected_repo: str) -> tuple[bool, str]:
++        now = int(self.now_fn())
++        d, why = load_delegation(self.s.delegation_file, now, self.s.acl_check)
++        if d is None or not d.enabled:
++            return False, "DELEGATION_OFF_OR_UNUSABLE"
++        if now >= d.expires_at:
++            return False, "DELEGATION_EXPIRED"
++        try:
++            if transport.repository_id() != d.repo_id or d.repo_id != delegation_expected_repo:
++                return False, "REPOSITORY_CHANGED"
++        except (TransportError, AuthRequired):
++            return False, "REPOSITORY_UNVERIFIABLE"
++        return True, "ok"
++
++    def _uncertain(self, store, rid, rev, why: str) -> AutoResult:
++        store.auto_update(rid, rev, int(self.now_fn()), stage="UNCERTAIN", detail=why[:200])
++        self._event("AUTO_SIGNING_UNCERTAIN", rid, f"{why}; no further automatic action for this request")
++        return AutoResult("UNCERTAIN", why)
++
++    def _sign_and_post(self, transport, store, policy, base, rid, rev, delegation, front, request_raw, ready_raw, package_raw, pin_raw, commit) -> AutoResult:
++        t = lambda: int(self.now_fn())                                 # noqa: E731
++        ok, why = self._still_allowed(transport, delegation.repo_id)   # immediately before the signature
++        if not ok:
++            return self._uncertain(store, rid, rev, f"stopped before signing: {why}")
++        try:
++            approval_raw = self.signer.sign(request_raw, ready_raw, package_raw, str(front["package_path"]), commit, policy.local_policy_revision,
++                                            self.s.valid_hours)
++            self.signer.verify(approval_raw, pin_raw, request_raw, ready_raw, package_raw, str(front["package_path"]), policy.local_policy_revision,
++                               policy.trust_root, policy.signature_backend)
++        except (ApprovalRejected, NotConfigured) as exc:
++            return self._uncertain(store, rid, rev, f"the signature did not verify: {type(exc).__name__}")
++        except Exception as exc:                                       # noqa: BLE001  never include a message: it could carry a path
++            return self._uncertain(store, rid, rev, f"signing failed: {type(exc).__name__}")
++        store.auto_update(rid, rev, t(), stage="SIGNED_LOCAL", approval_text=approval_raw.decode("utf-8"), ready_text=ready_raw.decode("utf-8"))
++        self._event("AUTO_SIGNED_LOCAL", rid, "approval signed and verified locally; publishing follows (approval first, READY last)")
++        return self._publish(transport, store, base, rid, rev, delegation)
++
++    def _publish(self, transport, store, base, rid, rev, delegation) -> AutoResult:
++        claim = store.auto_get_claim(rid, rev)
++        approval_raw, ready_raw = claim["approval_text"].encode("utf-8"), claim["ready_text"].encode("utf-8")
++        if claim["stage"] == "SIGNED_LOCAL":
++            ok, why = self._still_allowed(transport, delegation.repo_id)
++            if not ok:
++                return self._uncertain(store, rid, rev, f"stopped before posting the approval: {why}")
++            if self._exists(transport, f"{base}/READY.md"):
++                return self._uncertain(store, rid, rev, "a READY already exists remotely")
++            res = self._post_create_only(transport, f"{base}/APPROVAL_SIG.json", approval_raw)
++            if res not in ("POSTED", "EXISTS_SAME"):
++                return self._uncertain(store, rid, rev, f"approval publication: {res}")
++            store.auto_update(rid, rev, int(self.now_fn()), stage="APPROVAL_POSTED")
++            self._event("AUTO_APPROVAL_POSTED", rid, "APPROVAL_SIG.json published and read back; READY is published last")
++            claim = store.auto_get_claim(rid, rev)
++        if claim["stage"] == "APPROVAL_POSTED":
++            ok, why = self._still_allowed(transport, delegation.repo_id)
++            if not ok:
++                return self._uncertain(store, rid, rev, f"stopped before posting READY: {why}")
++            try:
++                remote_approval = transport.download_latest(f"{base}/APPROVAL_SIG.json")[0]
++            except (TransportError, AuthRequired):
++                return self._uncertain(store, rid, rev, "the published approval cannot be read back")
++            if remote_approval != approval_raw:
++                return self._uncertain(store, rid, rev, "the remote approval differs from the signed one")
++            res = self._post_create_only(transport, f"{base}/READY.md", ready_raw)
++            if res not in ("POSTED", "EXISTS_SAME"):
++                return self._uncertain(store, rid, rev, f"READY publication: {res}")
++            store.auto_update(rid, rev, int(self.now_fn()), stage="READY_POSTED")
++            self._event("AUTO_READY_POSTED", rid, "READY.md published last and read back; the unchanged watcher validates and dispatches on a later cycle")
++            return AutoResult("READY_POSTED")
++        return AutoResult(claim["stage"])
++
++    def _resume(self, transport, store, policy, base, rid, rev, claim, delegation, front, request_raw) -> AutoResult:
++        stage = claim["stage"]
++        if stage in ("READY_POSTED", "UNCERTAIN"):
++            return AutoResult(stage)
++        now = int(self.now_fn())
++        if stage == "RESERVED":
++            # Nothing was ever published (a publication needs a stored signature). A restart before the signature may sign ONCE more, never twice.
++            try:
++                remote_any = self._exists(transport, f"{base}/APPROVAL_SIG.json") or self._exists(transport, f"{base}/READY.md")
++            except (TransportError, AuthRequired):
++                return self._uncertain(store, rid, rev, "recovery: remote state unreadable")
++            if remote_any or claim["attempts"] >= 2:
++                return self._uncertain(store, rid, rev, "recovery: reservation without a signature but remote files exist or a retry was used")
++            store.auto_update(rid, rev, now, attempts=claim["attempts"] + 1)
++            try:
++                pin_raw = transport.download(f"{base}/SOURCE_PIN.json")[0]
++                pin = json.loads(pin_raw)
++                package_raw = transport.download(str(front["package_path"]))[0]
++            except Exception as exc:                                   # noqa: BLE001
++                return self._uncertain(store, rid, rev, f"recovery: inputs unreadable ({type(exc).__name__})")
++            if (hashlib.sha256(package_raw).hexdigest() != claim["package_sha256"] or str(pin.get("repo_id")) != delegation.repo_id
++                    or "request_sha256=" + hashlib.sha256(request_raw).hexdigest() != (claim.get("detail") or "")):
++                return self._uncertain(store, rid, rev, "recovery: bytes changed since the reservation")
++            ready_raw = self._ready_for(policy, front, request_raw, claim).encode("utf-8")
++            return self._sign_and_post(transport, store, policy, base, rid, rev, delegation, front, request_raw, ready_raw, package_raw, pin_raw,
++                                       str(pin.get("commit")))
++        if stage in ("SIGNED_LOCAL", "APPROVAL_POSTED"):
++            try:
++                approval = json.loads(claim["approval_text"])
++                expires = datetime.fromisoformat(approval["payload"]["expires_at"])
++            except (ValueError, KeyError, TypeError):
++                return self._uncertain(store, rid, rev, "recovery: the stored approval is unreadable")
++            if datetime.now(timezone.utc) >= expires:
++                return self._uncertain(store, rid, rev, "recovery: the stored approval expired; it is never re-signed automatically")
++            return self._publish(transport, store, base, rid, rev, delegation)
++        return AutoResult(stage)
++
++    @staticmethod
++    def _ready_for(policy, front, request_raw, claim) -> str:
++        return _ready_text(str(front["request_id"]), str(front["request_revision"]), hashlib.sha256(request_raw).hexdigest(),
++                           claim["package_sha256"], policy.active_baseline_id)
+diff --git a/skill_collab_watcher/auto_policy.py b/skill_collab_watcher/auto_policy.py
+--- a/skill_collab_watcher/auto_policy.py
++++ b/skill_collab_watcher/auto_policy.py
+@@ -0,0 +1,96 @@
++"""CoWork bounded auto-signing preflight prototype (offline, NO I/O).
++
++The returned ALLOW result is NOT a signature or a review approval.
++Windows must do durable atomic reservation, GitHub raw-byte verification,
++existing Ed25519 signing and original Watcher verification/dispatch.
++"""
++from dataclasses import dataclass
++import re
++
++_HASH64 = re.compile(r"[0-9a-f]{64}\Z")
++_SHA40 = re.compile(r"[0-9a-f]{40}\Z")
++
++
++@dataclass(frozen=True)
++class Delegation:
++    enabled: bool
++    repo_id: str
++    branch: str
++    projects: frozenset[str]
++    skills: frozenset[str]
++    expires_at: int
++    earliest_request_at: int
++    max_request_cents: int = 100
++    max_day_calls: int = 2
++    max_day_cents: int = 300
++    max_month_cents: int = 1000
++
++
++@dataclass(frozen=True)
++class Candidate:
++    request_id: str
++    revision: int
++    project: str
++    skill: str
++    repo_id: str
++    branch: str
++    created_at: int
++    commit_a: str
++    request_sha256: str
++    zip_sha256: str
++    policy: str
++    estimated_cents: int
++    max_calls: int
++    attempt: int
++    state: str = "REQUESTED"
++
++
++@dataclass(frozen=True)
++class Evidence:
++    now: int
++    pins_verified: bool
++    bytes_and_crc_verified: bool
++    signer_and_trust_root_valid: bool
++    prior_state: str
++    day_calls_used_or_reserved: int
++    day_cents_used_or_reserved: int
++    month_cents_used_or_reserved: int
++    atomic_claim_available: bool
++
++
++def assess(d: Delegation, c: Candidate, e: Evidence) -> tuple[bool, str]:
++    """Pure first gate only. Never produces keys, APPROVAL_SIG or READY."""
++    if not d.enabled:
++        return False, "DISABLED"
++    if e.now >= d.expires_at or d.expires_at <= d.earliest_request_at:
++        return False, "DELEGATION_EXPIRED"
++    if c.created_at < d.earliest_request_at or c.created_at > e.now:
++        return False, "RETROACTIVE_OR_FUTURE_REQUEST"
++    if c.repo_id != d.repo_id or c.branch != d.branch:
++        return False, "REPOSITORY_OR_BRANCH"
++    if not d.projects or not d.skills or c.project not in d.projects or c.skill not in d.skills:
++        return False, "SCOPE"
++    if c.policy != "POLICY-STATIC-V1" or c.max_calls != 1 or c.attempt != 1:
++        return False, "REVIEW_POLICY"
++    if c.state not in ("REQUESTED", "SUBMITTED") or not c.request_id or c.revision < 1:
++        return False, "REQUEST_FORMAT"
++    if not _SHA40.fullmatch(c.commit_a) or not _HASH64.fullmatch(c.request_sha256) or not _HASH64.fullmatch(c.zip_sha256):
++        return False, "INVALID_PIN_FORMAT"
++    if c.estimated_cents < 1 or c.estimated_cents > d.max_request_cents:
++        return False, "PER_REQUEST_COST"
++    if (d.max_request_cents > 100 or d.max_day_calls < 1 or d.max_day_calls > 2
++            or d.max_day_cents > 300 or d.max_month_cents > 1000):
++        return False, "UNSUPPORTED_DELEGATION_LIMIT"
++    if e.prior_state != "NEW":
++        return False, "DUPLICATE_OR_UNCERTAIN"
++    if not (e.pins_verified and e.bytes_and_crc_verified and e.signer_and_trust_root_valid):
++        return False, "INPUT_OR_TRUST"
++    if not e.atomic_claim_available:
++        return False, "NO_ATOMIC_CLAIM"
++    if e.day_calls_used_or_reserved >= d.max_day_calls:
++        return False, "DAY_CALL_LIMIT"
++    if e.day_cents_used_or_reserved + c.estimated_cents > d.max_day_cents:
++        return False, "DAY_COST_LIMIT"
++    if e.month_cents_used_or_reserved + c.estimated_cents > d.max_month_cents:
++        return False, "MONTH_COST_LIMIT"
++    return True, "ALLOW_ATOMIC_CLAIM_THEN_EXISTING_SIGNER_ONLY"
+diff --git a/skill_collab_watcher/cli.py b/skill_collab_watcher/cli.py
+--- a/skill_collab_watcher/cli.py
++++ b/skill_collab_watcher/cli.py
+@@ -262,6 +262,17 @@
+         return None
+ 
+ 
++def _build_auto_approver(cfg: Config, store: StateStore):
++    """The optional bounded automatic approval. Absent `auto_approval` section = the feature does not exist. Present = it is built, but it signs
++    nothing unless the PROTECTED local delegation file says enabled=true (default false)."""
++    section = cfg.raw.get("auto_approval")
++    if section is None:
++        return None
++    from .auto_approval import AutoApprover, AutoSettings
++
++    return AutoApprover(AutoSettings.from_config(section), store)
++
++
+ def _open_runtime(cfg: Config, dry_run_override: bool | None, stop: threading.Event) -> Runtime:
+     mode = cfg.provider_mode
+     reach = ("NOT_APPLICABLE_LIVE", [])
+@@ -284,6 +295,7 @@
+         if mode == "LIVE":
+             policy.trust_root = _load_trust(cfg, store)
+             policy.signature_backend = default_backend()  # None without cryptography: approvals fail closed
++            policy.auto_approver = _build_auto_approver(cfg, store)
+     return Runtime(
+         cfg=cfg, store=store, transport=_build_transport(cfg, store, stop),
+         policy=policy, runner=ShadowRunner() if mode == "SHADOW" else _build_runner(cfg),
+@@ -328,6 +340,14 @@
+     for ref in rp.known_run_policy_refs:
+         print(f"  run policy {ref}: max_budget_usd={rp.budget_for(ref)} effort={rp.effort_for(ref) or '(user setting)'}")
+     print(f"claude_executable: {cfg.claude_executable or '(auto: PATH)'}")
++    section = cfg.raw.get("auto_approval")
++    if section is None:
++        print("auto_approval: not configured (the feature does not exist for this watcher)")
++    else:
++        from .auto_approval import describe_for_config_check
++
++        for line in describe_for_config_check(section):
++            print(line)
+     print(
+         "secrets present: "
+         f"app_key={'yes' if secrets.get('app_key') else 'no'} "
+diff --git a/skill_collab_watcher/github_transport.py b/skill_collab_watcher/github_transport.py
+--- a/skill_collab_watcher/github_transport.py
++++ b/skill_collab_watcher/github_transport.py
+@@ -16,6 +16,8 @@
+ import hashlib
+ import json
+ import time
++import re
++from datetime import datetime
+ import urllib.error
+ import urllib.parse
+ import urllib.request
+@@ -271,6 +273,25 @@
+         finally:
+             self._pin = saved
+ 
++    def download_at_commit(self, path: str, commit: str) -> tuple[bytes, EntryMeta]:
++        if not re.fullmatch(r"[0-9a-f]{40}", str(commit)):
++            raise TransportError("BAD_COMMIT_ID")
++        saved, self._pin = self._pin, commit
++        try:
++            return self.download(path)
++        finally:
++            self._pin = saved
++
++    def commit_time(self, commit: str) -> float:
++        if not re.fullmatch(r"[0-9a-f]{40}", str(commit)):
++            raise TransportError("BAD_COMMIT_ID")
++        _, _, body = self._get(f"/repos/{self.repo}/commits/{commit}")
++        date = ((self._json(body).get("commit") or {}).get("committer") or {}).get("date")
++        try:
++            return datetime.fromisoformat(str(date).replace("Z", "+00:00")).timestamp()
++        except ValueError as exc:
++            raise TransportError("COMMIT_TIME_UNREADABLE") from exc
++
+     def get_metadata(self, path: str) -> EntryMeta | None:
+         repo_path = self._repo_path(path)
+         try:
+diff --git a/skill_collab_watcher/notify_events.py b/skill_collab_watcher/notify_events.py
+--- a/skill_collab_watcher/notify_events.py
++++ b/skill_collab_watcher/notify_events.py
+@@ -18,6 +18,7 @@
+     "COMPLETED", "FAILED", "REVIEW_UNCERTAIN", "UPLOAD_FAILED", "CONFLICT",
+     "AUTH_REQUIRED", "REJECTED", "LEGACY_SIDECAR_BLOCKED", "PENDING_HELD",
+     "CLAUDE_AUTH_REQUIRED", "USAGE_LIMIT_DEFERRED", "DAILY_BUDGET_BLOCKED", "DAILY_LIMIT_BLOCKED",
++    "AUTO_SIGNING_UNCERTAIN",
+ )
+ 
+ 
+@@ -103,6 +104,9 @@
+         return "[일일 비용 상한] 오늘 한도에 도달해 새 리뷰를 시작하지 않습니다. 요청은 대기 상태로 보존됩니다."
+     if event == "DAILY_LIMIT_BLOCKED":
+         return "[일일 리뷰 횟수 상한] 오늘 한도에 도달해 새 리뷰를 시작하지 않습니다. 요청은 대기 상태로 보존됩니다."
++    if event == "AUTO_SIGNING_UNCERTAIN":
++        return (f"[자동 서명 불확실] {key or ''}: 자동 서명·게시를 멈췄습니다. 새로 서명하거나 모델을 호출하지 않았습니다. "
++                f"사람이 확인해야 합니다. ({detail or ''})")
+     request_id, revision = _split_key(key)
+     where = _location(provider, repo, request_id, revision)
+     if event == "COMPLETED":
+diff --git a/skill_collab_watcher/orchestrator.py b/skill_collab_watcher/orchestrator.py
+--- a/skill_collab_watcher/orchestrator.py
++++ b/skill_collab_watcher/orchestrator.py
+@@ -590,6 +590,11 @@
+                    request_bytes=request_raw)
+ 
+     if not pre.needs_package_download:
++        auto = getattr(policy, "auto_approver", None)
++        if auto is not None and allowed and ready_text is None and pre.outcome == ValidationOutcome.WAIT_INPUT:
++            # A valid REQUEST without READY: the only place where automatic approval may act. It never dispatches a review itself;
++            # it can only publish an approval and a READY that the unchanged checks below must accept on a later cycle.
++            auto.process(transport, store, policy, remote_root, request_id, request_text, request_raw)
+         store.log_event_once(pre.outcome.value, processing_key=pre.processing_key, detail=f"{request_id}: {pre.reason}")
+         return GroupResult(retry=pre.outcome == ValidationOutcome.WAIT_INPUT)
+ 
+diff --git a/skill_collab_watcher/state_store.py b/skill_collab_watcher/state_store.py
+--- a/skill_collab_watcher/state_store.py
++++ b/skill_collab_watcher/state_store.py
+@@ -76,6 +76,33 @@
+ 
+ IN_FLIGHT = (JobState.CLAIMED.value, JobState.REVIEW_RUNNING.value)
+ 
++# Automatic approval (v0.2.21). Created only when the feature is configured, so a database that never uses it keeps its schema.
++AUTO_SCHEMA = """
++CREATE TABLE IF NOT EXISTS auto_seen (
++    request_id TEXT NOT NULL,
++    revision TEXT NOT NULL,
++    first_seen_at INTEGER NOT NULL,
++    enabled_at_first_seen INTEGER NOT NULL,
++    PRIMARY KEY (request_id, revision)
++);
++CREATE TABLE IF NOT EXISTS auto_claims (
++    request_id TEXT NOT NULL,
++    revision TEXT NOT NULL,
++    package_sha256 TEXT NOT NULL,
++    stage TEXT NOT NULL,
++    reserved_cents INTEGER NOT NULL,
++    day_key TEXT NOT NULL,
++    month_key TEXT NOT NULL,
++    attempts INTEGER NOT NULL DEFAULT 1,
++    approval_text TEXT,
++    ready_text TEXT,
++    detail TEXT,
++    created_at INTEGER NOT NULL,
++    updated_at INTEGER NOT NULL,
++    PRIMARY KEY (request_id, revision)
++);
++"""
++
+ 
+ def _now() -> str:
+     return datetime.now(timezone.utc).isoformat()
+@@ -264,6 +291,86 @@
+             raise
+         return "CLAIMED" if won else "LOST"
+ 
++    # --- automatic approval (v0.2.21) ------------------------------------------------------------------------------
++
++    def ensure_auto_tables(self) -> None:
++        if not self.read_only:
++            self.conn.executescript(AUTO_SCHEMA)
++
++    def auto_note_seen(self, request_id: str, revision: str, enabled: bool, now: int) -> tuple[int, bool]:
++        """First sight of a REQUEST without READY, and whether the delegation was ENABLED at that moment. Written once, never updated:
++        a request seen while the feature was off can never become eligible later (no retroactive start)."""
++        if self.read_only:
++            return now, False
++        self.conn.execute("INSERT OR IGNORE INTO auto_seen (request_id, revision, first_seen_at, enabled_at_first_seen) VALUES (?, ?, ?, ?)",
++                          (request_id, revision, now, 1 if enabled else 0))
++        with closing(self.conn.execute("SELECT first_seen_at, enabled_at_first_seen FROM auto_seen WHERE request_id=? AND revision=?",
++                                       (request_id, revision))) as cur:
++            seen, flag = cur.fetchone()
++        return seen, bool(flag)
++
++    def auto_get_claim(self, request_id: str, revision: str) -> dict | None:
++        with closing(self.conn.execute(
++            "SELECT package_sha256, stage, reserved_cents, day_key, month_key, attempts, approval_text, ready_text, detail, created_at, updated_at "
++            "FROM auto_claims WHERE request_id=? AND revision=?", (request_id, revision))) as cur:
++            row = cur.fetchone()
++        if row is None:
++            return None
++        names = ("package_sha256", "stage", "reserved_cents", "day_key", "month_key", "attempts", "approval_text", "ready_text", "detail",
++                 "created_at", "updated_at")
++        return dict(zip(names, row))
++
++    def auto_claim(self, request_id: str, revision: str, package_sha256: str, cents: int, day_key: str, month_key: str, now: int, *,
++                   max_day_calls: int, max_day_cents: int, max_month_cents: int,
++                   extra_day_calls: int = 0, extra_day_cents: int = 0, extra_month_cents: int = 0) -> str:
++        """Atomic reservation (BEGIN IMMEDIATE): one row per (request, revision) EVER, and the day/month ceilings are checked in the same
++        transaction against every earlier reservation (all stages count, including uncertain ones) and the watcher's own recorded dispatches.
++        Returns CLAIMED, EXISTS, DAY_CALL_LIMIT, DAY_COST_LIMIT, MONTH_COST_LIMIT or READ_ONLY."""
++        if self._skip_write("AUTO_CLAIM", None, request_id):
++            return "READ_ONLY"
++        self.conn.execute("BEGIN IMMEDIATE")
++        try:
++            with closing(self.conn.execute("SELECT 1 FROM auto_claims WHERE request_id=? AND revision=?", (request_id, revision))) as cur:
++                if cur.fetchone():
++                    self.conn.execute("ROLLBACK")
++                    return "EXISTS"
++            with closing(self.conn.execute("SELECT COUNT(*), COALESCE(SUM(reserved_cents),0) FROM auto_claims WHERE day_key=?", (day_key,))) as cur:
++                day_calls, day_cents = cur.fetchone()
++            with closing(self.conn.execute("SELECT COALESCE(SUM(reserved_cents),0) FROM auto_claims WHERE month_key=?", (month_key,))) as cur:
++                month_cents = cur.fetchone()[0]
++            day_calls, day_cents, month_cents = max(day_calls, extra_day_calls), max(day_cents, extra_day_cents), max(month_cents, extra_month_cents)
++            verdict = None
++            if day_calls >= max_day_calls:
++                verdict = "DAY_CALL_LIMIT"
++            elif day_cents + cents > max_day_cents:
++                verdict = "DAY_COST_LIMIT"
++            elif month_cents + cents > max_month_cents:
++                verdict = "MONTH_COST_LIMIT"
++            if verdict:
++                self.conn.execute("ROLLBACK")
++                return verdict
++            self.conn.execute(
++                "INSERT INTO auto_claims (request_id, revision, package_sha256, stage, reserved_cents, day_key, month_key, attempts, created_at, updated_at) "
++                "VALUES (?, ?, ?, 'RESERVED', ?, ?, ?, 1, ?, ?)", (request_id, revision, package_sha256, cents, day_key, month_key, now, now))
++            self.conn.execute("COMMIT")
++        except Exception:
++            self.conn.execute("ROLLBACK")
++            raise
++        return "CLAIMED"
++
++    def auto_update(self, request_id: str, revision: str, now: int, **fields) -> None:
++        if self._skip_write("AUTO_UPDATE", None, request_id):
++            return
++        allowed = {"stage", "approval_text", "ready_text", "detail", "attempts"}
++        assert set(fields) <= allowed, set(fields) - allowed
++        sets = ", ".join(f"{k}=?" for k in fields)
++        self.conn.execute(f"UPDATE auto_claims SET {sets}, updated_at=? WHERE request_id=? AND revision=?",
++                          (*fields.values(), now, request_id, revision))
++
++    def auto_jobs_for(self, request_id: str, revision: str) -> list[tuple[str, str]]:
++        with closing(self.conn.execute("SELECT processing_key, state FROM jobs WHERE request_id=? AND request_revision=?", (request_id, revision))) as cur:
++            return cur.fetchall()
++
+     def record_claim(self, processing_key: str) -> None:
+         if self._skip_write("CLAIM_OWNER", processing_key, None):
+             return
+diff --git a/skill_collab_watcher/transport_base.py b/skill_collab_watcher/transport_base.py
+--- a/skill_collab_watcher/transport_base.py
++++ b/skill_collab_watcher/transport_base.py
+@@ -106,6 +106,14 @@
+         what this watcher just wrote."""
+         return self.download(path)
+ 
++    def download_at_commit(self, path: str, commit: str) -> tuple[bytes, EntryMeta]:
++        """Read a file exactly as it was at one commit. Providers without commits cannot take part in automatic approval."""
++        raise TransportError("this transport cannot read a file at a commit")
++
++    def commit_time(self, commit: str) -> float:
++        """Server-recorded time of a commit (epoch seconds)."""
++        raise TransportError("this transport cannot report a commit time")
++
+     def repository_id(self) -> str | None:
+         """The provider's own identifier of the repository (GitHub: the numeric id), or None for a provider that has no
+         such concept. Approvals are only honoured when this equals the id the trust root was issued for."""
+diff --git a/skill_collab_watcher/validator.py b/skill_collab_watcher/validator.py
+--- a/skill_collab_watcher/validator.py
++++ b/skill_collab_watcher/validator.py
+@@ -84,6 +84,7 @@
+     require_approval: bool = False
+     trust_root: object | None = None
+     signature_backend: object | None = None
++    auto_approver: object | None = None      # v0.2.21: bounded automatic approval; None = the feature does not exist for this watcher
+ 
+ 
+ def _reject(reason: str) -> ValidationResult:
+diff --git a/tests/auto_helpers.py b/tests/auto_helpers.py
+--- a/tests/auto_helpers.py
++++ b/tests/auto_helpers.py
+@@ -0,0 +1,134 @@
++"""Shared fixtures for the automatic-approval tests. Synthetic data and a THROW-AWAY Ed25519 key only; never the operating key."""
++from __future__ import annotations
++
++import base64
++import json
++import time
++from datetime import datetime, timezone
++from types import SimpleNamespace
++
++import pytest
++
++pytest.importorskip("cryptography", reason="the automatic-approval tests use real Ed25519 signatures")
++
++from cryptography.hazmat.primitives import serialization  # noqa: E402
++from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey  # noqa: E402
++
++from bundle import KEY_ID, REPO_ID, github_policy  # noqa: E402
++from conftest import BASELINE, make_package_zip  # noqa: E402
++from fake_github import j, rp  # noqa: E402
++from skill_collab_watcher.approval import PIN_SCHEMA, TrustedKey, TrustRoot, fingerprint_of  # noqa: E402
++from skill_collab_watcher.auto_approval import AutoApprover, AutoSettings, ToolSigner  # noqa: E402
++from skill_collab_watcher.signature_backend import Ed25519Backend  # noqa: E402
++from test_phase1_github import run  # noqa: E402
++
++
++class Crash(BaseException):
++    """The process dies here."""
++
++
++def iso(epoch: float) -> str:
++    return datetime.fromtimestamp(epoch, timezone.utc).isoformat()
++
++
++def write_delegation(path, **over):
++    now = time.time()
++    data = {"schema": "AUTO_DELEGATION_V1", "enabled": True, "repo_id": REPO_ID, "branch": "main", "projects": ["test-project"], "skills": ["test-skill"],
++            "policy": "POLICY-STATIC-V1", "enabled_at": iso(now - 60), "expires_at": iso(now + 30 * 86400), "max_request_usd": 1.0,
++            "max_day_calls": 2, "max_day_usd": 3.0, "max_month_usd": 10.0}
++    data.update(over)
++    for k in [k for k, v in data.items() if v is None]:
++        del data[k]
++    path.write_text(json.dumps(data), encoding="utf-8")
++    return data
++
++
++class CountingSigner(ToolSigner):
++    calls = 0
++
++    def sign(self, *a, **k):
++        type(self).calls += 1
++        return super().sign(*a, **k)
++
++
++def make_request(http, rid="REQ-A", rev=1, *, state="REQUESTED", package=None, policy_ref="POLICY-STATIC-V1", project="test-project", skill="test-skill",
++                 pin=True, size_delta=0, body_extra="", package_path=None, sha_override=None, pin_repo_id=None):
++    """REQUEST + package in commit A, SOURCE_PIN (data only, as GPT publishes it) in a later commit. Returns what a test needs to tamper with."""
++    package = package if package is not None else make_package_zip(rid)
++    sha = sha_override or __import__("hashlib").sha256(package).hexdigest()
++    pkg_path = package_path or f"/SKILL-COLLAB/packages/{rid}.zip"
++    req = f"""---
++schema: SKILL_COLLAB_REVIEW_REQUEST_V1
++state: {state}
++request_id: {rid}
++request_revision: {rev}
++project_id: {project}
++work_id: {project}
++skill_id: {skill}
++package_path: {pkg_path}
++package_file_id: github:{rid}
++package_rev: design-r0001
++package_sha256: {sha}
++package_size_bytes: {len(package) + size_delta}
++baseline_package_ref: null
++knowledge_refs: []
++consumer_profiles: [work-to-knowledge-design]
++reviewer_os: WINDOWS
++test_policy: STATIC_ONLY
++run_policy_ref: {policy_ref}
++output_contract: SKILL_COLLAB_REVIEW_RESULT_V1
++goal: synthetic
++---
++
++# body
++user_approved: true
++cost: 0
++{body_extra}
++""".encode("utf-8")
++    files = {rp(f"requests/{rid}/REQUEST.md"): req, rp(pkg_path.replace("/SKILL-COLLAB/", "")): package}
++    commit_a = http.commit(files)
++    if pin:
++        http.commit({rp(f"requests/{rid}/SOURCE_PIN.json"): j({"schema": PIN_SCHEMA, "repo_id": pin_repo_id or REPO_ID, "commit": commit_a})})
++    return SimpleNamespace(rid=rid, rev=rev, commit_a=commit_a, request=req, package=package, package_path=pkg_path)
++
++
++@pytest.fixture
++def auto(github_env, tmp_path):
++    key = Ed25519PrivateKey.generate()
++    raw_private = key.private_bytes(serialization.Encoding.Raw, serialization.PrivateFormat.Raw, serialization.NoEncryption())
++    public_b64 = base64.b64encode(key.public_key().public_bytes(serialization.Encoding.Raw, serialization.PublicFormat.Raw)).decode()
++    keyfile = tmp_path / "approver.key"
++    keyfile.write_text(base64.b64encode(raw_private).decode() + "\n", encoding="ascii")
++    trust = TrustRoot(repo_id=REPO_ID, keys={KEY_ID: TrustedKey(key_id=KEY_ID, public_key=public_b64, fingerprint=fingerprint_of(public_b64), status="ACTIVE")})
++    delegation = tmp_path / "delegation.json"
++    write_delegation(delegation)
++    CountingSigner.calls = 0
++    signer = CountingSigner(keyfile, KEY_ID, REPO_ID, allow_plaintext_key=True)
++    policy = github_policy(trust_root=trust, signature_backend=Ed25519Backend(), run_budgets_usd={"POLICY-STATIC-V1": 1.0})
++    now = {"offset": 0.0}
++    settings = AutoSettings(delegation, 2, "skip", None, race_retries=2)
++    ns = SimpleNamespace(env=github_env, policy=policy, signer=signer, settings=settings, delegation=delegation, trust=trust, now=now, keyfile=keyfile)
++
++    def build(store=None):
++        policy.auto_approver = AutoApprover(settings, store or github_env.store, signer=signer, now_fn=lambda: time.time() + now["offset"], sleep=lambda _s: None)
++        ns.approver = policy.auto_approver
++    ns.build = build
++    ns.cycle = lambda **kw: run(github_env, policy=policy, **kw)
++    build()
++    return ns
++
++
++def puts(env, needle):
++    return [u for m, u in env.http.calls if m == "PUT" and needle in u]
++
++
++def events(env):
++    return [(e, d or "") for _t, e, _k, d in env.store.recent_events(1000)]
++
++
++def has(env, name, detail=""):
++    return any(e == name and detail in d for e, d in events(env))
++
++
++def remote(env, rel):
++    return env.http.files().get(rp(rel))
+diff --git a/tests/fake_github.py b/tests/fake_github.py
+--- a/tests/fake_github.py
++++ b/tests/fake_github.py
+@@ -2,6 +2,8 @@
+ 
+ import base64
+ import hashlib
++import time
++from datetime import datetime, timezone
+ import json
+ import urllib.parse
+ 
+@@ -35,12 +37,18 @@
+         self.calls: list[tuple[str, str]] = []
+         self.repo_id = "repo-synthetic-1"
+         self._inject: list[dict] = []
++        self._times: dict[str, float] = {}
+         self._corrupt: set[str] = set()
+         self.commit({})
+ 
+     def _new_sha(self) -> str:
+         self._count += 1
+-        return hashlib.sha1(f"synthetic-commit-{self._count}".encode()).hexdigest()
++        sha = hashlib.sha1(f"synthetic-commit-{self._count}".encode()).hexdigest()
++        self._times[sha] = time.time()
++        return sha
++
++    def set_commit_time(self, sha: str, epoch: float) -> None:
++        self._times[sha] = epoch
+ 
+     def commit(self, files: dict[str, bytes]) -> str:
+         base = dict(self._objects[self._head]) if self._head else {}
+@@ -103,6 +111,10 @@
+         rest = path[len(base):]
+         if method == "GET" and rest == "":
+             return 200, {}, j({"full_name": REPO, "id": self.repo_id} if self.repo_id is not None else {"full_name": REPO})
++        if method == "GET" and rest.startswith("/commits/") and rest[len("/commits/"):] in self._objects:
++            sha = rest[len("/commits/"):]
++            date = datetime.fromtimestamp(self._times.get(sha, time.time()), timezone.utc).isoformat()
++            return 200, {}, j({"sha": sha, "commit": {"committer": {"date": date}}})
+         if method == "GET" and rest.startswith("/commits/"):
+             etag = f'"{self._head}"'
+             if headers.get("If-None-Match") == etag:
+diff --git a/tests/test_auto_approval.py b/tests/test_auto_approval.py
+--- a/tests/test_auto_approval.py
++++ b/tests/test_auto_approval.py
+@@ -0,0 +1,878 @@
++"""Bounded automatic approval (v0.2.21): policy file, contract with the real signer and verifier, duplicates, limits, retroactivity, spoofing,
++crash recovery, races. The automatic part may only publish an APPROVAL_SIG.json and a READY.md; the unchanged watcher decides and dispatches.
++Synthetic data, a throw-away key, a fake GitHub. No model, no operating state."""
++from __future__ import annotations
++
++import hashlib
++import json
++import sys
++import threading
++import time
++import zipfile
++import io
++
++import pytest
++
++from auto_helpers import Crash, auto, events, has, iso, make_request, puts, remote, write_delegation  # noqa: F401,E402
++from bundle import REPO_ID, make_transport  # noqa: E402
++from conftest import make_package_zip  # noqa: E402
++from fake_github import rp  # noqa: E402
++from skill_collab_watcher import auto_approval, orchestrator  # noqa: E402
++from skill_collab_watcher.auto_approval import AutoApprover, AutoSettings, ToolSigner, aces_allow_broad_write, load_delegation, windows_acl_ok  # noqa: E402
++from skill_collab_watcher.models import JobState  # noqa: E402
++from skill_collab_watcher.state_store import StateStore  # noqa: E402
++from skill_collab_watcher.transport_base import TransportError  # noqa: E402
++from test_phase1_github import run  # noqa: E402
++
++REQ = "requests/{rid}/"
++
++
++def direct(auto, rid, info, store=None, approver=None):
++    """Call the approver the way a cycle does: the transport has talked to the server first (that is where the server time comes from)."""
++    transport = make_transport(auto.env.http)
++    transport.ensure_auth()
++    return (approver or auto.approver).process(transport, store or auto.env.store, auto.policy, "/SKILL-COLLAB", rid, info.request.decode(), info.request).status
++
++
++def approval_posted(env, rid="REQ-A"):
++    return remote(env, REQ.format(rid=rid) + "APPROVAL_SIG.json") is not None
++
++
++def ready_posted(env, rid="REQ-A"):
++    return remote(env, REQ.format(rid=rid) + "READY.md") is not None
++
++
++# ================================ delegation file and ACL =========================================================================================
++
++def test_a_valid_enabled_delegation_loads(tmp_path):
++    path = tmp_path / "d.json"
++    write_delegation(path)
++    d, why = load_delegation(path, time.time(), "skip")
++    assert d is not None and d.enabled and d.max_request_cents == 100 and d.max_day_calls == 2 and d.max_day_cents == 300 and d.max_month_cents == 1000
++
++
++@pytest.mark.parametrize("over", [
++    {"schema": "OTHER"}, {"enabled": "true"}, {"enabled": 1}, {"projects": "x"}, {"skills": [""]}, {"policy": "POLICY-STATIC-V1-LARGE"},
++    {"expires_at": "tomorrow"}, {"expires_at": "2030-01-01T00:00:00"}, {"enabled_at": None}, {"repo_id": None}, {"max_request_usd": -1}, {"max_day_usd": "3"},
++])
++def test_a_malformed_delegation_is_unusable_not_enabled(tmp_path, over):
++    path = tmp_path / "d.json"
++    write_delegation(path, **over)
++    d, why = load_delegation(path, time.time(), "skip")
++    assert d is None
++
++
++@pytest.mark.parametrize("content", ["", "{", "[]", "null"])
++def test_garbage_or_missing_delegation_is_unusable(tmp_path, content):
++    path = tmp_path / "d.json"
++    if content:
++        path.write_text(content, encoding="utf-8")
++    assert load_delegation(path, time.time(), "skip")[0] is None
++
++
++def test_the_acl_rule_flags_every_broad_group_with_a_write_right():
++    EVERYONE, USERS, AUTH, ME = "S-1-1-0", "S-1-5-32-545", "S-1-5-11", "S-1-5-21-1-2-3-1001"
++    assert aces_allow_broad_write([(0, EVERYONE, 0x2)])                       # FILE_WRITE_DATA
++    assert aces_allow_broad_write([(0, USERS, 0x1301bf)])                     # modify
++    assert aces_allow_broad_write([(0, AUTH, 0x40000)])                       # WRITE_DAC
++    assert aces_allow_broad_write([(0, EVERYONE, 0x10000000)])                # GENERIC_ALL
++    assert not aces_allow_broad_write([(0, USERS, 0x1200a9)])                 # read and execute only
++    assert not aces_allow_broad_write([(0, ME, 0x1f01ff)])                    # the owner may write
++    assert not aces_allow_broad_write([(1, EVERYONE, 0x1f01ff)])              # a DENY entry is not a grant
++    assert not aces_allow_broad_write([])
++
++
++@pytest.mark.skipif(sys.platform != "win32", reason="Win32 ACL")
++def test_the_real_acl_reader_accepts_a_private_file_and_refuses_a_file_everyone_can_write(tmp_path):
++    import subprocess
++    f = tmp_path / "d.json"
++    f.write_text("{}", encoding="utf-8")
++    assert windows_acl_ok(f) == (True, "ok")
++    subprocess.run(["icacls", str(f), "/grant", "*S-1-1-0:(W)"], capture_output=True, check=True)
++    assert windows_acl_ok(f) == (False, "ACL_BROAD_WRITE")
++    assert load_delegation(f, time.time(), "windows") == (None, "ACL_BROAD_WRITE")
++
++
++def test_a_missing_file_fails_the_acl_check_closed(tmp_path):
++    assert windows_acl_ok(tmp_path / "nope.json")[0] is False
++
++
++def test_settings_reject_bad_values():
++    for bad in (None, {}, {"delegation_file": ""}, {"delegation_file": "x", "valid_hours": 0}, {"delegation_file": "x", "valid_hours": 13},
++                {"delegation_file": "x", "valid_hours": True}, {"delegation_file": "x", "acl_check": "off"}, {"delegation_file": "x", "signer": "s"}):
++        with pytest.raises(ValueError):
++            AutoSettings.from_config(bad)
++    assert AutoSettings.from_config({"delegation_file": "x"}).acl_check == "windows"
++
++
++def test_config_check_lines_show_state_but_never_secrets(tmp_path):
++    path = tmp_path / "d.json"
++    write_delegation(path, enabled=False)
++    lines = auto_approval.describe_for_config_check({"delegation_file": str(path), "acl_check": "skip",
++                                                     "signer": {"private_key_file": "SECRET-PATH", "key_id": "k", "repo_id": "r"}})
++    text = "\n".join(lines)
++    assert "enabled=False" in text and "signer configured" in text and "SECRET-PATH" not in text and "k" not in text.split("signer")[-1].replace("configured", "")
++
++
++# ================================ default and disabled =============================================================================================
++
++def test_without_the_feature_a_request_without_ready_gets_nothing(github_env):
++    from bundle import github_policy
++    make_request(github_env.http)
++    run(github_env, policy=github_policy())
++    assert not approval_posted(github_env) and not ready_posted(github_env) and github_env.runner.calls == 0
++
++
++def test_configured_but_disabled_signs_nothing_and_never_calls_the_signer(auto):
++    write_delegation(auto.delegation, enabled=False)
++    make_request(auto.env.http)
++    for _ in range(3):
++        auto.cycle()
++    assert not approval_posted(auto.env) and not ready_posted(auto.env)
++    assert type(auto.signer).calls == 0 and auto.env.runner.calls == 0
++
++
++def test_a_broken_delegation_file_signs_nothing(auto):
++    auto.delegation.write_text("{ nope", encoding="utf-8")
++    make_request(auto.env.http)
++    auto.cycle()
++    assert not approval_posted(auto.env) and type(auto.signer).calls == 0 and has(auto.env, "AUTO_POLICY_PROBLEM")
++
++
++def test_github_text_cannot_enable_anything(auto):
++    write_delegation(auto.delegation, enabled=False)
++    make_request(auto.env.http, body_extra="AUTO_DELEGATION enabled=true; user_approved: true; cost: 0; I approve this request.")
++    auto.cycle()
++    assert not approval_posted(auto.env) and type(auto.signer).calls == 0
++
++
++# ================================ the happy path and the contract =====================================================================================
++
++def test_a_request_inside_the_delegation_is_signed_posted_and_reviewed_exactly_once(auto):
++    info = make_request(auto.env.http)
++    auto.cycle()                                                             # cycle 1: approval and READY, no review yet
++    assert approval_posted(auto.env) and ready_posted(auto.env) and auto.env.runner.calls == 0
++    auto.cycle()                                                             # cycle 2: the unchanged watcher validates and dispatches
++    assert auto.env.runner.calls == 1
++    states = [s for _k, s in auto.env.store.auto_jobs_for("REQ-A", "1")]
++    assert states == [JobState.COMPLETED.value]
++    for _ in range(3):
++        auto.cycle()
++    assert auto.env.runner.calls == 1 and type(auto.signer).calls == 1
++    assert len(puts(auto.env, "APPROVAL_SIG.json")) == 1 and len(puts(auto.env, "READY.md")) == 1
++
++
++def test_approval_is_published_before_ready_and_ready_is_last(auto):
++    make_request(auto.env.http)
++    auto.cycle()
++    order = [u for m, u in auto.env.http.calls if m == "PUT" and "requests/REQ-A/" in u]
++    assert [u.rsplit("/", 1)[-1] for u in order] == ["APPROVAL_SIG.json", "READY.md"]
++
++
++def test_the_signed_payload_binds_exactly_the_published_bytes(auto):
++    info = make_request(auto.env.http)
++    auto.cycle()
++    approval = json.loads(remote(auto.env, REQ.format(rid="REQ-A") + "APPROVAL_SIG.json"))
++    p = approval["payload"]
++    ready = remote(auto.env, REQ.format(rid="REQ-A") + "READY.md")
++    assert p["ready_sha256"] == hashlib.sha256(ready).hexdigest()
++    assert p["request_sha256"] == hashlib.sha256(info.request).hexdigest()
++    assert p["package_sha256"] == hashlib.sha256(info.package).hexdigest() and p["package_size_bytes"] == len(info.package)
++    assert p["source_commit"] == info.commit_a and p["repo_id"] == REPO_ID and p["run_policy_ref"] == "POLICY-STATIC-V1"
++    assert p["package_path"] == info.package_path and p["local_policy_revision"] == auto.policy.local_policy_revision
++    issued, expires = (time.mktime(time.strptime(p[k][:19], "%Y-%m-%dT%H:%M:%S")) for k in ("issued_at", "expires_at"))
++    assert 0 < expires - issued <= 2 * 3600 + 5
++    assert has(auto.env, "AUTO_RESERVED") and has(auto.env, "AUTO_SIGNED_LOCAL") and has(auto.env, "AUTO_APPROVAL_POSTED") and has(auto.env, "AUTO_READY_POSTED")
++
++
++def test_the_published_ready_passes_the_official_validator_and_the_official_verifier(auto):
++    from skill_collab_watcher.approval import verify_approval
++    from skill_collab_watcher.models import ValidationOutcome
++    from skill_collab_watcher.validator import validate
++    info = make_request(auto.env.http)
++    auto.cycle()
++    base = REQ.format(rid="REQ-A")
++    ready = remote(auto.env, base + "READY.md")
++    approval = remote(auto.env, base + "APPROVAL_SIG.json")
++    pin = remote(auto.env, base + "SOURCE_PIN.json")
++    r = validate(info.request.decode(), ready.decode(), (len(info.package), hashlib.sha256(info.package).hexdigest()), auto.policy,
++                 expected_request_id="REQ-A", request_bytes=info.request)
++    assert r.outcome == ValidationOutcome.VALIDATED
++    from skill_collab_watcher.approval import knowledge_refs_hash
++    from datetime import datetime, timezone
++    expected = {"request_id": "REQ-A", "request_revision": "1", "request_sha256": hashlib.sha256(info.request).hexdigest(),
++                "ready_sha256": hashlib.sha256(ready).hexdigest(), "package_path": info.package_path,
++                "package_sha256": hashlib.sha256(info.package).hexdigest(), "package_size_bytes": len(info.package),
++                "local_policy_revision": "1", "run_policy_ref": "POLICY-STATIC-V1", "knowledge_refs_hash": knowledge_refs_hash([])}
++    verify_approval(approval, pin, trust=auto.trust, backend=auto.policy.signature_backend, expected=expected, now=datetime.now(timezone.utc))
++
++
++@pytest.mark.parametrize("state", ["REQUESTED", "SUBMITTED"])
++def test_requested_and_submitted_are_both_accepted(auto, state):
++    make_request(auto.env.http, state=state)
++    auto.cycle()
++    auto.cycle()
++    assert auto.env.runner.calls == 1
++
++
++def test_the_existing_source_pin_is_never_overwritten(auto):
++    info = make_request(auto.env.http)
++    before = remote(auto.env, REQ.format(rid="REQ-A") + "SOURCE_PIN.json")
++    auto.cycle()
++    assert remote(auto.env, REQ.format(rid="REQ-A") + "SOURCE_PIN.json") == before and not puts(auto.env, "SOURCE_PIN.json")
++
++
++def test_the_automatic_part_alone_never_starts_a_review(auto, monkeypatch):
++    make_request(auto.env.http)
++    monkeypatch.setattr(orchestrator, "_reserve_dispatch", lambda *a, **k: (_ for _ in ()).throw(AssertionError("a dispatch started in the signing cycle")))
++    auto.cycle()
++    assert approval_posted(auto.env) and ready_posted(auto.env) and auto.env.runner.calls == 0
++
++
++# ================================ scope, retroactivity, limits ======================================================================================
++
++def test_a_request_seen_while_the_feature_was_off_is_never_started_later(auto):
++    write_delegation(auto.delegation, enabled=False)
++    make_request(auto.env.http)
++    auto.cycle()                                                            # first sight, delegation off
++    write_delegation(auto.delegation, enabled=True)
++    for _ in range(3):
++        auto.cycle()
++    assert not approval_posted(auto.env) and type(auto.signer).calls == 0 and has(auto.env, "AUTO_PRE_EXISTING_REQUEST")
++
++
++def test_a_request_older_than_the_delegation_is_retroactive(auto):
++    info = make_request(auto.env.http)
++    auto.env.http.set_commit_time(info.commit_a, time.time() - 7200)         # committed two hours ago; the delegation starts one minute ago
++    auto.cycle()
++    assert not approval_posted(auto.env) and has(auto.env, "AUTO_NOT_ELIGIBLE", "RETROACTIVE")
++
++
++def test_a_request_dated_in_the_future_is_refused(auto):
++    info = make_request(auto.env.http)
++    auto.env.http.set_commit_time(info.commit_a, time.time() + 3600)
++    auto.cycle()
++    assert not approval_posted(auto.env) and has(auto.env, "AUTO_NOT_ELIGIBLE", "RETROACTIVE_OR_FUTURE")
++
++
++@pytest.mark.parametrize("over, kw", [
++    ({"expires_at": iso(time.time() - 10)}, {}),
++    ({}, {"project": "other-project"}),
++    ({}, {"skill": "other-skill"}),
++    ({"projects": ["x"], "skills": ["y"]}, {}),
++    ({}, {"policy_ref": "POLICY-STATIC-V1-LARGE"}),
++    ({"projects": []}, {}),
++    ({"skills": []}, {}),
++    ({"max_request_usd": 1.5}, {}),
++    ({"max_day_calls": 3}, {}),
++    ({"max_day_usd": 4.0}, {}),
++    ({"max_month_usd": 11.0}, {}),
++    ({"repo_id": "another-repository"}, {}),
++    ({"branch": "develop"}, {}),
++])
++def test_scope_expiry_policy_and_limit_violations_sign_nothing(auto, over, kw):
++    write_delegation(auto.delegation, **over)
++    make_request(auto.env.http, **kw)
++    auto.cycle()
++    assert not approval_posted(auto.env) and not ready_posted(auto.env) and type(auto.signer).calls == 0 and auto.env.runner.calls == 0
++
++
++def test_the_day_call_limit_allows_two_and_refuses_the_third(auto):
++    for rid in ("REQ-A", "REQ-B", "REQ-C"):
++        make_request(auto.env.http, rid)
++    auto.cycle()
++    assert [approval_posted(auto.env, r) for r in ("REQ-A", "REQ-B", "REQ-C")] == [True, True, False]
++    assert has(auto.env, "AUTO_LIMIT_BLOCKED", "DAY_CALL_LIMIT") and type(auto.signer).calls == 2
++
++
++def test_the_day_cost_limit_counts_reservations(auto):
++    write_delegation(auto.delegation, max_day_calls=2, max_day_usd=1.5)           # below the product ceiling of 3: allowed, stricter
++    auto.policy.run_budgets_usd["POLICY-STATIC-V1"] = 1.0
++    make_request(auto.env.http, "REQ-A")
++    make_request(auto.env.http, "REQ-B")
++    auto.cycle()
++    assert approval_posted(auto.env, "REQ-A") and not approval_posted(auto.env, "REQ-B") and has(auto.env, "AUTO_LIMIT_BLOCKED", "DAY_COST_LIMIT")
++
++
++def test_the_month_limit_spans_days(auto):
++    """Direct calls (no watcher dispatch in between), so that the MONTH ceiling is the one that decides."""
++    write_delegation(auto.delegation, max_month_usd=2.0, expires_at=iso(time.time() + 90 * 86400))
++    statuses = []
++    for i, rid in enumerate(("REQ-A", "REQ-B", "REQ-C")):
++        info = make_request(auto.env.http, rid)
++        auto.now["offset"] = i * 86400                                            # a new KST day each time, same month
++        statuses.append(direct(auto, rid, info))
++    assert statuses == ["READY_POSTED", "READY_POSTED", "MONTH_COST_LIMIT"]
++    assert has(auto.env, "AUTO_LIMIT_BLOCKED", "MONTH_COST_LIMIT")
++
++
++def test_a_new_kst_month_starts_a_new_month_budget(auto):
++    write_delegation(auto.delegation, max_month_usd=1.0, expires_at=iso(time.time() + 120 * 86400))
++    statuses = []
++    for i, rid in enumerate(("REQ-A", "REQ-B", "REQ-C")):
++        info = make_request(auto.env.http, rid)
++        auto.now["offset"] = i * 40 * 86400                                       # a different month every time
++        statuses.append(direct(auto, rid, info))
++    assert statuses == ["READY_POSTED"] * 3
++
++
++def test_real_dispatches_of_the_watcher_count_against_the_day(auto):
++    for _ in range(2):
++        auto.env.store.log_event("REVIEW_DISPATCHED", processing_key="old|1|x|1", detail="{}")
++    make_request(auto.env.http)
++    auto.cycle()
++    assert not approval_posted(auto.env) and has(auto.env, "AUTO_NOT_ELIGIBLE", "DAY_CALL_LIMIT")
++
++
++# ================================ spoofing and input checks ===========================================================================================
++
++def test_a_missing_source_pin_signs_nothing_and_reserves_nothing(auto):
++    make_request(auto.env.http, pin=False)
++    auto.cycle()
++    assert not approval_posted(auto.env) and auto.env.store.auto_get_claim("REQ-A", "1") is None and has(auto.env, "AUTO_NOT_ELIGIBLE", "SOURCE_PIN.json")
++
++
++def test_a_pin_for_another_repository_is_refused(auto):
++    make_request(auto.env.http, pin_repo_id="some-other-repository")
++    auto.cycle()
++    assert not approval_posted(auto.env) and has(auto.env, "AUTO_NOT_ELIGIBLE", "PIN_MISMATCH")
++
++
++def test_a_server_that_reports_another_repository_id_is_refused(auto):
++    make_request(auto.env.http)
++    auto.env.http.repo_id = "the-name-now-points-elsewhere"
++    auto.cycle()
++    assert not approval_posted(auto.env) and type(auto.signer).calls == 0
++
++
++def test_an_unreadable_repository_identity_waits(auto, monkeypatch):
++    from skill_collab_watcher.github_transport import GitHubTransport
++    make_request(auto.env.http)
++    monkeypatch.setattr(GitHubTransport, "repository_id", lambda self: (_ for _ in ()).throw(TransportError("synthetic")))
++    auto.cycle()
++    assert not approval_posted(auto.env) and type(auto.signer).calls == 0
++
++
++def test_a_pin_that_points_at_a_commit_with_other_bytes_is_refused(auto):
++    info = make_request(auto.env.http, pin=False)
++    later = auto.env.http.commit({rp(f"requests/REQ-A/REQUEST.md"): info.request + b"\nedited after the pin\n"})
++    from skill_collab_watcher.approval import PIN_SCHEMA
++    from fake_github import j
++    auto.env.http.commit({rp("requests/REQ-A/SOURCE_PIN.json"): j({"schema": PIN_SCHEMA, "repo_id": REPO_ID, "commit": info.commit_a})})
++    auto.cycle()                                                            # the REQUEST on main no longer equals the REQUEST at commit A
++    assert not approval_posted(auto.env) and has(auto.env, "AUTO_NOT_ELIGIBLE", "COMMIT_A_MISMATCH")
++
++
++def test_a_package_replaced_after_the_pin_is_refused(auto):
++    info = make_request(auto.env.http)
++    auto.env.http.commit({rp(info.package_path.replace("/SKILL-COLLAB/", "")): make_package_zip("a different package")})
++    auto.cycle()
++    assert not approval_posted(auto.env) and has(auto.env, "AUTO_NOT_ELIGIBLE", "PACKAGE_INVALID")
++
++
++def test_a_wrong_package_sha_in_the_request_is_refused(auto):
++    make_request(auto.env.http, sha_override="0" * 64)
++    auto.cycle()
++    assert not approval_posted(auto.env) and has(auto.env, "AUTO_NOT_ELIGIBLE", "PACKAGE_INVALID")
++
++
++def test_a_wrong_package_size_in_the_request_is_refused(auto):
++    make_request(auto.env.http, size_delta=1)
++    auto.cycle()
++    assert not approval_posted(auto.env) and has(auto.env, "AUTO_NOT_ELIGIBLE", "PACKAGE_INVALID")
++
++
++def _zip(entries, corrupt=False):
++    buf = io.BytesIO()
++    with zipfile.ZipFile(buf, "w") as zf:
++        for name, data in entries:
++            zf.writestr(zipfile.ZipInfo(name, date_time=(2026, 11, 1, 0, 0, 0)), data)
++    raw = buf.getvalue()
++    if corrupt:
++        i = raw.index(entries[0][1].encode() if isinstance(entries[0][1], str) else entries[0][1])
++        raw = raw[:i] + bytes([raw[i] ^ 0xFF]) + raw[i + 1:]
++    return raw
++
++
++@pytest.mark.parametrize("label, package", [
++    ("zip-slip", _zip([("../evil.txt", "x")])),
++    ("absolute path", _zip([("/abs.txt", "x")])),
++    ("secret-shaped text", _zip([("a.md", '{"refresh_token": "' + "a" * 40 + '"}')])),
++    ("corrupt CRC", _zip([("a.md", "design text that will be damaged")], corrupt=True)),
++    ("not a zip", b"this is not a zip file"),
++])
++def test_an_unsafe_or_damaged_package_is_refused(auto, label, package):
++    make_request(auto.env.http, package=package)
++    auto.cycle()
++    assert not approval_posted(auto.env) and type(auto.signer).calls == 0
++
++
++def test_a_package_over_the_size_limit_is_refused(auto, monkeypatch):
++    monkeypatch.setattr(auto_approval, "MAX_PACKAGE_BYTES", 10)
++    make_request(auto.env.http)
++    auto.cycle()
++    assert not approval_posted(auto.env)
++
++
++def test_a_package_path_outside_packages_is_refused(auto):
++    make_request(auto.env.http, package_path="/SKILL-COLLAB/other/REQ-A.zip")
++    auto.cycle()
++    assert not approval_posted(auto.env) and type(auto.signer).calls == 0
++
++
++# ================================ duplicates ===========================================================================================================
++
++def test_a_request_that_already_has_an_approval_is_left_alone(auto):
++    make_request(auto.env.http)
++    auto.env.http.commit({rp("requests/REQ-A/APPROVAL_SIG.json"): b"{}"})
++    auto.cycle()
++    assert not ready_posted(auto.env) and type(auto.signer).calls == 0 and has(auto.env, "AUTO_DUPLICATE_BLOCKED")
++
++
++def test_a_request_whose_result_already_exists_is_never_signed(auto):
++    make_request(auto.env.http)
++    auto.env.http.commit({rp("reviews/REQ-A/REVIEW_RESULT_1.md"): b"old"})
++    auto.cycle()
++    assert not approval_posted(auto.env) and type(auto.signer).calls == 0
++
++
++def test_a_request_with_a_dispatch_record_is_never_signed(auto):
++    make_request(auto.env.http)
++    auto.env.http.commit({rp("dispatch/REQ-A/DISPATCH_1.md"): b"{}"})
++    auto.cycle()
++    assert not approval_posted(auto.env) and type(auto.signer).calls == 0
++
++
++def test_a_request_with_a_local_job_is_never_signed(auto):
++    make_request(auto.env.http)
++    auto.env.store.create_job("REQ-A|1|x|1", "REQ-A", "1", "x", JobState.COMPLETED)
++    auto.cycle()
++    assert not approval_posted(auto.env) and type(auto.signer).calls == 0
++
++
++def test_two_scans_of_the_same_request_sign_once(auto):
++    make_request(auto.env.http)
++    other = StateStore(auto.env.tmp / "state.sqlite3")
++    try:
++        second = AutoApprover(auto.settings, other, signer=auto.signer, now_fn=time.time, sleep=lambda _s: None)
++        auto.cycle()
++        run_policy = auto.policy.auto_approver
++        auto.policy.auto_approver = second
++        run(auto.env, policy=auto.policy)
++        auto.policy.auto_approver = run_policy
++    finally:
++        other.close()
++    assert type(auto.signer).calls == 1 and len(puts(auto.env, "APPROVAL_SIG.json")) == 1
++
++
++def test_racing_threads_reserve_exactly_one_signature(auto):
++    make_request(auto.env.http)
++    results, errors = [], []
++    info = auto.env.http.files()[rp("requests/REQ-A/REQUEST.md")]
++
++    def worker():
++        try:
++            store = StateStore(auto.env.tmp / "state.sqlite3")                    # a SQLite connection belongs to its own thread
++            approver = AutoApprover(auto.settings, store, signer=auto.signer, now_fn=time.time, sleep=lambda _s: None)
++            transport = make_transport(auto.env.http)
++            transport.ensure_auth()
++            results.append(approver.process(transport, store, auto.policy, "/SKILL-COLLAB", "REQ-A", info.decode(), info).status)
++            store.close()
++        except Exception as exc:                                                  # noqa: BLE001
++            errors.append(repr(exc))
++
++    threads = [threading.Thread(target=worker) for _ in range(4)]
++    [t.start() for t in threads]
++    [t.join() for t in threads]
++    assert not errors, errors
++    assert type(auto.signer).calls == 1 and len(puts(auto.env, "APPROVAL_SIG.json")) == 1
++    assert results.count("READY_POSTED") == 1
++
++
++def test_after_a_total_local_state_loss_published_files_block_any_new_signature(auto):
++    make_request(auto.env.http)
++    auto.cycle()
++    auto.cycle()
++    assert type(auto.signer).calls == 1 and auto.env.runner.calls == 1
++    auto.env.store.close()
++    for suffix in ("", "-wal", "-shm"):
++        p = auto.env.tmp / f"state.sqlite3{suffix}"
++        if p.exists():
++            p.unlink()
++    auto.env.store = StateStore(auto.env.tmp / "state.sqlite3")
++    auto.build(auto.env.store)
++    for _ in range(3):
++        auto.cycle()
++    assert type(auto.signer).calls == 1 and auto.env.runner.calls == 1
++
++
++def test_restoring_an_old_backup_never_signs_again(auto):
++    import shutil
++    make_request(auto.env.http)
++    auto.env.store.conn.execute("PRAGMA wal_checkpoint(FULL)")
++    backup = auto.env.tmp / "old.sqlite3"
++    shutil.copyfile(auto.env.tmp / "state.sqlite3", backup)                    # a backup from BEFORE the claim
++    auto.cycle()
++    auto.cycle()
++    auto.env.store.close()
++    for suffix in ("-wal", "-shm"):
++        p = auto.env.tmp / f"state.sqlite3{suffix}"
++        if p.exists():
++            p.unlink()
++    shutil.copyfile(backup, auto.env.tmp / "state.sqlite3")
++    auto.env.store = StateStore(auto.env.tmp / "state.sqlite3")
++    auto.build(auto.env.store)
++    for _ in range(3):
++        auto.cycle()
++    assert type(auto.signer).calls == 1 and auto.env.runner.calls == 1
++
++
++# ================================ crash recovery =======================================================================================================
++
++def test_a_crash_before_the_claim_costs_nothing_and_the_next_scan_signs(auto, monkeypatch):
++    make_request(auto.env.http)
++    real = auto.env.store.auto_claim
++    monkeypatch.setattr(type(auto.env.store), "auto_claim", lambda *a, **k: (_ for _ in ()).throw(Crash()))
++    with pytest.raises(Crash):
++        auto.cycle()
++    monkeypatch.undo()
++    assert type(auto.signer).calls == 0
++    auto.cycle()
++    assert approval_posted(auto.env) and ready_posted(auto.env) and type(auto.signer).calls == 1
++
++
++def test_a_crash_after_the_claim_before_the_signature_allows_one_more_signature_only(auto, monkeypatch):
++    make_request(auto.env.http)
++    monkeypatch.setattr(ToolSigner, "sign", lambda *a, **k: (_ for _ in ()).throw(Crash()))
++    with pytest.raises(Crash):
++        auto.cycle()
++    claim = auto.env.store.auto_get_claim("REQ-A", "1")
++    assert claim["stage"] == "RESERVED" and not approval_posted(auto.env)
++    auto.env.store.close()
++    auto.env.store = StateStore(auto.env.tmp / "state.sqlite3")                 # the process was restarted
++    auto.build(auto.env.store)
++    with pytest.raises(Crash):
++        auto.cycle()                                                            # the one extra attempt dies as well
++    monkeypatch.undo()
++    auto.cycle()                                                                # a third try is refused: UNCERTAIN, never re-signed automatically
++    claim = auto.env.store.auto_get_claim("REQ-A", "1")
++    assert claim["stage"] == "UNCERTAIN" and not approval_posted(auto.env) and has(auto.env, "AUTO_SIGNING_UNCERTAIN")
++
++
++def test_a_crash_after_the_signature_before_the_approval_is_posted_resumes_with_the_same_bytes(auto, monkeypatch):
++    make_request(auto.env.http)
++    monkeypatch.setattr(AutoApprover, "_post_create_only", lambda *a, **k: (_ for _ in ()).throw(Crash()))
++    with pytest.raises(Crash):
++        auto.cycle()
++    stored = auto.env.store.auto_get_claim("REQ-A", "1")["approval_text"]
++    monkeypatch.undo()
++    auto.cycle()
++    assert remote(auto.env, REQ.format(rid="REQ-A") + "APPROVAL_SIG.json") == stored.encode() and ready_posted(auto.env)
++    assert type(auto.signer).calls == 1
++
++
++def test_a_crash_between_approval_and_ready_publishes_only_the_stored_ready(auto, monkeypatch):
++    make_request(auto.env.http)
++    real = AutoApprover._post_create_only
++    state = {"n": 0}
++
++    def flaky(self, transport, path, data):
++        state["n"] += 1
++        if path.endswith("READY.md"):
++            raise Crash()
++        return real(self, transport, path, data)
++    monkeypatch.setattr(AutoApprover, "_post_create_only", flaky)
++    with pytest.raises(Crash):
++        auto.cycle()
++    assert approval_posted(auto.env) and not ready_posted(auto.env)
++    stored_ready = auto.env.store.auto_get_claim("REQ-A", "1")["ready_text"]
++    monkeypatch.undo()
++    auto.cycle()
++    assert remote(auto.env, REQ.format(rid="REQ-A") + "READY.md") == stored_ready.encode() and type(auto.signer).calls == 1
++    auto.cycle()
++    assert auto.env.runner.calls == 1
++
++
++def test_a_stored_approval_that_expired_is_never_re_signed(auto, monkeypatch):
++    make_request(auto.env.http)
++    monkeypatch.setattr(AutoApprover, "_post_create_only", lambda *a, **k: (_ for _ in ()).throw(Crash()))
++    with pytest.raises(Crash):
++        auto.cycle()
++    monkeypatch.undo()
++    claim = auto.env.store.auto_get_claim("REQ-A", "1")
++    approval = json.loads(claim["approval_text"])
++    approval["payload"]["expires_at"] = iso(time.time() - 5)
++    auto.env.store.auto_update("REQ-A", "1", int(time.time()), approval_text=json.dumps(approval))
++    auto.cycle()
++    assert not approval_posted(auto.env) and type(auto.signer).calls == 1
++    assert auto.env.store.auto_get_claim("REQ-A", "1")["stage"] == "UNCERTAIN"
++
++
++def test_a_crash_after_ready_before_the_watcher_still_reviews_exactly_once(auto, monkeypatch):
++    make_request(auto.env.http)
++    auto.cycle()                                                              # READY posted; the process "dies" before the next cycle
++    auto.env.store.close()
++    auto.env.store = StateStore(auto.env.tmp / "state.sqlite3")
++    auto.build(auto.env.store)
++    for _ in range(3):
++        auto.cycle()
++    assert auto.env.runner.calls == 1 and type(auto.signer).calls == 1
++
++
++def test_a_failed_result_upload_after_dispatch_neither_resigns_nor_re_reviews(auto):
++    make_request(auto.env.http)
++    auto.cycle()
++    auto.env.http.inject("PUT", "/contents/collab/reviews/", status=500, times=100)
++    auto.cycle()                                                              # review runs; its result cannot be uploaded
++    assert auto.env.runner.calls == 1
++    auto.env.http._inject.clear()
++    for _ in range(3):
++        auto.cycle()
++    assert auto.env.runner.calls == 1 and type(auto.signer).calls == 1
++
++
++# ================================ remote errors and races ==========================================================================================
++
++def test_a_branch_head_race_on_the_approval_is_retried_a_bounded_number_of_times(auto):
++    make_request(auto.env.http)
++    auto.env.http.inject("PUT", "requests/REQ-A/APPROVAL_SIG.json", status=422, times=1)
++    auto.cycle()
++    assert approval_posted(auto.env) and ready_posted(auto.env) and type(auto.signer).calls == 1
++
++
++def test_a_persistent_conflict_stops_after_the_bound_and_publishes_no_ready(auto):
++    make_request(auto.env.http)
++    auto.env.http.inject("PUT", "requests/REQ-A/APPROVAL_SIG.json", status=422, times=100)
++    auto.cycle()
++    assert not ready_posted(auto.env) and len(puts(auto.env, "APPROVAL_SIG.json")) <= 3
++    assert auto.env.store.auto_get_claim("REQ-A", "1")["stage"] == "UNCERTAIN" and has(auto.env, "AUTO_SIGNING_UNCERTAIN")
++    for _ in range(3):
++        auto.cycle()
++    assert type(auto.signer).calls == 1 and not ready_posted(auto.env)
++
++
++def test_a_server_error_while_posting_stops_without_ready(auto):
++    make_request(auto.env.http)
++    auto.env.http.inject("PUT", "requests/REQ-A/", status=503, times=100)
++    auto.cycle()
++    assert not ready_posted(auto.env) and auto.env.store.auto_get_claim("REQ-A", "1")["stage"] == "UNCERTAIN"
++
++
++def test_a_different_file_already_at_the_approval_path_stops_everything(auto):
++    make_request(auto.env.http)
++    real_post = AutoApprover._post_create_only
++
++    def planted(self, transport, path, data):
++        if path.endswith("APPROVAL_SIG.json"):
++            self_http = auto.env.http
++            self_http.commit({rp("requests/REQ-A/APPROVAL_SIG.json"): b"somebody else's file"})
++        return real_post(self, transport, path, data)
++    AutoApprover._post_create_only = planted
++    try:
++        auto.cycle()
++    finally:
++        AutoApprover._post_create_only = real_post
++    assert not ready_posted(auto.env) and auto.env.store.auto_get_claim("REQ-A", "1")["stage"] == "UNCERTAIN"
++
++
++def test_the_delegation_switched_off_before_posting_stops_the_publication(auto, monkeypatch):
++    make_request(auto.env.http)
++    real_sign = ToolSigner.sign
++
++    def sign_then_switch_off(self, *a, **k):
++        out = real_sign(self, *a, **k)
++        write_delegation(auto.delegation, enabled=False)
++        return out
++    monkeypatch.setattr(ToolSigner, "sign", sign_then_switch_off)
++    auto.cycle()
++    assert not approval_posted(auto.env) and not ready_posted(auto.env)
++    assert auto.env.store.auto_get_claim("REQ-A", "1")["stage"] == "UNCERTAIN"
++
++
++def test_a_repository_that_changes_before_posting_stops_the_publication(auto, monkeypatch):
++    make_request(auto.env.http)
++    real_sign = ToolSigner.sign
++
++    def sign_then_swap_repository(self, *a, **k):
++        out = real_sign(self, *a, **k)
++        auto.env.http.repo_id = "replaced-repository"
++        return out
++    monkeypatch.setattr(ToolSigner, "sign", sign_then_swap_repository)
++    auto.cycle()
++    assert not approval_posted(auto.env) and not ready_posted(auto.env)
++
++
++# ================================ signer and trust failures ============================================================================================
++
++def test_a_signer_that_fails_leaves_an_uncertain_claim_and_nothing_remote(auto, monkeypatch):
++    make_request(auto.env.http)
++    monkeypatch.setattr(ToolSigner, "sign", lambda *a, **k: (_ for _ in ()).throw(RuntimeError("synthetic")))
++    auto.cycle()
++    assert not approval_posted(auto.env) and auto.env.store.auto_get_claim("REQ-A", "1")["stage"] == "UNCERTAIN"
++
++
++def test_a_key_that_is_not_in_the_trust_root_signs_nothing(auto):
++    from skill_collab_watcher.approval import TrustRoot
++    auto.policy.trust_root = TrustRoot(repo_id=REPO_ID, keys={})
++    make_request(auto.env.http)
++    auto.cycle()
++    assert not approval_posted(auto.env) and type(auto.signer).calls == 0
++
++
++def test_without_a_signature_backend_nothing_is_signed(auto):
++    auto.policy.signature_backend = None
++    make_request(auto.env.http)
++    auto.cycle()
++    assert not approval_posted(auto.env) and type(auto.signer).calls == 0
++
++
++def test_a_signature_that_does_not_verify_against_the_trust_root_is_never_published(auto):
++    import base64
++    from cryptography.hazmat.primitives import serialization
++    from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
++    other = Ed25519PrivateKey.generate().public_key().public_bytes(serialization.Encoding.Raw, serialization.PublicFormat.Raw)
++    from skill_collab_watcher.approval import TrustedKey, TrustRoot, fingerprint_of
++    from bundle import KEY_ID
++    pub = base64.b64encode(other).decode()
++    auto.policy.trust_root = TrustRoot(repo_id=REPO_ID, keys={KEY_ID: TrustedKey(key_id=KEY_ID, public_key=pub, fingerprint=fingerprint_of(pub), status="ACTIVE")})
++    make_request(auto.env.http)
++    auto.cycle()
++    assert not approval_posted(auto.env) and auto.env.store.auto_get_claim("REQ-A", "1")["stage"] == "UNCERTAIN"
++
++
++def test_the_signer_refuses_a_plaintext_key_unless_explicitly_allowed(auto):
++    signer = ToolSigner(auto.keyfile, "k", REPO_ID)
++    with pytest.raises(PermissionError):
++        signer.sign(b"r", b"y", b"p", "/SKILL-COLLAB/packages/x.zip", "a" * 40, "1", 2)
++
++
++def test_the_signer_refuses_an_encrypted_key_without_a_passphrase_provider(auto, tmp_path):
++    from skill_collab_watcher.approval import ApprovalRejected  # noqa: F401
++    tool = ToolSigner._tool()
++    enc = tmp_path / "enc.key"
++    raw = b"\x01" * 32
++    enc.write_text(tool.encrypt_private(raw, "a long passphrase for the test"), encoding="ascii")
++    with pytest.raises(PermissionError):
++        ToolSigner(enc, "k", REPO_ID).sign(b"r", b"y", b"p", "/SKILL-COLLAB/packages/x.zip", "a" * 40, "1", 2)
++
++
++def test_an_encrypted_key_signs_through_the_passphrase_provider(auto, tmp_path):
++    import base64
++    tool = ToolSigner._tool()
++    raw = base64.b64decode(auto.keyfile.read_text().strip())
++    enc = tmp_path / "enc.key"
++    enc.write_text(tool.encrypt_private(raw, "a long passphrase for the test"), encoding="ascii")
++    signer = ToolSigner(enc, "key-synthetic-1", REPO_ID, passphrase_provider=lambda _p: "a long passphrase for the test")
++    info = make_request(auto.env.http)
++    ready = f"---\nschema: SKILL_COLLAB_READY_V1\nstate: READY\nrequest_id: REQ-A\nrequest_revision: 1\nrequest_path: /SKILL-COLLAB/requests/REQ-A/REQUEST.md\nrequest_sha256: {hashlib.sha256(info.request).hexdigest()}\npackage_sha256: {hashlib.sha256(info.package).hexdigest()}\nbaseline_id: TEST-BASELINE-0001\n---\n".encode()
++    approval = signer.sign(info.request, ready, info.package, info.package_path, info.commit_a, "1", 2)
++    assert json.loads(approval)["payload"]["request_id"] == "REQ-A"
++    assert b"passphrase" not in approval
++
++
++def test_a_wrong_passphrase_never_signs(auto, tmp_path):
++    import base64
++    tool = ToolSigner._tool()
++    enc = tmp_path / "enc.key"
++    enc.write_text(tool.encrypt_private(base64.b64decode(auto.keyfile.read_text().strip()), "a long passphrase for the test"), encoding="ascii")
++    signer = ToolSigner(enc, "k", REPO_ID, passphrase_provider=lambda _p: "the wrong passphrase!!")
++    with pytest.raises(Exception):
++        signer.sign(b"r", b"y", b"p", "/SKILL-COLLAB/packages/x.zip", "a" * 40, "1", 2)
++
++
++# ================================ modes ================================================================================================================
++
++def test_a_dry_run_never_invokes_automatic_approval(auto):
++    make_request(auto.env.http)
++    run(auto.env, policy=auto.policy, allowed=False)
++    assert not approval_posted(auto.env) and type(auto.signer).calls == 0
++
++
++def test_a_read_only_store_never_signs(auto):
++    make_request(auto.env.http)
++    ro = StateStore(auto.env.tmp / "state.sqlite3", read_only=True)
++    info = auto.env.http.files()[rp("requests/REQ-A/REQUEST.md")]
++    res = AutoApprover(auto.settings, auto.env.store, signer=auto.signer).process(make_transport(auto.env.http), ro, auto.policy, "/SKILL-COLLAB", "REQ-A", info.decode(), info)
++    ro.close()
++    assert res.status == "READ_ONLY" and type(auto.signer).calls == 0
++
++
++def test_requests_that_already_have_a_ready_are_not_touched(auto):
++    from bundle import publish_bundle
++    publish_bundle(auto.env.http)                                               # a hand-signed request with READY (double signature backend)
++    auto.cycle()
++    assert type(auto.signer).calls == 0 and not puts(auto.env, "APPROVAL_SIG.json")
++
++
++def test_events_never_contain_key_material_or_paths(auto):
++    make_request(auto.env.http)
++    auto.cycle()
++    text = " ".join(f"{e} {d}" for e, d in events(auto.env))
++    assert str(auto.keyfile) not in text and "PRIVATE KEY" not in text and "approver.key" not in text
++
++
++# ================================ the reservation itself (store level) ===================================================================================
++
++def test_the_store_reserves_a_request_once_and_says_so(github_env):
++    s = github_env.store
++    s.ensure_auto_tables()
++    kw = dict(max_day_calls=2, max_day_cents=300, max_month_cents=1000)
++    assert s.auto_claim("R", "1", "a" * 64, 100, "2026-11-15", "2026-11", 1, **kw) == "CLAIMED"
++    assert s.auto_claim("R", "1", "a" * 64, 100, "2026-11-15", "2026-11", 2, **kw) == "EXISTS"
++    assert s.auto_claim("R", "2", "a" * 64, 100, "2026-11-15", "2026-11", 3, **kw) == "CLAIMED"            # another revision is another request
++    assert s.auto_claim("R", "3", "a" * 64, 100, "2026-11-15", "2026-11", 4, **kw) == "DAY_CALL_LIMIT"
++    assert s.auto_claim("R", "3", "a" * 64, 100, "2026-11-16", "2026-11", 5, **kw) == "CLAIMED"            # the next KST day has room
++
++
++def test_many_processes_racing_for_one_request_produce_exactly_one_reservation(github_env):
++    github_env.store.ensure_auto_tables()
++    outcomes, errors = [], []
++
++    def worker():
++        try:
++            store = StateStore(github_env.tmp / "state.sqlite3")
++            outcomes.append(store.auto_claim("R", "1", "a" * 64, 100, "2026-11-15", "2026-11", 1, max_day_calls=9, max_day_cents=900, max_month_cents=9000))
++            store.close()
++        except Exception as exc:                                                                           # noqa: BLE001
++            errors.append(repr(exc))
++
++    threads = [threading.Thread(target=worker) for _ in range(8)]
++    [t.start() for t in threads]
++    [t.join() for t in threads]
++    assert not errors, errors
++    assert outcomes.count("CLAIMED") == 1 and outcomes.count("EXISTS") == 7
++
++
++def test_first_sight_is_recorded_once_and_never_upgraded(github_env):
++    s = github_env.store
++    s.ensure_auto_tables()
++    assert s.auto_note_seen("R", "1", False, 100) == (100, False)
++    assert s.auto_note_seen("R", "1", True, 200) == (100, False)             # seen while off: stays excluded
++    assert s.auto_note_seen("S", "1", True, 300) == (300, True)
++
++
++def test_the_tables_exist_only_when_the_feature_is_used(github_env):
++    names = {r[0] for r in github_env.store.conn.execute("select name from sqlite_master where type='table'")}
++    assert "auto_claims" not in names and "auto_seen" not in names
++
++
++def test_an_uncertain_automatic_signing_is_an_alert_event_with_a_plain_message():
++    from skill_collab_watcher.notify_events import NOTIFY_EVENTS, build_message
++    assert "AUTO_SIGNING_UNCERTAIN" in NOTIFY_EVENTS
++    text = build_message("AUTO_SIGNING_UNCERTAIN", "REQ-A", "approval publication: ERROR", "github", "owner/repo")
++    assert "REQ-A" in text and "모델을 호출하지 않았습니다" in text
++
++
++def test_an_unexpected_error_before_any_reservation_is_a_plain_log_line_not_an_alert(auto, monkeypatch):
++    make_request(auto.env.http)
++    monkeypatch.setattr(auto_approval.auto_policy, "assess", lambda *a, **k: (_ for _ in ()).throw(ValueError("synthetic")))
++    auto.cycle()
++    assert auto.env.store.auto_get_claim("REQ-A", "1") is None and not approval_posted(auto.env)
++    assert has(auto.env, "AUTO_ERROR") and not has(auto.env, "AUTO_SIGNING_UNCERTAIN") and type(auto.signer).calls == 0
++
++
++def test_an_unexpected_error_after_the_reservation_is_an_alert_and_final(auto, monkeypatch):
++    make_request(auto.env.http)
++    monkeypatch.setattr(AutoApprover, "_sign_and_post", lambda *a, **k: (_ for _ in ()).throw(ValueError("synthetic")))
++    auto.cycle()
++    assert auto.env.store.auto_get_claim("REQ-A", "1")["stage"] == "UNCERTAIN" and has(auto.env, "AUTO_SIGNING_UNCERTAIN")
+diff --git a/tests/test_auto_approval_e2e.py b/tests/test_auto_approval_e2e.py
+--- a/tests/test_auto_approval_e2e.py
++++ b/tests/test_auto_approval_e2e.py
+@@ -0,0 +1,134 @@
++"""Isolated SHADOW-style end-to-end test of automatic approval through the REAL command-line entry point (separate process).
++
++Real: cli.main, Config.load (the `auto_approval` section), runtime wiring, the delegation reader, the existing signer tool with a THROW-AWAY key,
++Ed25519 verification, GitHubTransport, the orchestrator, RealReviewRunner (argv, stdin, JSON), the SQLite state store, the single-instance lock.
++Replaced: the network (loopback synthetic GitHub, so remote writes go nowhere), the `claude` executable (a counting stub, so no paid model), and there
++is no Telegram code path in the watcher at all. The operating database, Tasks, Notifier and key are never touched."""
++from __future__ import annotations
++
++import base64
++import json
++import time
++
++import pytest
++
++pytest.importorskip("cryptography", reason="real Ed25519")
++
++from cryptography.hazmat.primitives import serialization  # noqa: E402
++
++from auto_helpers import iso, make_request, write_delegation  # noqa: E402
++from bundle import KEY_ID, REPO_ID  # noqa: E402
++from fake_github import rp  # noqa: E402
++from skill_collab_watcher.models import JobState  # noqa: E402
++from test_cli_entrypoint_e2e import e2e  # noqa: E402,F401  (fixture)
++
++
++def configure(e2e, enabled=True, **delegation):
++    raw = e2e.key.private_bytes(serialization.Encoding.Raw, serialization.PrivateFormat.Raw, serialization.NoEncryption())
++    keyfile = e2e.tmp / "throwaway.key"
++    keyfile.write_text(base64.b64encode(raw).decode() + "\n", encoding="ascii")
++    delegation_file = e2e.tmp / "delegation.json"
++    write_delegation(delegation_file, enabled=enabled, **delegation)
++    cfg = json.loads(e2e.cfg_path.read_text(encoding="utf-8"))
++    cfg["review_policy"]["known_run_policy_refs"] = {"POLICY-STATIC-V1": {"max_budget_usd": 1.0, "effort": "medium"}}
++    cfg["auto_approval"] = {"delegation_file": str(delegation_file), "acl_check": "skip", "valid_hours": 2,
++                            "signer": {"private_key_file": str(keyfile), "key_id": KEY_ID, "repo_id": REPO_ID, "allow_plaintext_key": True}}
++    e2e.cfg_path.write_text(json.dumps(cfg), encoding="utf-8")
++    return delegation_file
++
++
++def watch(e2e, cycles=4):
++    p = e2e.popen("watch", "--max-cycles", str(cycles), "--poll-interval", "1")
++    out, err = p.communicate(timeout=240)
++    return p.returncode, out, err
++
++
++def has_file(e2e, rel):
++    return e2e.repo_has(rel)
++
++
++def puts(e2e, needle):
++    return [u for m, u in e2e.fake.calls if m == "PUT" and needle in u]
++
++
++def test_enabled_delegation_signs_posts_and_the_unchanged_watcher_reviews_exactly_once(e2e):
++    configure(e2e)
++    info = make_request(e2e.fake, "REQ-1", project="test-project", skill="test-skill")
++    code, out, err = watch(e2e)
++    assert code == 0, (out + err)[-300:]
++    assert has_file(e2e, "requests/REQ-1/APPROVAL_SIG.json") and has_file(e2e, "requests/REQ-1/READY.md")
++    assert e2e.model_calls == 1
++    s = e2e.store()
++    try:
++        assert [st for _k, st in s.auto_jobs_for("REQ-1", "1")] == [JobState.COMPLETED.value]
++        assert s.auto_get_claim("REQ-1", "1")["stage"] == "READY_POSTED"
++    finally:
++        s.close()
++    assert has_file(e2e, "reviews/REQ-1/REVIEW_RESULT_1.md") and has_file(e2e, "receipts/REQ-1/RECEIPT_1.md") and has_file(e2e, "dispatch/REQ-1/DISPATCH_1.md")
++    order = [u.rsplit("/", 1)[-1] for u in puts(e2e, "requests/REQ-1/")]
++    assert order == ["APPROVAL_SIG.json", "READY.md"]
++
++
++def test_disabled_delegation_through_the_real_cli_does_nothing(e2e):
++    configure(e2e, enabled=False)
++    make_request(e2e.fake, "REQ-1")
++    code, out, err = watch(e2e, 3)
++    assert code == 0
++    assert not has_file(e2e, "requests/REQ-1/APPROVAL_SIG.json") and not has_file(e2e, "requests/REQ-1/READY.md") and e2e.model_calls == 0
++    assert not puts(e2e, "requests/")
++
++
++def test_restarts_and_repeated_runs_neither_sign_nor_review_again(e2e):
++    configure(e2e)
++    make_request(e2e.fake, "REQ-1")
++    watch(e2e)
++    assert e2e.model_calls == 1
++    for _ in range(2):
++        code, _o, _e = watch(e2e, 3)                                           # two restarts
++        assert code == 0
++    assert e2e.model_calls == 1
++    assert len(puts(e2e, "APPROVAL_SIG.json")) == 1 and len(puts(e2e, "READY.md")) == 1
++
++
++def test_a_second_watcher_is_refused_and_only_one_approval_exists(e2e):
++    configure(e2e)
++    make_request(e2e.fake, "REQ-1")
++    first = e2e.popen("watch", "--max-cycles", "6", "--poll-interval", "1", sleep="3")
++    time.sleep(2)
++    code, out, err = watch(e2e, 2)
++    first.communicate(timeout=240)
++    assert code == 3 and "already holds" in (out + err).lower()
++    assert len(puts(e2e, "APPROVAL_SIG.json")) <= 1 and e2e.model_calls <= 1
++
++
++def test_requests_present_before_the_feature_was_switched_on_are_never_started(e2e):
++    delegation = configure(e2e, enabled=False)
++    make_request(e2e.fake, "REQ-OLD")
++    watch(e2e, 2)                                                              # first sight with the delegation off
++    write_delegation(delegation, enabled=True)
++    make_request(e2e.fake, "REQ-NEW")
++    watch(e2e, 4)
++    assert not has_file(e2e, "requests/REQ-OLD/APPROVAL_SIG.json") and not has_file(e2e, "requests/REQ-OLD/READY.md")
++    assert has_file(e2e, "requests/REQ-NEW/READY.md") and e2e.model_calls == 1
++
++
++def test_a_request_outside_the_delegation_is_never_signed_through_the_real_cli(e2e):
++    configure(e2e)
++    make_request(e2e.fake, "REQ-1", project="some-other-project")
++    watch(e2e, 3)
++    assert not has_file(e2e, "requests/REQ-1/APPROVAL_SIG.json") and e2e.model_calls == 0
++
++
++def test_config_check_reports_the_feature_without_secrets(e2e):
++    configure(e2e, enabled=False)
++    p = e2e.popen("config-check")
++    out, err = p.communicate(timeout=120)
++    text = out + err
++    assert p.returncode == 0 and "auto_approval: configured" in text and "enabled=False" in text and "signer configured" in text
++    assert "throwaway.key" not in text and "BEGIN" not in text
++
++
++def test_without_the_section_config_check_says_the_feature_does_not_exist(e2e):
++    p = e2e.popen("config-check")
++    out, err = p.communicate(timeout=120)
++    assert "auto_approval: not configured" in (out + err)
+diff --git a/tests/test_auto_policy_gpt_proto.py b/tests/test_auto_policy_gpt_proto.py
+--- a/tests/test_auto_policy_gpt_proto.py
++++ b/tests/test_auto_policy_gpt_proto.py
+@@ -0,0 +1,97 @@
++# GPT prototype tests, byte-identical except the one import line (auto_policy -> skill_collab_watcher.auto_policy).
++"""Offline synthetic tests. No GitHub calls, Windows keys or paid models."""
++from dataclasses import replace
++import unittest
++from skill_collab_watcher.auto_policy import Delegation, Candidate, Evidence, assess
++
++
++class AutoPolicyTest(unittest.TestCase):
++    def setUp(self):
++        self.d = Delegation(True, "1451933830", "main", frozenset({"TEST-WORK"}),
++                            frozenset({"test-skill"}), 99999, 1000)
++        self.c = Candidate("REQ-TEST-001", 1, "TEST-WORK", "test-skill", "1451933830",
++                           "main", 2000, "c"*40, "a"*64, "b"*64,
++                           "POLICY-STATIC-V1", 100, 1, 1)
++        self.e = Evidence(3000, True, True, True, "NEW", 0, 0, 0, True)
++
++    def verdict(self, d=None, c=None, e=None):
++        return assess(d or self.d, c or self.c, e or self.e)
++
++    def test_allowed(self):
++        self.assertEqual(self.verdict(), (True, "ALLOW_ATOMIC_CLAIM_THEN_EXISTING_SIGNER_ONLY"))
++
++    def test_disabled(self):
++        self.assertEqual(self.verdict(d=replace(self.d, enabled=False))[1], "DISABLED")
++
++    def test_expired(self):
++        self.assertEqual(self.verdict(e=replace(self.e, now=99999))[1], "DELEGATION_EXPIRED")
++
++    def test_retroactive(self):
++        self.assertEqual(self.verdict(c=replace(self.c, created_at=999))[1], "RETROACTIVE_OR_FUTURE_REQUEST")
++
++    def test_future(self):
++        self.assertEqual(self.verdict(c=replace(self.c, created_at=4000))[1], "RETROACTIVE_OR_FUTURE_REQUEST")
++
++    def test_other_repo(self):
++        self.assertEqual(self.verdict(c=replace(self.c, repo_id="123"))[1], "REPOSITORY_OR_BRANCH")
++
++    def test_other_branch(self):
++        self.assertEqual(self.verdict(c=replace(self.c, branch="feature"))[1], "REPOSITORY_OR_BRANCH")
++
++    def test_other_project(self):
++        self.assertEqual(self.verdict(c=replace(self.c, project="OTHER"))[1], "SCOPE")
++
++    def test_no_allowlist(self):
++        self.assertEqual(self.verdict(d=replace(self.d, projects=frozenset()))[1], "SCOPE")
++
++    def test_other_skill(self):
++        self.assertEqual(self.verdict(c=replace(self.c, skill="other"))[1], "SCOPE")
++
++    def test_policy_escalation(self):
++        self.assertEqual(self.verdict(c=replace(self.c, policy="POLICY-STATIC-V1-LARGE"))[1], "REVIEW_POLICY")
++
++    def test_second_attempt(self):
++        self.assertEqual(self.verdict(c=replace(self.c, attempt=2))[1], "REVIEW_POLICY")
++
++    def test_second_call(self):
++        self.assertEqual(self.verdict(c=replace(self.c, max_calls=2))[1], "REVIEW_POLICY")
++
++    def test_invalid_state(self):
++        self.assertEqual(self.verdict(c=replace(self.c, state="DRAFT_EXAMPLE"))[1], "REQUEST_FORMAT")
++
++    def test_pin_tampering(self):
++        self.assertEqual(self.verdict(c=replace(self.c, request_sha256="bad"))[1], "INVALID_PIN_FORMAT")
++
++    def test_request_over_budget(self):
++        self.assertEqual(self.verdict(c=replace(self.c, estimated_cents=101))[1], "PER_REQUEST_COST")
++
++    def test_policy_limit_expansion(self):
++        self.assertEqual(self.verdict(d=replace(self.d, max_day_calls=3))[1], "UNSUPPORTED_DELEGATION_LIMIT")
++
++    def test_completed_duplicate(self):
++        self.assertEqual(self.verdict(e=replace(self.e, prior_state="COMPLETED"))[1], "DUPLICATE_OR_UNCERTAIN")
++
++    def test_uncertain_duplicate(self):
++        self.assertEqual(self.verdict(e=replace(self.e, prior_state="REVIEW_UNCERTAIN"))[1], "DUPLICATE_OR_UNCERTAIN")
++
++    def test_crc_failure(self):
++        self.assertEqual(self.verdict(e=replace(self.e, bytes_and_crc_verified=False))[1], "INPUT_OR_TRUST")
++
++    def test_key_invalid(self):
++        self.assertEqual(self.verdict(e=replace(self.e, signer_and_trust_root_valid=False))[1], "INPUT_OR_TRUST")
++
++    def test_no_atomic_db(self):
++        self.assertEqual(self.verdict(e=replace(self.e, atomic_claim_available=False))[1], "NO_ATOMIC_CLAIM")
++
++    def test_day_call_limit(self):
++        self.assertEqual(self.verdict(e=replace(self.e, day_calls_used_or_reserved=2))[1], "DAY_CALL_LIMIT")
++
++    def test_day_cost_limit(self):
++        self.assertEqual(self.verdict(e=replace(self.e, day_cents_used_or_reserved=250))[1], "DAY_COST_LIMIT")
++
++    def test_month_cost_limit(self):
++        self.assertEqual(self.verdict(e=replace(self.e, month_cents_used_or_reserved=950))[1], "MONTH_COST_LIMIT")
++
++
++if __name__ == "__main__":
++    unittest.main()
