@@ -8,8 +8,8 @@
   "policy": "POLICY-STATIC-V1",
   "policy_max_usd": 1,
   "max_review_calls": 1,
-  "user_review_request": "AUTHORIZED_BY_CURRENT_USER_REQUEST",
-  "host_signed_approval": "PENDING_PER_REQUEST_COST_AUTHORIZATION_AND_HOST_SIGNER",
+  "user_review_request": "EXPLICIT_PAID_REVIEW_APPROVED_2026_11_15",
+  "host_signed_approval": "PENDING_WINDOWS_EXISTING_SIGNER_VALIDATION",
   "ready": "NOT_POSTED",
   "source_pin": "POSTED_VALIDATED_NO_REPIN_REQUIRED",
   "host_preflight": "PASS_V0220_VALIDATOR_ISOLATED_HOST",
@@ -17,7 +17,7 @@
   "independent_review": "NOT_RUN",
   "result": "NOT_RECEIVED",
   "blockers": [
-    "This request's separate paid model cost approval (POLICY-STATIC-V1 max USD 1, exactly 1 call) and authorized existing host signature must be established before posting APPROVAL_SIG and READY. GitHub LIVE watcher will automatically dispatch after valid READY; do not start a second watcher."
+    "User paid-review approval now explicitly confirmed (POLICY-STATIC-V1 max USD 1, exactly one model call). Existing Windows Ed25519 host signer must generate and verify per-request APPROVAL_SIG.json before READY.md can be posted. GPT cannot access operating private signing key or start Windows signer; do not fabricate signature, READY, receipt or paid review."
   ],
   "output_paths": {
     "result": "collab/reviews/REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-001/REVIEW_RESULT_1.md",
@@ -32,7 +32,10 @@
   "state_requested_accepted": "PASS_NO_CHANGE_REQUIRED",
   "design_zip_validator": "PASS_NO_SKILL_MD_REQUIRED",
   "duplicate_execution_check": "PASS_NONE_FOUND_HOST",
-  "paid_review_cost_approval": "NOT_EXPLICITLY_VERIFIED_FOR_THIS_REQUEST",
+  "paid_review_cost_approval": "APPROVED_FOR_THIS_REQUEST_R1_MAX_USD_1_ONE_MODEL_CALL",
   "validator_result_path": "collab/projects/L1-WORKSPACE-RAG-20261111-001/CLAUDE_REQUEST_VALIDATOR_PREFLIGHT_RESULT_FOR_GPT_20261115.md",
-  "gpt_disposition_path": "collab/projects/L1-WORKSPACE-RAG-20261111-001/GPT_REQUEST_VALIDATOR_PREFLIGHT_DISPOSITION_r0001_20261115.md"
+  "gpt_disposition_path": "collab/projects/L1-WORKSPACE-RAG-20261111-001/GPT_REQUEST_VALIDATOR_PREFLIGHT_DISPOSITION_r0001_20261115.md",
+  "cost_approval_document": "collab/requests/REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-001/GPT_USER_COST_APPROVAL_AND_SIGNER_HANDOFF_r0001_20261115.md",
+  "cost_approval_commit": "766f10dff51a5b305203c56822165dd81f3604d1",
+  "next_action": "Windows Claude Code: execute GPT_USER_COST_APPROVAL_AND_SIGNER_HANDOFF_r0001_20261115.md once with authorized signer; confirm no previous execution, APPROVAL_SIG readback, READY last, observe one GitHub LIVE review and receipt, update actual results; no repeat paid calls."
 }
