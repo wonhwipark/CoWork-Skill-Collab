@@ -3,6 +3,8 @@ on:
   push:
     paths:
       - .github/workflows/joblist-v0438-debug-preflight-once.yml
+      - .github/joblist-nrtx-v0438/build_debug_release.py
+      - .github/joblist-nrtx-v0438/test_v0438_init_rach_active.py
   workflow_dispatch:
 permissions:
   contents: write
