@@ -1,6 +1,6 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
-## 현재 요약 — Updater 분석의 개인 Workspace 저장 요구 반영 (2026-11-15 KST)
+## 현재 요약 — 분석·MSC·Procedure/Feature MD 보기 링크 지원 검토 (2026-11-15 KST)
 
 - **사용자 피드백 수용:** Updater의 Procedure/Feature 직접 분석과 Workflow 업무 결과 지식화 모두 개인 업무용 `l1-workspace`의 같은 Work에 분석·초안·Evidence·검토/결정을 보존. `l1sw-dev-knowledge`는 그룹 공용 스킬이며 검증·승인된 공유 지식을 별도 반영.
 - **추가 확인:** `l1-knowledge-updater`와 `l1-fix-workflow` 모두 같은 개인 Workspace에 자기 결과를 저장·갱신하는 주체. Kernel/기존 writer를 공통 재사용하며 Updater 저장에 전체 Workflow 실행을 강제하지 않음. 설계 §3A 참조; 실제 저장/readback은 두 스킬별 미검증.
@@ -9,7 +9,8 @@
 - **범위:** 비민감 PRIVATE 설계·연결 문서 및 기존 TRACKER의 다음 조치. PUBLIC 표시 결과는 [대시보드 CURRENT](../COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md)에서 확인. 기존 CL/PR·고정 리뷰 이력 보존.
 - **열린 메모 — MSC 바로 열람:** [구조·B HTML+SVG 열람 검토](notes/MSC_WORKSPACE_VIEW_STRUCTURE_REVIEW_r0001_20261115_KST.md). 기존 문서/안내를 유지하며 분석 문서의 MSC 미리보기 + HTML 확대 링크를 추천. 실제 업무용 tree·호스팅·열람 E2E는 미확인.
 - **PUBLIC 샘플 게시:** 사용자 요청으로 [L1Work/sample](https://github.com/wonhwipark/L1Work/tree/main/sample)에 가상 Workspace 분석 문서·MSC 미리보기·HTML 확대 뷰어 게시. [열람 화면](https://wonhwipark.github.io/L1Work/sample/msc-workspace/index.html), [원격 SHA·Pages·실제 클릭 검증](MSC_WORKSPACE_PUBLIC_SAMPLE_RESULT_r0001_20261115_KST.md). 샘플 UI 실제 브라우저 PASS / 실제 업무 저장소 tree·저장 연동은 기존 미검증 유지.
-- **다음 한 행동:** 업무 GPT/로컬 Agent가 기존 Work 하나로 두 스킬의 Workspace 갱신 경로와 분석 문서→HTML→MSC의 실제 파일·열람 URL을 읽기 전용 매핑하고 확인/미확인/GAP을 회신.
+- **최신 스킬 연계 검토:** [4개 고정 공개 패키지 원문·MSC 링크 지원 제안](MSC_MD_LINK_SKILL_SUPPORT_REVIEW_AND_PROPOSAL_r0001_20261115_KST.md). 기존 MSC 원본/SVG/MSC_VIEW/Work 안내 재사용; B HTML 생성·대상 MD 링크·게시 자산/경로 연결 보완 후보. Kernel baseline의 SVG 복사 제외·미렌더 fallback·그룹 링크 접근을 구분. 업무 설치본·Updater/그룹 writer 원문은 미검증; 이번은 검토·제안이며 패치/새 패키지/설치/새 유료 리뷰 없음.
+- **다음 한 행동:** 업무 GPT가 보유한 설치/G0 결과로 Updater·그룹 writer와 현재 converter/Kernel의 F1~F5를 기존 Work 하나에 좁혀 매핑하고 REUSE/CONNECT/입증된 최소 패치 범위를 회신. 기본 분석 재실행·새 호스팅 도입은 지시하지 않음.
 
 ---
 

@@ -9,7 +9,7 @@
       "owner": "GPT",
       "self_test": "NOT_VERIFIED",
       "independent_review": "NOT_RUN",
-      "next_action": "업무 GPT: 기존 Work 하나의 Workspace 저장 경로·분석 문서→HTML→MSC 열람 경로와 호스팅을 읽기 전용 매핑."
+      "next_action": "업무 GPT: 기존 Work 하나로 Updater·그룹 writer·현재 converter/Kernel의 HTML·MD 링크·자산 게시 경로를 F1~F5에 매핑."
     }
   ]
 }
