@@ -3,10 +3,11 @@
 - Revision: `r0001` / 2026-11-11 KST
 - Location: GitHub PRIVATE `wonhwipark/CoWork-Skill-Collab`, branch `main`, `collab/knowledge/`
 - Classification: **NON_SENSITIVE_SHARED_CONTEXT / POINTER_ONLY + VERIFIED_ABSTRACTS**
-- Latest K5.8/K6 contract: `collab/projects/L1-WORKSPACE-RAG-20261111-001/L1_KNOWLEDGE_UPDATER_K58_K6_WORKFLOW_CONTRACT_r0005_20261111.md`; 최신 실행 상태는 프로젝트 `CURRENT.md` 마지막 절을 우선.
+- Latest K5.8/K6 contract: `collab/projects/L1-WORKSPACE-RAG-20261111-001/L1_KNOWLEDGE_UPDATER_K58_K6_WORKFLOW_CONTRACT_r0005_20261111.md`; 최신 실행 상태는 프로젝트 `CURRENT.md` **최상단 현재 요약 및 최신 결과·영수증**을 우선.
 - Scope: 새 GPT 대화·설계 리뷰·Claude 인계 시 재사용할 **공통 맥락**. 특정 프로젝트 최신 실행 상태나 승인·실제 구현 완료를 선언하는 정본이 아님.
 - Authoritative live status: `collab/projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md`의 **가장 최신 섹션** 및 실제 결과/영수증.
-- CoWork transport: **MIGRATION_NOT_CUTOVER**; 실제 ACTIVE_PROVIDER는 이관 CURRENT 최신 요약 우선. 이 문서 게시만으로 GitHub watcher·Windows Claude Code·GPT가 자동 실행되지 않음.
+- CoWork transport: **2026-11-11의 MIGRATION_NOT_CUTOVER는 당시 기록**. 현재 ACTIVE_PROVIDER/LIVE는 [이관 CURRENT](../projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) 최상단과 실제 영수증에서 확인. 이 문서 게시만으로 호스트·리뷰 호출이 시작되지 않음.
+- 통합 현행 포인터: [협업 × L1 업무·지식 탑뷰](../projects/COWORK-SKILL-DISCOVERY-20261112-001/COWORK_L1_INTEGRATED_TOPVIEW_r0001_20261115_KST.md). 기존 r0001/r0002 설계·고정 리뷰 입력을 보존하고 이후 상태를 여기에 복제하지 않음.
 
 ## 2026-11-14 — 현재 유효한 요약 (아래 날짜별 과거 상태보다 우선)
 
