@@ -37,8 +37,8 @@ def test_no_remote_prompt_or_paths():
             assert "GROUP_WRITE" in text or "게시" in text
         else:
             assert required in text
-    assert "/home/whpark/" not in text
-    assert "/home/whpark/" not in WORKER.read_text(encoding="utf8")
+    assert "/home/" not in text
+    assert "/home/" not in WORKER.read_text(encoding="utf8")
 
 def test_unsupported_platform_blocks():
     with mock.patch.object(worker.sys, "platform", "darwin"):
