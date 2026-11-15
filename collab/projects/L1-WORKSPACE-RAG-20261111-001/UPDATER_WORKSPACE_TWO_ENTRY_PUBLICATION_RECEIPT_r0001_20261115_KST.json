@@ -1,0 +1,110 @@
+{
+  "private_commit": "68dfb293dca4433cf3fe3fb3c40e45f4ab576c64",
+  "private_files": [
+    {
+      "path": "collab/CONTEXT_BRIEF.md",
+      "bytes": 10351,
+      "sha256": "f98c78d804a14d8d250a6cc1ea120eb82ac99115682d8b55543df94f439e72bb",
+      "git_blob": "db0f545e0c151d4f0c488d8aa48761e8e39966c7",
+      "readback": "PASS"
+    },
+    {
+      "path": "collab/knowledge/SKILL_CAPABILITY_CATALOG.md",
+      "bytes": 10476,
+      "sha256": "bfa12b7fd401428068c27b14cb74cf0d6ddf40adae1f66af00fe23085dd1e339",
+      "git_blob": "3e1200b3d8a05d145cf89d5abf297f8095319c15",
+      "readback": "PASS"
+    },
+    {
+      "path": "collab/projects/COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md",
+      "bytes": 73388,
+      "sha256": "447646a7936f686ec0d7a38b6c5036054215782b1c07ad0298887e9d7a935292",
+      "git_blob": "ed00fdd4d2774695c10add5c111358e29654da6f",
+      "readback": "PASS"
+    },
+    {
+      "path": "collab/projects/COWORK-GITHUB-DASHBOARD-20261111-001/TRACKER.json",
+      "bytes": 542,
+      "sha256": "85a24977cf1b988633b74a5b9bb9d2a37bba44ae38057cd9fef652575c840858",
+      "git_blob": "97714cb976ed4a51a1c3574153a40586fa6a7a82",
+      "readback": "PASS"
+    },
+    {
+      "path": "collab/projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md",
+      "bytes": 79225,
+      "sha256": "0bdeb2c00b957acb7b59d513d9a262fcc8a0b32a8b61646b7fec6aff3195c8ab",
+      "git_blob": "62af6b25b6baa7eb25952a49e918d0dcaf52e826",
+      "readback": "PASS"
+    },
+    {
+      "path": "collab/projects/L1-WORKSPACE-RAG-20261111-001/L1_WORK_TO_KNOWLEDGE_FLOW_r0002_20261115_KST.md",
+      "bytes": 7629,
+      "sha256": "b6209aae434edf0ff5897ecffce1ba14f1ce9c6985d58e61928a6cacf1d4cfeb",
+      "git_blob": "1457f106da655c6f23abde444c628ce48c8e8dd8",
+      "readback": "PASS"
+    },
+    {
+      "path": "collab/projects/L1-WORKSPACE-RAG-20261111-001/TRACKER.json",
+      "bytes": 489,
+      "sha256": "062d279e3eb3c1de9c00022bfaf922fe8ce20238de2a59dd959464c577d0d427",
+      "git_blob": "3b8e37f734a43d8849430889923285ad5b99b3f6",
+      "readback": "PASS"
+    },
+    {
+      "path": "collab/projects/L1-WORKSPACE-RAG-20261111-001/UPDATER_WORKSPACE_TWO_ENTRY_DESIGN_AND_DASHBOARD_RESULT_r0001_20261115_KST.md",
+      "bytes": 5157,
+      "sha256": "4df2a6e817e294536dc0431a1eacbc0c8e39655e3784580a0ca79bd53103c736",
+      "git_blob": "e70a0f112bf52d82430740bfb936539783860417",
+      "readback": "PASS"
+    }
+  ],
+  "public_commit": "247afde1cbb89336061effde182ec9a189958ff3",
+  "public_files": [
+    {
+      "path": "docs/cowork-dashboard/index.html",
+      "bytes": 19837,
+      "sha256": "9866a5836ceeddfe3872e2c6f25ccb2e440e46871be547b416b1c5257be843f8",
+      "git_blob": "7e5a4fdf65352a757a407048841b9ea2ee1c348a",
+      "readback": "PASS"
+    },
+    {
+      "path": "docs/cowork-dashboard/board.js",
+      "bytes": 15635,
+      "sha256": "32d707f32cc9657624153af98bf3de8eb634674c85e761a0c858476aad247a7f",
+      "git_blob": "92baa9cfd647dda9aa8c6edcd4184cccb57a0c8e",
+      "readback": "PASS"
+    }
+  ],
+  "pages_run": {
+    "id": 43715716066,
+    "status": "completed",
+    "conclusion": "success"
+  },
+  "static_qa": {
+    "syntax": "PASS",
+    "flow_consistency": "PASS_STATIC",
+    "routes": 2,
+    "lanes": 5,
+    "steps": 13,
+    "publication_files": [
+      {
+        "path": "docs/cowork-dashboard/index.html",
+        "bytes": 19837,
+        "sha256": "9866a5836ceeddfe3872e2c6f25ccb2e440e46871be547b416b1c5257be843f8"
+      },
+      {
+        "path": "docs/cowork-dashboard/board.js",
+        "bytes": 15635,
+        "sha256": "32d707f32cc9657624153af98bf3de8eb634674c85e761a0c858476aad247a7f"
+      }
+    ],
+    "browser_render": "NOT_RUN_ENVIRONMENT_SOCKET_RESTRICTION",
+    "actual_workspace_save": "NOT_VERIFIED",
+    "independent_review_r0002": "NOT_RUN",
+    "html_structure": "PASS",
+    "csp_unchanged": "PASS"
+  },
+  "actual_workspace_save": "NOT_VERIFIED",
+  "group_publish": "NOT_RUN",
+  "independent_review_r0002": "NOT_RUN"
+}
