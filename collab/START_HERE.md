@@ -1,6 +1,12 @@
 # CoWork — GitHub 협업 진입점
-기준: 2026-11-14 KST | **MIGRATION_NOT_CUTOVER / 활성 리뷰 provider는 각 프로젝트 CURRENT.md에서 확인**
+기준: 2026-11-15 KST | **GitHub 단일 LIVE 전환 완료(Windows 호스트 보고·GPT 리뷰/영수증 검증)**. 이후 최신 상태는 각 프로젝트 `CURRENT.md` 최상단 우선.
 성격: **고정 진입점**. 특정 Phase, 요청자 전달 대기, ZIP PASS 등 수시 상태를 이 문서에 고정하지 않는다.
+
+## 2026-11-15 CoWork 운영 채널 최신 판정
+- **현재 CoWork 독립 리뷰 운송 채널:** GitHub PRIVATE `wonhwipark/CoWork-Skill-Collab` `ACTIVE_PROVIDER=GITHUB / CUTOVER=LIVE`. Windows Claude Code 호스트 실측: `skill-collab-watcher v0.2.20`, 독립 R1 `BLOCKING=0`, B1 운영 Python crypto·B2 Notifier DB별 워터마크·B3 GitHub Watcher Task 반영, 30초 7주기+재시작 및 단일 provider 확인. 기존 Dropbox watcher는 Disabled, 이력 및 레거시 pending 1건 보존.
+- **원격 GPT 정본:** [GitHub LIVE 최종 판정](projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/GPT_GITHUB_LIVE_CUTOVER_FINAL_DISPOSITION_r0001_20261115.md) 및 [최신 CURRENT](projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md). 신규 리뷰는 **유효한 승인 서명과 REQUEST/READY**를 요구하고, 파일 업로드만으로 유료 모델 리뷰를 호출하지 않음. Classic PAT 사용자 확정 방식 유지.
+- **범위 구분:** 이번 전환은 **실운영 호스트 보고를 GPT가 리뷰/receipt 원문으로 대조한 판정**. GPT가 Windows GUI를 직접 관찰한 것은 아님. 새 LIVE watcher로 신규 유료 리뷰 첫 수행, Telegram 실제 수신, 장기 지속가동·재로그온은 미검증. rollback은 준비 및 격리 시험 수준.
+- 아래 `2026-11-12~14 ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER` 서술은 **작성 당시 이력**으로 보존. 최신 상태로 다시 해석하지 말 것. 과도기 프로젝트 설정 문구의 자동 개정·동기화는 별도 절차이며, GitHub 문서 갱신 자체가 Windows 재설치/모델 호출/정책 우회는 아님.
 
 ## 새 창에서 먼저 읽을 한 파일
 
