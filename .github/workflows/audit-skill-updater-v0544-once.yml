@@ -140,6 +140,9 @@ jobs:
           # Source excerpts may include trailing spaces; strip them from report only.
           sed -i 's/[[:blank:]]*$//' "$REPORT"
           python3 -c 'import pathlib,sys; p=pathlib.Path(sys.argv[1]); p.write_text(p.read_text(encoding="utf-8").rstrip()+"\\n",encoding="utf-8")' "$REPORT"
+          FOCUSED="collab/projects/SKILL-UPDATER-JOBLIST-LATENCY-20261115-001/FOCUSED_AUDIT_v0544.md"
+          sed -i 's/[[:blank:]]*$//' "$FOCUSED"
+          python3 -c 'import pathlib,sys; p=pathlib.Path(sys.argv[1]); p.write_text(p.read_text(encoding="utf-8").rstrip()+"\\n",encoding="utf-8")' "$FOCUSED"
           git add -- "$REPORT" "collab/projects/SKILL-UPDATER-JOBLIST-LATENCY-20261115-001/FOCUSED_AUDIT_v0544.md"
           git diff --cached --check
           git commit -m 'audit(skill-updater): inspect public v0.5.44 activate/wait boundaries'
