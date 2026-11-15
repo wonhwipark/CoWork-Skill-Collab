@@ -3,7 +3,7 @@
   "live_provider": "GITHUB",
   "operations": {
     "active_provider": "GITHUB",
-    "cutover": "NOT_OBSERVED",
+    "cutover": "LIVE",
     "dashboard_source": true,
     "host_shadow": "NOT_OBSERVED",
     "independent_review": "NOT_OBSERVED",
@@ -20,7 +20,7 @@
       "status": "문서상 진행",
       "title": "COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태",
       "tone": "neutral",
-      "topic": "GitHub 단일 LIVE 활성화 완료(호스트 실측): v0.2.20 독립 R1 PASS, B1~B3 적용, ACTIVE_PROVIDER=GITHUB (Claude 호스트 보고, 2026-11-15 KST)"
+      "topic": "GPT 최종 판정 — GitHub 단일 LIVE 전환 완료 수용(2026-11-15 KST)"
     },
     {
       "id": "COWORK-GITHUB-DASHBOARD-20261111-001",
