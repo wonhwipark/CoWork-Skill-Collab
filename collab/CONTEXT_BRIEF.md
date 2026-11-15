@@ -1,11 +1,39 @@
 # CoWork 공통 맥락 브리프
 
-- 개정: r0008 / 구조·경로 개정 기준 2026-11-15 KST.
+- 개정: r0009 / 구조·경로 개정 기준 2026-11-15 KST.
 - 저장소: GitHub PRIVATE `wonhwipark/CoWork-Skill-Collab`, branch `main`.
 - 역할: 협업·L1 지식·관리 스킬의 **고정 지도**. 진행 상태·최신 버전·리뷰 결과·승인 대기·source blob을 복사하지 않는다.
 - 읽기: **이 지도 → 요청 목적에 맞는 CURRENT → 필요한 근거·계약·스킬 원문**. 현재 상태는 실행할 때 해당 정본을 조회한다.
 - **GPT 공통 투두:** [전체 개선 후보·GPT 검토 의견](GPT_TODO.md). 후보 조회·정리·작업 연결은 이 목록에서 관리하고, 실행 진행은 관련 CURRENT에서 확인한다.
 - 갱신 기준: [스킬 발견·재사용 절차](ops/CONTRACTS/SKILL_DISCOVERY_AND_REUSE_V1.md). 결과·피드백은 해당 Work에서 관리하고 지도는 구조·역할·경로가 바뀔 때만 수정한다.
+
+## 0. 협업 → 업무·지식 → 피드백 전체 흐름
+
+[통합 탑뷰·정본 책임·인계 계약](projects/COWORK-SKILL-DISCOVERY-20261112-001/COWORK_L1_INTEGRATED_TOPVIEW_r0001_20261115_KST.md)에서 단계·입력·승인·검증 경계를 확인한다. 아래 화살표는 **책임/전달 관계**이며 실제 자동 호출·설치·호스트 접속이 검증됐다는 뜻이 아니다.
+
+```mermaid
+flowchart LR
+  REQ["요구·범위"] --> CW["CoWork 기존 Work"]
+  CW --> DEV["개발·자체시험"]
+  DEV --> REV["독립 리뷰·영수증"]
+  REV --> DEC["GPT 판정"]
+  DEC --> PUB["승인된 전달"]
+  PUB --> HOST["별도 호스트 설치·호출 검증"]
+  HOST --> AW["업무용 기존 Work"]
+  AW --> ANA["기존 분석·변환 스킬"]
+  ANA --> EV["Kernel Work·Evidence"]
+  EV --> CAND["Updater 후보·Preview"]
+  CAND --> PUBK["승인된 Knowledge 게시·readback"]
+  PUBK --> LINK["원래 Work 역링크"]
+  LINK --> USE["재사용·RAG 별도 검증"]
+  EV --> FB["근거·피드백"]
+  USE --> FB
+  FB --> ROUTE["책임별 기존 Work 보완"]
+  ROUTE --> CW
+  ROUTE --> AW
+```
+
+CoWork Work/리뷰 요청과 업무 Kernel Work는 별개다. 팀 지식 정본은 검증된 상세 설계·HLD·AS-IS MSC를 포함할 수 있고, 업무 Workspace는 분석/결정/Evidence 원본을 보존한다. 협업 운송 LIVE와 자동 승인 개선 상태는 각각 아래 해당 CURRENT에서 **별도로** 확인한다. 원본·승인·실행·게시·RAG 성공을 한 단계로 묶지 않는다.
 
 ## 1. 역할과 정본
 
