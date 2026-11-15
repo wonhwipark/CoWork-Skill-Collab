@@ -89,6 +89,8 @@ jobs:
           test -s "$REPORT"
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          # Source excerpts may include trailing spaces; strip them from report only.
+          sed -i 's/[[:blank:]]*$//' "$REPORT"
           git add -- "$REPORT"
           git diff --cached --check
           git commit -m 'audit(skill-updater): inspect public v0.5.44 activate/wait boundaries'
