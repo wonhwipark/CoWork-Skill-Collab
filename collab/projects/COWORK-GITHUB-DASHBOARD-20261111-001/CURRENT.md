@@ -1,5 +1,17 @@
 # COWORK-GITHUB-DASHBOARD-20261111-001 — CURRENT
 
+## B안 배포 후 상태 정합성·자동 업데이트 직접 검토 — 2026-11-15 KST
+
+- **검토 정본:** [B_STYLE_STATUS_CONSISTENCY_AND_AUTO_REFRESH_REVIEW_r0001_20261115_KST.md](B_STYLE_STATUS_CONSISTENCY_AND_AUTO_REFRESH_REVIEW_r0001_20261115_KST.md). PRIVATE/PUBLIC 현재 파일·상태 Git blob 직접 재조회. 정적 코드 경로와 브라우저 갱신 로직 대조; 최신 PRIVATE Action 실제 실패 로그는 접근 불가로 직접 검증하지 못함.
+- **P0 FAIL 상태 불일치:** 이관 CURRENT의 `GITHUB/LIVE` 수용 및 PRIVATE `state.json`의 `operations.active_provider=GITHUB`/`cutover=LIVE`와 달리, 같은 PRIVATE state의 `phase=MIGRATION_NOT_CUTOVER`, PUBLIC `status.json`의 `NONE/정식 전환 전`이 남음. `public_sync.py`가 GITHUB provider를 SafetyBlock으로 차단, `generate.py`는 이전 phase를 하드코딩. 실제 원본 대조로 재현 근거 확인.
+- **PUBLIC 자동 갱신:** `cowork-dashboard.yml`의 PRIVATE 변경 감지→`cowork-public-status-sync.yml`의 허용 상태 생성·공개 게시 연결은 **구현 확인**. B안 `board.js`는 120초/복귀 fetch **구현 확인**. 단 현재 PUBLIC JSON `generated_at=2026-11-14T16:20:47Z`(11/15 01:20 KST)로 갱신 중단/정합성 차단 관측. 현재 새 run의 실제 오류·자동 게시 E2E **NOT_VERIFIED**.
+- **P1 시간/표시 오류:** `public_sync.publish_public`는 데이터 변화 없이 생성 시각만 바뀌면 UNCHANGED를 반환하지만 B안의 `fresh()`는 6시간 초과 시 stale 표시: 정상 무변경에도 거짓 경고 가능. L1 Tracker의 비표준 `self_test`/`independent_review` 및 과도하게 긴 `next_action`은 정형 상태 fallback/165자 절단을 유발. PUBLIC의 다음 행동도 5개 고정 허용 문구이며 TD-001~004 정확한 원본 공개 아님.
+- **판정:** `CONSISTENCY=FAIL`; `AUTOMATION_TRIGGER=IMPLEMENTED_STATIC`; `BROWSER_POLL=IMPLEMENTED_STATIC`; `CURRENT_PUBLIC_E2E=NOT_VERIFIED`; `NEW_CODE_PATCH/PUBLIC_STATUS_DEPLOY/NEW_PAID_REVIEW/OPERATING_CHANGE=NOT_RUN`. B안 UI 배포 자체와 구분하고, PRIVATE 상세·PUBLIC allowlist·기존 LIVE 운영을 불변 유지.
+- **NEXT_ONE_ACTION:** 기존 Work에서 `generate.py`+`public_sync.py`의 GITHUB/LIVE 정합성 최소 보완·fail-closed 회귀, L1 TRACKER 유효 enum 최소 정리, `generated_at`/성공 점검 시각 의미 정리. 기존 승인/독립 리뷰·공개 허용 필드 충족 후 PUBLIC `status.json` 실제 auto publish/readback·Pages 브라우저 E2E 확인. B안 UI·새 포털을 중복 구현하지 않음.
+
+---
+
+
 ## B안 공개 GitHub Pages UI 적용 완료 — 2026-11-15 KST
 
 - **사용자 지시:** 이 창에서 B안으로 기존 대시보드 실제 교체·GitHub 게시·검증까지. A/B 전환 없이 B 단독 구조·L1·TODO 3개 서브화면 적용.
