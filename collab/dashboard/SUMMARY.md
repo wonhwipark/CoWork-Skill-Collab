@@ -4,7 +4,7 @@
 
 이 문서는 GitHub Actions가 생성하는 안내 화면이며 리뷰·설치·배포 승인이나 자동 실행 결과가 아닙니다.
 
-- 문서가 있는 프로젝트: **9개**
+- 문서가 있는 프로젝트: **10개**
 - GitHub REQUEST 파일 관측: **6개** (검증 안 됨)
 - GitHub REVIEW 파일 관측: **4개** (검증 안 됨)
 - GitHub RECEIPT 파일 관측: **4개** (검증 안 됨)
@@ -51,6 +51,7 @@ flowchart TB
 
 | Work ID | 스킬 | 진행 단계(신고) | 담당 | 시험(신고) | 독립 리뷰(신고) | 다음 조치 |
 |---|---|---|---|---|---|---|
+| [COWORK-AUTO-APPROVAL-20261115-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-AUTO-APPROVAL-20261115-001/CURRENT.md) | 미지정 | 단계 미확인 | 미등록 | NOT_VERIFIED | NOT_VERIFIED | CURRENT.md 최신 상태 및 다음 담당 확인 |
 | [COWORK-DROPBOX-TO-GITHUB-MIGRATION](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) | cowork-review-watcher | 완료 신고 (검증 필요) | GPT / Claude Code | PASS | PASS | 2026-11-15 GPT 최종 판정 ACCEPT_GITHUB_LIVE_CUTOVER_HOST_REPORTED_AND_REVIEW_VERIFIED. Windows 결과 v0.2.20 R1 독립 리뷰 BLOCKING 0, 모델 1회 $0.3769412(한도 $1), B1 cryptography,  |
 | [COWORK-GITHUB-DASHBOARD-20261111-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md) | cowork-dashboard | 독립 리뷰 | GPT | PASS | PENDING | 발표용 개선 설계 독립 리뷰 요청 등록; Windows 호스트가 이번 요청 비용 권한·서명 확인 후 READY 게시. 실제 모델 리뷰 미실행. |
 | [COWORK-SKILL-DISCOVERY-20261112-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md) | skill-discovery | GPT 판정 | GPT | NOT_VERIFIED | NOT_RUN | 통합 브리프→관련 CURRENT 진입 문서 적용; 실제 새 창 사용 후 관련 요약·출처만 유지보수 |
@@ -68,6 +69,7 @@ flowchart TB
 
 | 프로젝트 | 문서상 상태 | 근거 |
 |---|---|---|
+| COWORK-AUTO-APPROVAL-20261115-001 | 검증 진행 중 | [CURRENT.md](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-AUTO-APPROVAL-20261115-001/CURRENT.md) |
 | COWORK-DROPBOX-TO-GITHUB-MIGRATION | 문서상 진행 | [CURRENT.md](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) |
 | COWORK-GITHUB-DASHBOARD-20261111-001 | 전환 전 | [CURRENT.md](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md) |
 | COWORK-SKILL-DISCOVERY-20261112-001 | 검증 진행 중 | [CURRENT.md](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md) |
