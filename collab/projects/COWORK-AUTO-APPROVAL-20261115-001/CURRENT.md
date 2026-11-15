@@ -1,5 +1,12 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 사용자 통합 승인 확보 / v0.2.22 승인 범위 접두사 호환성 수정 대기 — 2026-11-15 KST
+
+- **현재 사용자 승인 기록:** [GPT_R2_APPROVAL_AND_V0222_SCOPE_FIX_GATE_r0001_20261115.md](GPT_R2_APPROVAL_AND_V0222_SCOPE_FIX_GATE_r0001_20261115.md), commit `9fafb272864d7b9570650995db27e81675154f35`, 원격 readback PASS. 사용자 “그래”는 이전 [통합 제안](GPT_V0222_DISPOSITION_AND_COMBINED_APPROVAL_GATE_r0001_20261115.md)의 **v0.2.22 독립 R2 LARGE 최대 $3/1회**, 보호 로컬 위임 project families `COWORK-`·`L1-WORKSPACE-`, 3개 exact skill, STATIC-V1 $1/요청, 2회/$3/일, $10/월, 30일 위임, R2 독립 PASS·GPT 판정 **조건부** Windows 설치/자동서명 활성화를 통합 승인한 것으로 기록. 서명/READY/유료 호출은 아직 없음.
+- **새로 확인된 blocker:** v0.2.22 `auto_approval.py::_families`가 project family `len(x)>=8`을 필수로 요구하지만 승인된 `COWORK-` 길이는 **7**. 그대로 설치하면 보호 정책이 `POLICY_UNREADABLE`로 거부. `L1-WORKSPACE-`는 규칙 통과. 기존 M2 시험에 실제 승인 접두사 반례가 빠졌음. 운영 활성화/유료 R2 선행 시 비용 낭비 가능.
+- **판정:** `APPROVAL_RECORDED`, `V0222_SCOPE_COMPAT=FAIL`, `R2_1CALL_USD3=APPROVED_FOR_ORIGINAL_V0222_NOT_SPENT`, `R2_REQUEST=NOT_POSTED`, `R2_READY=NOT_POSTED`, `REVIEW=NOT_RUN`, `AUTO_SIGNING=OFF`, `OPERATING=v0.2.20_GITHUB_LIVE_UNCHANGED`. 승인받지 않은 새로운 후보 바이트에 원래 R2 비용 승인을 자동 이전하지 않음.
+- **NEXT_ONE_ACTION:** Windows Claude Code에 위 문서 **§3 한 번** 인계 → 격리 v0.2.22 복사본에서 정확 `COWORK-` 짧은 접두사 호환성만 안전하게 수정·구버전 FAIL/신본 PASS 회귀 및 전체 Windows 시험/SHADOW/rollback → 고유 v0.2.23 DEV ZIP/실 SHA/CRC·PRIVATE 결과 `CLAUDE_V0222_APPROVED_PREFIX_COMPAT_FIX_RESULT_FOR_GPT_20261115.md` 게시·원격 readback. 설치/실키/REQUEST/READY/유료 호출 0. 이후 GPT가 변경 입력만 좁게 사용자 확정하고 기존 1회 독립 R2와 조건부 LIVE 적용을 이어감.
+
 ## GPT v0.2.22 직접 재해시·정적 판정 — 독립 R2 및 위임 범위 사용자 통합 승인 대기 (2026-11-15 KST)
 
 - **GPT 판정 정본:** [GPT_V0222_DISPOSITION_AND_COMBINED_APPROVAL_GATE_r0001_20261115.md](GPT_V0222_DISPOSITION_AND_COMBINED_APPROVAL_GATE_r0001_20261115.md); commit `f3bf1f1e691540c6f4dfec2598d962790c9e39c7`, 원격 본문 readback PASS.
