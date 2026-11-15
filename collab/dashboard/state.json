@@ -313,7 +313,7 @@
     {
       "evidence": "프로젝트 TRACKER.json 신고 값 · 운영 근거 별도 확인 필요",
       "independent_review": "NOT_RUN",
-      "next_action": "통합 설계 TODO D01~D08 변경안·영향 파일과 D09 검증 계획을 묶어서 검토; D10 실제 분석 검증은 후속",
+      "next_action": "TD-002 V07 PASS·TD-001 탑뷰 문서 완료; TD-003 실제 E2E는 NR 분석 기존 Work의 Linux 설치 SHA·신규 Job/Receipt/MCP readback 증거 확보 후 재판정",
       "owner": "GPT",
       "phase": "DISPOSITION",
       "record_source": "REGISTERED_METADATA_UNVERIFIED",
