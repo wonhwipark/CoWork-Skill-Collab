@@ -32,7 +32,8 @@
 - 스킬/소유자: `code-analyzer` 사실·revision → `doc-converter` 기존 MSC 정규화·표현·HTML → `l1-fix-workflow` 또는 `l1-knowledge-updater` 가 해당 Work 결과 저장 연결 → Kernel/허용 Workspace writer → 유효 승인 시 Updater/그룹 writer. 절/링크는 최종 **대상 writer**가 소유.
 - 먼저 **읽기 전용 설치 I/O 계약 대조**: Updater/그룹 writer, Kernel export·registry, converter 입력/파일명/HTML, 게시 경로/size limit, 실제 열람/CSP. G0 가정과 사용 경로를 분리. 이후 필요성이 입증된 최소 패치·합성 회귀·업무 호스트 검증을 순차 수행.
 - 이번 판정으로 유료 모델 리뷰/서명/READY, 실제 코드 수정·패키지·설치·운영, 업무 Workspace/그룹 지식 게시, PUBLIC 배포를 **시작하지 않음**.
-- **NEXT_ONE_ACTION:** 업무 GPT/허용 로컬 Agent가 설치본과 기존 G0 결과를 **읽기 전용**으로 대조하여 위 입력·writer·호스팅 계약의 미확인 항목을 하나의 기존 Work에 회신. 다른 Work/재분석/새 호스팅 추가 없음.
+- **소스 경계 정정(2026-11-16 KST):** `code-analyzer`, `doc-converter`, `l1-fix-workflow`, `work-ledger-kernel` 4종은 [PUBLIC L1Work/main](https://github.com/wonhwipark/L1Work)의 기존 고정 ZIP 경로에서 GPT가 직접 확인 가능(루트 파일 존재·size·Git blob 메타 확인). **`l1-knowledge-updater`만 별도 실제 스킬 원문 확인**. 그룹 `l1sw-dev-knowledge` writer·업무 호스트 설치 차이·접근권은 여전히 별도 확인. PUBLIC 소스 검토와 업무 설치 E2E를 혼동하지 않음.
+- **NEXT_ONE_ACTION:** 위 4종 공개 정적 분석은 GPT의 기존 확인을 재사용하고, 업무 GPT/허용 로컬 Agent는 **Updater 실제 I/O, 그룹 writer, 업무 설치본과 공개본 차이·호스팅 접근**만 읽기 전용으로 대조해 같은 Work에 회신. 다른 Work/재분석/새 호스팅 추가 없음.
 
 ## 3. 검증 상태
 
