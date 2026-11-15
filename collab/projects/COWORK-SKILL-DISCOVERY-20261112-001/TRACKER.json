@@ -9,7 +9,7 @@
       "owner": "GPT",
       "self_test": "PASS",
       "independent_review": "NOT_RUN",
-      "next_action": "문서 갱신 규칙 적용·정적 확인; 실제 새 창에서 같은 Work·다음 행동 선택 검증"
+      "next_action": "통합 설계 TODO D01~D08 변경안·영향 파일과 D09 검증 계획을 묶어서 검토; D10 실제 분석 검증은 후속"
     }
   ]
 }
