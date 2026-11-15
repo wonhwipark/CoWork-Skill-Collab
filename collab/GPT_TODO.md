@@ -10,7 +10,7 @@
 
 - **TD-002 완료:** 실제 새 창 V07 수동 조회·기존 Work 재개 PASS. 무지시 자동 로더·호스트 기능 시험과 구분.
 - **TD-001 완료(문서 범위):** 협업→업무·지식→피드백 단일 탑뷰/정본·인계·승인/검증 경계의 D01~D09 설계 반영. 실 운영·코드·RAG PASS 주장 없음.
-- **TD-003 작업 연결:** 기존 NR 분석 Work를 추적한 8개 계약 시나리오 DOC_TRACE_PASS. 실제 업무 스킬 다중 호출·Knowledge 게시/역링크·RAG E2E는 NOT_RUN.
+- **TD-003 작업 연결:** 기존 NR 분석 Work를 추적한 8개 계약 시나리오 DOC_TRACE_PASS. Linux MCP 직접 접근 도구 부재로 실제 다중 스킬·Knowledge 게시/역링크·RAG E2E는 NOT_RUN. [기존 Job 단일 호스트 인계](projects/NR-L1TX-CODE-ANALYSIS-20261115-001/TD003_LINUX_MCP_E2E_ONE_SHOT_HANDOFF_r0001_20261115_KST.md) 게시·원격 검증, 호스트 실제 실행은 미확인.
 - 최신 결과/승인·다음 행동은 [맥락 Work CURRENT](projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md)와 해당 실행 Work CURRENT에서 조회. 신규 독립 리뷰/모델 호출/REQUEST/READY 없음.
 
 ## 개선 후보
@@ -21,7 +21,7 @@
 |---|---|---|---|---|---|
 | TD-001 | 1 | 완료 | 협업 체계·L1 지식 통합 탑뷰 정리 | D01~D09의 비민감 설계·정본 책임·통합 흐름도·현행 포인터 적용, 원격 본문 대조. 실제 호스트·유료 리뷰와 구분 | [통합 탑뷰](projects/COWORK-SKILL-DISCOVERY-20261112-001/COWORK_L1_INTEGRATED_TOPVIEW_r0001_20261115_KST.md) · [원래 설계 D01~D09](projects/COWORK-SKILL-DISCOVERY-20261112-001/COWORK_L1_INTEGRATED_CONTEXT_DESIGN_TODO_r0001_20261115_KST.md) |
 | TD-002 | 1 | 완료 | 새 창 재개 실제 검증 | 실제 별도 대화에서 PRIVATE 최신 지도·목록·기존 Work와 목적별 CURRENT 4건을 재조회. V07 수동 새 창 PASS, 자동 선조회는 별도 미검증 | [V07 실제 새 창 결과](projects/COWORK-SKILL-DISCOVERY-20261112-001/TD002_V07_ACTUAL_NEW_CHAT_VALIDATION_20261115.md) · [기존 V06 점검](projects/COWORK-SKILL-DISCOVERY-20261112-001/TD002_SESSION_ROUTING_CHECK_20261115.md) |
-| TD-003 | 2 | 작업 연결 | 여러 스킬 간 인계·피드백 순환 검증 | 8개 인계/오류 분기 문서·증거 추적 PASS, 실제 Linux MCP→업무 Work→Updater→Knowledge E2E는 NOT_RUN. 기존 NR 분석 Work 첫 사례에 연결 | [TD-003 인계 추적](projects/COWORK-SKILL-DISCOVERY-20261112-001/TD003_MULTI_SKILL_HANDOFF_FEEDBACK_TRACE_20261115.md) · [D05·D06·D10](projects/COWORK-SKILL-DISCOVERY-20261112-001/COWORK_L1_INTEGRATED_CONTEXT_DESIGN_TODO_r0001_20261115_KST.md#3-통합-설계-todo) |
+| TD-003 | 2 | 작업 연결 | 여러 스킬 간 인계·피드백 순환 검증 | 8개 인계·오류 문서 추적 PASS; Linux MCP 접근 도구 부재로 실제 E2E NOT_RUN. NR 분석 기존 Work에 동일 Job ID의 설치·Run/Receipt/MCP readback 원샷 인계 게시(운영 실행 트리거 아님) | [TD-003 추적](projects/COWORK-SKILL-DISCOVERY-20261112-001/TD003_MULTI_SKILL_HANDOFF_FEEDBACK_TRACE_20261115.md) · [호스트 원샷](projects/NR-L1TX-CODE-ANALYSIS-20261115-001/TD003_LINUX_MCP_E2E_ONE_SHOT_HANDOFF_r0001_20261115_KST.md) |
 | TD-004 | 2 | 완료 | CURRENT의 과거·현재 표시 정리 검토 | 기존 맥락 Work의 CURRENT 과거 절 2곳 `(LATEST)` 오독 위험 정정. 역사적 내용·근거 보존, PRIVATE 원격 본문 재조회 완료. 다른 Work의 전수감사는 이번 범위 밖 | [D07](projects/COWORK-SKILL-DISCOVERY-20261112-001/COWORK_L1_INTEGRATED_CONTEXT_DESIGN_TODO_r0001_20261115_KST.md#3-통합-설계-todo) · [TD-004 결과](projects/COWORK-SKILL-DISCOVERY-20261112-001/TD004_CURRENT_HISTORY_LABEL_REVIEW_20261115.md) |
 
 상세 문서의 D01~D10·수용 기준·이력은 그대로 재사용. 위 네 묶음으로 다른 기존 항목을 취소하거나 신규 실행을 시작하지 않음.
@@ -57,4 +57,5 @@
 - 2026-11-15: 새 대화의 PRIVATE 직접 조회로 [TD-002 V07](projects/COWORK-SKILL-DISCOVERY-20261112-001/TD002_V07_ACTUAL_NEW_CHAT_VALIDATION_20261115.md) PASS, 목록을 `완료`로 전환.
 - 2026-11-15: [TD-001 통합 탑뷰](projects/COWORK-SKILL-DISCOVERY-20261112-001/COWORK_L1_INTEGRATED_TOPVIEW_r0001_20261115_KST.md) 작성, 브리프 통합도 및 START_HERE/공통 L1 포인터 보강. 비민감 문서 범위 `완료`.
 - 2026-11-15: [TD-003 실제 증거 추적](projects/COWORK-SKILL-DISCOVERY-20261112-001/TD003_MULTI_SKILL_HANDOFF_FEEDBACK_TRACE_20261115.md) 8개 문서 분기 PASS, 호스트 E2E NOT_RUN으로 `작업 연결`.
+- 2026-11-15: 사용자의 추가 실행 요청에 따라 기존 NR Work에 [TD-003 기존 Job E2E 인계](projects/NR-L1TX-CODE-ANALYSIS-20261115-001/TD003_LINUX_MCP_E2E_ONE_SHOT_HANDOFF_r0001_20261115_KST.md)를 게시. Linux MCP 직접 호출은 연결 도구 부재로 BLOCKED; 새 Job/유료 리뷰/운영 변경 없이 실제 호스트 결과 NOT_RUN 유지.
 - 다음 한 동작: TD-003 실제 E2E는 NR 분석 기존 Work에서 Linux Agent의 v0.4.38 설치 SHA·신규 Job ID/Run ID·Receipt/MCP readback 확인부터 재개. 승인 없는 Job 재실행/그룹 게시 금지.
