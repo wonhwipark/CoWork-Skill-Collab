@@ -5,11 +5,11 @@
       "work_id": "COWORK-AUTO-APPROVAL-20261115-001",
       "skill": "cowork-review-watcher",
       "title": "GPT→GitHub REQUEST 자동 서명·READY (제한된 사전 위임)",
-      "phase": "DISPOSITION",
+      "phase": "REVIEW",
       "owner": "GPT / Windows Claude Code",
       "self_test": "PASS",
-      "independent_review": "NOT_RUN",
-      "next_action": "v0.2.23 (승인 접두사 COWORK-/L1-WORKSPACE- 호환 수정, 옛 후보 거부 재현 5건 실패 후 수정본 PASS, 자체시험 890/890 두 해석기, SHADOW 8/8, 롤백 PASS). GPT 최종 판정 PASS 후에만 독립 R2 1회(USD 3). 그 전에는 서명·READY·모델 호출 없음. 운영 불변."
+      "independent_review": "PENDING",
+      "next_action": "2026-11-15 GPT v0.2.23 final static PASS_FOR_INDEPENDENT_R2_CANDIDATE_ONLY: approved family COWORK- 7 chars is valid protected-local owner-listed prefix under ASCII fullmatch, wildcard invalid, skill allowlist unchanged. Candidate actual remote ZIP 282340 bytes SHA256 f941be8a6b53d00baa10a9b097f234b159470e2aa1242ecc33bcf0bdee080ea7 direct recomputation PASS, ZIP central directory 102 entries; Windows SELF_TEST_REPORTED 890 passed/12 skipped (two Python env) SHADOW 8/8. INDEPENDENT_REVIEW NOT_RUN, LIVE v0.2.20, AUTO_SIGNING OFF, PAID_CALLS 0. Current owner consent scoped R2 input to original v0.2.22. NEXT narrowly confirm changing one authorized R2 input to v0.2.23 fixed SHA, SAME POLICY-STATIC-V1-LARGE max $3/model 1 call; after approval prepare new pin and original Windows signer/READY LAST. Existing bounded delegation and R2 PASS conditional operating-install approval unchanged; no extra approval repetition. See GPT_V0223_PREFIX_COMPAT_FINAL_DISPOSITION_r0001_20261115.md."
     }
   ]
 }
