@@ -1,5 +1,16 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 현재 요약 — 스킬 수정 범위 좁힘·PUBLIC 업무 GPT G0 인계 (2026-11-16 KST)
+
+- **완료:** [5종 G0 인계·4종 수정 필요성 GPT 판정](GPT_MSC_SKILL_SCOPE_AND_PUBLIC_HANDOFF_r0001_20261116_KST.md). 기존 정적 근거로 `doc-converter`는 최소 EXTEND 후보, `work-ledger-kernel`은 CONNECT/조건부 EXTEND, `l1-fix-workflow`는 REUSE/CONNECT, `code-analyzer`는 REUSE·수정 보류로 분류. 실제 스킬 코드 패치 확정이나 설치본 PASS 아님.
+- **PUBLIC 전달:** [L1Work/main/handoffs MSC G0 검토 인계](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_MSC_LINK_SKILL_G0_REVIEW_HANDOFF_r0001_20261116_KST.md) 게시·원격 readback PASS, UTF-8 SHA-256 `2de8f2d5a69f8691d7aad03e8e0e7b7bb5a863d4b3e43b1a4b87aea1c059bead`. `handoffs/README.md` 목록 갱신. 기존 r0005/B 뷰어 인계 보존. **업무 GPT가 실행·응답했다는 뜻 아님**.
+- **Updater 필수 검토 유지:** `l1-knowledge-updater` 실제 설치 I/O, Workflow/직접 두 진입과 같은 `l1-workspace` 저장, `l1sw-dev-knowledge` writer·Preview/승인/실제 HTML/SVG 호스팅 Q1~Q8로 좁게 확인.
+- **상태:** 기존 정적 판정 재사용 PASS, 새로운 스킬 소스 패치·합성 회귀·ZIP 후보·PUBLIC ZIP/호스트 설치/그룹 지식 게시 `NOT_RUN`. 작업 컨테이너의 공개 ZIP 재다운로드 DNS 실패. watcher 정식 독립 리뷰 별도 미수신. 개인 Work/그룹 게시·브라우저 E2E `NOT_VERIFIED`.
+- **다음 한 행동:** 업무 GPT/허용 로컬 Agent가 PUBLIC G0 인계를 읽고 실제 설치 원문과 기존 G0를 READ_ONLY 대조, 비민감 REUSE/CONNECT/EXTEND 및 차단 사항만 회신. GPT는 검증된 gap만 후속 최소 개발 후보로 진행.
+
+---
+
+
 ## 현재 요약 — MSC·MD 링크 대화형 구조 검토 회수·GPT 판정 (2026-11-16 KST)
 
 - **새로 확인한 결과:** [Windows Claude Code 대화형 정적 검토](CLAUDE_MSC_MD_LINK_STRUCTURE_INTERACTIVE_REVIEW_FOR_GPT_20261115.md)가 PRIVATE main에 게시됨. `REQ-L1-MSC-MD-LINK-STRUCTURE-20261115-001` rev1 / SOURCE_PIN / ZIP SHA에 대응. **이는 정식 watcher 유료 독립 리뷰가 아닌 별도 대화형 정적 검토**다.
