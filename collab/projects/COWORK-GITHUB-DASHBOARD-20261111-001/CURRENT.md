@@ -3,6 +3,7 @@
 ## 현재 요약 — Updater 분석의 개인 저장 경로 반영 (2026-11-15 KST)
 
 - **사용자 요구 반영:** A Updater의 Procedure/Feature 직접 분석 / B Workflow 업무 결과 지식화를 구분하고, 두 진입 모두 개인 업무용 `l1-workspace`에 분석·초안·Evidence를 보존. 그룹 공용 `l1sw-dev-knowledge`에는 검증·승인된 공유 지식을 반영.
+- **추가 확인:** `l1-knowledge-updater`와 `l1-fix-workflow` 모두 개인 Workspace 저장·갱신 주체임을 PUBLIC ②·⑥ 및 A/B 설명에 명시. 실제 저장/readback은 각 스킬별 미검증; 기존 정적 시험·배포 해시는 당시 스냅샷. 이번 후속 게시 확인은 [영수증](../L1-WORKSPACE-RAG-20261111-001/WORKSPACE_BOTH_SKILLS_UPDATE_PUBLICATION_RECEIPT_r0001_20261115_KST.json) 참조.
 - **PUBLIC 변경:** 기존 13단계 앞에 A/B 진입 카드, ⑥ Workspace·⑦ Updater·⑩ 그룹 공용 스킬 설명과 개인 유지 분기 보완. 기존 화면 스타일·상태 JSON·120초 갱신·공개 허용목록은 유지.
 - **실제 결과:** PUBLIC commit `247afde1cbb89336061effde182ec9a189958ff3`, 2파일 원격 base64 bytes·SHA-256·Git blob readback PASS. [Pages #43715716066](https://github.com/wonhwipark/L1Work/actions/runs/43715716066) `completed/success`.
 - **검증:** JavaScript 구문·두 진입/5영역/13단계·HTML 구조·CSP 및 상태/갱신 제어 로직 불변 PASS. Chromium은 환경 socket 제한으로 실행 실패해 브라우저 렌더/클릭·viewport 시험은 NOT_RUN; 실제 Pages HTTP/시각 확인과 업무 호스트 Workspace 저장/readback은 NOT_VERIFIED. 새 독립 리뷰 NOT_RUN.

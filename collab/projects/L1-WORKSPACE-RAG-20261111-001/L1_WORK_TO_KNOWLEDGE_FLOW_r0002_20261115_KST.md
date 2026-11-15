@@ -49,6 +49,21 @@ Updater는 분석 요청·후보·검토/게시 과정을 조정하고, Work/Evi
 
 상세 HLD·상세설계·AS-IS MSC·재사용 가능한 이슈 지식도 검증·승인 범위에서 그룹에 포함 가능. 개인/그룹 구분은 문서 상세도로 결정하지 않음. 같은 분석이 두 위치에 연결될 수 있으나, 분석·판정 이력의 정본은 Work, 승인된 공유 지식의 정본은 그룹의 고정 revision으로 구분.
 
+## 3A. 두 스킬의 Workspace 저장·갱신 책임 — 사용자 추가 확인 (2026-11-15 KST)
+
+**`l1-knowledge-updater`와 `l1-fix-workflow` 모두 업무용 개인 PRIVATE `l1-workspace`에 결과를 저장·갱신할 수 있어야 함.** Updater를 Workspace 읽기 전용 소비자로 제한하거나 Workspace 갱신을 Workflow만의 권한으로 해석하지 않음.
+
+| 갱신 주체 | 같은 Work에 저장·갱신하는 내용 |
+|---|---|
+| `l1-fix-workflow` | 업무 요청·진행, 코드/이슈 분석, 수정·시험·리뷰 결과, 결정·근거·후속 작업 |
+| `l1-knowledge-updater` | 직접 분석한 내용, Procedure/Feature 조사, 지식 초안·후보, 검토/보완·결정, 그룹 반영 상태·실제 게시 revision |
+
+두 스킬은 결과를 만드는 주체이고, Work/Evidence 기록·Git 저장은 기존 Kernel 허용 경로와 기존 writer를 재사용. **Updater의 매번 저장에 전체 Workflow 실행을 의무화하지 않음.** 설치본이 지원하는 공통 기록 경로로 연결할 수 있는지 먼저 확인. 미확인 함수를 만들거나 두 스킬이 별도 원장·독립 정본을 소유하도록 확장하지 않음.
+
+같은 목적은 같은 Work를 재사용하고 각 스킬의 결과·source revision·검토 이력을 구분. 상대 스킬의 결과를 덮어쓰지 않고, 기존 revision/충돌 보호·저장 후 원격 readback으로 각 갱신을 확인. 개인 Workspace 갱신과 그룹 지식 게시의 승인은 별도.
+
+이번 추가는 **두 스킬 모두 갱신 가능해야 한다는 설계 요구 확정**이며 설치본의 실제 쓰기 API·권한·저장 성공을 입증한 결과는 아님. 실제 저장/readback은 각 스킬별로 검증해야 함.
+
 ## 4. 저장·게시 결과와 실패 처리
 
 - **Workspace 저장:** 두 진입 모두 Work ID·분석/초안 위치·source revision·근거·미확인·생산 스킬/실행 결과·저장 확인 여부를 기존 기록으로 남김. 성공은 실제 commit/revision과 원격 readback으로 확인.

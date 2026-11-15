@@ -3,6 +3,7 @@
 ## 현재 요약 — Updater 분석의 개인 Workspace 저장 요구 반영 (2026-11-15 KST)
 
 - **사용자 피드백 수용:** Updater의 Procedure/Feature 직접 분석과 Workflow 업무 결과 지식화 모두 개인 업무용 `l1-workspace`의 같은 Work에 분석·초안·Evidence·검토/결정을 보존. `l1sw-dev-knowledge`는 그룹 공용 스킬이며 검증·승인된 공유 지식을 별도 반영.
+- **추가 확인:** `l1-knowledge-updater`와 `l1-fix-workflow` 모두 같은 개인 Workspace에 자기 결과를 저장·갱신하는 주체. Kernel/기존 writer를 공통 재사용하며 Updater 저장에 전체 Workflow 실행을 강제하지 않음. 설계 §3A 참조; 실제 저장/readback은 두 스킬별 미검증.
 - **설계 정본:** [두 진입·Workspace 보존·그룹 반영 r0002](L1_WORK_TO_KNOWLEDGE_FLOW_r0002_20261115_KST.md). r0001의 게시·복구·역링크 경계 유지. 기존 고정 리뷰 REQUEST/ZIP/manifest/SOURCE_PIN은 변경하지 않으며 r0002를 기존 리뷰 PASS로 취급하지 않음.
 - **실제 상태:** `DESIGN=USER_REQUIREMENT_DOCUMENTED`; `UPDATER_TO_WORKSPACE_SAVE=NOT_VERIFIED`; `WORKFLOW_UPDATER_E2E=NOT_RUN`; `INDEPENDENT_REVIEW_R0002=NOT_RUN`. 문서 반영과 실제 업무 호스트 저장·그룹 게시를 구분.
 - **범위:** 비민감 PRIVATE 설계·연결 문서 및 기존 TRACKER의 다음 조치. PUBLIC 표시 결과는 [대시보드 CURRENT](../COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md)에서 확인. 기존 CL/PR·고정 리뷰 이력 보존.

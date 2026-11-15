@@ -1,6 +1,6 @@
 # CoWork 공통 스킬 기능 목록
 
-- 개정: r0007 / 2026-11-15 KST (책임·입출력·연결 지도와 실행 상태 분리; 패키지 재감사 아님)
+- 개정: r0008 / 2026-11-15 KST (책임·입출력·연결 지도와 실행 상태 분리; 패키지 재감사 아님)
 - 새 창은 [공통 맥락 브리프](../CONTEXT_BRIEF.md) → 해당 CURRENT를 먼저 읽고 필요한 상세 기능을 이 목록에서 확인.
 - 대상: 사용자 확인한 관리 스킬 18개 + 별도 업무용 연동 스킬 1개. 전체 보유 스킬의 완전성·최신 설치 버전을 뜻하지 않음.
 - [이번 패키지 정적 확인·SHA-256·원본 위치](../projects/COWORK-SKILL-DISCOVERY-20261112-001/SKILL_18_PACKAGE_AUDIT_20261112.md) · [최신 상태](../projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md) · [시작·재사용 절차](../ops/CONTRACTS/SKILL_DISCOVERY_AND_REUSE_V1.md)
@@ -13,7 +13,7 @@
 | 1 | `issue-analyzer` / 이슈 분석기 | SDM/TXT/로그·증상 → 원인 근거·분석 보고·승인 수정 인계 | code-analyzer, code-fix, 지식 provider | 로그 경로 요청·과거 사례 재사용; 변환/분석은 기존 pipeline |
 | 2 | `code-analyzer` / 코드 분석기 | 고정 소스·scope → CODE FACT·call flow·MSC/HLD 입력 | l1-github, p4-code-owner, hld-composer, doc-converter | 코드 사실의 책임자; 지식 링크 등록은 Provider 호출 성공 아님 |
 | 3 | `code-fix` / 코드 수정 | 분석 결과·CL·변경 요청 → 승인 계획·수정·shelve·as-built 보고 | issue-analyzer, code-analyzer, l1-github | 승인된 anchor 수정만; shelve와 submit 분리 |
-| 4 | `l1-fix-workflow` / 워크플로우 | 요청·기존 Work → Work 흐름·연속성·계획 조회 | work-ledger-kernel, analyzer, 지식 provider | 기존 Work 선택·재개 우선; 버전·배포 적합성은 해당 CURRENT와 원문 확인 |
+| 4 | `l1-fix-workflow` / 워크플로우 | 요청·기존 Work → Work 흐름·연속성·계획, 개인 `l1-workspace`에 분석·결정·수정/시험/리뷰 결과 저장·갱신 | work-ledger-kernel, analyzer, 지식 provider | Updater와 모두 Workspace 갱신 주체; 공통 Kernel/기존 writer 재사용. 실제 설치·호출·저장 성공은 L1 CURRENT와 원문에서 확인 |
 | 5 | `work-ledger-kernel` / 작업 원장 | Work·Evidence·승인 → 결정형 상태·staleness·resume/transfer guard | l1-fix-workflow | Work/Evidence 정본; registry/schema 임의 확장 금지 |
 | 6 | `hld-composer` / HLD 작성 | 분석 결과·SRS/HLD → 통합/Target HLD·review ledger·gate | code-analyzer, doc-converter | 전진 설계와 코드 기반 역설계 분리; HLD gate는 실제 구현 검증과 별개 |
 | 7 | `doc-converter` / 문서·MSC 변환 | MD/HTML/XHTML·scenario IR → 변환 문서·PUML/SVG·검증/manifest | code-analyzer, hld-composer | SOURCE_PARENT_DIR_V1·stack_group·근거 trace 보존; AS-IS fact를 스스로 승인하지 않음 |
@@ -28,7 +28,7 @@
 | 16 | `job-list` / 잡리스트 | 승인 profile/Job → dispatcher·one-shot 결과/영수증 | skill-updater, 승인된 worker/driver | 승인된 Job/profile·Runner·결과를 구분; 실제 버전·활성 Job은 해당 CURRENT와 호스트 근거로 확인 |
 | 17 | `autotask-builder` / 예약 작업 | task YAML·일정 → 검증·OS 작업 정의·deploy/status | 공개 child launcher, skill-updater, l1-cleanup | Windows Task Scheduler/Linux user timer; OS 예약만 소유, Job queue/state 불변 |
 | 18 | `l1-cleanup` / 정리·보존 | 대상/정책 → audit·plan·HTML/JSON·승인 격리/복구 | autotask-builder, 유효 artifact receipt 제공자 | 기본 조회; OpenCode DB 삭제·purge는 별도 승인; receipt 자동 연동은 미구현 표기 |
-| 19 | `l1-knowledge-updater` / 지식 Updater | Procedure/Feature 직접 분석 요청 또는 기존 Workflow Work → 개인 Workspace의 분석·초안·근거 보존 + 검증 지식의 그룹 공용 `l1sw-dev-knowledge` 반영 후보 | 기존 analyzer·converter·Workflow/Kernel의 Work 기록·기존 게시 경로 | 두 진입 모두 같은 Work 보존이 설계 요구. 실제 저장/readback·그룹 반영 구현/API·G0·통합 검증은 L1 CURRENT에서 확인 |
+| 19 | `l1-knowledge-updater` / 지식 Updater | Procedure/Feature 직접 분석 요청 또는 기존 Workflow Work → 개인 Workspace의 분석·초안·근거 보존 + 검증 지식의 그룹 공용 `l1sw-dev-knowledge` 반영 후보 | 기존 analyzer·converter·Workflow/Kernel의 Work 기록·기존 게시 경로 | 두 진입 모두 같은 Work 저장·갱신이 설계 요구. Updater 자체도 Workspace 갱신 주체이며 전체 Workflow 실행 의무 없음. 공통 Kernel/기존 writer·실제 저장/readback은 설치 계약과 L1 CURRENT에서 확인 |
 
 지식 연결 설계: [두 진입·개인 Workspace 보존·그룹 반영 r0002](../projects/L1-WORKSPACE-RAG-20261111-001/L1_WORK_TO_KNOWLEDGE_FLOW_r0002_20261115_KST.md). 그룹 공용 스킬과 그 관리 지식의 실제 저장 위치를 구분하며 동명 GitHub.com 저장소로 추정하지 않음.
 
