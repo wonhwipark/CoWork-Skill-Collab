@@ -5,11 +5,11 @@
       "work_id": "COWORK-AUTO-APPROVAL-20261115-001",
       "skill": "cowork-review-watcher",
       "title": "GPT→GitHub REQUEST 자동 서명·READY (제한된 사전 위임)",
-      "phase": "BLOCKED",
+      "phase": "DISPOSITION",
       "owner": "GPT / Windows Claude Code",
       "self_test": "PASS",
-      "independent_review": "PENDING",
-      "next_action": "2026-11-15 사용자 '그래'로 통합 승인 확보: v0.2.22 R2 LARGE 1회 최대 $3 + 보호 Windows 위임 family COWORK-/L1-WORKSPACE-, skills cowork-review-watcher/cowork-dashboard/l1-knowledge-updater, STATIC $1/요청·1회, 일 2회/$3, 월 $10, 30일, 소급 금지, R2 BLOCKING=0 + GPT PASS 조건부 운영 설치/자동서명/Notifier/rollback. GPT 선행 점검에서 v0.2.22 auto_approval._families len>=8이 실제 승인 'COWORK-'(7자)를 거부함 확인. 유료 R2 전에 안전한 접두사 규칙/실제 반례 수정 필요. NEXT Windows Claude Code one-shot: GPT_R2_APPROVAL_AND_V0222_SCOPE_FIX_GATE_r0001_20261115.md §3 → isolated minimal fix, old fail/new pass, full Windows regressions/SHADOW/rollback, v0.2.23 DEV ZIP SHA/CRC, CLAUDE_V0222_APPROVED_PREFIX_COMPAT_FIX_RESULT_FOR_GPT_20261115.md+CURRENT/TRACKER PRIVATE readback. 원래 v0.2.22에 대한 비용 승인 새 바이트로 자동 확대 금지; 결과 확인 후 변경 입력만 좁게 승인. 지금 운영 v0.2.20 GitHub LIVE 유지, AUTO_SIGNING OFF, R2 REQUEST/READY 없음, 추가 유료 호출 0."
+      "independent_review": "NOT_RUN",
+      "next_action": "v0.2.23 (승인 접두사 COWORK-/L1-WORKSPACE- 호환 수정, 옛 후보 거부 재현 5건 실패 후 수정본 PASS, 자체시험 890/890 두 해석기, SHADOW 8/8, 롤백 PASS). GPT 최종 판정 PASS 후에만 독립 R2 1회(USD 3). 그 전에는 서명·READY·모델 호출 없음. 운영 불변."
     }
   ]
 }
