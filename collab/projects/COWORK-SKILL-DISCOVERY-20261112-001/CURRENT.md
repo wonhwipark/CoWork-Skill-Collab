@@ -1,18 +1,22 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
-## 현재 요약 — 2026-11-14 KST
+## 현재 요약 — 2026-11-15 KST
 
-- Scope: 새 창의 협업 운용·L1 지식·관리 스킬 공통 맥락 파악 경로를 문서로 적용.
-- Entry: [collab/CONTEXT_BRIEF.md](../../CONTEXT_BRIEF.md). README·AGENTS·START_HERE·baseline·카탈로그·기존 발견/재사용 절차가 같은 브리프를 연결.
-- Result: DOCUMENT_BOOTSTRAP_APPLIED. 공통 브리프 → 관련 CURRENT/메모 → 필요한 계약·스킬 원문.
-- Sources: 실제 PRIVATE main 문서·현재 프로젝트 기록을 기준으로 source blob을 표시. 원문 변경 시 해당 영역 요약/출처 갱신 또는 재확인 표시.
-- Current alignment: L1 CURRENT 최상단에 CL/PR 설계 리뷰 준비 상태 연결. Job CURRENT는 과거 후보와 v0.4.36 배포/미검증 상태를 첫 요약에서 구분. 실제 동작 변경 아님.
-- Existing audit: 18개 관리 + 별도 업무용 연동1개, 17 ZIP SKILL 정적 확인·skillsilent 추가 확인. 설치/API·실호출·독립 리뷰와 분리.
-- SELF_TEST: 문서 구조·내부 링크·브리프 크기·source blob·요청별 경로 검증 범위. 결과와 원격 검증은 아래 적용 기록 및 게시 영수증에서 확인.
-- INDEPENDENT_REVIEW: NOT_RUN.
-- ChatGPT 프로젝트 설정·백그라운드 자동 로더·새 엔진·스킬·호스트·Job·유료 리뷰·PUBLIC 신규 자료·LIVE 변경 없음.
-- NEXT: 실제 새 창에서 최소 시작 요청으로 이 경로를 사용하고 이후 정책/CURRENT 변경 시 브리프의 관련 줄만 함께 갱신.
-- 아래는 과거 감사/개선 검토 기록. 당시 “브리프 미적용/제안”을 현재 상태로 반복하지 않음.
+- Scope: 승인된 지속 갱신형 맥락 운용을 PRIVATE 문서·지침에 적용. 기존 Work를 이어가며 새 엔진·스킬·원장·자동 로더를 만들지 않음.
+- Entry: [고정 공통 지도](../../CONTEXT_BRIEF.md) → 목적별 CURRENT → 필요한 근거·계약·스킬 원문.
+- Rule: 결과·피드백 원문은 기존 결과/결정/notes, 현재 상태·근거 링크·미해결·승인 범위·다음 행동은 해당 CURRENT. 지도는 구조·역할·경로 변경 때, 카탈로그는 책임·입출력·연결 변경 때만 수정.
+- Routing: NR 실제 분석·기존 Job 진단·Smoke 및 자동 승인 개선의 진입 경로를 각각 구분. 진행 상태·버전·source blob을 브리프에 복사하지 않음.
+- Result: DOCUMENT_WORKFLOW_UPDATED. [적용·검증 기록](CONTINUOUS_CONTEXT_APPLICATION_r0001_20261115_KST.md).
+- SELF_TEST: 게시 전 문서 구조·링크·JSON·중복 갱신 규칙 제거 검증 결과는 위 적용 기록 참조. 호스트/기능 시험과 구분.
+- REMOTE_READBACK: PENDING_PUBLICATION. 실제 게시·원격 확인 뒤 별도 검증 기록과 이 줄을 갱신.
+- INDEPENDENT_REVIEW: NOT_RUN. 실제 새 창 재개·멀티 스킬 인계 E2E: NOT_RUN.
+- Existing audit: 기존 패키지 감사 결과는 해당 원문 시점의 근거로 보존. 이번 변경은 재감사·설치·실호출 검증이 아님.
+- Approval: 이번 사용자 지시는 PRIVATE 문서 갱신 범위. PUBLIC 신규 게시·유료 리뷰·Windows/운영 설정·LIVE 변경 수행 없음.
+- NEXT: 실제 새 창에서 같은 Work·작업 흐름·기존 승인 범위·다음 행동을 올바르게 선택하는지 첫 사용으로 확인. 일반 작업 결과는 그 작업 CURRENT만 갱신.
+
+## 이전 적용·감사 기록 — 당시 상태 보존
+
+아래 source blob·동시 갱신·브리프 상태 요약 관련 기록은 작성 당시 이력이다. 현재 갱신 규칙은 [개정 계약](../../ops/CONTRACTS/SKILL_DISCOVERY_AND_REUSE_V1.md)의 1A/1B를 따른다. 기존 결과·영수증을 이번 문서 검증으로 소급 PASS하지 않는다.
 
 ## 변경 내용과 근거
 

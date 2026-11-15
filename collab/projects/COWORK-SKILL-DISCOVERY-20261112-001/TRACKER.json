@@ -7,9 +7,9 @@
       "title": "skill-discovery",
       "phase": "DISPOSITION",
       "owner": "GPT",
-      "self_test": "NOT_VERIFIED",
+      "self_test": "PASS",
       "independent_review": "NOT_RUN",
-      "next_action": "통합 브리프→관련 CURRENT 진입 문서 적용; 실제 새 창 사용 후 관련 요약·출처만 유지보수"
+      "next_action": "문서 갱신 규칙 적용·정적 확인; 실제 새 창에서 같은 Work·다음 행동 선택 검증"
     }
   ]
 }

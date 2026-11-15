@@ -1,17 +1,10 @@
 # CoWork — GitHub 협업 진입점
-기준: 2026-11-15 KST | **GitHub 단일 LIVE 전환 완료(Windows 호스트 보고·GPT 리뷰/영수증 검증)**. 이후 최신 상태는 각 프로젝트 `CURRENT.md` 최상단 우선.
-성격: **고정 진입점**. 특정 Phase, 요청자 전달 대기, ZIP PASS 등 수시 상태를 이 문서에 고정하지 않는다.
+개정 기준: 2026-11-15 KST | 고정 운영 규칙·계약 진입점.
+프로젝트별 상태·버전·승인 대기·다음 행동은 해당 `CURRENT.md`와 결과/영수증에서 조회한다.
 
-## 2026-11-15 CoWork 운영 채널 최신 판정
-- **현재 CoWork 독립 리뷰 운송 채널:** GitHub PRIVATE `wonhwipark/CoWork-Skill-Collab` `ACTIVE_PROVIDER=GITHUB / CUTOVER=LIVE`. Windows Claude Code 호스트 실측: `skill-collab-watcher v0.2.20`, 독립 R1 `BLOCKING=0`, B1 운영 Python crypto·B2 Notifier DB별 워터마크·B3 GitHub Watcher Task 반영, 30초 7주기+재시작 및 단일 provider 확인. 기존 Dropbox watcher는 Disabled, 이력 및 레거시 pending 1건 보존.
-- **원격 GPT 정본:** [GitHub LIVE 최종 판정](projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/GPT_GITHUB_LIVE_CUTOVER_FINAL_DISPOSITION_r0001_20261115.md) 및 [최신 CURRENT](projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md). 신규 리뷰는 **유효한 승인 서명과 REQUEST/READY**를 요구하고, 파일 업로드만으로 유료 모델 리뷰를 호출하지 않음. Classic PAT 사용자 확정 방식 유지.
-- **범위 구분:** 이번 전환은 **실운영 호스트 보고를 GPT가 리뷰/receipt 원문으로 대조한 판정**. GPT가 Windows GUI를 직접 관찰한 것은 아님. 새 LIVE watcher로 신규 유료 리뷰 첫 수행, Telegram 실제 수신, 장기 지속가동·재로그온은 미검증. rollback은 준비 및 격리 시험 수준.
-- 아래 `2026-11-12~14 ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER` 서술은 **작성 당시 이력**으로 보존. 최신 상태로 다시 해석하지 말 것. 과도기 프로젝트 설정 문구의 자동 개정·동기화는 별도 절차이며, GitHub 문서 갱신 자체가 Windows 재설치/모델 호출/정책 우회는 아님.
-
-## 신규 개선 Work — 제한적 사전 위임 자동 서명 (2026-11-15)
-- [AUTO_APPROVAL CURRENT](projects/COWORK-AUTO-APPROVAL-20261115-001/CURRENT.md), [설계 정본](projects/COWORK-AUTO-APPROVAL-20261115-001/AUTOMATIC_SIGNING_MINIMAL_DESIGN_r0001_20261115.md), [Windows 개발·시험·후보 원샷](projects/COWORK-AUTO-APPROVAL-20261115-001/WINDOWS_ONE_SHOT_DEVELOP_TEST_CANDIDATE_HANDOFF_r0001_20261115.md).
-- **기존 GitHub LIVE 유지.** 새 Work는 GPT REQUEST 이후 Windows signer·READY를 자동화하기 위한 **격리 개발 단계**, 순수 정책 25/25 PASS. `AUTO_SIGNING=OFF`, Windows 구현/독립 리뷰/운영 적용 NOT_RUN. 기본 흐름에 Telegram 승인 버튼 없음. 별도 위임 범위·누적 비용/실운영 설치 승인 전에 실제 유료 자동 실행 금지.
-- 이전 CoWork 이관 Work의 `COMPLETE` 상태나 레거시 pending 1건을 이 개선 Work로 소급 변경·자동 디스패치하지 않는다.
+- 협업 provider·LIVE·운영 판정: [이관 CURRENT](projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md).
+- 자동 승인·서명 개선: [별도 개선 CURRENT](projects/COWORK-AUTO-APPROVAL-20261115-001/CURRENT.md). 이관 완료와 개선 구현·운영 적용을 같은 상태로 해석하지 않는다.
+- 이전 진입점의 날짜별 상태는 Git 이력과 해당 프로젝트 결과에 보존되어 있다. 고정 진입점에 현재 실행 상태를 복사하지 않는다.
 
 ## 새 창에서 먼저 읽을 한 파일
 
@@ -36,14 +29,14 @@
 - 사용자 승인: **CoWork 감시기 자체 소스·후보 ZIP**은 회사 L1 코드·고객자료·토큰을 제외하고 **CoWork PRIVATE**에 리뷰용 게시 가능. **L1Work PUBLIC에 이미 게시된 스킬 ZIP과 `handoffs/` MD**는 실제 GitHub 파일 링크를 Claude 독립 리뷰에 제공 가능. 사용자 지시한 링크 기반 전달 절차는 [상세 계약](projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/GPT_GITHUB_LINK_REVIEW_TRANSPORT_APPROVAL_AND_ONE_SHOT_r0001_20261114.md)을 기준으로 한다.
 - 별도 서명자 PC·로컬 LLM 확보는 일반 단일 사용자 CoWork 리뷰의 선행 의무가 아님. **실제 유료 리뷰 요청/READY·PUBLIC 신규 ZIP 게시·운영 watcher/LIVE 변경은 이 자료 전달 승인과 별개**. GitHub file URL이 곧 리뷰 실행 트리거가 아님.
 - 기존 공개 릴리스 ZIP은 `L1Work/main` **루트**에 유지. 배포되지 않은 후보 ZIP은 **PRIVATE 리뷰용으로만** 게시. 업무 PC용 Handoff MD 최종본은 `L1Work/main/handoffs/`. PRIVATE/PUBLIC 게시 시 실제 원격 commit·bytes/sha·파일 링크 검증, 업무 호스트 설치/Job 실행은 별도 영수증 필요.
-- `ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER`는 기존 실측 상태이며, 이 문서 추가는 Windows 실행·모델 리뷰 호출·GitHub LIVE 전환이 아님.
+- 위 자료 전달 승인은 2026-11-14 당시 기록이다. 당시 provider 값은 Git 이력에 보존하며 현재 상태는 이관 CURRENT에서 확인한다. 자료 전달 승인 자체는 Windows 실행·모델 리뷰 호출·LIVE 전환이 아니다.
 
 ## 단일 최신 정본 위치
 1. **프로젝트 실행 상태:** [`collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md`](projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) — 최상단 현재 요약·이후 새 결과/영수증을 우선한다. 끝에만 새 기록이 있는 과거 형식은 날짜·근거를 대조하며 과거 상태를 현재로 복사하지 않는다.
 2. **협업 안전 계약:** `collab/ops/CONTRACTS/NO_PR_COLLABORATION_V1.md`, `collab/ops/CONTRACTS/REVIEW_TRANSPORT_V1.md` (DRAFT, 실제 key/서명 세부는 최신 설계·판정을 우선).
-3. **현재 설계/시험:** `collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/GITHUB_ADAPTER_AND_REVIEW_FLOW_DESIGN_r0002_20261110.md`, `ACCEPTANCE_TEST_MATRIX_r0001_20261110.md`.
+3. **보존된 설계/시험 참고(최신 실행 기준은 CURRENT):** `collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/GITHUB_ADAPTER_AND_REVIEW_FLOW_DESIGN_r0002_20261110.md`, `ACCEPTANCE_TEST_MATRIX_r0001_20261110.md`.
 4. **보안 기준:** `collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/GPT_B7_TRUST_ROOT_AND_APPROVAL_POLICY_DRAFT_r0001_20261110.md` (설계 초안, 운영 승인/설치 아님).
-5. **보존된 이력 원본:** 기존 Dropbox `/SKILL-COLLAB/`의 요청·결과·영수증·운영 규칙. GitHub에 전부 복제되지 않았음. **2026-11-12 감시기 Disable 실측 보고 후 `ACTIVE_PROVIDER=NONE`이며, 현재 상태는 프로젝트 `CURRENT.md` 최상단을 우선 확인.**
+5. **보존된 이력 원본:** 기존 Dropbox `/SKILL-COLLAB/`의 요청·결과·영수증·운영 규칙. GitHub에 전부 복제되지 않았음. 과거 provider 기록은 현재 상태로 재사용하지 않으며 해당 CURRENT와 최신 결과/영수증을 확인한다.
 
 ## 신규 Work/스킬별 병렬 작업 등록 (기본)
 
@@ -58,27 +51,31 @@
 - Python watcher: 유효한 승인 서명·파일·repo ID·정책·비용·중복 확인 후 **정식 REQUEST/READY**가 있을 때만 리뷰 호출. 파일 게시 자체는 실행 신호 아님.
 - PRIVATE: `wonhwipark/CoWork-Skill-Collab` — 새 협업 문서/판정/인계/영수증의 기준 저장소. 민감/반출금지 자료는 PRIVATE에도 게시 불가.
 - **스킬 ZIP 전달 SSOT:** [Job-list/Skill-Updater PUBLIC 배송 계약](ops/CONTRACTS/JOBLIST_PUBLIC_DELIVERY_V1.md). 작업 PC의 Skill-Updater가 받는 최종 ZIP은 **PUBLIC `wonhwipark/L1Work` `main` 루트**. PRIVATE 후보/문서 게시로 배송·실행 호스트 동작을 완료했다고 보고하지 않는다. 일반 정식 배포는 사전 게이트를 유지하되 **2026-11-15 사용자 승인된 NR Tx Job-list v0.4.38 읽기 전용 디버깅 ZIP은 계약 8절에 따라 배포 전 보안·회귀시험, 배포 후 Claude 독립 리뷰·Linux 호스트 G0/종단 검증**으로 운영한다. 사후 결함은 새 버전으로만 재발행하며 같은 ZIP/기존 소비 Job을 재사용하지 않는다.
-- **Issue Analyzer 1차 PUBLIC 배포 지정:** [작업 CURRENT](projects/ISSUE-ANALYZER-20261114-001/CURRENT.md) 기준, 첫 ZIP도 PUBLIC `wonhwipark/L1Work/main` 루트에만 전달. PRIVATE ZIP으로 배송 대체 금지. v0.11.50은 로컬 패키지 검증 후보이며 GitHub ZIP 게시 `NOT_POSTED`, 전체 회귀·독립 리뷰·실호스트 검증 미완료로 구분. [전달 계약](ops/CONTRACTS/JOBLIST_PUBLIC_DELIVERY_V1.md) 7절 참조.
+- **Issue Analyzer 1차 PUBLIC 배포 지정:** [작업 CURRENT](projects/ISSUE-ANALYZER-20261114-001/CURRENT.md)와 [전달 계약](ops/CONTRACTS/JOBLIST_PUBLIC_DELIVERY_V1.md) 7절 기준, 첫 ZIP도 PUBLIC `wonhwipark/L1Work/main` 루트에 전달. PRIVATE 후보를 배송 완료로 대체하지 않는다. 버전·시험·독립 리뷰·게시·호스트 상태는 해당 CURRENT에서 각각 확인한다.
 - PUBLIC: `wonhwipark/L1Work` — 승인된 최종 ZIP 다운로드 및 **별도 사용자 승인된 공개 허용 목록 기반 HTML Pages 상태 요약**. 개발 후보/REQUEST/영수증/PRIVATE 원문은 공개 금지. Pages 기본 URL: `https://wonhwipark.github.io/L1Work/cowork-dashboard/`. 공개 범위는 `collab/dashboard/PUBLIC_PAGES_DEFAULT_POLICY.md` 참조.
-- 기존 Dropbox reviewer watcher: 2026-11-12 사용자 승인으로 예약작업 Disable·Stop 완료 보고, 이력 및 로컬 백업 보존. **ACTIVE_PROVIDER=NONE**, GitHub LIVE 승인·가동 아님. 다른 updater/notifier/Bridge는 변경 승인 전 유지.
+- 기존 Dropbox reviewer watcher의 종료·보존 및 현재 provider는 이관 CURRENT와 해당 결과/영수증에서 확인한다. 다른 updater/notifier/Bridge 변경은 별도 승인 범위를 따른다.
 
 ## L1 담당 모듈·이슈 분석 범위 공통 사전지식
 
 - [L1_CHANNEL 담당 4개 모듈 및 Knowledge 분류 공통 컨텍스트](knowledge/L1_CHANNEL_MODULE_SCOPE_COMMON_r0001_20261113.md) — NR BCH(= NR L1 Channel), NR L1 Tx, LTE ChCfg, LTE L1 Tx의 **사용자 확인 담당 범위**와 Procedure(A)/Technical(B) 분류. 지식 업데이트/모듈 간 이슈 조사 시작 시 관련 범위부터 확인.
 - [최신 Confluence 분류 검토표 v0.9](knowledge/references/L1_NR_LTE_Confluence_Module_Procedure_Feature_Table_v0_9_20261113_KST.md) — **P120/F95, 총215개 검토행**. 실제 ID·지원·구현·담당자 승인과 구분. [v0.7 181행 원본](knowledge/references/L1_NR_LTE_OWNER_REVIEW_CLASSIFICATION_v0_7_20261113.md)은 보존.
-- [L1 지식 최신 상태](projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md) · [2026-11-14 피드백 판정](projects/L1-WORKSPACE-RAG-20261111-001/L1_KNOWLEDGE_FEEDBACK_DISPOSITION_r0001_20261114.md): r0005 유지, G0 일부 확인 보고 확보. 실제 저장·source/MSC/Evidence·게시/역링크·RAG 입력은 첫 실제 분석 후 검증하며 현재 분류/연계 설계의 완료 차단으로 취급하지 않음.
+- [L1 지식 CURRENT](projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md)에서 적용 설계·G0 근거·미실행 검증·다음 행동을 확인한다. [2026-11-14 피드백 판정](projects/L1-WORKSPACE-RAG-20261111-001/L1_KNOWLEDGE_FEEDBACK_DISPOSITION_r0001_20261114.md)은 해당 시점의 근거로 보존한다. 첫 분석 후속 검증을 확인된 결함으로 바꾸거나 검증 전 완료로 승격하지 않는다.
 - 범위를 확인할 때 **사용자 확인 담당 영역**과 **추후 코드 검증할 세부 시나리오**를 분리하고, 다른 모듈의 실제 알고리즘까지 자동 확대하지 않는다. GitHub 게시만으로 코드 분석·Job 실행·Knowledge write는 시작되지 않음.
 
 ## 새 창·새 기능 요청: 보유 스킬부터 확인
 
 - [개선 검토 원본](projects/COWORK-SKILL-DISCOVERY-20261112-001/NEW_CHAT_CONTEXT_BOOTSTRAP_REVIEW_r0001_20261114.md)의 최소 문서안을 적용: 공통 브리프 → 관련 CURRENT → 필요한 원문. 자동 로더/프로젝트 설정 변경과 구분.
 
-1. [공통 맥락 브리프](CONTEXT_BRIEF.md)의 역할·요청별 경로·source blob을 확인한다.
+1. [공통 맥락 브리프](CONTEXT_BRIEF.md)의 역할·목적별 정본 경로를 확인하고 해당 CURRENT에서 현재 상태를 조회한다.
 2. 해당 CURRENT·열린 메모·새 결과/영수증을 확인하고, 요청에 관련된 [스킬 상세 목록](knowledge/SKILL_CAPABILITY_CATALOG.md)·실제 계약만 추가로 읽는다. 사용자에게 스킬명을 다시 요구하지 않는다.
 3. **REUSE / CONNECT / 입증된 최소 EXTEND / DEFER·추가 확인**을 판단한다. 미확인을 기능 부재로 취급하지 않고, 첫 분석 후속을 현재 설계 누락으로 승격하지 않는다.
-4. CURRENT·정책·카탈로그를 변경하면 브리프의 해당 요약·출처·확인일을 함께 갱신하거나 재확인 대상으로 표시한다.
+4. 일반 진행·결과·피드백은 해당 결과/결정/notes와 CURRENT만 갱신한다. 구조·역할·정본 경로 변경 때만 브리프를, 스킬 책임·입출력·연결 계약 변경 때만 카탈로그를 수정한다. 기존 TRACKER는 해당 CURRENT의 현행 추적 필드만 맞춘다. 작업한 GPT/Agent가 게시와 원격 재조회를 확인한다.
 
-상세: [스킬 발견·재사용 시작 절차](ops/CONTRACTS/SKILL_DISCOVERY_AND_REUSE_V1.md) · [현재 보강 상태](projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md). 목록은 탐색 포인터이며 설치·호출 검증이 아니다. 사용자 확인한 18개는 패키지 정적 확인을 완료했고, 17개 SKILL 확인·skillsilent 원본 추가 확인으로 구분한다. 실제 설치·호스트 검증은 별도다. 이 연결이 ChatGPT 프로젝트 설정이나 다른 창의 문서 자동 로드를 변경하지는 않는다.
+상세: [스킬 발견·재사용 시작 절차](ops/CONTRACTS/SKILL_DISCOVERY_AND_REUSE_V1.md) · [맥락 운용 CURRENT](projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md). 목록은 탐색 포인터이며 설치·호출 검증이 아니다. 과거 패키지 정적 감사는 [해당 시점의 감사 원문](projects/COWORK-SKILL-DISCOVERY-20261112-001/SKILL_18_PACKAGE_AUDIT_20261112.md)에서 확인하고 현재 설치·호스트 검증과 구분한다. 이 연결이 ChatGPT 프로젝트 설정이나 다른 창의 문서 자동 로드를 변경하지는 않는다.
+
+## 지속 갱신·피드백·다음 창 재개
+
+[스킬 발견·재사용 절차의 갱신 기준](ops/CONTRACTS/SKILL_DISCOVERY_AND_REUSE_V1.md)을 단일 기준으로 사용한다. 공통 지도 → 관련 CURRENT·근거 → 필요한 스킬 → 결과·피드백 판정 → 같은 Work 보완 또는 정본 갱신 → 원격 확인 → 다음 창 조회로 이어간다. 문서 이력·스킬 원문·기존 실행 보호 장치는 그대로 구분한다.
 
 ## 후속 메모·대화형 노트
 

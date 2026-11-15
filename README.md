@@ -6,7 +6,9 @@ This repository is a **private collaboration workspace**, not a deployment repos
 
 ## 새 창 시작 — 공통 맥락 한 번에 파악
 
-**[공통 맥락 브리프 열기](collab/CONTEXT_BRIEF.md)** → 요청별 **CURRENT** → 필요한 계약·스킬 원문. 협업 운용·L1 지식 방향·관리 스킬·현재 업무를 한 파일에서 먼저 읽습니다. 자료의 현재성은 브리프 source blob과 해당 CURRENT로 확인합니다.
+**[공통 맥락 브리프 열기](collab/CONTEXT_BRIEF.md)** → 요청별 **CURRENT** → 필요한 계약·스킬 원문. 브리프는 역할·정본 위치·작업 경로를 안내하고, 진행 상태는 해당 CURRENT와 최신 근거에서 확인합니다.
+
+작업한 GPT/Agent가 결과·피드백을 기록하고 해당 CURRENT의 요약·근거 링크·다음 행동을 갱신한 뒤 PRIVATE 게시·원격 재조회까지 확인합니다. 구조·경로 변경 때만 브리프, 스킬 책임·입출력 변경 때만 카탈로그를 수정합니다. 상세 기준은 [지속 갱신·피드백 절차](collab/ops/CONTRACTS/SKILL_DISCOVERY_AND_REUSE_V1.md)를 따릅니다.
 
 이 연결은 저장소 문서를 읽는 세션의 시작 경로입니다. 새 창의 자동 선조회나 ChatGPT 프로젝트 설정을 변경한 것은 아닙니다.
 
@@ -38,8 +40,9 @@ This repository is a **private collaboration workspace**, not a deployment repos
 - **PRIVATE here:** non-restricted design, candidate artifacts, reviews, receipts, status and dashboard — only after explicit source classification/approval.
 - **PUBLIC [L1Work](https://github.com/wonhwipark/L1Work):** separately approved final ZIPs and an approved allowlist-filtered, auto-updated public work-status HTML dashboard, preserving existing anonymous ZIP download paths. PRIVATE collaboration files must not be published.
 
-## Current safety status
-- 최신 이관 `CURRENT.md` 기준 `ACTIVE_PROVIDER=NONE` (2026-11-12 기존 reviewer watcher Disable·Stop 보고). PRIVATE 상태 생성기의 과거 LIVE 문구는 최신 운영 근거가 아닙니다.
-- PRIVATE → PUBLIC 허용 상태 요약의 자동 갱신은 E2E PASS 기록이 있습니다. 이는 리뷰 모델·Windows watcher GitHub LIVE 전환과 별개의 기능입니다. `MIGRATION_NOT_CUTOVER` 유지.
-- GitHub LIVE 운영 및 Claude 독립 리뷰 완료는 미검증/`NOT_RUN`; 민감 코드·고객정보·토큰을 저장소로 반출하지 않습니다. 실제 상세 상태는 [최신 이관 CURRENT](collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md)를 우선합니다.
-- GitHub branch protection and Windows reviewer GitHub authorization require separate verification before any LIVE workflow.
+## 실행·게시 경계
+
+- provider·LIVE·승인·실제 실행 상태는 [해당 이관 CURRENT](collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md)와 연결된 최신 결과/영수증에서 확인합니다. README에 상태값을 반복 복사하지 않습니다.
+- 문서 게시, 독립 리뷰, PUBLIC 전달, 호스트 설치와 LIVE 변경은 각각 구분하며 관련 계약·사용자 승인 범위를 확인합니다.
+- 공개 대시보드는 승인된 허용목록을 따르는 파생 요약입니다. PRIVATE의 상세 상태·리뷰·영수증과 구분합니다.
+- 회사 코드·고객자료·비밀·반출 미승인 자료는 PRIVATE에도 게시하지 않습니다.

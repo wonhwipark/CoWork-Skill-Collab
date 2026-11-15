@@ -1,9 +1,11 @@
 # CoWork 운영 기준 — 마이그레이션 최소 정본 안내
-상태: POINTER_ONLY / RAW_SOURCE_NOT_COPIED | 현재 포인터 정정: 2026-11-14 KST
+상태: POINTER_ONLY / RAW_SOURCE_NOT_COPIED | 포인터·갱신 기준 정정: 2026-11-15 KST
 
 ## 새 창 공통 맥락
 
 [CONTEXT_BRIEF](../CONTEXT_BRIEF.md)를 먼저 읽고 해당 CURRENT·필요한 계약으로 이동한다. 이 파일은 과거 원본의 포인터이며 브리프와 실제 최신 근거가 충돌하면 최신 근거를 우선한다.
+
+결과·피드백 원문은 해당 Work 기록에 보존하고 CURRENT에는 짧은 현재 요약·근거 링크·미해결·다음 행동을 갱신한다. 공통 지도는 구조·정본 경로, 카탈로그는 스킬 책임·입출력·연결이 바뀔 때만 수정한다. [정본별 갱신·피드백·원격 확인 기준](../ops/CONTRACTS/SKILL_DISCOVERY_AND_REUSE_V1.md)을 따른다.
 
 ## 현재 기준과 과거 원본 구분
 
