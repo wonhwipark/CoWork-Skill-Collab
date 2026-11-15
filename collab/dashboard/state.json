@@ -44,10 +44,10 @@
       "id": "COWORK-SKILL-DISCOVERY-20261112-001",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md",
-      "status": "문서상 진행",
+      "status": "검증 진행 중",
       "title": "COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT",
-      "tone": "neutral",
-      "topic": "현재 요약 — GPT 공통 투두 연결 (2026-11-15 KST)"
+      "tone": "warning",
+      "topic": "현재 요약 — TD-004 과거·현재 표기 점검 (2026-11-15 KST)"
     },
     {
       "id": "ISSUE-ANALYZER-20261114-001",
