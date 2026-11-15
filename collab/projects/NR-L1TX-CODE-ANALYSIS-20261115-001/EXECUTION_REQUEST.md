@@ -5,7 +5,7 @@
 - 요청 경로: `collab/projects/NR-L1TX-CODE-ANALYSIS-20261115-001/EXECUTION_REQUEST.md`
 - 검토 기준: `collab/projects/JOBLIST-NRTX-20261112-001/CURRENT.md`, `collab/projects/JOBLIST-SMOKE-20261114-001/CURRENT.md`
 - **사용자가 확인한 실제 코드 경로: `/home/whpark/Project/smp1900`**. Linux 실행 호스트에서 이 경로를 소스 checkout으로 사용한다. 실제 Git HEAD/branch·권한은 실행 시 검증하고, 원문 소스는 외부 반출하지 않는다.
-- **신규 분석용 Job-list 목표 버전: `v0.4.38`, 패키지명 `job-list_v0_4_38_1115.zip`**. 지정만 된 상태이며 ZIP 생성·PUBLIC 게시·호스트 설치는 미실행.
+- **신규 분석용 Job-list 전달 완료: `v0.4.38`, 패키지 `job-list_v0_4_38_1115.zip`**. 2026-11-15 사용자 승인에 따라 PUBLIC `wonhwipark/L1Work/main` 루트에 게시·원격 바이트 검증 완료 (ZIP SHA-256 `0cdda16fe214f86811d4df25cc04f3453ec93789ddc9bc2b0769e730bb9c16e0`; 커밋 `67ace047d336b81015034df913e11b10a64711d8`). Linux 설치·실행·분석·결과 조회는 별도 사후 검증 중이며 미확인.
 
 ## 목적
 이미 디버깅한 MCP 연결을 재사용해 **NR L1 Tx의 실제 소스 기반 분석**을 시도한다. **기존 소비된 Job-list v0.4.36 Job ID 재실행/재큐잉 금지**. 신규 Job-list ZIP 배송/설치/활성화와 코드 분석을 혼동하지 않는다.
