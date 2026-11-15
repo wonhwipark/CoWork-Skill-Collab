@@ -1,5 +1,18 @@
 # COWORK-GITHUB-DASHBOARD-20261111-001 — CURRENT
 
+## B안 확정·로컬 구현 검증 / 기존 공개 대시보드 미교체 (2026-11-15 KST)
+
+- **USER_UI_CHOICE=B:** A/B 실제 시제품 비교에서 사용자는 **B안(GitHub Projects형 보드·표)의 가독성이 더 좋다**고 판정, B안으로 진행 지시. 기존 `COWORK-GITHUB-DASHBOARD-20261111-001` Work 재사용, 새로운 Site/Work·운영 원장 생성하지 않음.
+- **변경/결과 정본:** [B안 선택·구현·공개 게이트 기록](B_STYLE_SELECTION_AND_IMPLEMENTATION_r0001_20261115_KST.md). HTML `CoWork_B_Selected_r0003_20261115_KST.html`(46,101 B / SHA256 `ea996809c470a84b115c1cf10a5adb1472e2fac9138bd329c5c7b3b4f1390414`)은 **이 대화 로컬 전달물로만 제공**(GitHub 미게시/Pages 미적용), 기존 A/B 토글 제거.
+- **화면 구성:** `협업 전체` 6건/보드↔표·검색·근거 상세, `L1 지식 설계` 7단계·스윔레인/Module→Feature→Scenario, `GPT TODO` TD-001~004 실제 상태·정본 근거. **데이터는 PRIVATE 2026-11-15 스냅샷**이며 실시간 자동 갱신 아님.
+- **실제 시험:** 로컬 Chromium Playwright 1440×900 / 1366×768 / 390×844의 3 서브화면, 보드/표, 검색, 6 Work·7 L1 단계·4 TODO, 세부 패널·Escape, 가로 overflow=0 **PASS**. 별도 실제 PUBLIC 브라우저/Pages·PRIVATE→PUBLIC 동기화·독립 리뷰는 `NOT_RUN`.
+- **공개 경계:** PRIVATE Work ID/TODO ID/원문 링크 포함 로컬 후보를 그대로 PUBLIC에 올리지 않음. 기존 5개 공개 허용목록·Exporter·현행 JSON 계약을 유지하고 별도 허용된 정형 데이터만 PUBLIC으로 반영. PRIVATE `ACTIVE_PROVIDER=GITHUB/LIVE` vs 구형 PUBLIC `NONE/전환 전` 불일치, Tracker 필드 정합성을 PUBLIC 반영 전에 최소 수정·검증 필요.
+- **기존 독립 리뷰 요청 보존:** `REQ-COWORK-DASHBOARD-PRESENTATION-20261115-001`의 고정 SOURCE_PIN/ZIP/REQUEST 변경 0, 서명·READY·모델 호출 0, B안 후속 UI 자체 독립 리뷰 `NOT_RUN`. 사용자 선택은 이미 고정된 리뷰를 수정하거나 자동 실행하지 않음.
+- **NEXT_ONE_ACTION:** 기존 Work에서 **B안 선택을 기준으로 공개 허용목록 전용 UI와 PRIVATE 상세를 구분**하는 최소 패치·시험을 설계/개발하고, 기존 P0 상태 불일치 및 유효 리뷰·PUBLIC 범위를 확인한 뒤에만 운영 대시보드 배포. 기존 URL 및 최근 공개 인계 3건 유지.
+
+---
+
+
 ## 발표용 정보·상태 정합성 개선 설계 및 독립 리뷰 요청 — 2026-11-15 KST
 
 - 사용자 요청: 앞선 발표 적합성 검토를 설계 문서로 작성한 뒤 협업 리뷰 요청까지 진행.
