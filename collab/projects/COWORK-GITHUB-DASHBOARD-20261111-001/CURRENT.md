@@ -1,5 +1,17 @@
 # COWORK-GITHUB-DASHBOARD-20261111-001 — CURRENT
 
+## B안 상태 정합성·자동 갱신 수정 완료 / 외부 이미지 플로우 입력 대기 — 2026-11-15 KST
+
+- **직접 결과·근거:** [B_STYLE_STATUS_SYNC_IMPLEMENTATION_RESULT_r0001_20261115_KST.md](B_STYLE_STATUS_SYNC_IMPLEMENTATION_RESULT_r0001_20261115_KST.md). PRIVATE/PUBLIC 원본·해시·실제 Actions Job 로그·Pages 결과 확인.
+- **실제 수정:** `generate.py`+`public_sync.py`+`flow_view.py`에 `GITHUB/LIVE` 상태 동시 검증 및 고정 공개 라벨 매핑. L1 TRACKER 비표준 enum 정리(`NOT_VERIFIED/NOT_RUN`, 기존 본문은 Git 이전 blob에 보존). PUBLIC B안 `board.js`에 provider/cutover 조합 검증·LIVE 현황 표시·6시간 무변경 거짓 경고 제거. 전환 후 후속 조치도 고정 공개 문구로 조정.
+- **정합성/시험:** 기존 PUBLIC 실패 run #43708647995 직접 로그 `SafetyBlock: unapproved active provider marker`; 수정 후 Python 65 + preview 8 = **73 PASS**, PRIVATE #43710632245 PASS, PUBLIC #43710647722 `POSTED_READBACK_PASS`, 후속 PRIVATE #43710809562/PUBLIC #43710825831 PASS. PUBLIC `status.json` 현재 `GitHub LIVE (호스트 보고 수용)`; 최신 공개 JSON/board.js 원격 SHA-256은 결과문서에 기록. Pages #43710905559 SUCCESS.
+- **미검증:** 실제 Pages URL HTTP 본문·120초 실제 브라우저 지속 갱신 `NOT_VERIFIED`. B안 수정 독립 리뷰 `NOT_RUN`; 기존 별도 정식 리뷰 `READY=NOT_POSTED/REVIEW=NOT_RUN`. GitHub LIVE 장기 운영·신규 실전 리뷰/알림 별도. 기존 PUBLIC allowlist 5개·인계3건·운영 Watcher/DB/서명/키/유료 호출/Job/Knowledge 변경 없음.
+- **사용자 신규 요청:** ChatGPT 공유 링크의 이미지와 동일한 플로우를 B안 스타일로 반영. 공유 링크에서 원본 이미지 접근 실패 — 사용자 **스크린샷/원본 이미지 입력 대기**. 이미지를 추정하여 실제 운영 구조도를 변경하지 않음.
+- **NEXT_ONE_ACTION:** 사용자 이미지 도착 시 실제 노드·화살표 관계를 확인해 기존 B안 흐름도만 동일 Work에서 최소 수정·회귀·PUBLIC 배포. 함께 Pages 실제 HTTP 화면 검증.
+
+---
+
+
 ## B안 배포 후 상태 정합성·자동 업데이트 직접 검토 — 2026-11-15 KST
 
 - **검토 정본:** [B_STYLE_STATUS_CONSISTENCY_AND_AUTO_REFRESH_REVIEW_r0001_20261115_KST.md](B_STYLE_STATUS_CONSISTENCY_AND_AUTO_REFRESH_REVIEW_r0001_20261115_KST.md). PRIVATE/PUBLIC 현재 파일·상태 Git blob 직접 재조회. 정적 코드 경로와 브라우저 갱신 로직 대조; 최신 PRIVATE Action 실제 실패 로그는 접근 불가로 직접 검증하지 못함.
