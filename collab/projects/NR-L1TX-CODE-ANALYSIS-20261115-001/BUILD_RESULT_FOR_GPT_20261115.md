@@ -1,10 +1,10 @@
 # Job-list v0.4.38 GitHub isolated build result
-- Run: https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43662422335
+- Run: https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43662461574
 - Workflow status before report: success
 - Candidate ZIP: job-list_v0_4_38_1115.zip
 - Candidate package: CANDIDATE_CREATED
-- Candidate bytes: 1570712
-- Candidate SHA-256: 5bfaed7ccd5cf55614d1d4958a3ed932b1b8320718d21779007647741a498c5e
+- Candidate bytes: 1570707
+- Candidate SHA-256: 50f1e03532b72620e39b3a67ab7b70d8b63fed9560c1070db2f60822f4fceb78
 - Unit and regression tests: see exact workflow run step status and logs; don't assume PASS from ZIP existence.
 - INDEPENDENT_REVIEW: NOT_RUN
 - HOST_G0: NOT_VERIFIED
