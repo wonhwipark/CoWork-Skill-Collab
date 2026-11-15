@@ -29,7 +29,7 @@
       "status": "전환 전",
       "title": "COWORK-GITHUB-DASHBOARD-20261111-001 — CURRENT",
       "tone": "warning",
-      "topic": "사용자 피드백 반영 — 인계 5단계 추적 대신 최근 문서 3건 (2026-11-14 KST)"
+      "topic": "발표용 정보·상태 정합성 개선 설계 및 독립 리뷰 요청 — 2026-11-15 KST"
     },
     {
       "id": "COWORK-SKILL-DISCOVERY-20261112-001",
@@ -96,6 +96,30 @@
     }
   ],
   "review_chains": [
+    {
+      "disposition": "NOT_VERIFIED",
+      "findings": [],
+      "flags": {
+        "gpt": false,
+        "ready": false,
+        "receipt": false,
+        "request": true,
+        "review": false
+      },
+      "id": "REQ-COWORK-DASHBOARD-PRESENTATION-20261115-001",
+      "paths": {
+        "gpt": "",
+        "ready": "",
+        "receipt": "",
+        "request": "collab/requests/REQ-COWORK-DASHBOARD-PRESENTATION-20261115-001/REQUEST.md",
+        "review": ""
+      },
+      "revision": "1",
+      "stage": "READY_NOT_OBSERVED",
+      "tone": "warning",
+      "trust": "DOCUMENT_FIELDS_MATCH_ONLY_SIGNATURE_NOT_VERIFIED",
+      "work_id": "COWORK-GITHUB-DASHBOARD-20261111-001"
+    },
     {
       "disposition": "NOT_VERIFIED",
       "findings": [],
@@ -226,7 +250,7 @@
       "verified": false
     },
     "requests": {
-      "files_observed": 5,
+      "files_observed": 6,
       "note": "GitHub 파일 관측 수 · 실제 리뷰 실행/서명/영수증 검증 아님",
       "verified": false
     },
@@ -253,15 +277,15 @@
     },
     {
       "evidence": "프로젝트 TRACKER.json 신고 값 · 운영 근거 별도 확인 필요",
-      "independent_review": "NOT_RUN",
-      "next_action": "PUBLIC 자동 동기화 E2E 검증 완료 후 GPT 최종 판정 및 HTML 사용성 확인; 독립 리뷰 미실행 유지",
+      "independent_review": "PENDING",
+      "next_action": "발표용 개선 설계 독립 리뷰 요청 등록; Windows 호스트가 이번 요청 비용 권한·서명 확인 후 READY 게시. 실제 모델 리뷰 미실행.",
       "owner": "GPT",
-      "phase": "DISPOSITION",
+      "phase": "REVIEW",
       "record_source": "REGISTERED_METADATA_UNVERIFIED",
       "self_test": "PASS",
       "skill": "cowork-dashboard",
       "source": "collab/projects/COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md",
-      "title": "cowork-dashboard",
+      "title": "발표용 대시보드 정보·상태 정합성 개선 설계",
       "work_id": "COWORK-GITHUB-DASHBOARD-20261111-001"
     },
     {

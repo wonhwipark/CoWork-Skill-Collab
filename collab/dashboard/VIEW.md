@@ -38,7 +38,7 @@ flowchart TB
 | GitHub 전환 | **원문 확인 필요** | 별도 명시적 승인 전 전환 금지 |
 | Windows 실행·SHADOW | **기록 미관측** | 실제 호스트 실행 증거 필요 |
 | Claude Code 독립 리뷰 | **기록 미관측** | 자체 시험과 구분 |
-| GitHub 요청·결과·영수증 | **요청 5 · 결과 4 · 영수증 4** | PRIVATE 파일 관측 수일 뿐 완료 건수가 아님 |
+| GitHub 요청·결과·영수증 | **요청 6 · 결과 4 · 영수증 4** | PRIVATE 파일 관측 수일 뿐 완료 건수가 아님 |
 | 공개 Work 대시보드 | **기록 미관측** | L1Work에 승인된 비식별 상태만 자동 요약 · PRIVATE 원문은 비공개 |
 
 [전환·Windows 원문](../projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) · [대시보드 원문](../projects/COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md)
@@ -48,7 +48,7 @@ flowchart TB
 
 | 현재 프로젝트 | GitHub REQUEST | GitHub REVIEW | GitHub RECEIPT |
 |:---:|:---:|:---:|:---:|
-| **9** | **5** | **4** | **4** |
+| **9** | **6** | **4** | **4** |
 
 **파일 수 = 검증 완료 건수 아님.** 아직 GitHub로 이관되지 않은 자료는 미확인입니다.
 
@@ -64,7 +64,7 @@ HTML은 GitHub에서 소스로 표시되므로 다운로드 후 브라우저로 
 이 문서는 GitHub Actions가 생성하는 안내 화면이며 리뷰·설치·배포 승인이나 자동 실행 결과가 아닙니다.
 
 - 문서가 있는 프로젝트: **9개**
-- GitHub REQUEST 파일 관측: **5개** (검증 안 됨)
+- GitHub REQUEST 파일 관측: **6개** (검증 안 됨)
 - GitHub REVIEW 파일 관측: **4개** (검증 안 됨)
 - GitHub RECEIPT 파일 관측: **4개** (검증 안 됨)
 
@@ -77,7 +77,7 @@ HTML은 GitHub에서 소스로 표시되므로 다운로드 후 브라우저로 
 | Work ID | 스킬 | 진행 단계(신고) | 담당 | 시험(신고) | 독립 리뷰(신고) | 다음 조치 |
 |---|---|---|---|---|---|---|
 | [COWORK-DROPBOX-TO-GITHUB-MIGRATION](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) | cowork-review-watcher | 완료 신고 (검증 필요) | GPT / Claude Code | PASS | PASS | 2026-11-15 GPT 최종 판정 ACCEPT_GITHUB_LIVE_CUTOVER_HOST_REPORTED_AND_REVIEW_VERIFIED. Windows 결과 v0.2.20 R1 독립 리뷰 BLOCKING 0, 모델 1회 $0.3769412(한도 $1), B1 cryptography,  |
-| [COWORK-GITHUB-DASHBOARD-20261111-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md) | cowork-dashboard | GPT 판정 | GPT | PASS | NOT_RUN | PUBLIC 자동 동기화 E2E 검증 완료 후 GPT 최종 판정 및 HTML 사용성 확인; 독립 리뷰 미실행 유지 |
+| [COWORK-GITHUB-DASHBOARD-20261111-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md) | cowork-dashboard | 독립 리뷰 | GPT | PASS | PENDING | 발표용 개선 설계 독립 리뷰 요청 등록; Windows 호스트가 이번 요청 비용 권한·서명 확인 후 READY 게시. 실제 모델 리뷰 미실행. |
 | [COWORK-SKILL-DISCOVERY-20261112-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md) | skill-discovery | GPT 판정 | GPT | NOT_VERIFIED | NOT_RUN | 통합 브리프→관련 CURRENT 진입 문서 적용; 실제 새 창 사용 후 관련 요약·출처만 유지보수 |
 | [ISSUE-ANALYZER-20261114-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/ISSUE-ANALYZER-20261114-001/CURRENT.md) | issue-analyzer | 차단·보류 | GPT | NOT_VERIFIED | NOT_RUN | 전체 회귀·독립 리뷰 후 L1Work PUBLIC 루트에 ZIP 게시 및 SHA 원격 재검증 |
 | [JOBLIST-NRTX-20261112-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/JOBLIST-NRTX-20261112-001/CURRENT.md) | job-list | 개발·시험 | GPT | PASS | NOT_RUN | 호스트 G0 확인 전 후보 패키지 검증 범위 유지 |
@@ -111,6 +111,7 @@ HTML은 GitHub에서 소스로 표시되므로 다운로드 후 브라우저로 
 
 | 요청 | Work | 단계 | GPT 판정 |
 |---|---|---|---|
+| [REQ-COWORK-DASHBOARD-PRESENTATION-20261115-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-COWORK-DASHBOARD-PRESENTATION-20261115-001/REQUEST.md) | COWORK-GITHUB-DASHBOARD-20261111-001 | READY_NOT_OBSERVED | NOT_VERIFIED |
 | [REQ-COWORK-V0214-R1-20261114](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-COWORK-V0214-R1-20261114/REQUEST.md) | COWORK-DROPBOX-TO-GITHUB-MIGRATION | GPT_NOT_OBSERVED | NOT_VERIFIED |
 | [REQ-COWORK-V0217-R2-20261114](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-COWORK-V0217-R2-20261114/REQUEST.md) | COWORK-DROPBOX-TO-GITHUB-MIGRATION | GPT_NOT_OBSERVED | NOT_VERIFIED |
 | [REQ-COWORK-V0219-R2-20261114](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-COWORK-V0219-R2-20261114/REQUEST.md) | COWORK-DROPBOX-TO-GITHUB-MIGRATION | GPT_NOT_OBSERVED | NOT_VERIFIED |
