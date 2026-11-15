@@ -1,5 +1,14 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 사용자 승인 확정 — Work→Knowledge 설계 독립 리뷰 1회·최대 $1 (2026-11-15 KST)
+- **비용 승인 완료:** 사용자 명시 승인 `REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-001` revision 1, `POLICY-STATIC-V1`, 독립 설계 Claude 리뷰 **최대 1회·USD $1.00**. 동일 비용 승인 재요청 금지·추가 유료 모델 호출 금지. [서명자·LIVE 원샷 실행 정본](../../requests/REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-001/GPT_USER_COST_APPROVAL_AND_SIGNER_HANDOFF_r0001_20261115.md), commit `766f10dff51a5b305203c56822165dd81f3604d1` 원격 readback PASS.
+- **입력 Validator는 이전 Windows v0.2.20 사전 검사 PASS:** `state: REQUESTED`, 설계 ZIP 5문서(28805 B, SHA256 `4ccede070d03e497a8d821fcabc8092c0d46045b245b64dabf023abc83daa417`), Commit A `0a46fea5f7f63c68c5cb12cfa35bfaed00c2c1a3`와 SOURCE_PIN 원본 고정. REQUEST·ZIP·manifest·SOURCE_PIN **수정 0**.
+- **실제 실행 경계:** GPT는 `APPROVAL_SIG.json`과 `READY.md`, 리뷰/dispatch/receipt 원격 **NOT_FOUND**를 재조회. 기존 `ACTIVE_PROVIDER=GITHUB` 운영 호스트 보고는 유지. 이번 GPT 환경에는 Windows 기존 Ed25519 서명자/운영 private key 접근이나 Windows Claude Code 시작 수단이 없음. 문서 게시만으로 실제 signer/READY/watch 자동 디스패치가 시작되지 않음.
+- **상태:** `USER_PAID_REVIEW_APPROVAL=APPROVED`, `VALIDATOR_PREFLIGHT=PASS`, `HOST_SIGNER=NOT_RUN`, `APPROVAL_SIG=NOT_POSTED`, `READY=NOT_POSTED`, `REVIEW=NOT_RUN`, `ACTUAL_MODEL_CALLS=0` (마지막 GitHub 결과/호스트 preflight 기준). 서명/READY·모델 호출을 수행한 것으로 보고하지 않음.
+- **Windows 다음 원샷:** 기존 signer가 이번 ID/요청 SHA·고정 ZIP SHA·commit/repo id·정책·한도·만료 결속 및 중복 검사 → 정상 승인 서명/remote readback → READY **마지막** 게시 → **기존 GitHub LIVE watcher 자동** 독립 리뷰 1회 → Review Result/Receipt/Usage/Dispatch readback → Windows 결과 `CLAUDE_WORK_KNOWLEDGE_DESIGN_LIVE_REVIEW_RESULT_FOR_GPT_20261115.md`·본 Work CURRENT/TRACKER 상태 업데이트. 실패 시 fail-closed/모델 재호출 0. GPT는 결과가 실제 올라온 후 리뷰 판정.
+- **기존 HOST_SUBMIT_ONESHOT.md와 SUBMISSION_STATUS.json**에 비용 승인 및 정확한 최신 인계서 링크 반영. 다른 CL/PR 개발·회귀·업무 지식 업데이트·PUBLIC 배포/운영 변경은 이력 그대로, 실행 0.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 위 정확한 PRIVATE main 원샷 인계서를 실행하여 **기존 실제 Windows 서명**을 수행. 동일 승인 질문 금지. 아래 사전검증·CLPR 기록 보존.
+
 ## Work→Knowledge v0.2.20 Validator 사전 검증 GPT 판정 — PASS(2026-11-15 KST)
 - **공식 판정 정본:** [GPT_REQUEST_VALIDATOR_PREFLIGHT_DISPOSITION_r0001_20261115.md](GPT_REQUEST_VALIDATOR_PREFLIGHT_DISPOSITION_r0001_20261115.md), commit `ff5863d97626fe4d57a2b3c8de80246c113b46cf`, 원격 readback PASS. Windows 실제 Validator 진단 [CLAUDE_REQUEST_VALIDATOR_PREFLIGHT_RESULT_FOR_GPT_20261115.md](CLAUDE_REQUEST_VALIDATOR_PREFLIGHT_RESULT_FOR_GPT_20261115.md), Git blob `0d5a54f15174577559fa5028f9c7545821432833`.
 - **결과:** `REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-001`의 `state: REQUESTED`는 v0.2.20 `validate()`에서 정상 허용(`SUBMITTED` 강제 아님); 설계 문서 5개 전용 ZIP도 `SKILL.md` 없이 `safe_extract`·`_file_index`·`_write_context`·`_build_prompt` PASS. 실제 GitHub `main`+Commit A raw ZIP 28805 B / sha256 `4ccede070d03e497a8d821fcabc8092c0d46045b245b64dabf023abc83daa417` / CRC 일치(Windows 호스트 실측 보고). secret findings 0. `knowledge_refs: []`, skill/profile/rev·고정 `SOURCE_PIN`과 GitHub repo ID 정상. 중복/완료/불확실 리뷰 실행 흔적 없음(조회 가능한 호스트 근거 범위).
