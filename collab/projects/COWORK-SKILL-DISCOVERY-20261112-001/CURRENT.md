@@ -8,7 +8,8 @@
 - 변경 범위: 공통 목록 구성·네 가지 후보 등록·공통 브리프/협업 진입점 연결·이 등록 기록. 기존 상세 문서·TRACKER·진행 중 요청·승인 상태는 보존.
 - 기존 적용: 지속 갱신형 맥락 운용 규칙·관련 문서 연결 적용 완료는 유지. 후보의 실제 수정·새 창/스킬 인계 검증·Claude Code 리뷰·호스트 변경은 이번 범위로 수행하지 않음.
 - DOC_SELF_CHECK: PASS (후보 ID·상태·상대 링크·기존 본문 보존·변경 범위에 대한 정적 확인; 실행·기능 시험과 구분).
-- REMOTE_READBACK: PENDING — 게시 후 실제 commit·원격 본문·Git blob·UTF-8 bytes SHA-256 확인 결과로 갱신.
+- REMOTE_READBACK: PASS. content commit `0d008218c776e649de13601306ffd31d592548ca`의 문서 4개 전체 원격 본문·UTF-8 bytes/크기·SHA-256·Git blob이 작성안과 일치. 후속 main `3d51e3140d106616d8df0d4124dcf99b84831369`에서도 4개 target blob 동일 확인. 이 기록은 고정 content commit 검증 결과이며 아래 이전 게시 검증과 구분.
+- 공통 목록 무결성: 위 content commit의 `collab/GPT_TODO.md` = 5,554 bytes, SHA-256 `11fc16d344cce2af743b718c397661b6c1f41bfb8376858512cf4417781cda95`. 문서 등록·연결 확인 결과이며 후보 실행 시험·독립 리뷰 완료가 아님.
 - NEXT_ONE_ACTION: 공통 목록을 조회·정리하고 사용자가 실행을 요청한 항목을 기존 Work에 연결. 아래 이전 요약의 설계 작성 단계는 후보 선택 후의 후속 방향이며 목록 등록만으로 시작하지 않음.
 
 ## 이전 요약 — 통합 개선 설계 TODO 등록 (2026-11-15 KST)
