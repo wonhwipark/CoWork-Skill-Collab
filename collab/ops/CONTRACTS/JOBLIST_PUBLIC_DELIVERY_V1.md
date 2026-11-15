@@ -23,7 +23,7 @@
 
 1. **REQUEST_DESIGNED**: 사용자 조사 범위/대상 환경·스킬/완료 기준 정의.
 2. **CANDIDATE_BUILT / SELF_TESTED**: 이전 ZIP 원본 그대로 보존, 신규 버전으로 제작, CRC·SHA·경로이탈·필수파일·민감정보·회귀시험 검증. 이 단계는 배송도 실행도 아니다.
-3. **INDEPENDENT_REVIEW / HOST_G0 / RELEASE_APPROVAL**: 독립 리뷰·사내 설치/호출 계약·보안/실행/이전·롤백 요건은 개별 판정. 미검증이면 `development_not_for_deployment`; PUBLIC 게시 보류.
+3. **RELEASE_GATE / REVIEW / HOST_G0**: 일반 정식 배포는 원래의 필수 게이트로 판정하되, **사용자가 명시 승인한 읽기 전용 디버깅 ZIP은 8절의 사전 안전검증을 먼저 수행하고 Claude 독립 리뷰·Linux G0/종단 검증은 PUBLIC 배송 후에 수행**한다. 사후 검증 미실행을 PASS로 선언하지 않는다.
 4. **PUBLIC_RELEASE_POSTED**: 사용자 승인과 배포 게이트를 통과한 최종 ZIP만 `L1Work/main` 루트 신규 파일명으로 게시. 게시된 bytes/SHA-256·size/commit 및 remote 재다운로드 검증.
 5. **SKILL_UPDATER_INSTALLED**: 사내 Skill-Updater가 root-zips 최신 버전을 발견/다운로드/설치한 실제 호스트 영수증이 있어야 PASS. PUBLIC 게시만으로 설치 완료라고 주장 금지.
 6. **JOB_ACTIVATED**: 기존 OS 예약 Skill-Updater의 정해진 활성화 hook과 호스트별 승인·중복·만료·Profile·권한 게이트 통과. 일반 업데이트만으로 실행 트리거 생성 금지.
@@ -37,7 +37,7 @@ Job-list **한 버전에 활성 One-shot Job 최대 1건**. 이미 소비된 Job
 - 사내 Linux 소스·도구의 실제 action/entrypoint/owner 승인 사실은 **사내 호스트**에서 확인. GitHub PUBLIC/PRIVATE의 설계·텍스트가 설치된 `l1-knowledge-updater` 실행 계약의 근거가 아님.
 - `l1-knowledge-updater` 조율 하에 `code-analyzer`는 CODE FACTS, `doc-converter`는 검증된 AS-IS 시나리오 MSC 표현을 담당. 임의 shell/명령·임의 도구 action 생성 금지.
 - 원본 코드·고객정보·사내 로그·상세 MSC의 GitHub PUBLIC/PRIVATE 외부 반출 금지. 사내 원본 읽기·분석 결과 생성과 지식 정본 쓰기를 분리.
-- 호스트 계약이 아직 미검증인 후보를 단지 사용자가 'PUBLIC에 올려줘'라고 요청했다고 최종 배포 ZIP으로 승격하지 않는다. **PUBLIC 경로 사용 승인과 기술적 배포 가능 판정은 다름.**
+- 일반 후보는 호스트 계약 미검증 시 정식 릴리스로 승격하지 않는다. **단, 사용자가 한정 승인한 읽기 전용 디버깅 Job-list는 8절에 따라 사전 정적 안전검사를 충족하면 배송 후 호스트 검증을 수행한다.** PUBLIC 경로 지시만으로 무검증 패키지를 올리는 것은 허용하지 않는다.
 - 작업 목적이 '퇴근 후 사내 LLM 무인 실행'이면 **PUBLIC 신규 ZIP + 활성 One-shot 실제 실행 게이트**가 준비되어야 요청 완료. PRIVATE 설계/후보 게시나 PUBLIC 비활성 후보 게시만으로 완료라고 하지 않는다.
 
 ## 4. 배포 완료 보고 형식 (필수)
@@ -69,3 +69,17 @@ Job-list **한 버전에 활성 One-shot Job 최대 1건**. 이미 소비된 Job
 - 이전에 '우선 PRIVATE 후보 ZIP에 게시'하던 단계는 이 작업의 배포 절차에서 제거한다. 개발 작업공간의 임시 후보 ZIP은 배포가 아니며, 사용자에게 PRIVATE 다운로드로 공개 배송을 대체했다고 보고하지 않는다.
 - 첫 배포 위치 확정은 **독립 리뷰 PASS, 설치/실행 PASS, 자동 활성화 승인**을 뜻하지 않는다. 단계별 진위·금지된 정보 반출 검사·파일 바이트와 SHA-256 원격 재조회 등 기존 안전 게이트는 유지한다. 미충족이면 정확히 `PUBLIC_RELEASE=BLOCKED/NOT_POSTED`로 기록하며 임의 우회하지 않는다.
 - 이 결정의 근거·현황: [issue-analyzer Work CURRENT](../../projects/ISSUE-ANALYZER-20261114-001/CURRENT.md). 최초 후보 목표 파일 `issue-analyzer_v0_11_50_1114.zip`. GitHub 실제 게시/Skill-Updater 설치는 별도 확인 전까지 NOT_POSTED/NOT_RUN.
+
+
+## 8. 사용자 지정 Job-list READ-ONLY DEBUG 릴리스: 사후 독립 리뷰 / 호스트 검증 — 2026-11-15
+
+**본 절은 2026-11-15 사용자가 승인한 `job-list_v0_4_38_1115.zip` NR L1 Tx Init RACH 분석/디버깅 목적에 직접 적용되는 한정된 예외다.** 이후 다른 공개 스킬 ZIP이나 운영 상태 변경에 자동 확대하지 않는다. 공통 배포 게이트와 충돌하는 경우 **이 요청의 읽기 전용 디버깅 전후 검증 순서에 대해서만 본 절을 우선 적용**한다.
+
+1. **배포 전 필수:** 사용자 PUBLIC 배송 승인, 신뢰된 원본 ZIP의 byte/SHA pin, 전체 ZIP CRC 및 경로/중복/심링크/민감정보 검사, 실제 버전·메타데이터·manifest 일치, 회귀시험 PASS, 신규 유일 Job ID 1건, 기존 소비 Job·DB·Registry·Queue·Receipt 보존, source/Knowledge 정본 쓰기 금지, 진입점·권한·실패-차단 정적 검증. 하나라도 FAIL이면 PUBLIC 배포 금지. `CANDIDATE_TEST_PASS`와 `PUBLIC_RELEASE`는 구분한다.
+2. **Claude Code 독립 리뷰는 배포 후 점검:** 본 읽기 전용 디버깅 릴리스는 `INDEPENDENT_REVIEW=POST_RELEASE_PENDING`으로 PUBLIC 배송 가능. 단, 미실행 리뷰를 PASS로 기록하지 않으며, 유료 리뷰 REQUEST/READY나 모델 호출은 기존 승인·서명·비용 게이트에 따라 별도로만 실행한다. 사후 리뷰에 결함이 발견되면 GPT가 지적별 판단 후 **새로운 버전명·새 ZIP**을 발행하고, 같은 이름/바이트를 덮어쓰거나 소비된 One-shot Job을 재실행하지 않는다.
+3. **실 Linux 호스트 G0, 기존 장애 복구, OpenCode CLI 및 MCP 결과 조회는 배포 후 검증:** 이 항목들이 미확인이라는 이유만으로 본 승인된 read-only debug ZIP의 PUBLIC 배송을 보류하지 않는다. 호스트 런타임 검사 미통과 시 `HOST_G0=BLOCKED`, `ANALYSIS=NOT_RUN/PARTIAL`로 영수증을 남기고 fail closed. 호스트 설치/활성화/실제 분석/결과 readback은 모두 배송과 다른 상태.
+4. **배송 순서:** 승인된 ZIP을 `wonhwipark/L1Work/main` **루트**에 신규 파일로 게시 → 원격 다운로드 실제 ZIP byte SHA-256/크기/commit 검증 → 배송만 `PUBLIC_POSTED` 보고. 호스트 Skill-Updater 자동감지/설치/Job 분석 성공으로 소급 주장하지 않는다.
+5. **실행 보호:** NR Tx 코드 루트는 Linux에서 검증된 `/home/whpark/Project/smp1900`이나 공개 ZIP·프롬프트에는 개인 절대 경로/비밀을 포함하지 않는다. 기존 등록 도구의 읽기 전용 동작만 허용하고, Git/업무 코드/지식 정본/운영 데이터·예약 작업 변경·외부 반출 및 추가 유료 호출 금지.
+6. **재발방지:** 사용자가 Job-list 배포·분석 시도를 명시 승인했고 사전 안전 검사가 PASS라면, 리뷰/호스트 E2E가 사후라는 사실을 배포 불가 원인으로 삼지 않는다. 권한·무결성·보안·회귀시험 문제로 실제 게시가 실패할 때만 정확한 `BLOCKED` 사유를 즉시 보고한다. `PUBLIC_POSTED`와 `JOB_EXECUTED`는 반드시 별도 열로 관리한다.
+
+**이 절은 Zip PUBLIC 게시 승인이지 Windows watcher LIVE, Linux 운영 설정/DB 수동 변경, 이미 소비된 Job 재활성화, 유료 리뷰 자동 호출 승인이 아니다.**
