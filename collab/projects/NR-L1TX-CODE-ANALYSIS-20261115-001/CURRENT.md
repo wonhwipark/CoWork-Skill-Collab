@@ -3,7 +3,7 @@
 ## TD-003 실제 인계 E2E 재개 — Linux MCP 직접 접근 차단 / 기존 Job one-shot 인계 게시 (2026-11-15 KST)
 
 - 사용자 재실행 지시: GPT 공통 투두 TD-003을 실제 검증까지 이어가라는 요청. **같은 NR L1 Tx Work**와 기존 승인된 v0.4.38 배포본/신규 Job ID 재사용. 새로운 Job·요청·운영 설정/DB·그룹 Knowledge write를 만들지 않음.
-- **원격 최신 확인:** 본 Work 폴더에 `BUILD_RESULT_FOR_GPT_20261115.md`, `PRE_RELEASE_VALIDATION_v0438.md`, `EXECUTION_REQUEST.md`, `CURRENT.md`만 존재했고 Linux 호스트 Receipt/Result 보고는 새로 발견되지 않음. PRE_RELEASE 문서는 배포 전 시점 이력이므로 현행 배포 판정은 아래 최상위 배송 결과를 계속 사용.
+- **원격 조회:** 새 인계 문서 게시 전 본 Work 폴더의 기존 4개 문서를 확인했으며 Linux 호스트 Receipt/Result 보고는 발견되지 않음. 이후 아래 원샷 인계서가 추가되었지만 실제 호스트 실행 결과는 여전히 미확인. PRE_RELEASE 문서는 배포 전 시점 이력이므로 현행 배포 판정은 아래 최상위 배송 결과를 계속 사용.
 - **실행 도구 한계:** 이번 GPT 대화의 연결된 도구에 모바일 Agent/Linux MCP 직접 호출 인터페이스가 없음. `HOST_MCP_TOOL_ACCESS=BLOCKED`, `HOST_TOOL_LIST=NOT_RUN`, `SKILL_UPDATER_INSTALLED=NOT_VERIFIED`, `NEW_JOB_RUN/RESULT/RECEIPT_READBACK=NOT_VERIFIED`, `NR_L1TX_CODE_ANALYSIS=NOT_RUN`. GitHub 문서 게시만으로 자동 호출되지 않음.
 - **정확한 단일 인계:** [TD003_LINUX_MCP_E2E_ONE_SHOT_HANDOFF_r0001_20261115_KST.md](TD003_LINUX_MCP_E2E_ONE_SHOT_HANDOFF_r0001_20261115_KST.md) (PRIVATE main, 기존 사용자 승인·변경 경계 보존). 먼저 기존 Job 소비 여부/동일 Run/Receipt READ로 정산하고, 정상·유효한 경우에만 이미 승인된 v0.4.38 정상 Updater/읽기 전용 분석 경로의 **최대 1회**. 과거 소비 ID 재큐잉·임의 shell/API·무검증 게시/운영 수정 금지.
 - **TD003 정적 인계 계약:** [맥락 Work의 인계 8항 추적](../COWORK-SKILL-DISCOVERY-20261112-001/TD003_MULTI_SKILL_HANDOFF_FEEDBACK_TRACE_20261115.md)은 DOC_TRACE_PASS, 실제 업무 Work/Evidence·Updater 후보/Preview·Knowledge/RAG E2E는 별도 증거 확보 전 `NOT_RUN`. 설치·Job 실행/분석 PASS로 소급하지 않음.
