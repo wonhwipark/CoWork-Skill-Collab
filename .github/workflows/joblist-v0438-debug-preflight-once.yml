@@ -1,0 +1,120 @@
+name: Verify approved read-only Job-list v0.4.38 debug release
+on:
+  push:
+    paths:
+      - .github/workflows/joblist-v0438-debug-preflight-once.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch immutable v0.4.36 PUBLIC baseline
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fLsS --max-time 75 --retry 2 -o baseline.zip "https://raw.githubusercontent.com/wonhwipark/L1Work/main/job-list_v0_4_36_1112.zip"
+          test "$(wc -c < baseline.zip)" -eq 1563658
+          echo 'cbe17dc15199593e2a9bce6aa2b8857c1f011336ebd2cd3d4c8ee3cce0eee3f6  baseline.zip' | sha256sum -c -
+      - name: Build approved debug release and validate package
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 .github/joblist-nrtx-v0438/build_debug_release.py baseline.zip .github/joblist-nrtx-v0438/debug-out
+          python3 - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile
+          import hashlib, json, stat
+          p=Path('.github/joblist-nrtx-v0438/debug-out/job-list_v0_4_38_1115.zip')
+          with ZipFile(p) as z:
+              assert z.testzip() is None
+              names=z.namelist()
+              assert names and len(names)==len(set(names))
+              assert all(n.startswith('job-list_v0_4_38/') for n in names)
+              for x in z.infolist():
+                  assert '..' not in Path(x.filename).parts
+                  assert not stat.S_ISLNK(x.external_attr >> 16)
+              z.extractall('stage')
+          root=Path('stage/job-list_v0_4_38')
+          release=json.loads((root/'.skill-release.json').read_text())
+          assert release['channel']=='stable'
+          assert release['version']=='0.4.38'
+          assert release['name']=='job-list'
+          a=json.loads((root/'requests/one-shot-jobs.json').read_text())['jobs']
+          assert len(a)==1
+          assert a[0]['job_id']=='JOB-20261115-NR-L1TX-INIT-RACH-EXEC-01'
+          assert a[0]['profile']=='nr-l1tx-init-rach-analysis-linux'
+          assert a[0]['params']=={}
+          worker=(root/'scripts/nrtx_init_rach_linux_job.py').read_text()
+          prompt=(root/'references/NR_TX_INIT_RACH_CODE_ANALYSIS_v0438.md').read_text()
+          assert 'L2_L1_TX_REQ' in prompt and 'code-analyzer' in prompt
+          for forbidden in ('/home/whpark','CoWork-Skill-Collab','private_key','BEGIN OPENSSH PRIVATE KEY'):
+              assert forbidden not in worker and forbidden not in prompt
+          for required in ('"edit": "deny"','"write": "deny"','"apply_patch": "deny"','"webfetch": "deny"'):
+              assert required in worker
+          assert 'APPROVED READ-ONLY DEBUG RELEASE' in (root/'SKILL.md').read_text()
+          assert p.stat().st_size>1500000
+          print('DEBUG_RELEASE_SHA256='+hashlib.sha256(p.read_bytes()).hexdigest())
+          print('DEBUG_RELEASE_BYTES='+str(p.stat().st_size))
+          print('RELEASE_CHANNEL='+release['channel'])
+          print('ACTIVE_JOBS=1, ZIP_CRC=PASS, PATHS=PASS, PRIVACY=PASS')
+          PY
+          python3 -m py_compile stage/job-list_v0_4_38/scripts/job_core.py stage/job-list_v0_4_38/scripts/nrtx_init_rach_linux_job.py
+          python3 stage/job-list_v0_4_38/scripts/job_core.py validate --root stage/job-list_v0_4_38
+      - name: Regression suite
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m venv "$RUNNER_TEMP/venv"
+          "$RUNNER_TEMP/venv/bin/python" -m pip install -q pytest
+          cd stage/job-list_v0_4_38
+          "$RUNNER_TEMP/venv/bin/python" -m pytest -q \
+            tests/test_v0434_dependency_gate.py \
+            tests/test_v0432_knowledge_workflow_bridge.py \
+            tests/test_v0431_knowledge_input_stage.py \
+            tests/test_v0436_nrtx_active.py \
+            tests/test_v0438_init_rach_active.py
+      - name: Record exact result with error status
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          REPORT="collab/projects/NR-L1TX-CODE-ANALYSIS-20261115-001/PRE_RELEASE_VALIDATION_v0438.md"
+          mkdir -p "$(dirname "$REPORT")"
+          P=".github/joblist-nrtx-v0438/debug-out/job-list_v0_4_38_1115.zip"
+          if test -s "$P"; then
+            B="$(wc -c < "$P")"; H="$(sha256sum "$P" | awk '{print $1}')"
+          else
+            B="NOT_BUILT"; H="NOT_BUILT"
+          fi
+          {
+            echo '# v0.4.38 approved read-only debug ZIP — pre-release evidence'
+            echo '- Workflow: https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/${{ github.run_id }}'
+            echo '- Job status before report: ${{ job.status }}'
+            echo "- ZIP: job-list_v0_4_38_1115.zip"
+            echo "- Actual bytes: $B"
+            echo "- Actual SHA-256: $H"
+            echo '- Tests: see actual workflow regression step; not implied by ZIP presence'
+            echo '- Independent review: POST_RELEASE_PENDING'
+            echo '- Linux G0, MCP E2E, NR analysis: POST_RELEASE_PENDING/NOT_RUN'
+            echo '- PUBLIC: not yet posted at this phase'
+          } > "$REPORT"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- "$REPORT"
+          git diff --cached --check
+          if ! git diff --cached --quiet; then
+            git commit -m 'test(job-list): record actual v0.4.38 debug release preflight'
+            git push origin HEAD:main
+          fi
+      - name: Archive isolated approved debug ZIP
+        uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: job-list-v0438-approved-debug-verified
+          path: .github/joblist-nrtx-v0438/debug-out/job-list_v0_4_38_1115.zip
+          if-no-files-found: error
+          retention-days: 14
