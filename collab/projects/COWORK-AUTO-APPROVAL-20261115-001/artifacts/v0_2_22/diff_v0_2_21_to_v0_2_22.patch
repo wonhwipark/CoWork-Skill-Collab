@@ -1,0 +1,986 @@
+diff --git a/docs/CUTOVER_RUNBOOK.md b/docs/CUTOVER_RUNBOOK.md
+--- a/docs/CUTOVER_RUNBOOK.md
++++ b/docs/CUTOVER_RUNBOOK.md
+@@ -1,4 +1,4 @@
+-# Cutover runbook: Dropbox to GitHub (v0.2.21, development_not_for_deployment)
++# Cutover runbook: Dropbox to GitHub (v0.2.22, development_not_for_deployment)
+ 
+ Status: a design with isolated test evidence. Nothing here installs, starts or switches anything on the
+ operating host. Each step marked APPROVAL needs an explicit decision by the user.
+diff --git a/skill_collab_watcher/__init__.py b/skill_collab_watcher/__init__.py
+--- a/skill_collab_watcher/__init__.py
++++ b/skill_collab_watcher/__init__.py
+@@ -1 +1 @@
+-__version__ = "0.2.21"
++__version__ = "0.2.22"
+diff --git a/skill_collab_watcher/auto_approval.py b/skill_collab_watcher/auto_approval.py
+--- a/skill_collab_watcher/auto_approval.py
++++ b/skill_collab_watcher/auto_approval.py
+@@ -19,7 +19,7 @@
+ import threading
+ import time
+ import zipfile
+-from dataclasses import dataclass
++from dataclasses import dataclass, replace
+ from datetime import datetime, timedelta, timezone
+ from pathlib import Path
+ 
+@@ -157,6 +157,18 @@
+     return True, "ok"
+ 
+ 
++def project_scope(d, project: str):
++    """The delegation as it applies to one project: an exact listed project, or a project that continues an owner-listed family prefix. The copy
++    returned for a family match only adds THIS verified project to the set the gate checks."""
++    if not project:
++        return None
++    if project in d.projects:
++        return d
++    if any(project.startswith(f) and len(project) > len(f) for f in getattr(d, "families", ())):
++        return replace(d, projects=d.projects | {project})
++    return None
++
++
+ def _iso(value, name):
+     try:
+         t = datetime.fromisoformat(str(value))
+@@ -173,6 +185,22 @@
+     return int(round(float(value) * 100))
+ 
+ 
++@dataclass(frozen=True)
++class Scope(auto_policy.Delegation):
++    """The gate's Delegation plus the owner's explicit project families (prefixes). Only the scope helpers read `families`."""
++    families: frozenset = frozenset()
++
++
++def _families(raw) -> frozenset:
++    value = raw.get("project_families", [])
++    if not isinstance(value, list) or not all(isinstance(x, str) for x in value):
++        raise ValueError("project_families must be a list of strings")
++    for x in value:
++        if not (x.endswith("-") and len(x) >= 8 and not x.startswith("-") and "*" not in x and not any(c.isspace() for c in x)):
++            raise ValueError("a project family must end with '-', be at least 8 characters, and contain no wildcard or spaces")
++    return frozenset(value)
++
++
+ def load_delegation(path: Path, now: float, acl_check: str = "windows"):
+     """(Delegation | None, reason). None means: nothing may be signed. A disabled delegation is returned as such (enabled=False)."""
+     try:
+@@ -191,11 +219,13 @@
+             return None, "POLICY_SCOPE_FORMAT"
+         if raw.get("policy", "POLICY-STATIC-V1") != "POLICY-STATIC-V1":
+             return None, "POLICY_NOT_STATIC_V1"
+-        d = auto_policy.Delegation(
++        families = _families(raw)
++        d = Scope(
+             enabled=enabled, repo_id=str(raw["repo_id"]), branch=str(raw["branch"]), projects=frozenset(projects), skills=frozenset(skills),
+             expires_at=_iso(raw["expires_at"], "expires_at"), earliest_request_at=_iso(raw["enabled_at"], "enabled_at"),
+             max_request_cents=_cents(raw.get("max_request_usd", 1.0), "max_request_usd"), max_day_calls=int(raw.get("max_day_calls", 2)),
+-            max_day_cents=_cents(raw.get("max_day_usd", 3.0), "max_day_usd"), max_month_cents=_cents(raw.get("max_month_usd", 10.0), "max_month_usd"))
++            max_day_cents=_cents(raw.get("max_day_usd", 3.0), "max_day_usd"), max_month_cents=_cents(raw.get("max_month_usd", 10.0), "max_month_usd"),
++            families=families)
+         return d, "ok"
+     except (OSError, ValueError, KeyError, TypeError):
+         return None, "POLICY_UNREADABLE"
+@@ -323,6 +353,12 @@
+ 
+ 
+ class AutoApprover:
++    # Requests being handled by ANY approver object of this process. A second call for the same request while the first is still between its
++    # reservation and its publications must not treat the reservation as a crashed attempt and sign again. Across processes the single-instance
++    # watcher lock already serialises the work, and a restart after a crash clears this set.
++    _in_progress: set = set()
++    _guard = threading.Lock()
++
+     def __init__(self, settings: AutoSettings, store, signer=None, now_fn=time.time, sleep=time.sleep):
+         self.s, self.store, self.now_fn, self.sleep = settings, store, now_fn, sleep
+         self.signer = signer if signer is not None else (ToolSigner.from_config(settings.signer) if settings.signer else None)
+@@ -370,6 +406,17 @@
+         self.store = store                                             # always the store of the cycle in progress (it is replaced on a restart)
+         if store.read_only:
+             return AutoResult("READ_ONLY")
++        with AutoApprover._guard:
++            if request_id in AutoApprover._in_progress:
++                return AutoResult("IN_PROGRESS")
++            AutoApprover._in_progress.add(request_id)
++        try:
++            return self._process_once(transport, store, policy, remote_root, request_id, request_text, request_raw)
++        finally:
++            with AutoApprover._guard:
++                AutoApprover._in_progress.discard(request_id)
++
++    def _process_once(self, transport, store, policy, remote_root, request_id, request_text, request_raw) -> AutoResult:
+         try:
+             return self._process(transport, store, policy, remote_root, request_id, request_text, request_raw)
+         except Exception as exc:                                       # noqa: BLE001  one bad request must not stop the others
+@@ -377,7 +424,7 @@
+             try:
+                 rev = str(parse_front_matter(request_text).get("request_revision"))
+                 claim = store.auto_get_claim(request_id, rev)
+-                if claim and claim["stage"] not in ("READY_POSTED", "UNCERTAIN"):
++                if claim and claim["stage"] not in ("READY_POSTED", "UNCERTAIN", "POLICY_STOPPED"):
+                     store.auto_update(request_id, rev, int(self.now_fn()), stage="UNCERTAIN", detail=f"unexpected {type(exc).__name__}")
+             except Exception:                                          # noqa: BLE001
+                 claim = claim or None
+@@ -430,9 +477,18 @@
+         pins_ok = (pin.get("schema") == PIN_SCHEMA and re.fullmatch(r"[0-9a-f]{40}", commit) is not None
+                    and str(pin.get("repo_id")) == server_repo == delegation.repo_id)
+ 
+-        project = str(front.get("project_id") or front.get("work_id") or "")
+-        if front.get("project_id") and front.get("work_id") and front["project_id"] != front["work_id"]:
+-            project = ""
++        pid, wid = front.get("project_id"), front.get("work_id")
++        if pid and wid and str(pid) != str(wid):
++            self._once("AUTO_NOT_ELIGIBLE", rid, "PROJECT_IDS_DIFFER: project_id and work_id name different projects")
++            return AutoResult("PROJECT_IDS_DIFFER")
++        project = str(pid or wid or "")
++        if not project:
++            self._once("AUTO_NOT_ELIGIBLE", rid, "PROJECT_ID_MISSING")
++            return AutoResult("PROJECT_ID_MISSING")
++        scoped = project_scope(delegation, project)
++        if scoped is None:
++            self._once("AUTO_NOT_ELIGIBLE", rid, "PROJECT_NOT_IN_SCOPE: the project is neither listed nor inside an owner-listed family")
++            return AutoResult("PROJECT_NOT_IN_SCOPE")
+         run_policy = str(front.get("run_policy_ref", ""))
+         package_path = str(front.get("package_path", ""))
+         budget = policy.run_budgets_usd.get(run_policy)
+@@ -453,10 +509,7 @@
+                 return AutoResult("COMMIT_UNREADABLE")
+ 
+         prior = self._prior_state(transport, store, root, rid, rev)
+-        day_key, month_key = _kst_keys(now)
+-        real_calls = store.dispatches_since(24)
+-        real_day = int(math.ceil(store.spend_since(24) * 100))
+-        real_month = int(math.ceil(store.spend_since(24 * 31) * 100))
++        usage = store.window_usage(now)
+         signer_ok = bool(self.signer is not None and policy.trust_root is not None and policy.signature_backend is not None
+                          and (not hasattr(self.signer, "trusts_key") or self.signer.trusts_key(policy.trust_root)))
+         cand = auto_policy.Candidate(
+@@ -464,7 +517,6 @@
+             branch=str(getattr(transport, "branch", "main")), created_at=created_at, commit_a=commit,
+             request_sha256=hashlib.sha256(request_raw).hexdigest(), zip_sha256=str(front.get("package_sha256", "")), policy=run_policy,
+             estimated_cents=estimated, max_calls=1, attempt=1, state=str(front.get("state", "")))
+-        month_used = real_month
+         # specific, honest reasons for the three input checks (the pure gate would only say INPUT_OR_TRUST)
+         if not pins_ok:
+             self._once("AUTO_NOT_ELIGIBLE", rid, "PIN_MISMATCH: SOURCE_PIN schema, commit or repository id do not match the server and the delegation")
+@@ -476,9 +528,10 @@
+             self._once("AUTO_NOT_ELIGIBLE", rid, "COMMIT_A_MISMATCH: the pinned commit does not hold the same REQUEST and package bytes")
+             return AutoResult("COMMIT_A_MISMATCH")
+         ev = auto_policy.Evidence(now=now, pins_verified=pins_ok and commit_ok, bytes_and_crc_verified=bytes_ok, signer_and_trust_root_valid=signer_ok,
+-                                  prior_state=prior, day_calls_used_or_reserved=real_calls, day_cents_used_or_reserved=real_day,
+-                                  month_cents_used_or_reserved=month_used, atomic_claim_available=True)
+-        ok, reason = auto_policy.assess(delegation, cand, ev)
++                                  prior_state=prior, day_calls_used_or_reserved=usage["day_calls"],
++                                  day_cents_used_or_reserved=usage["day_cents"], month_cents_used_or_reserved=usage["month_cents"],
++                                  atomic_claim_available=True)
++        ok, reason = auto_policy.assess(scoped, cand, ev)
+         if not ok:
+             ev_name = "AUTO_DUPLICATE_BLOCKED" if reason == "DUPLICATE_OR_UNCERTAIN" else "AUTO_NOT_ELIGIBLE"
+             self._once(ev_name, rid, reason)
+@@ -497,15 +550,17 @@
+             return AutoResult("VALIDATOR_" + check.outcome.value)
+ 
+         # ---- atomic reservation -------------------------------------------------------------------------------------------------------------
+-        verdict = store.auto_claim(rid, rev, cand.zip_sha256, estimated, day_key, month_key, now,
++        candidate = json.dumps({"request_id": rid, "revision": rev, "project": project, "skill": cand.skill, "policy": run_policy,
++                                "cents": estimated, "created_at": created_at, "commit": commit, "repo_id": str(server_repo),
++                                "branch": cand.branch, "state": cand.state, "request_sha256": cand.request_sha256,
++                                "zip_sha256": cand.zip_sha256, "package_path": package_path}, sort_keys=True)
++        verdict = store.auto_claim(rid, rev, cand.zip_sha256, estimated, candidate, now,
+                                    max_day_calls=delegation.max_day_calls, max_day_cents=delegation.max_day_cents,
+-                                   max_month_cents=delegation.max_month_cents, extra_day_calls=real_calls, extra_day_cents=real_day,
+-                                   extra_month_cents=real_month)
++                                   max_month_cents=delegation.max_month_cents)
+         if verdict != "CLAIMED":
+             self._once("AUTO_LIMIT_BLOCKED" if verdict.endswith("LIMIT") else "AUTO_DUPLICATE_BLOCKED", rid, verdict)
+             return AutoResult(verdict)
+-        store.auto_update(rid, rev, now, detail="request_sha256=" + cand.request_sha256)
+-        self._event("AUTO_RESERVED", rid, f"{estimated} cents reserved for {day_key}/{month_key}; signing follows")
++        self._event("AUTO_RESERVED", rid, f"{estimated} cents reserved; signing follows")
+         return self._sign_and_post(transport, store, policy, base, rid, rev, delegation, front, request_raw, ready_raw, package_raw, pin_raw, commit)
+ 
+     # -- helpers --
+@@ -534,20 +589,48 @@
+             return "LOCAL_HISTORY"
+         return "NEW"
+ 
+-    def _still_allowed(self, transport, delegation_expected_repo: str) -> tuple[bool, str]:
+-        now = int(self.now_fn())
++    def _revalidate(self, transport, store, rid, rev, claim, now) -> tuple[bool, str]:
++        """The stored candidate must still be allowed by the CURRENT protected delegation: enabled, unexpired, same repository, the project in the
++        (exact or family) scope, the skill in its list, the limits (per request, day, month) counted without this request's own reservation, and the
++        pure gate. Anything else stops the request. Nothing is cached: this runs before every signature and every publication."""
++        stored = json.loads((claim or {}).get("candidate_json") or "{}")
++        if not stored:
++            return False, "CANDIDATE_MISSING"
+         d, why = load_delegation(self.s.delegation_file, now, self.s.acl_check)
+-        if d is None or not d.enabled:
+-            return False, "DELEGATION_OFF_OR_UNUSABLE"
+-        if now >= d.expires_at:
+-            return False, "DELEGATION_EXPIRED"
++        if d is None:
++            return False, "DELEGATION_UNUSABLE:" + why
++        if not d.enabled:
++            return False, "DELEGATION_DISABLED"
+         try:
+-            if transport.repository_id() != d.repo_id or d.repo_id != delegation_expected_repo:
++            if transport.repository_id() != d.repo_id or d.repo_id != stored.get("repo_id"):
+                 return False, "REPOSITORY_CHANGED"
+         except (TransportError, AuthRequired):
+             return False, "REPOSITORY_UNVERIFIABLE"
++        scoped = project_scope(d, str(stored.get("project", "")))
++        if scoped is None:
++            return False, "PROJECT_NOT_IN_SCOPE"
++        usage = store.window_usage(now, exclude=(rid, rev))
++        cand = auto_policy.Candidate(
++            request_id=rid, revision=int(rev) if rev.isdigit() else 0, project=str(stored["project"]), skill=str(stored.get("skill", "")),
++            repo_id=str(stored["repo_id"]), branch=str(stored.get("branch", "main")), created_at=int(stored["created_at"]),
++            commit_a=str(stored["commit"]), request_sha256=str(stored["request_sha256"]), zip_sha256=str(stored["zip_sha256"]),
++            policy=str(stored["policy"]), estimated_cents=int(stored["cents"]), max_calls=1, attempt=1, state=str(stored.get("state", "")))
++        ev = auto_policy.Evidence(now=now, pins_verified=True, bytes_and_crc_verified=True, signer_and_trust_root_valid=True,
++                                  prior_state="NEW", day_calls_used_or_reserved=usage["day_calls"],
++                                  day_cents_used_or_reserved=usage["day_cents"], month_cents_used_or_reserved=usage["month_cents"],
++                                  atomic_claim_available=True)
++        ok, reason = auto_policy.assess(scoped, cand, ev)
++        if not ok:
++            return False, f"CURRENT_POLICY:{reason}"
+         return True, "ok"
+ 
++    def _policy_stop(self, store, rid, rev, why: str) -> AutoResult:
++        """The delegation no longer allows this exact candidate. Terminal for the request: no signature, no publication, no model. Anything already
++        published stays as it is (an approval expires on its own within its validity; without READY no review starts)."""
++        store.auto_update(rid, rev, int(self.now_fn()), stage="POLICY_STOPPED", detail=why[:200])
++        self._event("AUTO_POLICY_STOPPED", rid, f"{why}; no further automatic action for this request")
++        return AutoResult("POLICY_STOPPED", why)
++
+     def _uncertain(self, store, rid, rev, why: str) -> AutoResult:
+         store.auto_update(rid, rev, int(self.now_fn()), stage="UNCERTAIN", detail=why[:200])
+         self._event("AUTO_SIGNING_UNCERTAIN", rid, f"{why}; no further automatic action for this request")
+@@ -555,9 +638,9 @@
+ 
+     def _sign_and_post(self, transport, store, policy, base, rid, rev, delegation, front, request_raw, ready_raw, package_raw, pin_raw, commit) -> AutoResult:
+         t = lambda: int(self.now_fn())                                 # noqa: E731
+-        ok, why = self._still_allowed(transport, delegation.repo_id)   # immediately before the signature
++        ok, why = self._revalidate(transport, store, rid, rev, store.auto_get_claim(rid, rev), t())   # immediately before the signature
+         if not ok:
+-            return self._uncertain(store, rid, rev, f"stopped before signing: {why}")
++            return self._policy_stop(store, rid, rev, f"before signing: {why}")
+         try:
+             approval_raw = self.signer.sign(request_raw, ready_raw, package_raw, str(front["package_path"]), commit, policy.local_policy_revision,
+                                             self.s.valid_hours)
+@@ -575,9 +658,9 @@
+         claim = store.auto_get_claim(rid, rev)
+         approval_raw, ready_raw = claim["approval_text"].encode("utf-8"), claim["ready_text"].encode("utf-8")
+         if claim["stage"] == "SIGNED_LOCAL":
+-            ok, why = self._still_allowed(transport, delegation.repo_id)
++            ok, why = self._revalidate(transport, store, rid, rev, claim, int(self.now_fn()))
+             if not ok:
+-                return self._uncertain(store, rid, rev, f"stopped before posting the approval: {why}")
++                return self._policy_stop(store, rid, rev, f"before posting the approval: {why}")
+             if self._exists(transport, f"{base}/READY.md"):
+                 return self._uncertain(store, rid, rev, "a READY already exists remotely")
+             res = self._post_create_only(transport, f"{base}/APPROVAL_SIG.json", approval_raw)
+@@ -587,9 +670,9 @@
+             self._event("AUTO_APPROVAL_POSTED", rid, "APPROVAL_SIG.json published and read back; READY is published last")
+             claim = store.auto_get_claim(rid, rev)
+         if claim["stage"] == "APPROVAL_POSTED":
+-            ok, why = self._still_allowed(transport, delegation.repo_id)
++            ok, why = self._revalidate(transport, store, rid, rev, claim, int(self.now_fn()))
+             if not ok:
+-                return self._uncertain(store, rid, rev, f"stopped before posting READY: {why}")
++                return self._policy_stop(store, rid, rev, f"before posting READY: {why}")
+             try:
+                 remote_approval = transport.download_latest(f"{base}/APPROVAL_SIG.json")[0]
+             except (TransportError, AuthRequired):
+@@ -606,7 +689,7 @@
+ 
+     def _resume(self, transport, store, policy, base, rid, rev, claim, delegation, front, request_raw) -> AutoResult:
+         stage = claim["stage"]
+-        if stage in ("READY_POSTED", "UNCERTAIN"):
++        if stage in ("READY_POSTED", "UNCERTAIN", "POLICY_STOPPED"):
+             return AutoResult(stage)
+         now = int(self.now_fn())
+         if stage == "RESERVED":
+@@ -624,8 +707,9 @@
+                 package_raw = transport.download(str(front["package_path"]))[0]
+             except Exception as exc:                                   # noqa: BLE001
+                 return self._uncertain(store, rid, rev, f"recovery: inputs unreadable ({type(exc).__name__})")
++            stored = json.loads(claim.get("candidate_json") or "{}")
+             if (hashlib.sha256(package_raw).hexdigest() != claim["package_sha256"] or str(pin.get("repo_id")) != delegation.repo_id
+-                    or "request_sha256=" + hashlib.sha256(request_raw).hexdigest() != (claim.get("detail") or "")):
++                    or stored.get("request_sha256") != hashlib.sha256(request_raw).hexdigest()):
+                 return self._uncertain(store, rid, rev, "recovery: bytes changed since the reservation")
+             ready_raw = self._ready_for(policy, front, request_raw, claim).encode("utf-8")
+             return self._sign_and_post(transport, store, policy, base, rid, rev, delegation, front, request_raw, ready_raw, package_raw, pin_raw,
+diff --git a/skill_collab_watcher/state_store.py b/skill_collab_watcher/state_store.py
+--- a/skill_collab_watcher/state_store.py
++++ b/skill_collab_watcher/state_store.py
+@@ -3,7 +3,7 @@
+ import sqlite3
+ import uuid
+ from contextlib import closing
+-from datetime import datetime, timezone
++from datetime import datetime, timedelta, timezone
+ from pathlib import Path
+ 
+ from .models import JobRecord, JobState
+@@ -94,6 +94,7 @@
+     day_key TEXT NOT NULL,
+     month_key TEXT NOT NULL,
+     attempts INTEGER NOT NULL DEFAULT 1,
++    candidate_json TEXT,
+     approval_text TEXT,
+     ready_text TEXT,
+     detail TEXT,
+@@ -108,6 +109,17 @@
+     return datetime.now(timezone.utc).isoformat()
+ 
+ 
++KST = timezone(timedelta(hours=9))
++
++
++def kst_window_starts(now: int) -> tuple[int, int]:
++    """Epoch seconds of the start of the KST calendar day and of the KST calendar month containing `now`."""
++    t = datetime.fromtimestamp(now, KST)
++    day = t.replace(hour=0, minute=0, second=0, microsecond=0)
++    month = day.replace(day=1)
++    return int(day.timestamp()), int(month.timestamp())
++
++
+ class ProviderConflict(RuntimeError):
+     """Another provider already holds the LIVE lease, or a switch is not safe now."""
+ 
+@@ -311,20 +323,72 @@
+ 
+     def auto_get_claim(self, request_id: str, revision: str) -> dict | None:
+         with closing(self.conn.execute(
+-            "SELECT package_sha256, stage, reserved_cents, day_key, month_key, attempts, approval_text, ready_text, detail, created_at, updated_at "
++            "SELECT package_sha256, stage, reserved_cents, day_key, month_key, attempts, approval_text, ready_text, detail, created_at, updated_at, candidate_json "
+             "FROM auto_claims WHERE request_id=? AND revision=?", (request_id, revision))) as cur:
+             row = cur.fetchone()
+         if row is None:
+             return None
+         names = ("package_sha256", "stage", "reserved_cents", "day_key", "month_key", "attempts", "approval_text", "ready_text", "detail",
+-                 "created_at", "updated_at")
++                 "created_at", "updated_at", "candidate_json")
+         return dict(zip(names, row))
+ 
+-    def auto_claim(self, request_id: str, revision: str, package_sha256: str, cents: int, day_key: str, month_key: str, now: int, *,
+-                   max_day_calls: int, max_day_cents: int, max_month_cents: int,
+-                   extra_day_calls: int = 0, extra_day_cents: int = 0, extra_month_cents: int = 0) -> str:
+-        """Atomic reservation (BEGIN IMMEDIATE): one row per (request, revision) EVER, and the day/month ceilings are checked in the same
+-        transaction against every earlier reservation (all stages count, including uncertain ones) and the watcher's own recorded dispatches.
++    def _auto_usage_locked(self, now: int, exclude: tuple[str, str] | None) -> dict:
++        """Delegation usage inside the caller's write transaction. One identity (request id, revision) counts ONCE: its call is counted once and its
++        cost is the larger of its automatic reservation and its watcher dispatch cost (never the sum, never a lost part). Day = KST calendar day,
++        month = KST calendar month. `exclude` removes the candidate's own identity when a stored candidate is re-checked."""
++        day_start, month_start = kst_window_starts(now)
++        window_rows = self.conn.execute(
++            "SELECT request_id, revision, reserved_cents, created_at FROM auto_claims WHERE created_at >= ?", (month_start,)).fetchall()
++        dispatch_rows = self.conn.execute(
++            "SELECT ts, event, processing_key, detail FROM audit_log WHERE event IN ('REVIEW_DISPATCHED', 'REVIEW_COST') AND ts >= ? ORDER BY id",
++            ((datetime.fromtimestamp(month_start, KST) - timedelta(days=1)).astimezone(timezone.utc).isoformat(),)).fetchall()
++        import json
++        import math
++
++        def usage(start: int) -> tuple[int, int]:
++            idents: dict[tuple[str, str], int] = {}
++            for rid, rev, cents, created in window_rows:
++                if created >= start and (rid, rev) != exclude:
++                    idents[(rid, rev)] = max(idents.get((rid, rev), 0), int(cents))
++            capped: dict[str, float] = {}
++            cost: dict[str, float] = {}
++            keys: dict[str, tuple[str, str]] = {}
++            for ts, event, key, detail in dispatch_rows:
++                try:
++                    when = datetime.fromisoformat(ts)
++                except ValueError:
++                    continue
++                if when.timestamp() < start or not key:
++                    continue
++                parts = key.split("|")
++                ident = (parts[0], parts[1]) if len(parts) >= 2 else (key, "")
++                if ident == exclude:
++                    continue
++                keys[key] = ident
++                try:
++                    data = json.loads(detail or "{}")
++                except ValueError:
++                    data = {}
++                if event == "REVIEW_DISPATCHED":
++                    capped[key] = float(data.get("max_budget_usd") or 0.0)
++                elif data.get("total_cost_usd") is not None:
++                    cost[key] = float(data["total_cost_usd"])
++            for key, ident in keys.items():
++                amount = cost.get(key, capped.get(key, 0.0))
++                idents[ident] = max(idents.get(ident, 0), int(math.ceil(amount * 100)))
++            return len(idents), sum(idents.values())
++
++        day_calls, day_cents = usage(day_start)
++        _, month_cents = usage(month_start)
++        return {"day_calls": day_calls, "day_cents": day_cents, "month_cents": month_cents}
++
++    def window_usage(self, now: int, *, exclude: tuple[str, str] | None = None) -> dict:
++        return self._auto_usage_locked(now, exclude)
++
++    def auto_claim(self, request_id: str, revision: str, package_sha256: str, cents: int, candidate_json: str, now: int, *,
++                   max_day_calls: int, max_day_cents: int, max_month_cents: int) -> str:
++        """Atomic reservation (BEGIN IMMEDIATE). One row per (request, revision) EVER. The delegation ceilings are evaluated against the watcher's own
++        recorded dispatches and the other automatic reservations, in the same transaction, with the identity rule of _auto_usage_locked.
+         Returns CLAIMED, EXISTS, DAY_CALL_LIMIT, DAY_COST_LIMIT, MONTH_COST_LIMIT or READ_ONLY."""
+         if self._skip_write("AUTO_CLAIM", None, request_id):
+             return "READ_ONLY"
+@@ -334,24 +398,23 @@
+                 if cur.fetchone():
+                     self.conn.execute("ROLLBACK")
+                     return "EXISTS"
+-            with closing(self.conn.execute("SELECT COUNT(*), COALESCE(SUM(reserved_cents),0) FROM auto_claims WHERE day_key=?", (day_key,))) as cur:
+-                day_calls, day_cents = cur.fetchone()
+-            with closing(self.conn.execute("SELECT COALESCE(SUM(reserved_cents),0) FROM auto_claims WHERE month_key=?", (month_key,))) as cur:
+-                month_cents = cur.fetchone()[0]
+-            day_calls, day_cents, month_cents = max(day_calls, extra_day_calls), max(day_cents, extra_day_cents), max(month_cents, extra_month_cents)
++            usage = self._auto_usage_locked(now, exclude=(request_id, revision))
+             verdict = None
+-            if day_calls >= max_day_calls:
++            if usage["day_calls"] + 1 > max_day_calls:
+                 verdict = "DAY_CALL_LIMIT"
+-            elif day_cents + cents > max_day_cents:
++            elif usage["day_cents"] + cents > max_day_cents:
+                 verdict = "DAY_COST_LIMIT"
+-            elif month_cents + cents > max_month_cents:
++            elif usage["month_cents"] + cents > max_month_cents:
+                 verdict = "MONTH_COST_LIMIT"
+             if verdict:
+                 self.conn.execute("ROLLBACK")
+                 return verdict
++            day_key = datetime.fromtimestamp(now, KST).strftime("%Y-%m-%d")
++            month_key = datetime.fromtimestamp(now, KST).strftime("%Y-%m")
+             self.conn.execute(
+-                "INSERT INTO auto_claims (request_id, revision, package_sha256, stage, reserved_cents, day_key, month_key, attempts, created_at, updated_at) "
+-                "VALUES (?, ?, ?, 'RESERVED', ?, ?, ?, 1, ?, ?)", (request_id, revision, package_sha256, cents, day_key, month_key, now, now))
++                "INSERT INTO auto_claims (request_id, revision, package_sha256, stage, reserved_cents, day_key, month_key, attempts, candidate_json, created_at, updated_at) "
++                "VALUES (?, ?, ?, 'RESERVED', ?, ?, ?, 1, ?, ?, ?)",
++                (request_id, revision, package_sha256, cents, day_key, month_key, candidate_json, now, now))
+             self.conn.execute("COMMIT")
+         except Exception:
+             self.conn.execute("ROLLBACK")
+diff --git a/tests/auto_helpers.py b/tests/auto_helpers.py
+--- a/tests/auto_helpers.py
++++ b/tests/auto_helpers.py
+@@ -51,7 +51,7 @@
+         return super().sign(*a, **k)
+ 
+ 
+-def make_request(http, rid="REQ-A", rev=1, *, state="REQUESTED", package=None, policy_ref="POLICY-STATIC-V1", project="test-project", skill="test-skill",
++def make_request(http, rid="REQ-A", rev=1, *, state="REQUESTED", package=None, policy_ref="POLICY-STATIC-V1", project="test-project", work=None, skill="test-skill",
+                  pin=True, size_delta=0, body_extra="", package_path=None, sha_override=None, pin_repo_id=None):
+     """REQUEST + package in commit A, SOURCE_PIN (data only, as GPT publishes it) in a later commit. Returns what a test needs to tamper with."""
+     package = package if package is not None else make_package_zip(rid)
+@@ -63,7 +63,7 @@
+ request_id: {rid}
+ request_revision: {rev}
+ project_id: {project}
+-work_id: {project}
++work_id: {work or project}
+ skill_id: {skill}
+ package_path: {pkg_path}
+ package_file_id: github:{rid}
+diff --git a/tests/test_auto_approval.py b/tests/test_auto_approval.py
+--- a/tests/test_auto_approval.py
++++ b/tests/test_auto_approval.py
+@@ -34,6 +34,11 @@
+     return (approver or auto.approver).process(transport, store or auto.env.store, auto.policy, "/SKILL-COLLAB", rid, info.request.decode(), info.request).status
+ 
+ 
++def denied_for(env, reason):
++    """A ceiling refusal is recorded either by the gate (AUTO_NOT_ELIGIBLE) or by the atomic reservation (AUTO_LIMIT_BLOCKED)."""
++    return has(env, "AUTO_LIMIT_BLOCKED", reason) or has(env, "AUTO_NOT_ELIGIBLE", reason)
++
++
+ def approval_posted(env, rid="REQ-A"):
+     return remote(env, REQ.format(rid=rid) + "APPROVAL_SIG.json") is not None
+ 
+@@ -282,7 +287,7 @@
+         make_request(auto.env.http, rid)
+     auto.cycle()
+     assert [approval_posted(auto.env, r) for r in ("REQ-A", "REQ-B", "REQ-C")] == [True, True, False]
+-    assert has(auto.env, "AUTO_LIMIT_BLOCKED", "DAY_CALL_LIMIT") and type(auto.signer).calls == 2
++    assert denied_for(auto.env, "DAY_CALL_LIMIT") and type(auto.signer).calls == 2
+ 
+ 
+ def test_the_day_cost_limit_counts_reservations(auto):
+@@ -291,7 +296,7 @@
+     make_request(auto.env.http, "REQ-A")
+     make_request(auto.env.http, "REQ-B")
+     auto.cycle()
+-    assert approval_posted(auto.env, "REQ-A") and not approval_posted(auto.env, "REQ-B") and has(auto.env, "AUTO_LIMIT_BLOCKED", "DAY_COST_LIMIT")
++    assert approval_posted(auto.env, "REQ-A") and not approval_posted(auto.env, "REQ-B") and denied_for(auto.env, "DAY_COST_LIMIT")
+ 
+ 
+ def test_the_month_limit_spans_days(auto):
+@@ -303,7 +308,7 @@
+         auto.now["offset"] = i * 86400                                            # a new KST day each time, same month
+         statuses.append(direct(auto, rid, info))
+     assert statuses == ["READY_POSTED", "READY_POSTED", "MONTH_COST_LIMIT"]
+-    assert has(auto.env, "AUTO_LIMIT_BLOCKED", "MONTH_COST_LIMIT")
++    assert denied_for(auto.env, "MONTH_COST_LIMIT")
+ 
+ 
+ def test_a_new_kst_month_starts_a_new_month_budget(auto):
+@@ -317,8 +322,8 @@
+ 
+ 
+ def test_real_dispatches_of_the_watcher_count_against_the_day(auto):
+-    for _ in range(2):
+-        auto.env.store.log_event("REVIEW_DISPATCHED", processing_key="old|1|x|1", detail="{}")
++    for n in (1, 2):
++        auto.env.store.log_event("REVIEW_DISPATCHED", processing_key=f"old{n}|1|x|1", detail="{}")
+     make_request(auto.env.http)
+     auto.cycle()
+     assert not approval_posted(auto.env) and has(auto.env, "AUTO_NOT_ELIGIBLE", "DAY_CALL_LIMIT")
+@@ -686,7 +691,7 @@
+     monkeypatch.setattr(ToolSigner, "sign", sign_then_switch_off)
+     auto.cycle()
+     assert not approval_posted(auto.env) and not ready_posted(auto.env)
+-    assert auto.env.store.auto_get_claim("REQ-A", "1")["stage"] == "UNCERTAIN"
++    assert auto.env.store.auto_get_claim("REQ-A", "1")["stage"] == "POLICY_STOPPED"
+ 
+ 
+ def test_a_repository_that_changes_before_posting_stops_the_publication(auto, monkeypatch):
+@@ -813,32 +818,40 @@
+ 
+ # ================================ the reservation itself (store level) ===================================================================================
+ 
++def _kst_day(offset_days=0):
++    from skill_collab_watcher.state_store import kst_window_starts
++    return kst_window_starts(int(time.time()))[0] + 3600 + offset_days * 86400
++
++
+ def test_the_store_reserves_a_request_once_and_says_so(github_env):
+     s = github_env.store
+     s.ensure_auto_tables()
++    t = _kst_day()
+     kw = dict(max_day_calls=2, max_day_cents=300, max_month_cents=1000)
+-    assert s.auto_claim("R", "1", "a" * 64, 100, "2026-11-15", "2026-11", 1, **kw) == "CLAIMED"
+-    assert s.auto_claim("R", "1", "a" * 64, 100, "2026-11-15", "2026-11", 2, **kw) == "EXISTS"
+-    assert s.auto_claim("R", "2", "a" * 64, 100, "2026-11-15", "2026-11", 3, **kw) == "CLAIMED"            # another revision is another request
+-    assert s.auto_claim("R", "3", "a" * 64, 100, "2026-11-15", "2026-11", 4, **kw) == "DAY_CALL_LIMIT"
+-    assert s.auto_claim("R", "3", "a" * 64, 100, "2026-11-16", "2026-11", 5, **kw) == "CLAIMED"            # the next KST day has room
++    cj = "{}"
++    assert s.auto_claim("R", "1", "a" * 64, 100, cj, t, **kw) == "CLAIMED"
++    assert s.auto_claim("R", "1", "a" * 64, 100, cj, t + 1, **kw) == "EXISTS"
++    assert s.auto_claim("R", "2", "a" * 64, 100, cj, t + 2, **kw) == "CLAIMED"           # another revision is another request
++    assert s.auto_claim("R", "3", "a" * 64, 100, cj, t + 3, **kw) == "DAY_CALL_LIMIT"
++    assert s.auto_claim("R", "3", "a" * 64, 100, cj, _kst_day(1), **kw) == "CLAIMED"     # the next KST day has room
+ 
+ 
+ def test_many_processes_racing_for_one_request_produce_exactly_one_reservation(github_env):
+     github_env.store.ensure_auto_tables()
+     outcomes, errors = [], []
++    t = _kst_day()
+ 
+     def worker():
+         try:
+             store = StateStore(github_env.tmp / "state.sqlite3")
+-            outcomes.append(store.auto_claim("R", "1", "a" * 64, 100, "2026-11-15", "2026-11", 1, max_day_calls=9, max_day_cents=900, max_month_cents=9000))
++            outcomes.append(store.auto_claim("R", "1", "a" * 64, 100, "{}", t, max_day_calls=9, max_day_cents=900, max_month_cents=9000))
+             store.close()
+         except Exception as exc:                                                                           # noqa: BLE001
+             errors.append(repr(exc))
+ 
+     threads = [threading.Thread(target=worker) for _ in range(8)]
+-    [t.start() for t in threads]
+-    [t.join() for t in threads]
++    [t_.start() for t_ in threads]
++    [t_.join() for t_ in threads]
+     assert not errors, errors
+     assert outcomes.count("CLAIMED") == 1 and outcomes.count("EXISTS") == 7
+ 
+diff --git a/tests/test_auto_approval_e2e.py b/tests/test_auto_approval_e2e.py
+--- a/tests/test_auto_approval_e2e.py
++++ b/tests/test_auto_approval_e2e.py
+@@ -90,15 +90,32 @@
+     assert len(puts(e2e, "APPROVAL_SIG.json")) == 1 and len(puts(e2e, "READY.md")) == 1
+ 
+ 
++def _wait_event(e2e, name, seconds=120):
++    """Wait for a watcher event in its database. Used instead of sleeps: a fixed sleep raced the child's start-up and lock acquisition."""
++    end = time.time() + seconds
++    while time.time() < end:
++        try:
++            if any(e == name for e, _ in e2e.events()):
++                return
++        except Exception:                                                  # the database may not exist yet
++            pass
++        time.sleep(0.3)
++    raise AssertionError(f"event {name} never appeared")
++
++
+ def test_a_second_watcher_is_refused_and_only_one_approval_exists(e2e):
+     configure(e2e)
+     make_request(e2e.fake, "REQ-1")
+-    first = e2e.popen("watch", "--max-cycles", "6", "--poll-interval", "1", sleep="3")
+-    time.sleep(2)
+-    code, out, err = watch(e2e, 2)
+-    first.communicate(timeout=240)
+-    assert code == 3 and "already holds" in (out + err).lower()
+-    assert len(puts(e2e, "APPROVAL_SIG.json")) <= 1 and e2e.model_calls <= 1
++    first = e2e.popen("watch", "--max-cycles", "200", "--poll-interval", "1", sleep="3")
++    try:
++        _wait_event(e2e, "WATCH_START")                                    # the first process now holds the single-instance lock
++        code, out, err = watch(e2e, 1)
++        assert code == 3 and "already holds" in (out + err).lower()
++        _wait_event(e2e, "COMPLETED")                                      # its one review finished while the second watcher was refused
++    finally:
++        first.terminate()
++        first.communicate(timeout=60)
++    assert len(puts(e2e, "APPROVAL_SIG.json")) <= 1 and e2e.model_calls == 1
+ 
+ 
+ def test_requests_present_before_the_feature_was_switched_on_are_never_started(e2e):
+diff --git a/tests/test_v022_findings.py b/tests/test_v022_findings.py
+--- a/tests/test_v022_findings.py
++++ b/tests/test_v022_findings.py
+@@ -0,0 +1,340 @@
++"""v0.2.22 regressions for the GPT static findings on v0.2.21. Written against the PUBLIC flow only (the approver, the delegation file, the watcher's
++own audit events), so the same file runs against the old candidate (must FAIL where the finding is real) and the fixed one (must PASS).
++Synthetic data, throw-away key, fake GitHub. No model, no operating state."""
++from __future__ import annotations
++
++import json
++import threading
++import time
++from datetime import datetime, timedelta, timezone
++
++import pytest
++
++from auto_helpers import auto, events, has, make_request, puts, remote, write_delegation  # noqa: F401
++from bundle import make_transport  # noqa: E402
++from fake_github import rp  # noqa: E402
++from skill_collab_watcher.state_store import StateStore  # noqa: E402
++from datetime import datetime as _dt, timezone as _tz, timedelta as _td
++
++
++def kst_window_starts(now):
++    """The KST day and month starts, computed here so the same test file collects on the old candidate too."""
++    kst = _tz(_td(hours=9))
++    t = _dt.fromtimestamp(now, kst)
++    day = t.replace(hour=0, minute=0, second=0, microsecond=0)
++    return int(day.timestamp()), int(day.replace(day=1).timestamp())
++
++
++def direct(auto_ns, rid, info):
++    transport = make_transport(auto_ns.env.http)
++    transport.ensure_auth()
++    return auto_ns.approver.process(transport, auto_ns.env.store, auto_ns.policy, "/SKILL-COLLAB", rid, info.request.decode(), info.request).status
++
++
++def watcher_dispatch(store, key, cost_usd, when=None):
++    """Exactly the audit rows the watcher writes for one paid review (dispatch with its cap, then the recorded cost)."""
++    store.log_event("REVIEW_DISPATCHED", processing_key=key, detail=json.dumps({"max_budget_usd": cost_usd}))
++    store.log_event("REVIEW_COST", processing_key=key, detail=json.dumps({"total_cost_usd": cost_usd}))
++
++
++def _kst_day(offset_days=0):
++    return kst_window_starts(int(time.time()))[0] + 3600 + offset_days * 86400
++
++
++# ================================ B1: one identity counts once, union of reservations and dispatches ==============================================
++
++def test_B1_auto_reservation_plus_a_separate_manual_dispatch_is_two_calls_and_the_third_is_refused(auto):
++    """A is reserved by automation, B was dispatched by the watcher, C would be the third distinct request in a day that allows two."""
++    a = make_request(auto.env.http, "REQ-A")
++    assert direct(auto, "REQ-A", a) == "READY_POSTED"
++    watcher_dispatch(auto.env.store, "REQ-B|1|bbb|1", 1.0)
++    c = make_request(auto.env.http, "REQ-C")
++    assert direct(auto, "REQ-C", c) != "READY_POSTED"
++    assert not (auto.env.http.files().get(rp("requests/REQ-C/READY.md")) is not None)
++
++
++def test_B1_a_restart_keeps_the_union(auto):
++    a = make_request(auto.env.http, "REQ-A")
++    direct(auto, "REQ-A", a)
++    watcher_dispatch(auto.env.store, "REQ-B|1|bbb|1", 1.0)
++    fresh = StateStore(auto.env.tmp / "state.sqlite3")
++    try:
++        usage = fresh.window_usage(int(time.time()))
++    finally:
++        fresh.close()
++    assert usage["day_calls"] == 2 and usage["day_cents"] == 200
++
++
++def test_B1_the_same_request_reserved_and_dispatched_counts_once(auto):
++    """Guard against over-correction: one identity must not be counted twice."""
++    a = make_request(auto.env.http, "REQ-A")
++    assert direct(auto, "REQ-A", a) == "READY_POSTED"
++    watcher_dispatch(auto.env.store, "REQ-A|1|aaa|1", 1.0)
++    usage = auto.env.store.window_usage(int(time.time()))
++    assert usage["day_calls"] == 1 and usage["day_cents"] == 100
++    c = make_request(auto.env.http, "REQ-C")
++    assert direct(auto, "REQ-C", c) == "READY_POSTED"
++
++
++def test_B1_cost_union_across_days_counts_both_costs_against_the_month_ceiling(auto):
++    """Two days, one month: A reserved on day 0 ($1), B dispatched by the watcher ($1) on day 0's clock, C on day 1 ($1). $3 > $2.5 monthly."""
++    write_delegation(auto.delegation, max_day_calls=2, max_day_usd=3, max_month_usd=2.5)
++    a = make_request(auto.env.http, "REQ-A")
++    assert direct(auto, "REQ-A", a) == "READY_POSTED"
++    watcher_dispatch(auto.env.store, "REQ-B|1|bbb|1", 1.0)
++    auto.now["offset"] = 86400                                                    # the next KST day, same month
++    c = make_request(auto.env.http, "REQ-C")
++    assert direct(auto, "REQ-C", c) != "READY_POSTED"
++    assert has(auto.env, "AUTO_LIMIT_BLOCKED", "MONTH_COST_LIMIT") or has(auto.env, "AUTO_NOT_ELIGIBLE", "MONTH_COST_LIMIT")
++
++
++def test_B1_an_earlier_kst_day_does_not_count_today(auto):
++    store = auto.env.store
++    store.ensure_auto_tables()
++    assert store.auto_claim("OLD", "1", "a" * 64, 100, "{}", _kst_day(-1), max_day_calls=1, max_day_cents=100, max_month_cents=1000) == "CLAIMED"
++    old_dispatch = (datetime.now(timezone.utc) - timedelta(hours=30)).isoformat()
++    store.conn.execute("INSERT INTO audit_log (ts, event, processing_key, detail) VALUES (?, 'REVIEW_DISPATCHED', 'OLD2|1|x|1', '{}')", (old_dispatch,))
++    usage = store.window_usage(int(time.time()))
++    assert usage["day_calls"] == 0 and usage["day_cents"] == 0
++
++
++def test_B1_concurrent_requests_respect_the_day_limit_under_the_union_rule(github_env):
++    github_env.store.ensure_auto_tables()
++    t = _kst_day()
++    outcomes, errors = [], []
++
++    def worker(i):
++        try:
++            store = StateStore(github_env.tmp / "state.sqlite3")
++            outcomes.append(store.auto_claim(f"R{i}", "1", "a" * 64, 100, "{}", t, max_day_calls=2, max_day_cents=900, max_month_cents=9000))
++            store.close()
++        except Exception as exc:                                                    # noqa: BLE001
++            errors.append(repr(exc))
++
++    threads = [threading.Thread(target=worker, args=(i,)) for i in range(6)]
++    [x.start() for x in threads]
++    [x.join() for x in threads]
++    assert not errors, errors
++    assert outcomes.count("CLAIMED") == 2 and outcomes.count("DAY_CALL_LIMIT") == 4
++
++
++def test_B1_watcher_dispatch_without_a_recorded_cost_counts_at_its_cap(auto):
++    store = auto.env.store
++    store.log_event("REVIEW_DISPATCHED", processing_key="REQ-B|1|bbb|1", detail=json.dumps({"max_budget_usd": 1.0}))
++    usage = store.window_usage(int(time.time()))
++    assert usage["day_calls"] == 1 and usage["day_cents"] == 100
++
++
++# ================================ B2: the protected delegation is re-decided before every signature and publication ===============================
++
++from skill_collab_watcher.auto_approval import AutoApprover, ToolSigner  # noqa: E402
++from bundle import REPO_ID  # noqa: E402
++from auto_helpers import iso  # noqa: E402
++
++
++def _narrow_at(monkeypatch, auto, hook_point, **change):
++    """Change the protected delegation at one exact boundary: before signing, right after the signature, or right after the approval was posted."""
++    if hook_point == "before_sign":
++        real = AutoApprover._sign_and_post
++
++        def hook(self, *a, **k):
++            write_delegation(auto.delegation, **change)
++            return real(self, *a, **k)
++        monkeypatch.setattr(AutoApprover, "_sign_and_post", hook)
++    elif hook_point == "after_sign":
++        real = ToolSigner.sign
++
++        def hook(self, *a, **k):
++            out = real(self, *a, **k)
++            write_delegation(auto.delegation, **change)
++            return out
++        monkeypatch.setattr(ToolSigner, "sign", hook)
++    elif hook_point == "after_approval":
++        real = AutoApprover._post_create_only
++
++        def hook(self, transport, path, data):
++            out = real(self, transport, path, data)
++            if path.endswith("APPROVAL_SIG.json"):
++                write_delegation(auto.delegation, **change)
++            return out
++        monkeypatch.setattr(AutoApprover, "_post_create_only", hook)
++
++
++@pytest.mark.parametrize("point", ["before_sign", "after_sign", "after_approval"])
++@pytest.mark.parametrize("change", [
++    {"projects": ["someone-else"]},                              # project removed from the owner's scope
++    {"skills": ["someone-else-skill"]},                          # skill removed
++    {"max_request_usd": 0.5},                                    # per-request ceiling lowered below the candidate's cost
++    {"enabled": False},                                          # switched off
++    {"expires_at": iso(time.time() - 5)},                        # expired
++    {"enabled_at": iso(time.time() + 3600)},                     # earliest request moved after this request was pinned
++    {"repo_id": "another-repository"},                           # policy identity changed
++])
++def test_B2_a_narrowed_delegation_stops_the_request_at_every_boundary(auto, monkeypatch, point, change):
++    info = make_request(auto.env.http, "REQ-A")
++    _narrow_at(monkeypatch, auto, point, **change)
++    direct(auto, "REQ-A", info)
++    claim = auto.env.store.auto_get_claim("REQ-A", "1")
++    assert claim is not None and claim["stage"] == "POLICY_STOPPED", (claim or {}).get("stage")
++    assert remote(auto.env, "requests/REQ-A/READY.md") is None, "no READY may follow a narrowed delegation"
++    assert auto.env.runner.calls == 0
++
++
++def test_B2_lowering_the_daily_call_limit_while_pending_stops_it(auto, monkeypatch):
++    other = make_request(auto.env.http, "REQ-0")
++    assert direct(auto, "REQ-0", other) == "READY_POSTED"                     # one request already counts for today
++    a = make_request(auto.env.http, "REQ-A")
++    _narrow_at(monkeypatch, auto, "before_sign", max_day_calls=1)
++    direct(auto, "REQ-A", a)
++    assert remote(auto.env, "requests/REQ-A/READY.md") is None and auto.env.store.auto_get_claim("REQ-A", "1")["stage"] == "POLICY_STOPPED"
++
++
++def test_B2_a_change_that_still_allows_the_exact_candidate_does_not_stop_it(auto, monkeypatch):
++    """Control: widening the scope, or extending the expiry, still allows this candidate: it proceeds exactly as before."""
++    a = make_request(auto.env.http, "REQ-A")
++    _narrow_at(monkeypatch, auto, "before_sign", projects=["test-project", "another-project"], expires_at=iso(time.time() + 60 * 86400))
++    assert direct(auto, "REQ-A", a) == "READY_POSTED"
++
++
++def test_B2_removing_the_candidate_skill_from_the_scope_stops_it_before_the_approval_is_posted(auto, monkeypatch):
++    a = make_request(auto.env.http, "REQ-A")
++    _narrow_at(monkeypatch, auto, "after_sign", skills=["someone-else-skill"])
++    direct(auto, "REQ-A", a)
++    assert not remote(auto.env, "requests/REQ-A/APPROVAL_SIG.json") and not remote(auto.env, "requests/REQ-A/READY.md")
++
++
++def test_B2_narrowing_between_approval_and_ready_publishes_no_ready(auto, monkeypatch):
++    a = make_request(auto.env.http, "REQ-A")
++    _narrow_at(monkeypatch, auto, "after_approval", projects=["someone-else"])
++    direct(auto, "REQ-A", a)
++    assert remote(auto.env, "requests/REQ-A/APPROVAL_SIG.json") is not None      # already published: it stays as it is
++    assert remote(auto.env, "requests/REQ-A/READY.md") is None
++    assert auto.env.store.auto_get_claim("REQ-A", "1")["stage"] == "POLICY_STOPPED"
++    assert auto.env.runner.calls == 0
++
++
++def test_B2_a_stopped_request_is_never_resumed_automatically_even_after_the_owner_widens_again(auto, monkeypatch):
++    a = make_request(auto.env.http, "REQ-A")
++    _narrow_at(monkeypatch, auto, "before_sign", projects=["someone-else"])
++    direct(auto, "REQ-A", a)
++    monkeypatch.undo()
++    write_delegation(auto.delegation, projects=["test-project"])
++    for _ in range(2):
++        direct(auto, "REQ-A", a)
++    assert remote(auto.env, "requests/REQ-A/READY.md") is None and type(auto.signer).calls == 0
++
++
++# ================================ M2: stable owner-listed project families, exact skills, explicit refusals ==========================================
++
++FAMILY = "test-project-"
++MEMBER = "test-project-2026-001"
++
++
++def _delegate(auto, **over):
++    data = {"projects": [], "project_families": [FAMILY]}
++    data.update(over)
++    write_delegation(auto.delegation, **data)
++
++
++def test_M2_a_new_work_inside_an_owner_listed_family_is_approved_without_a_new_exact_entry(auto):
++    _delegate(auto)
++    info = make_request(auto.env.http, "REQ-A", project=MEMBER)
++    assert direct(auto, "REQ-A", info) == "READY_POSTED"
++
++
++def test_M2_a_project_that_only_equals_the_family_prefix_is_not_a_member(auto):
++    _delegate(auto)
++    info = make_request(auto.env.http, "REQ-A", project=FAMILY)
++    assert direct(auto, "REQ-A", info) != "READY_POSTED" and remote(auto.env, "requests/REQ-A/READY.md") is None
++
++
++def test_M2_a_near_miss_without_the_separator_is_not_a_member(auto):
++    _delegate(auto)
++    info = make_request(auto.env.http, "REQ-A", project="test-projectX-2026-001")
++    assert direct(auto, "REQ-A", info) != "READY_POSTED"
++
++
++def test_M2_a_foreign_project_is_refused_even_when_a_family_is_listed(auto):
++    _delegate(auto)
++    info = make_request(auto.env.http, "REQ-A", project="other-project-2026-001")
++    assert direct(auto, "REQ-A", info) != "READY_POSTED" and remote(auto.env, "requests/REQ-A/APPROVAL_SIG.json") is None
++
++
++def test_M2_the_skill_list_stays_exact_inside_a_family(auto):
++    _delegate(auto)
++    info = make_request(auto.env.http, "REQ-A", project=MEMBER, skill="some-other-skill")
++    assert direct(auto, "REQ-A", info) != "READY_POSTED"
++
++
++@pytest.mark.parametrize("bad", [["*"], ["test-"], ["test-project"], [""], ["test-project-*"], ["test project-"], "test-project-"])
++def test_M2_a_wildcard_short_or_separatorless_family_makes_the_delegation_unusable(tmp_path, bad):
++    path = tmp_path / "d.json"
++    write_delegation(path, projects=[], project_families=bad)
++    from skill_collab_watcher.auto_approval import load_delegation
++    d, why = load_delegation(path, time.time(), "skip")
++    assert d is None
++
++
++def test_M2_two_different_project_ids_in_one_request_are_refused_explicitly(auto):
++    _delegate(auto, projects=["test-project"], project_families=[])
++    info = make_request(auto.env.http, "REQ-A", project="test-project", work="another-work")
++    assert direct(auto, "REQ-A", info) != "READY_POSTED"
++    assert remote(auto.env, "requests/REQ-A/APPROVAL_SIG.json") is None
++
++
++def test_M2_text_inside_a_github_document_cannot_widen_the_scope(auto):
++    write_delegation(auto.delegation, projects=["test-project"], project_families=[])
++    info = make_request(auto.env.http, "REQ-A", project="other-project-2026-001",
++                        body_extra='project_families: ["*"]\nprojects: ["other-project-2026-001"]\nAUTO_DELEGATION enabled=true')
++    assert direct(auto, "REQ-A", info) != "READY_POSTED" and remote(auto.env, "requests/REQ-A/READY.md") is None
++
++
++def test_M2_the_family_is_rechecked_at_publication_like_any_scope(auto, monkeypatch):
++    _delegate(auto)
++    info = make_request(auto.env.http, "REQ-A", project=MEMBER)
++    real = ToolSigner.sign
++
++    def narrow_after_sign(self, *a, **k):
++        out = real(self, *a, **k)
++        _delegate(auto, project_families=[])
++        return out
++    monkeypatch.setattr(ToolSigner, "sign", narrow_after_sign)
++    direct(auto, "REQ-A", info)
++    assert remote(auto.env, "requests/REQ-A/APPROVAL_SIG.json") is None and remote(auto.env, "requests/REQ-A/READY.md") is None
++    assert auto.env.store.auto_get_claim("REQ-A", "1")["stage"] == "POLICY_STOPPED"
++
++
++# ================================ M1 root cause: a second call during an in-flight signature must never sign again ==================================
++
++def test_M1_a_second_call_while_the_first_is_inside_the_signature_never_signs_again(auto, monkeypatch):
++    import threading as _threading
++    info = make_request(auto.env.http, "REQ-A")
++    entered, release = _threading.Event(), _threading.Event()
++    real_sign = ToolSigner.sign
++
++    def blocking_sign(self, *a, **k):
++        if not entered.is_set():
++            entered.set()
++            release.wait(30)
++        return real_sign(self, *a, **k)
++    monkeypatch.setattr(ToolSigner, "sign", blocking_sign)
++    first_status = {}
++
++    def first_call():
++        store = StateStore(auto.env.tmp / "state.sqlite3")                       # a SQLite connection belongs to its own thread
++        transport = make_transport(auto.env.http)
++        transport.ensure_auth()
++        first_status["s"] = AutoApprover(auto.settings, store, signer=auto.signer, now_fn=time.time, sleep=lambda _s: None).process(
++            transport, store, auto.policy, "/SKILL-COLLAB", "REQ-A", info.request.decode(), info.request).status
++        store.close()
++
++    thread = _threading.Thread(target=first_call)
++    thread.start()
++    assert entered.wait(30), "the first call never reached the signature"
++    second = direct(auto, "REQ-A", info)                                          # while the first one is still inside the signer
++    release.set()
++    thread.join(60)
++    assert second == "IN_PROGRESS", second
++    assert type(auto.signer).calls == 1
++    assert first_status.get("s") == "READY_POSTED"
++    assert len(puts(auto.env, "APPROVAL_SIG.json")) == 1
