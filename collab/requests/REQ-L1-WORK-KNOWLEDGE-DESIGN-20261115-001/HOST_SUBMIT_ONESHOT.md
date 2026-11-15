@@ -1,5 +1,10 @@
 # 정식 Work → Knowledge 리뷰 접수 원샷
 
+## 최신 확정 승인 (2026-11-15 KST)
+- **이번 리뷰 1회 최대 $1 명시 승인 완료**, 재승인 질문 금지. [정확한 승인·서명·LIVE 실행 원샷 정본](GPT_USER_COST_APPROVAL_AND_SIGNER_HANDOFF_r0001_20261115.md), GitHub PRIVATE main commit `766f10dff51a5b305203c56822165dd81f3604d1`, 원격 readback PASS.
+- 이 문서는 기존 단계별 인계 기록이며, **신규 사용자 승인과 오류 시 처리의 단일 최신 기준은 위 정본**. 운영 signer만 `APPROVAL_SIG`를 생성 가능하며 GPT 문서는 서명이 아님.
+- Request/ZIP/Commit A/SOURCE_PIN 전부 변경 금지. READY는 서명 실검증 후 마지막, GitHub LIVE Watcher가 자동 실행. 수동 reviewer·두 번째 Watcher 기동 금지. 결과·영수증 확인 전 리뷰 완료라고 표시 금지.
+
 - PRIVATE 저장소: wonhwipark/CoWork-Skill-Collab
 - branch: main
 - REQUEST: collab/requests/REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-001/REQUEST.md
