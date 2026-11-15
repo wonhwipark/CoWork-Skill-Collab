@@ -9,16 +9,15 @@
   "policy_max_usd": 1,
   "max_review_calls": 1,
   "user_review_request": "AUTHORIZED_BY_CURRENT_USER_REQUEST",
-  "host_signed_approval": "PENDING_HOST_VERIFICATION",
+  "host_signed_approval": "PENDING_PER_REQUEST_COST_AUTHORIZATION_AND_HOST_SIGNER",
   "ready": "NOT_POSTED",
-  "source_pin": "POSTED_DATA_ONLY_HOST_SIGNATURE_PENDING",
-  "host_preflight": "NOT_RUN",
-  "automatic_queue": "NOT_QUEUED",
+  "source_pin": "POSTED_VALIDATED_NO_REPIN_REQUIRED",
+  "host_preflight": "PASS_V0220_VALIDATOR_ISOLATED_HOST",
+  "automatic_queue": "NOT_QUEUED_WAIT_INPUT_READY_MISSING",
   "independent_review": "NOT_RUN",
   "result": "NOT_RECEIVED",
   "blockers": [
-    "Existing host signer and per-request cost authority must be verified; no signer/execution interface in this GPT session.",
-    "Current long-running provider activation is not confirmed; reuse an existing authorized one-shot route without operational changes."
+    "This request's separate paid model cost approval (POLICY-STATIC-V1 max USD 1, exactly 1 call) and authorized existing host signature must be established before posting APPROVAL_SIG and READY. GitHub LIVE watcher will automatically dispatch after valid READY; do not start a second watcher."
   ],
   "output_paths": {
     "result": "collab/reviews/REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-001/REVIEW_RESULT_1.md",
@@ -27,5 +26,13 @@
   "input_commit": "0a46fea5f7f63c68c5cb12cfa35bfaed00c2c1a3",
   "publication_text_readback": "PASS",
   "package_git_blob_readback": "PASS",
-  "package_remote_raw_bytes_rehash": "PENDING_HOST"
+  "package_remote_raw_bytes_rehash": "PASS_HOST_MAIN_AND_COMMIT_A",
+  "active_provider": "GITHUB_LIVE_HOST_REPORTED",
+  "watcher_pre_ready_observation": "WAIT_INPUT_REQUEST_PRESENT_READY_MISSING",
+  "state_requested_accepted": "PASS_NO_CHANGE_REQUIRED",
+  "design_zip_validator": "PASS_NO_SKILL_MD_REQUIRED",
+  "duplicate_execution_check": "PASS_NONE_FOUND_HOST",
+  "paid_review_cost_approval": "NOT_EXPLICITLY_VERIFIED_FOR_THIS_REQUEST",
+  "validator_result_path": "collab/projects/L1-WORKSPACE-RAG-20261111-001/CLAUDE_REQUEST_VALIDATOR_PREFLIGHT_RESULT_FOR_GPT_20261115.md",
+  "gpt_disposition_path": "collab/projects/L1-WORKSPACE-RAG-20261111-001/GPT_REQUEST_VALIDATOR_PREFLIGHT_DISPOSITION_r0001_20261115.md"
 }
