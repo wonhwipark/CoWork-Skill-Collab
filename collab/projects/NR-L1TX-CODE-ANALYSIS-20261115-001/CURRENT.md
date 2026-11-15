@@ -1,5 +1,20 @@
 # NR-L1TX-CODE-ANALYSIS-20261115-001 — CURRENT
 
+## 최신 판정 — 2026-11-15 KST / v0.4.38 READ-ONLY DEBUG PUBLIC 게시
+
+- **USER_APPROVAL:** 사용자 요청으로 Job-list ZIP 운영 규칙을 변경했다. Claude Code 독립 리뷰는 PUBLIC 배송 **사후 검증**이며 지적 사항은 **신규 버전 ZIP 재발행**으로 처리; Linux 호스트 G0·기존 Registry/Runner/MCP 장애 및 코드 분석은 이 배송 후 디버깅 검증. 적용 대상은 승인된 v0.4.38 읽기 전용 debug one-shot; 무검증 쓰기·업무 Knowledge 정본 수정·운영 DB/설정 변경은 제외.
+- **POLICY_POSTED=PASS:** `collab/ops/CONTRACTS/JOBLIST_PUBLIC_DELIVERY_V1.md` 8절, `collab/ops/CONTRACTS/PUBLIC_RELEASE_GATE.md`, `collab/START_HERE.md` 최신 우선 참조.
+- **PACKAGE=PASS / SELF_TEST=PASS:** `job-list_v0_4_38_1115.zip`, 실제 **1,570,759 bytes**, **SHA-256 `0cdda16fe214f86811d4df25cc04f3453ec93789ddc9bc2b0769e730bb9c16e0`**. 승인된 Debug 릴리스 채널 메타데이터 정합, ZIP CRC·manifest·path/symlink·비밀/읽기 전용 권한 정적 검사 PASS. PRIVATE [preflight](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43662485333): **38 pytest PASS / 0 FAIL**.
+- **PUBLIC_RELEASE=POSTED / REMOTE_READBACK=PASS:** `wonhwipark/L1Work`, `main`, **루트** `job-list_v0_4_38_1115.zip`; 실제 게시 커밋 `67ace047d336b81015034df913e11b10a64711d8`. [PUBLIC 배포·검증](https://github.com/wonhwipark/L1Work/actions/runs/43662572023)에서 다시 빌드한 ZIP 해시·크기와 업로드 후 pinned commit 원격 재다운로드가 모두 일치. PUBLIC 임시 워크플로/빌드 입력 제거 후 ZIP 유지, 최종 임시파일 정리 커밋 `b301580cf90012f7ffce58033f75048c9f0d9aac`.
+- **ACTIVE_ONE_SHOT_ID:** `JOB-20261115-NR-L1TX-INIT-RACH-EXEC-01` / profile `nr-l1tx-init-rach-analysis-linux`; 최초 분석 범위 `L2_L1_TX_REQ` → 실제 NR L1 TX → PHY IPC 경계, 등록된 `code-analyzer` read-only action만 사용. 과거 소비 Job ID와 충돌·재큐잉 금지.
+- **사후 검증 상태:** `INDEPENDENT_REVIEW=POST_RELEASE_PENDING`; `LINUX_HOST_G0=POST_RELEASE_PENDING`; `MCP_RESULT_READBACK=NOT_VERIFIED`; `SKILL_UPDATER_INSTALLED=NOT_VERIFIED`; `JOB_ACTIVATED=NOT_VERIFIED`; `NR_L1TX_CODE_ANALYSIS=NOT_RUN`; `GROUP_KNOWLEDGE_WRITE=NOT_RUN`. PUBLIC 배송이 곧 설치·실행·분석 성공은 아님.
+- **NEXT_ONE_ACTION:** Linux 모바일 Agent에서 정상 허용된 Skill-Updater 1회 또는 기존 예약 주기 후 `0.4.38` 설치 패키지 SHA, 신규 Job Catalog/Registry/Queue/Run ID/Worker, code-analyzer 실제 호출과 Receipt·MCP 조회의 **동일 Job ID** 연계를 비민감 상태 코드로 확인. 기존 소비 Job 재실행·운영 파일 수동 조작 금지.
+
+---
+
+## 배포 이전 기록 (당시 상태 보존 — 현재 상태로 오독 금지)
+
+
 ## v0.4.38 build/test result — 2026-11-15 KST
 
 - **DEVELOPMENT=CANDIDATE_BUILT / SELF_TEST=PASS**. From pinned PUBLIC baseline `job-list_v0_4_36_1112.zip` (1,563,658 bytes, SHA-256 `cbe17dc15199593e2a9bce6aa2b8857c1f011336ebd2cd3d4c8ee3cce0eee3f6`); full v0.4.38 new ZIP was built in isolated GitHub Actions. Preserved existing source, historical Job IDs and baseline ZIP; the active request is exactly one new Linux Job `JOB-20261115-NR-L1TX-INIT-RACH-EXEC-01`.
