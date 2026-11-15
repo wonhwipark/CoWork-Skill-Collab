@@ -47,7 +47,7 @@
       "status": "검증 진행 중",
       "title": "COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT",
       "tone": "warning",
-      "topic": "현재 요약 — 2026-11-15 KST"
+      "topic": "현재 요약 — 통합 개선 설계 TODO 등록 (2026-11-15 KST)"
     },
     {
       "id": "ISSUE-ANALYZER-20261114-001",
@@ -313,7 +313,7 @@
     {
       "evidence": "프로젝트 TRACKER.json 신고 값 · 운영 근거 별도 확인 필요",
       "independent_review": "NOT_RUN",
-      "next_action": "문서 갱신 규칙 적용·정적 확인; 실제 새 창에서 같은 Work·다음 행동 선택 검증",
+      "next_action": "통합 설계 TODO D01~D08 변경안·영향 파일과 D09 검증 계획을 묶어서 검토; D10 실제 분석 검증은 후속",
       "owner": "GPT",
       "phase": "DISPOSITION",
       "record_source": "REGISTERED_METADATA_UNVERIFIED",
