@@ -4,7 +4,7 @@
 - 정본: GitHub PRIVATE `wonhwipark/CoWork-Skill-Collab`, branch `main`, `collab/GPT_TODO.md`.
 - 목적: 전체 운용·협업·L1 지식·맥락 관리의 개선 후보와 GPT 검토 의견을 한곳에서 조회.
 - 진입: [공통 맥락 브리프](CONTEXT_BRIEF.md) · [협업 진입점](START_HERE.md).
-- 이번 범위: 공통 목록 구성·네 가지 후보 등록·기존 상세 문서 연결. 후보의 실제 수정·시험·Claude Code 리뷰는 시작하지 않음.
+- 최초 등록 범위: 공통 목록 구성·네 가지 후보 등록·기존 상세 문서 연결. 최초 등록 당시 후보의 실제 수정·시험·Claude Code 리뷰는 시작하지 않았음. 후속 실행·판정은 아래 목록과 해당 Work의 CURRENT를 따른다.
 
 ## 개선 후보
 
@@ -15,7 +15,7 @@
 | TD-001 | 1 | 후보 | 협업 체계·L1 지식 통합 탑뷰 정리 | 기존 r0001/r0002와 최신 정본을 대조해 전체 순환과 공통 지도 진입 링크를 보완 | [통합 설계 D01~D06](projects/COWORK-SKILL-DISCOVERY-20261112-001/COWORK_L1_INTEGRATED_CONTEXT_DESIGN_TODO_r0001_20261115_KST.md#3-통합-설계-todo) |
 | TD-002 | 1 | 후보 | 새 창 재개 실제 검증 | 문서 적용 완료와 실제 재개 성공을 구분. 같은 Work·작업 흐름·승인 범위·다음 행동 선택 확인 | [D07·D09 / V07](projects/COWORK-SKILL-DISCOVERY-20261112-001/COWORK_L1_INTEGRATED_CONTEXT_DESIGN_TODO_r0001_20261115_KST.md#7-수용검증-체크리스트) |
 | TD-003 | 2 | 후보 | 여러 스킬 간 인계·피드백 순환 검증 | 첫 승인 사례에서 기존 Work/Evidence와 인계표를 재사용하고 맥락 누락·중복 Work·불필요한 재분석 확인 | [D05·D06·D10](projects/COWORK-SKILL-DISCOVERY-20261112-001/COWORK_L1_INTEGRATED_CONTEXT_DESIGN_TODO_r0001_20261115_KST.md#3-통합-설계-todo) |
-| TD-004 | 2 | 후보 | CURRENT의 과거·현재 표시 정리 검토 | 이미 적용된 상단 현재/과거 구분을 유지하고, 과거 LATEST·PENDING 표현의 추가 정리 필요성을 실사용에서 확인 | [D07](projects/COWORK-SKILL-DISCOVERY-20261112-001/COWORK_L1_INTEGRATED_CONTEXT_DESIGN_TODO_r0001_20261115_KST.md#3-통합-설계-todo) |
+| TD-004 | 2 | 완료 | CURRENT의 과거·현재 표시 정리 검토 | 기존 맥락 Work의 CURRENT 과거 절 2곳 `(LATEST)` 오독 위험 정정. 역사적 내용·근거 보존, PRIVATE 원격 본문 재조회 완료. 다른 Work의 전수감사는 이번 범위 밖 | [D07](projects/COWORK-SKILL-DISCOVERY-20261112-001/COWORK_L1_INTEGRATED_CONTEXT_DESIGN_TODO_r0001_20261115_KST.md#3-통합-설계-todo) · [TD-004 결과](projects/COWORK-SKILL-DISCOVERY-20261112-001/TD004_CURRENT_HISTORY_LABEL_REVIEW_20261115.md) |
 
 상세 문서의 D01~D10·수용 기준·이력은 그대로 재사용. 위 네 묶음으로 다른 기존 항목을 취소하거나 신규 실행을 시작하지 않음.
 
@@ -24,7 +24,7 @@
 - 기준 근거: 원격 commit `8d991be90e803af8e0baef0ac2489320be6babf7`의 [상세 설계 TODO](projects/COWORK-SKILL-DISCOVERY-20261112-001/COWORK_L1_INTEGRATED_CONTEXT_DESIGN_TODO_r0001_20261115_KST.md)와 [맥락 운용 CURRENT](projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md). 이 기준은 등록 당시 관찰이며 실행 시 최신 정본을 재조회.
 - TD-001: [아키텍처 r0002](projects/L1-WORKSPACE-RAG-20261111-001/L1_E2E_INHOUSE_OFFSITE_ARCHITECTURE_r0002_20261111.md)는 그룹 기술 정본·개인 Work 역할을 이미 보완한 설계. r0001만 보고 같은 보완을 새 결함으로 단정하지 않음. provider·버전·승인·시험 상태는 탑뷰에 복사하지 않고 해당 CURRENT로 연결.
 - TD-002·003: 기존 맥락 운용 규칙·문서 연결 적용 완료는 유지. 실제 새 창·여러 스킬 인계·첫 분석 사례의 실행 검증은 각각 별도 근거가 필요하며 이번 목록 등록을 PASS로 대체하지 않음.
-- TD-004: 최신 CURRENT의 상단 요약과 과거 구분 개선은 이미 존재. 남은 표현의 오독 가능성을 확인할 후보이며 실제 실패가 입증된 결함으로 취급하지 않음.
+- TD-004: 기존 상단 요약 구조를 유지하고 2026-11-12 과거 절의 잘못된 최신 표기 두 곳을 최소 정정했음. 문서 표기 정리의 완료이며 새 창 실제 재개·호스트 기능 시험 PASS로 확대하지 않음.
 - 피드백: 같은 목적의 실행 보완은 원래 Work로 회수. 전체 운용의 새 아이디어는 이 목록에 후보로 추가. 결과·판정 원문은 해당 Work의 결과/결정/notes에 보존.
 
 ## 조회·작업 연결
@@ -45,4 +45,5 @@
 ## 등록 이력
 
 - 2026-11-15: 사용자 승인으로 GPT 공통 목록과 TD-001~004 구성. 기존 상세 설계 TODO를 재사용하고 공통 브리프·협업 진입점에 연결. 기존 Work·진행 중 요청·실행 승인 상태는 유지.
-- 다음 한 동작: 필요할 때 공통 목록을 조회하거나 실행할 항목 ID를 지정.
+- 2026-11-15: 사용자 순차 검토·실행 요청에 따라 TD-004를 기존 맥락 Work에서 먼저 처리. [점검 결과](projects/COWORK-SKILL-DISCOVERY-20261112-001/TD004_CURRENT_HISTORY_LABEL_REVIEW_20261115.md)와 [CURRENT](projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md)에 연결. PRIVATE 문서 수준 점검이며 독립 리뷰·실제 새 창 검증 미실행.
+- 다음 한 동작: TD-002의 현재 세션에서 경로·Work 재개 선택을 점검. 실제 새 창에서의 V07은 별도 근거 없이는 NOT_RUN.
