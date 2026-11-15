@@ -1,5 +1,14 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## GPT 최종 판정 — GitHub 단일 LIVE 전환 완료 수용(2026-11-15 KST)
+- **판정 정본:** [GPT_GITHUB_LIVE_CUTOVER_FINAL_DISPOSITION_r0001_20261115.md](GPT_GITHUB_LIVE_CUTOVER_FINAL_DISPOSITION_r0001_20261115.md), commit `c567e66be3edb15efd1c751048ee3fb15ca051ba`, 원격 readback PASS. `GPT_DISPOSITION=ACCEPT_GITHUB_LIVE_CUTOVER_HOST_REPORTED_AND_REVIEW_VERIFIED`.
+- **LIVE 상태:** `ACTIVE_PROVIDER=GITHUB`, `CUTOVER=LIVE`, `HOST_APPLIED=PASS` (**Windows Claude Code 호스트 실측 보고 기준**, GPT가 Windows Task/Process에 직접 접속한 것은 아님). Dropbox reviewer Disabled, 30초 7주기+재시작·중복 기동 방지, 별도 GitHub 상태 DB의 provider lease 1건. 기존 Dropbox 운영 DB/레거시 pending 1건 무손실 보존.
+- **GPT 직접 검증한 외부 근거:** `collab/reviews/REQ-COWORK-V0220-R1-20261115/REVIEW_RESULT_1.md` 독립 R1 `BLOCKING=0`, `collab/receipts/REQ-COWORK-V0220-R1-20261115/RECEIPT_1.md`, `USAGE_RECEIPT_1.json`, `collab/dispatch/REQ-COWORK-V0220-R1-20261115/DISPATCH_1.md` 원격 조회. 요청 ID/rev/고정 ZIP sha256 `6a8626375e5e711535abdd261ff48781114802bb345cabe2ed5940b75968f386` 일치; 모델 호출 정확히 1회, `$0.3769412`(최대 $1 이하). 기존 v0.2.19 R2 BLOCKING N2 저장소 ID 캐시 결함은 v0.2.20에서 수정·독립 리뷰 PASS.
+- **호스트 실행:** B1 cryptography 운영 venv 해시 고정 설치·674 PASS/12 SKIP, 서명 검증 116 PASS, B2 Notifier provider별 워터마크 설치·12/12 비발송 PASS, B3 단일 GitHub Watcher 설치/Task Running/중복 기동 차단 PASS. ZIP 239432 B·원격 SHA/CRC·설치본 일치 호스트 보고. 운영 원본 DB main/WAL 불변·완료 60/CONFLICT 1/pending 1 그대로(기존 pending 미이관).
+- **검증 한계:** 새 정식 REQUEST+READY에 대한 GitHub 운영 watcher의 **첫 실전 유료 리뷰**는 아직 없음, Telegram **실제 수신**은 이벤트 0건으로 미검증, 재부팅/장기 지속가동·실 CLI 사용량 한도 문자열은 미검증. 롤백은 준비·격리 리허설 PASS, 실제 운영 롤백 미실행. 위 항목을 LIVE 초기 작동 완료로 과장하지 않음.
+- **운용 기준 전환:** PRIVATE GitHub 리뷰 transport = LIVE, 기존 Dropbox watcher = Disabled/보존. 승인되지 않은 Dropbox 재기동·기존 pending 리뷰 재실행 금지. Classic PAT 계속 사용; 같은 승인/토큰 종류 재논의 금지.
+- **NEXT_ONE_ACTION:** 현 LIVE 상태 유지. 실제 신규 유효 서명 REQUEST+READY가 발생하면 첫 실전 리뷰 결과/receipt·Notifier 이벤트를 확인하고 필요 시 수정. **테스트 목적으로 새 유료 리뷰 생성하거나 장기 감시 자동화를 추가하지 않음**. 아래 완료 전 승인/시험 이력은 시점별 역사로 보존.
+
 ## GitHub 단일 LIVE 활성화 완료(호스트 실측): v0.2.20 독립 R1 PASS, B1~B3 적용, ACTIVE_PROVIDER=GITHUB (Claude 호스트 보고, 2026-11-15 KST)
 - 결과: `CLAUDE_V0220_R1_AND_GITHUB_LIVE_ACTIVATION_RESULT_FOR_GPT_20261115.md` (PRIVATE `main`, commit `0b0dc5ff24424c835bc2c6a12bbace6cd1af89a0`, 원격 바이트·SHA-256 `89546954852ad1c38bb1be0475a1859861796da4963bf18046fcf0c5e0d476ee` 일치).
 - 독립 R1: `REQ-COWORK-V0220-R1-20261115`(POLICY-STATIC-V1), 모델 호출 1, **$0.3769**(상한 $1), **BLOCKING 0**·비차단 1(의도된 `is not None` 가드를 죽은 코드로 지적, 코드 불변). ZIP `6a8626375e5e…`(239432 B) 원격 원시 바이트·CRC 일치, 설치본 바이트 동일. 감시기가 예약·결과·영수증을 자동 게시(결과 `ceff4d145c78`, 영수증 `0f79cd65c9e8`, 예약 `ae7e1213e3b7`, 사용영수증 `3bc7d3a5caa4`).
