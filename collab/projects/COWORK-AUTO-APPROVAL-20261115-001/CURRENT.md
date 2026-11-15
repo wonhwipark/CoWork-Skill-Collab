@@ -1,5 +1,15 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## v0.2.21 GPT 정적 판정 수정 완료: 후보 v0.2.22 (B1·B2·M1·M2, 자체시험 866/866, 독립리뷰 NOT_RUN, 운영 불변) (Claude 호스트 보고, 2026-11-15 KST)
+- 결과: `CLAUDE_V0221_GPT_FINDINGS_FIX_RESULT_FOR_GPT_20261115.md` (PRIVATE `main`, commit `6f448b63e607c9ba951f2b5ea09043217de5f6a3`, 원격 바이트·SHA-256 `4413787701b1997ace8d7e4e0064665f95e340159bc19f9530209f53d2a18f20` 일치).
+- B1: 자동 예약과 워처 디스패치를 요청 신원 단위 합집합(중복 1회, 비용은 큰 값, 합산)으로 예약 트랜잭션 안에서 집계. 옛 후보는 max() 때문에 세 번째 요청 통과(실패 재현). B2: 서명·승인 게시·READY 게시 직전마다 현재 보호 위임으로 저장 후보 재판정, 축소 시 POLICY_STOPPED(서명·READY·모델 0). 옛 후보 25건 실패.
+- M1(간헐 실패)은 시험 타이밍이 아니라 실제 결함: 같은 프로세스의 두 호출이 예약 후 서명 전 단계를 죽은 시도로 오인해 두 번 서명. 옛 후보 12회 중 3회 재현, 수정본 12/12 통과, 프로세스 내 진행 중 가드 추가.
+- M2: 정확 프로젝트 외에 끝이 '-'인 가족 접두사 허용(와일드카드 불가, 스킬은 정확 일치, 두 프로젝트 ID 명시 거절). 실제 REQUEST V1은 project_id·work_id가 항상 같음. 범위 확정은 사용자 승인 전이라 미적용.
+- 검증: 최종 ZIP 트리에서 시험 venv·운영 인터프리터 각 866 passed/12 skipped(기준선 v0.2.20 674/12), SHADOW 8/8, 롤백 리허설 ALL_PASS, 운영 DB·키·Task·설치 트리 불변. 변이 시험은 v0.2.22에서 재실행하지 않음.
+- 후보 `skill-collab-watcher_v0_2_22_1115_DEV_NOT_FOR_DEPLOYMENT.zip` 280313 B, sha256 `1b67de37891cb7fdbae721b9424e312d1cc5b8c68e06e69357555a556d27bd87`, PRIVATE `artifacts/v0_2_22/`에 ZIP·diff·매니페스트 게시(원격 바이트 일치, 요청·READY 없음).
+- 미실행/미승인: 독립 리뷰(R2/LARGE $3 1회), 위임 범위 1회 확정, 운영 설치·Notifier 이벤트 추가·활성화. AUTO_SIGNING=OFF, 유료 모델 0, 실서명 0, READY 0.
+- 다음 한 동작: GPT 단일 판정과 리뷰·범위 승인 요청 묶음.
+
 ## GPT 정적 판정 — v0.2.21 후보 보완 후 독립 리뷰 (2026-11-15 KST)
 
 - **최신 GPT 판정 정본:** [GPT_V0221_STATIC_DISPOSITION_AND_SINGLE_FIX_HANDOFF_r0001_20261115.md](GPT_V0221_STATIC_DISPOSITION_AND_SINGLE_FIX_HANDOFF_r0001_20261115.md), GitHub PRIVATE main commit `5608dec4072710846b6331ecd48f22029914a7ea`, remote readback PASS. `GPT_DISPOSITION=REVISE_BEFORE_INDEPENDENT_REVIEW` / `BLOCKING=2` / `MAJOR=2`.
