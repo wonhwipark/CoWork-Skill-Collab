@@ -22,7 +22,7 @@
 
 - SELF_TEST: 문서상 갱신 기준, 브리프의 상태/source blob 복사 제거, 요청별 목적 라우팅, 상대 링크, TRACKER JSON·허용 상태·Work ID 보존을 게시 전에 점검.
 - SELF_TEST=PASS (문서 정적 점검, 35개 점검·상대 링크 100개). 실제 로컬 검증 출력에 근거하며 실행 호스트·스킬 호출·새 창 인계 시험을 뜻하지 않는다.
-- REMOTE_READBACK: 이 기록 게시 후 수행. [원격 검증 기록](CONTINUOUS_CONTEXT_READBACK_r0001_20261115_KST.md)에 실제 content commit·파일별 bytes/SHA-256/Git blob·검증 결과를 남긴다.
+- REMOTE_READBACK=PASS: content commit `0c15299de0b22e5c28a4b21dda5ad9c8f9c0c515`의 11개 파일 원격 본문·Git blob·바이트 SHA-256 일치. main `04f680f9dc8e11201b72cb8276a5757459303ec6` target blob 일치도 확인. [파일별 원격 검증 기록](CONTINUOUS_CONTEXT_READBACK_r0001_20261115_KST.md). 이 확인 뒤 CURRENT·본 기록·검증 기록의 메타데이터를 게시한다.
 - INDEPENDENT_REVIEW=NOT_RUN. NEW_CHAT_RESUME_E2E=NOT_RUN. MULTI_SKILL_HANDOFF_E2E=NOT_RUN.
 - PUBLIC 신규 게시·Windows 설치·운영 DB/Task·LIVE·유료 모델·Job 실행은 이번 작업에서 수행하지 않음.
 

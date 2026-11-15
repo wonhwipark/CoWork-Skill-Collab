@@ -7,8 +7,8 @@
 - Rule: 결과·피드백 원문은 기존 결과/결정/notes, 현재 상태·근거 링크·미해결·승인 범위·다음 행동은 해당 CURRENT. 지도는 구조·역할·경로 변경 때, 카탈로그는 책임·입출력·연결 변경 때만 수정.
 - Routing: NR 실제 분석·기존 Job 진단·Smoke 및 자동 승인 개선의 진입 경로를 각각 구분. 진행 상태·버전·source blob을 브리프에 복사하지 않음.
 - Result: DOCUMENT_WORKFLOW_UPDATED. [적용·검증 기록](CONTINUOUS_CONTEXT_APPLICATION_r0001_20261115_KST.md).
-- SELF_TEST: 게시 전 문서 구조·링크·JSON·중복 갱신 규칙 제거 검증 결과는 위 적용 기록 참조. 호스트/기능 시험과 구분.
-- REMOTE_READBACK: PENDING_PUBLICATION. 실제 게시·원격 확인 뒤 별도 검증 기록과 이 줄을 갱신.
+- SELF_TEST: PASS (문서 정적 점검 35개·상대 링크 100개). 구조·링크·JSON·중복 갱신 규칙 제거 범위이며 호스트/기능 시험과 구분.
+- REMOTE_READBACK: PASS. content commit `0c15299de0b22e5c28a4b21dda5ad9c8f9c0c515`의 11개 파일 원격 본문·Git blob·바이트 SHA-256이 수정안과 일치. 이후 main `04f680f9dc8e11201b72cb8276a5757459303ec6`에서도 11개 target blob 동일 확인. [원격 검증 기록](CONTINUOUS_CONTEXT_READBACK_r0001_20261115_KST.md).
 - INDEPENDENT_REVIEW: NOT_RUN. 실제 새 창 재개·멀티 스킬 인계 E2E: NOT_RUN.
 - Existing audit: 기존 패키지 감사 결과는 해당 원문 시점의 근거로 보존. 이번 변경은 재감사·설치·실호출 검증이 아님.
 - Approval: 이번 사용자 지시는 PRIVATE 문서 갱신 범위. PUBLIC 신규 게시·유료 리뷰·Windows/운영 설정·LIVE 변경 수행 없음.
