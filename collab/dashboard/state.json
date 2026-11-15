@@ -35,10 +35,10 @@
       "id": "COWORK-GITHUB-DASHBOARD-20261111-001",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md",
-      "status": "전환 전",
+      "status": "검증 진행 중",
       "title": "COWORK-GITHUB-DASHBOARD-20261111-001 — CURRENT",
       "tone": "warning",
-      "topic": "발표용 정보·상태 정합성 개선 설계 및 독립 리뷰 요청 — 2026-11-15 KST"
+      "topic": "B안 확정·로컬 구현 검증 / 기존 공개 대시보드 미교체 (2026-11-15 KST)"
     },
     {
       "id": "COWORK-SKILL-DISCOVERY-20261112-001",
