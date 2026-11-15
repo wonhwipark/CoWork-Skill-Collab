@@ -20,7 +20,7 @@
       "status": "검증 진행 중",
       "title": "COWORK-AUTO-APPROVAL-20261115-001 — CURRENT",
       "tone": "warning",
-      "topic": "v0.2.21 GPT 정적 판정 수정 완료: 후보 v0.2.22 (B1·B2·M1·M2, 자체시험 866/866, 독립리뷰 NOT_RUN, 운영 불변) (Claude 호스트 보고, 2026-11-15 KST)"
+      "topic": "GPT v0.2.22 직접 재해시·정적 판정 — 독립 R2 및 위임 범위 사용자 통합 승인 대기 (2026-11-15 KST)"
     },
     {
       "id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
