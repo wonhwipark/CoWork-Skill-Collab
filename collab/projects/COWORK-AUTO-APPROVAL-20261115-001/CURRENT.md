@@ -1,5 +1,13 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 승인 접두사 호환성 수정 완료: 후보 v0.2.23 (COWORK-/L1-WORKSPACE- 승인 범위 통과, 옛 후보 거부 재현, 자체시험 890/890, 독립 R2 NOT_RUN, 운영 불변) (Claude 호스트 보고, 2026-11-15 KST)
+- 결과: `CLAUDE_V0222_APPROVED_PREFIX_COMPAT_FIX_RESULT_FOR_GPT_20261115.md` (PRIVATE `main`, commit `30e6b7fed42a886fb8f8e3bd10ba671683209c61`, 원격 바이트·SHA-256 `bb4c71d40c2b6064ba48e2df663a18be3350a6db6ca7e0d95e9019eb5a0220a9` 일치).
+- 원인: v0.2.22 접두사 최소 길이 8자 → 승인된 `COWORK-`(7자) 거부로 위임 전체 로드 실패. 수정: 영숫자 단어와 `-`로 끝나는 접두사, 최소 7자, 와일드카드·공백·구분자 없는 단어 거부. 매칭·스킬 정확 일치는 불변.
+- 시험: 신규 승인 범위 시험을 옛 후보 v0.2.22에서 실행 → 5건 실패(재현), 거절 시험 19건 통과. 수정본 v0.2.23 전부 통과, 전체 회귀 시험 venv·운영 인터프리터 각 890 passed/12 skipped, SHADOW 8/8, 롤백 리허설 ALL_PASS, 운영 DB·키·설치 트리 불변.
+- 후보 `skill-collab-watcher_v0_2_23_1115_DEV_NOT_FOR_DEPLOYMENT.zip` 282340 B, sha256 `f941be8a6b53d00baa10a9b097f234b159470e2aa1242ecc33bcf0bdee080ea7`, PRIVATE `artifacts/v0_2_23/`에 ZIP·diff·매니페스트 게시(원격 바이트 일치, 요청·READY 없음). 독립 리뷰 NOT_RUN.
+- 미실행: 독립 R2, 실제 서명, APPROVAL_SIG·READY 게시, 위임 활성화, 운영 설치, Notifier 추가. 유료 모델 0.
+- 다음 한 동작: GPT 최종 판정. PASS 이후에만 독립 R2 1회(USD 3) 실행.
+
 ## 사용자 통합 승인 확보 / v0.2.22 승인 범위 접두사 호환성 수정 대기 — 2026-11-15 KST
 
 - **현재 사용자 승인 기록:** [GPT_R2_APPROVAL_AND_V0222_SCOPE_FIX_GATE_r0001_20261115.md](GPT_R2_APPROVAL_AND_V0222_SCOPE_FIX_GATE_r0001_20261115.md), commit `9fafb272864d7b9570650995db27e81675154f35`, 원격 readback PASS. 사용자 “그래”는 이전 [통합 제안](GPT_V0222_DISPOSITION_AND_COMBINED_APPROVAL_GATE_r0001_20261115.md)의 **v0.2.22 독립 R2 LARGE 최대 $3/1회**, 보호 로컬 위임 project families `COWORK-`·`L1-WORKSPACE-`, 3개 exact skill, STATIC-V1 $1/요청, 2회/$3/일, $10/월, 30일 위임, R2 독립 PASS·GPT 판정 **조건부** Windows 설치/자동서명 활성화를 통합 승인한 것으로 기록. 서명/READY/유료 호출은 아직 없음.
