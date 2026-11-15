@@ -1,5 +1,16 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 현재 요약 — MSC·MD 링크 대화형 구조 검토 회수·GPT 판정 (2026-11-16 KST)
+
+- **새로 확인한 결과:** [Windows Claude Code 대화형 정적 검토](CLAUDE_MSC_MD_LINK_STRUCTURE_INTERACTIVE_REVIEW_FOR_GPT_20261115.md)가 PRIVATE main에 게시됨. `REQ-L1-MSC-MD-LINK-STRUCTURE-20261115-001` rev1 / SOURCE_PIN / ZIP SHA에 대응. **이는 정식 watcher 유료 독립 리뷰가 아닌 별도 대화형 정적 검토**다.
+- **검토·GPT 판정:** [GPT 항목별 판정](GPT_MSC_MD_LINK_STRUCTURE_REVIEW_DISPOSITION_r0001_20261116_KST.md) `ACCEPT_WITH_CHANGE`, **MAJOR 5·MINOR 1 / BLOCKING 0**. 두 진입→개인 Workspace 보존→승인된 그룹 writer 분리 유지; 입력 클래스, SVG/HTML 게시·무음 누락, 호스트 URL 폴백, 한글명 충돌, MSC 절 owner/마커, B 뷰어 단계 이동을 수정 수용.
+- **설계 변경분:** [Procedure/Feature MSC 링크 제안 r0002](MSC_MD_LINK_SKILL_SUPPORT_REVIEW_AND_PROPOSAL_r0002_20261116_KST.md) 새 파일로 정리. **기존 고정 r0001/REQUEST/ZIP/SOURCE_PIN, 과거 비용 승인·영수증 이력 불변**. `PASS`는 이 대화형 문서 회수·설계 보완 판정 범위에 한정.
+- **정식 리뷰 상태 조회:** `collab/reviews/REQ-L1-MSC-MD-LINK-STRUCTURE-20261115-001/REVIEW_RESULT_1.md`, receipt, READY 각각 2026-11-16 조회 시 **NOT_FOUND**. 따라서 `FORMAL_INDEPENDENT_REVIEW=NOT_RUN/NOT_RECEIVED`; 새 유료 호출·서명/READY 시작하지 않음. 실제 설치 Updater/그룹 writer, 수정 코드·회귀, 업무 Workspace·그룹 게시/HTML E2E 모두 `NOT_RUN/NOT_VERIFIED`.
+- **변경 범위:** PRIVATE 비민감 문서·CURRENT·TRACKER 상태 연결만. 운영 LIVE/provider/호스트·모델 실행·PUBLIC·업무 지식 데이터 변경 0.
+- **다음 한 행동:** 업무 GPT/허용 로컬 Agent가 **기존 설치본·G0를 읽기 전용**으로 확인해 Updater/그룹 writer, converter MSC 입력, Kernel export/marker, 실제 호스팅/열람 제약을 이 Work에 회신; 검증된 gap만 후속 최소 개발 후보로 판정.
+
+---
+
 ## 현재 요약 — MSC·MD 링크 독립 구조 리뷰 정식 요청 등록 (2026-11-15 KST)
 
 - **사용자 최신 지시:** “클로드코드로 구조리뷰요청해줘”. [제안서](MSC_MD_LINK_SKILL_SUPPORT_REVIEW_AND_PROPOSAL_r0001_20261115_KST.md)에 대한 **별도 독립 구조 리뷰**를 같은 Work에서 등록했어요.
