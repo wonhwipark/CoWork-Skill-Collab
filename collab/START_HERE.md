@@ -8,6 +8,11 @@
 - **범위 구분:** 이번 전환은 **실운영 호스트 보고를 GPT가 리뷰/receipt 원문으로 대조한 판정**. GPT가 Windows GUI를 직접 관찰한 것은 아님. 새 LIVE watcher로 신규 유료 리뷰 첫 수행, Telegram 실제 수신, 장기 지속가동·재로그온은 미검증. rollback은 준비 및 격리 시험 수준.
 - 아래 `2026-11-12~14 ACTIVE_PROVIDER=NONE / MIGRATION_NOT_CUTOVER` 서술은 **작성 당시 이력**으로 보존. 최신 상태로 다시 해석하지 말 것. 과도기 프로젝트 설정 문구의 자동 개정·동기화는 별도 절차이며, GitHub 문서 갱신 자체가 Windows 재설치/모델 호출/정책 우회는 아님.
 
+## 신규 개선 Work — 제한적 사전 위임 자동 서명 (2026-11-15)
+- [AUTO_APPROVAL CURRENT](projects/COWORK-AUTO-APPROVAL-20261115-001/CURRENT.md), [설계 정본](projects/COWORK-AUTO-APPROVAL-20261115-001/AUTOMATIC_SIGNING_MINIMAL_DESIGN_r0001_20261115.md), [Windows 개발·시험·후보 원샷](projects/COWORK-AUTO-APPROVAL-20261115-001/WINDOWS_ONE_SHOT_DEVELOP_TEST_CANDIDATE_HANDOFF_r0001_20261115.md).
+- **기존 GitHub LIVE 유지.** 새 Work는 GPT REQUEST 이후 Windows signer·READY를 자동화하기 위한 **격리 개발 단계**, 순수 정책 25/25 PASS. `AUTO_SIGNING=OFF`, Windows 구현/독립 리뷰/운영 적용 NOT_RUN. 기본 흐름에 Telegram 승인 버튼 없음. 별도 위임 범위·누적 비용/실운영 설치 승인 전에 실제 유료 자동 실행 금지.
+- 이전 CoWork 이관 Work의 `COMPLETE` 상태나 레거시 pending 1건을 이 개선 Work로 소급 변경·자동 디스패치하지 않는다.
+
 ## 새 창에서 먼저 읽을 한 파일
 
 **[공통 맥락 브리프](CONTEXT_BRIEF.md)**에서 협업 운용·L1 지식·관리 스킬을 먼저 파악하고 요청별 CURRENT로 이동한다. 이 파일은 상세 정책 진입점으로 유지한다. 브리프를 이미 읽었으면 반복 조회하지 않으며 실제 작업에 필요한 계약만 추가 확인한다. 문서 연결만으로 프로젝트 설정·백그라운드 선조회를 변경하지 않음.
