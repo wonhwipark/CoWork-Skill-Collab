@@ -91,7 +91,7 @@ jobs:
           base="skill-updater_v0_5_44_1027/"
           names=["scripts/skill_updater.py","scripts/skill_updater_auto.py"]
           out=["# Skill-Updater v0.5.44 dispatch and discovery — exact source excerpts","","- Public ZIP; static audit only, not Linux installed files",""]
-          regex=re.compile(r"root.?zip|github.*cache|github.*listing|github_min_poll|job_list|joblist|activate|source.*github|force.*refresh|refresh.*remote|remote.*version|def main\\(|def update\\(",re.I)
+          regex=re.compile(r"root.?zip|github.*cache|github.*listing|github_min_poll|job_list|joblist|activate|source.*github|force.*refresh|refresh.*remote|remote.*version|def main|def update",re.I)
           for name in names:
               src=z.read(base+name).decode('utf8').splitlines()
               tree=ast.parse("\n".join(src))
