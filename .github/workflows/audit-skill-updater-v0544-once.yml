@@ -81,18 +81,66 @@ jobs:
           print("MATCHED_PUBLIC_PY_FILES",len(pyfiles))
           print("REPORT_CHARS",out.stat().st_size)
           PY
+      - name: Extract exact v0.5.44 updater dispatch and GitHub root-ZIP decision code
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import io,zipfile,urllib.request,ast,re,pathlib
+          z=zipfile.ZipFile(io.BytesIO(urllib.request.urlopen("https://raw.githubusercontent.com/wonhwipark/L1Work/main/skill-updater_v0_5_44_1027.zip",timeout=55).read()))
+          base="skill-updater_v0_5_44_1027/"
+          names=["scripts/skill_updater.py","scripts/skill_updater_auto.py"]
+          out=["# Skill-Updater v0.5.44 dispatch and discovery — exact source excerpts","","- Public ZIP; static audit only, not Linux installed files",""]
+          regex=re.compile(r"root.?zip|github.*cache|github.*listing|github_min_poll|job_list|joblist|activate|source.*github|force.*refresh|refresh.*remote|remote.*version|def main\\(|def update\\(",re.I)
+          for name in names:
+              src=z.read(base+name).decode('utf8').splitlines()
+              tree=ast.parse("\n".join(src))
+              matches=[]
+              for node in ast.walk(tree):
+                  if not isinstance(node,(ast.FunctionDef,ast.AsyncFunctionDef)): continue
+                  low=node.name.lower()
+                  if ('job_list' in low or 'github' in low or 'root_zip' in low or 'discover' in low or 'cache' in low or 'remote' in low or low in ('main','update')):
+                      matches.append(node)
+              out+=["## "+name, "Source functions of interest: "+", ".join(n.name+":"+str(n.lineno) for n in matches[:100]),""]
+              intervals=[]
+              for i,line in enumerate(src):
+                  if regex.search(line):
+                      intervals.append((max(0,i-4),min(len(src),i+9)))
+              for node in matches:
+                  if node.name in ('run_job_list_post_update','github_contents_listing','github_contents_bytes','main','_job_list_version_changed','discover_remote','discover_public_zips','list_remote_assets') or 'root_zip' in node.name:
+                      intervals.append((node.lineno-1,min(len(src),node.end_lineno)))
+              used=set()
+              for a,b in intervals: used.update(range(a,b))
+              if name.endswith('skill_updater.py'):
+                  # Keep focus on discovery, CLI invocation and activation.
+                  used={i for i in used if (i<1500 or i>4200) or any(abs(i-(n.lineno-1))<100 for n in matches if 'github' in n.name)}
+              ix=sorted(used)
+              if len(ix)>1350: ix=ix[:1350]
+              last=-2
+              out.append('\\x60\\x60\\x60python'.replace('\\x60','`'))
+              for i in ix:
+                  if i!=last+1:out.append('...')
+                  out.append(f'{i+1:05d}: {src[i].rstrip()}')
+                  last=i
+              out.append('\\x60\\x60\\x60'.replace('\\x60','`'))
+          p=pathlib.Path("collab/projects/SKILL-UPDATER-JOBLIST-LATENCY-20261115-001/FOCUSED_AUDIT_v0544.md")
+          p.parent.mkdir(parents=True,exist_ok=True)
+          p.write_text("\n".join(out).rstrip()+"\n",encoding='utf8')
+          print('FOCUSED_REPORT',p,p.stat().st_size)
+          PY
       - name: Commit isolated static report to PRIVATE
         shell: bash
         run: |
           set -euo pipefail
           REPORT="collab/projects/SKILL-UPDATER-JOBLIST-LATENCY-20261115-001/STATIC_AUDIT_v0544.md"
           test -s "$REPORT"
+          test -s "collab/projects/SKILL-UPDATER-JOBLIST-LATENCY-20261115-001/FOCUSED_AUDIT_v0544.md"
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           # Source excerpts may include trailing spaces; strip them from report only.
           sed -i 's/[[:blank:]]*$//' "$REPORT"
           python3 -c 'import pathlib,sys; p=pathlib.Path(sys.argv[1]); p.write_text(p.read_text(encoding="utf-8").rstrip()+"\\n",encoding="utf-8")' "$REPORT"
-          git add -- "$REPORT"
+          git add -- "$REPORT" "collab/projects/SKILL-UPDATER-JOBLIST-LATENCY-20261115-001/FOCUSED_AUDIT_v0544.md"
           git diff --cached --check
           git commit -m 'audit(skill-updater): inspect public v0.5.44 activate/wait boundaries'
           git push origin HEAD:main
