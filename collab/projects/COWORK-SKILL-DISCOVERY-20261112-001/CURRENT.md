@@ -1,5 +1,18 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 현재 요약 — TD-002 V07 PASS → TD-001 문서 반영 → TD-003 실제 E2E 대기 (2026-11-15 KST)
+
+- **사용자 실행 순서:** `TD-002 → TD-001 → TD-003`. 모두 **기존** `COWORK-SKILL-DISCOVERY-20261112-001` Work에서 진행, 새 CoWork Work/별도 원장 생성 없음. 후보 상태의 단일 정본은 [GPT 공통 투두](../../GPT_TODO.md).
+- **TD-002=완료 / V07_ACTUAL_NEW_CHAT=PASS:** [이번 별도 대화 검증](TD002_V07_ACTUAL_NEW_CHAT_VALIDATION_20261115.md). PRIVATE main 공통 지도·투두·현 CURRENT·기존 4개 목적별 CURRENT를 직접 조회하고 승인·다음 행동 구별. 이전 V06 PASS 보존. 자동 선조회/프로젝트 설정과 실제 호스트 실행은 별도 `NOT_VERIFIED/NOT_RUN`.
+- **TD-001=완료(비민감 문서 설계 범위):** [통합 탑뷰·SSOT·인계·피드백 r0001](COWORK_L1_INTEGRATED_TOPVIEW_r0001_20261115_KST.md). [브리프](../../CONTEXT_BRIEF.md)에 협업→업무 Work/지식→피드백 단일 Mermaid 흐름도와 목적별 정본 경계를 반영; [START_HERE](../../START_HERE.md) 진입 링크 및 [L1 공통 참고](../../knowledge/L1_WORKSPACE_RAG_COMMON_r0001_20261111.md)의 작성 당시 provider·과거 상태 오독 방지 포인터 보완. 원본 r0001/r0002·기존 고정 리뷰 입력 보존.
+- **TD-001 문서 판정:** D01~D09 책임/현행 포인터/문서 연결의 정적 반영 완료, V01~V05/V06/V07/V09 문서·세션 검증 범위 PASS. 원격 본문 재조회 확인, 최종 파일별 SHA/readback 정리는 본 Work 게시 기록으로 구분. 호스트 설치·유료 독립 리뷰·Knowledge 게시·RAG 실행은 이번 TD-001의 `NOT_RUN`.
+- **TD-003=작업 연결 / DOC_TRACE_PASS(8개) / REAL_MULTI_SKILL_E2E=NOT_RUN:** [스킬간 인계·피드백 추적](TD003_MULTI_SKILL_HANDOFF_FEEDBACK_TRACE_20261115.md). 실제 NR L1 Tx 분석 Work를 기준으로 Job-list 배송 이후 Linux MCP·code-analyzer·Kernel Work/Evidence·Updater 후보/게시·역링크/Provider의 검증 상태를 나눔. CoWork reviewer LIVE 성공을 L1 업무 스킬 간 E2E 성공으로 오해하지 않음.
+- **현재 실증 경계:** NR 분석 PUBLIC v0.4.38 게시·38 pytest는 기존 NR Work의 근거로 수용; Linux 설치/Job/Receipt/readback/코드 분석 미확인·미실행. `COWORK-AUTO-APPROVAL` v0.2.21 BLOCKING 2/서명 OFF와 이관 Work의 GITHUB 단일 LIVE는 **별개**. L1 Work→Knowledge 정식 리뷰는 승인된 최대 $1/1회가 있으나 실제 Windows 서명·READY/모델 실행은 미완료.
+- **승인·변경 경계:** 이번 작업은 이미 허용된 PRIVATE 비민감 문서·정본 갱신·원격 조회. 신규 유료 모델 호출 0, 새 `REQUEST/READY=0`, 운영 Windows/Linux 설치·Job 재실행·PUBLIC ZIP·provider/LIVE·업무 지식 write 0. 기존 미정산 요청·영수증·승인/비용 한도 유지.
+- **NEXT_ONE_ACTION:** 사용자 허용된 **기존** Linux Agent 경로로 [NR 실제 분석 CURRENT](../NR-L1TX-CODE-ANALYSIS-20261115-001/CURRENT.md)의 v0.4.38 설치 SHA·신규 `JOB-20261115-NR-L1TX-INIT-RACH-EXEC-01` Catalog/Registry·Run/Receipt/MCP readback을 같은 ID로 확인. CODE FACTS/업무 Evidence가 실제 확보될 때만 TD-003의 Updater 후보 인계를 후속 검증하고 별도 그룹 게시 승인 유무 확인. 기존 소비 Job 재큐잉 금지.
+
+---
+
 ## 현재 요약 — TD-002 현재 세션의 재개 경로 검증 (2026-11-15 KST)
 
 - 사용자 요청: GPT 공통 투두를 쉬운 작업부터 순차 검토. TD-004는 문서 정정·PRIVATE readback 완료, TD-002는 같은 기존 Work에서 후속 점검.
