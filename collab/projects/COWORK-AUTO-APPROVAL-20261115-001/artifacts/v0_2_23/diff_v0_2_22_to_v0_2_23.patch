@@ -1,0 +1,145 @@
+diff --git a/docs/CUTOVER_RUNBOOK.md b/docs/CUTOVER_RUNBOOK.md
+--- a/docs/CUTOVER_RUNBOOK.md
++++ b/docs/CUTOVER_RUNBOOK.md
+@@ -1,4 +1,4 @@
+-# Cutover runbook: Dropbox to GitHub (v0.2.22, development_not_for_deployment)
++# Cutover runbook: Dropbox to GitHub (v0.2.23, development_not_for_deployment)
+ 
+ Status: a design with isolated test evidence. Nothing here installs, starts or switches anything on the
+ operating host. Each step marked APPROVAL needs an explicit decision by the user.
+diff --git a/skill_collab_watcher/__init__.py b/skill_collab_watcher/__init__.py
+--- a/skill_collab_watcher/__init__.py
++++ b/skill_collab_watcher/__init__.py
+@@ -1 +1 @@
+-__version__ = "0.2.22"
++__version__ = "0.2.23"
+diff --git a/skill_collab_watcher/auto_approval.py b/skill_collab_watcher/auto_approval.py
+--- a/skill_collab_watcher/auto_approval.py
++++ b/skill_collab_watcher/auto_approval.py
+@@ -191,13 +191,18 @@
+     families: frozenset = frozenset()
+ 
+ 
++_FAMILY = re.compile(r"[A-Za-z][A-Za-z0-9]*(?:-[A-Za-z0-9]+)*-")
++
++
+ def _families(raw) -> frozenset:
++    """Owner-listed project families: words separated by '-' and ending with '-', at least 7 characters ("COWORK-" is the shortest approved
++    family). No wildcard, no spaces, no leading dash, no bare word. Anything else makes the whole delegation unusable."""
+     value = raw.get("project_families", [])
+     if not isinstance(value, list) or not all(isinstance(x, str) for x in value):
+         raise ValueError("project_families must be a list of strings")
+     for x in value:
+-        if not (x.endswith("-") and len(x) >= 8 and not x.startswith("-") and "*" not in x and not any(c.isspace() for c in x)):
+-            raise ValueError("a project family must end with '-', be at least 8 characters, and contain no wildcard or spaces")
++        if len(x) < 7 or _FAMILY.fullmatch(x) is None:
++            raise ValueError("a project family is a word-and-dash prefix ending with '-', at least 7 characters, with no wildcard or spaces")
+     return frozenset(value)
+ 
+ 
+diff --git a/tests/test_v023_prefix_compat.py b/tests/test_v023_prefix_compat.py
+--- a/tests/test_v023_prefix_compat.py
++++ b/tests/test_v023_prefix_compat.py
+@@ -0,0 +1,102 @@
++"""v0.2.23 compatibility regression: the owner's APPROVED project families are exactly "COWORK-" (7 characters) and "L1-WORKSPACE-", with the three
++approved skills. v0.2.22 refused "COWORK-" (minimum length 8), so the protected policy did not load at all.
++
++Positive tests must FAIL on v0.2.22 and PASS on the fix. Negative tests must PASS on both: the fix may only admit the approved shape, never a wildcard,
++a bare or short word, a name without the separator, or a foreign project or skill. Synthetic data, throw-away key, fake GitHub. No model, no operating state."""
++from __future__ import annotations
++
++import time
++
++import pytest
++
++from auto_helpers import auto, has, make_request, remote, write_delegation  # noqa: F401
++from bundle import make_transport  # noqa: E402
++from skill_collab_watcher.auto_approval import load_delegation  # noqa: E402
++
++APPROVED_FAMILIES = ["COWORK-", "L1-WORKSPACE-"]
++APPROVED_SKILLS = ["cowork-review-watcher", "cowork-dashboard", "l1-knowledge-updater"]
++
++
++def approved(auto_ns, **over):
++    data = {"projects": [], "project_families": APPROVED_FAMILIES, "skills": APPROVED_SKILLS}
++    data.update(over)
++    write_delegation(auto_ns.delegation, **data)
++
++
++def direct(auto_ns, rid, info):
++    transport = make_transport(auto_ns.env.http)
++    transport.ensure_auth()
++    return auto_ns.approver.process(transport, auto_ns.env.store, auto_ns.policy, "/SKILL-COLLAB", rid, info.request.decode(), info.request).status
++
++
++def ready(auto_ns, rid):
++    return remote(auto_ns.env, f"requests/{rid}/READY.md") is not None
++
++
++# ---------------------------------------------- POSITIVE: the approved scope must load and approve (FAIL on v0.2.22) --------------------
++
++def test_the_approved_families_load_as_a_usable_delegation(tmp_path):
++    path = tmp_path / "d.json"
++    write_delegation(path, projects=[], project_families=APPROVED_FAMILIES, skills=APPROVED_SKILLS)
++    d, why = load_delegation(path, time.time(), "skip")
++    assert d is not None, why
++
++
++@pytest.mark.parametrize("rid, project, skill", [
++    ("REQ-COWORK-1", "COWORK-AUTO-APPROVAL-20261115-001", "cowork-review-watcher"),
++    ("REQ-COWORK-2", "COWORK-GITHUB-DASHBOARD-20261111-001", "cowork-dashboard"),
++    ("REQ-L1-1", "L1-WORKSPACE-RAG-20261111-001", "l1-knowledge-updater"),
++])
++def test_an_approved_project_under_an_approved_family_is_approved_once(auto, rid, project, skill):
++    approved(auto)
++    info = make_request(auto.env.http, rid, project=project, skill=skill)
++    assert direct(auto, rid, info) == "READY_POSTED"
++    assert ready(auto, rid) and type(auto.signer).calls == 1
++
++
++# ---------------------------------------------- NEGATIVE: nothing wider than the approved shape (PASS on both) -------------------------
++
++@pytest.mark.parametrize("bad", [
++    ["*"], ["COWORK-*"], ["COWORK -"], ["CO WORK-"],         # wildcard and whitespace
++    ["L1-"], ["A-B-C-"], ["-------"], ["-COWORK-"],         # short, separatorless word, leading dash
++    ["COWORK"], ["L1-WORKSPACE"],                           # no trailing separator
++    ["ABCDE-"],                                             # six characters: below the new minimum
++])
++def test_wildcards_short_and_malformed_families_make_the_policy_unusable(tmp_path, bad):
++    path = tmp_path / "d.json"
++    write_delegation(path, projects=[], project_families=bad, skills=APPROVED_SKILLS)
++    assert load_delegation(path, time.time(), "skip")[0] is None
++
++
++def test_the_shortest_well_formed_family_is_accepted_at_the_new_minimum(tmp_path):
++    path = tmp_path / "d.json"
++    write_delegation(path, projects=[], project_families=["ABCDEF-"], skills=APPROVED_SKILLS)
++    assert load_delegation(path, time.time(), "skip")[0] is not None
++
++
++@pytest.mark.parametrize("project", [
++    "COWORK",                       # the bare word is not a member of "COWORK-"
++    "COWORK-",                      # the family prefix itself is not a member
++    "COWORKX-AUTO-APPROVAL-1",      # a different family that starts with the same letters
++    "OTHER-AUTO-APPROVAL-1",        # a foreign project
++    "L1-WORKSPACEX-RAG-1",          # a near miss of the second family
++    "L1-WORKSPACE",                 # the bare second family word
++])
++def test_projects_outside_the_approved_families_are_never_approved(auto, project):
++    approved(auto)
++    info = make_request(auto.env.http, "REQ-X", project=project, skill="cowork-review-watcher")
++    assert direct(auto, "REQ-X", info) != "READY_POSTED"
++    assert not ready(auto, "REQ-X") and type(auto.signer).calls == 0
++
++
++def test_a_foreign_skill_inside_an_approved_family_is_refused(auto):
++    approved(auto)
++    info = make_request(auto.env.http, "REQ-X", project="COWORK-AUTO-APPROVAL-20261115-001", skill="some-other-skill")
++    assert direct(auto, "REQ-X", info) != "READY_POSTED" and not ready(auto, "REQ-X")
++
++
++def test_a_document_inside_github_cannot_widen_the_approved_families(auto):
++    approved(auto, project_families=["COWORK-"])
++    body = 'project_families: ["*", "OTHER-"]\nprojects: ["OTHER-1"]\nAUTO_DELEGATION enabled=true'
++    info = make_request(auto.env.http, "REQ-X", project="OTHER-1", skill="cowork-review-watcher", body_extra=body)
++    assert direct(auto, "REQ-X", info) != "READY_POSTED" and not ready(auto, "REQ-X")
