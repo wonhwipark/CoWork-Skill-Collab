@@ -1,5 +1,20 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 현재 요약 — MSC·MD 링크 독립 구조 리뷰 정식 요청 등록 (2026-11-15 KST)
+
+- **사용자 최신 지시:** “클로드코드로 구조리뷰요청해줘”. [제안서](MSC_MD_LINK_SKILL_SUPPORT_REVIEW_AND_PROPOSAL_r0001_20261115_KST.md)에 대한 **별도 독립 구조 리뷰**를 같은 Work에서 등록했어요.
+- **정식 요청:** [REQ-L1-MSC-MD-LINK-STRUCTURE-20261115-001](../../requests/REQ-L1-MSC-MD-LINK-STRUCTURE-20261115-001/REQUEST.md), revision 1 / [입력 manifest](review-inputs/REQ-L1-MSC-MD-LINK-STRUCTURE-20261115-001/REVIEW_MANIFEST.md) / [Claude Code 호스트 접수 원샷](../../requests/REQ-L1-MSC-MD-LINK-STRUCTURE-20261115-001/HOST_SUBMIT_ONESHOT.md) / [접수 상태](../../requests/REQ-L1-MSC-MD-LINK-STRUCTURE-20261115-001/SUBMISSION_STATUS.json).
+- **구조 검토 범위:** 두 진입 모두 Workspace 갱신, analyzer 사실·converter 표현·기존 writer 책임, Procedure/Feature MD의 SVG 미리보기/HTML 링크, 자산 경로·해시/등록·그룹 접근, 부분 게시·역링크 복구. R01~R10으로 기존 기능 재사용과 최소 확장·더 단순한 대안을 독립 판단해요.
+- **GPT 직접 게시·검증:** Commit A `013b9f26fde91c3bcc87374952f64a61111c5a69`. 입력 8개/ZIP **38132 B**, SHA-256 `90bb61a0e7c3b429942c620480ad9a079980d2a3432b72cea8ba80a4b915907d`. 원격 텍스트 12개 실제 Git blob/내용·ZIP raw bytes SHA/크기·CRC/8개 멤버 해시 PASS. [SOURCE_PIN](../../requests/REQ-L1-MSC-MD-LINK-STRUCTURE-20261115-001/SOURCE_PIN.json)은 Commit A와 repo ID를 고정해요. [게시 검증 영수증](../../requests/REQ-L1-MSC-MD-LINK-STRUCTURE-20261115-001/PUBLICATION_RECEIPT.md).
+- **현재 단계:** `REQUEST=POSTED`, `SOURCE_PIN=POSTED`, `HOST_VALIDATOR=NOT_RUN`, `APPROVAL_SIG/READY=NOT_POSTED`, `INDEPENDENT_REVIEW=NOT_RUN`, `RESULT/RECEIPT=NOT_RECEIVED`. Tracker의 `PENDING`은 실행 전 대기예요. 새 유료 모델 호출 0이에요.
+- **실행 한계·승인:** 기존 GitHub LIVE는 이관 CURRENT의 호스트 보고로 유지해요. 자동 승인 CURRENT 최신 최상단은 `AUTO_SIGNING=OFF / v0.2.23 R2 처리 대기`예요. 이 GPT 도구에는 Windows Claude Code 시작 수단이 없고, 이번 새 ID의 실제 유료 실행 권한은 미확인이에요. 정책 상한 $1/1회만 정했으며 다른 요청의 승인·서명이나 활성화 전 위임을 재사용하지 않아요.
+- **기존 이력 보존:** 이전 동결 Work→Knowledge 요청 `REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-001`의 ZIP·REQUEST·SOURCE_PIN·기존 $1 승인 및 CL/PR 후보/시험/차단은 변경하지 않았어요. 스킬 구현·설치·업무 분석/지식 게시·PUBLIC 배포·운영 변경은 수행하지 않았어요.
+- **다음 한 행동:** Windows Claude Code가 위 원샷으로 실제 권한·validator·중복을 확인하고 허용된 독립 리뷰 1회 결과/receipt 또는 차단 이유를 같은 Work에 게시해요. GPT는 실제 결과를 회수한 뒤 지적별 판정해요.
+
+아래는 이전 시점의 설계·검토·실행 기록이며 해당 동결 입력과 근거를 보존해요.
+
+---
+
 ## 현재 요약 — 분석·MSC·Procedure/Feature MD 보기 링크 지원 검토 (2026-11-15 KST)
 
 - **사용자 피드백 수용:** Updater의 Procedure/Feature 직접 분석과 Workflow 업무 결과 지식화 모두 개인 업무용 `l1-workspace`의 같은 Work에 분석·초안·Evidence·검토/결정을 보존. `l1sw-dev-knowledge`는 그룹 공용 스킬이며 검증·승인된 공유 지식을 별도 반영.

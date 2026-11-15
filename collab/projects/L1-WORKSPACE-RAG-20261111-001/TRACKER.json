@@ -5,11 +5,11 @@
       "work_id": "L1-WORKSPACE-RAG-20261111-001",
       "skill": "l1-knowledge-updater",
       "title": "l1-knowledge-updater",
-      "phase": "BLOCKED",
-      "owner": "GPT",
+      "phase": "REVIEW",
+      "owner": "Claude Code",
       "self_test": "NOT_VERIFIED",
-      "independent_review": "NOT_RUN",
-      "next_action": "업무 GPT: 기존 Work 하나로 Updater·그룹 writer·현재 converter/Kernel의 HTML·MD 링크·자산 게시 경로를 F1~F5에 매핑."
+      "independent_review": "PENDING",
+      "next_action": "Claude Code: 고정 MSC·MD 링크 구조 요청의 권한·입력 확인 후 1회 결과/영수증 또는 차단 이유 게시."
     }
   ]
 }

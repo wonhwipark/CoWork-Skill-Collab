@@ -3,7 +3,7 @@
   "revision": 1,
   "work_id": "L1-WORKSPACE-RAG-20261111-001",
   "purpose": "MSC_MD_LINK_INDEPENDENT_STRUCTURE_REVIEW",
-  "request_document": "PREPARED_NOT_POSTED",
+  "request_document": "POSTED_REMOTE_READBACK_PASS",
   "user_review_request": "EXPLICIT_2026_11_15",
   "package_sha256": "90bb61a0e7c3b429942c620480ad9a079980d2a3432b72cea8ba80a4b915907d",
   "package_size_bytes": 38132,
@@ -14,7 +14,7 @@
   "standing_auto_approval": "OFF_LAST_VERIFIED_CURRENT_NOT_RETROACTIVE",
   "host_signed_approval": "NOT_POSTED",
   "ready": "NOT_POSTED",
-  "source_pin": "TO_BE_POSTED_AFTER_COMMIT_A_READBACK",
+  "source_pin": "POSTED_WITH_COMMIT_B",
   "local_input_qa": "PASS_BYTE_IDENTITY_CRC_PATH_REGULAR_FILE_SCOPE",
   "host_validator": "NOT_RUN",
   "automatic_queue": "NOT_QUEUED_READY_MISSING",
@@ -32,5 +32,13 @@
     "receipt": "collab/receipts/REQ-L1-MSC-MD-LINK-STRUCTURE-20261115-001/RECEIPT_1.md",
     "dispatch": "collab/dispatch/REQ-L1-MSC-MD-LINK-STRUCTURE-20261115-001/DISPATCH_1.md"
   },
-  "next_action": "Windows Claude Code: collab/requests/REQ-L1-MSC-MD-LINK-STRUCTURE-20261115-001/HOST_SUBMIT_ONESHOT.md로 현재 권한·호스트 validator·중복 확인 후 허용된 1회 독립 리뷰 결과/receipt 또는 차단 이유를 게시해요."
+  "next_action": "Windows Claude Code: collab/requests/REQ-L1-MSC-MD-LINK-STRUCTURE-20261115-001/HOST_SUBMIT_ONESHOT.md로 현재 권한·호스트 validator·중복 확인 후 허용된 1회 독립 리뷰 결과/receipt 또는 차단 이유를 게시해요.",
+  "input_commit": "013b9f26fde91c3bcc87374952f64a61111c5a69",
+  "request_sha256": "850f7ec185acfeea51356b0f60b0f49cb1564b8a98756c93c5ba5c7b2b3c5693",
+  "publication_text_readback": "PASS_12_FILES_AT_COMMIT_A",
+  "package_remote_raw_bytes_rehash": "PASS",
+  "package_remote_crc": "PASS",
+  "package_remote_members": "PASS_8_OF_8_SHA256_SIZE",
+  "package_git_blob_sha1": "34744b9fe1b2fe7bfe3b49961b807fec4ab62a9c",
+  "publication_receipt": "collab/requests/REQ-L1-MSC-MD-LINK-STRUCTURE-20261115-001/PUBLICATION_RECEIPT.md"
 }
