@@ -101,7 +101,7 @@
       "status": "검증 진행 중",
       "title": "NR-L1TX-CODE-ANALYSIS-20261115-001 — CURRENT",
       "tone": "warning",
-      "topic": "최신 판정 — 2026-11-15 KST / v0.4.38 READ-ONLY DEBUG PUBLIC 게시"
+      "topic": "TD-003 실제 인계 E2E 재개 — Linux MCP 직접 접근 차단 / 기존 Job one-shot 인계 게시 (2026-11-15 KST)"
     }
   ],
   "review_chains": [
