@@ -20,7 +20,7 @@
       "status": "검증 진행 중",
       "title": "COWORK-AUTO-APPROVAL-20261115-001 — CURRENT",
       "tone": "warning",
-      "topic": "GPT 정적 판정 — v0.2.21 후보 보완 후 독립 리뷰 (2026-11-15 KST)"
+      "topic": "v0.2.21 GPT 정적 판정 수정 완료: 후보 v0.2.22 (B1·B2·M1·M2, 자체시험 866/866, 독립리뷰 NOT_RUN, 운영 불변) (Claude 호스트 보고, 2026-11-15 KST)"
     },
     {
       "id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
@@ -274,9 +274,9 @@
     {
       "evidence": "프로젝트 TRACKER.json 신고 값 · 운영 근거 별도 확인 필요",
       "independent_review": "NOT_RUN",
-      "next_action": "2026-11-15 GPT DIRECT STATIC: v0.2.21 candidate actual ZIP 272839B SHA256 16921bf4021714345cabc78de5e2e8a6882891615f90b5747622570ca4465d8b verified; Windows SELF_TES",
+      "next_action": "GPT 단일 통합 판정: 후보 v0.2.22(B1 합집합 집계·B2 현재 위임 재판정·M1 실제 이중 서명 결함 수정·M2 가족 접두사, 자체시험 866/866 PASS 두 해석기, SHADOW 8/8, 롤백 PASS). 독립 리뷰(R2/LARGE $3 1회)와 위임 범위 1회 확정을 사용자에게",
       "owner": "GPT / Windows Claude Code",
-      "phase": "BLOCKED",
+      "phase": "DISPOSITION",
       "record_source": "REGISTERED_METADATA_UNVERIFIED",
       "self_test": "PASS",
       "skill": "cowork-review-watcher",
