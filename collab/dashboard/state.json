@@ -20,7 +20,7 @@
       "status": "검증 진행 중",
       "title": "COWORK-AUTO-APPROVAL-20261115-001 — CURRENT",
       "tone": "warning",
-      "topic": "승인 접두사 호환성 수정 완료: 후보 v0.2.23 (COWORK-/L1-WORKSPACE- 승인 범위 통과, 옛 후보 거부 재현, 자체시험 890/890, 독립 R2 NOT_RUN, 운영 불변) (Claude 호스"
+      "topic": "GPT v0.2.23 최종 정적 PASS — R2 대상 변경 확인만 대기 (2026-11-15 KST)"
     },
     {
       "id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
