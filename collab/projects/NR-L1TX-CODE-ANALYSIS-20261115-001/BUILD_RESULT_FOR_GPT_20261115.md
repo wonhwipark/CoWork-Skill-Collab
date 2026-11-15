@@ -1,5 +1,5 @@
 # Job-list v0.4.38 GitHub isolated build result
-- Run: https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43614499408
+- Run: https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43662280340
 - Workflow status before report: success
 - Candidate ZIP: job-list_v0_4_38_1115.zip
 - Candidate package: CANDIDATE_CREATED
