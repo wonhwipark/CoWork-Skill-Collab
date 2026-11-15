@@ -1,5 +1,15 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## Work→Knowledge v0.2.20 Validator 사전 검증 GPT 판정 — PASS(2026-11-15 KST)
+- **공식 판정 정본:** [GPT_REQUEST_VALIDATOR_PREFLIGHT_DISPOSITION_r0001_20261115.md](GPT_REQUEST_VALIDATOR_PREFLIGHT_DISPOSITION_r0001_20261115.md), commit `ff5863d97626fe4d57a2b3c8de80246c113b46cf`, 원격 readback PASS. Windows 실제 Validator 진단 [CLAUDE_REQUEST_VALIDATOR_PREFLIGHT_RESULT_FOR_GPT_20261115.md](CLAUDE_REQUEST_VALIDATOR_PREFLIGHT_RESULT_FOR_GPT_20261115.md), Git blob `0d5a54f15174577559fa5028f9c7545821432833`.
+- **결과:** `REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-001`의 `state: REQUESTED`는 v0.2.20 `validate()`에서 정상 허용(`SUBMITTED` 강제 아님); 설계 문서 5개 전용 ZIP도 `SKILL.md` 없이 `safe_extract`·`_file_index`·`_write_context`·`_build_prompt` PASS. 실제 GitHub `main`+Commit A raw ZIP 28805 B / sha256 `4ccede070d03e497a8d821fcabc8092c0d46045b245b64dabf023abc83daa417` / CRC 일치(Windows 호스트 실측 보고). secret findings 0. `knowledge_refs: []`, skill/profile/rev·고정 `SOURCE_PIN`과 GitHub repo ID 정상. 중복/완료/불확실 리뷰 실행 흔적 없음(조회 가능한 호스트 근거 범위).
+- **REQUEST 수정 0 / ZIP 수정 0 / Commit A 재고정 0 / SOURCE_PIN 변경 0.** 기존 `REQUEST.md`·`collab/packages/…REVIEW_INPUT.zip`·`REVIEW_MANIFEST.md`·`SOURCE_PIN.json` 그대로 보존. `state`를 `SUBMITTED`로 임의 변경하거나 SKILL.md를 추가하지 않음.
+- **실제 실행 상황:** `ACTIVE_PROVIDER=GITHUB`(이관 CURRENT의 11/15 호스트 실측 판정), 운영 Watcher가 이 REQUEST에 `WAIT_INPUT`(READY 없음)을 기록. `APPROVAL_SIG=NOT_POSTED`; `READY=NOT_POSTED`; `REVIEW=NOT_RUN`; `MODEL_CALLS=0`. 이 프로젝트의 이전 `ACTIVE_PROVIDER=NONE`·격리 단발 실행 문구는 작성 당시 이력이며 최신 운영 상태 아님.
+- **인계 오해 수정:** [HOST_SUBMIT_ONESHOT.md](../../requests/REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-001/HOST_SUBMIT_ONESHOT.md)는 이미 운영 중인 GitHub LIVE Watcher에서 `APPROVAL_SIG→READY 마지막→자동 디스패치`하도록 갱신. 별도 Watcher/격리 리뷰 수동 기동 금지. [SUBMISSION_STATUS.json](../../requests/REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-001/SUBMISSION_STATUS.json)도 진단 PASS/WAIT_INPUT으로 갱신.
+- **유일한 남은 실행 게이트:** 이번 요청 ID에 대한 **명시적 비용 권한(POLICY-STATIC-V1, 최대 $1, 1회)** 확인 및 기존 Windows 서명자의 유효한 `APPROVAL_SIG.json` 작성/검증 후 `READY.md` 마지막 게시. 다른 리뷰 비용 승인·서명 재사용 금지. 승인 전 새 유료 호출 0; READY 단독 게시 금지.
+- **다른 업무와 분리:** CL/PR 확장 회귀 9/11 및 기존 2 FAIL, PRIVATE 후보의 배포 차단, 실제 E3/Knowledge 게시/Job 미실행 상태는 기존대로. 아래 이력 변경 없음.
+- **NEXT_ONE_ACTION:** 해당 요청의 새 유료 리뷰 비용 승인이 확인될 때 Windows 기존 서명자가 정확한 ID/commit/SHA로 서명·READY를 게시하고 기존 LIVE Watcher의 1회 결과/receipt readback 확인. 현재 추가 서명·READY/운영 변경·모델 호출 **NOT_RUN**.
+
 ## Work → Knowledge 정식 REQUEST 보완 — 2026-11-15 KST
 
 - 사용자 요청: 수동 인계의 누락을 보완해 정식 협업 요청으로 등록. 요청 ID `REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-001`, revision 1. 기존 대화형 리뷰 ID와 동일 검토 대상이며 중복 실행 금지.
