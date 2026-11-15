@@ -8,8 +8,9 @@
 - 제안: 최신 정본→정형 공개 매핑, 목적/완료/현재·대기/다음 역할·행동·산출물, parent/하위 활동 분리, 데이터 기준/수신/원본 확인의 최신성 구분. 공개 정책·UI·schema의 최소 개정은 리뷰 후 확정.
 - **정식 요청:** [REQ-COWORK-DASHBOARD-PRESENTATION-20261115-001](../../requests/REQ-COWORK-DASHBOARD-PRESENTATION-20261115-001/REQUEST.md) revision 1 / POLICY-STATIC-V1 상한 $1·1회 제안. [호스트 LIVE 접수](../../requests/REQ-COWORK-DASHBOARD-PRESENTATION-20261115-001/HOST_SUBMIT_ONESHOT.md) / [접수 상태](../../requests/REQ-COWORK-DASHBOARD-PRESENTATION-20261115-001/SUBMISSION_STATUS.json).
 - **실제 사전검증:** 원격 v0.2.20 ZIP SHA 확인 후 격리 Validator 실행: READY 없음 WAIT_INPUT, 메모리 전용 합성 READY 입력 형식 VALIDATED, 틀린 ZIP hash CONFLICT. safe_extract/CRC/경로·심링크·비밀형태 0 PASS. Windows 운영 서명·유효 비용 승인/독립 리뷰는 NOT_RUN. [사전검증 결과](review-inputs/REQ-COWORK-DASHBOARD-PRESENTATION-20261115-001/LOCAL_REQUEST_PREFLIGHT.json).
-- **상태:** DESIGN=DOCUMENTED; REQUEST=PREPARED_FOR_COMMIT_A; APPROVAL_SIG=PENDING_HOST; READY=NOT_POSTED; QUEUE=NOT_QUEUED; INDEPENDENT_REVIEW=NOT_RUN; IMPLEMENTATION/PUBLIC_POLICY_PATCH/UI_DEPLOY=NOT_RUN. 문서 QA·입력 검사 PASS를 구현/독립 리뷰 PASS로 승격하지 않음.
+- **상태:** DESIGN=DOCUMENTED; REQUEST=POSTED_REMOTE_READBACK_PASS; APPROVAL_SIG=PENDING_HOST; READY=NOT_POSTED; QUEUE=NOT_QUEUED; INDEPENDENT_REVIEW=NOT_RUN; IMPLEMENTATION/PUBLIC_POLICY_PATCH/UI_DEPLOY=NOT_RUN. 문서 QA·입력 검사 PASS를 구현/독립 리뷰 PASS로 승격하지 않음.
 - 현재 운영 상태는 최신 이관 CURRENT의 GITHUB/LIVE 수용 판정을 우선. 아래 과거 NONE/MIGRATION_NOT_CUTOVER는 당시 이력. 이번 설계 요청은 watcher/DB/Task/비용정책/LIVE·다른 요청·L1 지식 변경 없음.
+- 게시 검증: Commit A `455789da22f197f76477512ef6e92eae26de4b93`의 문서11개 원문 일치, ZIP 원격 실바이트 SHA/크기/CRC 일치. [검증 영수증](../../requests/REQ-COWORK-DASHBOARD-PRESENTATION-20261115-001/PUBLICATION_RECEIPT.md). SOURCE_PIN은 이 commit A에 고정하며 실제 승인 서명이 아님.
 - 다음 한 동작: 호스트에서 이번 ID 비용 권한·기존 서명자·중복 상태 확인 → 유효 승인 서명 → READY 마지막 게시 → 기존 LIVE watcher 리뷰 1회 → 결과/receipt readback → GPT 판정. 이 GPT 세션은 서명키/Windows 실행 도구에 접근 불가. 자동 리뷰 실행 완료로 기록하지 않음.
 
 

@@ -2,7 +2,7 @@
   "request_id": "REQ-COWORK-DASHBOARD-PRESENTATION-20261115-001",
   "revision": 1,
   "parent_work": "COWORK-GITHUB-DASHBOARD-20261111-001",
-  "request_document": "PREPARED_FOR_COMMIT_A",
+  "request_document": "POSTED_REMOTE_READBACK_PASS",
   "user_review_intent": "AUTHORIZED_BY_CURRENT_REQUEST",
   "policy": "POLICY-STATIC-V1",
   "policy_max_usd": 1,
@@ -18,10 +18,14 @@
   "local_v0220_format_preflight": "PASS_WITH_SYNTHETIC_READY_ONLY",
   "windows_host_signature_preflight": "NOT_RUN",
   "execution_provider": "EXISTING_GITHUB_LIVE",
-  "publication_readback": "PENDING",
+  "publication_readback": "PASS",
   "blocker": "Host signer/execution interface unavailable in this GPT session; verify per-request cost authority and use existing LIVE path.",
   "output_paths": {
     "result": "collab/reviews/REQ-COWORK-DASHBOARD-PRESENTATION-20261115-001/REVIEW_RESULT_1.md",
     "receipt": "collab/receipts/REQ-COWORK-DASHBOARD-PRESENTATION-20261115-001/RECEIPT_1.md"
-  }
+  },
+  "package_remote_raw_bytes_sha256": "PASS",
+  "source_pin": "POSTED_DATA_ONLY",
+  "input_commit": "455789da22f197f76477512ef6e92eae26de4b93",
+  "repo_id": "1451933830"
 }
