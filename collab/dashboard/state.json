@@ -47,7 +47,7 @@
       "status": "검증 진행 중",
       "title": "COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT",
       "tone": "warning",
-      "topic": "현재 요약 — 2026-11-14 KST"
+      "topic": "현재 요약 — 2026-11-15 KST"
     },
     {
       "id": "ISSUE-ANALYZER-20261114-001",
@@ -313,11 +313,11 @@
     {
       "evidence": "프로젝트 TRACKER.json 신고 값 · 운영 근거 별도 확인 필요",
       "independent_review": "NOT_RUN",
-      "next_action": "통합 브리프→관련 CURRENT 진입 문서 적용; 실제 새 창 사용 후 관련 요약·출처만 유지보수",
+      "next_action": "문서 갱신 규칙 적용·정적 확인; 실제 새 창에서 같은 Work·다음 행동 선택 검증",
       "owner": "GPT",
       "phase": "DISPOSITION",
       "record_source": "REGISTERED_METADATA_UNVERIFIED",
-      "self_test": "NOT_VERIFIED",
+      "self_test": "PASS",
       "skill": "skill-discovery",
       "source": "collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md",
       "title": "skill-discovery",
