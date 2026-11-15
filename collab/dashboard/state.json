@@ -273,10 +273,10 @@
   "work_items": [
     {
       "evidence": "프로젝트 TRACKER.json 신고 값 · 운영 근거 별도 확인 필요",
-      "independent_review": "NOT_RUN",
-      "next_action": "GPT 단일 통합 판정: 후보 v0.2.22(B1 합집합 집계·B2 현재 위임 재판정·M1 실제 이중 서명 결함 수정·M2 가족 접두사, 자체시험 866/866 PASS 두 해석기, SHADOW 8/8, 롤백 PASS). 독립 리뷰(R2/LARGE $3 1회)와 위임 범위 1회 확정을 사용자에게",
+      "independent_review": "PENDING",
+      "next_action": "2026-11-15 GPT v0.2.22 patch B1/B2/M1/M2 statically ACCEPT_FOR_R2_ONLY; actual 280313 B ZIP SHA256 1b67de37891cb7fdbae721b9424e312d1cc5b8c68e06e69357555a556d27bd87 d",
       "owner": "GPT / Windows Claude Code",
-      "phase": "DISPOSITION",
+      "phase": "REVIEW",
       "record_source": "REGISTERED_METADATA_UNVERIFIED",
       "self_test": "PASS",
       "skill": "cowork-review-watcher",
