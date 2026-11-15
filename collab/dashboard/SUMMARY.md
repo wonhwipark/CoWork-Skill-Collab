@@ -1,6 +1,6 @@
 # CoWork GitHub SHADOW 대시보드
 
-> **MIGRATION_NOT_CUTOVER** — GitHub 리뷰 제공자 (문서 기록). GitHub 기록과 리뷰 실행은 별개입니다.
+> **GITHUB_LIVE** — GitHub 리뷰 제공자 (문서 기록). GitHub 기록과 리뷰 실행은 별개입니다.
 
 이 문서는 GitHub Actions가 생성하는 안내 화면이며 리뷰·설치·배포 승인이나 자동 실행 결과가 아닙니다.
 
@@ -15,10 +15,12 @@
 
 ```mermaid
 flowchart TB
-  subgraph LIVE["현재 리뷰 제공자 기록 미확인"]
-    L1["최신 CURRENT.md 확인"] --> L2["운영 근거 검증 필요"]
+  subgraph LIVE["GitHub LIVE 리뷰 운송 · 호스트 보고 수용"]
+    L1["GPT 요구·판정"] --> L2["GitHub PRIVATE / 요청·결과"]
+    L2 --> L3["Windows watcher / Claude Code"]
+    L3 --> L4["결과·영수증 / GPT"]
   end
-  subgraph NEXT["GitHub 목표 경로 · 정식 전환 전"]
+  subgraph NEXT["GitHub 목표 경로 · 개별 리뷰 검증 별도"]
     A["GPT 요구·범위 확정"] --> B["GitHub PRIVATE / REQUEST·READY"]
     B --> C["Windows watcher / 승인·신뢰 검증"]
     C --> D["Claude Code / 독립 리뷰"]
@@ -36,7 +38,7 @@ flowchart TB
 | 구분 | 현재 상태 | 근거 범위 |
 |---|---|---|
 | 현재 운영 경로 | **GitHub 리뷰 제공자 (문서 기록)** | 최신 이관 CURRENT 기록 · 실제 호스트는 별도 검증 |
-| GitHub 전환 | **원문 확인 필요** | 별도 명시적 승인 전 전환 금지 |
+| GitHub 전환 | **GitHub LIVE (호스트 보고)** | 호스트 보고·GPT 판정과 신규 요청 실전 검증은 별개 |
 | Windows 실행·SHADOW | **기록 미관측** | 실제 호스트 실행 증거 필요 |
 | Claude Code 독립 리뷰 | **기록 미관측** | 자체 시험과 구분 |
 | GitHub 요청·결과·영수증 | **요청 7 · 결과 4 · 영수증 4** | PRIVATE 파일 관측 수일 뿐 완료 건수가 아님 |
@@ -59,7 +61,7 @@ flowchart TB
 | [JOBLIST-NRTX-20261112-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/JOBLIST-NRTX-20261112-001/CURRENT.md) | job-list | 개발·시험 | GPT | PASS | NOT_RUN | 호스트 G0 확인 전 후보 패키지 검증 범위 유지 |
 | [JOBLIST-SMOKE-20261114-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/JOBLIST-SMOKE-20261114-001/CURRENT.md) | 미지정 | 단계 미확인 | 미등록 | NOT_VERIFIED | NOT_VERIFIED | CURRENT.md 최신 상태 및 다음 담당 확인 |
 | [L1-CHANNEL-KNOWLEDGE-SCOPE-20261113-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/L1-CHANNEL-KNOWLEDGE-SCOPE-20261113-001/CURRENT.md) | l1-knowledge-updater | 독립 리뷰 | GPT | PASS | NOT_RUN | v0.9 215행 담당자 검토; 실제 ID·산출물 검증은 첫 승인된 분석 후속 |
-| [L1-WORKSPACE-RAG-20261111-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md) | 미지정 | 단계 미확인 | 미등록 | NOT_VERIFIED | NOT_VERIFIED | CURRENT.md 최신 상태 및 다음 담당 확인 |
+| [L1-WORKSPACE-RAG-20261111-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md) | l1-knowledge-updater | 차단·보류 | GPT | NOT_VERIFIED | NOT_RUN | Windows Claude Code: 승인된 Work→Knowledge 설계 리뷰의 서명·READY 확인 후 결과/Receipt를 회수. CL/PR 별도 검증은 기존 Work 유지. |
 | [NR-L1TX-CODE-ANALYSIS-20261115-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/NR-L1TX-CODE-ANALYSIS-20261115-001/CURRENT.md) | 미지정 | 단계 미확인 | 미등록 | NOT_VERIFIED | NOT_VERIFIED | CURRENT.md 최신 상태 및 다음 담당 확인 |
 
 스킬별 병렬 작업은 각 프로젝트의 TRACKER.json으로 등록합니다. 등록 전에는 확인되지 않은 실제 진행률을 추정하지 않습니다.
