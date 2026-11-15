@@ -9,7 +9,7 @@
       "owner": "GPT",
       "self_test": "NOT_VERIFIED",
       "independent_review": "NOT_RUN",
-      "next_action": "Windows Claude Code: 승인된 Work→Knowledge 설계 리뷰의 서명·READY 확인 후 결과/Receipt를 회수. CL/PR 별도 검증은 기존 Work 유지."
+      "next_action": "업무 GPT: Updater 직접 분석과 Workflow 결과의 같은 Work 저장·재조회 및 그룹 반영 경로를 기존 설치본으로 매핑."
     }
   ]
 }

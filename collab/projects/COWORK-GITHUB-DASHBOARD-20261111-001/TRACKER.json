@@ -9,7 +9,7 @@
       "owner": "GPT",
       "self_test": "PASS",
       "independent_review": "PENDING",
-      "next_action": "발표용 개선 설계 독립 리뷰 요청 등록; Windows 호스트가 이번 요청 비용 권한·서명 확인 후 READY 게시. 실제 모델 리뷰 미실행."
+      "next_action": "대시보드의 두 진입·개인/그룹 구분을 확인. 실제 Updater→Workspace 저장 연결은 L1 Work에서 업무 GPT의 설치본 매핑으로 확인."
     }
   ]
 }

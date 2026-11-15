@@ -1,6 +1,6 @@
 # CoWork 공통 맥락 브리프
 
-- 개정: r0009 / 구조·경로 개정 기준 2026-11-15 KST.
+- 개정: r0010 / 구조·경로 개정 기준 2026-11-15 KST.
 - 저장소: GitHub PRIVATE `wonhwipark/CoWork-Skill-Collab`, branch `main`.
 - 역할: 협업·L1 지식·관리 스킬의 **고정 지도**. 진행 상태·최신 버전·리뷰 결과·승인 대기·source blob을 복사하지 않는다.
 - 읽기: **이 지도 → 요청 목적에 맞는 CURRENT → 필요한 근거·계약·스킬 원문**. 현재 상태는 실행할 때 해당 정본을 조회한다.
@@ -12,7 +12,7 @@
 [통합 탑뷰·정본 책임·인계 계약](projects/COWORK-SKILL-DISCOVERY-20261112-001/COWORK_L1_INTEGRATED_TOPVIEW_r0001_20261115_KST.md)에서 단계·입력·승인·검증 경계를 확인한다. 아래 화살표는 **책임/전달 관계**이며 실제 자동 호출·설치·호스트 접속이 검증됐다는 뜻이 아니다.
 
 ```mermaid
-flowchart LR
+flowchart TD
   REQ["요구·범위"] --> CW["CoWork 기존 Work"]
   CW --> DEV["개발·자체시험"]
   DEV --> REV["독립 리뷰·영수증"]
@@ -20,6 +20,7 @@ flowchart LR
   DEC --> PUB["승인된 전달"]
   PUB --> HOST["별도 호스트 설치·호출 검증"]
   HOST --> AW["업무용 기존 Work"]
+  UA["Updater 직접 분석 요청"] --> AW
   AW --> ANA["기존 분석·변환 스킬"]
   ANA --> EV["Kernel Work·Evidence"]
   EV --> CAND["Updater 후보·Preview"]
@@ -33,7 +34,7 @@ flowchart LR
   ROUTE --> AW
 ```
 
-CoWork Work/리뷰 요청과 업무 Kernel Work는 별개다. 팀 지식 정본은 검증된 상세 설계·HLD·AS-IS MSC를 포함할 수 있고, 업무 Workspace는 분석/결정/Evidence 원본을 보존한다. 협업 운송 LIVE와 자동 승인 개선 상태는 각각 아래 해당 CURRENT에서 **별도로** 확인한다. 원본·승인·실행·게시·RAG 성공을 한 단계로 묶지 않는다.
+CoWork Work/리뷰 요청과 업무 Kernel Work는 별개다. 팀 지식 정본은 검증된 상세 설계·HLD·AS-IS MSC를 포함할 수 있고, 업무 Workspace는 Updater 직접 분석과 Workflow 업무 분석 모두의 초안·분석/결정/Evidence 원본을 보존한다. 그룹 공용 `l1sw-dev-knowledge`의 반영 여부와 개인 Work 보존을 분리한다. 협업 운송 LIVE와 자동 승인 개선 상태는 각각 아래 해당 CURRENT에서 **별도로** 확인한다. 원본·승인·실행·게시·RAG 성공을 한 단계로 묶지 않는다.
 
 ## 1. 역할과 정본
 
@@ -47,7 +48,7 @@ CoWork Work/리뷰 요청과 업무 Kernel Work는 별개다. 팀 지식 정본�
 | CoWork PRIVATE | 비민감 협업 설계·결정·결과·리뷰·영수증. 현재 상태는 프로젝트 CURRENT |
 | L1Work PUBLIC | 별도 승인된 최종 ZIP(main 루트), 인계(handoffs), 허용목록 상태 화면 |
 | 업무용 l1-workspace | Work ID·진행·분석/결정·수정/시험/리뷰·Evidence 원본. 동명 GitHub.com 저장소로 추정 금지 |
-| 팀 l1sw-dev-knowledge | 검증된 기술 지식 정본. 게시 결과와 Work 역링크는 각각 확인 |
+| 그룹 공용 l1sw-dev-knowledge | 팀 공용 스킬과 관리하는 검증 기술 지식. 실제 저장 위치는 설치 계약으로 확인; 게시 결과와 Work 역링크는 각각 확인 |
 
 사용자 최신 지시와 최신 실제 근거가 우선한다. 민감 코드·상세 MSC/로그·고객자료·비밀은 PRIVATE에도 게시하지 않는다. [운영 계약](START_HERE.md) · [역할·용어](ops/CONTRACTS/EXECUTION_PROMPT_TERMINOLOGY_V1.md).
 
@@ -57,7 +58,7 @@ CoWork Work/리뷰 요청과 업무 Kernel Work는 별개다. 팀 지식 정본�
 - Workflow는 요청·Work 선택/재개, Kernel은 Work/Evidence, code-analyzer는 코드 사실, doc-converter는 문서·MSC 표현, Knowledge Updater는 후보·중복/충돌·Preview·승인/기존 writer 연결을 담당하는 설계다. 실제 지원·설치·호출은 관련 CURRENT와 원문으로 확인한다.
 - 기술 정본의 Module → Feature → Scenario 구조, Procedure/운용 맥락의 교차 탐색, AS-IS/TO-BE 구분을 유지한다. 검토행을 실제 Feature/Scenario ID·코드 지원 승인으로 취급하지 않는다.
 - 개인 Work의 분석·결정·Evidence 이력을 보존하고 검증된 기술 지식을 그룹 정본 revision에 연결한다. 상세도만으로 개인/그룹을 결정하지 않는다.
-- 분석 저장 → 같은 Work의 지식화 요청 → 후보/대조/Preview → 같은 Work 보완 또는 승인 게시 → 원격 확인 → 원래 Work 결과 회수: [Work→Knowledge 설계](projects/L1-WORKSPACE-RAG-20261111-001/L1_WORK_TO_KNOWLEDGE_FLOW_r0001_20261114_KST.md). 구현·호출·검증의 현재 상태는 L1 CURRENT를 읽는다.
+- 두 진입(Updater의 Procedure/Feature 직접 분석 / Workflow 업무 결과 지식화) → 개인 `l1-workspace`의 같은 Work에 분석·초안·근거 보존 → 후보/대조/Preview → 보완 또는 승인된 그룹 반영 → readback·원래 Work 결과 회수: [Workspace 보존·그룹 반영 설계](projects/L1-WORKSPACE-RAG-20261111-001/L1_WORK_TO_KNOWLEDGE_FLOW_r0002_20261115_KST.md). 그룹 미반영에도 개인 분석 이력은 보존. 구현·호출·검증은 L1 CURRENT에서 확인.
 - 최초 실제 분석 후 확인하기로 한 항목은 해당 Work의 후속 검증으로 관리한다. 미실행을 확인된 결함이나 완료 근거로 바꾸지 않는다.
 
 | 요청 기능 | 우선 검토할 기존 스킬 |

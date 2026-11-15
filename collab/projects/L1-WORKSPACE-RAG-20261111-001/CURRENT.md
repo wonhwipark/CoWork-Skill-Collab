@@ -1,5 +1,15 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 현재 요약 — Updater 분석의 개인 Workspace 저장 요구 반영 (2026-11-15 KST)
+
+- **사용자 피드백 수용:** Updater의 Procedure/Feature 직접 분석과 Workflow 업무 결과 지식화 모두 개인 업무용 `l1-workspace`의 같은 Work에 분석·초안·Evidence·검토/결정을 보존. `l1sw-dev-knowledge`는 그룹 공용 스킬이며 검증·승인된 공유 지식을 별도 반영.
+- **설계 정본:** [두 진입·Workspace 보존·그룹 반영 r0002](L1_WORK_TO_KNOWLEDGE_FLOW_r0002_20261115_KST.md). r0001의 게시·복구·역링크 경계 유지. 기존 고정 리뷰 REQUEST/ZIP/manifest/SOURCE_PIN은 변경하지 않으며 r0002를 기존 리뷰 PASS로 취급하지 않음.
+- **실제 상태:** `DESIGN=USER_REQUIREMENT_DOCUMENTED`; `UPDATER_TO_WORKSPACE_SAVE=NOT_VERIFIED`; `WORKFLOW_UPDATER_E2E=NOT_RUN`; `INDEPENDENT_REVIEW_R0002=NOT_RUN`. 문서 반영과 실제 업무 호스트 저장·그룹 게시를 구분.
+- **범위:** 비민감 PRIVATE 설계·연결 문서 및 기존 TRACKER의 다음 조치. PUBLIC 표시 결과는 [대시보드 CURRENT](../COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md)에서 확인. 기존 CL/PR·고정 리뷰 이력 보존.
+- **다음 한 행동:** 업무 GPT가 기존 설치 원문/결과로 두 진입의 Work 선택·Workspace 저장/readback·그룹 반영 경로를 매핑하고 확인/미확인/GAP을 회신.
+
+---
+
 ## 사용자 승인 확정 — Work→Knowledge 설계 독립 리뷰 1회·최대 $1 (2026-11-15 KST)
 - **비용 승인 완료:** 사용자 명시 승인 `REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-001` revision 1, `POLICY-STATIC-V1`, 독립 설계 Claude 리뷰 **최대 1회·USD $1.00**. 동일 비용 승인 재요청 금지·추가 유료 모델 호출 금지. [서명자·LIVE 원샷 실행 정본](../../requests/REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-001/GPT_USER_COST_APPROVAL_AND_SIGNER_HANDOFF_r0001_20261115.md), commit `766f10dff51a5b305203c56822165dd81f3604d1` 원격 readback PASS.
 - **입력 Validator는 이전 Windows v0.2.20 사전 검사 PASS:** `state: REQUESTED`, 설계 ZIP 5문서(28805 B, SHA256 `4ccede070d03e497a8d821fcabc8092c0d46045b245b64dabf023abc83daa417`), Commit A `0a46fea5f7f63c68c5cb12cfa35bfaed00c2c1a3`와 SOURCE_PIN 원본 고정. REQUEST·ZIP·manifest·SOURCE_PIN **수정 0**.
