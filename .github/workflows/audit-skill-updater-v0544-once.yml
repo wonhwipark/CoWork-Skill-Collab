@@ -1,0 +1,95 @@
+name: Audit public Skill-Updater v0.5.44 job-list activation behavior
+on:
+  push:
+    paths:
+      - .github/workflows/audit-skill-updater-v0544-once.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  inspect_public_zip:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inspect pinned public archive without running the updater
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import ast, hashlib, io, re, sys, urllib.request, zipfile, pathlib
+          url="https://raw.githubusercontent.com/wonhwipark/L1Work/main/skill-updater_v0_5_44_1027.zip"
+          data=urllib.request.urlopen(url,timeout=55).read()
+          blob=hashlib.sha1(b"blob "+str(len(data)).encode()+b"\0"+data).hexdigest()
+          assert len(data)==210717,(len(data), "SIZE")
+          assert blob=="d83faa021549835a40e3ddc134b8e936dc962e65",(blob,"BLOB_MISMATCH")
+          z=zipfile.ZipFile(io.BytesIO(data))
+          assert z.testzip() is None
+          paths=[n for n in z.namelist() if not n.endswith("/")]
+          assert len(paths)==len(set(paths))
+          for n in paths:
+              assert ".." not in pathlib.PurePosixPath(n).parts
+          needle=re.compile(r"job.?list|job_sync|post.update|activate|launch|subprocess|Popen|wait\(|returncode|timeout|wait_job|worker|version_changed",re.I)
+          root="collab/projects/SKILL-UPDATER-JOBLIST-LATENCY-20261115-001"
+          out=pathlib.Path(root)/"STATIC_AUDIT_v0544.md"
+          out.parent.mkdir(parents=True,exist_ok=True)
+          lines=[
+            "# Skill-Updater v0.5.44 — isolated public ZIP code audit",
+            "- Source: `wonhwipark/L1Work/main/skill-updater_v0_5_44_1027.zip`",
+            "- Source size: "+str(len(data)),
+            "- Source SHA-256: `"+hashlib.sha256(data).hexdigest()+"`",
+            "- Git blob SHA: `"+blob+"`",
+            "- ZIP CRC: PASS",
+            "- Scope: STATIC source inspection; not the currently installed Linux binary. Never ran updater, activated Jobs or touched host.",
+            "- Source files: "+str(len(paths)),
+            "",
+          ]
+          pyfiles=[n for n in paths if n.endswith(".py") and ("skill_updater" in n or "bootstrap" in n or "job" in n or "mcp" in n)]
+          for n in pyfiles[:25]:
+              raw=z.read(n)
+              try: source=raw.decode("utf-8")
+              except UnicodeDecodeError: continue
+              src=source.splitlines()
+              hits=[i for i,l in enumerate(src) if needle.search(l)]
+              if not hits: continue
+              lines+=["## `"+n+"`", "- total lines: "+str(len(src)), "- matching lines: "+str(len(hits))]
+              try:
+                  tree=ast.parse(source)
+                  nodes=[node for node in ast.walk(tree) if isinstance(node,(ast.FunctionDef,ast.AsyncFunctionDef)) and needle.search(node.name)]
+                  lines.append("- related functions: "+", ".join(f"`{node.name}` at {node.lineno}–{node.end_lineno}" for node in nodes[:30]))
+              except SyntaxError as exc:
+                  lines.append("- AST parse: "+str(exc))
+                  nodes=[]
+              zones=set()
+              for i in hits[:130]:
+                  for j in range(max(i-5,0),min(i+7,len(src))): zones.add(j)
+              for node in nodes:
+                  if node.end_lineno-node.lineno<90:
+                      for j in range(node.lineno-1,node.end_lineno): zones.add(j)
+              excerpt=[]
+              last=-2
+              for i in sorted(zones):
+                  if i!=last+1: excerpt.append("...")
+                  if len(src[i])>260: excerpt.append(f"{i+1:05d}: "+src[i][:260]+" ...[TRUNCATED]")
+                  else: excerpt.append(f"{i+1:05d}: "+src[i])
+                  last=i
+              excerpt=excerpt[:570]
+              lines+=["```python",*excerpt,"```",""]
+          if len(lines)<12: raise RuntimeError("NO_RELEVANT_SOURCE_EXTRACTED")
+          out.write_text("\n".join(lines)+"\n")
+          print("AUDIT_PATH",out)
+          print("MATCHED_PUBLIC_PY_FILES",len(pyfiles))
+          print("REPORT_CHARS",out.stat().st_size)
+          PY
+      - name: Commit isolated static report to PRIVATE
+        shell: bash
+        run: |
+          set -euo pipefail
+          REPORT="collab/projects/SKILL-UPDATER-JOBLIST-LATENCY-20261115-001/STATIC_AUDIT_v0544.md"
+          test -s "$REPORT"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- "$REPORT"
+          git diff --cached --check
+          git commit -m 'audit(skill-updater): inspect public v0.5.44 activate/wait boundaries'
+          git push origin HEAD:main
