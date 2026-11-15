@@ -1,5 +1,18 @@
 # COWORK-GITHUB-DASHBOARD-20261111-001 — CURRENT
 
+## B안 공개 GitHub Pages UI 적용 완료 — 2026-11-15 KST
+
+- **사용자 지시:** 이 창에서 B안으로 기존 대시보드 실제 교체·GitHub 게시·검증까지. A/B 전환 없이 B 단독 구조·L1·TODO 3개 서브화면 적용.
+- **결과/영수증:** [B_STYLE_PUBLIC_UI_DEPLOY_RESULT_r0001_20261115_KST.md](B_STYLE_PUBLIC_UI_DEPLOY_RESULT_r0001_20261115_KST.md) (PRIVATE main remote readback PASS). 기존 PUBLIC `wonhwipark/L1Work/main/docs/cowork-dashboard/`의 `board.js` 신설/기존 `index.html` 교체, JS commit `5a80688019a98f6bfeb73a9f83a6392bd8146530`, HTML commit `31ac017d56fecca6522469d790891909a2d5eea8` 원격 본문 일치. [Pages 배포 #43706148759](https://github.com/wonhwipark/L1Work/actions/runs/43706148759) `completed/success`.
+- **B안 UI 결과:** PUBLIC 5개 범주 `status.json` 기반 상태 보드·표·검색·세부 패널, 전체 협업 역할도, L1 Module→Feature/Procedure→Scenario·7단계 지식화 구조, PUBLIC 범주의 TODO/다음 행동·기존 최근 인계 3건. 120초/복귀 시 same-origin 갱신. PRIVATE GPT TODO의 실제 TD ID·Work ID/원문은 PUBLIC 불포함.
+- **직접 시험:** Chromium viewport 1440/1366/390에서 메뉴·보드/표/검색·상세/Escape·L1 7단계·공개 후속 5건·인계 렌더 **PASS**, 가로 overflow 0. 악성 category·HTML 입력·인계 파일명 **차단 PASS**. GitHub Pages 실제 URL HTTP 본문/사용자 브라우저 E2E는 도구 미지원으로 **NOT_VERIFIED**.
+- **P0 남음:** PRIVATE GITHUB/LIVE vs 기존 PUBLIC `status.json`의 과거 NONE/전환 전 간 상태 데이터 불일치 및 Tracker enum 문제는 **미수정**. 새로운 UI는 오래된 공개 데이터 경고를 표시하고 운영 상태 단정 회피; 상태 연결 복구·정합성 승격 아님. 현 PUBLIC `status.js`/JSON/기존 exporter·Actions/LIVE 불변.
+- **독립 리뷰/승인 경계:** 기존 `REQ-COWORK-DASHBOARD-PRESENTATION-20261115-001`의 고정 SOURCE_PIN·ZIP·승인/READY/리뷰 모두 불변, UI 구현 독립 리뷰 `NOT_RUN`, 신규 유료 모델 호출·운영 watcher/DB·Job·그룹 지식 변경 0.
+- **NEXT_ONE_ACTION:** 기존 대시보드 Work에서 P0 공개 상태 매핑·Tracker enum 안전 보완을 별도 개발·시험·유효 독립 리뷰 뒤 승인된 공개 범위로 반영하고, 실제 Pages HTTP 수신 확인. B안 디자인 재검토/재게시로 중복 작업하지 않음.
+
+---
+
+
 ## B안 확정·로컬 구현 검증 / 기존 공개 대시보드 미교체 (2026-11-15 KST)
 
 - **USER_UI_CHOICE=B:** A/B 실제 시제품 비교에서 사용자는 **B안(GitHub Projects형 보드·표)의 가독성이 더 좋다**고 판정, B안으로 진행 지시. 기존 `COWORK-GITHUB-DASHBOARD-20261111-001` Work 재사용, 새로운 Site/Work·운영 원장 생성하지 않음.
