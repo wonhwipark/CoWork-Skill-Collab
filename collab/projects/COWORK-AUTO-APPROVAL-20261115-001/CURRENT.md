@@ -1,5 +1,15 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## GPT 정적 판정 — v0.2.21 후보 보완 후 독립 리뷰 (2026-11-15 KST)
+
+- **최신 GPT 판정 정본:** [GPT_V0221_STATIC_DISPOSITION_AND_SINGLE_FIX_HANDOFF_r0001_20261115.md](GPT_V0221_STATIC_DISPOSITION_AND_SINGLE_FIX_HANDOFF_r0001_20261115.md), GitHub PRIVATE main commit `5608dec4072710846b6331ecd48f22029914a7ea`, remote readback PASS. `GPT_DISPOSITION=REVISE_BEFORE_INDEPENDENT_REVIEW` / `BLOCKING=2` / `MAJOR=2`.
+- **GPT 원격 ZIP 재해시 확인:** v0.2.21 dev 후보 실제 raw bytes 272839, SHA-256 `16921bf4021714345cabc78de5e2e8a6882891615f90b5747622570ca4465d8b` = Windows 보고 일치. Full CRC/Windows 실행은 호스트 자체보고로 구분. 기존 817 PASS/12 SKIP, SHADOW 8/8은 `SELF_TEST_REPORTED`.
+- **B1 BLOCKING:** 자동 서명 예약과 기존 별도 수동 리뷰 dispatch를 `max(counts)`로 합치면 서로 다른 예약·실행이 과소 집계됨(예: 자동 예약 A1 + 수동 실행 B1 + 추가 자동 C1 → day 2 한도인데 3건 허용 가능). 기존 watcher 최종 집행이 실제 과금 초과를 허용했다는 뜻은 아님. identity 기반 union 집계/원자 한도 회귀 필요.
+- **B2 BLOCKING:** 위임 로컬 정책을 서명/READY 이전에 축소해도 `_still_allowed`는 enabled/expiry/repo만 재검증하고 project/skill/limit 축소를 놓침. 재검증/claim 정책 결속 및 revoke crash 회귀 필요.
+- **M1 MAJOR:** 최초 ZIP 추출 회귀 1 FAIL 원인·테스트 이름 미확인, 이후 반복 전부 PASS; 재현·증거 확보. **M2 MAJOR:** 정확 project/skill allowlist와 project_id≠work_id 처리가 신규 Work 무인 자동 리뷰 목표에 맞는지 기존 계약과 대조. 무제한 자동 범위 도입 금지.
+- **실제 단계:** `DEVELOPMENT=v0.2.21_COMPLETED_CANDIDATE`, `GPT_STATIC_REVIEW=FAIL_BLOCKING_2`, `INDEPENDENT_REVIEW=NOT_RUN`, `OPERATING_DEPLOYMENT=NOT_RUN`, `AUTO_SIGNING=OFF`, `EXISTING_GITHUB_LIVE=v0.2.20_UNCHANGED`, `NEW_PAID_MODEL_CALLS=0`. 기존 후보·설치·원본 보존, 비용과 실운영 자동위임 승인 없음.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 위 판정 정본의 마지막 원샷 지시로 B1/B2 재현·수정·전체 회귀/격리 SHADOW·rollback, M1/M2 판단, 새 dev ZIP/SHA/CRC 및 `CLAUDE_V0221_GPT_FINDINGS_FIX_RESULT_FOR_GPT_20261115.md`를 PRIVATE 게시·원격 readback. 사용자 중간 질문/새 유료 모델 호출 없음. 그 후 GPT가 재판정하고 독립 R2(권고 LARGE $3/1회)와 제한적 사전 위임·운영 적용 범위를 묶어 **별도 명시 승인**을 요청.
+
 ## Windows 원샷 완료: 자동 서명·READY 후보 v0.2.21 개발·시험·후보 고정 (Claude 호스트 보고, 2026-11-15 KST) — AUTO_SIGNING=OFF 유지
 - 결과: `CLAUDE_AUTO_APPROVAL_ONE_SHOT_RESULT_FOR_GPT_20261115.md` (PRIVATE `main`, commit `c99d49e8b15c73ea312364548cf5213a59c1874e`, 원격 바이트·SHA-256 `76bb3c16360a6993339d78380f0bfa84435ea4d3c7c34028e2e262cb323627e7` 일치). 운영 감시기·DB·Task·Notifier·키 **불변**, 실제 서명 0, READY 게시 0, 유료 모델 호출 0.
 - 후보 `skill-collab-watcher_v0_2_21_1115_DEV_NOT_FOR_DEPLOYMENT.zip` 272839 B, sha256 `16921bf4021714345cabc78de5e2e8a6882891615f90b5747622570ca4465d8b`(재빌드 바이트 동일, CRC OK, 비밀 스캔 0). PRIVATE `artifacts/v0_2_21/`에 ZIP·diff·매니페스트 게시(원격 바이트 일치, 요청·READY 없음). 독립 리뷰 **NOT_RUN**.
