@@ -47,7 +47,7 @@
       "status": "검증 진행 중",
       "title": "COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT",
       "tone": "warning",
-      "topic": "현재 요약 — TD-002 V07 PASS → TD-001 문서 반영 → TD-003 실제 E2E 대기 (2026-11-15 KST)"
+      "topic": "TD-003 후속 — 기존 NR Work에 호스트 E2E one-shot 인계 게시 / 직접 Linux MCP 미접근 (2026-11-15 KST)"
     },
     {
       "id": "ISSUE-ANALYZER-20261114-001",
