@@ -1,6 +1,15 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
-## 현재 요약 — TD-004 과거·현재 표기 점검 (2026-11-15 KST)
+## 현재 요약 — TD-002 현재 세션의 재개 경로 검증 (2026-11-15 KST)
+
+- 사용자 요청: GPT 공통 투두를 쉬운 작업부터 순차 검토. TD-004는 문서 정정·PRIVATE readback 완료, TD-002는 같은 기존 Work에서 후속 점검.
+- `TD-002/V06_SESSION_ROUTE=PASS`: [현 세션 읽기 경로 점검](TD002_SESSION_ROUTING_CHECK_20261115.md)에서 NR 코드 분석·Job Smoke·자동 승인 개선·기존 GitHub LIVE 운영의 4개 목적별 CURRENT를 실제 읽고 Work/승인/다음 행동을 구별.
+- `TD-002/V07_ACTUAL_NEW_CHAT=NOT_RUN`: 별도 새 대화창에서의 실제 시작·재개를 확인하지 않음. GitHub 문서 갱신으로 자동 선조회 동작이 설정된 것은 아님.
+- 현재 목록 상태 정본: [GPT_TODO.md](../../GPT_TODO.md) (TD-004 완료; TD-002 작업 연결).
+- 승인 경계: 비민감 읽기/PRIVATE 문서 갱신만 수행. 새 유료 리뷰·REQUEST/READY·호스트/Job·공개 전달·LIVE 변경 없음.
+- NEXT_ONE_ACTION: 실제 새 대화에서 이 기존 Work와 해당 CURRENT의 최신 요약·기존 승인 범위·다음 행동 선택을 재현해 V07을 판정.
+
+## 이전 요약 — TD-004 과거·현재 표기 점검 (2026-11-15 KST)
 
 - 사용자 지시: GPT 공통 투두를 쉬운 항목부터 순차 검토·실행. 기존 Work `COWORK-SKILL-DISCOVERY-20261112-001`의 맥락 표시 작업 재개.
 - TD-004 결과: `CURRENT.md` 상단 최신 요약 구조는 유지하고, 2026-11-12 과거 섹션의 오해 소지가 있는 `(LATEST)` 두 곳만 `(당시 이력)`으로 정정. 날짜·커밋·시험 결과·기존 판정 본문 보존.
