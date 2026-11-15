@@ -1,5 +1,14 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## GPT v0.2.22 직접 재해시·정적 판정 — 독립 R2 및 위임 범위 사용자 통합 승인 대기 (2026-11-15 KST)
+
+- **GPT 판정 정본:** [GPT_V0222_DISPOSITION_AND_COMBINED_APPROVAL_GATE_r0001_20261115.md](GPT_V0222_DISPOSITION_AND_COMBINED_APPROVAL_GATE_r0001_20261115.md); commit `f3bf1f1e691540c6f4dfec2598d962790c9e39c7`, 원격 본문 readback PASS.
+- **판정 `ACCEPT_V0222_FOR_INDEPENDENT_REVIEW_ONLY`:** B1 합집합 비용/횟수, B2 보호 위임 scope 재검증, M1 in-process double signer 경쟁 방지, M2 프로젝트 family를 새 `diff_v0_2_21_to_v0_2_22.patch`로 직접 대조. Windows Claude Code 최종 ZIP 자체시험 `866 passed/12 skipped` 두 Python 환경, 격리 SHADOW 8/8, 구후보 FAIL→신후보 PASS, 운영 원본 불변은 Windows 호스트 보고이며 독립 PASS가 아님.
+- **GPT GitHub ZIP 실제 bytes 검증 PASS:** `artifacts/v0_2_22/skill-collab-watcher_v0_2_22_1115_DEV_NOT_FOR_DEPLOYMENT.zip` 280313 B, 101 entries, SHA-256 `1b67de37891cb7fdbae721b9424e312d1cc5b8c68e06e69357555a556d27bd87`, Git blob `caa55e965df2a42693a06cee44e17e2e1cb879e5`. 전체 ZIP CRC는 Windows 호스트 증거, GPT는 미실행.
+- **다음 게이트:** 신규 v0.2.22 독립 Claude R2 **`POLICY-STATIC-V1-LARGE` 최대 $3 1회**, **아직 사용자 승인/REQUEST/READY/모델 호출 없음**. 단일 통합 승인안: 기존 LIVE v0.2.20 보존, 보호 로컬 사전 위임 `COWORK-`·`L1-WORKSPACE-` family + 3개 실제 skill exact, `POLICY-STATIC-V1`만 요청당 1회/$1, 일 2회/$3, 월 $10, 30일 만료, 소급 요청 불허. R2 BLOCKING=0 등 GPT 판정 PASS **조건부** 운영 설치/auto signer 활성화·Notifier 이벤트 연결/검증/롤백 승인 제안. 아직 모든 값 `NOT_APPROVED`.
+- **실제 운영 상태:** `ACTIVE_PROVIDER=GITHUB`, `OPERATING_VERSION=v0.2.20`(Windows 보고), `AUTO_SIGNING=OFF`, `INDEPENDENT_REVIEW=NOT_RUN`, `NEW_PAID_MODEL_CALLS=0`, `V0222_INSTALL=NOT_RUN`. 현재 대기 Work→Knowledge·dashboard REQUEST는 소급 자동 디스패치 0 유지.
+- **NEXT_ONE_ACTION:** 위 문서의 비용/R2·범위·조건부 운영 승인에 대한 사용자 한 번의 명시 응답을 받기. 승인 뒤 신규 R2 패키지 SHA/원격 요청 고정 → Windows 기존 signer/READY LAST→LIVE watcher 독립 리뷰 1회·receipt→GPT 판정. PASS면 허용된 Windows 적용·검증으로 한 번에 마무리. 실패/승인 초과는 fail-closed/모델 재호출 0.
+
 ## v0.2.21 GPT 정적 판정 수정 완료: 후보 v0.2.22 (B1·B2·M1·M2, 자체시험 866/866, 독립리뷰 NOT_RUN, 운영 불변) (Claude 호스트 보고, 2026-11-15 KST)
 - 결과: `CLAUDE_V0221_GPT_FINDINGS_FIX_RESULT_FOR_GPT_20261115.md` (PRIVATE `main`, commit `6f448b63e607c9ba951f2b5ea09043217de5f6a3`, 원격 바이트·SHA-256 `4413787701b1997ace8d7e4e0064665f95e340159bc19f9530209f53d2a18f20` 일치).
 - B1: 자동 예약과 워처 디스패치를 요청 신원 단위 합집합(중복 1회, 비용은 큰 값, 합산)으로 예약 트랜잭션 안에서 집계. 옛 후보는 max() 때문에 세 번째 요청 통과(실패 재현). B2: 서명·승인 게시·READY 게시 직전마다 현재 보호 위임으로 저장 후보 재판정, 축소 시 POLICY_STOPPED(서명·READY·모델 0). 옛 후보 25건 실패.
