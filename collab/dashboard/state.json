@@ -35,10 +35,10 @@
       "id": "COWORK-GITHUB-DASHBOARD-20261111-001",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md",
-      "status": "검증 진행 중",
+      "status": "전환 전",
       "title": "COWORK-GITHUB-DASHBOARD-20261111-001 — CURRENT",
       "tone": "warning",
-      "topic": "B안 공개 GitHub Pages UI 적용 완료 — 2026-11-15 KST"
+      "topic": "B안 배포 후 상태 정합성·자동 업데이트 직접 검토 — 2026-11-15 KST"
     },
     {
       "id": "COWORK-SKILL-DISCOVERY-20261112-001",
