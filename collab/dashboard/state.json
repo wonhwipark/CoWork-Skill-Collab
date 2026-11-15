@@ -272,16 +272,16 @@
   "visibility": "PRIVATE_REPO_ONLY",
   "work_items": [
     {
-      "evidence": "CURRENT 문서 관측. 단계·진행률은 증명되지 않음",
-      "independent_review": "NOT_VERIFIED",
-      "next_action": "CURRENT.md 최신 상태 및 다음 담당 확인",
-      "owner": "미등록",
-      "phase": "UNKNOWN",
-      "record_source": "CURRENT_ONLY_UNSTRUCTURED",
-      "self_test": "NOT_VERIFIED",
-      "skill": "미지정",
+      "evidence": "프로젝트 TRACKER.json 신고 값 · 운영 근거 별도 확인 필요",
+      "independent_review": "NOT_RUN",
+      "next_action": "2026-11-15 GPT 설계·격리 코드/회귀 25 PASS, 원격 Git blob=실시험 파일 일치. 운영 GitHub LIVE v0.2.20은 그대로 유지; AUTO_SIGNING=OFF. 설계 AUTOMATIC_SIGNING_MINIMAL_DESIGN_r0001_20261115.md 및 ",
+      "owner": "GPT / Windows Claude Code",
+      "phase": "DEVELOPMENT",
+      "record_source": "REGISTERED_METADATA_UNVERIFIED",
+      "self_test": "PASS",
+      "skill": "cowork-review-watcher",
       "source": "collab/projects/COWORK-AUTO-APPROVAL-20261115-001/CURRENT.md",
-      "title": "COWORK-AUTO-APPROVAL-20261115-001 — CURRENT",
+      "title": "GPT→GitHub REQUEST 자동 서명·READY (제한된 사전 위임)",
       "work_id": "COWORK-AUTO-APPROVAL-20261115-001"
     },
     {

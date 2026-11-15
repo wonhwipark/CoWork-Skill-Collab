@@ -51,7 +51,7 @@ flowchart TB
 
 | Work ID | 스킬 | 진행 단계(신고) | 담당 | 시험(신고) | 독립 리뷰(신고) | 다음 조치 |
 |---|---|---|---|---|---|---|
-| [COWORK-AUTO-APPROVAL-20261115-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-AUTO-APPROVAL-20261115-001/CURRENT.md) | 미지정 | 단계 미확인 | 미등록 | NOT_VERIFIED | NOT_VERIFIED | CURRENT.md 최신 상태 및 다음 담당 확인 |
+| [COWORK-AUTO-APPROVAL-20261115-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-AUTO-APPROVAL-20261115-001/CURRENT.md) | cowork-review-watcher | 개발·시험 | GPT / Windows Claude Code | PASS | NOT_RUN | 2026-11-15 GPT 설계·격리 코드/회귀 25 PASS, 원격 Git blob=실시험 파일 일치. 운영 GitHub LIVE v0.2.20은 그대로 유지; AUTO_SIGNING=OFF. 설계 AUTOMATIC_SIGNING_MINIMAL_DESIGN_r0001_20261115.md 및  |
 | [COWORK-DROPBOX-TO-GITHUB-MIGRATION](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) | cowork-review-watcher | 완료 신고 (검증 필요) | GPT / Claude Code | PASS | PASS | 2026-11-15 GPT 최종 판정 ACCEPT_GITHUB_LIVE_CUTOVER_HOST_REPORTED_AND_REVIEW_VERIFIED. Windows 결과 v0.2.20 R1 독립 리뷰 BLOCKING 0, 모델 1회 $0.3769412(한도 $1), B1 cryptography,  |
 | [COWORK-GITHUB-DASHBOARD-20261111-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md) | cowork-dashboard | 독립 리뷰 | GPT | PASS | PENDING | 발표용 개선 설계 독립 리뷰 요청 등록; Windows 호스트가 이번 요청 비용 권한·서명 확인 후 READY 게시. 실제 모델 리뷰 미실행. |
 | [COWORK-SKILL-DISCOVERY-20261112-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md) | skill-discovery | GPT 판정 | GPT | NOT_VERIFIED | NOT_RUN | 통합 브리프→관련 CURRENT 진입 문서 적용; 실제 새 창 사용 후 관련 요약·출처만 유지보수 |
