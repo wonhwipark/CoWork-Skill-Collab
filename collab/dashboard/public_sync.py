@@ -274,6 +274,8 @@ def build_payload(state: dict, date: str, *,
                 raise SafetyBlock("duplicate public category")
             used_primary.add(item_id)
             title, category, owner, next_action = PUBLIC_WORKS[item_id]
+            if item_id == "COWORK-DROPBOX-TO-GITHUB-MIGRATION" and state.get("phase") == "GITHUB_LIVE":
+                next_action = "첫 신규 유효 요청의 실제 리뷰·영수증, 알림 수신 및 지속 가동 검증"
         elif skill in PUBLIC_SKILL_EXAMPLES:
             # Publicly approved skill names but no PRIVATE Work ID or title.
             title, category, owner, next_action = PUBLIC_SKILL_EXAMPLES[skill]
