@@ -77,9 +77,11 @@ def build_state(root: Path, repo: str = REPO) -> dict:
         transport[family] = {"files_observed": n, "verified": False,
                              "note": "GitHub 파일 관측 수 · 실제 리뷰 실행/서명/영수증 검증 아님"}
     operations = flow_view.snapshot(root)
+    phase = ("GITHUB_LIVE" if operations["active_provider"] == "GITHUB"
+             and operations["cutover"] == "LIVE" else "MIGRATION_NOT_CUTOVER")
     return {"review_chains": review_chain.collect(root), "operations": operations,
             "schema": "COWORK_GITHUB_DASHBOARD_SHADOW_V4",
-            "phase": "MIGRATION_NOT_CUTOVER", "live_provider": operations["active_provider"],
+            "phase": phase, "live_provider": operations["active_provider"],
             "visibility": "PRIVATE_REPO_ONLY", "source": "GITHUB_TRACKED_FILES_ONLY",
             "disclaimer": "GitHub SHADOW 현황. 미이관 자료는 0건이 아니라 미확인입니다.",
             "projects": projects, "work_items": work_tracker.collect(root), "transport": transport}
@@ -117,8 +119,8 @@ def render_html(state: dict, repo: str = REPO) -> str:
 body{{margin:0;background:var(--bg);font:15px/1.6 system-ui,'Malgun Gothic',sans-serif;color:var(--ink)}}main{{max-width:1120px;margin:auto;padding:26px 20px 72px}}h1{{font-size:clamp(24px,3vw,34px);margin:0}}h2{{font-size:18px;line-height:1.4;overflow-wrap:anywhere}}a{{color:var(--blue);text-underline-offset:3px}}a:focus-visible,input:focus-visible{{outline:3px solid var(--focus);outline-offset:3px}}
 .header{{display:flex;align-items:flex-start;justify-content:space-between;gap:15px;flex-wrap:wrap}}.overline{{font-weight:800;letter-spacing:.1em;color:var(--blue);font-size:12px}}.sub,.minor,.topic{{color:var(--muted)}}.banner{{border:1px solid #d2dceb;background:#eef3fa;border-radius:13px;padding:15px 18px;margin:19px 0}}.banner strong{{display:block}}.stats{{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:20px 0}}.stat{{background:white;border:1px solid var(--border);padding:15px;border-radius:13px}}.stat strong{{display:block;font-size:26px}}.stat span{{font-size:12px;color:var(--muted)}}.toolbar{{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;margin:26px 0 14px}}input{{border:1px solid #bccada;border-radius:10px;padding:12px;font:inherit;width:min(100%,340px);background:white}}.grid{{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}}.card{{background:var(--paper);border:1px solid var(--border);border-radius:16px;padding:18px;min-width:0}}.card-top{{display:flex;align-items:center;justify-content:space-between;gap:8px}}.pill{{border-radius:100px;background:#eaf0f7;color:#284a70;padding:5px 10px;font-size:12px;font-weight:750}}.pill.warning{{background:#fff0d9;color:#80500c}}.pill.danger{{background:#ffe8e8;color:#9b2222}}.next{{border-top:1px solid var(--border);padding-top:12px}}.empty{{padding:25px;background:white;border-radius:12px}}footer{{margin-top:30px;color:var(--muted);font-size:13px}}[hidden]{{display:none!important}}@media(max-width:740px){{.grid{{grid-template-columns:1fr}}.stats{{grid-template-columns:repeat(2,minmax(0,1fr))}}main{{padding:18px 14px 50px}}}}
 {flow_view.FLOW_CSS}{work_tracker.CSS}</style></head><body><main>
-<div class="header"><div><div class="overline">COWORK · GITHUB PRIVATE / READ-ONLY DASHBOARD</div><h1>협업 진행 현황</h1><p class="sub">프로젝트 CURRENT.md와 GitHub에 게시된 파일 기준 · 운영 실행 근거와 구별</p></div><span class="pill warning">MIGRATION_NOT_CUTOVER</span></div>
-<section class="banner" aria-label="중요 운영 상태"><strong>{html.escape(flow_view.provider_label(state))} · GitHub 정식 전환 전</strong><span>이 화면은 코드 리뷰 실행·배포·LIVE 전환을 수행하지 않습니다. GitHub로 이관되지 않은 자료는 아직 확인할 수 없습니다.</span></section>
+<div class="header"><div><div class="overline">COWORK · GITHUB PRIVATE / READ-ONLY DASHBOARD</div><h1>협업 진행 현황</h1><p class="sub">프로젝트 CURRENT.md와 GitHub에 게시된 파일 기준 · 운영 실행 근거와 구별</p></div><span class="pill warning">{html.escape(state["phase"])}</span></div>
+<section class="banner" aria-label="중요 운영 상태"><strong>{html.escape(flow_view.provider_label(state))} · {("GitHub LIVE · 호스트 보고 수용" if state["phase"] == "GITHUB_LIVE" else "GitHub 전환 상태 확인 필요" if state["operations"]["cutover"] == "LIVE" else "GitHub 정식 전환 전")}</strong><span>이 화면은 코드 리뷰 실행·배포·LIVE 전환을 수행하지 않습니다. GitHub로 이관되지 않은 자료는 아직 확인할 수 없습니다.</span></section>
 <section class="stats" aria-label="GitHub 관측 파일 수"><div class="stat"><strong>{count}</strong><span>현재 문서가 있는 프로젝트</span></div><div class="stat"><strong>{reqs}</strong><span>GitHub 요청 파일 수 (검증 아님)</span></div><div class="stat"><strong>{reviews}</strong><span>GitHub 결과 파일 수 (검증 아님)</span></div><div class="stat"><strong>{receipts}</strong><span>GitHub 영수증 파일 수 (검증 아님)</span></div></section>
 {flow_view.render_html(state)}
 {work_tracker.render_html(state["work_items"], lambda p: url_for(repo, p))}
@@ -136,7 +138,7 @@ if(ws)ws.addEventListener('input',()=>{{const q=ws.value.toLocaleLowerCase('ko')
 
 
 def render_summary(state: dict, repo: str = REPO) -> str:
-    lines = ["# CoWork GitHub SHADOW 대시보드", "", "> **MIGRATION_NOT_CUTOVER** — " + flow_view.provider_label(state) + ". GitHub 기록과 리뷰 실행은 별개입니다.",
+    lines = ["# CoWork GitHub SHADOW 대시보드", "", "> **" + state["phase"] + "** — " + flow_view.provider_label(state) + ". GitHub 기록과 리뷰 실행은 별개입니다.",
              "", "이 문서는 GitHub Actions가 생성하는 안내 화면이며 리뷰·설치·배포 승인이나 자동 실행 결과가 아닙니다.", "",
              f"- 문서가 있는 프로젝트: **{len(state['projects'])}개**",
              f"- GitHub REQUEST 파일 관측: **{state['transport']['requests']['files_observed']}개** (검증 안 됨)",
@@ -167,7 +169,7 @@ def render_direct_view(state: dict, repo: str = REPO) -> str:
     header = [
         "# CoWork 협업 대시보드",
         "",
-        "> **PRIVATE · GitHub에서 바로 보기 · MIGRATION_NOT_CUTOVER**",
+        "> **PRIVATE · GitHub에서 바로 보기 · " + state["phase"] + "**",
         ">",
         "> " + flow_view.provider_label(state) + ". 이 화면은 GitHub 기록을 읽기 전용으로 표시합니다.",
         "",

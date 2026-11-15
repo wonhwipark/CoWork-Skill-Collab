@@ -2,6 +2,14 @@
 
 **정책 적용:** 2026-11-12 / **기본 URL:** https://wonhwipark.github.io/L1Work/cowork-dashboard/
 
+## 2026-11-15 B안 상태 정합성 보완 — 고정 비식별 라벨만 허용
+
+- 사용자 지시: B안 공개 대시보드의 오래된 `NONE/정식 전환 전` 표시를 PRIVATE 최신 이관 판정에 맞춰 수정하고, 기존 GitHub Actions 자동 갱신을 검증.
+- **허용된 상태의 최소 확장:** 최신 이관 CURRENT와 PRIVATE generated state에서 `ACTIVE_PROVIDER=GITHUB` **및** `CUTOVER=LIVE`가 동시에 확인되는 경우에만 `GitHub 리뷰 운송 LIVE (호스트 보고 수용)` / `GitHub LIVE (호스트 보고 수용)` 고정 문구를 PUBLIC에 사용. 신규 유료 리뷰 실행이나 장기 운영 PASS를 의미하지 않음.
+- 모순·미확인 provider/phase, 출처 변조 및 미승인 라벨은 계속 fail-closed. 기존 5개 공개 범주, 인계 최근 3건, 승인된 공개용 수치·문구 외 PRIVATE Work/TODO/REQUEST ID, 결과·Receipt 원문, 토큰, 회사 코드/MSC/링크 공개 불가. 자동 출력 경로는 기존 `status.json` 단 하나.
+- `generated_at`은 공개 상태 **마지막 변경** 시각이지 원본 데이터 **마지막 검증** 시각이 아니므로 브라우저가 6시간 이상 무변경을 무조건 실패로 표시하지 않음. 단순 JSON 수신은 PRIVATE 최신 확인 완료의 근거 아님.
+- 이전 절의 전환 전 값은 당시 기록. 신규 공개 코드·실제 Actions 실행·독립 리뷰 판정은 관련 Work에 따로 기록.
+
 ## 인계·리뷰 추적 확장 — 공개 승인 범위 (2026-11-14 KST)
 - **분리된 사용자 흐름:** Work 카드는 업무 목적·진행을, 인계 카드는 문서 게시 → 리뷰 요청 → 결과 접수 → GPT 판정 → 후속 반영을 표시. 단계를 완료율이나 실행/독립 리뷰 PASS로 해석하지 않음.
 - **승인된 공개 인계 1건:** L1Work PUBLIC `main/handoffs/L1_KNOWLEDGE_MSC_B_VIEWER_GPT_REVIEW_HANDOFF_r0001_20261114_KST.md` (MSC B 뷰어 설계 리뷰). 초기 단계 `PUBLISHED`, 독립 리뷰 미실행. 이 문서는 실제 Work ID가 아니며 별도 Work를 자동 생성하지 않음.

@@ -27,6 +27,8 @@ PUBLIC_SCHEMA = "COWORK_PUBLIC_STATUS_V1"
 PRIVATE_SCHEMA = "COWORK_GITHUB_DASHBOARD_SHADOW_V4"
 TOKEN_ENV = "COWORK_PUBLIC_DASHBOARD_WRITE_TOKEN"
 KST = timezone(timedelta(hours=9))
+GITHUB_LIVE_PROVIDER_LABEL = "GitHub 리뷰 운송 LIVE (호스트 보고 수용)"
+GITHUB_LIVE_CUTOVER_LABEL = "GitHub LIVE (호스트 보고 수용)"
 PHASE_LABELS = {
     "REQUIREMENT": "요구·설계",
     "DEVELOPMENT": "개발·시험 신고",
@@ -189,7 +191,12 @@ def _read_active_provider(root: Path) -> str:
         return "활성 리뷰 제공자 없음"
     if provider == "DROPBOX":
         return "Dropbox 리뷰 제공자 (문서 기록)"
-    # Migration has NOT cut over; new/unknown provider needs separate approval.
+    if provider == "GITHUB":
+        # A provider marker alone is not sufficient evidence for cutover.
+        cutovers = set(re.findall(r"\bCUTOVER\s*=\s*([A-Z_]+)\b", head))
+        if cutovers != {"LIVE"}:
+            raise SafetyBlock("GitHub provider without confirmed LIVE cutover")
+        return GITHUB_LIVE_PROVIDER_LABEL
     raise SafetyBlock("unapproved active provider marker")
 
 
@@ -202,12 +209,28 @@ def build_payload(state: dict, date: str, *,
         raise SafetyBlock("unexpected PRIVATE state schema")
     if state.get("visibility") != "PRIVATE_REPO_ONLY":
         raise SafetyBlock("unexpected source visibility")
-    if state.get("phase") != "MIGRATION_NOT_CUTOVER":
+    operations = state.get("operations")
+    if not isinstance(operations, dict):
+        raise SafetyBlock("missing operations evidence")
+    source_provider = operations.get("active_provider", "NOT_OBSERVED")
+    source_cutover = operations.get("cutover", "NOT_OBSERVED")
+    if state.get("phase") == "GITHUB_LIVE":
+        if (source_provider != "GITHUB" or source_cutover != "LIVE"
+                or active_provider != GITHUB_LIVE_PROVIDER_LABEL):
+            raise SafetyBlock("inconsistent GitHub LIVE evidence")
+        public_cutover = GITHUB_LIVE_CUTOVER_LABEL
+    elif state.get("phase") == "MIGRATION_NOT_CUTOVER":
+        if (source_provider == "GITHUB" or source_cutover == "LIVE"
+                or active_provider == GITHUB_LIVE_PROVIDER_LABEL):
+            raise SafetyBlock("inconsistent legacy cutover evidence")
+        public_cutover = "정식 전환 전"
+    else:
         raise SafetyBlock("cutover state outside published approval")
     if not re.fullmatch(r"20[0-9]{2}-[01][0-9]-[0-3][0-9]", date):
         raise SafetyBlock("invalid date")
     if active_provider not in {
-            "활성 리뷰 제공자 없음", "Dropbox 리뷰 제공자 (문서 기록)", "기록 미확인"}:
+            "활성 리뷰 제공자 없음", "Dropbox 리뷰 제공자 (문서 기록)",
+            "기록 미확인", GITHUB_LIVE_PROVIDER_LABEL}:
         raise SafetyBlock("invalid public provider label")
     if generated_at is not None:
         if not isinstance(generated_at, str) or not re.fullmatch(
@@ -283,7 +306,7 @@ def build_payload(state: dict, date: str, *,
         "snapshot_date": date,
         "source": "APPROVED_AGGREGATE_ONLY",
         "sync_mode": "AUTOMATED_ALLOWLIST",
-        "cutover": "정식 전환 전",
+        "cutover": public_cutover,
         "counts": {
             "projects": len(projects),
             "requests": _count(state, "requests"),
@@ -379,6 +402,16 @@ def publish_public(payload: bytes, token: str) -> str:
         _validate_public_handoffs(obj["handoffs"])
     if obj.get("schema") != PUBLIC_SCHEMA or obj.get("source") != "APPROVED_AGGREGATE_ONLY":
         raise SafetyBlock("invalid public schema")
+    # Reject forged or mutually inconsistent published state labels before a write.
+    cutover_providers = {
+        "정식 전환 전": {"활성 리뷰 제공자 없음", "Dropbox 리뷰 제공자 (문서 기록)", "기록 미확인"},
+        GITHUB_LIVE_CUTOVER_LABEL: {GITHUB_LIVE_PROVIDER_LABEL},
+    }
+    checks = obj.get("checks")
+    if (obj.get("cutover") not in cutover_providers or
+            not isinstance(checks, dict) or
+            checks.get("active_provider") not in cutover_providers[obj["cutover"]]):
+        raise SafetyBlock("inconsistent PUBLIC provider/cutover labels")
     if len(payload) > 16000:
         raise SafetyBlock("public payload too large")
     if obj.get("generated_at") is not None:

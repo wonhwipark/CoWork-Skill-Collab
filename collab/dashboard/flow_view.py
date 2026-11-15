@@ -107,7 +107,7 @@ def snapshot(root: Path) -> dict:
 def pretty(raw: str) -> str:
     return {
         "NOT_RUN": "미실행", "NOT_OBSERVED": "기록 미관측",
-        "MIGRATION_NOT_CUTOVER": "정식 전환 전",
+        "MIGRATION_NOT_CUTOVER": "정식 전환 전", "LIVE": "GitHub LIVE (호스트 보고)",
         "PASS": "배포 성공 기록", "PARTIAL": "일부 확인",
         "BLOCKED": "차단", "BLOCKED_TRUST": "신뢰 검증 차단",
         "PENDING": "대기", "PENDING_EXECUTION": "실행 대기",
@@ -132,7 +132,7 @@ def status_rows(state: dict) -> list[tuple[str, str, str]]:
     ops = state.get("operations", {})
     return [
         ("현재 운영 경로", provider_label(state), "최신 이관 CURRENT 기록 · 실제 호스트는 별도 검증"),
-        ("GitHub 전환", pretty(ops.get("cutover", "NOT_OBSERVED")), "별도 명시적 승인 전 전환 금지"),
+        ("GitHub 전환", pretty(ops.get("cutover", "NOT_OBSERVED")), "호스트 보고·GPT 판정과 신규 요청 실전 검증은 별개"),
         ("Windows 실행·SHADOW", pretty(ops.get("windows_stage1", "NOT_OBSERVED")), "실제 호스트 실행 증거 필요"),
         ("Claude Code 독립 리뷰", pretty(ops.get("independent_review", "NOT_OBSERVED")), "자체 시험과 구분"),
         ("GitHub 요청·결과·영수증",
@@ -184,6 +184,10 @@ def render_html(state: dict) -> str:
         lane_label = "문서상 리뷰 경로 · Dropbox"
         lane_path = "GPT 요구·판정 → Dropbox 리뷰 운송 → Windows 감시기 / Claude Code"
         lane_note = "문서상 provider 표시이며 실제 Windows 가동은 별도 확인해야 합니다."
+    elif provider == "GITHUB" and ops.get("cutover") == "LIVE":
+        lane_label = "현재 리뷰 경로 · GitHub LIVE (호스트 보고 수용)"
+        lane_path = "GPT 판정 → GitHub PRIVATE → Windows watcher / Claude Code"
+        lane_note = "LIVE 운송 수용과 개별 독립 리뷰·장기 운영 검증은 별개입니다."
     else:
         lane_label = "현재 리뷰 경로 · 실행 근거 미확인"
         lane_path = "운영 경로 확인 필요 · 프로젝트 CURRENT.md 참조"
@@ -197,7 +201,9 @@ def render_html(state: dict) -> str:
         '<div class="live-lane"><span class="lane-label">' + esc(lane_label) + '</span>'
         '<div class="lane-path">' + esc(lane_path) + '</div>'
         '<p class="flow-note">' + esc(lane_note) + '</p></div>'
-        '<div class="target-label"><h3>GitHub 목표 경로</h3><span class="pill warning">정식 전환 전</span></div>'
+        '<div class="target-label"><h3>GitHub 목표 경로</h3><span class="pill warning">'
+        + esc("호스트 보고 LIVE" if ops.get("cutover") == "LIVE" and provider == "GITHUB"
+              else "정식 전환 전") + '</span></div>'
         '<ol class="flow-strip">' + cards + '</ol>'
         '<p class="flow-caption">카드의 화살표는 계획된 처리 순서입니다. '
         'READY·리뷰 파일 관측을 승인·실행·LIVE 전환 완료로 판정하지 않습니다.</p>'
@@ -233,6 +239,14 @@ def render_markdown(state: dict) -> str:
             '    L3 --> L4["결과·영수증 / GPT"]',
             "  end",
         ]
+    elif provider == "GITHUB" and state.get("operations", {}).get("cutover") == "LIVE":
+        lane = [
+            '  subgraph LIVE["GitHub LIVE 리뷰 운송 · 호스트 보고 수용"]',
+            '    L1["GPT 요구·판정"] --> L2["GitHub PRIVATE / 요청·결과"]',
+            '    L2 --> L3["Windows watcher / Claude Code"]',
+            '    L3 --> L4["결과·영수증 / GPT"]',
+            "  end",
+        ]
     else:
         lane = [
             '  subgraph LIVE["현재 리뷰 제공자 기록 미확인"]',
@@ -247,7 +261,7 @@ def render_markdown(state: dict) -> str:
         fence + "mermaid",
         "flowchart TB",
         *lane,
-        '  subgraph NEXT["GitHub 목표 경로 · 정식 전환 전"]',
+        '  subgraph NEXT["GitHub 목표 경로 · 개별 리뷰 검증 별도"]',
         '    A["GPT 요구·범위 확정"] --> B["GitHub PRIVATE / REQUEST·READY"]',
         '    B --> C["Windows watcher / 승인·신뢰 검증"]',
         '    C --> D["Claude Code / 독립 리뷰"]',
