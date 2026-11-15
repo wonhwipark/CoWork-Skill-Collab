@@ -5,11 +5,11 @@
       "work_id": "COWORK-AUTO-APPROVAL-20261115-001",
       "skill": "cowork-review-watcher",
       "title": "GPT→GitHub REQUEST 자동 서명·READY (제한된 사전 위임)",
-      "phase": "DISPOSITION",
+      "phase": "REVIEW",
       "owner": "GPT / Windows Claude Code",
       "self_test": "PASS",
-      "independent_review": "NOT_RUN",
-      "next_action": "GPT 단일 통합 판정: 후보 v0.2.22(B1 합집합 집계·B2 현재 위임 재판정·M1 실제 이중 서명 결함 수정·M2 가족 접두사, 자체시험 866/866 PASS 두 해석기, SHADOW 8/8, 롤백 PASS). 독립 리뷰(R2/LARGE $3 1회)와 위임 범위 1회 확정을 사용자에게 묶어 요청. AUTO_SIGNING=OFF, 운영 불변."
+      "independent_review": "PENDING",
+      "next_action": "2026-11-15 GPT v0.2.22 patch B1/B2/M1/M2 statically ACCEPT_FOR_R2_ONLY; actual 280313 B ZIP SHA256 1b67de37891cb7fdbae721b9424e312d1cc5b8c68e06e69357555a556d27bd87 direct recompute PASS, ZIP entries 101. Windows host self-test 866 passed/12 skipped both Python, SHADOW 8/8, independent NOT_RUN. R2 POLICY-STATIC-V1-LARGE max $3 1 call pending explicit cost approval; bounded auto delegation COWORK-/L1-WORKSPACE- families + 3 exact skills, static only 1 call/$1, day 2/$3, month $10, 30 day validity, no retro-active, and conditional install/rollback ALL PENDING USER SINGLE APPROVAL. Follow GPT_V0222_DISPOSITION_AND_COMBINED_APPROVAL_GATE_r0001_20261115.md. Existing provider GITHUB LIVE v0.2.20, AUTO_SIGNING OFF, paid calls 0, no install. NEXT owner one combined approval, then R2 signed request and only if GPT PASS conditional Windows deployment."
     }
   ]
 }
