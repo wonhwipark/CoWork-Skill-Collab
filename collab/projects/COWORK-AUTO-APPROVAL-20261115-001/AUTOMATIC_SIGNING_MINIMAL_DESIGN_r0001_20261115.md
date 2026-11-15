@@ -62,7 +62,7 @@ REVIEW_RESULT + RECEIPT + USAGE_RECEIPT → 기존 notifier/Telegram 완료 통�
 | `delegation_expiry` | **제안 30일** | 만료 시 자동 서명 차단. 갱신은 명시적 사용자 결정 |
 | `revocation` | 보호된 로컬 `enabled=false` 즉시 | 서명 단계 이후 호출 중인 리뷰는 기존 영수증·중복 계약 적용 |
 
-AUTO 요청에서 PROJECT/skill/ZIP 타입뿐 아니라 데이터 분류와 파일 크기를 검사한다. 사내 제한 자료/고객 로그/토큰·개인키는 PRIVATE에도 업로드 금지. 운영 설치·PUBLIC 배포·LIVE provider 전환/원장 이행·지식 정본 게시 권한은 **리뷰 자동 승인과 무관**하고 자동 허용하지 않는다.
+AUTO 요청에서 PROJECT/skill/ZIP 타입뿐 아니라 데이터 분류와 파일 크기를 검사한다. 업무 제한 자료/고객 로그/토큰·개인키는 PRIVATE에도 업로드 금지. 운영 설치·PUBLIC 배포·LIVE provider 전환/원장 이행·지식 정본 게시 권한은 **리뷰 자동 승인과 무관**하고 자동 허용하지 않는다.
 
 ## 4. fail-closed / 비용 상한 / 중복
 
