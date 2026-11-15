@@ -123,3 +123,19 @@ D01~D09의 주 담당은 설계 GPT다. 실행 환경·설치 API 대조가 필�
 | [맥락 운용 CURRENT](CURRENT.md) | 이 통합 TODO의 상태·다음 묶음만 관리 |
 
 범위는 비민감 문서 설계다. 스킬 ZIP·설치본·운영 DB/Task·키/토큰·진행 중 REQUEST/READY·고정 리뷰 입력·업무 Knowledge/metadata·소스 코드를 이 TODO 등록으로 변경하지 않는다.
+
+## 9. 이번 설계 TODO 등록의 게시 검증
+
+- CONTENT_COMMIT: `87ebdc02ff81f8baccecaf15eeb9809b57d42a2b` — 설계 TODO·CURRENT·기존 TRACKER 3개 파일.
+- DOC_SELF_CHECK=PASS: 항목/ID/의존관계/범위·상태/기존 Work/JSON 등 13개 점검, 상대 링크 22개 실존 확인.
+- REMOTE_READBACK=PASS: 위 고정 content commit의 전체 본문과 실제 UTF-8 bytes SHA-256·Git blob이 작성안과 일치.
+- MAIN_TARGET_CHECK=PASS: 후속 main `abe2ce713b1c213dfd538dbc3f6ce79cf1ff8627`의 3개 target blob도 동일. 중간 대시보드 파생 변경 보존.
+- 아래 해시는 **고정 content commit의 당시 바이트**다. 이 검증 메타데이터를 추가한 최종 문서의 자기 해시가 아니며, 메타데이터 게시 뒤 별도 원격 확인한다.
+
+| 파일 | bytes | SHA-256 | Git blob |
+|---|---:|---|---|
+| `COWORK_L1_INTEGRATED_CONTEXT_DESIGN_TODO_r0001_20261115_KST.md` | 16356 | `588d074e847c84a834f2895d76cfa73ff876981c56987b75a2b00056246f5e56` | `98038f9474c97089d7dfae56ec5089352396b5f5` |
+| `CURRENT.md` | 12491 | `018cae396431c5aff273e53cfa91222948880153a83bff12c5a3a9d0639f2232` | `4739a761d6ac98d6e65ba13a52970242a3074e26` |
+| `TRACKER.json` | 465 | `656d78c1a020b7fa1ca39181c4e679763209e6f4f84e5d5e7f985f15d6b45786` | `1c8d95eab7887c8a8a1d8207b6289e026fbc0be6` |
+
+**완료 범위:** 통합 설계 TODO와 현재 상태 기록의 PRIVATE 등록·문서 QA·원격 게시 확인. D01~D09 개선 반영, 실제 새 창/호스트/스킬 인계, D10 첫 실제 분석·게시·RAG 검증 및 새 독립 리뷰는 수행하지 않았다.

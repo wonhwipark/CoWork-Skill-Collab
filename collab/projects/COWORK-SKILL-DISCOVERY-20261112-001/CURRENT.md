@@ -6,8 +6,8 @@
 - 설계 정본: [통합 설계 TODO r0001](COWORK_L1_INTEGRATED_CONTEXT_DESIGN_TODO_r0001_20261115_KST.md). D01~D10, 우선순위·의존관계·영향 문서·담당·수용 기준 V01~V10을 한 묶음으로 관리.
 - 확인된 개선점: 공통 지도 r0007의 첫 진입 통합도/기존 상위 아키텍처 직접 연결, 11/11 상위 아키텍처의 이전 provider·그룹/개인 상세 분리 정책. 지도 상대 링크 15개는 모두 실제 파일 존재 확인.
 - 기존 적용 기반: 지속 갱신형 문서 운용 r0007·관련 11개 파일의 적용/원격 검증 완료는 유지. 기존 최소 인계·같은 Work 보완·게시/readback/역링크 규칙을 재사용한다.
-- 이번 상태: `DESIGN_TODO=POSTED_PENDING_READBACK`; `INTEGRATED_TOPVIEW_REVISION=NOT_RUN`; `HOST_OR_RUNTIME_CHANGES=NOT_RUN`; `INDEPENDENT_REVIEW=NOT_RUN`. TODO 등록을 전체 개선 완료로 보고하지 않음.
-- 문서 QA: PASS — 항목/ID/의존관계/기존 Work/상태·범위/JSON 등 13개 점검, 상대 링크 22개 모두 실존 확인. 호스트·기능·실제 새 창 시험과 구분. 이번 PRIVATE 게시의 REMOTE_READBACK=PENDING이며 확인 후 실제 결과를 기록한다. 이전 문서 QA 35개/100링크는 당시 범위의 결과로 보존.
+- 이번 상태: `DESIGN_TODO=POSTED_VERIFIED`; `INTEGRATED_TOPVIEW_REVISION=NOT_RUN`; `HOST_OR_RUNTIME_CHANGES=NOT_RUN`; `INDEPENDENT_REVIEW=NOT_RUN`. TODO 등록을 전체 개선 완료로 보고하지 않음.
+- 문서 QA: PASS — 항목/ID/의존관계/기존 Work/상태·범위/JSON 등 13개 점검, 상대 링크 22개 모두 실존 확인. 호스트·기능·실제 새 창 시험과 구분. 이번 content commit `87ebdc02ff81f8baccecaf15eeb9809b57d42a2b`의 3개 파일 원격 전체 본문·실제 UTF-8 bytes SHA-256·Git blob 일치 PASS, 후속 main `abe2ce713b1c213dfd538dbc3f6ce79cf1ff8627`에서도 3개 target blob 동일 확인. [등록 검증](COWORK_L1_INTEGRATED_CONTEXT_DESIGN_TODO_r0001_20261115_KST.md#9-이번-설계-todo-등록의-게시-검증). 이전 문서 QA 35개/100링크는 당시 범위의 결과로 보존.
 - 첫 실제 분석 검증 D10 및 실제 새 창/스킬 간 인계 E2E는 기존 합의대로 후속. 현재 탑뷰 설계의 결함·완료 차단으로 바꾸지 않음.
 - 승인 범위: 비민감 설계 TODO·PRIVATE 상태 기록. 실제 스킬/호스트/운영/유료 리뷰/PUBLIC 신규 전달물 변경 없음.
 - NEXT_ONE_ACTION: D01~D08의 통합 설계 변경안·영향 파일·인계/피드백 표와 D09 검증 계획을 한 묶음으로 작성·검토. 개별 TODO별 중간 승인 반복 없이 기존 범위 내에서 진행. D10은 첫 실제 분석 사례로 분리.
