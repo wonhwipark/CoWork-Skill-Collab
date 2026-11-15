@@ -1,5 +1,13 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 새 요청: 비판적 평가 기준을 실제 Claude 자동 리뷰에 반영·검증 (2026-11-16 KST)
+
+- **사용자 최신 지시:** 강화된 독립 리뷰 R0~R3의 비판적 검토·수정안/구조 대안 평가를 **자동 리뷰 경로에서 실제로 적용하고 시험하는 작업까지 요청**.
+- **GPT 작업 요청서 PRIVATE 게시·재조회 PASS:** [GPT_CRITICAL_REVIEW_AUTO_APPLY_AND_TEST_REQUEST_r0001_20261116.md](GPT_CRITICAL_REVIEW_AUTO_APPLY_AND_TEST_REQUEST_r0001_20261116.md), 기준 계약 `collab/ops/CONTRACTS/REVIEW_TIER_TOKEN_BUDGET_V1.md` §2.1 (commit `1b7ab2175da7bace4d9dced5e01c31087a2bfe73`). 실제 Windows review prompt-builder/REQUEST 본문 전달 지점을 먼저 확인하고 `REUSE→CONNECT→최소 EXTEND`, 결함 강제 0·근거 중심 검토·결함/개선 제안 구분·최소 수정안과 구조 대안의 비용 비교 등을 신규 요청에 반영하고 가짜 runner의 **모델 호출 0** 시험으로 입증하도록 인계.
+- **경계:** 위 문서는 Windows 자동 실행 신호가 아니므로 `AUTO_REVIEW_APPLY_REQUEST=POSTED`, `WINDOWS_APPLY_EXECUTION=NOT_RUN`, `PROMPT_INJECTION_TEST=NOT_RUN`. 실행한 호스트 결과가 오기 전 적용 완료라고 표기하지 않음.
+- **기존 동결 R2 유지:** `REQ-COWORK-AUTO-APPROVAL-V023-R2-20261115`의 원본 REQUEST/ZIP/SOURCE_PIN, 최대 `POLICY-STATIC-V1-LARGE` USD $3·1회는 불변. 금회 GitHub 최신 조회 시 `APPROVAL_SIG/READY/DISPATCH/RESULT/RECEIPT=NOT_FOUND` / `INDEPENDENT_REVIEW=NOT_RUN` / `AUTO_SIGNING=OFF`(호스트 직접 상태는 별도). 이번 요청으로 새 유료 리뷰·중복 R2/READY 생성하지 않음.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 요청서의 단일 실행 프롬프트로 기존 프롬프트 결합 경로와 실제 런타임 반영을 점검하고 격리 dry-run·negative test 후 `CLAUDE_CRITICAL_REVIEW_AUTO_APPLY_VALIDATION_FOR_GPT_20261116.md` 결과/증거와 `CURRENT.md`·`TRACKER.json`을 PRIVATE main에 게시·원격 확인. 유효한 보호 자동 위임·리뷰 요청이 실제 활성화되기 전 모델 호출 0. 기존 R2 상태가 먼저 변경되면 결과/영수증 우선 확인 후 중복 금지.
+
 ## R2 v0.2.23 공식 REQUEST·ZIP·SOURCE_PIN 게시 완료, 호스트 처리 대기 (2026-11-15 KST)
 
 - **사용자 최신 실행 지시:** “그래 자동승인까지 진행해줘” — 기존 통합 R2 1회/최대 $3, 승인된 보호 Windows 사전 위임 범위, 독립 리뷰+GPT PASS 조건부 운영 활성화에 대한 진행 의사 확인. 새 대상은 **v0.2.23**(원래 v0.2.22에서 접두사 호환성만 보완, GPT 정적 PASS).
