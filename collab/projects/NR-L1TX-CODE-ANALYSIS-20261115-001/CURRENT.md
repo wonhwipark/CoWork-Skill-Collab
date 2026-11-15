@@ -1,5 +1,17 @@
 # NR-L1TX-CODE-ANALYSIS-20261115-001 — CURRENT
 
+## TD-003 실제 인계 E2E 재개 — Linux MCP 직접 접근 차단 / 기존 Job one-shot 인계 게시 (2026-11-15 KST)
+
+- 사용자 재실행 지시: GPT 공통 투두 TD-003을 실제 검증까지 이어가라는 요청. **같은 NR L1 Tx Work**와 기존 승인된 v0.4.38 배포본/신규 Job ID 재사용. 새로운 Job·요청·운영 설정/DB·그룹 Knowledge write를 만들지 않음.
+- **원격 최신 확인:** 본 Work 폴더에 `BUILD_RESULT_FOR_GPT_20261115.md`, `PRE_RELEASE_VALIDATION_v0438.md`, `EXECUTION_REQUEST.md`, `CURRENT.md`만 존재했고 Linux 호스트 Receipt/Result 보고는 새로 발견되지 않음. PRE_RELEASE 문서는 배포 전 시점 이력이므로 현행 배포 판정은 아래 최상위 배송 결과를 계속 사용.
+- **실행 도구 한계:** 이번 GPT 대화의 연결된 도구에 모바일 Agent/Linux MCP 직접 호출 인터페이스가 없음. `HOST_MCP_TOOL_ACCESS=BLOCKED`, `HOST_TOOL_LIST=NOT_RUN`, `SKILL_UPDATER_INSTALLED=NOT_VERIFIED`, `NEW_JOB_RUN/RESULT/RECEIPT_READBACK=NOT_VERIFIED`, `NR_L1TX_CODE_ANALYSIS=NOT_RUN`. GitHub 문서 게시만으로 자동 호출되지 않음.
+- **정확한 단일 인계:** [TD003_LINUX_MCP_E2E_ONE_SHOT_HANDOFF_r0001_20261115_KST.md](TD003_LINUX_MCP_E2E_ONE_SHOT_HANDOFF_r0001_20261115_KST.md) (PRIVATE main, 기존 사용자 승인·변경 경계 보존). 먼저 기존 Job 소비 여부/동일 Run/Receipt READ로 정산하고, 정상·유효한 경우에만 이미 승인된 v0.4.38 정상 Updater/읽기 전용 분석 경로의 **최대 1회**. 과거 소비 ID 재큐잉·임의 shell/API·무검증 게시/운영 수정 금지.
+- **TD003 정적 인계 계약:** [맥락 Work의 인계 8항 추적](../COWORK-SKILL-DISCOVERY-20261112-001/TD003_MULTI_SKILL_HANDOFF_FEEDBACK_TRACE_20261115.md)은 DOC_TRACE_PASS, 실제 업무 Work/Evidence·Updater 후보/Preview·Knowledge/RAG E2E는 별도 증거 확보 전 `NOT_RUN`. 설치·Job 실행/분석 PASS로 소급하지 않음.
+- **승인 경계/실제 변화:** PRIVATE 비민감 인계서·현재 기록만 추가. `NEW_PAID_REVIEW=0`, `REQUEST_READY=0`, `LINUX_JOB_TRIGGER=0`, `PUBLIC_ZIP_RELEASE=0`, `GROUP_KNOWLEDGE_WRITE=0` (이번 GPT 세션에서 실행하지 않았다는 의미). 기존 타 작업 승인과 LIVE provider는 불변.
+- **NEXT_ONE_ACTION:** 기존 **모바일 Agent가 연결된 Linux MCP**에서 위 원샷 인계 문서를 따르되 동일 Job ID의 설치 ZIP SHA·Catalog/Registry/Run·Worker·Receipt·MCP readback을 먼저 수집. 결과가 실제 생성되면 원래 NR Work에서 판정하고 TD-003에 최소 참조만 회수.
+
+---
+
 ## 최신 판정 — 2026-11-15 KST / v0.4.38 READ-ONLY DEBUG PUBLIC 게시
 
 - **USER_APPROVAL:** 사용자 요청으로 Job-list ZIP 운영 규칙을 변경했다. Claude Code 독립 리뷰는 PUBLIC 배송 **사후 검증**이며 지적 사항은 **신규 버전 ZIP 재발행**으로 처리; Linux 호스트 G0·기존 Registry/Runner/MCP 장애 및 코드 분석은 이 배송 후 디버깅 검증. 적용 대상은 승인된 v0.4.38 읽기 전용 debug one-shot; 무검증 쓰기·업무 Knowledge 정본 수정·운영 DB/설정 변경은 제외.
