@@ -91,7 +91,7 @@
 - LIMITATION: 목록은 13개 언급 후보의 시작용 매핑이며 기존 18개 전체 감사·최신 설치본 확인이 아니다. GitHub/AGENTS 지침을 읽는 세션에 적용하며 ChatGPT 프로젝트 설정·자동 로드는 변경하지 않음.
 - PENDING: 18개 PRIVATE/원본 대조는 다음 별도 작업으로 유지. 현재 r0005 요청·열린 메모·운영 상태 변경 없음.
 
-## 2026-11-12 — 사용자 승인 18개 정적 확인·업무 GPT 스킬 분리 (당시 이력)
+## 2026-11-12 — 사용자 승인 18개 정적 확인·사내 스킬 분리 (당시 이력)
 
 - USER_SCOPE: 1~18번 진행 승인. 19번은 사내 GPT 협업으로 l1sw-dev-knowledge 스킬을 업데이트하는 사내 스킬로 분리.
 - RESULT: 17개 ZIP 실제 bytes의 Git blob 일치·CRC 확인, SKILL 문서 정적 검토. skillsilent 독립 ZIP 미발견=ADDITIONAL_CHECK_REQUIRED. 설치 부재 판정 아님.
