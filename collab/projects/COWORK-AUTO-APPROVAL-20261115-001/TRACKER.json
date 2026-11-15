@@ -5,11 +5,11 @@
       "work_id": "COWORK-AUTO-APPROVAL-20261115-001",
       "skill": "cowork-review-watcher",
       "title": "GPT→GitHub REQUEST 자동 서명·READY (제한된 사전 위임)",
-      "phase": "DEVELOPMENT",
+      "phase": "DISPOSITION",
       "owner": "GPT / Windows Claude Code",
       "self_test": "PASS",
       "independent_review": "NOT_RUN",
-      "next_action": "2026-11-15 GPT 설계·격리 코드/회귀 25 PASS, 원격 Git blob=실시험 파일 일치. 운영 GitHub LIVE v0.2.20은 그대로 유지; AUTO_SIGNING=OFF. 설계 AUTOMATIC_SIGNING_MINIMAL_DESIGN_r0001_20261115.md 및 Windows 원샷 WINDOWS_ONE_SHOT_DEVELOP_TEST_CANDIDATE_HANDOFF_r0001_20261115.md를 PRIVATE main에 게시/readback PASS. NEXT Windows Claude Code 1회: 실제 code/signature ready_sha256/Task ACL/DB 확인→격리 구현/전체 회귀/SHADOW/rollback→DEV ZIP SHA/CRC→CLAUDE_AUTO_APPROVAL_ONE_SHOT_RESULT_FOR_GPT_20261115.md 원격 게시/readback. Telegram 승인 버튼 기본 미사용. 기존 DB·Task·Notifier/키 변경 금지, 운영 설치/자동 위임 활성화와 신규 유료 모델 호출 0. 위임 scope와 월 $10/30일 제안, 최종 운영 적용은 별도 한 번의 사용자 승인 후에만."
+      "next_action": "후보 v0.2.21(자체시험 817/817 PASS, 변이 16/17, 격리 SHADOW 8/8, 롤백 리허설 PASS, 운영·키·DB 불변, 모델 0) 완료. GPT 단일 판정: 독립 리뷰 요청(권고 R2/LARGE $3 1회)+사용자 위임 범위 1회 확정 → 승인 후 설치·위임 OFF 1주기·enabled 전환. AUTO_SIGNING=OFF 유지."
     }
   ]
 }
