@@ -80,4 +80,5 @@ Updater 직접 ─┘                   ↓
 - 동일 renderer/config/정규화가 통제된 합성 환경이면 동일 입력의 **manifest·SVG hash 불변**을 검증. 서로 다른 renderer에 대해 바이트 동일을 전제로 하지 않는다.
 - 정상 경로의 “링크 3개 열림”과 폴백의 “존재하지 않는 링크 0”을 **각기 다른 PASS 조건**으로 정의한다.
 - 공개 B UI 샘플 PASS는 스킬이 자동 HTML을 만들었다는 증거가 아님. 업무 설치/G0, 실제 분석 호출/G1, 업무 Workspace·그룹 게시, RAG 소비는 각각 구분.
-- **NEXT_ONE_ACTION:** 업무 GPT/허용 로컬 Agent가 기존 설치본·G0 결과를 읽기 전용 대조(Updater/그룹 writer, converter 입력·경로, Kernel 복사·원장/마커, 호스팅/권한)한 다음 실제 입증된 GAP만 기존 스킬에 최소 반영 제안. 모델 재분석·정식 리뷰 실행·LIVE 변경을 이 문서 게시로 지시하지 않는다.
+- **공개 소스 확인(2026-11-16 KST):** `l1-knowledge-updater`를 제외한 분석·변환·Work 4종(`code-analyzer`, `doc-converter`, `l1-fix-workflow`, `work-ledger-kernel`)은 [L1Work/main](https://github.com/wonhwipark/L1Work)에서 고정 ZIP 경로·파일 메타 확인. 해당 공개 원본은 GPT가 검토하고 업무 GPT에 중복 자료 조사를 요구하지 않는다. 그룹 `l1sw-dev-knowledge` writer는 별도 설치 계약 확인 대상으로 유지한다. PUBLIC ZIP이 실제 설치 revision과 동일하다는 뜻은 아니다.
+- **NEXT_ONE_ACTION:** 업무 GPT/허용 로컬 Agent가 `l1-knowledge-updater` 실제 I/O·그룹 writer와 **공개 4종 대비 업무 설치 차이 및 호스팅/권한**만 기존 G0와 좁게 대조한 다음 입증된 GAP만 최소 반영 제안. 모델 재분석·정식 리뷰 실행·LIVE 변경을 이 문서 게시로 지시하지 않는다.
