@@ -1,0 +1,15 @@
+{
+  "validator_source_version": "0.2.20",
+  "validator_zip_sha256": "6a8626375e5e711535abdd261ff48781114802bb345cabe2ed5940b75968f386",
+  "execution_environment": "GPT scratch; not Windows operational host",
+  "no_READY": "WAIT_INPUT",
+  "synthetic_READY_format_only": "VALIDATED",
+  "wrong_package_sha": "CONFLICT",
+  "zip_safe_extract": "PASS",
+  "credential_shape_findings": 0,
+  "host_signature_approval": "NOT_RUN",
+  "review_model_calls": 0,
+  "real_READY_published": false,
+  "request_sha256": "5bf22f60cbf468224e21f668086f997b5e21d23f31917d9a7106d3eee86bd1c4",
+  "design_md_sha256": "dfbbe2e9cac4d9aafef098ffc585518de30b13305fda3295090b47d750608e1c"
+}

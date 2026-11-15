@@ -1,0 +1,27 @@
+{
+  "request_id": "REQ-COWORK-DASHBOARD-PRESENTATION-20261115-001",
+  "revision": 1,
+  "parent_work": "COWORK-GITHUB-DASHBOARD-20261111-001",
+  "request_document": "PREPARED_FOR_COMMIT_A",
+  "user_review_intent": "AUTHORIZED_BY_CURRENT_REQUEST",
+  "policy": "POLICY-STATIC-V1",
+  "policy_max_usd": 1,
+  "max_review_calls": 1,
+  "cost_authority": "NOT_CONFIRMED_FOR_THIS_ID",
+  "host_signed_approval": "PENDING_HOST",
+  "ready": "NOT_POSTED",
+  "queue": "NOT_QUEUED",
+  "review": "NOT_RUN",
+  "result": "NOT_RECEIVED",
+  "package_sha256": "cbb72c90f77e969fc9f3241ba83b4a203b74d4e60ae34969e67a6fda933f3343",
+  "package_size_bytes": 24687,
+  "local_v0220_format_preflight": "PASS_WITH_SYNTHETIC_READY_ONLY",
+  "windows_host_signature_preflight": "NOT_RUN",
+  "execution_provider": "EXISTING_GITHUB_LIVE",
+  "publication_readback": "PENDING",
+  "blocker": "Host signer/execution interface unavailable in this GPT session; verify per-request cost authority and use existing LIVE path.",
+  "output_paths": {
+    "result": "collab/reviews/REQ-COWORK-DASHBOARD-PRESENTATION-20261115-001/REVIEW_RESULT_1.md",
+    "receipt": "collab/receipts/REQ-COWORK-DASHBOARD-PRESENTATION-20261115-001/RECEIPT_1.md"
+  }
+}

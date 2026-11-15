@@ -1,5 +1,18 @@
 # COWORK-GITHUB-DASHBOARD-20261111-001 — CURRENT
 
+## 발표용 정보·상태 정합성 개선 설계 및 독립 리뷰 요청 — 2026-11-15 KST
+
+- 사용자 요청: 앞선 발표 적합성 검토를 설계 문서로 작성한 뒤 협업 리뷰 요청까지 진행.
+- **설계 정본:** [PRESENTATION_DASHBOARD_DESIGN_r0001_20261115_KST.md](PRESENTATION_DASHBOARD_DESIGN_r0001_20261115_KST.md). [근거/재현](PRESENTATION_DASHBOARD_EVIDENCE_r0001_20261115.md). 기존 URL·Executive·5개 공개 범주·최근 인계3건·Actions·exporter 재사용.
+- 확인: 공개 status의 GITHUB/LIVE 미반영, public_sync.py의 GITHUB/전환후 차단 코드, 잘못된 L1 Tracker enum의 실제 fallback 격리 재현, 일반 문구로 인한 발표 맥락 부족. 실제 실패 Action 로그 원인까지 단정하지 않음.
+- 제안: 최신 정본→정형 공개 매핑, 목적/완료/현재·대기/다음 역할·행동·산출물, parent/하위 활동 분리, 데이터 기준/수신/원본 확인의 최신성 구분. 공개 정책·UI·schema의 최소 개정은 리뷰 후 확정.
+- **정식 요청:** [REQ-COWORK-DASHBOARD-PRESENTATION-20261115-001](../../requests/REQ-COWORK-DASHBOARD-PRESENTATION-20261115-001/REQUEST.md) revision 1 / POLICY-STATIC-V1 상한 $1·1회 제안. [호스트 LIVE 접수](../../requests/REQ-COWORK-DASHBOARD-PRESENTATION-20261115-001/HOST_SUBMIT_ONESHOT.md) / [접수 상태](../../requests/REQ-COWORK-DASHBOARD-PRESENTATION-20261115-001/SUBMISSION_STATUS.json).
+- **실제 사전검증:** 원격 v0.2.20 ZIP SHA 확인 후 격리 Validator 실행: READY 없음 WAIT_INPUT, 메모리 전용 합성 READY 입력 형식 VALIDATED, 틀린 ZIP hash CONFLICT. safe_extract/CRC/경로·심링크·비밀형태 0 PASS. Windows 운영 서명·유효 비용 승인/독립 리뷰는 NOT_RUN. [사전검증 결과](review-inputs/REQ-COWORK-DASHBOARD-PRESENTATION-20261115-001/LOCAL_REQUEST_PREFLIGHT.json).
+- **상태:** DESIGN=DOCUMENTED; REQUEST=PREPARED_FOR_COMMIT_A; APPROVAL_SIG=PENDING_HOST; READY=NOT_POSTED; QUEUE=NOT_QUEUED; INDEPENDENT_REVIEW=NOT_RUN; IMPLEMENTATION/PUBLIC_POLICY_PATCH/UI_DEPLOY=NOT_RUN. 문서 QA·입력 검사 PASS를 구현/독립 리뷰 PASS로 승격하지 않음.
+- 현재 운영 상태는 최신 이관 CURRENT의 GITHUB/LIVE 수용 판정을 우선. 아래 과거 NONE/MIGRATION_NOT_CUTOVER는 당시 이력. 이번 설계 요청은 watcher/DB/Task/비용정책/LIVE·다른 요청·L1 지식 변경 없음.
+- 다음 한 동작: 호스트에서 이번 ID 비용 권한·기존 서명자·중복 상태 확인 → 유효 승인 서명 → READY 마지막 게시 → 기존 LIVE watcher 리뷰 1회 → 결과/receipt readback → GPT 판정. 이 GPT 세션은 서명키/Windows 실행 도구에 접근 불가. 자동 리뷰 실행 완료로 기록하지 않음.
+
+
 ## 사용자 피드백 반영 — 인계 5단계 추적 대신 최근 문서 3건 (2026-11-14 KST)
 - **판정:** 다른 GPT에 전달하는 공개 인계서의 피드백은 현재 대시보드가 자동 관측할 수 없음. 이전 5단계 '게시→리뷰 요청→접수→판정→반영'은 자동 진행 추적으로 오해할 수 있으므로 **공개 UI에서 제거**. 이제 `최근 핸드오프 이력`으로 공개 인계 문서명·최초 Git 게시일·원문 바로가기 최신 **3건만** 표시.
 - **원본/자동화:** PUBLIC `wonhwipark/L1Work/main/handoffs/*.md`의 HANDOFF 문서만 읽음. 새 PUBLIC 문서가 커밋되면 `.github/workflows/handoff-history.yml` → `scripts/build_handoff_history.py` → `docs/cowork-dashboard/handoffs.json` (최신 3건) 자동 재생성. PUBLIC 정적 Pages HTML은 해당 JSON을 같은 출처에서 읽고 열람 시/120초마다 갱신. 모든 과거 문서는 그대로 유지하며 전체 폴더 링크 제공. 문서 제목은 텍스트로만 렌더링하고 파일명은 고정 GitHub PUBLIC 경로로 제한.

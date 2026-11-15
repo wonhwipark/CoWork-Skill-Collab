@@ -1,0 +1,8 @@
+{
+  "observed_current_tracker": "REJECTED_TO_FALLBACK",
+  "cause": "self_test and independent_review contain strings outside exact allowed enums",
+  "synthetic_normalization_only": "ACCEPTED",
+  "writes_to_real_tracker": 0,
+  "public_exporter_GITHUB_support": "SOURCE_CONFIRMED_REJECTS",
+  "actual_failed_actions_log": "NOT_VERIFIED"
+}
