@@ -1,13 +1,14 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
-## 최신 상태 — 두 진입 경로·MSC 문서 구성 독립 설계 리뷰 요청 게시 (2026-11-17 KST)
+## 최신 상태 — 기존 MSC 설계 리뷰 완료 우선·Windows 실행 인계 (2026-11-17 KST)
 
 - **사용자 요청·범위:** Updater의 코드 기반 직접 지식 작성과 Workflow 이슈 AS-IS/TO-BE 문서 작성의 관계를 설계안으로 정리하고, 스킬 간 관계·상황·문서별 작성 책임을 충분히 전달해 Windows Claude 독립 설계 리뷰 요청. 기존 Guard 코드 리뷰와 다른 신규 설계 검토이며 구현·설치·PUBLIC 전달·업무 지식 게시 요청이 아님.
 - **설계·리뷰 입력:** [설계안 r0001](L1_MSC_DUAL_ENTRY_DOCUMENT_DESIGN_r0001_20261117_KST.md), [상황·스킬 관계](L1_MSC_DUAL_ENTRY_REVIEW_CONTEXT_r0001_20261117_KST.md), [근거·수락 조건 입력](review-inputs/REQ-L1-MSC-DUAL-ENTRY-DESIGN-R1-20261117/README.md). 직접 지식 작성/이슈 Work/기존 Work 지식화의 3개 사례, Workflow·Kernel·분석기·Converter·Updater·최종 writer 책임, ISSUE HTML 공백과 최소 연결안, 게시명 변경·상대 링크·부분 실패·호환성·미확인을 포함. 실제 UL CA 업무 소스·MSC/로그는 포함하지 않음.
 - **정식 요청·고정:** [REQUEST](../../requests/REQ-L1-MSC-DUAL-ENTRY-DESIGN-R1-20261117/REQUEST.md), [SOURCE_PIN](../../requests/REQ-L1-MSC-DUAL-ENTRY-DESIGN-R1-20261117/SOURCE_PIN.json). 입력 commit `939b5b9f4c59534d908bc48ced59cfd25a4e8f64`; ZIP **29111 bytes**, SHA-256 `e5c2da38fda253781b2cf0179c46d3cd6dbefdc5f5efb3f0603ddaaf7d03b91c`. 원격 ZIP bytes·멤버 CRC/본문·해시, REQUEST 및 SOURCE_PIN readback **PASS**. 자세한 위치·커밋·검증: [게시 영수증](../../requests/REQ-L1-MSC-DUAL-ENTRY-DESIGN-R1-20261117/PUBLICATION_RECEIPT.md).
 - **승인·실행 구분:** 유효한 기존 Windows 보호 사전위임 범위의 **R1 POLICY-STATIC-V1, 호출 1회·최대 USD 1** 한정 설계 검토. 전체 R2/R3 자동 승급·추가 호출 없음. 일/월 잔여 한도·서명·실행 여부는 보호 watcher가 검증. GPT는 APPROVAL_SIG/READY를 만들지 않고 유료 모델을 직접 호출하지 않음.
 - **현재 확인 상태:** REQUEST/SOURCE_PIN=`POSTED_REMOTE_VERIFIED`; APPROVAL_SIG/READY/DISPATCH=`NOT_OBSERVED`; Claude 실행=`NOT_VERIFIED`; REVIEW_RESULT/RECEIPT=`NOT_RECEIVED`. 최신 원격 트리 확인 기준이며 호스트 호출 0을 단정하는 근거가 아님. 독립 리뷰와 업무 E3=`PENDING/NOT_RUN`.
-- **NEXT_ONE_ACTION:** 동일 요청의 Windows Claude REVIEW_RESULT/RECEIPT를 수신·대조하고 GPT가 수용/보완·G0·최소 구현 범위를 판정. 입력 변조·만료·한도·중복·불확실 실행은 기존 fail-closed 유지. 기존 Guard·복구 지점 조사·그룹 G0 진행을 보존하며 재실행하지 않음.
+- **사용자 최신 순서·실행 차단:** “리뷰 먼저 완료해서 정리해놓고 그 다음에 확인해줘.” 기존 요청 1건의 완료를 우선하며 [Windows 완료 인계](GPT_MSC_DUAL_ENTRY_EXISTING_REVIEW_CLOSEOUT_HANDOFF_r0001_20261117_KST.md) 게시. 이번 원격 전체 트리에서도 동일 요청의 서명/READY/디스패치/결과/실행 영수증은 미발견. 자동 승인 활성화는 기존 호스트 보고이며 이번 보류 사유는 미확인. GPT 세션에 Windows 직접 실행 연결 없음(`HOST_EXECUTION=NOT_RUN_BY_GPT`); 인계 게시 자체는 호스트 기동이 아님.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 위 인계로 **기존 요청의 로컬 보류 사유·기존 실행 이력·유효 위임/잔여 한도**를 확인하고, 허용된 경우 기존 signer/watcher를 통해 동일 고정 요청의 R1 1회만 완료·결과/영수증 게시. 차단이면 비민감 보류 근거만 기존 Work에 기록. 실제 결과 수신 후 GPT가 지적별 판정·정리. 새 REQUEST/임의 재큐잉/추가 호출/알림 연계 확장 없음. 기존 Guard·복구 지점 조사·그룹 G0 진행 보존.
 
 ---
 
