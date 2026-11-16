@@ -1,0 +1,51 @@
+{
+  "schema": "CLAUDE_INTERACTIVE_REVIEW_EXECUTION_EVIDENCE_V1",
+  "review_id": "L1-MSC-SKILL-PATCH-20261116-001",
+  "work_id": "L1-WORKSPACE-RAG-20261111-001",
+  "review_kind": "INTERACTIVE_SESSION_NOT_WATCHER_REVIEW",
+  "reviewer": {
+    "host": "Windows 11 Home 10.0.26100 (single-user PC)",
+    "tool": "Claude Code interactive session",
+    "model": "claude-sonnet-5-5",
+    "separate_from_developer": true,
+    "modified_candidate_code": false
+  },
+  "performed_at_kst": "2026-11-16",
+  "input": {
+    "request_file": "collab/projects/L1-WORKSPACE-RAG-20261111-001/CLAUDE_MSC_SKILL_PATCH_INDEPENDENT_REVIEW_REQUEST_r0001_20261116.md",
+    "pinned_commit": "29aadbaeb5245f7a811c3050160c10cddce46954",
+    "zips_read": [
+      {"name": "doc-converter_v0_2_23_1116.zip", "bytes": 210426, "sha256": "43805ae0ce1b08205125441f383f6bdfc6f114ef53bb2609295827f10b1ce23e", "matches_request": true},
+      {"name": "work-ledger-kernel_v0_7_40_1116.zip", "bytes": 410922, "sha256": "b8077fd717f326fb7bc556407b8e8b8a7f32a580e143ec3a6d646d3b1e9df7ce", "matches_request": true},
+      {"name": "work-ledger-kernel_v0_7_39_1115.zip", "bytes": 409355, "sha256": "24184fe760c058a6fbc4f79c8d2d3e580978c05bde4597155e81fa3d6f23885a", "role": "diff base"},
+      {"name": "doc-converter_v0_2_21_1106.zip (PUBLIC L1Work)", "bytes": 155012, "sha256": "ef5d1d9e0b8847d2732d13ae387dc842bb8e90765952bc170345ea0a7b51039a", "role": "diff base", "note": "doc-converter_v0_2_22_1116.zip named in the request is absent at the pinned commit (404)"}
+    ]
+  },
+  "independent_tests": [
+    {"name": "doc-converter new tests (5) rerun, Python 3.11 venv", "status": "PASS", "result": "5 passed"},
+    {"name": "Kernel export_docs with SVG Evidence, v0.7.39 vs v0.7.40", "status": "FAIL_CANDIDATE", "result": "v0.7.39 export OK; v0.7.40 ARTIFACT_NAME_INVALID (UNSUPPORTED_PUBLISHED_ARTIFACT)"},
+    {"name": "package case-only name collision (Init/init) on Windows", "status": "FAIL_CANDIDATE", "result": "exit 0, status PARTIAL, 2 diagrams, 1 puml file"},
+    {"name": "package NFC vs NFD Korean name", "status": "FAIL_CANDIDATE", "result": "different output names"},
+    {"name": "managed policy allows --view-mode", "status": "FAIL_CANDIDATE", "result": "not in allowed_flags of msc-package and msc-scenario-build"},
+    {"name": "package integrity lists and version metadata", "status": "FAIL_CANDIDATE", "result": "PACKAGE_CONTENTS.sha256 3 mismatches 5 unlisted; SKILL.md/VERSION.md/manifest still 0.2.21; kernel SKILL.md 0.7.38-dev.1"},
+    {"name": "B HTML in real Edge headless via DevTools Protocol", "status": "PASS", "result": "no extra script execution, no CSP errors, phase click scroll 2117 equal to formula, zoom 125%/min 50%, duplicate/missing phase buttons not created"}
+  ],
+  "not_run": [
+    "Python 3.10",
+    "package path with a real PlantUML renderer (renderer missing on this PC)",
+    "full existing pytest suites",
+    "real remote published_path / Markdown writer / business host E3",
+    "mobile viewport and other browsers"
+  ],
+  "model_calls": {
+    "separate_paid_review_calls": 0,
+    "note": "interactive session only; no watcher dispatch, no APPROVAL_SIG or READY for this review; no per-review cost receipt exists"
+  },
+  "verdict": "REVISE",
+  "blocking": 1,
+  "major": 2,
+  "minor": 3,
+  "result_document": "collab/projects/L1-WORKSPACE-RAG-20261111-001/CLAUDE_MSC_SKILL_PATCH_INDEPENDENT_REVIEW_RESULT_FOR_GPT_r0001_20261116.md",
+  "public_summary_only": true,
+  "contains_secrets": false
+}
