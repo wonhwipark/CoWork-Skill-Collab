@@ -6,8 +6,8 @@
 
 - 문서가 있는 프로젝트: **10개**
 - GitHub REQUEST 파일 관측: **8개** (검증 안 됨)
-- GitHub REVIEW 파일 관측: **4개** (검증 안 됨)
-- GitHub RECEIPT 파일 관측: **4개** (검증 안 됨)
+- GitHub REVIEW 파일 관측: **5개** (검증 안 됨)
+- GitHub RECEIPT 파일 관측: **5개** (검증 안 됨)
 
 ## 협업 흐름과 상태 · 역할 기준
 
@@ -41,7 +41,7 @@ flowchart TB
 | GitHub 전환 | **GitHub LIVE (호스트 보고)** | 호스트 보고·GPT 판정과 신규 요청 실전 검증은 별개 |
 | Windows 실행·SHADOW | **기록 미관측** | 실제 호스트 실행 증거 필요 |
 | Claude Code 독립 리뷰 | **기록 미관측** | 자체 시험과 구분 |
-| GitHub 요청·결과·영수증 | **요청 8 · 결과 4 · 영수증 4** | PRIVATE 파일 관측 수일 뿐 완료 건수가 아님 |
+| GitHub 요청·결과·영수증 | **요청 8 · 결과 5 · 영수증 5** | PRIVATE 파일 관측 수일 뿐 완료 건수가 아님 |
 | 공개 Work 대시보드 | **기록 미관측** | L1Work에 승인된 비식별 상태만 자동 요약 · PRIVATE 원문은 비공개 |
 
 [전환·Windows 원문](../projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) · [대시보드 원문](../projects/COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md)
@@ -90,7 +90,7 @@ flowchart TB
 
 | 요청 | Work | 단계 | GPT 판정 |
 |---|---|---|---|
-| [REQ-COWORK-AUTO-APPROVAL-V023-R2-20261115](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-COWORK-AUTO-APPROVAL-V023-R2-20261115/REQUEST.md) | COWORK-AUTO-APPROVAL-20261115-001 | REVIEW_NOT_OBSERVED | NOT_VERIFIED |
+| [REQ-COWORK-AUTO-APPROVAL-V023-R2-20261115](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-COWORK-AUTO-APPROVAL-V023-R2-20261115/REQUEST.md) | COWORK-AUTO-APPROVAL-20261115-001 | GPT_NOT_OBSERVED | NOT_VERIFIED |
 | [REQ-COWORK-DASHBOARD-PRESENTATION-20261115-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-COWORK-DASHBOARD-PRESENTATION-20261115-001/REQUEST.md) | COWORK-GITHUB-DASHBOARD-20261111-001 | READY_NOT_OBSERVED | NOT_VERIFIED |
 | [REQ-COWORK-V0214-R1-20261114](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-COWORK-V0214-R1-20261114/REQUEST.md) | COWORK-DROPBOX-TO-GITHUB-MIGRATION | GPT_NOT_OBSERVED | NOT_VERIFIED |
 | [REQ-COWORK-V0217-R2-20261114](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-COWORK-V0217-R2-20261114/REQUEST.md) | COWORK-DROPBOX-TO-GITHUB-MIGRATION | GPT_NOT_OBSERVED | NOT_VERIFIED |
