@@ -1,5 +1,16 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 현재 요약 — 4종 스킬 개발 후보 2개·독립 코드 시험 대기 (2026-11-16 KST)
+
+- **사용자 최신 지시:** 업무 GPT 설치본 확인과 별개로 `doc-converter`, `work-ledger-kernel`, `l1-fix-workflow`, `code-analyzer`를 검토 후 수정 진행. [실제 패치·산출물·시험 상태 판정](GPT_MSC_FOUR_SKILL_DEV_PATCH_RESULT_r0001_20261116_KST.md) 참고.
+- **실제 수정·PRIVATE 후보 ZIP:** `candidates/doc-converter_v0_2_23_1116.zip` (210426 B, SHA-256 `43805ae0ce1b08205125441f383f6bdfc6f114ef53bb2609295827f10b1ce23e`) — 한글 MSC 이름 충돌·Procedure/Feature AS-IS 문구·조건부 delta 링크 + opt-in SVG 내장 B HTML·유일 Phase 이동. `candidates/work-ledger-kernel_v0_7_40_1116.zip` (410922 B, SHA-256 `b8077fd717f326fb7bc556407b8e8b8a7f32a580e143ec3a6d646d3b1e9df7ce`) — 기존 CL/PR v0.7.39 수정 유지, 등록 소형 SVG Evidence export/크기 초과 차단. 원격 blob·바이트 SHA/기본 ZIP 구조·수정 STORED CRC 확인 PASS.
+- **기존 제공자 재사용:** `l1-fix-workflow v1.6.69`와 `code-analyzer v0.15.3` 최신 PRIVATE 후보 존재 확인. 이번 MSC 링크를 위한 직접 패치 gap 미입증으로 추가 코드 변경 **NOT_RUN**. 원본 분석·그룹 writer와의 합성 E2E는 아직 미확인.
+- **엄격한 게이트:** 패키지 코드·테스트 파일 후보는 실제 작성됐지만 Python 3.10/3.11 단위/전체 회귀, B HTML 실제 브라우저/CSP, 업무 저장·readback, 패치 후 독립 코드 리뷰·영수증 **NOT_RUN/NOT_VERIFIED**. 새 ZIP은 `development_not_for_deployment`, `PUBLIC_RELEASE=BLOCKED`; PUBLIC L1Work 루트 최종 ZIP/업무 호스트 설치·Job·Knowledge·LIVE 변경 없음. 기존 G0 공개 인계 및 REQUEST/READY/승인·비용 이력 보존.
+- **다음 한 행동:** G0 회신을 기다리지 않고 두 개발 ZIP의 **격리 Python 3.10/3.11 회귀·브라우저 B 뷰어/ZIP manifest 안전성**을 실행 가능한 환경에서 검증. 합격 후에만 기존 Work의 보완·독립 리뷰·PUBLIC 전달 게이트 판정.
+
+---
+
+
 ## 현재 요약 — 스킬 수정 범위 좁힘·PUBLIC 업무 GPT G0 인계 (2026-11-16 KST)
 
 - **완료:** [5종 G0 인계·4종 수정 필요성 GPT 판정](GPT_MSC_SKILL_SCOPE_AND_PUBLIC_HANDOFF_r0001_20261116_KST.md). 기존 정적 근거로 `doc-converter`는 최소 EXTEND 후보, `work-ledger-kernel`은 CONNECT/조건부 EXTEND, `l1-fix-workflow`는 REUSE/CONNECT, `code-analyzer`는 REUSE·수정 보류로 분류. 실제 스킬 코드 패치 확정이나 설치본 PASS 아님.
