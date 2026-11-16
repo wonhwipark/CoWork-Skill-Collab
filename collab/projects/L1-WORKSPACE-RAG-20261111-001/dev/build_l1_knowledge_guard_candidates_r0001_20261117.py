@@ -274,7 +274,7 @@ def refresh_package_metadata(root: Path, row: dict) -> None:
         lines = text.splitlines(keepends=True)
         for i, line in enumerate(lines[:45]):
             match = re.match(
-                r"^(\s*(?:(?:version|skill_version|버전)|(?:[-#* ]{0,6}(?:current version|현재 버전)))\s*[:：]\s*)v?\d+\.\d+\.\d+",
+                r"^(\s*(?:(?:version|skill_version|버전)|(?:[-#* ]{0,6}(?:current version|현재 버전)))\s*[:：]\s*[\"\x27]?)v?\d+\.\d+\.\d+",
                 line, re.I)
             if match:
                 lines[i] = line[:match.start()] + match.group(1) + version + line[match.end():]
