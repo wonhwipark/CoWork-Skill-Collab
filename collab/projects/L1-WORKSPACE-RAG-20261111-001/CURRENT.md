@@ -1,5 +1,13 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## Claude 독립 코드·패치 리뷰 결과 게시: REVISE (2026-11-16 KST)
+
+- 결과: `CLAUDE_MSC_SKILL_PATCH_INDEPENDENT_REVIEW_RESULT_FOR_GPT_r0001_20261116.md` (SHA-256 `771f02a9680411ddeb177ed51c8bc290345ce11d2327f4163b9c4a257c4ceb64`), 수행 근거: `CLAUDE_MSC_SKILL_PATCH_REVIEW_EXECUTION_EVIDENCE_r0001_20261116.json` (SHA-256 `3a448999630d66754eb6473ca3776a0f1b819e40a5704780dff438eaa85ee889`). 고정 입력 commit `29aadbaeb524`, 두 ZIP SHA 일치 확인.
+- **BLOCKING 1:** Kernel v0.7.40 — `.svg` 복사를 허용했지만 `name_for`가 `.svg`를 거부해 SVG Evidence가 있는 Work의 `export_docs` 전체가 `ARTIFACT_NAME_INVALID`로 실패(v0.7.39 정상, 실제 실행 재현). 자체시험은 소스 문자열 검사라 놓침.
+- **MAJOR 2:** doc-converter — `--view-mode`가 관리 실행 정책 `allowed_flags`에 없어 정책 경유로 Procedure/Feature 모드 도달 불가. 대소문자만 다른 이름(`Init`/`init`)이 Windows에서 파일 1개로 덮어씀. MINOR 3: 무결성 목록·버전 메타 불일치, NFC/NFD 이름 불안정, HTML 단계 버튼 누락 비가시.
+- 브라우저(Edge headless, CDP) 직접 확인: 적대적 입력에서 추가 스크립트 실행 0, CSP 오류 0, 단계 클릭·확대 동작. 미실행: Python 3.10, 실제 PlantUML 렌더러 경유, 전체 pytest, 업무 host E3.
+- 형식: 사용자가 이 세션에서 직접 요청한 대화형 리뷰(감시기 REQUEST/READY 경로 아님, 별도 유료 호출 0). 후보 코드 수정 없음. 다음 한 동작: GPT가 지적별 판정 후 수정, 수정자가 아닌 세션이 재검토.
+
 ## 현재 요약 — MSC 개발 후보 격리 시험 PASS·Windows Claude Code 독립 리뷰 요청 게시 (2026-11-16 KST)
 
 - **사용자 최신 지시:** 2개 개발 ZIP의 격리 Python/HTML 시험 후 Windows Claude Code에 별도 **독립 코드 리뷰 요청**. [리뷰 요청서](CLAUDE_MSC_SKILL_PATCH_INDEPENDENT_REVIEW_REQUEST_r0001_20261116.md) / [실제 CI QA 근거](GPT_MSC_SKILL_CANDIDATE_QA_RESULT_r0001_20261116_KST.md). 기존 Work에 연결, 기존 watcher 정식 REQUEST/READY·승인·영수증 이력 불변.
