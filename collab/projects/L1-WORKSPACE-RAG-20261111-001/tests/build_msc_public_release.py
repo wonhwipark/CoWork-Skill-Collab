@@ -90,7 +90,7 @@ def release_kernel(data,outname,version):
  valid(txt(data,"VERSION").strip()=="0.7.41-dev.1","kernel previous version mismatch")
  write(data,"VERSION",version+"\n")
  skill=txt(data,"SKILL.md")
- skill=replace(skill,"version: 0.7.41-dev.1","version: "+version,"kernel frontmatter")
+ skill=replace(skill,'version: "0.7.38-dev.1"','version: "'+version+'"',"kernel frontmatter")
  # Replace the current title only, preserving historic change log versions.
  current_re=re.search(r"(?m)^# [^\n]*v0\.7\.41-dev\.1[^\n]*$",skill)
  if current_re: skill=skill[:current_re.start()]+skill[current_re.start():].replace("v0.7.41-dev.1","v"+version,1)
