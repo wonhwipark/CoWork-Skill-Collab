@@ -1,0 +1,23 @@
+{
+  "key_id": "cowork-approver-1",
+  "payload": {
+    "expires_at": "2026-11-16T17:06:07.103333+00:00",
+    "issued_at": "2026-11-16T15:06:07.103333+00:00",
+    "knowledge_refs_hash": "d84c599b38b661764ac1ef97be223d823d5a916ea7a4dfcabaf4d575e82c6652",
+    "local_policy_revision": "1",
+    "nonce": "a39bdc25e5dc0bbf9c8414a5d1f24208",
+    "package_path": "/SKILL-COLLAB/packages/work-to-knowledge-fixed-design_r0001_1116_REVIEW_INPUT.zip",
+    "package_sha256": "58d39bcf884d9fbd22d03a14e5fffde5e1b69a8ecec482d2e9c8b2b125add7bb",
+    "package_size_bytes": 14986,
+    "ready_sha256": "b2f0557ce7d1fb335e58b227eab068fa01755c6ab6196a8e3712d5e186398fff",
+    "repo_id": "1451933830",
+    "request_id": "REQ-L1-WORK-KNOWLEDGE-FIXED-R1-20261116",
+    "request_revision": "1",
+    "request_sha256": "937fd3f5d3bffd302cbdd63284492becb4a613e52a5ee5dc8e1fe97973668a3e",
+    "run_policy_ref": "POLICY-STATIC-V1",
+    "schema": "SKILL_COLLAB_APPROVAL_PAYLOAD_V1",
+    "source_commit": "4d7f674b37846eec37c37a9d98cd98ae89ee9556"
+  },
+  "schema": "SKILL_COLLAB_APPROVAL_SIG_V1",
+  "signature": "zMfteY24FWWYpLuNcyzYEBsA1LwWwM6czXMxJ4RLgx000xO9a929snBCTnT55OJUPWLjwjB7LYaKspoJrLo7CA=="
+}
