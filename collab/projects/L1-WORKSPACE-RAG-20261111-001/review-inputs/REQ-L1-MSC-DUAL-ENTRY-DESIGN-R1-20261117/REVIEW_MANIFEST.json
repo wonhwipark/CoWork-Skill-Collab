@@ -1,0 +1,46 @@
+{
+  "request_id": "REQ-L1-MSC-DUAL-ENTRY-DESIGN-R1-20261117",
+  "request_revision": 1,
+  "project_id": "L1-WORKSPACE-RAG-20261111-001",
+  "review_kind": "SCOPED_INDEPENDENT_DESIGN",
+  "review_tier": "R1",
+  "run_policy_ref": "POLICY-STATIC-V1",
+  "max_model_calls": 1,
+  "max_cost_usd": 1,
+  "output_tokens_target": 3000,
+  "files": [
+    {
+      "zip_path": "README.md",
+      "repository_path": "collab/projects/L1-WORKSPACE-RAG-20261111-001/review-inputs/REQ-L1-MSC-DUAL-ENTRY-DESIGN-R1-20261117/README.md",
+      "size_bytes": 1459,
+      "sha256": "395b79805cc4df07d437fdbc51c53cd196489f896343e58c86f612064a62ec32"
+    },
+    {
+      "zip_path": "01_DESIGN.md",
+      "repository_path": "collab/projects/L1-WORKSPACE-RAG-20261111-001/L1_MSC_DUAL_ENTRY_DOCUMENT_DESIGN_r0001_20261117_KST.md",
+      "size_bytes": 9750,
+      "sha256": "f0f10ecebdc6a8496e6cd6c222968d345edfc35cc972b28379556582ef69cff4"
+    },
+    {
+      "zip_path": "02_CONTEXT_AND_SKILL_RELATIONSHIPS.md",
+      "repository_path": "collab/projects/L1-WORKSPACE-RAG-20261111-001/L1_MSC_DUAL_ENTRY_REVIEW_CONTEXT_r0001_20261117_KST.md",
+      "size_bytes": 4831,
+      "sha256": "5fef4095432214115031e74a10f04be69b370faa6ec54bb518a7ac19fdcd9be1"
+    },
+    {
+      "zip_path": "03_SOURCE_EVIDENCE.md",
+      "repository_path": "collab/projects/L1-WORKSPACE-RAG-20261111-001/review-inputs/REQ-L1-MSC-DUAL-ENTRY-DESIGN-R1-20261117/03_SOURCE_EVIDENCE.md",
+      "size_bytes": 5599,
+      "sha256": "e80879aef10dbface8bbfe65b12c9ca077e3848355892830f6c09e735ddcbdbe"
+    },
+    {
+      "zip_path": "04_ACCEPTANCE_AND_REVIEW_QUESTIONS.md",
+      "repository_path": "collab/projects/L1-WORKSPACE-RAG-20261111-001/review-inputs/REQ-L1-MSC-DUAL-ENTRY-DESIGN-R1-20261117/04_ACCEPTANCE_AND_REVIEW_QUESTIONS.md",
+      "size_bytes": 4539,
+      "sha256": "5aa4b3b86f4250184b0a61a9a6eaff6ddabaab971f5122ab0eb75a03e55e161d"
+    }
+  ],
+  "manifest_self_hash": "Member list excludes this manifest; outer ZIP SHA-256 fixes it.",
+  "token_estimation_method": "ASCII chars/3 + non-ASCII code points*1.5, plus 2048 reserve. Heuristic, not a tokenizer or hard token cap.",
+  "execution_status": "DESIGN_ONLY_NO_HOST_IMPLEMENTATION"
+}
