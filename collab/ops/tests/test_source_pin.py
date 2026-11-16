@@ -69,6 +69,23 @@ class SourcePinTests(unittest.TestCase):
             self.assertEqual(rc, 2)
             self.assertEqual(path.read_text(encoding="utf-8"), "historical pin is immutable")
 
+    def test_audit_repo_fails_closed_on_malformed_request_pin(self):
+        with tempfile.TemporaryDirectory() as td:
+            base = pathlib.Path(td) / "collab" / "requests" / "REQ-1"
+            base.mkdir(parents=True)
+            pin = base / "SOURCE_PIN.json"
+            pin.write_text(source_pin.dumps_source_pin(source_commit=COMMIT, repo_id=REPO), encoding="utf-8")
+            self.assertEqual(source_pin.audit_source_pins(pathlib.Path(td), expected_repo_id=REPO), 1)
+            pin.write_text(json.dumps({"schema": source_pin.SCHEMA, "commit": COMMIT, "repo_id": 1451933830}), encoding="utf-8")
+            with self.assertRaises(source_pin.SourcePinError):
+                source_pin.audit_source_pins(pathlib.Path(td), expected_repo_id=REPO)
+
+    def test_audit_rejects_empty_repo(self):
+        with tempfile.TemporaryDirectory() as td:
+            (pathlib.Path(td) / "collab" / "requests").mkdir(parents=True)
+            with self.assertRaises(source_pin.SourcePinError):
+                source_pin.audit_source_pins(pathlib.Path(td), expected_repo_id=REPO)
+
     def test_cli_check_accepts_new_pin_and_rejects_legacy_numeric(self):
         with tempfile.TemporaryDirectory() as td:
             path = pathlib.Path(td) / "pin.json"
