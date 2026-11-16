@@ -99,6 +99,9 @@ def release_kernel(data,outname,version):
  if "0.7.37-dev.1" in launcher:
   launcher=replace(launcher,"0.7.37-dev.1",version,"kernel linux launcher --version")
  write(data,"work-ledger-kernel",launcher)
+ init=txt(data,"work_ledger_kernel/__init__.py")
+ init=replace(init,"0.7.37-dev.1",version,"kernel runtime __version__")
+ write(data,"work_ledger_kernel/__init__.py",init)
  skill=txt(data,"SKILL.md")
  skill=replace(skill,'version: "0.7.38-dev.1"','version: "'+version+'"',"kernel frontmatter")
  # Replace the current title only, preserving historic change log versions.
@@ -119,6 +122,30 @@ def release_kernel(data,outname,version):
  if not re.search(r"(?m)^import unittest\s*$",body):
   body="import unittest\n"+body
  write(data,t,body)
+ # Existing tests predate later protective TL_REVIEW fail-closed export and newer human-first Work view.
+ legacy="tests/test_crosshost_readability_v0718.py"
+ oldtest=txt(data,legacy)
+ import re as _re
+ pattern=_re.compile(r"(?ms)^    def test_s11_legacy_tl_review_not_rendered\(self\):\n.*?(?=^    def |^class |\Z)")
+ valid(len(pattern.findall(oldtest))==1,"legacy policy test anchor")
+ newtest=("    def test_s11_legacy_tl_review_not_rendered(self):\n"
+          "        from work_ledger_kernel.errors import KernelError\n"
+          "        self.k.work_context_event(self.a,'TL_REVIEW','private-personal-feedback')\n"
+          "        self.checkpoint()\n"
+          "        with self.assertRaisesRegex(KernelError,'Legacy TL_REVIEW'):\n"
+          "            self.k.work_docs_export(str(self.work),self.a)\n\n")
+ write(data,legacy,pattern.sub(lambda _:newtest,oldtest,count=1))
+ layout="tests/test_github_docs_layout_v077.py"
+ htmltest=txt(data,layout)
+ htmltest=replace(htmltest,"'**지금 상태:**'","'**상태:**'","new Work human-first status label")
+ write(data,layout,htmltest)
+ weekly="tests/test_tl_continuity_v0717.py"
+ weeklytest=txt(data,weekly)
+ weeklytest=replace(weeklytest,
+    "        report = self.c.weekly_draft(week_start='2026-10-19', week_end='2026-10-25')\n        item = report['tl_reviews'][0]",
+    "        from datetime import date,timedelta\n        today=date.today()\n        monday=today-timedelta(days=today.weekday())\n        report = self.c.weekly_draft(week_start=monday.isoformat(), week_end=(monday+timedelta(days=6)).isoformat())\n        item = report['tl_reviews'][0]",
+    "date-anchored weekly test fixture")
+ write(data,weekly,weeklytest)
  publish_metadata(data,"",version,outname,42)
  notes="MSC_RELEASE_NOTES_v0_7_42.md"
  write(data,notes,"# work-ledger-kernel "+version+"\n\nMSC Evidence SVG filename/export support, safe SVG gate and bounded export. Existing Work and published-path mapping rules retained. Synthetic Work export regression verified, no automatic host or Knowledge publication.\n")
@@ -134,7 +161,7 @@ def make_zip(path,data):
    info.compress_type=zipfile.ZIP_DEFLATED
    # Installers such as unzip preserve Unix executable bits from the central directory.
    info.create_system=3
-   info.external_attr=(0o755 if name == "work-ledger-kernel" else 0o644)<<16
+   info.external_attr=(0o755 if name in {"work-ledger-kernel", "integrations/claude-code/work-ledger-hook.sh"} else 0o644)<<16
    z.writestr(info,data[name])
  with zipfile.ZipFile(path) as z:
   valid(z.testzip() is None,"release CRC failed "+path.name)
