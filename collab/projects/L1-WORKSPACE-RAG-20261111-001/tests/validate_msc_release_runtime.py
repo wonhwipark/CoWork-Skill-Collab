@@ -60,16 +60,17 @@ def run():
                 chosen={"provider":"code-analyzer","kind":"asis_msc","stage":slot["stage"]}
                 break
         check(chosen is not None,"kernel-registry-as-is-msc-supported",chosen)
-        def register(filename,text,work_id=w):
+        def register(filename,text,work_id=w,kind=None):
             source=sandbox/filename
             source.write_text(text,encoding="utf-8")
             kw={key:chosen[key] for key in ("provider","kind","stage")}
+            if kind is not None: kw["kind"]=kind
             result=k.record_evidence(work_id,source_path=source,**kw,provider_version="release-regression",code_rev="test-synthetic",summary="synthetic test",confidence_state="AUTO_CANDIDATE")
             check(bool(result),"kernel-real-register-evidence",filename)
             return result
         goodsvg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="30">INIT</text></svg>'
         register("MSC_INIT.svg",goodsvg)
-        register("NOT_A_DIAGRAM.svg",goodsvg)
+        register("NOT_A_DIAGRAM.svg",goodsvg,kind="impact")
         register("notes.md","# Synthetic test\n")
         root=sandbox/"public-work-view"
         result=k.work_docs_export(str(root),work_id=w)
