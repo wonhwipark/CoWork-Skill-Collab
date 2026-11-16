@@ -4,7 +4,8 @@ on:
     branches: [dev/l1-knowledge-guards-20261117]
     paths:
       - .github/workflows/l1-knowledge-guard-hardening-once-20261117.yml
-      - collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/**
+      - collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/*.py
+      - "!collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/output/**"
       - collab/ops/CONTRACTS/MSC_SKILL_IO_MATRIX_V1.json
 permissions:
   contents: write
