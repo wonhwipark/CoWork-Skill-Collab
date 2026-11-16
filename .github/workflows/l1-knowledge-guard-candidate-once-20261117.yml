@@ -6,6 +6,7 @@ on:
     paths:
       - .github/workflows/l1-knowledge-guard-candidate-once-20261117.yml
       - collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/build_l1_knowledge_guard_candidates_r0001_20261117.py
+      - collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/tests_knowledge_guard_candidates.py
 permissions:
   contents: write
 jobs:
@@ -27,6 +28,9 @@ jobs:
         run: |
           python collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/build_l1_knowledge_guard_candidates_r0001_20261117.py \
             --repo . --out collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/output
+      - name: Isolated Workflow and Git Work-docs guard functional tests / metadata audit
+        run: |
+          python collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/tests_knowledge_guard_candidates.py
       - name: Candidate ZIP CRC and path duplicate check
         run: |
           python - <<'PY'
