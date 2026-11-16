@@ -1,5 +1,18 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 우리 3개 스킬 정적 분석 및 업무 GPT ③·④ 수정 범위 검토 — 2026-11-16 KST
+
+- **사용자 요청:** 업무 GPT에는 `l1-knowledge-updater` / `l1sw-dev-knowledge`의 TO-BE 계약을 제안하고, 우리가 관리하는 `l1-fix-workflow` / `work-ledger-kernel` / `l1-github`의 실제 변경 필요 범위를 원본 기준 검토. 스킬 수정·배포 지시가 아님.
+- **정본 보고서:** [L1_WORKSPACE_KNOWLEDGE_34_SKILL_CHANGE_REVIEW_r0001_20261116_KST.md](L1_WORKSPACE_KNOWLEDGE_34_SKILL_CHANGE_REVIEW_r0001_20261116_KST.md); commit `2508d81672510987997a3392e9286c922ab8f3d3`; blob `0bdfcbf3b96b125138c40c1447c74d89cf309d80`; 23,793 UTF-8 bytes, SHA-256 `7945c3b8b3848d5fe87c8b15ec03934cfad6ff1ecf0e5bc43fac55a2adb80372`; 원격 본문 동일 PASS.
+- **소스 직접 정적 확인:** PRIVATE Workflow v1.6.69(`l1_fix_workflow/github_docs.py`, `group_knowledge_bridge.py`), PRIVATE GitHub v0.3.57(`scripts/push_guard.py`), PUBLIC Kernel v0.7.42(`work_ux.py`, `kernel.py`, `work_refs.py`). 실제 업로드 ZIP 내부 원문 확인, runtime 전체 시험 아님.
+- **핵심 발견:** Kernel exporter는 `works/`, `index/`, root README를 생성. Workflow `docs_sync`는 dirty/untracked checkout을 차단하므로 서로 다른 폴더라도 동시 쓰기 경합 가능. GitHub Push guard의 repo/root/remote 검증은 폴더별 WRITE RBAC이 아님. Kernel `work_reference_add` 허용 ref_type은 `jira,alias,github_pr,p4_cl,code_root`이며 지식 링크 직접 등록 불가.
+- **수정 범위 판정:** P0 Workflow의 `knowledge/` 변경 금지 경로 및 인증된 공통 Git writer의 staged-path 권한 검토; P1 Kernel의 `knowledge/` 불변/README 탐색 연결 시험. Kernel 신규 Profile/record/원장·조사하지 않은 CAS 엔진 추가 금지. Updater·그룹 writer의 실제 API는 업무 GPT G0 결과 요청.
+- **판정:** `SOURCE_STATIC_REVIEW=PASS_SCOPE_LIMITED`, `SKILL_PATCH=NOT_RUN`, `E2E_TEST_T01_T18=NOT_RUN`, `INDEPENDENT_REVIEW_3_4=PENDING_RESULT`, `BUSINESS_HOST_G0=NOT_VERIFIED`, `GROUP_WRITE=NOT_RUN`. 기존 정식 리뷰/READY/영수증과 구버전 보존.
+- **NEXT_ONE_ACTION:** 기존 승인된 범위의 격리 환경에서 exporter의 `knowledge/` 보존(T01) 및 Workflow 쓰기 차단(T04)을 실측하고, 업무 GPT 설치본 U01~U06 회신을 대조해 최소 패치 대상을 확정. 운영 설치/게시/유료 리뷰는 별도 게이트 준수.
+
+---
+
+
 ## PUBLIC L1Work 업무 GPT 인계 게시 — Knowledge 폴더·Writer 경계 (2026-11-16 KST)
 
 - **사용자 지시:** 기존 PRIVATE 설계 인계의 공개 가능한 내용을 PUBLIC `wonhwipark/L1Work`, branch `main`, `handoffs/`에 게시하고 목록 진입점 연결.
