@@ -1,5 +1,16 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 최신 상태 — Knowledge 확정 ①~④ Claude R1 완료·GPT 판정/스킬 설계 갱신 (2026-11-17 KST)
+
+- **REVIEW/RECEIPT:** `REQ-L1-WORK-KNOWLEDGE-FIXED-R1-20261116` revision 1의 `REVIEW_RESULT_1.md` COMPLETED, `RECEIPT_1.md` `ok=true` (watcher v0.2.23), dispatch processing_key/패키지 SHA-256 일치; Claude verdict `ACCEPT_WITH_CHANGE` (BLOCKING 1/MAJOR 4/MINOR 2). 사용자 전달 비용 USD 0.27은 receipt에 금액 필드가 없으므로 상세 실측 미확인. 구버전 2026-11-15 리뷰는 소급 변경/재실행 금지.
+- **GPT 판정:** [GPT_FIXED_KNOWLEDGE_R1_REVIEW_DISPOSITION_r0001_20261117_KST.md](GPT_FIXED_KNOWLEDGE_R1_REVIEW_DISPOSITION_r0001_20261117_KST.md): `ACCEPT_WITH_CHANGE`, ①~④ 방향 유지. Work 링크는 개인 Knowledge origin 참조 우선, 기존 Kernel ref_type 오용/선제 확장 금지; Workflow WRITE 강제는 단순 프롬프트가 아니라 검증된 OS/Git 경계 필요; 공통 writer 경합 직렬화, 구조 변경 fail-closed, exporter 보존 시험 필수.
+- **스킬 설계 r0002:** [L1_KNOWLEDGE_UPDATER_SKILL_DESIGN_r0002_20261117_KST.md](L1_KNOWLEDGE_UPDATER_SKILL_DESIGN_r0002_20261117_KST.md): 개인/그룹 Knowledge 실제 구조 매핑·optional Work ID·3-way Preview/CAS/readback/부분복구 및 스킬별 최소 수정·T01~T10 상세 수락 조건. 실제 그룹 구조·업무 Updater/group writer API/actor 권한은 G0 미확인.
+- **판정 상태:** `INDEPENDENT_DESIGN_REVIEW=COMPLETED_ACCEPT_WITH_CHANGE` / `RESULT_RECEIPT=REMOTE_VERIFIED` / `GPT_DISPOSITION=POSTED` / `SKILL_DESIGN=R0002_POSTED` / `SKILL_PATCH=NOT_RUN` / `T01_T10=NOT_RUN` / `HOST_G0_E3=NOT_VERIFIED` / `GROUP_WRITE=NOT_RUN`. 추가 REQUEST/READY/유료 리뷰/운영 변경/PUBLIC 배송 없음.
+- **NEXT_ONE_ACTION:** 업무 GPT가 현재 설치본·그룹 폴더·공통 Git writer/credential·Kernel 링크/업데이터 승인·CAS·readback을 READ_ONLY G0 매핑 → 입증된 gap만 최소 패치와 시험. 새 리뷰 주기 재개나 호스트 쓰기 실행은 별도 게이트.
+
+---
+
+
 ## 확정 ①~④ Claude 독립 R1 리뷰 정식 요청 게시 — 2026-11-16 KST
 
 - **사용자 지시:** 1차 Claude Code 독립 설계 리뷰 요청. 기존 Work 유지; 이전의 2026-11-15 정식 리뷰는 소급 변경·재실행하지 않음.
