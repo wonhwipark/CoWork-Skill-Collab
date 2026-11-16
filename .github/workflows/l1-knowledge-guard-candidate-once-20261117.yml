@@ -1,0 +1,55 @@
+name: L1 knowledge guard candidate QA once
+on:
+  push:
+    branches:
+      - dev/l1-knowledge-guards-20261117
+    paths:
+      - .github/workflows/l1-knowledge-guard-candidate-once-20261117.yml
+      - collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/build_l1_knowledge_guard_candidates_r0001_20261117.py
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Fetch exact PUBLIC Kernel baseline for development
+        run: |
+          mkdir -p artifacts
+          curl --fail --location --retry 3 --silent --show-error \
+            -o artifacts/work-ledger-kernel_v0_7_42_1116.zip \
+            https://raw.githubusercontent.com/wonhwipark/L1Work/main/work-ledger-kernel_v0_7_42_1116.zip
+      - name: Build pinned development candidates and run syntax and ZIP integrity checks
+        run: |
+          python collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/build_l1_knowledge_guard_candidates_r0001_20261117.py \
+            --repo . --out collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/output
+      - name: Candidate ZIP CRC and path duplicate check
+        run: |
+          python - <<'PY'
+          import pathlib,zipfile
+          folder=pathlib.Path('collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/output')
+          for p in sorted(folder.glob('*.zip')):
+              with zipfile.ZipFile(p) as z:
+                  assert z.testzip() is None
+                  names=z.namelist()
+                  assert len(names)==len(set(names))
+                  print('ZIP_QA_PASS',p.name,len(names))
+          assert len(list(folder.glob('*.zip')))==3
+          PY
+      - name: Publish PRIVATE branch development packages (not release)
+        run: |
+          git config user.name 'CoWork development CI'
+          git config user.email 'cowork-dev-ci@users.noreply.github.com'
+          git add collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/output
+          git commit -m 'dev(l1-knowledge): candidate guarded skill packages and build receipt'
+          git push origin HEAD:dev/l1-knowledge-guards-20261117
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: l1-knowledge-guard-development-candidates-20261117
+          path: collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/output/
+          if-no-files-found: ignore
