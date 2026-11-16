@@ -1,5 +1,12 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## SOURCE_PIN repo_id 문자열 포맷 수정·자동 승인 불확실 상태 보존 (2026-11-17 KST)
+- **원인 확정:** Windows Claude Code가 보고한 `approval.py REPO_ID_MISMATCH`는 두 요청 `SOURCE_PIN.json`의 `repo_id`가 숫자 `1451933830`이던 실제 원격 타입 오류. GitHub 저장소 ID·정상 예전 pin은 문자열 `"1451933830"`.
+- **실제 변경 PASS:** `collab/ops/source_pin.py` 신규 표준 생성·검증기와 13개 회귀, PRIVATE Actions 11개 pin 전체 읽기 전용 타입 검사; Guard R1·MSC R1의 **기존 SOURCE_PIN.json에서 repo_id 타입만 문자열로 수정**. schema/Commit A/REQUEST/ZIP SHA 불변, 변경 전 pin blob 이력 보존. SOURCE_PIN 생성기만 수정하는 작업이 아니라 두 실파일 원격 readback 완료.
+- **시험:** [PRIVATE Actions #43983008308](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43983008308) SUCCESS; SOURCE_PIN 13/13 PASS, 실제 pin 11/11 PASS, 대시보드 77/77 + 미리보기 8/8 PASS. 결과·개별 SHA는 [SOURCE_PIN_REPO_ID_STRING_REPAIR_RESULT_r0001_20261117_KST.md](SOURCE_PIN_REPO_ID_STRING_REPAIR_RESULT_r0001_20261117_KST.md).
+- **승인/실행 경계:** GPT가 APPROVAL_SIG/READY를 만들지 않았고, 변경 후 해당 두 요청의 DISPATCH/REVIEW/RECEIPT도 원격 미관측. Guard의 `AUTO_SIGNING_UNCERTAIN`은 **Windows 사용자 보고·호스트 직접 정산 미검증**; 타입 보정만으로 로컬 예약·불확실 이력을 해제하거나 모델 재호출하지 않음. 기존 보호 위임/한도/중복 fail-closed 유지.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 기존 Guard·MSC 요청의 로컬 상태를 읽기 전용 대조한 뒤 불확실·중복이면 재큐잉하지 말고 보류 근거만 보고. 정상 서명·READY·결과가 게시되면 GPT가 기존 Work에서 단일 리뷰 사이클 1회 판정.
+
 ## Claude 리뷰 → GPT 실제 수신 검증·자동수신 경계 확정 (2026-11-17 KST)
 - **실제 GPT 직접 조회 PASS:** 기존 완료 `REQ-L1-WORK-KNOWLEDGE-FIXED-R1-20261116` REQUEST/READY/Claude REVIEW_RESULT/RECEIPT/GPT_DISPOSITION **5개 원격 파일을 이번 GPT 세션에서 직접 읽고** ID·rev·SHA·processing_key·완료 상태·지적 7건 등 **8항목 일치 확인**. 사용자가 이번에 Claude 원문을 복사하지 않아도 GPT가 GitHub PRIVATE에서 수신 가능. 기존 판정 `ACCEPT_WITH_CHANGE` 재판정·추가 리뷰 없음.
 - **별도 자동수신은 미구현/미검증:** 기존 `review_completion.py`는 PRIVATE GitHub Actions 요약에 완료 표시만 생성. GitHub push로 유휴 GPT가 자동 기동·원문 읽기·GPT 판정 실행하는 연결은 확인되지 않음. 이벤트 구독 조회도 404로 지원 확인 불가. **`GPT_ACTIVE_FETCH=PASS`, `GPT_AUTO_RECEIVE_ON_PUSH=NOT_VERIFIED`, `GPT_AUTO_DISPOSITION=NOT_IMPLEMENTED`**. 감지 PASS를 GPT 자동 수신 PASS로 승격하지 않음.
