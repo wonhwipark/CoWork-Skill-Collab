@@ -1,5 +1,11 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 사용자 확인 — Telegram 기존 연동 완료, 재연동 제외 (2026-11-17 KST)
+- **사용자 최신 사실 확인:** 기존 Windows Notifier ↔ Telegram 연동은 이미 완료됨 (`TELEGRAM_INTEGRATION=USER_CONFIRMED_COMPLETE`). 기존 설치·키·설정 재작업 및 중복 연동 시험 요구 **제외**. 이전 문서의 `TELEGRAM_REAL_RECEIPT=NOT_VERIFIED`는 과거 GPT 직접 검증 범위만 의미하며, 연동 미완료를 뜻하지 않음.
+- **구분할 대상:** 신규 `collab/dashboard/review_completion.py`는 PRIVATE GitHub Actions **작업 요약**을 생성함. 이 신규 델타를 기존 Telegram Notifier에 전달하는 별도 연계는 현재 구현 근거가 없어 `NEW_DETECTOR_TO_TELEGRAM=NOT_VERIFIED`로 유지. 원래 존재하는 watcher→Telegram 완료 알림은 재구현하지 않음.
+- **1사이클 유지:** REQUEST → Claude 독립 리뷰 1회 → GPT 판정, 이후 자동 재리뷰 0.
+- **NEXT_ONE_ACTION:** 신규 연결 구현이 꼭 필요한지 기존 watcher/Notifier의 **이미 동작하는 리뷰 완료 통보와 중복되는지** 먼저 읽기 전용 확인. 중복이라면 추가 변경 없이 종료, 실제 gap일 때만 별도 최소 연결 검토. 새 유료 리뷰/Windows 운영 변경 없음.
+
 ## 리뷰 완료 자동 감지 P0 구현·기존 1사이클 종료 기록 (2026-11-17 KST)
 - **현재 상태:** 기존 PRIVATE GitHub Actions 및 `review_chain.py`를 재사용해 **새 완료 리뷰 → GPT 판정 필요**를 1회만 계산하는 순수 Python 검출기 `collab/dashboard/review_completion.py` 구현·게시. 이전 `state.json`과 최신 검사 결과 비교로 이미 본 완료 재통지 0. 결과는 PRIVATE Actions 작업 요약에 기록하며 **Windows 호스트/Claude/GPT를 호출하지 않음**. 새 watcher/원장/서명/READY/유료 모델 호출 없음.
 - **사용자 확정 협업 단위:** **REQUEST → Claude 독립 리뷰 1회 → GPT 판정**이 하나의 작업·1사이클. 판정 후 보완·시험은 기존 Work에서 계속하되 자동 재리뷰/무한반복 금지.
