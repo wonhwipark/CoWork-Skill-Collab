@@ -91,7 +91,7 @@ def version_checks(files: dict[str, bytes], expected: str, archive_name: str) ->
     for line in declarations:
         v = semver(line, "SKILL.md declaration")
         if v != expected:
-            raise GateError("VERSION_MISMATCH: SKILL.md " + v)
+            raise GateError("VERSION_MISMATCH: SKILL.md " + v + " line=" + repr(line[:160]))
     if "VERSION.md" in files:
         head = "\n".join(files["VERSION.md"].decode("utf-8").splitlines()[:15])
         v = semver(head, "VERSION.md")
