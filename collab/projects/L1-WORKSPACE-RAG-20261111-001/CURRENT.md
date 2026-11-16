@@ -1,5 +1,18 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 신규 독립 설계 리뷰 인계 — Workflow × Updater Evidence/그룹 게시·역링크 (2026-11-16 KST)
+
+- **사용자 요청:** 구현 GPT 회신을 토대로 ① Workflow를 통한 Work ID 연결(사용자 보고), ② 양쪽의 기존 code-analyzer 재사용(사용자 보고), ③ 같은 Work에 Work ID·Code Evidence·MSC 원본·Source Revision 보존/교차 재사용(미검증), ④ Updater Preview·승인 이후 기존 l1sw-dev-knowledge writer 게시·readback·원래 Work 역링크(미검증)에 대한 **독립 설계 리뷰 요청**.
+- **리뷰 요청 인계·원격 확인:** [Windows Claude Code 설계 리뷰 요청 r0001](CLAUDE_WORKFLOW_UPDATER_EVIDENCE_PUBLISH_DESIGN_REVIEW_REQUEST_r0001_20261116.md), blob `37883fe23f0e39628f8a40c5ce70f968a2f384f6`, 게시 commit `fca4c3407f62e662f2d8c3a47f3b337d31cfe264`, PRIVATE `main` 원격 본문 확인 PASS. 같은 기존 Work를 사용하며 새 Kernel Work/관리 엔진 없음.
+- **검토 범위:** 두 진입점 공동 Evidence 참조·MSC 원본/HTML 분리·source revision staleness·단일 writer/중복 분석 방지·기존 Preview/승인/revision guard·게시 응답 유실·역링크 실패 시 중복 게시 방지를 설계 수준에서 비판 검토. R01~R11, V01~V08; 기존 스킬 REUSE→CONNECT→증명된 gap만 최소 EXTEND. 구현/API E3는 이 리뷰 PASS로 대체하지 않음.
+- **기존 정식 리뷰와 중복 금지:** `REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-001`는 다른 고정 입력·사용자 최대 $1/1회 승인 건. 금회 재조회에서 해당 `READY.md`, `REVIEW_RESULT_1.md`, `RECEIPT_1.md` 모두 NOT_FOUND. 기존 ZIP/SOURCE_PIN/REQUEST 변경하지 않으며 새 비용/서명/READY/유료 리뷰 호출을 만들지 않음. Windows 리뷰 전 기존 진행/실행 불확실/완료 여부를 먼저 확인.
+- **상태:** `REQUEST_DOCUMENT=POSTED_REMOTE_READBACK_PASS` / `WINDOWS_CLAUDE_REVIEW_EXECUTION=NOT_VERIFIED` / `INDEPENDENT_DESIGN_REVIEW=PENDING` / `REVIEW_RESULT=NOT_RECEIVED` / `NEW_WATCHER_REQUEST_READY=0` / `NEW_PAID_CALLS_THIS_REQUEST=0`. GitHub 게시가 Windows 실행 트리거라는 주장은 하지 않음.
+- **MSC 릴리스 상태 보정:** 본 파일 아래 이전 `PUBLIC_RELEASE=BLOCKED` 절은 당시 시점 기록. 이후 [최종 공개 결과](GPT_MSC_PUBLIC_L1WORK_RELEASE_RESULT_r0001_20261116_KST.md)와 PUBLIC commit `32a9c3f2d03a654c3cfc7c832067e35f6c83d8c9`에 따라 doc-converter v0.2.25 / work-ledger-kernel v0.7.42 **PUBLIC 게시·원격 SHA PASS**. 호스트 설치·Knowledge E3는 여전히 NOT_RUN/NOT_VERIFIED.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 위 인계 파일로 기존 정식 리뷰의 결과·영수증/중복 여부를 확인한 후 **별도 승인된 실제 실행 범위에서만** 독립 설계 리뷰를 수행하고 지정 RESULT MD·실행 근거 JSON을 PRIVATE main 게시·원격 readback → GPT가 지적별 판정. 모델/실행 불가 시 `BLOCKED/NOT_RUN`으로 보존.
+
+---
+
+
 ## PUBLIC L1Work 최신 ZIP 게시 요청 — 안전 게이트 차단 (2026-11-16 KST)
 
 - **사용자 최신 명시 지시:** `wonhwipark/L1Work/main`에 현재 최신 두 ZIP `doc-converter_v0_2_24_1116.zip`, `work-ledger-kernel_v0_7_41_1116.zip` 게시. PUBLIC 게시 승인 의사는 확인됨. 다만 승인만으로 미충족 릴리스 시험/보안 게이트를 해제하거나 Linux Skill-Updater의 자동 배포 위험을 제거한 것은 아님.
