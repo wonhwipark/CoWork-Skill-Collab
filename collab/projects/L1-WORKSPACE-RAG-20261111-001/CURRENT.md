@@ -1,5 +1,17 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 확정 ①~④ Claude 독립 R1 리뷰 정식 요청 게시 — 2026-11-16 KST
+
+- **사용자 지시:** 1차 Claude Code 독립 설계 리뷰 요청. 기존 Work 유지; 이전의 2026-11-15 정식 리뷰는 소급 변경·재실행하지 않음.
+- **확정 설계:** [GPT_KNOWLEDGE_1TO4_FIXED_DESIGN_FOR_CLAUDE_r0001_20261116_KST.md](GPT_KNOWLEDGE_1TO4_FIXED_DESIGN_FOR_CLAUDE_r0001_20261116_KST.md), commit `28b01ab0a1ef6651c9a09a110f5eea4377487bb3`. ① 개인 Knowledge 하위 구조=실제 그룹 구조 ② Workflow Bootstrap 및 실제 writer 경로에서 `knowledge/` WRITE 거부/Updater만 허용 ③ Work ID optional(Work 유래시에만 연결) ④ 그룹 기준 revision 보존·3-way merge/사용자 Preview·CAS·그룹 readback 후 개인 상태 및 optional Work 역링크, 부분 실패 정산.
+- **정식 요청:** [REQUEST.md](../../requests/REQ-L1-WORK-KNOWLEDGE-FIXED-R1-20261116/REQUEST.md), `REQ-L1-WORK-KNOWLEDGE-FIXED-R1-20261116` (revision 1, `skill_id=l1-knowledge-updater`, `POLICY-STATIC-V1`, 1회·최대 USD 1). 고정 ZIP `collab/packages/work-to-knowledge-fixed-design_r0001_1116_REVIEW_INPUT.zip`, **14986 bytes**, SHA-256 `58d39bcf884d9fbd22d03a14e5fffde5e1b69a8ecec482d2e9c8b2b125add7bb`. SOURCE_PIN commit A `4d7f674b37846eec37c37a9d98cd98ae89ee9556`; `SOURCE_PIN.json` 게시 commit `41c569959733ffe65e946f1dc0854e75581f7cef`. 실제 원격 요청·ZIP SHA-256·size·Pin readback PASS.
+- **승인 경계:** Windows AUTO_SIGNING v0.2.23 호스트 활성화 보고의 보호 로컬 위임에 일치하는 신규 요청만 watcher가 승인·서명·READY 마지막 게시. GPT는 서명·READY를 직접 게시하지 않았고 비용·유효기간·중복/일별 한도 검증을 대신하지 않음. 이전 2026-11-15 요청은 활성화 이전 대기로 자동 승인 소급 대상 아님.
+- **현재 상태:** `REQUEST=POSTED_REMOTE_VERIFIED` / `SOURCE_PIN=POSTED_REMOTE_VERIFIED` / `APPROVAL_SIG=NOT_OBSERVED` / `READY=NOT_OBSERVED` / `DISPATCH=NOT_OBSERVED` / `INDEPENDENT_REVIEW=PENDING` / `RESULT_RECEIPT=NOT_RECEIVED`. 실제 모델 호출 시작/완료 또는 운영 승인 성공은 주장하지 않음. 스킬 코드 수정·지식 게시·호스트 설치 `NOT_RUN`.
+- **NEXT_ONE_ACTION:** 새 정식 요청의 Windows 자동 서명·READY·dispatch 및 REVIEW_RESULT/RECEIPT를 확인하고, 수신 시 GPT가 지적별 판정. 정상 자동 승인/비용 차단은 실제 결과로 구분하고 모델 임의 재호출 금지.
+
+---
+
+
 ## PUBLIC 업무 GPT ③·④ 검토 요청서 게시 — 2026-11-16 KST
 
 - **사용자 최신 지시:** 업무 GPT로 전달할 요청은 PUBLIC `wonhwipark/L1Work/main/handoffs/` MD로 게시하고, 3,000자 이내일 경우 한 번에 복사하도록 채팅에 제공.
