@@ -29,7 +29,7 @@
       "status": "검증 진행 중",
       "title": "COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태",
       "tone": "warning",
-      "topic": "리뷰 자동 감지 설계 검토 — Claude 협업 평가 반영 (2026-11-17 KST)"
+      "topic": "리뷰 완료 자동 감지 P0 구현·기존 1사이클 종료 기록 (2026-11-17 KST)"
     },
     {
       "id": "COWORK-GITHUB-DASHBOARD-20261111-001",
