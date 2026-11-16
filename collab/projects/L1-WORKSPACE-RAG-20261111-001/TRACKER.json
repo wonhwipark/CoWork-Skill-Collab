@@ -5,11 +5,11 @@
       "work_id": "L1-WORKSPACE-RAG-20261111-001",
       "skill": "l1-knowledge-updater",
       "title": "l1-knowledge-updater",
-      "phase": "REVIEW",
-      "owner": "Windows Claude Code 독립 리뷰 대기 / GPT 판정",
-      "self_test": "NOT_VERIFIED",
-      "independent_review": "PENDING",
-      "next_action": "Claude 독립 코드·패치 리뷰(L1-MSC-SKILL-PATCH-20261116-001) 결과 게시: REVISE. Kernel v0.7.40 BLOCKING 1(SVG Evidence가 있으면 export_docs 전체 실패, v0.7.39 정상), doc-converter MAJOR 2(--view-mode 정책 미허용, 대소문자 이름 충돌)·MINOR 3. 대화형 리뷰(감시기·유료 아님). GPT 지적별 판정 후 수정·재검토."
+      "phase": "DEVELOPMENT",
+      "owner": "GPT 최소 수정 / 이후 Windows Claude Code 별도 재리뷰",
+      "self_test": "PASS",
+      "independent_review": "FAIL",
+      "next_action": "독립 Claude Code 실제 실행 리뷰 REVISE(BLOCKING 1·MAJOR 2·MINOR 3). Kernel name_for .svg 미지원 export_docs 회귀, converter --view-mode managed gate 미연결/Windows 대소문자 충돌 등 6건 수정 → 후보 신버전 패치·실행 회귀·ZIP 무결성 → 별도 세션 독립 재리뷰. 기존 표적 CI 19/19 PASS는 결함을 놓친 자체시험. PUBLIC 배포/호스트 설치 BLOCKED."
     }
   ]
 }
