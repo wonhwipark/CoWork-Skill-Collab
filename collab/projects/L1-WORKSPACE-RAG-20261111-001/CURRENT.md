@@ -11,13 +11,13 @@
 
 ---
 
-## 최신 검토 — Jira·CL·Merged PR 이슈 시나리오·복구 지점 분석 제안 (2026-11-17 KST)
+## 최신 검토 — CNF 미수신 timeout 제외·복구 지점 비교평가 (2026-11-17 KST)
 
-- **사용자 요청:** issue-analyzer·P4 이력·l1-github를 활용해 기존 Jira/CL/merged PR로 이슈 시나리오와 런타임 복구 삽입 지점을 찾는 방안 및 공개 사례 종합 검토. 이번 범위는 조사·제안이며 스킬 수정·호스트 실행 지시로 승격하지 않음.
-- **판정·정본:** [분석 방안·공개 사례·첫 사례 기준 r0001](JIRA_CL_PR_RECOVERY_SITE_ANALYSIS_PROPOSAL_r0001_20261117_KST.md). 기존 CL/PR Work 재사용, 정본 P4 스킬명 p4-code-owner 확인. 이력 조회 + code-analyzer 코드 사실 + 로그가 있을 때 issue-analyzer 선택 연결. 최초 이상·검출·복구 수행 경계를 구분하고 후보 2~3개의 소유 자원·실행 문맥·복귀 조건·오류 주입 검증 기준을 제안.
-- **실제 확인:** 공개 1차 자료 및 기존 정본/계약 원문 조회. 보고서 PRIVATE main commit `323a1f3257fcf9d3c8e8a74f7650d78b8ba932f1`, Git blob `428369729ea604978d059c590c7ebcb2c2f4c9f8`, **24125 UTF-8 bytes**, SHA-256 `d0feb6a7e382f6b592ac92753777dd1195e72781628687462b2b046ecf306b02`; 원격 본문·bytes 해시 대조 PASS.
-- **한계·경계:** 실제 Jira/P4/업무 소스·로그 분석, 삽입 지점 확정·시험·독립 리뷰·스킬 변경·설치·Job·유료 호출·PUBLIC 게시 `NOT_RUN`. 이번에는 기존 ZIP 내부를 다시 실행 검증하지 않음. 기존 CL/PR E3/Evidence/Mango historical source 미검증, 회귀·배포 차단 및 다른 Knowledge Guard/MSC 이력 그대로 보존.
-- **NEXT_ONE_ACTION:** 대표 종료 이슈 1건의 실제 업무 호스트 읽기 경로·revision 조회 가능성을 확인한 뒤 같은 Work에서 시범 분석. 번호·코드·로그가 없는 현 단계에서 구체적 함수/위치를 확정하지 않음.
+- **최신 범위·피드백 수용:** 사용자가 MSG REQ→CNF 미수신 timeout recovery 구현 완료를 알려 해당 이슈·기존 커버 범위를 제외. 구현 사실은 사용자 제공 정보이며 GPT 직접 소스 검증과 구분. 나머지 오류의 효과·안정성·저사양 모델 부담 기준 비교·제안 요청.
+- **판정·정본:** [제외 범위·비교평가·권장 방안 r0002](JIRA_CL_PR_RECOVERY_SITE_ANALYSIS_PROPOSAL_r0002_20261117_KST.md). 과거 Jira/CL/PR + 좁힌 코드의 최초 상태·자원 불일치 분석 → 실제 소유자의 기존 실패 처리/rollback/release/reconfigure 경로 재사용을 우선 권장. 예방/국소 복구/상위 이관/원인 수정 필요를 구분. 기존 [r0001](JIRA_CL_PR_RECOVERY_SITE_ANALYSIS_PROPOSAL_r0001_20261117_KST.md)은 과거 근거로 보존하고 r0002 범위가 우선.
+- **실제 확인:** 기존 정본·공개 1차 자료 조회 및 GPT 정성평가. r0002 PRIVATE main commit `f9539a4debd55e841d7ad37cb3b4e5bfc614273f`, Git blob `ba83082f68a43dcc009baedf8639ffc7f4add632`, **20354 UTF-8 bytes**, SHA-256 `9553a2f97bcf1bbbd6fe11a9853d4f08d87615a7189de8213e72b43a39f6d75e`; 원격 본문·bytes 해시 대조 PASS. 효과·속도·모델 정확도 실측 아님.
+- **한계·경계:** 실제 업무 Jira/P4/소스·로그 분석·복구 위치 확정·시험·모델 benchmark·독립 리뷰·스킬 변경·설치·Job·유료 리뷰 요청·PUBLIC 게시 `NOT_RUN`. 기존 CL/PR E3/Evidence/Mango historical source 미검증 및 다른 Guard/MSC/리뷰·영수증·배포 차단 이력 유지. 새 Work·runtime 감시·스키마·RAG 엔진 추가 없음.
+- **NEXT_ONE_ACTION:** timeout과 독립적이고 원인·수정 근거가 남아 있는 종료 이슈 1건에서 정상/실패 시나리오·최초 불일치·기존 실패 경로·복구 후 조건을 같은 Work에서 읽기 전용 대조. 실제 호스트 입력 없이 특정 함수나 복구 성공을 확정하지 않음.
 
 ---
 
