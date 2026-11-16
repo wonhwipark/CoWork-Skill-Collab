@@ -1,0 +1,25 @@
+{
+  "package_path": "collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/review_input/l1-knowledge-guards-three-skill-code_r0001_1117_REVIEW_INPUT.zip",
+  "sha256": "a67311473e63e7750ba9aa435f10311767d957b82e059bff0256a5e305c84849",
+  "size_bytes": 25569,
+  "file_count": 12,
+  "included_files": [
+    "README.md",
+    "REVIEW_QUESTIONS.md",
+    "SOURCE_MANIFEST.json",
+    "diff/github__SKILL.md.diff",
+    "diff/github__scripts__l1_github.py.diff",
+    "diff/github__scripts__push_guard.py.diff",
+    "diff/kernel__SKILL.md.diff",
+    "diff/kernel__work_ledger_kernel__work_ux.py.diff",
+    "diff/workflow__l1-fix-workflow__SKILL.md.diff",
+    "diff/workflow__l1-fix-workflow__l1_fix_workflow__github_docs.py.diff",
+    "tests/build_l1_knowledge_guard_candidates.py",
+    "tests/tests_knowledge_guard_candidates.py"
+  ],
+  "source_candidate_sha256": {
+    "workflow": "a3070d3cfd64d78da7a684f8d81fc35ea323c3667d539a61d16bf5ac6fe40878",
+    "github": "85f7e95372027a326a41b0d17e7df4d630115c468c0745236fb24ca68b19fcb0",
+    "kernel": "0e178e651c2a53175a5ddce2dae68e07f11141b4a92a6b94be6126114c5ab95c"
+  }
+}
