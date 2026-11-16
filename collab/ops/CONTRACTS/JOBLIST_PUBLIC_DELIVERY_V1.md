@@ -5,6 +5,17 @@
 - 상태: 현재 사용자 지시로 **전달 저장소 역할 및 실행 상태 분리 규칙 적용**. 이 문서가 기존 배포·설치·실행을 승인하거나 자동 시작하지 않음.
 - 상위 안전 규칙: `collab/START_HERE.md`, `collab/ops/CONTRACTS/PUBLIC_RELEASE_GATE.md`, 최신 해당 작업 `CURRENT.md`. 충돌 시 더 엄격한 무단 배포 방지 규칙 적용.
 
+## 2026-11-17 사용자 기본 지시 — 검증된 최종 스킬 ZIP의 L1Work 자동 게시
+
+- **최신 사용자 지시:** "올려줘. 앞으로 자동으로 올려." 이에 따라 GPT가 스킬 개발·수정 작업을 맡아 **최종 릴리스 게이트를 모두 충족한 경우**, 같은 작업 흐름에서 사용자에게 매번 별도의 "L1Work에 올릴까요?" 질문을 하지 않고 `wonhwipark/L1Work` / `main` / **루트**에 신규 고유 버전 ZIP을 게시하고 원격 bytes/SHA-256을 대조한다.
+- **적용 범위:** 사용자가 GPT에 맡긴 관리 스킬의 허용된 비민감 최종 공개 ZIP. 사용자의 최신 실행 지시와 승인 범위 및 PUBLIC 허용 여부를 확인한다. 기존 ZIP 덮어쓰기·인증정보/업무 제한 원문·미검증 후보 업로드 금지.
+- **필수 선행조건 그대로 유지:** 신뢰 원본 pin/ZIP CRC/경로·심링크·민감정보·manifest/회귀시험, 요구되는 독립 코드 리뷰와 실환경 권한/호환 게이트, release channel의 정식 릴리스 일치, readback. `development_not_for_deployment`, `review-candidate`, gate FAIL/NOT_RUN은 PUBLIC에 게시하지 않고 `BLOCKED_NOT_POSTED`를 정확히 기록. 이 지시는 QA/보호 정책 면제 지시가 아니다.
+- **자동의 의미:** GPT가 **각 스킬 작업을 수행할 때의 기본 게시 후속 동작**이며, 현재 무인 GitHub Action/신규 PAT·운영 watcher·스케줄러가 설치·활성화됐다는 뜻이 아니다. 별도 운영 자동 게시 서비스·키 생성/설치/지속 감시/운영 권한 변경은 해당 계약에 따른 별도 실제 활성화와 검증 필요.
+- 게시 후 `PUBLIC_POSTED`, `SKILL_UPDATER_INSTALLED`, `JOB_EXECUTED`, `GROUP_KNOWLEDGE_WRITE`는 각각 독립 판정한다. 게시 실패로 이미 실행된 빌드·유료 모델·운영 Job을 임의 재실행하지 않는다.
+- 2026-11-17 `L1-WORKSPACE-RAG-20261111-001` 3종 후보는 `development_not_for_deployment`; G0/하드 가드/코드 리뷰 미충족으로 현재 `PUBLIC_RELEASE=BLOCKED_NOT_POSTED`를 유지한다. 사용자의 기본 게시 지시 자체는 유효하다.
+
+---
+
 ## 1. 저장소 역할 — 앞으로 혼동 금지
 
 | 목적 | 유일한 기준 경로 | 할 수 있는 일 | 하면 안 되는 일 |
