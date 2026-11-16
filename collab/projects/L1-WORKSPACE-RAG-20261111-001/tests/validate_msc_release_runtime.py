@@ -53,7 +53,7 @@ def run():
         k.new(w,profile,"synthetic, publish-safe MSC regression")
         slots=k._slots(profile=profile)
         check(bool(slots),"kernel-registry-has-profiles",len(slots))
-        print("REGISTRY_SAFE_CHOICES",[(x.get("provider"),x.get("kind"),x.get("stage")) for x in slots[:18]],flush=True)
+        print("REGISTRY_SAFE_CHOICES",json.dumps(slots,ensure_ascii=False)[:3600],flush=True)
         excluded={"oracle_manifest","eval_baseline","tooling_baseline","baseline_measure","change_provenance","eval_after","tooling_after","after_measure"}
         eligible=[x for x in slots if x.get("kind") not in excluded and x.get("provider") and x.get("kind") and x.get("stage")]
         check(bool(eligible),"kernel-registry-has-evidence-kind",len(eligible))
