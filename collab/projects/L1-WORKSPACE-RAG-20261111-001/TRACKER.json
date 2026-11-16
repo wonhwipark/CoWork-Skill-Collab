@@ -5,11 +5,11 @@
       "work_id": "L1-WORKSPACE-RAG-20261111-001",
       "skill": "l1-knowledge-updater",
       "title": "l1-knowledge-updater",
-      "phase": "DEVELOPMENT",
-      "owner": "GPT 개발 패치 종료 / 업무 G0·E3 확인 대기",
+      "phase": "REVIEW",
+      "owner": "Windows Claude Code 독립 설계 리뷰 대기 / GPT 판정",
       "self_test": "PASS",
-      "independent_review": "COMPLETE_ONE_CYCLE_REVISE",
-      "next_action": "사용자가 최신 doc-converter v0.2.24/kernel v0.7.41 ZIP의 L1Work/main 루트 게시를 명시 요청. PUBLIC 원격엔 v0.2.21/v0.7.37만 존재. 개발 ZIP은 development_not_for_deployment이고 actual Work export_docs·managed skillsilent·전체 회귀·보안 점검 미완 → PUBLIC_RELEASE=BLOCKED/NOT_POSTED (정본 PUBLIC_RELEASE_GATE/JOBLIST_PUBLIC_DELIVERY). 추가 Claude 리뷰 금지(1회 종료). 기존 사용자 승인 범위에서 출시 필수 시험→정식 릴리스→새 PUBLIC 루트 ZIP 게시 및 readback 필요."
+      "independent_review": "PENDING",
+      "next_action": "기존 정식 설계 리뷰 실행·영수증 중복 확인 → Windows Claude Code ①~④ 후속 설계 리뷰 결과·근거 회수 (신규 비용·READY 없이)"
     }
   ]
 }
