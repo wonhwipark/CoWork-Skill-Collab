@@ -87,6 +87,12 @@
 
 - **실행 프롬프트 용어 기본 규칙:** [환경 중립 표현 계약](ops/CONTRACTS/EXECUTION_PROMPT_TERMINOLOGY_V1.md). CoWork 스킬·Job-list·Agent MCP 등 복사용/실행용 프롬프트에는 망·위치 구분 표현을 기본적으로 넣지 않고 역할/호스트/승인 기준으로 작성한다. 사용자의 반복 요청은 요구하지 않는다.
 
+## SOURCE_PIN.json 필수 직렬화·검증 규칙 (2026-11-17 KST)
+
+- `SKILL_COLLAB_SOURCE_PIN_V1` 유지. `repo_id`는 GitHub numeric repository ID를 의미하지만 **JSON 타입은 반드시 문자열**. 예: `"repo_id": "1451933830"`. Python 작성 시 `str(repo_id)`로 직렬화.
+- 새 정식 REQUEST의 SOURCE_PIN 생성 시 `collab/ops/source_pin.py create --repo-id <실제 GitHub ID> --commit <검증된 Commit A>` 활용. 게시 전 `collab/ops/source_pin.py check <후보 SOURCE_PIN.json> --expected-repo-id <신뢰 루트 ID>` 검증하고 원격 readback. 기존 승인·서명·READY 생성 기능이 아니며 새 요청을 실행하지 않음.
+- PRIVATE GitHub Actions는 SOURCE_PIN 전체 파일의 JSON 타입·schema·repo ID를 읽기 전용 감사. 숫자형/불일치 값은 fail-closed. 기존 REQUEST·pin·APPROVAL_SIG·READY·실행 이력을 임의 변경·소급 재큐잉하지 않음. `AUTO_SIGNING_UNCERTAIN`은 Windows 로컬 audit·상태 판정과 분리하며 포맷 보정만으로 해제되었다고 주장하지 않음.
+
 ## 기본 원샷 흐름 (핑퐁 최소화)
 사용자 실행 지시 1회 → 접근 가능한 원본/최근 변경분 확인 → 허용된 범위의 수정·재시험 반복 → 신규 후보 ZIP·SHA-256/시험 증거 → 비민감 결과 MD를 PRIVATE `main`에 **PR 없이** 직접 게시·remote readback → GPT 종합 판정. 권한/인증/모델 장애로 막힌 항목은 해당 항목만 BLOCKED/NOT_RUN으로 남기고 나머지 계속.
 - 사용자에게 제공하는 실행 프롬프트는 항상 **정확한 저장소·브랜치·인계 파일 상대 경로**를 포함해야 한다.
