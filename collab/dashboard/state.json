@@ -20,7 +20,7 @@
       "status": "검증 진행 중",
       "title": "COWORK-AUTO-APPROVAL-20261115-001 — CURRENT",
       "tone": "warning",
-      "topic": "GPT 최신 판정 — v0.2.23 R2 정적 PASS, 조건부 LIVE 증빙 확인 대기 (2026-11-16 KST)"
+      "topic": "운영 자동 승인 미활성화 오류 교정·v0.2.23 LIVE 마무리 원샷 지시 (2026-11-16 KST)"
     },
     {
       "id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
