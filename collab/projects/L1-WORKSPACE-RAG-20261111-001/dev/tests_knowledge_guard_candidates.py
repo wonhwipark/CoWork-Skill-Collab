@@ -114,6 +114,7 @@ def smoke():
 
         # Outbound commits are not visible to git status; compare commits with upstream.
         remote = Path(tmp) / "bare"
+        remote.mkdir()
         git(remote, "init", "--bare", "-q")
         git(repo, "branch", "-M", "main")
         git(repo, "remote", "add", "origin", str(remote))
