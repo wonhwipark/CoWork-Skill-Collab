@@ -4,7 +4,8 @@ on:
     branches: [dev/l1-knowledge-guards-20261117]
     paths:
       - .github/workflows/l1-knowledge-guard-hardening-once-20261117.yml
-      - collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/tests_knowledge_guard_candidates.py
+      - collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/**
+      - collab/ops/CONTRACTS/MSC_SKILL_IO_MATRIX_V1.json
 permissions:
   contents: write
 jobs:
@@ -28,6 +29,13 @@ jobs:
       - name: Security regression and actual Kernel exporter preserved-file checks
         run: |
           python collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/tests_knowledge_guard_candidates.py
+      - name: Executable release gate negative tests and MSC input-policy contract tests
+        run: |
+          python -m unittest discover -v -s collab/projects/L1-WORKSPACE-RAG-20261111-001/dev -p 'test_*gate.py'
+      - name: Verify deployed doc-converter contract flags (read only)
+        run: |
+          curl --fail --location --retry 3 --silent --show-error -o /tmp/doc-converter_v0_2_26_1117.zip https://raw.githubusercontent.com/wonhwipark/L1Work/main/doc-converter_v0_2_26_1117.zip
+          python collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/msc_skill_contract_gate.py --matrix collab/ops/CONTRACTS/MSC_SKILL_IO_MATRIX_V1.json --package /tmp/doc-converter_v0_2_26_1117.zip --require-policy
       - name: ZIP CRC plus traversal/symlink and manifest checks
         run: |
           python - <<'PY'
