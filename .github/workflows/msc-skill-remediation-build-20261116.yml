@@ -1,0 +1,85 @@
+name: MSC skills one-review remediation package build
+on:
+  push:
+    branches: [msc-skill-validation-20261116]
+    paths:
+      - .github/workflows/msc-skill-remediation-build-20261116.yml
+      - collab/projects/L1-WORKSPACE-RAG-20261111-001/tests/build_msc_one_review_fix.py
+permissions:
+  contents: write
+jobs:
+  remediate:
+    if: github.repository == 'wonhwipark/CoWork-Skill-Collab' && github.ref == 'refs/heads/msc-skill-validation-20261116'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - name: Rebuild pinned ZIPs with accepted single-review fixes
+        run: |
+          set -euo pipefail
+          python collab/projects/L1-WORKSPACE-RAG-20261111-001/tests/build_msc_one_review_fix.py
+      - name: Verify every candidate member/CRC/hash/metadata and compile
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib, json, pathlib, py_compile, tempfile, zipfile
+          root=pathlib.Path('collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates')
+          for filename in ('doc-converter_v0_2_24_1116.zip','work-ledger-kernel_v0_7_41_1116.zip'):
+              f=root/filename
+              with zipfile.ZipFile(f) as z:
+                  assert z.testzip() is None
+                  assert len(z.namelist()) == len(set(z.namelist()))
+                  with tempfile.TemporaryDirectory() as tmp:
+                      z.extractall(tmp)
+                      base=pathlib.Path(tmp)
+                      for p in base.rglob('*.py'):
+                          py_compile.compile(str(p),doraise=True)
+                      if filename.startswith('doc'):
+                          skill=base/'doc-converter'
+                          assert (skill/'VERSION').read_text().strip() == '0.2.24'
+                          assert json.loads((skill/'skillsilent/manifest.json').read_text())['skill_version']=='0.2.24'
+                          indexed={}
+                          for line in (skill/'PACKAGE_CONTENTS.sha256').read_text().splitlines():
+                              hashval, rel=line.split('  ',1)
+                              indexed[rel]=hashval
+                          actual={p.relative_to(skill).as_posix():hashlib.sha256(p.read_bytes()).hexdigest()
+                                  for p in skill.rglob('*') if p.is_file() and p.name!='PACKAGE_CONTENTS.sha256' and '__pycache__' not in p.parts}
+                      else:
+                          actual={p.relative_to(base).as_posix():hashlib.sha256(p.read_bytes()).hexdigest()
+                                  for p in base.rglob('*') if p.is_file() and p.name!='MANIFEST_SHA256.json' and '__pycache__' not in p.parts}
+                          indexed=json.loads((base/'MANIFEST_SHA256.json').read_text())
+                          assert (base/'VERSION').read_text().strip()=='0.7.41-dev.1'
+                      assert indexed == actual,(filename,set(indexed)^set(actual))
+                  print('ZIP_FULL_INTEGRITY_PASS',filename,f.stat().st_size,hashlib.sha256(f.read_bytes()).hexdigest(),len(z.namelist()),flush=True)
+          PY
+      - name: Execute real regression behaviors, not source-string checks
+        run: |
+          set -euo pipefail
+          python -m pip install --quiet pytest
+          python - <<'PY'
+          import pathlib,subprocess,sys,tempfile,zipfile
+          root=pathlib.Path('collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates')
+          cases=[('doc-converter_v0_2_24_1116.zip','doc-converter','tests/test_msc_review_fix_v0224.py'),
+                 ('work-ledger-kernel_v0_7_41_1116.zip','.','tests/test_msc_svg_export_v0741.py')]
+          for name,dirpath,test in cases:
+              with tempfile.TemporaryDirectory() as tmp:
+                  with zipfile.ZipFile(root/name) as z: z.extractall(tmp)
+                  cwd=pathlib.Path(tmp)/dirpath
+                  print('RUN_TESTS',name,test,flush=True)
+                  subprocess.run([sys.executable,'-m','pytest','-q',test],cwd=cwd,check=True)
+          PY
+      - name: Commit only tested new ZIP bytes to isolated branch
+        run: |
+          set -euo pipefail
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates/doc-converter_v0_2_24_1116.zip
+          git add collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates/work-ledger-kernel_v0_7_41_1116.zip
+          git diff --cached --quiet && { echo "Already committed"; exit 0; }
+          git commit -m "dev(msc): stage tested single-review remediation skill packages"
+          git push origin HEAD:msc-skill-validation-20261116
