@@ -127,6 +127,8 @@ def browser_check(html: Path, screenshot_dir: Path) -> list:
             page.select_option("#stage", "2")
             assert page.locator('.stage-note[aria-current="step"]').inner_text().startswith("03")
             assert page.locator("#pane").evaluate("e=>e.scrollTop") > 0
+            page.locator("#plus").click()
+            assert "FINISH" in page.locator("#viewstate").inner_text()
             page.locator('button.phase[data-phase-index="0"]').click()
             assert page.locator("#stage").input_value() == "0"
             page.locator('[data-zoom="reset"]').click()

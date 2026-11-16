@@ -35,9 +35,9 @@ jobs:
       - name: Full packaged regression, actual CLI and browser
         run: |
           if [ "${{ matrix.python-version }}" = "3.11" ]; then
-            python dev/msc-modern-viewer-20261117/validate_modern.py dev/msc-modern-viewer-20261117/doc-converter_v0_2_26_1117.zip --sha256 0168b572b5a19f14319f620bf5a1ff1248ab3973e958d698f5e3103520d5ce1d --browser
+            python dev/msc-modern-viewer-20261117/validate_modern.py dev/msc-modern-viewer-20261117/doc-converter_v0_2_26_1117.zip --sha256 47321d7d1c43d79d8b309d1d78a96b4bbdbbf90fbe8e613d958c7c9b73a9fe78 --browser
           else
-            python dev/msc-modern-viewer-20261117/validate_modern.py dev/msc-modern-viewer-20261117/doc-converter_v0_2_26_1117.zip --sha256 0168b572b5a19f14319f620bf5a1ff1248ab3973e958d698f5e3103520d5ce1d
+            python dev/msc-modern-viewer-20261117/validate_modern.py dev/msc-modern-viewer-20261117/doc-converter_v0_2_26_1117.zip --sha256 47321d7d1c43d79d8b309d1d78a96b4bbdbbf90fbe8e613d958c7c9b73a9fe78
           fi
   export:
     needs: validate
@@ -51,4 +51,4 @@ jobs:
         with:
           python-version: '3.11'
       - name: Finalize exact release bytes only after all QA passes
-        run: python dev/msc-modern-viewer-20261117/validate_modern.py dev/msc-modern-viewer-20261117/doc-converter_v0_2_26_1117.zip --sha256 0168b572b5a19f14319f620bf5a1ff1248ab3973e958d698f5e3103520d5ce1d --finalize-only
+        run: python dev/msc-modern-viewer-20261117/validate_modern.py dev/msc-modern-viewer-20261117/doc-converter_v0_2_26_1117.zip --sha256 47321d7d1c43d79d8b309d1d78a96b4bbdbbf90fbe8e613d958c7c9b73a9fe78 --finalize-only
