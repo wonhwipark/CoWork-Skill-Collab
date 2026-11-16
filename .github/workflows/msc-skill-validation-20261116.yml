@@ -5,6 +5,7 @@ on:
     paths:
       - .github/workflows/msc-skill-validation-20261116.yml
       - collab/projects/L1-WORKSPACE-RAG-20261111-001/tests/validate_msc_skill_candidates.py
+      - collab/projects/L1-WORKSPACE-RAG-20261111-001/tests/validate_msc_browser.py
 permissions:
   contents: read
 jobs:
@@ -29,3 +30,8 @@ jobs:
         run: |
           set -euo pipefail
           python collab/projects/L1-WORKSPACE-RAG-20261111-001/tests/validate_msc_skill_candidates.py
+      - name: Headless Chromium smoke (candidate B HTML, no external host)
+        if: matrix.python-version == '3.11'
+        run: |
+          set -euo pipefail
+          python collab/projects/L1-WORKSPACE-RAG-20261111-001/tests/validate_msc_browser.py
