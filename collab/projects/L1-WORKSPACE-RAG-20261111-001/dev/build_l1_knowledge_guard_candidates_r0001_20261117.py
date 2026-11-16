@@ -234,7 +234,18 @@ def refresh_package_metadata(root: Path, row: dict) -> None:
         data["channel"] = "development_not_for_deployment"
         data["release_kind"] = "development_not_for_deployment"
         data["based_on"] = row["version_from"]
+        data["release_date"] = "2026-11-17"
+        data["built_at"] = "2026-11-17T01:00:00+09:00"
         release.write_text(json.dumps(data, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    main_meta = root / ".skill-main.json"
+    if main_meta.is_file():
+        meta = json.loads(main_meta.read_text(encoding="utf-8"))
+        if isinstance(meta, dict):
+            if str(meta.get("version", "")) in (row["version_from"], version):
+                meta["version"] = version
+            if str(meta.get("skill_version", "")) in (row["version_from"], version):
+                meta["skill_version"] = version
+            main_meta.write_text(json.dumps(meta, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     manifest = root / "MANIFEST_SHA256.json"
     if manifest.is_file():
         m = json.loads(manifest.read_text(encoding="utf-8"))
