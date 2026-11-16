@@ -216,6 +216,55 @@ def patch_kernel(root: Path) -> None:
     sk.write_text(txt.replace('0.7.42','0.7.43'), encoding='utf-8', newline='\n')
 
 
+
+def refresh_package_metadata(root: Path, row: dict) -> None:
+    """Regenerate only existing package metadata; keep candidate non-deployable."""
+    version = row["version_to"]
+    version_file = root / "VERSION"
+    if version_file.is_file():
+        version_file.write_text(version + "\n", encoding="utf-8")
+    release = root / ".skill-release.json"
+    if release.is_file():
+        data = json.loads(release.read_text(encoding="utf-8"))
+        data["version"] = version
+        if "skill_version" in data:
+            data["skill_version"] = version
+        data["revision"] = int(version.split(".")[-1])
+        data["archive"] = row["output"]
+        data["channel"] = "development_not_for_deployment"
+        data["release_kind"] = "development_not_for_deployment"
+        data["based_on"] = row["version_from"]
+        release.write_text(json.dumps(data, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    manifest = root / "MANIFEST_SHA256.json"
+    if manifest.is_file():
+        m = json.loads(manifest.read_text(encoding="utf-8"))
+        if not isinstance(m, dict):
+            raise RuntimeError("MANIFEST_STRUCTURE_UNSUPPORTED")
+        new = {}
+        for rel in m:
+            if rel == "MANIFEST_SHA256.json":
+                raise RuntimeError("MANIFEST_SELF_REFERENCE_UNSUPPORTED")
+            file_path = root / rel
+            if not file_path.is_file() or not file_path.resolve().is_relative_to(root.resolve()):
+                raise RuntimeError(f"MANIFEST_MISSING_INPUT: {rel}")
+            new[rel] = sha(file_path)
+        manifest.write_text(json.dumps(new, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    listing = root / "PACKAGE_CONTENTS.sha256"
+    if listing.is_file():
+        records = []
+        for ln in listing.read_text(encoding="utf-8").splitlines():
+            parts = ln.split(maxsplit=1)
+            if len(parts) != 2:
+                raise RuntimeError("PACKAGE_CONTENTS_STRUCTURE_UNSUPPORTED")
+            rel = parts[1].strip()
+            if rel == "PACKAGE_CONTENTS.sha256":
+                raise RuntimeError("PACKAGE_CONTENTS_SELF_REFERENCE_UNSUPPORTED")
+            fp = root / rel
+            if not fp.is_file() or not fp.resolve().is_relative_to(root.resolve()):
+                raise RuntimeError(f"PACKAGE_CONTENTS_MISSING_INPUT: {rel}")
+            records.append(f"{sha(fp)}  {rel}")
+        listing.write_text("\n".join(records) + "\n", encoding="utf-8")
+
 def rezip(root: Path, output: Path) -> None:
     output.parent.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(output, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=8) as z:
@@ -246,6 +295,7 @@ def run_build(workdir: Path, outdir: Path, *, skip_pin: bool = False) -> dict:
             safe_unzip(src, x)
             p = x / row['root'] if row['root'] else x
             {'workflow':patch_workflow,'github':patch_github,'kernel':patch_kernel}[key](p)
+            refresh_package_metadata(p, row)
             if not compileall.compile_dir(str(p), quiet=1):
                 raise RuntimeError(f'PYTHON_COMPILE_FAIL: {key}')
             output = outdir / row['output']
