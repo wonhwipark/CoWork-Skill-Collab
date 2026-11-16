@@ -44,10 +44,10 @@
       "id": "COWORK-SKILL-DISCOVERY-20261112-001",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md",
-      "status": "문서상 진행",
+      "status": "검증 진행 중",
       "title": "COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT",
-      "tone": "neutral",
-      "topic": "최신 — L1Work 공개 스킬 39개 ZIP 분석·PRIVATE 협업 진입 연결 (2026-11-17 KST)"
+      "tone": "warning",
+      "topic": "최신 — GPT·Windows Claude Code 협업 현황 인식 부트스트랩 (2026-11-17 KST)"
     },
     {
       "id": "ISSUE-ANALYZER-20261114-001",
