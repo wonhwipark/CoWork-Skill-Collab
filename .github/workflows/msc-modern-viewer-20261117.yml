@@ -1,0 +1,54 @@
+name: MSC modern HTML isolated release QA
+on:
+  push:
+    branches: [msc-modern-viewer-20261117]
+    paths:
+      - dev/msc-modern-viewer-20261117/**
+      - .github/workflows/msc-modern-viewer-20261117.yml
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.10', '3.11']
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install isolated test tools and actual renderer
+        run: |
+          python -m pip install --quiet pytest==8.3.5
+          sudo apt-get update -qq
+          sudo apt-get install -y graphviz plantuml fonts-noto-cjk
+      - name: Install test-only Chromium
+        if: matrix.python-version == '3.11'
+        run: |
+          python -m pip install --quiet playwright==1.56.0
+          python -m playwright install --with-deps chromium
+      - name: Full packaged regression, actual CLI and browser
+        run: |
+          if [ "${{ matrix.python-version }}" = "3.11" ]; then
+            python dev/msc-modern-viewer-20261117/validate_modern.py dev/msc-modern-viewer-20261117/doc-converter_v0_2_26_1117.zip --sha256 0168b572b5a19f14319f620bf5a1ff1248ab3973e958d698f5e3103520d5ce1d --browser
+          else
+            python dev/msc-modern-viewer-20261117/validate_modern.py dev/msc-modern-viewer-20261117/doc-converter_v0_2_26_1117.zip --sha256 0168b572b5a19f14319f620bf5a1ff1248ab3973e958d698f5e3103520d5ce1d
+          fi
+  export:
+    needs: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - name: Finalize exact release bytes only after all QA passes
+        run: python dev/msc-modern-viewer-20261117/validate_modern.py dev/msc-modern-viewer-20261117/doc-converter_v0_2_26_1117.zip --sha256 0168b572b5a19f14319f620bf5a1ff1248ab3973e958d698f5e3103520d5ce1d --finalize-only
