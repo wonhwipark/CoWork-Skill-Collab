@@ -1,0 +1,31 @@
+name: MSC skill ZIP regression (isolated review candidates)
+on:
+  push:
+    branches: [msc-skill-validation-20261116]
+    paths:
+      - .github/workflows/msc-skill-validation-20261116.yml
+      - collab/projects/L1-WORKSPACE-RAG-20261111-001/tests/validate_msc_skill_candidates.py
+permissions:
+  contents: read
+jobs:
+  candidate_qa:
+    if: github.repository == 'wonhwipark/CoWork-Skill-Collab' && github.ref == 'refs/heads/msc-skill-validation-20261116'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.10', '3.11']
+    steps:
+      - name: Checkout pinned PRIVATE review input, no credential persistence
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Set up isolated Python interpreter
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Verify private candidate bytes, CRC, Python source, regression tests
+        run: |
+          set -euo pipefail
+          python collab/projects/L1-WORKSPACE-RAG-20261111-001/tests/validate_msc_skill_candidates.py
