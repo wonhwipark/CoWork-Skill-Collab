@@ -41,6 +41,16 @@ for filename,expected,relative in items:
     print("VERSIONED_TEST",name,"\n"+z.read(name).decode("utf-8")[:1000],flush=True)
   with tempfile.TemporaryDirectory(prefix="msc-full-regression-") as td:
    z.extractall(td)
+   # Python's zipfile.extractall ignores Unix executable mode; restore the modes
+   # from the ZIP central directory to model the actual Linux unzip installer.
+   for member in z.infolist():
+    restored=Path(td)/member.filename
+    if restored.is_file():
+     bits=stat.S_IMODE(member.external_attr>>16)
+     if bits:os.chmod(restored,bits)
+   if filename.startswith("work-ledger-kernel"):
+    launcher=z.getinfo("work-ledger-kernel")
+    assert (launcher.external_attr>>16)&0o111,"Linux kernel launcher not executable in distribution"
    cwd=Path(td)/relative
    module_tests=sorted((cwd/"tests").rglob("test_*.py"))
    print("FULL_REGRESSION_START",filename,"tests_files",len(module_tests),flush=True)
