@@ -1,0 +1,35 @@
+name: L1 knowledge guard R1 diff input once
+on:
+  push:
+    branches: [dev/l1-knowledge-guards-20261117]
+    paths:
+      - .github/workflows/l1-knowledge-guard-r1-input-once-20261117.yml
+permissions:
+  contents: write
+jobs:
+  build-input:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Fetch exact public Kernel pinned baseline
+        run: |
+          mkdir -p artifacts
+          curl --fail --location --retry 3 --silent --show-error -o artifacts/work-ledger-kernel_v0_7_42_1116.zip https://raw.githubusercontent.com/wonhwipark/L1Work/main/work-ledger-kernel_v0_7_42_1116.zip
+      - name: Build pinned R1 review input from three skills without code execution
+        run: |
+          python collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/build_review_input_r0001_20261117.py
+      - name: Preserve input only in PRIVATE development branch
+        run: |
+          git config user.name 'CoWork review input CI'
+          git config user.email 'cowork-review-ci@users.noreply.github.com'
+          git add collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/review_input/
+          if ! git diff --cached --quiet; then
+            git commit -m 'dev(review): pin three-skill code R1 diff input ZIP and byte receipt'
+            git push origin HEAD:dev/l1-knowledge-guards-20261117
+          fi
