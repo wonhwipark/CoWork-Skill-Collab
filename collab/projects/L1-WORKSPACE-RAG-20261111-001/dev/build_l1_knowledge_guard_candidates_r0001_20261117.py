@@ -292,35 +292,28 @@ def refresh_package_metadata(root: Path, row: dict) -> None:
             if str(meta.get("skill_version", "")) in (row["version_from"], version):
                 meta["skill_version"] = version
             main_meta.write_text(json.dumps(meta, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    # Derive the hash universe from the files that will actually ship in ZIP.
+    # Never reuse an old manifest's key set: it silently loses newly added files.
+    rels = sorted(
+        p.relative_to(root).as_posix() for p in root.rglob("*")
+        if p.is_file()
+        and p.name not in ("MANIFEST_SHA256.json", "PACKAGE_CONTENTS.sha256")
+        and "__pycache__" not in p.relative_to(root).parts
+        and p.suffix != ".pyc"
+        and p.relative_to(root).parts[0] != "artifacts"
+    )
     manifest = root / "MANIFEST_SHA256.json"
-    if manifest.is_file():
-        m = json.loads(manifest.read_text(encoding="utf-8"))
-        if not isinstance(m, dict):
-            raise RuntimeError("MANIFEST_STRUCTURE_UNSUPPORTED")
-        new = {}
-        for rel in m:
-            if rel == "MANIFEST_SHA256.json":
-                raise RuntimeError("MANIFEST_SELF_REFERENCE_UNSUPPORTED")
-            file_path = root / rel
-            if not file_path.is_file() or not file_path.resolve().is_relative_to(root.resolve()):
-                raise RuntimeError(f"MANIFEST_MISSING_INPUT: {rel}")
-            new[rel] = sha(file_path)
-        manifest.write_text(json.dumps(new, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     listing = root / "PACKAGE_CONTENTS.sha256"
+    if not manifest.is_file() and not listing.is_file():
+        raise RuntimeError("RELEASE_HASH_MANIFEST_MISSING")
+    digest_map = {rel: sha(root / rel) for rel in rels}
+    if manifest.is_file():
+        manifest.write_text(json.dumps(digest_map, ensure_ascii=False, indent=2,
+                                       sort_keys=True) + "\n", encoding="utf-8")
     if listing.is_file():
-        records = []
-        for ln in listing.read_text(encoding="utf-8").splitlines():
-            parts = ln.split(maxsplit=1)
-            if len(parts) != 2:
-                raise RuntimeError("PACKAGE_CONTENTS_STRUCTURE_UNSUPPORTED")
-            rel = parts[1].strip()
-            if rel == "PACKAGE_CONTENTS.sha256":
-                raise RuntimeError("PACKAGE_CONTENTS_SELF_REFERENCE_UNSUPPORTED")
-            fp = root / rel
-            if not fp.is_file() or not fp.resolve().is_relative_to(root.resolve()):
-                raise RuntimeError(f"PACKAGE_CONTENTS_MISSING_INPUT: {rel}")
-            records.append(f"{sha(fp)}  {rel}")
-        listing.write_text("\n".join(records) + "\n", encoding="utf-8")
+        listing.write_text("".join(f"{digest_map[rel]}  {rel}\n" for rel in rels),
+                           encoding="utf-8")
+
 
 def rezip(root: Path, output: Path) -> None:
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -357,9 +350,11 @@ def run_build(workdir: Path, outdir: Path, *, skip_pin: bool = False) -> dict:
                 raise RuntimeError(f'PYTHON_COMPILE_FAIL: {key}')
             output = outdir / row['output']
             rezip(x, output)
+            from skill_release_quality_gate import validate
+            checked = validate(output, row["version_to"])
             out[key] = {'baseline':row['path'],'baseline_sha256':actual,'output':str(output),
                         'output_sha256':sha(output),'size_bytes':output.stat().st_size,
-                        'verification':'ZIP_CRC_AND_PYTHON_COMPILE_PASS',
+                        'verification':'ZIP_CRC_AND_PYTHON_COMPILE_AND_RELEASE_GATE_PASS',
                         'release':'development_not_for_deployment'}
     return out
 
