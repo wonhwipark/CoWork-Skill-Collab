@@ -3,27 +3,27 @@
     "baseline": "collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates/l1-fix-workflow_v1_6_69_1115.zip",
     "baseline_sha256": "d4ba119298cd5763fd18ace2d54223fff010a8d2a1703ebab80eb4fa1b35846b",
     "output": "/home/runner/work/CoWork-Skill-Collab/CoWork-Skill-Collab/collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/output/l1-fix-workflow_v1_6_70_1117.zip",
-    "output_sha256": "a3070d3cfd64d78da7a684f8d81fc35ea323c3667d539a61d16bf5ac6fe40878",
-    "size_bytes": 758117,
-    "verification": "ZIP_CRC_AND_PYTHON_COMPILE_PASS",
+    "output_sha256": "a6693679876c7bebf38f79b71963fcb3374f8c53606c58f28a48b4dbca62f0d0",
+    "size_bytes": 758119,
+    "verification": "ZIP_CRC_AND_PYTHON_COMPILE_AND_RELEASE_GATE_PASS",
     "release": "development_not_for_deployment"
   },
   "github": {
     "baseline": "collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates/l1-github_v0_3_57_1114.zip",
     "baseline_sha256": "f1b8fb43d3af427f2c5d52864051c65894f3cb45969ab35ca502f344735611ce",
     "output": "/home/runner/work/CoWork-Skill-Collab/CoWork-Skill-Collab/collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/output/l1-github_v0_3_59_1117.zip",
-    "output_sha256": "85f7e95372027a326a41b0d17e7df4d630115c468c0745236fb24ca68b19fcb0",
+    "output_sha256": "40b92685c8cc38bb7c9b85566c12c8ba72542982d347d0666b9f145f32925d72",
     "size_bytes": 567266,
-    "verification": "ZIP_CRC_AND_PYTHON_COMPILE_PASS",
+    "verification": "ZIP_CRC_AND_PYTHON_COMPILE_AND_RELEASE_GATE_PASS",
     "release": "development_not_for_deployment"
   },
   "kernel": {
     "baseline": "artifacts/work-ledger-kernel_v0_7_42_1116.zip",
     "baseline_sha256": "ece2bce143ef35a1c8cc3bc12ddf6a73e27e0f218fc69fec87844759d9dfc164",
     "output": "/home/runner/work/CoWork-Skill-Collab/CoWork-Skill-Collab/collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/output/work-ledger-kernel_v0_7_43_1117.zip",
-    "output_sha256": "0e178e651c2a53175a5ddce2dae68e07f11141b4a92a6b94be6126114c5ab95c",
-    "size_bytes": 319793,
-    "verification": "ZIP_CRC_AND_PYTHON_COMPILE_PASS",
+    "output_sha256": "eae7632c1d5cc4dbcfbe539d50be23b51ab7aaf6e5387ee18f5c5f088bc487a5",
+    "size_bytes": 319792,
+    "verification": "ZIP_CRC_AND_PYTHON_COMPILE_AND_RELEASE_GATE_PASS",
     "release": "development_not_for_deployment"
   }
 }
