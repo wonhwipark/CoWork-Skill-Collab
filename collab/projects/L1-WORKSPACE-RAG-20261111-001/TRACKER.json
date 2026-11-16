@@ -6,10 +6,10 @@
       "skill": "l1-knowledge-updater",
       "title": "l1-knowledge-updater",
       "phase": "IMPLEMENTATION",
-      "owner": "GPT (3종 개발 후보·QA 게이트 판정 완료) → 업무 GPT (G0/실제 권한 확인)",
+      "owner": "GPT (MSC 모던 HTML 릴리스 완료·Guard 후속) → 업무 GPT (G0·실제 열람 확인)",
       "self_test": "PASS_SCOPE_LIMITED",
       "independent_review": "DESIGN_ACCEPT_WITH_CHANGE; CODE_NOT_RUN",
-      "next_action": "출고 커밋 diff/공통 writer 권한·경합 보호 최소 보완 + T03~T10 관련 시험 + 필수 코드 리뷰/릴리스 QA 후 L1Work PUBLIC 최종 ZIP 업로드. 현재 BLOCKED_NOT_POSTED"
+      "next_action": "기존 G0 기록을 재사용해 설치본·실제 writer/권한·HTML URL 확인 후 검증된 gap만 보완. MSC doc-converter v0.2.26 PUBLIC 완료; Knowledge Guard 3종의 기존 차단·미검증은 유지."
     }
   ]
 }

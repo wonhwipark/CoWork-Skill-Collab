@@ -1,5 +1,17 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 최신 MSC 결과 — doc-converter v0.2.26 모던 HTML 최종 ZIP PUBLIC 게시 (2026-11-17 KST)
+
+- **정본:** [변경·시험·게시 판정](GPT_MSC_MODERN_HTML_PUBLIC_RELEASE_RESULT_r0001_20261117_KST.md). 예시 계열 네이비 상단·출처/설명 카드·반응형 화면·확대/배율/폭 맞춤/초기화·검증된 단계 이동을 실제 converter 템플릿에 반영. 최신 공개 v0.2.25 기준, 다른 스킬의 Knowledge Guard 변경은 혼합하지 않음.
+- **실제 시험:** [CI 43912772886](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43912772886) SUCCESS; Python 3.10.22/3.11.18 각각 전체 **96 PASS**, 실제 direct gateway→PlantUML→SVG→HTML PASS. Chromium 1440/390/320 화면의 그림·확대·폭 맞춤·초기화·단계 이동 PASS, body 가로 넘침/JS·CSP 오류/외부 요청 0. 별도 로컬 forward test 28+13 PASS는 정식 Windows Claude 리뷰와 구별.
+- **PUBLIC 배송:** [doc-converter_v0_2_26_1117.zip](https://github.com/wonhwipark/L1Work/blob/main/doc-converter_v0_2_26_1117.zip), `wonhwipark/L1Work/main` 루트, **169204 bytes**, SHA-256 `b0ebd0aa4d771adc30648ab2bce23a3c1648e408984bedb36d0e3da45108312c`, commit `8f31fab49d88751bf0c65165f5384d2d241408b3`. 최종 ZIP CRC/원장/경로·비밀 검사 및 실제 원격 bytes readback PASS. 구버전 보존.
+- **역할·경계:** HTML 생성은 doc-converter; Work export는 Kernel; knowledge 링크/게시 조정은 Updater/허용 writer. `PROCEDURE_FEATURE` opt-in·SVG 성공 조건 및 기존 ISSUE 동작 유지. `PUBLIC_DELIVERY=PASS` / `WINDOWS_CODE_REVIEW_THIS_PATCH=NOT_RUN` / `HOST_INSTALL=NOT_RUN` / `BUSINESS_WORKSPACE_HTML_E3=NOT_VERIFIED`. 신규 REQUEST/READY/Windows 유료 리뷰/호스트·LIVE 변경 0.
+- **병행 흐름 보존:** 아래 Knowledge Guard 3종 후보의 미검증·차단 및 자동 PUBLIC 기본 지시는 해당 최신 결과/계약 그대로 유지. 이 MSC 완료를 전체 RAG·권한 보호·지식 게시 완료로 합치지 않음.
+- **NEXT_ONE_ACTION:** 업무 GPT가 기존 G0와 설치본·기존 writer/HTML 렌더 URL을 확인하여 실제 Workspace 문서→HTML→MSC 열람을 검증. 기존 분석/Job은 재실행하지 않음.
+
+---
+
+
 ## 최신 결정 — 자동 PUBLIC 게시 기본 지시·Git 커밋 반례 보완/재시험 (2026-11-17 KST)
 
 - **사용자 최신 지시:** 세 패키지 L1Work 업로드, 앞으로 스킬 작업 최종본 자동 게시. 계약 [`JOBLIST_PUBLIC_DELIVERY_V1.md`](../../ops/CONTRACTS/JOBLIST_PUBLIC_DELIVERY_V1.md)에 **최종 게이트 PASS 시 매번 재확인 없이 L1Work/main 루트 자동 게시** 기본 절차 추가. 현재 무인 게시기/토큰 신규 설치/활성화는 안 함.

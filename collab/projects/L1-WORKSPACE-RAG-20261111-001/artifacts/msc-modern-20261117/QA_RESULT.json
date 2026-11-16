@@ -1,0 +1,60 @@
+{
+  "work_id": "L1-WORKSPACE-RAG-20261111-001",
+  "date_kst": "2026-11-17",
+  "run_id": 43912772886,
+  "conclusion": "success",
+  "input_commit": "bfd55efcd63b55f5eefd76be350a47d0c67c1ddd",
+  "candidate_sha256": "47321d7d1c43d79d8b309d1d78a96b4bbdbbf90fbe8e613d958c7c9b73a9fe78",
+  "final": {
+    "size": 169204,
+    "sha256": "b0ebd0aa4d771adc30648ab2bce23a3c1648e408984bedb36d0e3da45108312c",
+    "git_blob": "dcdb89205ec16ab07f04866bfc514954a02f8bc4"
+  },
+  "public_commit": "8f31fab49d88751bf0c65165f5384d2d241408b3",
+  "python310": {
+    "python": "3.10.22 (main, Oct  1 2026, 14:31:30) [GCC 11.4.0]",
+    "full_pytest": "PASS",
+    "real_plantuml_gateway": "PASS",
+    "browser": "NOT_RUN_THIS_MATRIX_JOB"
+  },
+  "python311": {
+    "python": "3.11.18 (main, Oct 26 2026, 02:48:47) [GCC 11.4.0]",
+    "full_pytest": "PASS",
+    "real_plantuml_gateway": "PASS",
+    "browser": [
+      {
+        "width": 1440,
+        "height": 1000,
+        "overflow": false,
+        "image_loaded": true,
+        "zoom_fit_reset_phase": "PASS",
+        "js_csp_errors": [],
+        "external_requests": [],
+        "png_sha256": "b0dd0117d3ec574d8d8c872330396424e4d26962d0b41e7dc88910accbdf9af6"
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "overflow": false,
+        "image_loaded": true,
+        "zoom_fit_reset_phase": "PASS",
+        "js_csp_errors": [],
+        "external_requests": [],
+        "png_sha256": "e13a697cf7372022ce7c3ce39db1d33ad6821cfec9bf3b7b646994c7f9afc629"
+      },
+      {
+        "width": 320,
+        "height": 800,
+        "overflow": false,
+        "image_loaded": true,
+        "zoom_fit_reset_phase": "PASS",
+        "js_csp_errors": [],
+        "external_requests": [],
+        "png_sha256": "17b549c20cc75bee76bd539a9a9f1c0c63b5f122ded1b2d7ed077e3a5ecb48e6"
+      }
+    ]
+  },
+  "host_install": "NOT_RUN",
+  "business_workspace_e3": "NOT_VERIFIED",
+  "windows_claude_independent_code_review": "NOT_RUN"
+}
