@@ -1,5 +1,13 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 자동 승인 v0.2.23 LIVE 전환 완료: AUTO_SIGNING_LIVE=PASS_HOST_VERIFIED (2026-11-16 KST)
+
+- 결과: `CLAUDE_V023_AUTO_APPROVAL_LIVE_CLOSEOUT_RESULT_FOR_GPT_20261116.md` (PRIVATE `main`, commit `169579371514`, SHA-256 `e3339a8f34b48f40b894c12aa1bab443c08c92db5aaeda7f6b9cf0713dcca1d2`). R2 영수증 보충 `USAGE_RECEIPT_1.json` commit `f1279962649e` (SHA-256 `869ae22e1633433d4e199175ba7ba0b08fc345f89fde4b1d717c5a6e5d61f65a`, v0.2.20 계약상 필수 아님, DB 사실만).
+- 설치: v0.2.20 → v0.2.23(ZIP `f941be8a…80ea7` 바이트 동일), 백업·롤백 트리(이름 변경)·롤백 명령 준비, DB/키/토큰/Dropbox DB 해시 불변. 운영 회귀 967 passed/12 skipped, 자동 승인 시험 191 passed.
+- 활성화: 보호 로컬 위임(ACL 확인) `COWORK-`/`L1-WORKSPACE-`, 3 skill, `POLICY-STATIC-V1`만, 요청당 1회·USD 1, 하루 2회·USD 3, 월 USD 10, 30일. 활성화 직후와 재시작 뒤 각 2주기: 소급 차단 3건, 서명·READY·모델 호출 0.
+- 정정: R2 MINOR는 **2건**(이전 호스트 요약의 3건은 오기). Notifier에 자동 승인·불확실·정책 중지 알림과 대기 알림 중복 억제 추가(재시작으로 오래된 대기 요청 3건 알림이 갔을 수 있음, 공개됨).
+- 미관측: 활성화 뒤 첫 실제 자동 서명 요청(NOT_OBSERVED). 미실행: 비판적 평가 R0~R3 프롬프트 적용(별도 후속). 다음 한 동작: GPT 판정.
+
 ## 운영 자동 승인 미활성화 오류 교정·v0.2.23 LIVE 마무리 원샷 지시 (2026-11-16 KST)
 
 - **사용자 문제 제기:** Windows Claude Code가 현재 v0.2.20의 수동 승인 도구 `approve_request.py`만 설명하면서, 기존 사전 위임에 따른 v0.2.23 자동 승인 LIVE를 진척시키지 못한 협업 오류. GPT가 GitHub 요청 게시와 실제 Windows 실행을 연결하지 못한 점을 명시적으로 인정. 키가 PC에 존재하는 것과 매번 Claude 대화형 승인해야 한다는 주장은 별개.
