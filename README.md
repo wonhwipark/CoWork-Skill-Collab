@@ -12,7 +12,9 @@ This repository is a **private collaboration workspace**, not a deployment repos
 
 작업한 GPT/Agent가 결과·피드백을 기록하고 해당 CURRENT의 요약·근거 링크·다음 행동을 갱신한 뒤 PRIVATE 게시·원격 재조회까지 확인합니다. 구조·경로 변경 때만 브리프, 스킬 책임·입출력 변경 때만 카탈로그를 수정합니다. 상세 기준은 [지속 갱신·피드백 절차](collab/ops/CONTRACTS/SKILL_DISCOVERY_AND_REUSE_V1.md)를 따릅니다.
 
-이 연결은 저장소 문서를 읽는 세션의 시작 경로입니다. 새 창의 자동 선조회나 ChatGPT 프로젝트 설정을 변경한 것은 아닙니다.
+**[Windows Claude Code 세션 자동 인식 지침](CLAUDE.md)** — CoWork 저장소에서 시작하는 Claude Code는 `AGENTS.md`·공통 브리프를 프로젝트 맥락으로 import합니다. 로컬 `main` 동기화와 `/context all` 확인이 필요하며, 실행·GitHub 최신 상태의 자동 선조회 성공을 문서 게시로 단정하지 않습니다.
+
+이 연결은 저장소 문서를 읽는 세션의 시작 경로입니다. **GPT는 현재 CoWork 프로젝트 지침에 따라 첫 사용자 요청에서 GitHub를 조회할 수 있으나, 새 창이 열리기 전 강제 선조회 기능이나 ChatGPT 프로젝트 설정 자동 변경은 아닙니다.**
 
 ## 기본 대시보드 — 클릭하면 바로 열리는 HTML (GitHub Pages)
 
