@@ -1,9 +1,9 @@
 {
   "disclaimer": "GitHub SHADOW 현황. 미이관 자료는 0건이 아니라 미확인입니다.",
-  "live_provider": "GITHUB",
+  "live_provider": "NOT_OBSERVED",
   "operations": {
-    "active_provider": "GITHUB",
-    "cutover": "LIVE",
+    "active_provider": "NOT_OBSERVED",
+    "cutover": "NOT_OBSERVED",
     "dashboard_source": true,
     "host_shadow": "NOT_OBSERVED",
     "independent_review": "NOT_OBSERVED",
@@ -11,7 +11,7 @@
     "pages_deployment": "NOT_OBSERVED",
     "windows_stage1": "NOT_OBSERVED"
   },
-  "phase": "GITHUB_LIVE",
+  "phase": "MIGRATION_NOT_CUTOVER",
   "projects": [
     {
       "id": "COWORK-AUTO-APPROVAL-20261115-001",
@@ -26,10 +26,10 @@
       "id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md",
-      "status": "문서상 진행",
+      "status": "검증 진행 중",
       "title": "COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태",
-      "tone": "neutral",
-      "topic": "GPT 최종 판정 — GitHub 단일 LIVE 전환 완료 수용(2026-11-15 KST)"
+      "tone": "warning",
+      "topic": "리뷰 자동 감지 설계 검토 — Claude 협업 평가 반영 (2026-11-17 KST)"
     },
     {
       "id": "COWORK-GITHUB-DASHBOARD-20261111-001",

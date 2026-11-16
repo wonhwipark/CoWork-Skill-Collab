@@ -1,8 +1,8 @@
 # CoWork 협업 대시보드
 
-> **PRIVATE · GitHub에서 바로 보기 · GITHUB_LIVE**
+> **PRIVATE · GitHub에서 바로 보기 · MIGRATION_NOT_CUTOVER**
 >
-> GitHub 리뷰 제공자 (문서 기록). 이 화면은 GitHub 기록을 읽기 전용으로 표시합니다.
+> 활성 리뷰 제공자 기록 미확인. 이 화면은 GitHub 기록을 읽기 전용으로 표시합니다.
 
 ## 리뷰 처리 흐름
 
@@ -14,10 +14,8 @@
 
 ```mermaid
 flowchart TB
-  subgraph LIVE["GitHub LIVE 리뷰 운송 · 호스트 보고 수용"]
-    L1["GPT 요구·판정"] --> L2["GitHub PRIVATE / 요청·결과"]
-    L2 --> L3["Windows watcher / Claude Code"]
-    L3 --> L4["결과·영수증 / GPT"]
+  subgraph LIVE["현재 리뷰 제공자 기록 미확인"]
+    L1["최신 CURRENT.md 확인"] --> L2["운영 근거 검증 필요"]
   end
   subgraph NEXT["GitHub 목표 경로 · 개별 리뷰 검증 별도"]
     A["GPT 요구·범위 확정"] --> B["GitHub PRIVATE / REQUEST·READY"]
@@ -36,8 +34,8 @@ flowchart TB
 
 | 구분 | 현재 상태 | 근거 범위 |
 |---|---|---|
-| 현재 운영 경로 | **GitHub 리뷰 제공자 (문서 기록)** | 최신 이관 CURRENT 기록 · 실제 호스트는 별도 검증 |
-| GitHub 전환 | **GitHub LIVE (호스트 보고)** | 호스트 보고·GPT 판정과 신규 요청 실전 검증은 별개 |
+| 현재 운영 경로 | **활성 리뷰 제공자 기록 미확인** | 최신 이관 CURRENT 기록 · 실제 호스트는 별도 검증 |
+| GitHub 전환 | **기록 미관측** | 호스트 보고·GPT 판정과 신규 요청 실전 검증은 별개 |
 | Windows 실행·SHADOW | **기록 미관측** | 실제 호스트 실행 증거 필요 |
 | Claude Code 독립 리뷰 | **기록 미관측** | 자체 시험과 구분 |
 | GitHub 요청·결과·영수증 | **요청 9 · 결과 6 · 영수증 6** | PRIVATE 파일 관측 수일 뿐 완료 건수가 아님 |
@@ -61,7 +59,7 @@ HTML은 GitHub에서 소스로 표시되므로 다운로드 후 브라우저로 
 ---
 ## 상세 현황
 
-> **GITHUB_LIVE** — GitHub 리뷰 제공자 (문서 기록). GitHub 기록과 리뷰 실행은 별개입니다.
+> **MIGRATION_NOT_CUTOVER** — 활성 리뷰 제공자 기록 미확인. GitHub 기록과 리뷰 실행은 별개입니다.
 
 이 문서는 GitHub Actions가 생성하는 안내 화면이며 리뷰·설치·배포 승인이나 자동 실행 결과가 아닙니다.
 
@@ -97,7 +95,7 @@ HTML은 GitHub에서 소스로 표시되므로 다운로드 후 브라우저로 
 | 프로젝트 | 문서상 상태 | 근거 |
 |---|---|---|
 | COWORK-AUTO-APPROVAL-20261115-001 | 문서상 진행 | [CURRENT.md](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-AUTO-APPROVAL-20261115-001/CURRENT.md) |
-| COWORK-DROPBOX-TO-GITHUB-MIGRATION | 문서상 진행 | [CURRENT.md](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) |
+| COWORK-DROPBOX-TO-GITHUB-MIGRATION | 검증 진행 중 | [CURRENT.md](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) |
 | COWORK-GITHUB-DASHBOARD-20261111-001 | 검증 진행 중 | [CURRENT.md](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md) |
 | COWORK-SKILL-DISCOVERY-20261112-001 | 검증 진행 중 | [CURRENT.md](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md) |
 | ISSUE-ANALYZER-20261114-001 | 상태 확인 필요 | [CURRENT.md](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/ISSUE-ANALYZER-20261114-001/CURRENT.md) |
