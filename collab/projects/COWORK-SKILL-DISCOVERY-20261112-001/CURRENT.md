@@ -1,5 +1,17 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 최신 — GPT·Windows Claude Code 협업 현황 인식 부트스트랩 (2026-11-17 KST)
+
+- **범위/목적:** 새 대화의 협업·스킬 현황 조회에서 기존 정본을 스스로 찾도록 **프로젝트 시작 지침 경로만** 연결. 새로운 watcher/스킬/원장/예약/외부 호출/실행 트리거는 만들지 않음.
+- **실제 적용:** 루트 [CLAUDE.md](../../../CLAUDE.md) 신규 PRIVATE main 게시(commit `fc9e0b012d6929c447103eafb11015afa9a435d7`). 상대경로 `@AGENTS.md`, `@collab/CONTEXT_BRIEF.md` 2개를 Claude Code 프로젝트 시작 맥락으로 import하고, 첫 관련 요청에서 GitHub PRIVATE `main`의 브리프→해당 CURRENT→증거를 읽기 전용 재조회하도록 안내. [README](../../../README.md) 바로가기, [브리프 r0012](../../CONTEXT_BRIEF.md) 실제 적용 조건/한계 반영.
+- **검증:** GitHub 실제 두 import 대상 존재·문서 본문 원격 readback **PASS**. Windows Claude Code의 저장소 시작 폴더/로컬 동기화·실제 `/context all`·첫 응답 최신 PRIVATE readback **NOT_RUN/NOT_VERIFIED**. 새 대화가 열리기 전에 GPT가 자동 실행/조회하는 기능은 이번 범위에서 **NOT_SUPPORTED**; CoWork 프로젝트 지침은 첫 사용자 요청을 처리할 때 조회하도록 이미 명시.
+- **사용자 경험:** 새 대화에서 "협업 현재 상황 확인" 또는 "L1Work 스킬 현황" 요청 시 기존 목적별 Work로 이동하여 최신성 확인. 자동 **세션 문맥 로딩**과 **새 데이터 실시간 조회**를 구별하고, 오래된 로컬 checkout 정보는 최신 상태로 주장하지 않음.
+- **승인/변경 경계:** PRIVATE 비민감 MD만 신규/수정; PUBLIC ZIP/업무 호스트/Watcher/REQUEST/READY/유료 리뷰/운영 설정 변경 `0`.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 실제 CoWork PRIVATE main 최신 체크아웃에서 재시작한 후 `/context all`의 Memory files 내 `CLAUDE.md` 및 import 표시를 확인하고, 첫 사용자 요청에서 GitHub CURRENT 실제 readback을 기록. 실패 시 해당 로컬 작업 디렉터리/버전/권한만 진단; 검증 전 `WINDOWS_AUTO_LOAD=NOT_VERIFIED` 유지.
+
+---
+
+
 ## 최신 — L1Work 공개 스킬 39개 ZIP 분석·PRIVATE 협업 진입 연결 (2026-11-17 KST)
 
 - **정본 스냅샷:** [L1Work 공개 스킬 분석·협업 재개 인덱스 r0001](L1WORK_PUBLIC_SKILL_RELEASE_ANALYSIS_r0001_20261117_KST.md). PUBLIC `wonhwipark/L1Work/main` 고정 source commit `33d959f3376a495875eed59b79b292c0f8f9cfe0`에서 루트 ZIP 39개(관리 스킬 17종의 공개 ZIP·독립 `skillsilent` ZIP 미발견·기타/보조 17개)를 확인하고 기능·역할·버전·소스 링크·Git blob·현재 검증 경계를 구분. 39개 ZIP 바이트 재감사·호스트 설치를 수행한 것은 아님.
