@@ -5,11 +5,11 @@
       "work_id": "COWORK-AUTO-APPROVAL-20261115-001",
       "skill": "cowork-review-watcher",
       "title": "GPT→GitHub REQUEST 자동 서명·READY (제한된 사전 위임)",
-      "phase": "DISPOSITION",
-      "owner": "Windows 운영 호스트 증빙 정합성 확인 / GPT 최종 활성화 확인",
+      "phase": "COMPLETE",
+      "owner": "Windows 운영 호스트 (자동 승인 LIVE) / GPT 판정",
       "self_test": "PASS",
       "independent_review": "PASS",
-      "next_action": "2026-11-16: R2 v0.2.23 completed 1 paid call, $0.5244525 host DB report; GitHub APPROVAL_SIG/READY/DISPATCH/REVIEW_RESULT/RECEIPT verified, BLOCKING 0 MAJOR 0 actual MINOR 2; GPT static ACCEPT_WITH_FOLLOWUP. OPERATING_VERSION v0.2.20 AUTO_SIGNING OFF (last host evidence). Host summary MINOR 3 incorrect, usage receipt missing: determine actual v0.2.20 contract and report non-sensitive evidence only, no review rerun. USER reports Claude Code still explaining old manual approve_request.py vs desired protected delegation. GPT posted GPT_V023_AUTO_APPROVAL_LIVE_CLOSEOUT_CORRECTION_r0001_20261116.md, readback PASS. NEXT Windows Claude Code one-shot: reconcile evidence, verify actual local delegated trust, backed-up OFF install v0.2.23 exact SHA f941be8a...80ea7, full regression, enable only authorized STATIC $1/call 2/day $3/day $10/month 30day COWORK-/L1-WORKSPACE- exact 3 skill scope, 2 cycles/restart/rollback/Notifier tests, post host result & CURRENT/TRACKER. Do NOT request per-review cost confirmation, create repeat R2, or claim AUTO_SIGNING LIVE before host tests. No Windows host action is performed by GitHub document post."
+      "next_action": "2026-11-16 19:47 KST: v0.2.23 운영 설치·보호 위임 활성화 완료(AUTO_SIGNING_LIVE=PASS_HOST_VERIFIED). 전 게이트 PASS, 회귀 967 passed/12 skipped, 2주기·재시작·소급 3건 차단·Notifier·롤백 준비 확인, 모델 호출 0. 첫 실제 자동 서명 요청은 NOT_OBSERVED. 범위: COWORK-/L1-WORKSPACE-, 3 skill, POLICY-STATIC-V1, 1회·USD 1/요청, 2회·USD 3/일, USD 10/월, 30일(만료 2026-12-16). 다음: GPT 판정."
     }
   ]
 }
