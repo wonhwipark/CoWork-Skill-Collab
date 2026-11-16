@@ -1,11 +1,15 @@
 """Full regression and safety inventory on two exact PRIVATE candidate ZIPs (no host)."""
 from pathlib import Path
 import hashlib, json, os, re, subprocess, sys, tempfile, zipfile, stat
-root=Path(__file__).resolve().parents[1]/"candidates"
+root=Path(os.environ.get("MSC_RELEASE_OUTPUT_DIR", str(Path(__file__).resolve().parents[1]/"candidates")) )
 items=[
  ("doc-converter_v0_2_24_1116.zip","2ef0929bc0a80a1c0aca67bf3c8fc02f967bddba223b45c27807c363e96229f7","doc-converter"),
  ("work-ledger-kernel_v0_7_41_1116.zip","48d1bf5e24c613e7e0ba04df9946c427c5d1ee39d8d16204966afff07e93497b","."),
 ]
+if os.environ.get("MSC_RELEASE_OUTPUT_DIR"):
+ manifest=json.loads((root/"release_manifest.json").read_text(encoding="utf-8"))
+ assert len(manifest["candidates"])==2
+ items=[(r["filename"],r["sha256"],"doc-converter" if r["filename"].startswith("doc-converter") else ".") for r in manifest["candidates"]]
 secret=[
  ("PEM PRIVATE KEY",rb"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----"),
  ("Github PAT",rb"gh[pousr]_[A-Za-z0-9]{34,}"),
