@@ -9,7 +9,7 @@
       "owner": "GPT / Claude Code",
       "self_test": "PASS",
       "independent_review": "PASS",
-      "next_action": "기존 GitHub LIVE 유지. 새 완료 리뷰 Actions 감지 PASS(77+8 시험), 기존 Telegram 연동 USER_CONFIRMED. Claude 리뷰 원문→GPT 직접 GitHub 수신 8항목 PASS, 기존 판정 1사이클 종료. GitHub push→유휴 GPT 자동수신 NOT_VERIFIED(이벤트 연결 미확인). 다음: 실지원 이벤트 경로·비용 승인 확인 후에만 별도 연결. 신규 유료 리뷰/재리뷰 0."
+      "next_action": "GitHub 단일 LIVE 유지. SOURCE_PIN repo_id JSON 문자열 수정(Guard R1·MSC R1) 및 PRIVATE CI 11/11 pin·13/13 자체시험 PASS. Guard AUTO_SIGNING_UNCERTAIN은 Windows 로컬 정산 필요. 서명/READY/결과 미관측; 자동 재큐잉 금지."
     }
   ]
 }
