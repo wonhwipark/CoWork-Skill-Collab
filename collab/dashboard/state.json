@@ -179,7 +179,23 @@
     },
     {
       "disposition": "NOT_VERIFIED",
-      "findings": [],
+      "findings": [
+        {
+          "decision": "NOT_ADJUDICATED",
+          "id": "N1",
+          "summary": "— Approval nonce has no replay store (relevant to Q7)**"
+        },
+        {
+          "decision": "NOT_ADJUDICATED",
+          "id": "N2",
+          "summary": "— `repo_id` is a config-supplied label, not a GitHub-verified identity (Q7, confirms known gap)**"
+        },
+        {
+          "decision": "NOT_ADJUDICATED",
+          "id": "N3",
+          "summary": "— `read_github_token`'s repo-match check is advisory, not authorization (Q7, cli.py:33-55)**"
+        }
+      ],
       "flags": {
         "gpt": false,
         "ready": true,
@@ -203,7 +219,48 @@
     },
     {
       "disposition": "NOT_VERIFIED",
-      "findings": [],
+      "findings": [
+        {
+          "decision": "NOT_ADJUDICATED",
+          "id": "Q1",
+          "summary": "— Atomicity of the reservation"
+        },
+        {
+          "decision": "NOT_ADJUDICATED",
+          "id": "Q2",
+          "summary": "— Duplicate keys / binding"
+        },
+        {
+          "decision": "NOT_ADJUDICATED",
+          "id": "Q3",
+          "summary": "— Classification / double start / permanent refusal"
+        },
+        {
+          "decision": "NOT_ADJUDICATED",
+          "id": "Q4",
+          "summary": "— Crash / restore"
+        },
+        {
+          "decision": "NOT_ADJUDICATED",
+          "id": "Q5",
+          "summary": "— Remote errors / fail-closed"
+        },
+        {
+          "decision": "NOT_ADJUDICATED",
+          "id": "Q6",
+          "summary": "— N2 repository-id binding — **BLOCKING finding**"
+        },
+        {
+          "decision": "NOT_ADJUDICATED",
+          "id": "Q7",
+          "summary": "— Cost/gates, reservation vs. ceilings, SHADOW"
+        },
+        {
+          "decision": "NOT_ADJUDICATED",
+          "id": "Q8",
+          "summary": "— Interaction with v0.2.18, locking, seal_interrupted, publish-only retry"
+        }
+      ],
       "flags": {
         "gpt": false,
         "ready": true,
@@ -324,6 +381,16 @@
           "decision": "ACCEPT",
           "id": "M-4",
           "summary": "Exporter 보존 회귀 T01/T02 필수"
+        },
+        {
+          "decision": "ACCEPT",
+          "id": "m-1",
+          "summary": "전체 commit SHA와 파일별 revision 단위 명시"
+        },
+        {
+          "decision": "ACCEPT",
+          "id": "m-2",
+          "summary": "개인 복구 최대 3회, 그룹 재게시 0"
         }
       ],
       "flags": {

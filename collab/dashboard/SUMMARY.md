@@ -92,7 +92,18 @@ flowchart TB
 | [REQ-COWORK-DASHBOARD-PRESENTATION-20261115-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-COWORK-DASHBOARD-PRESENTATION-20261115-001/REQUEST.md) | COWORK-GITHUB-DASHBOARD-20261111-001 | READY_NOT_OBSERVED | NOT_VERIFIED |
 | [REQ-COWORK-V0214-R1-20261114](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-COWORK-V0214-R1-20261114/REQUEST.md) | COWORK-DROPBOX-TO-GITHUB-MIGRATION | GPT_NOT_OBSERVED | NOT_VERIFIED |
 | [REQ-COWORK-V0217-R2-20261114](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-COWORK-V0217-R2-20261114/REQUEST.md) | COWORK-DROPBOX-TO-GITHUB-MIGRATION | GPT_NOT_OBSERVED | NOT_VERIFIED |
+| ↳ N1 | — Approval nonce has no replay store (relevant to Q7)** | NOT_ADJUDICATED | - |
+| ↳ N2 | — `repo_id` is a config-supplied label, not a GitHub-verified identity (Q7, confirms known gap)** | NOT_ADJUDICATED | - |
+| ↳ N3 | — `read_github_token`'s repo-match check is advisory, not authorization (Q7, cli.py:33-55)** | NOT_ADJUDICATED | - |
 | [REQ-COWORK-V0219-R2-20261114](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-COWORK-V0219-R2-20261114/REQUEST.md) | COWORK-DROPBOX-TO-GITHUB-MIGRATION | GPT_NOT_OBSERVED | NOT_VERIFIED |
+| ↳ Q1 | — Atomicity of the reservation | NOT_ADJUDICATED | - |
+| ↳ Q2 | — Duplicate keys / binding | NOT_ADJUDICATED | - |
+| ↳ Q3 | — Classification / double start / permanent refusal | NOT_ADJUDICATED | - |
+| ↳ Q4 | — Crash / restore | NOT_ADJUDICATED | - |
+| ↳ Q5 | — Remote errors / fail-closed | NOT_ADJUDICATED | - |
+| ↳ Q6 | — N2 repository-id binding — **BLOCKING finding** | NOT_ADJUDICATED | - |
+| ↳ Q7 | — Cost/gates, reservation vs. ceilings, SHADOW | NOT_ADJUDICATED | - |
+| ↳ Q8 | — Interaction with v0.2.18, locking, seal_interrupted, publish-only retry | NOT_ADJUDICATED | - |
 | [REQ-COWORK-V0220-R1-20261115](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-COWORK-V0220-R1-20261115/REQUEST.md) | COWORK-DROPBOX-TO-GITHUB-MIGRATION | GPT_NOT_OBSERVED | NOT_VERIFIED |
 | [REQ-L1-MSC-MD-LINK-STRUCTURE-20261115-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-L1-MSC-MD-LINK-STRUCTURE-20261115-001/REQUEST.md) | L1-WORKSPACE-RAG-20261111-001 | READY_NOT_OBSERVED | NOT_VERIFIED |
 | [REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-001/REQUEST.md) | L1-WORKSPACE-RAG-20261111-001 | READY_NOT_OBSERVED | NOT_VERIFIED |
@@ -102,5 +113,7 @@ flowchart TB
 | ↳ M-2 | 공통 Git writer 경합 직렬화 및 CAS | ACCEPT | - |
 | ↳ M-3 | 그룹 구조 변경은 충돌·보류 후 재승인 | ACCEPT | - |
 | ↳ M-4 | Exporter 보존 회귀 T01/T02 필수 | ACCEPT | - |
+| ↳ m-1 | 전체 commit SHA와 파일별 revision 단위 명시 | ACCEPT | - |
+| ↳ m-2 | 개인 복구 최대 3회, 그룹 재게시 0 | ACCEPT | - |
 
 비차단 지적도 GPT 판정 기록 전에는 해결 처리하지 않습니다.
