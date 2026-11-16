@@ -26,10 +26,10 @@
       "id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md",
-      "status": "검증 진행 중",
+      "status": "상태 확인 필요",
       "title": "COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태",
-      "tone": "warning",
-      "topic": "리뷰 완료 자동 감지 P0 구현·기존 1사이클 종료 기록 (2026-11-17 KST)"
+      "tone": "neutral",
+      "topic": "사용자 확인 — Telegram 기존 연동 완료, 재연동 제외 (2026-11-17 KST)"
     },
     {
       "id": "COWORK-GITHUB-DASHBOARD-20261111-001",
