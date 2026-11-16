@@ -1,5 +1,16 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 최신 상태 — Knowledge Guard 3종 Windows Claude 코드 R1 REQUEST/SOURCE_PIN 게시 (2026-11-17 KST)
+
+- **사용자 요청:** `l1-fix-workflow v1.6.70`, `l1-github v0.3.59`, `work-ledger-kernel v0.7.43`의 기존 개발 변경을 **Windows Claude Code 독립 코드 리뷰 1회** 요청. 기존 설계 R1 검토와 독립된 코드 입력, 같은 Work에 계속 기록.
+- **정식 요청:** [REQUEST.md](../../requests/REQ-L1-WORK-KNOWLEDGE-GUARD-CODE-R1-20261117/REQUEST.md) / `REQ-L1-WORK-KNOWLEDGE-GUARD-CODE-R1-20261117` revision 1. [SOURCE_PIN.json](../../requests/REQ-L1-WORK-KNOWLEDGE-GUARD-CODE-R1-20261117/SOURCE_PIN.json)과 고정 [R1 코드 diff ZIP](../../packages/l1-knowledge-guards-three-skill-code_r0001_1117_REVIEW_INPUT.zip) PRIVATE `main` 게시·원격 readback PASS. ZIP 25,569 bytes, SHA-256 `a67311473e63e7750ba9aa435f10311767d957b82e059bff0256a5e305c84849`, Commit A `b2edf8b090b292163864cfbf670c77d1ad09c058`, SOURCE_PIN Commit B `28e71583b987cb02f35b56e1f2ee24873b7d08db`.
+- **검토 범위:** 고정 baseline/candidate 3종 ZIP에서 생성한 함수·정책 diff, 개발 표적시험, 입력 SHA manifest; Workflow 사전 WRITE 보호·Git staged/committed push·동시성/원격 HEAD·Kernel knowledge 보존 및 누락 회귀. `POLICY-STATIC-V1` 최대 USD 1·모델 호출 1회; 유효한 Windows v0.2.23 보호 위임에 한해 watcher 서명/READY 마지막 게시. GPT가 READY·서명을 작성하지 않음.
+- **구분:** `REQUEST=POSTED_VERIFIED`, `SOURCE_PIN=POSTED_VERIFIED`, `CODE_INDEPENDENT_REVIEW=PENDING_RESULT`(실제 결과·영수증 수신 전), `HOST_G0=NOT_VERIFIED`, `PUBLIC_GUARD_ZIPS=BLOCKED_NOT_POSTED`. 그룹 Knowledge·업무 호스트·LIVE·코드 추가 수정 0. 기존 MSC doc-converter v0.2.26 PUBLIC 배송 완료는 별개 흐름.
+- **NEXT_ONE_ACTION:** 실제 APPROVAL_SIG/READY→Windows Claude `REVIEW_RESULT_1.md` / `RECEIPT_1.md` 수신 여부를 확인하고 **한 사이클** GPT 지적별 판정. 같은 요청 재호출/새 리뷰 반복 금지.
+
+---
+
+
 ## 최신 MSC 결과 — doc-converter v0.2.26 모던 HTML 최종 ZIP PUBLIC 게시 (2026-11-17 KST)
 
 - **정본:** [변경·시험·게시 판정](GPT_MSC_MODERN_HTML_PUBLIC_RELEASE_RESULT_r0001_20261117_KST.md). 예시 계열 네이비 상단·출처/설명 카드·반응형 화면·확대/배율/폭 맞춤/초기화·검증된 단계 이동을 실제 converter 템플릿에 반영. 최신 공개 v0.2.25 기준, 다른 스킬의 Knowledge Guard 변경은 혼합하지 않음.
