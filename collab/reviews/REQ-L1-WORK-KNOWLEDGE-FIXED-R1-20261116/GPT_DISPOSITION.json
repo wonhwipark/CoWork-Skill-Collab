@@ -1,0 +1,47 @@
+{
+  "request_id": "REQ-L1-WORK-KNOWLEDGE-FIXED-R1-20261116",
+  "request_revision": "1",
+  "package_sha256": "58d39bcf884d9fbd22d03a14e5fffde5e1b69a8ecec482d2e9c8b2b125add7bb",
+  "verdict": "ACCEPT_WITH_CHANGE",
+  "findings": [
+    {
+      "id": "B-1",
+      "decision": "ACCEPT",
+      "summary": "Work 역링크 계약 모순 수용; 개인 Knowledge origin 우선"
+    },
+    {
+      "id": "M-1",
+      "decision": "ACCEPT",
+      "summary": "Workflow 쓰기 방지는 검증된 실제 경계 필요"
+    },
+    {
+      "id": "M-2",
+      "decision": "ACCEPT",
+      "summary": "공통 Git writer 경합 직렬화 및 CAS"
+    },
+    {
+      "id": "M-3",
+      "decision": "ACCEPT",
+      "summary": "그룹 구조 변경은 충돌·보류 후 재승인"
+    },
+    {
+      "id": "M-4",
+      "decision": "ACCEPT",
+      "summary": "Exporter 보존 회귀 T01/T02 필수"
+    },
+    {
+      "id": "m-1",
+      "decision": "ACCEPT",
+      "summary": "전체 commit SHA와 파일별 revision 단위 명시"
+    },
+    {
+      "id": "m-2",
+      "decision": "ACCEPT",
+      "summary": "개인 복구 최대 3회, 그룹 재게시 0"
+    }
+  ],
+  "source_document_path": "collab/projects/L1-WORKSPACE-RAG-20261111-001/GPT_FIXED_KNOWLEDGE_R1_REVIEW_DISPOSITION_r0001_20261117_KST.md",
+  "source_document_git_blob": "4bbc28d770e831ef9df2a6fd0ab74e252699c890",
+  "source_verification": "GPT_RECORDED_DOCUMENT_ONLY_SIGNATURE_NOT_VERIFIED",
+  "cycle_policy": "ONE_REVIEW_THEN_GPT_DISPOSITION_NO_AUTOMATIC_REREVIEW"
+}
