@@ -5,11 +5,11 @@
       "work_id": "L1-WORKSPACE-RAG-20261111-001",
       "skill": "l1-knowledge-updater",
       "title": "l1-knowledge-updater",
-      "phase": "DESIGN",
-      "owner": "GPT (R1 판정·설계 완료) → 업무 GPT (G0 READ_ONLY 검증)",
-      "self_test": "NOT_RUN",
-      "independent_review": "ACCEPT_WITH_CHANGE",
-      "next_action": "업무 GPT 설치본/그룹 구조·공통 Git writer·Kernel link G0 READ_ONLY 매핑 → 입증된 gap만 최소 패치·T01~T10 시험; 유료 리뷰 추가 없음"
+      "phase": "IMPLEMENTATION",
+      "owner": "GPT (3종 개발 후보·QA 게이트 판정 완료) → 업무 GPT (G0/실제 권한 확인)",
+      "self_test": "PASS_SCOPE_LIMITED",
+      "independent_review": "DESIGN_ACCEPT_WITH_CHANGE; CODE_NOT_RUN",
+      "next_action": "출고 커밋 diff/공통 writer 권한·경합 보호 최소 보완 + T03~T10 관련 시험 + 필수 코드 리뷰/릴리스 QA 후 L1Work PUBLIC 최종 ZIP 업로드. 현재 BLOCKED_NOT_POSTED"
     }
   ]
 }
