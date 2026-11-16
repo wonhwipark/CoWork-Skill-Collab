@@ -266,6 +266,29 @@ def patch_kernel(root: Path) -> None:
 def refresh_package_metadata(root: Path, row: dict) -> None:
     """Regenerate only existing package metadata; keep candidate non-deployable."""
     version = row["version_to"]
+    # Update only canonical header declarations; retain historical version notes.
+    import re
+    skill_md = root / "SKILL.md"
+    if skill_md.is_file():
+        text = skill_md.read_text(encoding="utf-8")
+        lines = text.splitlines(keepends=True)
+        for i, line in enumerate(lines[:45]):
+            match = re.match(
+                r"^(\s*(?:version|skill_version|버전)\s*[:：]\s*)v?\d+\.\d+\.\d+",
+                line, re.I)
+            if match:
+                lines[i] = line[:match.start()] + match.group(1) + version + line[match.end():]
+        skill_md.write_text("".join(lines), encoding="utf-8", newline="\n")
+    version_md = root / "VERSION.md"
+    if version_md.is_file():
+        content = version_md.read_text(encoding="utf-8")
+        lines = content.splitlines(keepends=True)
+        for i, line in enumerate(lines[:15]):
+            if re.search(r"\d+\.\d+\.\d+", line):
+                lines[i] = re.sub(r"(?<!\d)v?\d+\.\d+\.\d+(?!\d)",
+                                  "v" + version, line, count=1)
+                break
+        version_md.write_text("".join(lines), encoding="utf-8", newline="\n")
     version_file = root / "VERSION"
     if version_file.is_file():
         version_file.write_text(version + "\n", encoding="utf-8")
