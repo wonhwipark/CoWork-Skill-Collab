@@ -1,5 +1,13 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 리뷰 완료 자동 감지 P0 구현·기존 1사이클 종료 기록 (2026-11-17 KST)
+- **현재 상태:** 기존 PRIVATE GitHub Actions 및 `review_chain.py`를 재사용해 **새 완료 리뷰 → GPT 판정 필요**를 1회만 계산하는 순수 Python 검출기 `collab/dashboard/review_completion.py` 구현·게시. 이전 `state.json`과 최신 검사 결과 비교로 이미 본 완료 재통지 0. 결과는 PRIVATE Actions 작업 요약에 기록하며 **Windows 호스트/Claude/GPT를 호출하지 않음**. 새 watcher/원장/서명/READY/유료 모델 호출 없음.
+- **사용자 확정 협업 단위:** **REQUEST → Claude 독립 리뷰 1회 → GPT 판정**이 하나의 작업·1사이클. 판정 후 보완·시험은 기존 Work에서 계속하되 자동 재리뷰/무한반복 금지.
+- **기존 완료 사례 정합화:** `REQ-L1-WORK-KNOWLEDGE-FIXED-R1-20261116`은 이미 게시된 GPT 판정 `ACCEPT_WITH_CHANGE`를 기존 `GPT_DISPOSITION.json` 메타 형식으로 연결. PRIVATE 대시보드 `GPT_RECORDED_UNAUTHENTICATED` 및 지적 **7건** 원격 확인. 이는 새로운 GPT 판정이나 리뷰 실행이 아님.
+- **시험:** [PRIVATE Actions run #43902428499](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43902428499) SUCCESS, 대시보드 **77/77 PASS**, 공개 미리보기 **8/8 PASS**, 신규 detector 자체 격리 **11/11 PASS**. Actions 요약 생성 실행 확인. 실제 새 리뷰 도착 후 알림·Telegram 수신은 `NOT_VERIFIED`, Windows Notifier 읽기/실행은 `NOT_RUN`.
+- **결과 정본:** [GPT_REVIEW_COMPLETION_DETECTOR_IMPLEMENTATION_RESULT_r0001_20261117_KST.md](GPT_REVIEW_COMPLETION_DETECTOR_IMPLEMENTATION_RESULT_r0001_20261117_KST.md). 산출물별 SHA-256·상세 시험·호스트 차단 근거는 결과 원문. `PUBLIC` 신규 게시/운영 watcher DB·설정 변경 없음.
+- **NEXT_ONE_ACTION:** 기존 Windows Notifier의 완료 알림·워터마크/Telegram 실제 수신 경로를 기존 완료 이벤트와 비발송 시험으로만 검증. 신규 유료 리뷰·REQUEST/READY 반복 생성 금지.
+
 ## 리뷰 자동 감지 설계 검토 — Claude 협업 평가 반영 (2026-11-17 KST)
 - **정본 검토 문서:** [GPT_REVIEW_RESULT_AUTO_DETECTION_AND_COLLAB_FEEDBACK_r0001_20261117_KST.md](GPT_REVIEW_RESULT_AUTO_DETECTION_AND_COLLAB_FEEDBACK_r0001_20261117_KST.md). 사용자 제공 Claude 협업구조 8/10·자동화 7/10 평가의 강점·약점·제안을 수용/보류로 구분; 기존 GitHub watcher/Actions/Notifier 재사용, 새 원장/새 실행권한/유료 자동 재호출 없이 결과 감지→검증→대시보드 'GPT 판정 필요'→Telegram 1회 알림 설계.
 - **최신 사실 정정:** 2026-11-16의 자동 승인 첫 실전 `NOT_OBSERVED`는 당시 시점 기록. 2026-11-17 `REQ-L1-WORK-KNOWLEDGE-FIXED-R1-20261116`에 대해 APPROVAL_SIG/READY/DISPATCH/RESULT/RECEIPT 원격 존재·matching key 및 GPT 판정 게시 확인. **REMOTE_CHAIN=OBSERVED**, `HOST_DIRECT_E2E=NOT_VERIFIED`, `TELEGRAM_REAL_RECEIPT=NOT_VERIFIED`. 비용 상세는 영수증 필드 부재 시 추정 금지.
