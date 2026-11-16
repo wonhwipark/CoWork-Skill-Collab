@@ -5,11 +5,11 @@
       "work_id": "COWORK-AUTO-APPROVAL-20261115-001",
       "skill": "cowork-review-watcher",
       "title": "GPT→GitHub REQUEST 자동 서명·READY (제한된 사전 위임)",
-      "phase": "REVIEW",
+      "phase": "DISPOSITION",
       "owner": "GPT / Windows Claude Code",
       "self_test": "PASS",
-      "independent_review": "PENDING",
-      "next_action": "2026-11-16 NEW USER REQUEST: strengthened R0~R3 evidence-based critical evaluation + improvement proposals must be integrated into actual Claude auto-review prompt. GPT posted and read back GPT_CRITICAL_REVIEW_AUTO_APPLY_AND_TEST_REQUEST_r0001_20261116.md in same Work; REVIEW_TIER_TOKEN_BUDGET_V1.md §2.1 already amended. NEXT Windows Claude Code one-shot read request, inspect installed prompt builder and request text propagation, REUSE/CONNECT/minimal EXTEND, fake runner no-model test R1/R2/R3 and R0 only if supported, preserve immutable current v0.2.23 R2 REQUEST/ZIP/SOURCE_PIN; publish CLAUDE_CRITICAL_REVIEW_AUTO_APPLY_VALIDATION_FOR_GPT_20261116.md and CURRENT/TRACKER with readback. LIVE actual integration NOT_RUN, new paid calls 0; existing v0.2.23 R2 signature/READY/result absent in latest GitHub check, existing operation v0.2.20 AUTO_SIGNING OFF per last host evidence. No new READY or duplicate R2 until independently authenticated active policy and correct approval."
+      "independent_review": "PASS",
+      "next_action": "v0.2.23 독립 R2 완료(BLOCKING 0, MAJOR 0, MINOR 3, 정적, 비용 USD 0.52, 1회). GPT 판정 PASS 확인 전까지 운영 설치·자동 서명 활성화 안 함."
     }
   ]
 }
