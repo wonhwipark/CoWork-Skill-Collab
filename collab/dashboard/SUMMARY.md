@@ -96,6 +96,11 @@ flowchart TB
 | [REQ-COWORK-V0220-R1-20261115](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-COWORK-V0220-R1-20261115/REQUEST.md) | COWORK-DROPBOX-TO-GITHUB-MIGRATION | GPT_NOT_OBSERVED | NOT_VERIFIED |
 | [REQ-L1-MSC-MD-LINK-STRUCTURE-20261115-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-L1-MSC-MD-LINK-STRUCTURE-20261115-001/REQUEST.md) | L1-WORKSPACE-RAG-20261111-001 | READY_NOT_OBSERVED | NOT_VERIFIED |
 | [REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-001/REQUEST.md) | L1-WORKSPACE-RAG-20261111-001 | READY_NOT_OBSERVED | NOT_VERIFIED |
-| [REQ-L1-WORK-KNOWLEDGE-FIXED-R1-20261116](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-L1-WORK-KNOWLEDGE-FIXED-R1-20261116/REQUEST.md) | L1-WORKSPACE-RAG-20261111-001 | GPT_NOT_OBSERVED | NOT_VERIFIED |
+| [REQ-L1-WORK-KNOWLEDGE-FIXED-R1-20261116](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-L1-WORK-KNOWLEDGE-FIXED-R1-20261116/REQUEST.md) | L1-WORKSPACE-RAG-20261111-001 | GPT_RECORDED_UNAUTHENTICATED | ACCEPT_WITH_CHANGE |
+| ↳ B-1 | Work 역링크 계약 모순 수용; 개인 Knowledge origin 우선 | ACCEPT | - |
+| ↳ M-1 | Workflow 쓰기 방지는 검증된 실제 경계 필요 | ACCEPT | - |
+| ↳ M-2 | 공통 Git writer 경합 직렬화 및 CAS | ACCEPT | - |
+| ↳ M-3 | 그룹 구조 변경은 충돌·보류 후 재승인 | ACCEPT | - |
+| ↳ M-4 | Exporter 보존 회귀 T01/T02 필수 | ACCEPT | - |
 
 비차단 지적도 GPT 판정 기록 전에는 해결 처리하지 않습니다.

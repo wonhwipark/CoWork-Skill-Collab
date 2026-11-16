@@ -298,10 +298,36 @@
       "work_id": "L1-WORKSPACE-RAG-20261111-001"
     },
     {
-      "disposition": "NOT_VERIFIED",
-      "findings": [],
+      "disposition": "ACCEPT_WITH_CHANGE",
+      "findings": [
+        {
+          "decision": "ACCEPT",
+          "id": "B-1",
+          "summary": "Work 역링크 계약 모순 수용; 개인 Knowledge origin 우선"
+        },
+        {
+          "decision": "ACCEPT",
+          "id": "M-1",
+          "summary": "Workflow 쓰기 방지는 검증된 실제 경계 필요"
+        },
+        {
+          "decision": "ACCEPT",
+          "id": "M-2",
+          "summary": "공통 Git writer 경합 직렬화 및 CAS"
+        },
+        {
+          "decision": "ACCEPT",
+          "id": "M-3",
+          "summary": "그룹 구조 변경은 충돌·보류 후 재승인"
+        },
+        {
+          "decision": "ACCEPT",
+          "id": "M-4",
+          "summary": "Exporter 보존 회귀 T01/T02 필수"
+        }
+      ],
       "flags": {
-        "gpt": false,
+        "gpt": true,
         "ready": true,
         "receipt": true,
         "request": true,
@@ -309,15 +335,15 @@
       },
       "id": "REQ-L1-WORK-KNOWLEDGE-FIXED-R1-20261116",
       "paths": {
-        "gpt": "",
+        "gpt": "collab/reviews/REQ-L1-WORK-KNOWLEDGE-FIXED-R1-20261116/GPT_DISPOSITION.json",
         "ready": "collab/requests/REQ-L1-WORK-KNOWLEDGE-FIXED-R1-20261116/READY.md",
         "receipt": "collab/receipts/REQ-L1-WORK-KNOWLEDGE-FIXED-R1-20261116/RECEIPT_1.md",
         "request": "collab/requests/REQ-L1-WORK-KNOWLEDGE-FIXED-R1-20261116/REQUEST.md",
         "review": "collab/reviews/REQ-L1-WORK-KNOWLEDGE-FIXED-R1-20261116/REVIEW_RESULT_1.md"
       },
       "revision": "1",
-      "stage": "GPT_NOT_OBSERVED",
-      "tone": "warning",
+      "stage": "GPT_RECORDED_UNAUTHENTICATED",
+      "tone": "neutral",
       "trust": "DOCUMENT_FIELDS_MATCH_ONLY_SIGNATURE_NOT_VERIFIED",
       "work_id": "L1-WORKSPACE-RAG-20261111-001"
     }
