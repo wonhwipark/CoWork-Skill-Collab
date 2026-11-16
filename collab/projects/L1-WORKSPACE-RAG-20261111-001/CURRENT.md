@@ -1,5 +1,16 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 최신 결정 — 자동 PUBLIC 게시 기본 지시·Git 커밋 반례 보완/재시험 (2026-11-17 KST)
+
+- **사용자 최신 지시:** 세 패키지 L1Work 업로드, 앞으로 스킬 작업 최종본 자동 게시. 계약 [`JOBLIST_PUBLIC_DELIVERY_V1.md`](../../ops/CONTRACTS/JOBLIST_PUBLIC_DELIVERY_V1.md)에 **최종 게이트 PASS 시 매번 재확인 없이 L1Work/main 루트 자동 게시** 기본 절차 추가. 현재 무인 게시기/토큰 신규 설치/활성화는 안 함.
+- **코드 보완:** `l1-github_v0_3_59_1117.zip` 개발 후보에 `knowledge/`를 변경한 **이미 커밋된 출고 변경**도 upstream..HEAD diff로 검사해 Work-docs push 거부. `l1-fix-workflow v1.6.70`, `work-ledger-kernel v0.7.43` 후보는 함께 유지.
+- **증거:** [CI 43909570584](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43909570584) SUCCESS, `GITHUB_COMMITTED_KNOWLEDGE_DENY_PASS`, Workflow 변경 경로 차단 PASS, Kernel exporter Knowledge 해시 보존 T01/T02 PASS, ZIP CRC/경로/manifest/compile PASS. 자세한 [결과 r0002](GPT_KNOWLEDGE_GUARDS_HARDENING_RESULT_r0002_20261117_KST.md).
+- **현재 판정:** `CANDIDATE_BUILT=PASS` / `TARGETED_QA=PASS_SCOPE_LIMITED` / `HARD_OS_GUARD=NOT_VERIFIED` / `HOST_G0=NOT_VERIFIED` / `INDEPENDENT_CODE_REVIEW=NOT_RUN` / **`PUBLIC_RELEASE=BLOCKED_NOT_POSTED`** (모두 `development_not_for_deployment`). 업로드 요청은 승인 범위로 인식했으나 미충족 보호/배포 게이트를 자동 면제하지 않음.
+- **NEXT_ONE_ACTION:** 업무 GPT READ_ONLY G0로 단일 writer/credential/remote CAS를 확인 후 필요한 최소 보완·회귀/독립 코드 검증을 마무리하고, 검증된 **신규 최종 ZIP** 3종을 L1Work/main 루트에 별도 확인 없이 게시·원격 SHA 검증.
+
+---
+
+
 ## 최신 실행 결과 — 3종 Knowledge Guard 패키지 후보 생성·PUBLIC 게이트 차단 (2026-11-17 KST)
 
 - **요청:** 세 스킬 최신 기준 패키지 작업 후 PUBLIC `wonhwipark/L1Work/main` 루트 업로드.
