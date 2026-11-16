@@ -3,7 +3,7 @@
     "baseline": "collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates/l1-fix-workflow_v1_6_69_1115.zip",
     "baseline_sha256": "d4ba119298cd5763fd18ace2d54223fff010a8d2a1703ebab80eb4fa1b35846b",
     "output": "/home/runner/work/CoWork-Skill-Collab/CoWork-Skill-Collab/collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/output/l1-fix-workflow_v1_6_70_1117.zip",
-    "output_sha256": "805ca80f81488ccec17cc4b826b04838b64522a84da791861e001fc420e65502",
+    "output_sha256": "4461d2a19f8049833a95289f4167e151c305694e6ec08925ef44b899f9e8c76f",
     "size_bytes": 758093,
     "verification": "ZIP_CRC_AND_PYTHON_COMPILE_PASS",
     "release": "development_not_for_deployment"
@@ -12,7 +12,7 @@
     "baseline": "collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates/l1-github_v0_3_57_1114.zip",
     "baseline_sha256": "f1b8fb43d3af427f2c5d52864051c65894f3cb45969ab35ca502f344735611ce",
     "output": "/home/runner/work/CoWork-Skill-Collab/CoWork-Skill-Collab/collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/output/l1-github_v0_3_58_1117.zip",
-    "output_sha256": "16453edbfc96779052685eabeccb6a7108f783987be7cdcccb5770aa680606a8",
+    "output_sha256": "571d2ee9089a5ad1ac17dc0ddeab93867fbb2775ad073a4dee48ea0255ed850e",
     "size_bytes": 566775,
     "verification": "ZIP_CRC_AND_PYTHON_COMPILE_PASS",
     "release": "development_not_for_deployment"
@@ -21,7 +21,7 @@
     "baseline": "artifacts/work-ledger-kernel_v0_7_42_1116.zip",
     "baseline_sha256": "ece2bce143ef35a1c8cc3bc12ddf6a73e27e0f218fc69fec87844759d9dfc164",
     "output": "/home/runner/work/CoWork-Skill-Collab/CoWork-Skill-Collab/collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/output/work-ledger-kernel_v0_7_43_1117.zip",
-    "output_sha256": "23e78025d1612925c04fd9b028e37025521d2c354f5958c9894632722cbdd040",
+    "output_sha256": "1718349df021a47823d52c41b7b659b28dc4cd22042d17d758519af7a3439189",
     "size_bytes": 319794,
     "verification": "ZIP_CRC_AND_PYTHON_COMPILE_PASS",
     "release": "development_not_for_deployment"
