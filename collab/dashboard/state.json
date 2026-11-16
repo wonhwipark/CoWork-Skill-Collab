@@ -426,11 +426,11 @@
     {
       "evidence": "프로젝트 TRACKER.json 신고 값 · 운영 근거 별도 확인 필요",
       "independent_review": "PENDING",
-      "next_action": "L1Work/main/handoffs MSC G0 인계 r0001 게시 완료. 업무 GPT/허용 로컬 Agent: Updater 설치 I/O·그룹 writer/호스팅·공개 4종 대비 설치 차이 Q1~Q8 READ_ONLY 확인 후 비민감 회신. GPT: 입증된 gap만 최소 패치·합성 시험. 정",
+      "next_action": "G0와 독립: PRIVATE main 신규 후보 doc-converter v0.2.23 / work-ledger-kernel v0.7.40 격리 Python3.10/3.11 회귀·B HTML 브라우저·ZIP manifest 시험 후 코드 판정. Workflow v1.6.69 / Analyzer ",
       "owner": "업무 GPT",
       "phase": "REVIEW",
       "record_source": "REGISTERED_METADATA_UNVERIFIED",
-      "self_test": "NOT_VERIFIED",
+      "self_test": "NOT_RUN",
       "skill": "l1-knowledge-updater",
       "source": "collab/projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md",
       "title": "l1-knowledge-updater",
