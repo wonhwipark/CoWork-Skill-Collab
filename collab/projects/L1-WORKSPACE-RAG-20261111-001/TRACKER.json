@@ -6,10 +6,10 @@
       "skill": "l1-knowledge-updater",
       "title": "l1-knowledge-updater",
       "phase": "REVIEW",
-      "owner": "Windows Claude Code 독립 설계 리뷰 대기 / GPT 판정",
+      "owner": "Windows Claude Code (자동 서명·READY·독립 리뷰 결과 확인 대기)",
       "self_test": "PASS",
       "independent_review": "PENDING",
-      "next_action": "기존 정식 설계 리뷰 실행·영수증 중복 확인 → Windows Claude Code ①~④ 후속 설계 리뷰 결과·근거 회수 (신규 비용·READY 없이)"
+      "next_action": "REQ-L1-WORK-KNOWLEDGE-FIXED-R1-20261116 신규 SOURCE_PIN 검증 완료 → Windows 자동 승인·READY·리뷰 결과/영수증 확인 → GPT 판정"
     }
   ]
 }
