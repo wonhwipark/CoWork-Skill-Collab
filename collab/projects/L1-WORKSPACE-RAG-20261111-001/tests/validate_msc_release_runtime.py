@@ -14,11 +14,14 @@ import unittest.mock
 import zipfile
 
 ROOT=Path(__file__).resolve().parents[1]
-CANDS=ROOT/"candidates"
+CANDS=Path(os.environ.get("MSC_RELEASE_OUTPUT_DIR", str(ROOT/"candidates")))
 PRESETS=[
     ("doc-converter_v0_2_24_1116.zip","2ef0929bc0a80a1c0aca67bf3c8fc02f967bddba223b45c27807c363e96229f7"),
     ("work-ledger-kernel_v0_7_41_1116.zip","48d1bf5e24c613e7e0ba04df9946c427c5d1ee39d8d16204966afff07e93497b"),
 ]
+if os.environ.get("MSC_RELEASE_OUTPUT_DIR"):
+    data=json.loads((CANDS/"release_manifest.json").read_text(encoding="utf-8"))
+    PRESETS=[(row["filename"],row["sha256"]) for row in data["candidates"]]
 
 def check(flag,name,note=""):
     if not flag: raise AssertionError(name+": "+str(note))
@@ -36,8 +39,8 @@ def run():
         sandbox=Path(td)
         for name,expected in PRESETS:
             unpack(name,expected,sandbox/name.rsplit(".zip",1)[0])
-        converter=(sandbox/"doc-converter_v0_2_24_1116"/"doc-converter")
-        kernel=(sandbox/"work-ledger-kernel_v0_7_41_1116")
+        converter=(sandbox/PRESETS[0][0].removesuffix(".zip")/"doc-converter")
+        kernel=(sandbox/PRESETS[1][0].removesuffix(".zip"))
         sys.path.insert(0,str(kernel))
         sys.path.insert(0,str(converter/"scripts"))
         from work_ledger_kernel.kernel import WorkLedgerKernel
