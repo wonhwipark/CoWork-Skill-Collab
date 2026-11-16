@@ -1,5 +1,11 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 새 SOURCE_PIN repo_id 포맷 오류 보정 — 로컬 AUTO_SIGNING_UNCERTAIN 정산 대기 (2026-11-17 KST)
+- **원인:** Windows Claude Code 보고 `ApprovalRejected: REPO_ID_MISMATCH`: 신뢰 루트 `repo_id` 문자열 `"1451933830"`와 신규 SOURCE_PIN JSON 숫자 `1451933830`의 타입 불일치. watcher의 fail-closed 정상 동작이며 signer/승인 정책 결함으로 보지 않음. Guard `AUTO_SIGNING_UNCERTAIN`은 사용자 전달된 Windows 호스트 상태, GPT 호스트 DB 직접 확인 아님.
+- **생성 측 보정:** [협업 운송 결과](../COWORK-DROPBOX-TO-GITHUB-MIGRATION/SOURCE_PIN_REPO_ID_STRING_REPAIR_RESULT_r0001_20261117_KST.md) — 공통 생성기 `collab/ops/source_pin.py`와 총 13개 회귀, 기존 Guard·MSC SOURCE_PIN의 `repo_id` 타입만 문자열 보정·원격 검증. GitHub Actions 실제 SOURCE_PIN 11/11 타입 검사 PASS. signer/READY/watcher 로컬 버전·DB·키·Notifier·위임 정책 **변경 없음**.
+- **미정산:** Guard의 로컬 `AUTO_SIGNING_UNCERTAIN`은 포맷 수정만으로 자동 해제되었다고 주장하지 않음. 변경 이후 두 요청의 원격 APPROVAL_SIG/READY/DISPATCH/REVIEW_RESULT/RECEIPT는 조회 시 미관측. 비용·중복/불확실 로컬 이력은 Windows에서 확인해야 하며 자동 재큐잉 금지.
+- **NEXT_ONE_ACTION:** 기존 Windows 호스트에서 **읽기 전용**으로 두 요청의 원인·로컬 예약/실행 이력과 재스캔 결과를 확인. 기존 유효 위임·한도·중복 게이트를 우회하거나 신규 유료 요청을 만들지 않음.
+
 ## 자동 승인 v0.2.23 LIVE 전환 완료: AUTO_SIGNING_LIVE=PASS_HOST_VERIFIED (2026-11-16 KST)
 
 - 결과: `CLAUDE_V023_AUTO_APPROVAL_LIVE_CLOSEOUT_RESULT_FOR_GPT_20261116.md` (PRIVATE `main`, commit `169579371514`, SHA-256 `e3339a8f34b48f40b894c12aa1bab443c08c92db5aaeda7f6b9cf0713dcca1d2`). R2 영수증 보충 `USAGE_RECEIPT_1.json` commit `f1279962649e` (SHA-256 `869ae22e1633433d4e199175ba7ba0b08fc345f89fde4b1d717c5a6e5d61f65a`, v0.2.20 계약상 필수 아님, DB 사실만).
