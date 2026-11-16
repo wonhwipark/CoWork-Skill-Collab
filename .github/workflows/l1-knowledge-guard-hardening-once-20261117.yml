@@ -1,0 +1,55 @@
+name: L1 Knowledge guard hardening QA once
+on:
+  push:
+    branches: [dev/l1-knowledge-guards-20261117]
+    paths:
+      - .github/workflows/l1-knowledge-guard-hardening-once-20261117.yml
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Download pinned public Kernel source (SHA-256 verified by builder)
+        run: |
+          mkdir -p artifacts
+          curl --fail --location --retry 3 --silent --show-error -o artifacts/work-ledger-kernel_v0_7_42_1116.zip https://raw.githubusercontent.com/wonhwipark/L1Work/main/work-ledger-kernel_v0_7_42_1116.zip
+      - name: Build development ZIPs pinned to exact original bytes
+        run: |
+          python collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/build_l1_knowledge_guard_candidates_r0001_20261117.py --repo . --out collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/output
+      - name: Security regression and actual Kernel exporter preserved-file checks
+        run: |
+          python collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/tests_knowledge_guard_candidates.py
+      - name: ZIP CRC plus traversal/symlink and manifest checks
+        run: |
+          python - <<'PY'
+          import pathlib,stat,zipfile
+          folder=pathlib.Path('collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/output')
+          names=['l1-fix-workflow_v1_6_70_1117.zip','l1-github_v0_3_59_1117.zip','work-ledger-kernel_v0_7_43_1117.zip']
+          for name in names:
+              p=folder/name
+              with zipfile.ZipFile(p) as z:
+                  assert z.testzip() is None
+                  paths=z.namelist()
+                  assert len(paths)==len(set(paths))
+                  for info in z.infolist():
+                      assert not info.filename.startswith('/') and '..' not in pathlib.PurePosixPath(info.filename).parts
+                      assert stat.S_IFMT(info.external_attr>>16)!=stat.S_IFLNK
+                  print('ZIP_SAFETY_PASS',name,p.stat().st_size)
+          PY
+      - name: Publish candidate results to PRIVATE development branch only
+        run: |
+          git config user.name 'CoWork development CI'
+          git config user.email 'cowork-dev-ci@users.noreply.github.com'
+          git add collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/output
+          if ! git diff --cached --quiet; then
+            git commit -m 'dev(l1-knowledge): hardened outbound commit guard and targeted QA'
+            git push origin HEAD:dev/l1-knowledge-guards-20261117
+          fi
