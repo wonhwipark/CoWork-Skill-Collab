@@ -94,7 +94,10 @@ def release_kernel(data,outname,version):
  valid(txt(data,"VERSION").strip()=="0.7.41-dev.1","kernel previous version mismatch")
  write(data,"VERSION",version+"\n")
  launcher=txt(data,"work-ledger-kernel")
- launcher=replace(launcher,"0.7.37-dev.1",version,"kernel linux launcher --version")
+ print("LAUNCHER_HEADER",repr(launcher[:450]),flush=True)
+ print("OLD_VERSION_CODE_FILES",[(key,data[key].count(b"0.7.37-dev.1")) for key in data if b"0.7.37-dev.1" in data[key] and (key.endswith(".py") or key=="work-ledger-kernel")][:25],flush=True)
+ if "0.7.37-dev.1" in launcher:
+  launcher=replace(launcher,"0.7.37-dev.1",version,"kernel linux launcher --version")
  write(data,"work-ledger-kernel",launcher)
  skill=txt(data,"SKILL.md")
  skill=replace(skill,'version: "0.7.38-dev.1"','version: "'+version+'"',"kernel frontmatter")
