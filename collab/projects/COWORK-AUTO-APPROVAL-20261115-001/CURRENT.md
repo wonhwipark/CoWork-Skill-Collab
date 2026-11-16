@@ -1,5 +1,12 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 운영 자동 승인 미활성화 오류 교정·v0.2.23 LIVE 마무리 원샷 지시 (2026-11-16 KST)
+
+- **사용자 문제 제기:** Windows Claude Code가 현재 v0.2.20의 수동 승인 도구 `approve_request.py`만 설명하면서, 기존 사전 위임에 따른 v0.2.23 자동 승인 LIVE를 진척시키지 못한 협업 오류. GPT가 GitHub 요청 게시와 실제 Windows 실행을 연결하지 못한 점을 명시적으로 인정. 키가 PC에 존재하는 것과 매번 Claude 대화형 승인해야 한다는 주장은 별개.
+- **정확한 현재 근거:** 기존 R2 `REQ-COWORK-AUTO-APPROVAL-V023-R2-20261115`는 실제 `APPROVAL_SIG/READY/DISPATCH/REVIEW_RESULT/RECEIPT` 모두 원격 존재, 유료 모델 **1회 완료**, `BLOCKING=0`, `MAJOR=0`, 원문 `MINOR=2`; 비용 `USD 0.5244525`는 Windows DB 보고. GPT 판정 [GPT_V023_R2_FINAL_DISPOSITION_AND_LIVE_EVIDENCE_GATE_r0001_20261116.md](GPT_V023_R2_FINAL_DISPOSITION_AND_LIVE_EVIDENCE_GATE_r0001_20261116.md) `ACCEPT_WITH_FOLLOWUP`, `LIVE_ACTIVATION=HOLD_PENDING_EVIDENCE_AND_HOST_TESTS`. 호스트 요약 MINOR 3 불일치, `USAGE_RECEIPT_1.json` 부재는 재호출 없이 정산 판단 필요. 운영은 최종 호스트 보고 v0.2.20, `AUTO_SIGNING=OFF`.
+- **GPT 실행 시정 요청 게시·원격 readback PASS:** [GPT_V023_AUTO_APPROVAL_LIVE_CLOSEOUT_CORRECTION_r0001_20261116.md](GPT_V023_AUTO_APPROVAL_LIVE_CLOSEOUT_CORRECTION_r0001_20261116.md), commit `f7ba4347cd5dac19cc946be5d714287b6fa4433c`. **새 R2·추가 비용·수동 매요청 금액 확인 금지**. 한 번에 `R2 증빙 정합성 확인 → 기존 보호 정책 범위 확인 → 백업 → 기능 OFF v0.2.23 설치·회귀 → 보호된 LOCAL 자동 승인 활성화 → 두 주기/재시작/롤백/Notifier 검증 → 결과/영수증 원격 게시`. 실제 Windows 호스트 작업은 이 채팅 GitHub 게시만으로 자동 시작되지 않으므로 `HOST_CLOSEOUT=NOT_RUN` 유지. 독립적인 비판적 R0~R3 프롬프트 적용은 별도 기존 인계로 병렬 관리, 추가 리뷰로 이번 LIVE 차단 금지.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 위 신규 **정확한 상대 경로**를 직접 열어 동작 설명이 아닌 조건부 운영 전환을 처리하고 `CLAUDE_V023_AUTO_APPROVAL_LIVE_CLOSEOUT_RESULT_FOR_GPT_20261116.md` 및 CURRENT/TRACKER를 실제 결과에 따라 게시·원격 readback. 실패 시 차단 게이트만 `BLOCKED`와 근거를 기록하고 모델 재호출·임의 재큐잉·같은 승인 재질문 없이 종료.
+
 ## GPT 최신 판정 — v0.2.23 R2 정적 PASS, 조건부 LIVE 증빙 확인 대기 (2026-11-16 KST)
 - 정본: [GPT R2 결과·운영 게이트](GPT_V023_R2_FINAL_DISPOSITION_AND_LIVE_EVIDENCE_GATE_r0001_20261116.md). watcher 작성 REVIEW_RESULT_1.md, DISPATCH_1.md, RECEIPT_1.md를 원격 직접 확인. R2 BLOCKING 0 · MAJOR 0, 정적 리뷰 범위 PASS. 기존 R2 승인·서명·READY·모델 호출 1회 이력 보존.
 - 판정 차이: 실제 원본 리뷰 MINOR 2건, Claude 요약 및 파생 추적 MINOR 3건. USAGE_RECEIPT_1.json 미게시, 비용 USD 0.5244525는 Windows 호스트 DB REVIEW_COST 보고(원격 RECEIPT_1.md에는 없음). 추가 모델 호출 금지.
