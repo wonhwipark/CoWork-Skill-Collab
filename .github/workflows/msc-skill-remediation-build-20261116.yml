@@ -6,7 +6,7 @@ on:
       - .github/workflows/msc-skill-remediation-build-20261116.yml
       - collab/projects/L1-WORKSPACE-RAG-20261111-001/tests/build_msc_one_review_fix.py
 permissions:
-  contents: write
+  contents: read
 jobs:
   remediate:
     if: github.repository == 'wonhwipark/CoWork-Skill-Collab' && github.ref == 'refs/heads/msc-skill-validation-20261116'
@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
-          persist-credentials: true
+          persist-credentials: false
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
         with:
           python-version: '3.11'
@@ -73,13 +73,15 @@ jobs:
                   print('RUN_TESTS',name,test,flush=True)
                   subprocess.run([sys.executable,'-m','pytest','-q',test],cwd=cwd,check=True)
           PY
-      - name: Commit only tested new ZIP bytes to isolated branch
+      - name: Export successfully tested candidate ZIP bytes to private job log
         run: |
           set -euo pipefail
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config user.name "github-actions[bot]"
-          git add collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates/doc-converter_v0_2_24_1116.zip
-          git add collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates/work-ledger-kernel_v0_7_41_1116.zip
-          git diff --cached --quiet && { echo "Already committed"; exit 0; }
-          git commit -m "dev(msc): stage tested single-review remediation skill packages"
-          git push origin HEAD:msc-skill-validation-20261116
+          python - <<'PY'
+          import base64,hashlib,pathlib
+          root=pathlib.Path('collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates')
+          for name in ('doc-converter_v0_2_24_1116.zip','work-ledger-kernel_v0_7_41_1116.zip'):
+              data=(root/name).read_bytes()
+              print('MSC_ZIP_BEGIN '+name+' '+str(len(data))+' '+hashlib.sha256(data).hexdigest(),flush=True)
+              print('MSC_ZIP_B64 '+base64.b64encode(data).decode('ascii'),flush=True)
+              print('MSC_ZIP_END '+name,flush=True)
+          PY
