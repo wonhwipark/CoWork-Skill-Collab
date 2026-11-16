@@ -29,7 +29,7 @@
       "status": "문서상 진행",
       "title": "COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태",
       "tone": "neutral",
-      "topic": "Claude 리뷰 → GPT 실제 수신 검증·자동수신 경계 확정 (2026-11-17 KST)"
+      "topic": "SOURCE_PIN repo_id 문자열 포맷 수정·자동 승인 불확실 상태 보존 (2026-11-17 KST)"
     },
     {
       "id": "COWORK-GITHUB-DASHBOARD-20261111-001",
