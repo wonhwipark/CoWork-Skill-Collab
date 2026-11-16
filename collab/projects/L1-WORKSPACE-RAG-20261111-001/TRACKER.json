@@ -5,11 +5,11 @@
       "work_id": "L1-WORKSPACE-RAG-20261111-001",
       "skill": "l1-knowledge-updater",
       "title": "l1-knowledge-updater",
-      "phase": "REVIEW",
-      "owner": "Windows Claude Code (자동 서명·READY·독립 리뷰 결과 확인 대기)",
-      "self_test": "PASS",
-      "independent_review": "PENDING",
-      "next_action": "REQ-L1-WORK-KNOWLEDGE-FIXED-R1-20261116 신규 SOURCE_PIN 검증 완료 → Windows 자동 승인·READY·리뷰 결과/영수증 확인 → GPT 판정"
+      "phase": "DESIGN",
+      "owner": "GPT (R1 판정·설계 완료) → 업무 GPT (G0 READ_ONLY 검증)",
+      "self_test": "NOT_RUN",
+      "independent_review": "ACCEPT_WITH_CHANGE",
+      "next_action": "업무 GPT 설치본/그룹 구조·공통 Git writer·Kernel link G0 READ_ONLY 매핑 → 입증된 gap만 최소 패치·T01~T10 시험; 유료 리뷰 추가 없음"
     }
   ]
 }
