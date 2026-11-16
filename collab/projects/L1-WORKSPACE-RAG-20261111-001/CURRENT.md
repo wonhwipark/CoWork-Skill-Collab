@@ -1,5 +1,17 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 업무 GPT Knowledge 폴더·권한 분리 인계 게시 — 2026-11-16 KST
+
+- **사용자 최신 합의:** GitHub 탐색성을 위해 개인 업무용 `l1-workspace`에 물리적 `knowledge/` 탐색 폴더를 설계. 해당 폴더 `WRITE=l1-knowledge-updater ONLY`, `l1-fix-workflow=READ_ONLY`; `works/`는 기존 Kernel Work/Evidence 정본 그대로, Updater의 Work 갱신은 기존 Kernel 허용 writer 경유. Kernel 신규 `KNOWLEDGE` Profile/별도 원장 선제 추가 없음. 그룹 확정 지식은 승인 후 기존 `l1sw-dev-knowledge` writer.
+- **업무 GPT 독립형 인계 MD:** [L1_WORKSPACE_KNOWLEDGE_FOLDER_UPDATER_HANDOFF_r0001_20261116_KST.md](L1_WORKSPACE_KNOWLEDGE_FOLDER_UPDATER_HANDOFF_r0001_20261116_KST.md). PRIVATE main 게시 commit `975610d5911e28b1da994f9756789f07287e8feb`, Git blob `b0fb8adc39dbec9bd9f32724457c30d2a5a1c697`, 실제 UTF-8 21134 bytes / SHA-256 `96aaa3b9c63285b2f01aab9d4c6fa3676d85c8679e3cbf6e2634535617f0242d`, remote content readback PASS. 회사 코드·MSC 원문·비밀 없음.
+- **인계 핵심:** ③ 두 진입점 Work/Evidence/MSC 원본·Source Revision 참조 + `knowledge/` 소유권·동시 writer/경로 강제. ④ 기존 Preview/유효 승인→그룹 writer/readback→개인 knowledge 상태+원 Work 역링크, 응답 유실/부분 실패 복구. C01~C18 설계 반례, G01~G12 실제 설치본 READ_ONLY 매핑 요청.
+- **리뷰 선조회:** 기존 2026-11-16 Claude 설계 리뷰 RESULT MD/실행 근거 JSON 미발견; 별도 2026-11-15 정식 Work→Knowledge 리뷰 READY/RESULT/RECEIPT 미발견, SUBMISSION_STATUS `NOT_RUN/NOT_RECEIVED`. 금회 파일은 **사용자 합의 설계의 G0 검토용 인계이며 Claude 독립 리뷰 PASS/최종 기능 검증 결과 아님**. 고정 요청/ZIP/SOURCE_PIN·비용 승인 이력 불변, 신규 REQUEST/READY/모델 호출 0.
+- **이번 작업 범위:** 비민감 인계 문서·현재 상태 게시만. `knowledge/` 실제 생성, 업무 호스트 스킬/권한 수정, Workspace/그룹 정본 데이터 쓰기, PUBLIC 배포, 실제 E3/Job/운영 watcher 변경 `NOT_RUN`.
+- **NEXT_ONE_ACTION:** 업무 GPT가 인계 MD로 설치본 `l1-fix-workflow / work-ledger-kernel / l1-knowledge-updater`와 그룹 writer의 기존 기능·경로/권한을 READ_ONLY 확인, 요구별 REUSE/CONNECT/미확인/입증된 최소 EXTEND 회신 → 독립 리뷰 결과 도착 시 지적과 합쳐 GPT 설계 판정.
+
+---
+
+
 ## 신규 독립 설계 리뷰 인계 — Workflow × Updater Evidence/그룹 게시·역링크 (2026-11-16 KST)
 
 - **사용자 요청:** 구현 GPT 회신을 토대로 ① Workflow를 통한 Work ID 연결(사용자 보고), ② 양쪽의 기존 code-analyzer 재사용(사용자 보고), ③ 같은 Work에 Work ID·Code Evidence·MSC 원본·Source Revision 보존/교차 재사용(미검증), ④ Updater Preview·승인 이후 기존 l1sw-dev-knowledge writer 게시·readback·원래 Work 역링크(미검증)에 대한 **독립 설계 리뷰 요청**.
