@@ -1,0 +1,28 @@
+name: MSC kernel export behavioral inspection
+on:
+  push:
+    branches: [msc-skill-validation-20261116]
+    paths:
+      - .github/workflows/msc-skill-runtime-inspection-20261116.yml
+      - collab/projects/L1-WORKSPACE-RAG-20261111-001/tests/inspect_kernel_runtime_tests.py
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - name: Get isolated test scripts
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Read only latest candidate ZIPs from PRIVATE main
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: main
+          path: latest
+          persist-credentials: false
+      - name: Inspect existing WorkUX export_docs test setup (no operating host)
+        run: |
+          set -euo pipefail
+          python collab/projects/L1-WORKSPACE-RAG-20261111-001/tests/inspect_kernel_runtime_tests.py
