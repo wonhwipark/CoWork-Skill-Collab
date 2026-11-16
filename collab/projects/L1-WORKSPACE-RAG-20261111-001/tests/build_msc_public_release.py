@@ -122,7 +122,9 @@ def make_zip(path,data):
   for name in sorted(data):
    info=zipfile.ZipInfo(name,DATE)
    info.compress_type=zipfile.ZIP_DEFLATED
-   info.external_attr=0o644<<16
+   # Installers such as unzip preserve Unix executable bits from the central directory.
+   info.create_system=3
+   info.external_attr=(0o755 if name == "work-ledger-kernel" else 0o644)<<16
    z.writestr(info,data[name])
  with zipfile.ZipFile(path) as z:
   valid(z.testzip() is None,"release CRC failed "+path.name)
