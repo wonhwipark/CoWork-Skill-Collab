@@ -54,10 +54,12 @@ def run():
         slots=k._slots(profile=profile)
         check(bool(slots),"kernel-registry-has-profiles",len(slots))
         print("REGISTRY_SAFE_CHOICES",json.dumps(slots,ensure_ascii=False)[:3600],flush=True)
-        excluded={"oracle_manifest","eval_baseline","tooling_baseline","baseline_measure","change_provenance","eval_after","tooling_after","after_measure"}
-        eligible=[x for x in slots if x.get("kind") not in excluded and x.get("provider") and x.get("kind") and x.get("stage")]
-        check(bool(eligible),"kernel-registry-has-evidence-kind",len(eligible))
-        chosen=next((x for x in eligible if x.get("provider") in ("doc-converter","code-analyzer")),eligible[0])
+        chosen=None
+        for slot in slots:
+            if "code-analyzer" in slot.get("providers",[]) and "asis_msc" in slot.get("evidence_kinds",[]):
+                chosen={"provider":"code-analyzer","kind":"asis_msc","stage":slot["stage"]}
+                break
+        check(chosen is not None,"kernel-registry-as-is-msc-supported",chosen)
         def register(filename,text,work_id=w):
             source=sandbox/filename
             source.write_text(text,encoding="utf-8")
