@@ -9,7 +9,7 @@
       "owner": "GPT 개발 패치 종료 / 업무 G0·E3 확인 대기",
       "self_test": "PASS",
       "independent_review": "COMPLETE_ONE_CYCLE_REVISE",
-      "next_action": "사용자 지시로 독립 리뷰 1회 종료, 추가 리뷰 요청 없음. doc-converter v0.2.24(215092B; SHA256 2ef0929bc0a80a1c0aca67bf3c8fc02f967bddba223b45c27807c363e96229f7), kernel v0.7.41(413709B; SHA256 48d1bf5e24c613e7e0ba04df9946c427c5d1ee39d8d16204966afff07e93497b) PRIVATE main 게시·원격 확인 PASS. 격리 Python3.11 7/7·CRC/내부 원장 PASS. 실제 export_docs/skillsilent runner/업무 host E3 NOT_RUN, PUBLIC delivery BLOCKED. 다음: 업무 설치본 계약/실제 통합시험만 확인, 재리뷰 금지."
+      "next_action": "사용자가 최신 doc-converter v0.2.24/kernel v0.7.41 ZIP의 L1Work/main 루트 게시를 명시 요청. PUBLIC 원격엔 v0.2.21/v0.7.37만 존재. 개발 ZIP은 development_not_for_deployment이고 actual Work export_docs·managed skillsilent·전체 회귀·보안 점검 미완 → PUBLIC_RELEASE=BLOCKED/NOT_POSTED (정본 PUBLIC_RELEASE_GATE/JOBLIST_PUBLIC_DELIVERY). 추가 Claude 리뷰 금지(1회 종료). 기존 사용자 승인 범위에서 출시 필수 시험→정식 릴리스→새 PUBLIC 루트 ZIP 게시 및 readback 필요."
     }
   ]
 }
