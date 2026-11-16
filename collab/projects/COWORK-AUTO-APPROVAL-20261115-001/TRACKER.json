@@ -9,7 +9,7 @@
       "owner": "Windows 운영 호스트 (자동 승인 LIVE) / GPT 판정",
       "self_test": "PASS",
       "independent_review": "PASS",
-      "next_action": "2026-11-16 19:47 KST: v0.2.23 운영 설치·보호 위임 활성화 완료(AUTO_SIGNING_LIVE=PASS_HOST_VERIFIED). 전 게이트 PASS, 회귀 967 passed/12 skipped, 2주기·재시작·소급 3건 차단·Notifier·롤백 준비 확인, 모델 호출 0. 첫 실제 자동 서명 요청은 NOT_OBSERVED. 범위: COWORK-/L1-WORKSPACE-, 3 skill, POLICY-STATIC-V1, 1회·USD 1/요청, 2회·USD 3/일, USD 10/월, 30일(만료 2026-12-16). 다음: GPT 판정."
+      "next_action": "v0.2.23 LIVE 호스트 보고 유지. SOURCE_PIN 숫자 repo_id 원인 확인·두 요청 문자열 타입 보정(원격 PASS). Guard AUTO_SIGNING_UNCERTAIN 로컬 상태 해제 미확인. Windows 읽기 전용 예약/서명/비용 이력 대조가 다음 단계; 승인 게이트 우회·재큐잉 금지."
     }
   ]
 }
