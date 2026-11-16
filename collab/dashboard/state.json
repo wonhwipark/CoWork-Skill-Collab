@@ -20,7 +20,7 @@
       "status": "문서상 진행",
       "title": "COWORK-AUTO-APPROVAL-20261115-001 — CURRENT",
       "tone": "neutral",
-      "topic": "자동 승인 v0.2.23 LIVE 전환 완료: AUTO_SIGNING_LIVE=PASS_HOST_VERIFIED (2026-11-16 KST)"
+      "topic": "새 SOURCE_PIN repo_id 포맷 오류 보정 — 로컬 AUTO_SIGNING_UNCERTAIN 정산 대기 (2026-11-17 KST)"
     },
     {
       "id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
