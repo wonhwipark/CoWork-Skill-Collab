@@ -101,8 +101,32 @@ def smoke():
         print("KERNEL_EXPORTS", [x for x in dir(kmod) if not x.startswith("_")][:45])
         from work_ledger_kernel import kernel as kernel_module
         print("KERNEL_CLASSES", [(name,str(inspect.signature(getattr(kernel_module,name)))) for name in dir(kernel_module) if name in ("Kernel","WorkLedgerKernel")])
-        print("KERNEL_NAV_SOURCE_SMOKE_PASS (not E2E)")
-        print("TARGETED_SMOKE_PASS (T01/T02 full exporter and hard OS gate still NOT_RUN)")
+        from work_ledger_kernel.kernel import WorkLedgerKernel
+        import hashlib
+        ledger = WorkLedgerKernel(Path(tmp) / "ledger")
+        target = Path(tmp) / "kernel-workspace"
+        knowledge = target / "knowledge"
+        knowledge.mkdir(parents=True)
+        (knowledge / "README.md").write_text("# Individual knowledge index\n", encoding="utf-8")
+        (knowledge / "case.md").write_text("Unpublished individual edits\n", encoding="utf-8")
+        digest_before = {
+            p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in knowledge.glob("*.md")
+        }
+        exported = ledger.work_docs_export(str(target), None)
+        assert exported.get("ok") is not False, exported
+        assert not any(name.startswith("knowledge/") for name in exported.get("changed_files", []))
+        digest_after = {
+            p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in knowledge.glob("*.md")
+        }
+        assert digest_before == digest_after, (digest_before, digest_after)
+        root_readme = (target / "README.md").read_text(encoding="utf-8")
+        assert "[Knowledge 탐색](knowledge/README.md)" in root_readme
+        ledger.work_docs_export(str(target), None)
+        assert digest_before == {
+            p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in knowledge.glob("*.md")
+        }
+        print("KERNEL_EXPORTER_T01_T02_PASS", digest_after)
+        print("TARGETED_SMOKE_PASS (T01/T02, workflow/git local guards; hard OS gate still NOT_RUN)")
 
 
 if __name__ == "__main__":
