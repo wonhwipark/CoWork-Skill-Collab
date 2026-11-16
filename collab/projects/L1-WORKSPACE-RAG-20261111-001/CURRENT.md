@@ -1,5 +1,11 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## Guard 코드 R1·MSC 설계 R1 SOURCE_PIN 문자열 포맷 수정 (2026-11-17 KST)
+- **실제 수정:** Guard `REQ-L1-WORK-KNOWLEDGE-GUARD-CODE-R1-20261117` 및 MSC `REQ-L1-MSC-DUAL-ENTRY-DESIGN-R1-20261117`의 기존 `SOURCE_PIN.json` `repo_id` 숫자 `1451933830` → JSON 문자열 `"1451933830"`. 두 변경 외 Commit A, `SKILL_COLLAB_SOURCE_PIN_V1` schema, REQUEST ID/revision, ZIP SHA·고정 리뷰 입력 불변. 변경 전·후 Git blob 원격 확인. 승인 서명/READY를 GPT가 게시하지 않음.
+- **재발 방지:** 신규 공통 생성기 `collab/ops/source_pin.py`의 문자형 생성·엄격 검증을 CoWork START_HERE/PRIVATE Actions에 연결. [상세 결과](../COWORK-DROPBOX-TO-GITHUB-MIGRATION/SOURCE_PIN_REPO_ID_STRING_REPAIR_RESULT_r0001_20261117_KST.md). 실 CI 13/13 SOURCE_PIN 시험 + 전체 11/11 타입 검사, 대시보드 77/77 + 미리보기 8/8 PASS.
+- **검토/실행 현상:** Guard의 `AUTO_SIGNING_UNCERTAIN`은 Windows Claude Code 사용자 전달 사항; 포맷 수정만으로 로컬 불확실 상태가 해소된 것으로 보고하지 않음. 이번 확인 시 두 요청 모두 APPROVAL_SIG/READY/DISPATCH/REVIEW_RESULT/RECEIPT **원격 NOT_OBSERVED**. 실제 독립 리뷰·영수증 수신 전까진 각각 `PENDING`; 사용자 승인 없는 새 REQUEST/재리뷰·자동 재큐잉 없음.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 로컬 두 요청의 기존 시도·예약·실행 상태를 읽기 전용 정산하고, 기존 유효 보호 위임과 중복·비용 게이트를 만족한 **정상적인 기존 요청 1사이클**만 처리. GPT는 REVIEW_RESULT/RECEIPT 도착 후 한 번 판정.
+
 ## 최신 상태 — 기존 MSC 설계 리뷰 완료 우선·Windows 실행 인계 (2026-11-17 KST)
 
 - **사용자 요청·범위:** Updater의 코드 기반 직접 지식 작성과 Workflow 이슈 AS-IS/TO-BE 문서 작성의 관계를 설계안으로 정리하고, 스킬 간 관계·상황·문서별 작성 책임을 충분히 전달해 Windows Claude 독립 설계 리뷰 요청. 기존 Guard 코드 리뷰와 다른 신규 설계 검토이며 구현·설치·PUBLIC 전달·업무 지식 게시 요청이 아님.
