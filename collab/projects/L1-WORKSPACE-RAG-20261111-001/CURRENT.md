@@ -1,5 +1,16 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 최신 상태 — 두 진입 경로·MSC 문서 구성 독립 설계 리뷰 요청 게시 (2026-11-17 KST)
+
+- **사용자 요청·범위:** Updater의 코드 기반 직접 지식 작성과 Workflow 이슈 AS-IS/TO-BE 문서 작성의 관계를 설계안으로 정리하고, 스킬 간 관계·상황·문서별 작성 책임을 충분히 전달해 Windows Claude 독립 설계 리뷰 요청. 기존 Guard 코드 리뷰와 다른 신규 설계 검토이며 구현·설치·PUBLIC 전달·업무 지식 게시 요청이 아님.
+- **설계·리뷰 입력:** [설계안 r0001](L1_MSC_DUAL_ENTRY_DOCUMENT_DESIGN_r0001_20261117_KST.md), [상황·스킬 관계](L1_MSC_DUAL_ENTRY_REVIEW_CONTEXT_r0001_20261117_KST.md), [근거·수락 조건 입력](review-inputs/REQ-L1-MSC-DUAL-ENTRY-DESIGN-R1-20261117/README.md). 직접 지식 작성/이슈 Work/기존 Work 지식화의 3개 사례, Workflow·Kernel·분석기·Converter·Updater·최종 writer 책임, ISSUE HTML 공백과 최소 연결안, 게시명 변경·상대 링크·부분 실패·호환성·미확인을 포함. 실제 UL CA 업무 소스·MSC/로그는 포함하지 않음.
+- **정식 요청·고정:** [REQUEST](../../requests/REQ-L1-MSC-DUAL-ENTRY-DESIGN-R1-20261117/REQUEST.md), [SOURCE_PIN](../../requests/REQ-L1-MSC-DUAL-ENTRY-DESIGN-R1-20261117/SOURCE_PIN.json). 입력 commit `939b5b9f4c59534d908bc48ced59cfd25a4e8f64`; ZIP **29111 bytes**, SHA-256 `e5c2da38fda253781b2cf0179c46d3cd6dbefdc5f5efb3f0603ddaaf7d03b91c`. 원격 ZIP bytes·멤버 CRC/본문·해시, REQUEST 및 SOURCE_PIN readback **PASS**. 자세한 위치·커밋·검증: [게시 영수증](../../requests/REQ-L1-MSC-DUAL-ENTRY-DESIGN-R1-20261117/PUBLICATION_RECEIPT.md).
+- **승인·실행 구분:** 유효한 기존 Windows 보호 사전위임 범위의 **R1 POLICY-STATIC-V1, 호출 1회·최대 USD 1** 한정 설계 검토. 전체 R2/R3 자동 승급·추가 호출 없음. 일/월 잔여 한도·서명·실행 여부는 보호 watcher가 검증. GPT는 APPROVAL_SIG/READY를 만들지 않고 유료 모델을 직접 호출하지 않음.
+- **현재 확인 상태:** REQUEST/SOURCE_PIN=`POSTED_REMOTE_VERIFIED`; APPROVAL_SIG/READY/DISPATCH=`NOT_OBSERVED`; Claude 실행=`NOT_VERIFIED`; REVIEW_RESULT/RECEIPT=`NOT_RECEIVED`. 최신 원격 트리 확인 기준이며 호스트 호출 0을 단정하는 근거가 아님. 독립 리뷰와 업무 E3=`PENDING/NOT_RUN`.
+- **NEXT_ONE_ACTION:** 동일 요청의 Windows Claude REVIEW_RESULT/RECEIPT를 수신·대조하고 GPT가 수용/보완·G0·최소 구현 범위를 판정. 입력 변조·만료·한도·중복·불확실 실행은 기존 fail-closed 유지. 기존 Guard·복구 지점 조사·그룹 G0 진행을 보존하며 재실행하지 않음.
+
+---
+
 ## 최신 검토 — Jira·CL·Merged PR 이슈 시나리오·복구 지점 분석 제안 (2026-11-17 KST)
 
 - **사용자 요청:** issue-analyzer·P4 이력·l1-github를 활용해 기존 Jira/CL/merged PR로 이슈 시나리오와 런타임 복구 삽입 지점을 찾는 방안 및 공개 사례 종합 검토. 이번 범위는 조사·제안이며 스킬 수정·호스트 실행 지시로 승격하지 않음.
