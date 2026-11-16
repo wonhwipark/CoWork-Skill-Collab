@@ -1,5 +1,11 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 리뷰 자동 감지 설계 검토 — Claude 협업 평가 반영 (2026-11-17 KST)
+- **정본 검토 문서:** [GPT_REVIEW_RESULT_AUTO_DETECTION_AND_COLLAB_FEEDBACK_r0001_20261117_KST.md](GPT_REVIEW_RESULT_AUTO_DETECTION_AND_COLLAB_FEEDBACK_r0001_20261117_KST.md). 사용자 제공 Claude 협업구조 8/10·자동화 7/10 평가의 강점·약점·제안을 수용/보류로 구분; 기존 GitHub watcher/Actions/Notifier 재사용, 새 원장/새 실행권한/유료 자동 재호출 없이 결과 감지→검증→대시보드 'GPT 판정 필요'→Telegram 1회 알림 설계.
+- **최신 사실 정정:** 2026-11-16의 자동 승인 첫 실전 `NOT_OBSERVED`는 당시 시점 기록. 2026-11-17 `REQ-L1-WORK-KNOWLEDGE-FIXED-R1-20261116`에 대해 APPROVAL_SIG/READY/DISPATCH/RESULT/RECEIPT 원격 존재·matching key 및 GPT 판정 게시 확인. **REMOTE_CHAIN=OBSERVED**, `HOST_DIRECT_E2E=NOT_VERIFIED`, `TELEGRAM_REAL_RECEIPT=NOT_VERIFIED`. 비용 상세는 영수증 필드 부재 시 추정 금지.
+- **범위/상태:** `DETECTION_DESIGN=DOCUMENTED_ONLY`, `DETECTION_CODE/TEST=NOT_RUN`, 새 REQUEST/READY·서명·유료 모델 호출·Windows 운영/Notifier/DB·PUBLIC 게시 변경 0. 실전 추가 비용을 내지 않고 기존 결과로 정산.
+- **NEXT_ONE_ACTION:** 기존 GitHub Actions와 Windows Notifier의 완료 감지/중복 차단 경로를 G0 읽기 전용 대조해 실증된 gap만 최소 보완·비유료 합성시험. 문서 게시가 자동 실행/새 watcher 도입은 아님.
+
 ## GPT 최종 판정 — GitHub 단일 LIVE 전환 완료 수용(2026-11-15 KST)
 - **판정 정본:** [GPT_GITHUB_LIVE_CUTOVER_FINAL_DISPOSITION_r0001_20261115.md](GPT_GITHUB_LIVE_CUTOVER_FINAL_DISPOSITION_r0001_20261115.md), commit `c567e66be3edb15efd1c751048ee3fb15ca051ba`, 원격 readback PASS. `GPT_DISPOSITION=ACCEPT_GITHUB_LIVE_CUTOVER_HOST_REPORTED_AND_REVIEW_VERIFIED`.
 - **LIVE 상태:** `ACTIVE_PROVIDER=GITHUB`, `CUTOVER=LIVE`, `HOST_APPLIED=PASS` (**Windows Claude Code 호스트 실측 보고 기준**, GPT가 Windows Task/Process에 직접 접속한 것은 아님). Dropbox reviewer Disabled, 30초 7주기+재시작·중복 기동 방지, 별도 GitHub 상태 DB의 provider lease 1건. 기존 Dropbox 운영 DB/레거시 pending 1건 무손실 보존.
