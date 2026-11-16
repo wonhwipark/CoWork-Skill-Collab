@@ -89,10 +89,10 @@
       "id": "L1-WORKSPACE-RAG-20261111-001",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md",
-      "status": "검증 진행 중",
+      "status": "문서상 진행",
       "title": "L1-WORKSPACE-RAG-20261111-001 — CURRENT",
-      "tone": "warning",
-      "topic": "최신 상태 — 기존 MSC 설계 리뷰 완료 우선·Windows 실행 인계 (2026-11-17 KST)"
+      "tone": "neutral",
+      "topic": "Guard 코드 R1·MSC 설계 R1 SOURCE_PIN 문자열 포맷 수정 (2026-11-17 KST)"
     },
     {
       "id": "NR-L1TX-CODE-ANALYSIS-20261115-001",
