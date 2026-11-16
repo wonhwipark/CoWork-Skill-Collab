@@ -8,6 +8,8 @@ This repository is a **private collaboration workspace**, not a deployment repos
 
 **[공통 맥락 브리프 열기](collab/CONTEXT_BRIEF.md)** → 요청별 **CURRENT** → 필요한 계약·스킬 원문. 브리프는 역할·정본 위치·작업 경로를 안내하고, 진행 상태는 해당 CURRENT와 최신 근거에서 확인합니다.
 
+**[L1Work 스킬 현황 바로 확인](collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/L1WORK_PUBLIC_SKILL_RELEASE_ANALYSIS_r0001_20261117_KST.md)** — PUBLIC ZIP·관리 스킬별 역할·공개본과 개발 후보·검증 경계. [스킬 관리 CURRENT](collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md)에서 해당 작업의 최신 상태를 확인하며, 실제 PUBLIC HEAD와 비교합니다.
+
 작업한 GPT/Agent가 결과·피드백을 기록하고 해당 CURRENT의 요약·근거 링크·다음 행동을 갱신한 뒤 PRIVATE 게시·원격 재조회까지 확인합니다. 구조·경로 변경 때만 브리프, 스킬 책임·입출력 변경 때만 카탈로그를 수정합니다. 상세 기준은 [지속 갱신·피드백 절차](collab/ops/CONTRACTS/SKILL_DISCOVERY_AND_REUSE_V1.md)를 따릅니다.
 
 이 연결은 저장소 문서를 읽는 세션의 시작 경로입니다. 새 창의 자동 선조회나 ChatGPT 프로젝트 설정을 변경한 것은 아닙니다.
