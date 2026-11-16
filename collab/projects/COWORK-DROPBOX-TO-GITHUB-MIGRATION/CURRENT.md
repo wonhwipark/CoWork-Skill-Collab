@@ -1,5 +1,12 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## Claude 리뷰 → GPT 실제 수신 검증·자동수신 경계 확정 (2026-11-17 KST)
+- **실제 GPT 직접 조회 PASS:** 기존 완료 `REQ-L1-WORK-KNOWLEDGE-FIXED-R1-20261116` REQUEST/READY/Claude REVIEW_RESULT/RECEIPT/GPT_DISPOSITION **5개 원격 파일을 이번 GPT 세션에서 직접 읽고** ID·rev·SHA·processing_key·완료 상태·지적 7건 등 **8항목 일치 확인**. 사용자가 이번에 Claude 원문을 복사하지 않아도 GPT가 GitHub PRIVATE에서 수신 가능. 기존 판정 `ACCEPT_WITH_CHANGE` 재판정·추가 리뷰 없음.
+- **별도 자동수신은 미구현/미검증:** 기존 `review_completion.py`는 PRIVATE GitHub Actions 요약에 완료 표시만 생성. GitHub push로 유휴 GPT가 자동 기동·원문 읽기·GPT 판정 실행하는 연결은 확인되지 않음. 이벤트 구독 조회도 404로 지원 확인 불가. **`GPT_ACTIVE_FETCH=PASS`, `GPT_AUTO_RECEIVE_ON_PUSH=NOT_VERIFIED`, `GPT_AUTO_DISPOSITION=NOT_IMPLEMENTED`**. 감지 PASS를 GPT 자동 수신 PASS로 승격하지 않음.
+- **Telegram:** 사용자 기존 연동 완료 확인 유지. Telegram 완료 알림과 GPT 세션 자동 수신은 별개. 기존 연동 재설치/재시험은 제외.
+- **증빙·판정:** [GPT_CLAUDE_REVIEW_RECEIVE_VALIDATION_r0001_20261117_KST.md](GPT_CLAUDE_REVIEW_RECEIVE_VALIDATION_r0001_20261117_KST.md), 원격 readback PASS. 새로운 REQUEST/READY/Windows/유료 Claude 리뷰 0, 한 Work당 리뷰 요청→Claude 리뷰 1회→GPT 판정 **1사이클** 정책 유지.
+- **NEXT_ONE_ACTION:** '유휴 GPT의 무인 자동 수신'이 필요하면 GitHub 이벤트→ChatGPT 실행 경로의 실제 지원 여부·비용/승인 범위부터 확인. 현재 기존 Actions/Telegram 완료 통보 이후 사용자가 GPT에 확인 요청하면 GPT가 PRIVATE 원문을 바로 읽을 수 있음.
+
 ## 사용자 확인 — Telegram 기존 연동 완료, 재연동 제외 (2026-11-17 KST)
 - **사용자 최신 사실 확인:** 기존 Windows Notifier ↔ Telegram 연동은 이미 완료됨 (`TELEGRAM_INTEGRATION=USER_CONFIRMED_COMPLETE`). 기존 설치·키·설정 재작업 및 중복 연동 시험 요구 **제외**. 이전 문서의 `TELEGRAM_REAL_RECEIPT=NOT_VERIFIED`는 과거 GPT 직접 검증 범위만 의미하며, 연동 미완료를 뜻하지 않음.
 - **구분할 대상:** 신규 `collab/dashboard/review_completion.py`는 PRIVATE GitHub Actions **작업 요약**을 생성함. 이 신규 델타를 기존 Telegram Notifier에 전달하는 별도 연계는 현재 구현 근거가 없어 `NEW_DETECTOR_TO_TELEGRAM=NOT_VERIFIED`로 유지. 원래 존재하는 watcher→Telegram 완료 알림은 재구현하지 않음.
