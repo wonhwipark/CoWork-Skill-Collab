@@ -1,5 +1,16 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## PUBLIC 업무 GPT ③·④ 검토 요청서 게시 — 2026-11-16 KST
+
+- **사용자 최신 지시:** 업무 GPT로 전달할 요청은 PUBLIC `wonhwipark/L1Work/main/handoffs/` MD로 게시하고, 3,000자 이내일 경우 한 번에 복사하도록 채팅에 제공.
+- **PUBLIC 요청서:** [L1_WORKSPACE_KNOWLEDGE_34_BUSINESS_GPT_REVIEW_REQUEST_r0001_20261116_KST.md](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_WORKSPACE_KNOWLEDGE_34_BUSINESS_GPT_REVIEW_REQUEST_r0001_20261116_KST.md) (2,702자); commit `90238c5f925a6af1c04a1735e65f68702aaf6788`, blob `e9c411e06ae04e25bb7c70d59b68373d1eaa697f`, 원격 본문 readback PASS.
+- **목록:** `L1Work/handoffs/README.md`에 항목 추가, commit `9cff5d92e1359e46d2e942fdc9b80d3dc1f6fe47`, 원격 readback PASS.
+- **내용:** 업무 스킬 Updater/그룹 Knowledge에 대한 현 설치본 G0 확인 4항목, 설계 TO-BE, 우리 스킬 정적 근거, REUSE/CONNECT/입증된 최소 EXTEND 회신 형식. 코드 수정·그룹 게시·Job·설치·유료 호출 등 실작업 승인 아님. 이전 상세 스킬 정적 검토 MD와 독립 리뷰 미완료 상태 변경 없음.
+- **NEXT_ONE_ACTION:** 업무 GPT가 실제 설치본과 기존 Kernel·Git writer 계약을 읽기 전용으로 검증한 비민감 회신 제공 → GPT가 ③·④ 연결점·스킬 최소 수정 확정.
+
+---
+
+
 ## 우리 3개 스킬 정적 분석 및 업무 GPT ③·④ 수정 범위 검토 — 2026-11-16 KST
 
 - **사용자 요청:** 업무 GPT에는 `l1-knowledge-updater` / `l1sw-dev-knowledge`의 TO-BE 계약을 제안하고, 우리가 관리하는 `l1-fix-workflow` / `work-ledger-kernel` / `l1-github`의 실제 변경 필요 범위를 원본 기준 검토. 스킬 수정·배포 지시가 아님.
