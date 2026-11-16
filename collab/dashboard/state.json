@@ -589,16 +589,16 @@
       "work_id": "L1-CHANNEL-KNOWLEDGE-SCOPE-20261113-001"
     },
     {
-      "evidence": "CURRENT 문서 관측. 단계·진행률은 증명되지 않음",
-      "independent_review": "NOT_VERIFIED",
-      "next_action": "CURRENT.md 최신 상태 및 다음 담당 확인",
-      "owner": "미등록",
-      "phase": "UNKNOWN",
-      "record_source": "CURRENT_ONLY_UNSTRUCTURED",
-      "self_test": "NOT_VERIFIED",
-      "skill": "미지정",
+      "evidence": "프로젝트 TRACKER.json 신고 값 · 운영 근거 별도 확인 필요",
+      "independent_review": "PENDING",
+      "next_action": "Guard 코드·MSC 설계 R1의 SOURCE_PIN repo_id JSON 문자열 수정·CI PASS. Windows AUTO_SIGNING_UNCERTAIN 로컬 정산 필요. 두 REQUEST 결과·영수증 수신 후 GPT 1회 판정. 자동 재큐잉 금지.",
+      "owner": "GPT (Guard 코드·MSC 두 진입 설계 REQUEST 고정·게시) → Wi",
+      "phase": "REVIEW",
+      "record_source": "REGISTERED_METADATA_UNVERIFIED",
+      "self_test": "PASS",
+      "skill": "l1-knowledge-updater",
       "source": "collab/projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md",
-      "title": "L1-WORKSPACE-RAG-20261111-001 — CURRENT",
+      "title": "l1-knowledge-updater",
       "work_id": "L1-WORKSPACE-RAG-20261111-001"
     },
     {
