@@ -54,7 +54,7 @@ for filename,expected,relative in items:
    cwd=Path(td)/relative
    module_tests=sorted((cwd/"tests").rglob("test_*.py"))
    print("FULL_REGRESSION_START",filename,"tests_files",len(module_tests),flush=True)
-   p=subprocess.run([sys.executable,"-m","pytest","-q","--disable-warnings","--maxfail=1","tests"],cwd=cwd,text=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,timeout=350)
+   p=subprocess.run([sys.executable,"-m","pytest","-q","--disable-warnings","tests"],cwd=cwd,text=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,timeout=350)
    print("FULL_REGRESSION_OUTPUT",filename,"\n"+p.stdout[-12000:],flush=True)
    if p.returncode != 0:
     errors.append(filename)
