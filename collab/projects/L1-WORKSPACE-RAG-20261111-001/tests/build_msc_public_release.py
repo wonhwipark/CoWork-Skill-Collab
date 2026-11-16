@@ -66,6 +66,10 @@ def release_converter(data,outname,version):
  valid("skill_version" in contract,"contract version missing")
  contract["skill_version"]=version
  write(data,pre+"skillsilent/contract.json",json.dumps(contract,ensure_ascii=False,indent=2)+"\n")
+ routes=json.loads(txt(data,pre+"references/low_spec_routes.json"))
+ valid("version" in routes,"routes version missing")
+ routes["version"]=version
+ write(data,pre+"references/low_spec_routes.json",json.dumps(routes,ensure_ascii=False,indent=2)+"\n")
  ver=txt(data,pre+"VERSION.md")
  write(data,pre+"VERSION.md",
        "# doc-converter "+version+" — PUBLIC delivery\n\n"
@@ -89,6 +93,9 @@ def release_converter(data,outname,version):
 def release_kernel(data,outname,version):
  valid(txt(data,"VERSION").strip()=="0.7.41-dev.1","kernel previous version mismatch")
  write(data,"VERSION",version+"\n")
+ launcher=txt(data,"work-ledger-kernel")
+ launcher=replace(launcher,"0.7.37-dev.1",version,"kernel linux launcher --version")
+ write(data,"work-ledger-kernel",launcher)
  skill=txt(data,"SKILL.md")
  skill=replace(skill,'version: "0.7.38-dev.1"','version: "'+version+'"',"kernel frontmatter")
  # Replace the current title only, preserving historic change log versions.
