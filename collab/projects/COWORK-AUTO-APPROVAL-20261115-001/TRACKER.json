@@ -6,10 +6,10 @@
       "skill": "cowork-review-watcher",
       "title": "GPT→GitHub REQUEST 자동 서명·READY (제한된 사전 위임)",
       "phase": "DISPOSITION",
-      "owner": "GPT / Windows Claude Code",
+      "owner": "Windows 운영 호스트 증빙 정합성 확인 / GPT 최종 활성화 확인",
       "self_test": "PASS",
       "independent_review": "PASS",
-      "next_action": "v0.2.23 독립 R2 완료(BLOCKING 0, MAJOR 0, MINOR 3, 정적, 비용 USD 0.52, 1회). GPT 판정 PASS 확인 전까지 운영 설치·자동 서명 활성화 안 함."
+      "next_action": "R2 감시기 정적 독립 리뷰 1회 완료(BLOCKING 0, MAJOR 0, 실제 리뷰 본문 MINOR 2). 호스트 요약 MINOR 3 불일치 및 USAGE_RECEIPT_1.json 누락(비용 0.5244525 USD 호스트 DB 보고) 정합성 확인. GPT 정적 R2 ACCEPT_WITH_FOLLOWUP / LIVE_ACTIVATION HOLD_PENDING_EVIDENCE_AND_HOST_TESTS. 새 모델·READY 금지. 기존 조건부 승인과 유효 로컬 보호 확인 후 백업/OFF 설치·회귀·활성화·롤백 영수증."
     }
   ]
 }
