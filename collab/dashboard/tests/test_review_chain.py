@@ -85,6 +85,19 @@ class ReviewChainTests(unittest.TestCase):
         path.write_text(json.dumps(data))
         self.assertEqual(review_chain.collect(self.root)[0]["stage"], "GPT_DISPOSITION_MISMATCH")
 
+    def test_final_gpt_disposition_preserves_lowercase_minor_ids(self):
+        self.chain()
+        p = self.folders["reviews"] / "GPT_DISPOSITION.json"
+        data = json.loads(p.read_text(encoding="utf-8"))
+        data["findings"].extend([
+            {"id": "m-1", "decision": "ACCEPT", "summary": "minor accepted"},
+            {"id": "m02", "decision": "ACCEPT", "summary": "second minor accepted"},
+        ])
+        p.write_text(json.dumps(data), encoding="utf-8")
+        item = review_chain.collect(self.root)[0]
+        self.assertEqual(item["stage"], "GPT_RECORDED_UNAUTHENTICATED")
+        self.assertEqual({x["id"] for x in item["findings"]}, {"B-1", "m-1", "m02"})
+
     def test_all_links_restricted_to_private_repo_paths(self):
         with self.assertRaises(ValueError):
             review_chain.href("owner/repo", "collab/requests/../../secret/REQUEST.md")
