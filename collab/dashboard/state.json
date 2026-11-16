@@ -487,7 +487,7 @@
     {
       "evidence": "프로젝트 TRACKER.json 신고 값 · 운영 근거 별도 확인 필요",
       "independent_review": "PASS",
-      "next_action": "2026-11-16 19:47 KST: v0.2.23 운영 설치·보호 위임 활성화 완료(AUTO_SIGNING_LIVE=PASS_HOST_VERIFIED). 전 게이트 PASS, 회귀 967 passed/12 skipped, 2주기·재시작·소급 3건 차단·Notifier·롤백 준비 확인, 모델 ",
+      "next_action": "v0.2.23 LIVE 호스트 보고 유지. SOURCE_PIN 숫자 repo_id 원인 확인·두 요청 문자열 타입 보정(원격 PASS). Guard AUTO_SIGNING_UNCERTAIN 로컬 상태 해제 미확인. Windows 읽기 전용 예약/서명/비용 이력 대조가 다음 단계; 승인 게이트 우",
       "owner": "Windows 운영 호스트 (자동 승인 LIVE) / GPT 판정",
       "phase": "COMPLETE",
       "record_source": "REGISTERED_METADATA_UNVERIFIED",
@@ -500,7 +500,7 @@
     {
       "evidence": "프로젝트 TRACKER.json 신고 값 · 운영 근거 별도 확인 필요",
       "independent_review": "PASS",
-      "next_action": "기존 GitHub LIVE 유지. 새 완료 리뷰 Actions 감지 PASS(77+8 시험), 기존 Telegram 연동 USER_CONFIRMED. Claude 리뷰 원문→GPT 직접 GitHub 수신 8항목 PASS, 기존 판정 1사이클 종료. GitHub push→유휴 GPT 자동수신 NO",
+      "next_action": "GitHub 단일 LIVE 유지. SOURCE_PIN repo_id JSON 문자열 수정(Guard R1·MSC R1) 및 PRIVATE CI 11/11 pin·13/13 자체시험 PASS. Guard AUTO_SIGNING_UNCERTAIN은 Windows 로컬 정산 필요. 서명/READY/결",
       "owner": "GPT / Claude Code",
       "phase": "COMPLETE",
       "record_source": "REGISTERED_METADATA_UNVERIFIED",
