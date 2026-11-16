@@ -289,6 +289,17 @@ def refresh_package_metadata(root: Path, row: dict) -> None:
                                   "v" + version, line, count=1)
                 break
         version_md.write_text("".join(lines), encoding="utf-8", newline="\n")
+    # The embedded skillsilent policy manifest carries the hosting skill version.
+    # Synchronize only the package-owned version keys, never skillsilent's tool version.
+    policy_manifest = root / "skillsilent" / "manifest.json"
+    if policy_manifest.is_file():
+        meta = json.loads(policy_manifest.read_text(encoding="utf-8"))
+        for key in ("skill_version", "package_version"):
+            if key in meta:
+                meta[key] = version
+        policy_manifest.write_text(
+            json.dumps(meta, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8")
     version_file = root / "VERSION"
     if version_file.is_file():
         version_file.write_text(version + "\n", encoding="utf-8")
