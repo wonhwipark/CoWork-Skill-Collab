@@ -48,6 +48,28 @@ def smoke():
                     for p in candidates:
                         txt = p.read_text(encoding="utf-8", errors="replace")
                         print("META", name, p.relative_to(target), txt[:800].replace("\n", " "))
+        # Validate regenerated candidate version/release/hash manifests.
+        import hashlib
+        expected = {"workflow": "1.6.70", "github": "0.3.58", "kernel": "0.7.43"}
+        for name, path in V:
+            folder = folders[name] / ("l1-fix-workflow" if name == "workflow" else "")
+            release_file = folder / ".skill-release.json"
+            meta = json.loads(release_file.read_text(encoding="utf-8"))
+            assert meta["version"] == expected[name], meta
+            assert meta["channel"] == "development_not_for_deployment", meta
+            assert meta["archive"] == path.name, meta
+            assert (folder / "VERSION").read_text(encoding="utf-8").strip() == expected[name]
+            manifest = folder / "MANIFEST_SHA256.json"
+            if manifest.is_file():
+                obj = json.loads(manifest.read_text(encoding="utf-8"))
+                for rel, digest in obj.items():
+                    assert hashlib.sha256((folder / rel).read_bytes()).hexdigest() == digest, (name, rel)
+            listing = folder / "PACKAGE_CONTENTS.sha256"
+            if listing.is_file():
+                for ln in listing.read_text(encoding="utf-8").splitlines():
+                    digest, rel = ln.split(maxsplit=1)
+                    assert hashlib.sha256((folder / rel.strip()).read_bytes()).hexdigest() == digest, (name, rel)
+            print("RELEASE_HASH_MANIFEST_PASS", name, expected[name])
         # Workflow local file/path guard functional smoke.
         wf = folders["workflow"] / "l1-fix-workflow"
         sys.path.insert(0, str(wf))
