@@ -1,5 +1,17 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 현재 요약 — MSC 개발 후보 격리 시험 PASS·Windows Claude Code 독립 리뷰 요청 게시 (2026-11-16 KST)
+
+- **사용자 최신 지시:** 2개 개발 ZIP의 격리 Python/HTML 시험 후 Windows Claude Code에 별도 **독립 코드 리뷰 요청**. [리뷰 요청서](CLAUDE_MSC_SKILL_PATCH_INDEPENDENT_REVIEW_REQUEST_r0001_20261116.md) / [실제 CI QA 근거](GPT_MSC_SKILL_CANDIDATE_QA_RESULT_r0001_20261116_KST.md). 기존 Work에 연결, 기존 watcher 정식 REQUEST/READY·승인·영수증 이력 불변.
+- **QA 실측:** PRIVATE 시험 브랜치 `msc-skill-validation-20261116` [Actions run 43786218200](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43786218200) SUCCESS, Python **3.10.22/3.11.18 각 19/19 PASS**, candidate ZIP 전체 CRC·경로·심링크·중복·컴파일, 신규 표적 6개 PASS. Python 3.11의 실제 후보 B HTML **Chromium screenshot 18,649 B PASS**. 개발 자체시험이고 전체 pytest/E3/실제 호스트/CSP·Phase 클릭 독립 검증은 NOT_RUN/NOT_VERIFIED.
+- **고정 리뷰 입력:** commit `29aadbaeb5245f7a811c3050160c10cddce46954`; doc-converter `candidates/doc-converter_v0_2_23_1116.zip` 210426 B SHA-256 `43805ae0ce1b08205125441f383f6bdfc6f114ef53bb2609295827f10b1ce23e`; Kernel `candidates/work-ledger-kernel_v0_7_40_1116.zip` 410922 B SHA-256 `b8077fd717f326fb7bc556407b8e8b8a7f32a580e143ec3a6d646d3b1e9df7ce`. Workflow v1.6.69/Analyzer v0.15.3는 재사용 확인 대상이며 신규 수정 없음.
+- **독립 리뷰 실진행:** 사용자 요청 기반 Windows Claude Code 대화형 독립 패치 리뷰용 MD를 PRIVATE main에 게시·원격 readback. Review ID `L1-MSC-SKILL-PATCH-20261116-001`. 현재 이 GPT에서 Windows Claude Code 세션 시작/실행 도구 없음: `REQUEST_DOCUMENT=POSTED`, `WINDOWS_DELIVERY=NOT_VERIFIED`, `REVIEW_EXECUTION=NOT_RUN`, `RESULT/EVIDENCE=NOT_RECEIVED`. 본 문서 게시만으로 watcher 유료 리뷰·서명·READY가 실행되지 않음. AUTO_SIGNING=OFF의 최신 운영 판정은 관련 CURRENT를 우선.
+- **배포 경계:** 두 후보 모두 `development_not_for_deployment`, 정식 독립 코드 판정 및 업무 호스트/그룹 writer E3 전 `PUBLIC_L1WORK_ZIP=BLOCKED`. GitHub PRIVATE 개발/CI 외에 PUBLIC ZIP, 호스트 설치, Job, Knowledge, LIVE, 키, DB 운영 변경 없음. 업무 GPT Updater G0 Q1~Q8은 별도 기존 PUBLIC 인계 상태 유지.
+- **NEXT_ONE_ACTION:** Windows Claude Code 별도 세션에서 **위 리뷰 요청 MD**의 고정 SHA 입력으로 독립 코드 비판 리뷰를 수행하고 `CLAUDE_MSC_SKILL_PATCH_INDEPENDENT_REVIEW_RESULT_FOR_GPT_r0001_20261116.md`와 별도 실행 근거 JSON을 PRIVATE main에 게시·readback → GPT 지적별 판정·필요 최소 수정·재시험. 유효 승인 확인 전 새 유료 자동 REQUEST/READY/모델 호출 금지.
+
+---
+
+
 ## 현재 요약 — 4종 스킬 개발 후보 2개·독립 코드 시험 대기 (2026-11-16 KST)
 
 - **사용자 최신 지시:** 업무 GPT 설치본 확인과 별개로 `doc-converter`, `work-ledger-kernel`, `l1-fix-workflow`, `code-analyzer`를 검토 후 수정 진행. [실제 패치·산출물·시험 상태 판정](GPT_MSC_FOUR_SKILL_DEV_PATCH_RESULT_r0001_20261116_KST.md) 참고.
