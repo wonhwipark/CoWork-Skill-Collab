@@ -34,7 +34,7 @@ NEXT_OWNER = {
  "GPT_DISPOSITION_MISMATCH": "GPT · 판정 파일 정합성 확인",
  "GPT_RECORDED_UNAUTHENTICATED": "GPT · 미해결 피드백 추적",
 }
-FINDING_RE = re.compile(r"^(?:#{2,5}\s*|[-*]\s*\*{0,2})([A-Z]{1,5}-\d{1,4})\b[\s:.)*\]-]*(.{0,160})$")
+FINDING_RE = re.compile(r"^(?:#{2,5}\s*|[-*]\s*\*{0,2})([A-Za-z]{1,5}-?\d{1,4})\b[\s:.)*\]-]*(.{0,160})$")
 
 
 def read(path, limit=300000):
@@ -101,7 +101,7 @@ def extract_findings(raw, disposition):
             if not isinstance(item, dict):
                 continue
             fid, decision = item.get("id"), item.get("decision")
-            if isinstance(fid, str) and re.fullmatch(r"[A-Z]{1,5}-\d{1,4}", fid) and decision in DECISIONS:
+            if isinstance(fid, str) and re.fullmatch(r"[A-Za-z]{1,5}-?\d{1,4}", fid) and decision in DECISIONS:
                 found.append({"id": fid, "decision": decision, "summary": " ".join(str(item.get("summary", "")).split())[:115]})
         return found
     if raw:
