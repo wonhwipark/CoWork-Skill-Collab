@@ -12,7 +12,9 @@ with zipfile.ZipFile(p) as z:
             continue
         src = z.read(name).decode("utf-8")
         lines=src.splitlines()
-        matches = [i for i,l in enumerate(lines) if "export_docs(" in l or "WorkUX(" in l or "name_for(" in l or "artifact_publish_map" in l]
+        matches = [i for i,l in enumerate(lines) if "export_docs(" in l or "WorkUX(" in l or "name_for(" in l or "artifact_publish_map" in l or "add_evidence(" in l or "register_evidence(" in l]
+        if name in ("tests/test_discussion_continuity_v0728.py", "tests/test_discussion_patch_v0729.py"):
+            matches = list(range(min(len(lines),90)))
         if not matches: continue
         print("TEST_FILE",name,"MATCHES",len(matches),flush=True)
         shown=set()
