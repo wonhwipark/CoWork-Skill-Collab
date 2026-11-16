@@ -6,6 +6,8 @@ on:
     paths:
       - '.github/workflows/cowork-dashboard.yml'
       - 'collab/dashboard/*.py'
+      - 'collab/ops/source_pin.py'
+      - 'collab/ops/tests/test_source_pin.py'
       - 'collab/dashboard/handoff_registry.json'
       - 'collab/dashboard/tests/**'
       - 'collab/dashboard/public_preview/**'
@@ -41,6 +43,7 @@ jobs:
           # No new ledger, watcher, Telegram sender or Claude/GPT invocation.
           cp collab/dashboard/state.json "${RUNNER_TEMP}/cowork-review-before.json"
           python3 -m unittest discover -s collab/ops/tests -v
+          python3 collab/ops/source_pin.py audit --root . --expected-repo-id 1451933830
           python3 -m unittest discover -s collab/dashboard/tests -v
           python3 -m unittest discover -s collab/dashboard/public_preview/tests -v
           python3 collab/dashboard/public_preview/build.py
