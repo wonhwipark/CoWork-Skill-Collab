@@ -9,7 +9,7 @@
       "owner": "Windows Claude Code 독립 리뷰 대기 / GPT 판정",
       "self_test": "NOT_VERIFIED",
       "independent_review": "PENDING",
-      "next_action": "격리 CI Python3.10/3.11 각 19/19·Chromium B HTML smoke PASS(표적 자체시험). Windows Claude Code 별도 세션에 PRIVATE main/CLAUDE_MSC_SKILL_PATCH_INDEPENDENT_REVIEW_REQUEST_r0001_20261116.md 전달, 고정 2종 ZIP SHA로 독립 코드 리뷰 수행·결과/실행 근거 게시. WINDOWS_DELIVERY=NOT_VERIFIED, REVIEW_EXECUTION=NOT_RUN. 전체 회귀/E3/Phase click NOT_RUN, PUBLIC ZIP/설치 BLOCKED. 업무 GPT Updater G0 별도 유지."
+      "next_action": "Claude 독립 코드·패치 리뷰(L1-MSC-SKILL-PATCH-20261116-001) 결과 게시: REVISE. Kernel v0.7.40 BLOCKING 1(SVG Evidence가 있으면 export_docs 전체 실패, v0.7.39 정상), doc-converter MAJOR 2(--view-mode 정책 미허용, 대소문자 이름 충돌)·MINOR 3. 대화형 리뷰(감시기·유료 아님). GPT 지적별 판정 후 수정·재검토."
     }
   ]
 }
