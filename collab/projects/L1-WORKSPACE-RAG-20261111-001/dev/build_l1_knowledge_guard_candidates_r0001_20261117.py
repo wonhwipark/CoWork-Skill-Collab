@@ -27,8 +27,8 @@ PINS = {
     'github': {
         'path': 'collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates/l1-github_v0_3_57_1114.zip',
         'sha256': 'f1b8fb43d3af427f2c5d52864051c65894f3cb45969ab35ca502f344735611ce',
-        'version_from': '0.3.57', 'version_to': '0.3.58',
-        'output': 'l1-github_v0_3_58_1117.zip', 'root': '',
+        'version_from': '0.3.57', 'version_to': '0.3.59',
+        'output': 'l1-github_v0_3_59_1117.zip', 'root': '',
     },
     'kernel': {
         'path': 'artifacts/work-ledger-kernel_v0_7_42_1116.zip',
@@ -169,24 +169,70 @@ GITHUB_GUARD = '''\n\ndef assert_work_docs_knowledge_unchanged(root: Path | str)
 \n'''
 
 
+
+GITHUB_OUTBOUND_GUARD = r'''
+
+def assert_work_docs_outbound_knowledge_unchanged(root: Path | str) -> dict:
+    """Deny a Work-docs push if an outgoing commit changes knowledge/.
+
+    This is a local defense; a raw Git command with shared write credentials
+    can bypass it, so host OS/credential isolation remains a separate gate.
+    """
+    root = Path(root).expanduser().resolve()
+
+    def call(*args: str) -> bytes:
+        try:
+            cp = subprocess.run(['git', '-C', str(root), *args],
+                                capture_output=True, timeout=12, check=False)
+        except (OSError, subprocess.TimeoutExpired):
+            raise PushGuardError('WORK_DOCS_OUTBOUND_GIT_UNVERIFIED') from None
+        if cp.returncode:
+            raise PushGuardError('WORK_DOCS_OUTBOUND_GIT_UNVERIFIED')
+        return cp.stdout.strip()
+
+    upstream = call('rev-parse', '--symbolic-full-name', '@{upstream}').decode('utf-8')
+    if not upstream.startswith('refs/remotes/') or '..' in upstream:
+        raise PushGuardError('WORK_DOCS_OUTBOUND_UPSTREAM_UNVERIFIED')
+    commits = call('rev-list', '--reverse', upstream + '..HEAD').splitlines()
+    if len(commits) > 500:
+        raise PushGuardError('WORK_DOCS_OUTBOUND_HISTORY_TOO_LARGE')
+    for raw_sha in commits:
+        sha = raw_sha.decode('ascii')
+        paths = call('diff-tree', '--root', '-m', '--no-renames', '--name-only',
+                     '-r', '-z', sha).split(b'\x00')
+        for raw in paths:
+            if not raw:
+                continue
+            path = raw.decode('utf-8', 'surrogateescape').replace('\\', '/')
+            parts = path.split('/')
+            if not path or any(p in ('', '.', '..') for p in parts):
+                raise PushGuardError('WORK_DOCS_OUTBOUND_PATH_UNSAFE')
+            if parts[0].casefold() == 'knowledge':
+                raise PushGuardError('WORK_DOCS_COMMITTED_KNOWLEDGE_BLOCKED')
+    return {'ok': True, 'action': 'WORK_DOCS_OUTBOUND_HISTORY_PASS',
+            'inspected_commits': len(commits), 'hard_enforcement': False}
+
+'''
+
+
 def patch_github(root: Path) -> None:
     p = root / 'scripts/push_guard.py'
-    replace_once(p, '\ndef verify(*, root:', GITHUB_GUARD + '\ndef verify(*, root:', label='github shared protection declaration')
+    replace_once(p, '\ndef verify(*, root:', GITHUB_GUARD + GITHUB_OUTBOUND_GUARD + '\ndef verify(*, root:', label='github shared protection declaration')
     script = root / 'scripts/l1_github.py'
     s = script.read_text(encoding='utf-8')
     for tag in ('work_docs_commit', 'work_docs_push'):
         before = f'        return cross_host_git.{tag}(args, globals())'
-        after = '        push_guard.assert_work_docs_knowledge_unchanged(repo_root())\n' + before
+        after = '        push_guard.assert_work_docs_knowledge_unchanged(repo_root())\n' + (('        push_guard.assert_work_docs_outbound_knowledge_unchanged(repo_root())\n') if tag == 'work_docs_push' else '') + before
         if s.count(before) != 1:
             raise RuntimeError(f'github {tag} anchor count={s.count(before)}')
         s = s.replace(before, after)
     script.write_text(s, encoding='utf-8', newline='\n')
     sk = root / 'SKILL.md'
     txt = sk.read_text(encoding='utf-8')
-    txt += '\n\n### Workflow 개인 Knowledge 경로 보호 (개발 후보 v0.3.58)\n'
+    txt += '\n\n### Workflow 개인 Knowledge 경로 보호 (개발 후보 v0.3.59)\n'
     txt += '- Work-docs commit/push entrypoint의 status-staged/unstaged/untracked 경로에 `knowledge/` 변경이 있으면 fail-closed.\n'
     txt += '- raw Git/동일 자격증명 우회 가능성은 별도 호스트 권한 경계의 G0 검증 조건이며 본 guard만으로 완전 차단 주장 금지.\n'
-    sk.write_text(txt.replace('0.3.57','0.3.58'), encoding='utf-8', newline='\n')
+    sk.write_text(txt.replace('0.3.57','0.3.59'), encoding='utf-8', newline='\n')
 
 
 def patch_kernel(root: Path) -> None:
