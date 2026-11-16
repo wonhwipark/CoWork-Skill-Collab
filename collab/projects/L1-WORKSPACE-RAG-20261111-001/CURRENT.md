@@ -1,5 +1,13 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## GPT 최신 판정 — MSC 독립 코드 리뷰 REVISE (2026-11-16 KST)
+- 정본: [GPT 지적별 판정](GPT_MSC_PATCH_CLAUDE_REVIEW_DISPOSITION_r0001_20261116_KST.md). 독립 리뷰 결과(commit 5595d5fbee4de16757070841014f44faa190af49)와 실행 증거(commit a78c8a010915217787a075b30f0c24fbe103d7c3)를 조회. BLOCKING 1 · MAJOR 2 · MINOR 3 → REVISE; 공개·호스트 배포 차단.
+- 수용: Kernel SVG 확장자 미지원으로 export_docs 전체 실패, doc-converter managed --view-mode 미연결, Windows Init/init 대소문자 덮어쓰기. 무결성 메타 불일치·NFC/NFD·Phase 버튼 누락 상태도 보완. Workflow/Analyzer 재사용 및 업무 GPT Updater G0 별도 유지.
+- 시험: 선행 격리 CI Python3.10/3.11 각 19/19 및 Chromium synthetic smoke PASS는 자체 표적 시험의 성공일 뿐 위 BLOCKING/MAJOR를 놓쳤음. 새 수정 ZIP·실제 수정 후 재시험·추가 독립 리뷰 NOT_RUN.
+- NEXT_ONE_ACTION: 같은 Work에서 2개 개발 ZIP 최소 수정, 이전 FAIL→수정 PASS 동작 회귀와 ZIP 전체 무결성·메타 시험, 이후 개발 세션과 구분된 독립 재리뷰. PUBLIC ZIP·업무 호스트·Knowledge write 실행 금지.
+
+---
+
 ## Claude 독립 코드·패치 리뷰 결과 게시: REVISE (2026-11-16 KST)
 
 - 결과: `CLAUDE_MSC_SKILL_PATCH_INDEPENDENT_REVIEW_RESULT_FOR_GPT_r0001_20261116.md` (SHA-256 `771f02a9680411ddeb177ed51c8bc290345ce11d2327f4163b9c4a257c4ceb64`), 수행 근거: `CLAUDE_MSC_SKILL_PATCH_REVIEW_EXECUTION_EVIDENCE_r0001_20261116.json` (SHA-256 `3a448999630d66754eb6473ca3776a0f1b819e40a5704780dff438eaa85ee889`). 고정 입력 commit `29aadbaeb524`, 두 ZIP SHA 일치 확인.
