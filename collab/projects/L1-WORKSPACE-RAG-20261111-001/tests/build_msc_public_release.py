@@ -138,6 +138,7 @@ def release_kernel(data,outname,version):
  layout="tests/test_github_docs_layout_v077.py"
  htmltest=txt(data,layout)
  htmltest=replace(htmltest,"'**지금 상태:**'","'**상태:**'","new Work human-first status label")
+ htmltest=replace(htmltest,"'**다음 할 일:**'","'**다음:**'","new Work human-first next action label")
  write(data,layout,htmltest)
  weekly="tests/test_tl_continuity_v0717.py"
  weeklytest=txt(data,weekly)
