@@ -1,5 +1,16 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## PUBLIC L1Work 최신 ZIP 게시 요청 — 안전 게이트 차단 (2026-11-16 KST)
+
+- **사용자 최신 명시 지시:** `wonhwipark/L1Work/main`에 현재 최신 두 ZIP `doc-converter_v0_2_24_1116.zip`, `work-ledger-kernel_v0_7_41_1116.zip` 게시. PUBLIC 게시 승인 의사는 확인됨. 다만 승인만으로 미충족 릴리스 시험/보안 게이트를 해제하거나 Linux Skill-Updater의 자동 배포 위험을 제거한 것은 아님.
+- **실제 PUBLIC 조회:** `L1Work/main` 루트의 최신 보유본은 `doc-converter_v0_2_21_1106.zip`(155012 B) 및 `work-ledger-kernel_v0_7_37_1103.zip`(318845 B). 요청 최신 두 ZIP은 **NOT_POSTED**, 기존 파일 유지. 대상 PUBLIC 저장소 write 권한은 확인했으나 이슈는 인증이 아닌 릴리스 안전 게이트.
+- **입력 보존:** PRIVATE `candidates/doc-converter_v0_2_24_1116.zip` SHA-256 `2ef0929bc0a80a1c0aca67bf3c8fc02f967bddba223b45c27807c363e96229f7`; `candidates/work-ledger-kernel_v0_7_41_1116.zip` SHA-256 `48d1bf5e24c613e7e0ba04df9946c427c5d1ee39d8d16204966afff07e93497b`. 둘 다 ZIP 내부 `development_not_for_deployment`. 한 번의 독립 리뷰 후 사용자 요청으로 추가 리뷰 없음.
+- **게이트 근거:** `collab/START_HERE.md`, `collab/ops/CONTRACTS/JOBLIST_PUBLIC_DELIVERY_V1.md`, `collab/ops/CONTRACTS/PUBLIC_RELEASE_GATE.md`. 일반 스킬 ZIP은 dev 후보를 PUBLIC 루트에 배포용으로 게시 금지. 별도 승인된 읽기 전용 Job-list 디버깅 예외를 두 쓰기 기능 보유 스킬에 자동 확대하지 않음. 추가 실패/미확인: 실제 Kernel Work `export_docs` E2E(이전 리뷰 BLOCKING 수정의 실제 경로), skillsilent managed CLI 동작, 전체 회귀/민감정보 점검, 실제 업무 호스트 writer/G0. CI Python3.11 표적 7/7·ZIP CRC는 PASS이나 정식 출시 게이트와 구분.
+- **판정:** `PUBLIC_RELEASE=BLOCKED/NOT_POSTED`, `PRIVATE_DEVELOPMENT_CANDIDATES=POSTED`, `HOST_INSTALLED=NOT_RUN`, `SKILL_UPDATER_EXECUTION=NOT_RUN`. 원격 PUBLIC 파일이 생겼다는 성공 주장 금지. 이 작업을 위해 새 리뷰·모델 호출·READY·호스트 변경 없음.
+- **NEXT_ONE_ACTION:** 추가 리뷰 없이 실제 `export_docs`와 skillsilent 관리 경로, 민감정보/메타데이터 안전 및 필요한 기존 회귀를 수행하여 두 파일을 검증된 최종 릴리스로 판정한 뒤, 기존 사용자 PUBLIC 게시 지시를 사용하여 L1Work 루트에 새 버전 ZIP만 게시·원격 바이트 SHA-256 확인.
+
+---
+
 ## 리뷰 1회 종료 — 패치 2종 신규 ZIP 게시 (2026-11-16 KST)
 
 - **최신 사용자 지시:** Windows Claude Code 독립 리뷰 1회로 종료, 추가 리뷰 요청 없이 GPT가 6개 지적을 수정·재패키징. [변경·시험·SHA 정본](GPT_MSC_ONE_REVIEW_CYCLE_FIXED_PACKAGES_r0001_20261116_KST.md). NEW_INDEPENDENT_REVIEW=NOT_RUN_BY_USER_DIRECTION, 신규 REQUEST/READY/유료 모델 호출 0.
