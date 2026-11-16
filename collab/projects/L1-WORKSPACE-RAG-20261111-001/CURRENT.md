@@ -1,5 +1,16 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## PUBLIC L1Work 업무 GPT 인계 게시 — Knowledge 폴더·Writer 경계 (2026-11-16 KST)
+
+- **사용자 지시:** 기존 PRIVATE 설계 인계의 공개 가능한 내용을 PUBLIC `wonhwipark/L1Work`, branch `main`, `handoffs/`에 게시하고 목록 진입점 연결.
+- **PUBLIC 게시 확인:** [업무 GPT 설계 인계](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_WORKSPACE_KNOWLEDGE_FOLDER_UPDATER_HANDOFF_r0001_20261116_KST.md), 최종 내용 commit `f1923fd8a26a0093066951b4ffbebd38a34910e2`, 원격 Git blob `c918866f1fc41f147152fe5141e51207571b8499`. 실제 UTF-8 **20,952 bytes**, SHA-256 `ff512ece625fc1ae187e07ed5d56d605bcb817e0a76d28743a65ecba399395e8`, 원격 본문·Git blob 확인 PASS. PRIVATE 협업 요청·영수증 상세를 PUBLIC 본문에 직접 포함하지 않은 공개용 문구 조정본.
+- **목록 연결:** [L1Work/handoffs/README.md](https://github.com/wonhwipark/L1Work/blob/main/handoffs/README.md), commit `d33ce7b7254750f33a3ce0e9d21bca56e091cd5c`, 원격 readback PASS.
+- **판정:** `PUBLIC_HANDOFF=POSTED_VERIFIED`, `INDEPENDENT_REVIEW_3_4=RESULT_NOT_RECEIVED`, `WORKSPACE_KNOWLEDGE_FOLDER_IMPLEMENTATION=NOT_RUN`, `GROUP_KNOWLEDGE_WRITE=NOT_RUN`. 기존 PRIVATE r0001 인계·고정 리뷰 요청/승인/영수증 이력 불변. 본 인계는 업무 GPT 읽기 전용 설치본 G0 검토용이며 스킬 배포·Job/운영/그룹 쓰기의 승인이나 자동 실행 트리거가 아님.
+- **NEXT_ONE_ACTION:** 업무 GPT가 PUBLIC 인계 G01~G12로 현재 설치된 Workflow/Kernel/Updater/그룹 writer 계약의 REUSE/CONNECT/확인된 GAP를 읽기 전용 대조·회신.
+
+---
+
+
 ## 업무 GPT Knowledge 폴더·권한 분리 인계 게시 — 2026-11-16 KST
 
 - **사용자 최신 합의:** GitHub 탐색성을 위해 개인 업무용 `l1-workspace`에 물리적 `knowledge/` 탐색 폴더를 설계. 해당 폴더 `WRITE=l1-knowledge-updater ONLY`, `l1-fix-workflow=READ_ONLY`; `works/`는 기존 Kernel Work/Evidence 정본 그대로, Updater의 Work 갱신은 기존 Kernel 허용 writer 경유. Kernel 신규 `KNOWLEDGE` Profile/별도 원장 선제 추가 없음. 그룹 확정 지식은 승인 후 기존 `l1sw-dev-knowledge` writer.
