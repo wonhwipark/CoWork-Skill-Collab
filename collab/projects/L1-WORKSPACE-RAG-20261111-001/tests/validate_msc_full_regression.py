@@ -12,6 +12,7 @@ secret=[
  ("OpenAI secret",rb"sk-(?:proj-)?[A-Za-z0-9_\-]{35,}"),
  ("AWS id",rb"AKIA[0-9A-Z]{16}"),
 ]
+errors=[]
 for filename,expected,relative in items:
  data=(root/filename).read_bytes()
  assert hashlib.sha256(data).hexdigest()==expected, filename+" SHA mismatch"
@@ -31,6 +32,9 @@ for filename,expected,relative in items:
     if re.search(pattern,raw):findings.append((typ,i.filename))
   assert not findings,findings
   print("STATIC_RELEASE_GATES_PASS",filename,"members",len(names),"nested_archives",nested,"secret_flags",len(findings),flush=True)
+  for name in names:
+   if name.endswith("test_low_spec_execution_contract.py"):
+    print("VERSIONED_TEST",name,"\n"+z.read(name).decode("utf-8")[:1000],flush=True)
   with tempfile.TemporaryDirectory(prefix="msc-full-regression-") as td:
    z.extractall(td)
    cwd=Path(td)/relative
@@ -38,6 +42,11 @@ for filename,expected,relative in items:
    print("FULL_REGRESSION_START",filename,"tests_files",len(module_tests),flush=True)
    p=subprocess.run([sys.executable,"-m","pytest","-q","--disable-warnings","--maxfail=1","tests"],cwd=cwd,text=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,timeout=350)
    print("FULL_REGRESSION_OUTPUT",filename,"\n"+p.stdout[-12000:],flush=True)
-   assert p.returncode==0,filename+" full pytest failed"
-   print("FULL_REGRESSION_PASS",filename,flush=True)
+   if p.returncode != 0:
+    errors.append(filename)
+    print("FULL_REGRESSION_FAIL",filename,flush=True)
+   else:
+    print("FULL_REGRESSION_PASS",filename,flush=True)
+print("FULL_REGRESSION_TOTAL_ERRORS",errors,flush=True)
+assert not errors,"Full regression failed: "+repr(errors)
 print("FULL_REGRESSION_GATE=PASS",flush=True)
