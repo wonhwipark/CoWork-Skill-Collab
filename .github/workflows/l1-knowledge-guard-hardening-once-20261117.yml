@@ -4,6 +4,7 @@ on:
     branches: [dev/l1-knowledge-guards-20261117]
     paths:
       - .github/workflows/l1-knowledge-guard-hardening-once-20261117.yml
+      - collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/tests_knowledge_guard_candidates.py
 permissions:
   contents: write
 jobs:
