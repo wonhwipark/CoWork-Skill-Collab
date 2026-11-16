@@ -89,10 +89,10 @@
       "id": "L1-WORKSPACE-RAG-20261111-001",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md",
-      "status": "문서상 진행",
+      "status": "검증 진행 중",
       "title": "L1-WORKSPACE-RAG-20261111-001 — CURRENT",
-      "tone": "neutral",
-      "topic": "최신 상태 — Knowledge Guard 3종 Windows Claude 코드 R1 REQUEST/SOURCE_PIN 게시 (2026-11-17 KST)"
+      "tone": "warning",
+      "topic": "최신 검토 — Jira·CL·Merged PR 이슈 시나리오·복구 지점 분석 제안 (2026-11-17 KST)"
     },
     {
       "id": "NR-L1TX-CODE-ANALYSIS-20261115-001",
