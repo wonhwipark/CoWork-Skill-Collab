@@ -17,10 +17,10 @@
       "id": "COWORK-AUTO-APPROVAL-20261115-001",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/COWORK-AUTO-APPROVAL-20261115-001/CURRENT.md",
-      "status": "검증 진행 중",
+      "status": "문서상 진행",
       "title": "COWORK-AUTO-APPROVAL-20261115-001 — CURRENT",
-      "tone": "warning",
-      "topic": "운영 자동 승인 미활성화 오류 교정·v0.2.23 LIVE 마무리 원샷 지시 (2026-11-16 KST)"
+      "tone": "neutral",
+      "topic": "자동 승인 v0.2.23 LIVE 전환 완료: AUTO_SIGNING_LIVE=PASS_HOST_VERIFIED (2026-11-16 KST)"
     },
     {
       "id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
@@ -322,9 +322,9 @@
     {
       "evidence": "프로젝트 TRACKER.json 신고 값 · 운영 근거 별도 확인 필요",
       "independent_review": "PASS",
-      "next_action": "2026-11-16: R2 v0.2.23 completed 1 paid call, $0.5244525 host DB report; GitHub APPROVAL_SIG/READY/DISPATCH/REVIEW_RESULT/RECEIPT verified, BLOCKING 0 MAJOR 0 actual",
-      "owner": "Windows 운영 호스트 증빙 정합성 확인 / GPT 최종 활성화 확인",
-      "phase": "DISPOSITION",
+      "next_action": "2026-11-16 19:47 KST: v0.2.23 운영 설치·보호 위임 활성화 완료(AUTO_SIGNING_LIVE=PASS_HOST_VERIFIED). 전 게이트 PASS, 회귀 967 passed/12 skipped, 2주기·재시작·소급 3건 차단·Notifier·롤백 준비 확인, 모델 ",
+      "owner": "Windows 운영 호스트 (자동 승인 LIVE) / GPT 판정",
+      "phase": "COMPLETE",
       "record_source": "REGISTERED_METADATA_UNVERIFIED",
       "self_test": "PASS",
       "skill": "cowork-review-watcher",
