@@ -1,5 +1,16 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 리뷰 1회 종료 — 패치 2종 신규 ZIP 게시 (2026-11-16 KST)
+
+- **최신 사용자 지시:** Windows Claude Code 독립 리뷰 1회로 종료, 추가 리뷰 요청 없이 GPT가 6개 지적을 수정·재패키징. [변경·시험·SHA 정본](GPT_MSC_ONE_REVIEW_CYCLE_FIXED_PACKAGES_r0001_20261116_KST.md). NEW_INDEPENDENT_REVIEW=NOT_RUN_BY_USER_DIRECTION, 신규 REQUEST/READY/유료 모델 호출 0.
+- **새 후보 ZIP PRIVATE main 게시·원격 확인:** candidates/doc-converter_v0_2_24_1116.zip 215092 B / SHA-256 2ef0929bc0a80a1c0aca67bf3c8fc02f967bddba223b45c27807c363e96229f7; candidates/work-ledger-kernel_v0_7_41_1116.zip 413709 B / SHA-256 48d1bf5e24c613e7e0ba04df9946c427c5d1ee39d8d16204966afff07e93497b. Commit 395dafd4c2aa2378444b78e897829ab010198ca4, 구버전 보존. 리뷰 결함 B1/M1/M2/m1/m2/m3 수정 반영.
+- **실제 자체시험:** [CI run 43799762374](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43799762374) SUCCESS. 새 ZIP full CRC·모든 내부 SHA 원장·Python 컴파일 PASS, 신규 함수/관리 정책 표적 시험 7/7 PASS(Python3.11). 실제 Work export_docs/skillsilent runner·Python3.10·기존 전체 suite·실제 브라우저/Knowledge writer E3는 NOT_RUN/NOT_VERIFIED. release/host PASS로 승격하지 않음.
+- **역할 유지:** l1-fix-workflow v1.6.69 / code-analyzer v0.15.3 재사용, l1-knowledge-updater 및 그룹 writer G0는 별도 확인.
+- **배포 게이트:** 두 ZIP development_not_for_deployment; PUBLIC L1Work ZIP/업무 호스트 설치·Knowledge 게시/LIVE 변경 없음. 사용자 지시대로 리뷰 사이클 1회 종료.
+- **NEXT_ONE_ACTION:** 추가 리뷰 없이 실제 Work export_docs/관리 실행 정책·원격 B HTML 호스팅 검증 게이트 정산. 승인된 E3가 확인되기 전 공식 배포로 승격하지 않음.
+
+---
+
 ## GPT 최신 판정 — MSC 독립 코드 리뷰 REVISE (2026-11-16 KST)
 - 정본: [GPT 지적별 판정](GPT_MSC_PATCH_CLAUDE_REVIEW_DISPOSITION_r0001_20261116_KST.md). 독립 리뷰 결과(commit 5595d5fbee4de16757070841014f44faa190af49)와 실행 증거(commit a78c8a010915217787a075b30f0c24fbe103d7c3)를 조회. BLOCKING 1 · MAJOR 2 · MINOR 3 → REVISE; 공개·호스트 배포 차단.
 - 수용: Kernel SVG 확장자 미지원으로 export_docs 전체 실패, doc-converter managed --view-mode 미연결, Windows Init/init 대소문자 덮어쓰기. 무결성 메타 불일치·NFC/NFD·Phase 버튼 누락 상태도 보완. Workflow/Analyzer 재사용 및 업무 GPT Updater G0 별도 유지.
