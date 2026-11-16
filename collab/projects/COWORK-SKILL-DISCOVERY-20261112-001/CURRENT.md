@@ -1,5 +1,15 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 최신 — L1Work 공개 스킬 39개 ZIP 분석·PRIVATE 협업 진입 연결 (2026-11-17 KST)
+
+- **정본 스냅샷:** [L1Work 공개 스킬 분석·협업 재개 인덱스 r0001](L1WORK_PUBLIC_SKILL_RELEASE_ANALYSIS_r0001_20261117_KST.md). PUBLIC `wonhwipark/L1Work/main` 고정 source commit `33d959f3376a495875eed59b79b292c0f8f9cfe0`에서 루트 ZIP 39개(관리 스킬 17종의 공개 ZIP·독립 `skillsilent` ZIP 미발견·기타/보조 17개)를 확인하고 기능·역할·버전·소스 링크·Git blob·현재 검증 경계를 구분. 39개 ZIP 바이트 재감사·호스트 설치를 수행한 것은 아님.
+- **핵심 판정:** `doc-converter v0.2.25`, `work-ledger-kernel v0.7.42`는 기존 결과상 `PUBLIC_POSTED/REMOTE_SHA256_PASS`; `l1-fix-workflow v1.6.70`, `l1-github v0.3.58`, `work-ledger-kernel v0.7.43`은 PRIVATE 개발 후보이며 `PUBLIC_RELEASE=BLOCKED_NOT_POSTED`. 공개 파일과 미래 배포 후보를 병합하지 않음. 해당 최신 실행 상태는 [L1 RAG CURRENT](../L1-WORKSPACE-RAG-20261111-001/CURRENT.md)를 우선.
+- **게시·실제 검증:** 본문 보고서 PRIVATE main commit `c99062c61f314e277837929fedc4c822622e8dda`, UTF-8 25,079 bytes, SHA-256 `ed8570e7563aabd358afc934f2f5a6e113e1055b38cda022e89e02016c7c3b24`, Git blob `16d14a97fe66d015f102481e65e2449d1cf37cb3`, 원격 본문 비교 PASS. 공개 ZIP 수정·호스트/Job/Knowledge/REQUEST/READY/유료 리뷰 0.
+- **조회 순서:** `collab/CONTEXT_BRIEF.md` → 이 CURRENT **최상단 링크** → 스킬 분석 보고서 → 필요한 [스킬 기능 카탈로그](../../knowledge/SKILL_CAPABILITY_CATALOG.md)·관련 Work·실제 ZIP 원문. 기존 18종 감사·과거 기록 보존; 매 새 창 전체 패키지 재감사 불필요.
+- **NEXT_ONE_ACTION:** 공개/개발 버전 문의 시 이 스냅샷의 source pin과 **실제 최신 L1Work HEAD/관련 CURRENT**를 대조하여 변경분만 정리. 3종 Knowledge Guard 배포 보완은 기존 L1 RAG Work에서 진행하며 본 인벤토리 게시를 릴리스 승인이나 실행 트리거로 간주하지 않음.
+
+---
+
 ## TD-003 후속 — 기존 NR Work에 호스트 E2E one-shot 인계 게시 / 직접 Linux MCP 미접근 (2026-11-15 KST)
 
 - 사용자 '끝까지 이어서 진행'에 따라 기존 NR 분석 Work와 [EXECUTION_REQUEST](../NR-L1TX-CODE-ANALYSIS-20261115-001/EXECUTION_REQUEST.md), 기존 JOBLIST 배포 계약·PUBLIC v0.4.38 검증 결과를 다시 조회. **같은 CoWork/NR Work 재사용**, 신규 Work·Job ID·유료 리뷰 REQUEST/READY 추가 없음.
