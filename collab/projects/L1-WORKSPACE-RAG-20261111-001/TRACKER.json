@@ -6,10 +6,10 @@
       "skill": "l1-knowledge-updater",
       "title": "l1-knowledge-updater",
       "phase": "DEVELOPMENT",
-      "owner": "GPT 최소 수정 / 이후 Windows Claude Code 별도 재리뷰",
+      "owner": "GPT 개발 패치 종료 / 업무 G0·E3 확인 대기",
       "self_test": "PASS",
-      "independent_review": "FAIL",
-      "next_action": "독립 Claude Code 실제 실행 리뷰 REVISE(BLOCKING 1·MAJOR 2·MINOR 3). Kernel name_for .svg 미지원 export_docs 회귀, converter --view-mode managed gate 미연결/Windows 대소문자 충돌 등 6건 수정 → 후보 신버전 패치·실행 회귀·ZIP 무결성 → 별도 세션 독립 재리뷰. 기존 표적 CI 19/19 PASS는 결함을 놓친 자체시험. PUBLIC 배포/호스트 설치 BLOCKED."
+      "independent_review": "COMPLETE_ONE_CYCLE_REVISE",
+      "next_action": "사용자 지시로 독립 리뷰 1회 종료, 추가 리뷰 요청 없음. doc-converter v0.2.24(215092B; SHA256 2ef0929bc0a80a1c0aca67bf3c8fc02f967bddba223b45c27807c363e96229f7), kernel v0.7.41(413709B; SHA256 48d1bf5e24c613e7e0ba04df9946c427c5d1ee39d8d16204966afff07e93497b) PRIVATE main 게시·원격 확인 PASS. 격리 Python3.11 7/7·CRC/내부 원장 PASS. 실제 export_docs/skillsilent runner/업무 host E3 NOT_RUN, PUBLIC delivery BLOCKED. 다음: 업무 설치본 계약/실제 통합시험만 확인, 재리뷰 금지."
     }
   ]
 }
