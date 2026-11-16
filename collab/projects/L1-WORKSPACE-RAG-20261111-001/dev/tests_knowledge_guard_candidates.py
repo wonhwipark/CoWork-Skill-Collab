@@ -95,6 +95,12 @@ def smoke():
         assert 'if knowledge_readme.is_file():' in src
         assert '[Knowledge 탐색](knowledge/README.md)' in src
         assert 'WORK_DOCS_KNOWLEDGE_UNSAFE_PATH' in src
+        import inspect
+        sys.path.insert(0, str(kern))
+        import work_ledger_kernel as kmod
+        print("KERNEL_EXPORTS", [x for x in dir(kmod) if not x.startswith("_")][:45])
+        from work_ledger_kernel import kernel as kernel_module
+        print("KERNEL_CLASSES", [(name,str(inspect.signature(getattr(kernel_module,name)))) for name in dir(kernel_module) if name in ("Kernel","WorkLedgerKernel")])
         print("KERNEL_NAV_SOURCE_SMOKE_PASS (not E2E)")
         print("TARGETED_SMOKE_PASS (T01/T02 full exporter and hard OS gate still NOT_RUN)")
 
