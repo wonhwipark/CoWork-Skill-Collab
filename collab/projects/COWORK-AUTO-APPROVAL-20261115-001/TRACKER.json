@@ -5,11 +5,11 @@
       "work_id": "COWORK-AUTO-APPROVAL-20261115-001",
       "skill": "cowork-review-watcher",
       "title": "GPT→GitHub REQUEST 자동 서명·READY (제한된 사전 위임)",
-      "phase": "REVIEW",
+      "phase": "DISPOSITION",
       "owner": "Windows 운영 호스트 (자동 승인 LIVE) / GPT 판정",
       "self_test": "PASS",
-      "independent_review": "PENDING",
-      "next_action": "신규 REQ-COWORK-BUDGET-V025-LARGE-R2-20261117 GPT 정식 게시·SOURCE_PIN 검증 완료. Windows 실정책 preflight·유효 수동 승인/READY 후 1회 독립 R2 실행 및 결과·영수증 게시. 실패 시 BLOCKED/모델 호출 0."
+      "independent_review": "PASS",
+      "next_action": "2026-11-17: v0.2.25 독립 R2(LARGE $3, 수동승인) 완료. REQ-COWORK-BUDGET-V025-LARGE-R2-20261117, 비용 USD 0.8062, 1회. BLOCKING 0, MAJOR 1(M1: review_request_gate.py가 패키지에 없어 검토 불가 — 범위 공백, 코드 결함 아님), MINOR/관찰 6(대부분 확인). 리뷰어 직접 확인: auto_policy/config/validator 예산 파싱, state_store 원자적 예약, approval.py 신뢰 체인, 위임이 LARGE/DESIGN 자동서명 못하게 fail-closed. 전역 일일 상한(daily_budget_usd/max_dispatches_per_day)은 사용자 지시로 운영 설정에서 제거(delegation 자체 한도는 불변). GPT 판정 대기."
     }
   ]
 }
