@@ -1,5 +1,12 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-18 KST — MSC 두 진입 독립 R1 완료·GPT 판정 종료 / Guard 별도 유지
+- **완료 확인:** REQ-L1-MSC-DUAL-ENTRY-DESIGN-R1-20261117 rev1의 APPROVAL_SIG/READY/DISPATCH/REVIEW_RESULT/RECEIPT 원격 확인. 결과 COMPLETED/ACCEPT_WITH_CHANGE, 영수증 ok=true, processing_key·REQUEST/READY SHA-256 결속 PASS. 과거 NOT_OBSERVED는 당시 조회 이력으로 보존.
+- **GPT 판정:** [상세 판정](GPT_MSC_DUAL_ENTRY_R1_DISPOSITION_r0001_20261118_KST.md) ACCEPT_WITH_CHANGE, 차단 0·비차단 권고 2, REVIEW_CYCLE=CLOSED. 기존 파일명 유지+링크 문구로 'MSC 작업 안내/MSC 상세 원본' 구별, Work/개인 지식/그룹 문서별 기존 writer 단일 소유·마커 미확인 Preview/HOLD를 설계 보완으로 기록. 코드 반영·회귀·업무 E3 완료 아님.
+- **다른 요청:** Guard CODE R1의 AUTO_SIGNING_UNCERTAIN은 호스트 보고·정산 미완료로 별도 유지. 11/15 대화형 MSC는 기존 GPT 판정 완료·watcher NOT_RUN, 구 Knowledge DESIGN은 후속 FIXED R1과 중복 범위 확인 대기. [pending 9건 분류](../COWORK-DROPBOX-TO-GITHUB-MIGRATION/GPT_PENDING_REQUESTS_TRIAGE_r0001_20261118_KST.md). 기존 입력·영수증·이력 삭제·재큐잉·새 리뷰 없음.
+- **NEXT_ONE_ACTION:** Windows 기존 보호 절차로 Guard의 signing audit/jobs/예약/비용을 읽기 전용 정산. 불확실이면 HOLD, pin 수정만으로 수동 재실행하지 않음. MSC는 리뷰 판정 종료 상태로 보존.
+---
+
 ## 최신 감사 — MSC 설계 리뷰 최초 SOURCE_PIN 계약 위반 확인 (2026-11-17 KST)
 
 - **사용자 요청·판정:** 리뷰 요청이 규칙대로 진행됐는지 검토. [직접 감사 결과 r0001](L1_MSC_REVIEW_REQUEST_RULE_AUDIT_r0001_20261117_KST.md). **최초 입력 계약은 미충족**: GPT 작성 SOURCE_PIN의 `repo_id`가 숫자였고, 당시 v0.2.23 승인 코드의 문자열 비교에서 거부됨. 현재 pin의 타입 보정은 PASS이며 원래 REQUEST/ZIP/commit A는 유지. 원격 바이트 일치와 승인 계약 적합성을 혼동하지 않음.

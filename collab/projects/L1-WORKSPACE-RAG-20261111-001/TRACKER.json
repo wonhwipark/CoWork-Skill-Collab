@@ -6,10 +6,10 @@
       "skill": "l1-knowledge-updater",
       "title": "l1-knowledge-updater",
       "phase": "REVIEW",
-      "owner": "GPT (Guard 코드·MSC 두 진입 설계 REQUEST 고정·게시) → Windows Claude Code (각 독립 R1), 업무 GPT (G0 별도)",
+      "owner": "GPT (MSC 설계 R1 판정 종료) → Windows Claude Code (Guard 불확실 이력 정산), 업무 GPT (G0 별도)",
       "self_test": "PASS",
       "independent_review": "PENDING",
-      "next_action": "Guard 코드·MSC 설계 R1의 SOURCE_PIN repo_id JSON 문자열 수정·CI PASS. Windows AUTO_SIGNING_UNCERTAIN 로컬 정산 필요. 두 REQUEST 결과·영수증 수신 후 GPT 1회 판정. 자동 재큐잉 금지."
+      "next_action": "MSC 두 진입 독립 R1 COMPLETED/ok=true 원격 확인·GPT ACCEPT_WITH_CHANGE, 1사이클 종료. Guard CODE R1 AUTO_SIGNING_UNCERTAIN은 별도 유지. Windows signing audit/jobs/예약/비용 읽기 전용 정산 후 기존 유효 승인과 정상 보호 경로를 판정; 임의 초기화·재큐잉·유료 재리뷰 금지."
     }
   ]
 }

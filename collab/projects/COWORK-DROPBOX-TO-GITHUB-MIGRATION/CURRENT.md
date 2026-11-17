@@ -1,5 +1,13 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 2026-11-18 KST — pending 9건 재분류·MSC 실제 완료 정산
+- **분류:** pending_requests 9/미해결 5/완료 잔존 4는 Windows 호스트 보고. GPT가 완료 4건의 원격 영수증 ok=true·결과 존재를 직접 확인. 원시 행 수를 실행 대기로 표시하는 집계/표시 결함 후보 수용; DB/설치 코드 원인·수정은 NOT_RUN.
+- **미해결 해석:** 구 v0.2.25 DESIGN은 같은 ZIP의 LARGE R2 완료로 추가 리뷰 불필요한 미시작 대체 이력(로컬 종결 미적용). Guard는 AUTO_SIGNING_UNCERTAIN 읽기 전용 정산 우선. 기존 대화형 MSC는 정식 watcher 미실행과 구분; 구 Knowledge 설계는 후속 FIXED R1과 중복 범위 확인; 대시보드는 승인 범위 미확인 대기. 일괄 재실행/행 삭제 없음.
+- **MSC 새 완료 확인:** 두 진입 설계 R1의 승인/READY/디스패치/결과/영수증과 REQUEST·READY bytes 결속 확인. GPT ACCEPT_WITH_CHANGE, 차단 0·비차단 권고 2, 1사이클 종료. pin 수정과 자동 처리의 직접 인과는 호스트 audit 미검증.
+- **근거·범위:** [9건 분류·후속 판정](GPT_PENDING_REQUESTS_TRIAGE_r0001_20261118_KST.md), [MSC GPT 판정](../L1-WORKSPACE-RAG-20261111-001/GPT_MSC_DUAL_ENTRY_R1_DISPOSITION_r0001_20261118_KST.md). 이번 작업은 PRIVATE 문서 정리만; 운영 DB·정책·v0.2.25 조건부 배포·서명·READY·새 유료 요청 변경 0.
+- **NEXT_ONE_ACTION:** Windows 기존 작업 범위에서 Guard 불확실 이력과 구 DESIGN 미시작 대체 상태를 먼저 읽기 전용 정산하고 완료 포함 집계 위치 확인. 실제 호스트 실행은 GPT에서 NOT_RUN.
+---
+
 ## SOURCE_PIN repo_id 문자열 포맷 수정·자동 승인 불확실 상태 보존 (2026-11-17 KST)
 - **원인 확정:** Windows Claude Code가 보고한 `approval.py REPO_ID_MISMATCH`는 두 요청 `SOURCE_PIN.json`의 `repo_id`가 숫자 `1451933830`이던 실제 원격 타입 오류. GitHub 저장소 ID·정상 예전 pin은 문자열 `"1451933830"`.
 - **실제 변경 PASS:** `collab/ops/source_pin.py` 신규 표준 생성·검증기와 13개 회귀, PRIVATE Actions 11개 pin 전체 읽기 전용 타입 검사; Guard R1·MSC R1의 **기존 SOURCE_PIN.json에서 repo_id 타입만 문자열로 수정**. schema/Commit A/REQUEST/ZIP SHA 불변, 변경 전 pin blob 이력 보존. SOURCE_PIN 생성기만 수정하는 작업이 아니라 두 실파일 원격 readback 완료.
