@@ -27,13 +27,13 @@ jobs:
           names=z.namelist()
           print('SOURCE_NAMES',[x for x in names if x.endswith(('state_store.py','auto_approval.py','config.py','test_auto_approval.py'))])
           for name in names:
-              if not (name.endswith('state_store.py') or name.endswith('auto_approval.py') or name.endswith('config.py')):
+              if not (name.endswith(('state_store.py', 'auto_approval.py', 'auto_policy.py', 'config.py', 'delegation.py'))):
                   continue
               s=z.read(name).decode('utf8')
               print('SOURCE',name,'LENGTH',len(s))
               lines=s.splitlines()
-              indexes=[i for i,l in enumerate(lines) if any(x in l for x in ('def _auto_usage_locked','def auto_reserve','def auto_claim','day_call','monthly_call','daily_call','max_calls','DAY_CALL_LIMIT','AUTO_RESERVED','reserved_cents','POLICY_STOPPED','AUTO_SIGNING_UNCERTAIN','max_reviews_per_day'))]
-              for i in indexes[:50]:
+              indexes=[i for i,l in enumerate(lines) if any(x in l for x in ('def _auto_usage_locked','def auto_reserve','def auto_claim','day_call','monthly_call','daily_call','max_calls','DAY_CALL_LIMIT','AUTO_RESERVED','reserved_cents','POLICY_STOPPED','AUTO_SIGNING_UNCERTAIN','max_reviews_per_day','day_calls_used_or_reserved','daily_limit','max_day_calls'))]
+              for i in indexes[:75]:
                   a=max(0,i-5);e=min(len(lines),i+24)
                   print('SOURCE_LINES',name,a+1,e)
                   print('\n'.join(f'{j+1}: {lines[j]}' for j in range(a,e)))
