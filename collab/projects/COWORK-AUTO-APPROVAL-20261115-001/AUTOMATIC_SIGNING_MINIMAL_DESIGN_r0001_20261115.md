@@ -1,5 +1,14 @@
 # CoWork GPT→GitHub→Windows 자동 서명·독립 리뷰 최소 설계
 
+## 2026-11-17 최신 결정 — 횟수 상한 폐기 (기존 2026-11-15 설계보다 우선)
+
+- [최신 정본: COST_ONLY 정책](GPT_COST_ONLY_AUTO_APPROVAL_POLICY_r0001_20261117_KST.md).
+- 일/월 리뷰 **호출 횟수 상한은 사용하지 않음**. `max_day_calls` 필드는 기존 보호 위임 파일과 API 호환용으로만 받아들이고 정책 허용/원자 예약/상태 화면의 제한으로 사용하지 않는다.
+- 기존 **요청당 1회·중복/UNCERTAIN 자동 재시도 금지**, 프로젝트/스킬/서명/SOURCE_PIN, **USD 1/요청·USD 3/KST 일·USD 10/KST 월 비용 상한**은 유지한다.
+- 아래 2026-11-15 설계의 `하루 2회` 표기는 작성 당시 기준 이력이며 **신규 정책으로 적용 금지**. Windows 운영 LIVE에서는 새 ZIP의 독립 리뷰/호스트 시험/승인·설치 완료 전까지 과거 설정이 실제로 적용될 수 있으므로 문서 변경을 호스트 전환이라고 보고하지 않는다.
+
+---
+
 - 버전: r0001 / 2026-11-15 KST
 - 저장소/브랜치: GitHub PRIVATE `wonhwipark/CoWork-Skill-Collab` / `main`
 - 정확한 상대 경로: `collab/projects/COWORK-AUTO-APPROVAL-20261115-001/AUTOMATIC_SIGNING_MINIMAL_DESIGN_r0001_20261115.md`
@@ -57,7 +66,7 @@ REVIEW_RESULT + RECEIPT + USAGE_RECEIPT → 기존 notifier/Telegram 완료 통�
 | `allowed_policy` | `POLICY-STATIC-V1` | LARGE/XLARGE 자동 승인 금지 |
 | `max_cost_per_request` | `USD 1.00` | 1 요청/1회 |
 | `max_calls_per_request` | `1` | 재리뷰는 새로운 위임 없이 자동 시작 금지 |
-| `daily_limit` | **최대 2회/$3.00** | 현재 기존 watcher 운영 보고 상한보다 늘리지 않음 |
+| `daily_limit` | **USD 3.00 (횟수 상한 없음)** | 일일 비용만 KST 기준으로 제한; 과거 2회 상한 폐기 |
 | `monthly_limit` | **제안 $10.00** | 추가 누적 상한(사용자 확정 전 OFF) |
 | `delegation_expiry` | **제안 30일** | 만료 시 자동 서명 차단. 갱신은 명시적 사용자 결정 |
 | `revocation` | 보호된 로컬 `enabled=false` 즉시 | 서명 단계 이후 호출 중인 리뷰는 기존 영수증·중복 계약 적용 |
@@ -72,7 +81,7 @@ AUTO 요청에서 PROJECT/skill/ZIP 타입뿐 아니라 데이터 분류와 파�
 4. `APPROVAL_SIG` PUT 전 실패/409/timeout: 원격 상태 readback, 정확한 같은 payload면 정산. 승인 키로 재서명할 필요/요청이 불확실하면 자동 재시도 없이 `SIGNING_UNCERTAIN`. 임의 새 서명 생성 금지.
 5. `APPROVAL_SIG` 게시 후 READY 전 실패: 서명 payload와 준비된 READY bytes, existing signature 검증 통과 시 **기존 READY만** 게시 가능. HEAD race/원격 충돌 시 종료·보고, 영수증 확보 전 재호출 금지.
 6. READY 게시 후 Windows 중단/비용 한도 문제: **기존 Watcher N1 예약/REVIEW_UNCERTAIN**를 그대로 사용하여 모델 리뷰 1회만 실행. 첫 요청을 처리한 뒤 Telegram 알림 실패는 모델 재호출 사유가 아님.
-7. 매일/매월 사용량은 실제 청구+이미 예약된 최대 비용으로 보수적으로 계산. UTC/KST 경계 기준 한 가지를 고정하고 재시작/복구 후에도 정합성을 보장(추천 KST). 총액/횟수 상한은 **로컬 위임+기존 watcher 중 더 엄격한 제한**을 적용.
+7. 매일/매월 사용량은 실제 청구+이미 예약된 최대 비용으로 보수적으로 계산. UTC/KST 경계 기준 한 가지를 고정하고 재시작/복구 후에도 정합성을 보장(추천 KST). 총액 상한은 **로컬 위임+기존 watcher 중 더 엄격한 비용 제한**을 적용. 일/월 호출 횟수 상한은 두지 않는다.
 8. 신규 정책 변경·권한 확대, 위임 부재·만료·변조, allowlist 밖 요청, 모델 변경/프로파일 상승, 한도 초과는 `WAIT_USER_SCOPE` 또는 `BLOCKED`; Telegram 추가 승인 버튼을 자동으로 만들지 않음. 필요할 때 사용자에게 **한 번의 범위 확정**만 요청.
 
 ## 5. 구현 범위, 테스트, LIVE 게이트
