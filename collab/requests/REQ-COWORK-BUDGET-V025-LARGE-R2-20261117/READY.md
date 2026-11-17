@@ -1,0 +1,12 @@
+---
+schema: SKILL_COLLAB_READY_V1
+state: READY
+request_id: REQ-COWORK-BUDGET-V025-LARGE-R2-20261117
+request_revision: 1
+request_path: /SKILL-COLLAB/requests/REQ-COWORK-BUDGET-V025-LARGE-R2-20261117/REQUEST.md
+request_sha256: 2e8cf16ace20a694851df98e339faa7e5d08d02d9149c9c2e518bd2206388066
+package_sha256: 26d63c8a03290499b13b2ceb8ff0b70c06eb1b1bcc1a25fe3d8f65fcc213d228
+baseline_id: COWORK-LIVE-A-20261114
+---
+
+# ready
