@@ -76,7 +76,7 @@ HTML은 GitHub에서 소스로 표시되므로 다운로드 후 브라우저로 
 
 | Work ID | 스킬 | 진행 단계(신고) | 담당 | 시험(신고) | 독립 리뷰(신고) | 다음 조치 |
 |---|---|---|---|---|---|---|
-| [COWORK-AUTO-APPROVAL-20261115-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-AUTO-APPROVAL-20261115-001/CURRENT.md) | cowork-review-watcher | 독립 리뷰 | Windows 운영 호스트 (자동 승인 LIVE) / GPT 판정 | PASS | PENDING | 신규 REQ-COWORK-BUDGET-V025-LARGE-R2-20261117 GPT 정식 게시·SOURCE_PIN 검증 완료. Windows 실정책 preflight·유효 수동 승인/READY 후 1회 독립 R2 실행 및 결과·영수증 게시. 실패 시 BLOCKED/모델 호출 0. |
+| [COWORK-AUTO-APPROVAL-20261115-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-AUTO-APPROVAL-20261115-001/CURRENT.md) | cowork-review-watcher | GPT 판정 | Windows 운영 호스트 (자동 승인 LIVE) / GPT 판정 | PASS | PASS | 2026-11-17: v0.2.25 독립 R2(LARGE $3, 수동승인) 완료. REQ-COWORK-BUDGET-V025-LARGE-R2-20261117, 비용 USD 0.8062, 1회. BLOCKING 0, MAJOR 1(M1: review_request_gate.py가 패키지에 없어 검토 |
 | [COWORK-DROPBOX-TO-GITHUB-MIGRATION](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) | cowork-review-watcher | 완료 신고 (검증 필요) | GPT / Claude Code | PASS | PASS | GitHub 단일 LIVE 유지. SOURCE_PIN repo_id JSON 문자열 수정(Guard R1·MSC R1) 및 PRIVATE CI 11/11 pin·13/13 자체시험 PASS. Guard AUTO_SIGNING_UNCERTAIN은 Windows 로컬 정산 필요. 서명/READY/결 |
 | [COWORK-GITHUB-DASHBOARD-20261111-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md) | cowork-dashboard | 독립 리뷰 | GPT | PASS | PENDING | 대시보드의 두 진입·개인/그룹 구분을 확인. 실제 Updater→Workspace 저장 연결은 L1 Work에서 업무 GPT의 설치본 매핑으로 확인. |
 | [COWORK-SKILL-DISCOVERY-20261112-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md) | skill-discovery | GPT 판정 | GPT | PASS | NOT_RUN | TD-002 V07 PASS·TD-001 탑뷰 문서 완료; TD-003 실제 E2E는 NR 분석 기존 Work의 Linux 설치 SHA·신규 Job/Receipt/MCP readback 증거 확보 후 재판정 |
@@ -94,7 +94,7 @@ HTML은 GitHub에서 소스로 표시되므로 다운로드 후 브라우저로 
 
 | 프로젝트 | 문서상 상태 | 근거 |
 |---|---|---|
-| COWORK-AUTO-APPROVAL-20261115-001 | 검증 진행 중 | [CURRENT.md](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-AUTO-APPROVAL-20261115-001/CURRENT.md) |
+| COWORK-AUTO-APPROVAL-20261115-001 | 문서상 진행 | [CURRENT.md](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-AUTO-APPROVAL-20261115-001/CURRENT.md) |
 | COWORK-DROPBOX-TO-GITHUB-MIGRATION | 문서상 진행 | [CURRENT.md](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) |
 | COWORK-GITHUB-DASHBOARD-20261111-001 | 검증 진행 중 | [CURRENT.md](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md) |
 | COWORK-SKILL-DISCOVERY-20261112-001 | 검증 진행 중 | [CURRENT.md](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md) |
