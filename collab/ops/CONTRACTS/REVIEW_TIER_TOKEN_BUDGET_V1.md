@@ -1,4 +1,6 @@
 # CoWork 리뷰 등급 / 토큰·비용 예산 계약 V1
+
+> **2026-11-17 최신 정책:** 일/월 리뷰 호출 횟수 상한은 폐기. 횟수는 관측 지표만 허용하며 요청당 1회 중복 방지, 하루 USD 3·월 USD 10·요청 USD 1 비용 한도는 그대로 적용. [관련 결정](../../projects/COWORK-AUTO-APPROVAL-20261115-001/GPT_COST_ONLY_AUTO_APPROVAL_POLICY_r0001_20261117_KST.md).
 2026-11-14 KST · USER_REQUESTED_DESIGN · CONFIG_NOT_DEPLOYED
 Applies to: CoWork watcher 독립 Claude 리뷰 및 L1Work PUBLIC ZIP·handoff MD 링크 리뷰
 Canonical repo: PRIVATE `wonhwipark/CoWork-Skill-Collab`, `main`
@@ -60,7 +62,7 @@ Claude Code CLI 공식 `-p` 모드에는 `--max-budget-usd`, `--max-turns` 제�
 - GitHub PRIVATE에는 허용된 CoWork 자체 코드/ZIP/manifest를, PUBLIC L1Work에는 이미 공개된 스킬 및 `handoffs/` 문서 링크만 일반 리뷰 입력으로 사용. 회사 L1 코드·고객자료·자격정보는 제외.
 
 ## 4.1 리뷰마다 반복 승인하지 않는 단일 사용자 기본 정책(제안)
-- 사용자 요청 **한 번으로 작업별 리뷰 의도·대상·품질 등급을 함께 확정**한다. 단일 사용자 기준 사전 운영 정책에 대해서 사용자가 **한 번 명시 승인**하면 `approved_tiers`, `per_review_cost_cap`, `max_reviews_per_day`, `daily_cost_cap`, `repo_allowlist`, `valid_until` 안에서 각 작업의 새 리뷰를 자동으로 실행할 수 있게 설계. GitHub 임의 게시만으로 사용자의 승인된 업무 지시를 위조하거나 무제한 유료 호출하는 경로를 만들지 않는다.
+- 사용자 요청 **한 번으로 작업별 리뷰 의도·대상·품질 등급을 함께 확정**한다. 단일 사용자 기준 사전 운영 정책에 대해서 사용자가 **한 번 명시 승인**하면 `approved_tiers`, `per_review_cost_cap`, `daily_cost_cap`, `monthly_cost_cap`, `repo_allowlist`, `valid_until` 안에서 각 작업의 새 리뷰를 자동으로 실행할 수 있게 설계. GitHub 임의 게시만으로 사용자의 승인된 업무 지시를 위조하거나 무제한 유료 호출하는 경로를 만들지 않는다.
 - 상시 승인된 등급이라도 **예산 확대·등급 자동 상승·기존 리뷰 실패 후 새 유료 재리뷰·다른 저장소/범위 변경**은 예외로 보류하여 추가 명시 승인받는다. 정책이 만료되거나 불명확하면 새 모델 호출 0.
 - **현재의 사용자 승인 사실**: `REV-COWORK-V0214-20261114`, R1 / `POLICY-STATIC-V1`, 최대 **$1**, 1회, 동일 Windows PC 서명키 A안은 이미 승인됨. **한 번 더 물을 필요 없음**. 미래의 R0/R1/R2/R3 전체에 대한 **상시 예산 승인은 아직 주어지지 않음**.
 - 운영자가 유료 사용을 직접 승인한 명시 범위는 해당 단계에서 실행하되 실제 Windows host 토큰·운영 계정·LIVE 변경은 승인된 것으로 확대하지 않는다.
