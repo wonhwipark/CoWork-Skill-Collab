@@ -36,6 +36,9 @@ jobs:
           echo 'b0ebd0aa4d771adc30648ab2bce23a3c1648e408984bedb36d0e3da45108312c  /tmp/doc-converter_v0_2_26_1117.zip' | sha256sum --check
           python collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/skill_release_quality_gate.py --zip /tmp/doc-converter_v0_2_26_1117.zip --expected-version 0.2.26
           python collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/msc_skill_contract_gate.py --matrix collab/ops/CONTRACTS/MSC_SKILL_IO_MATRIX_V1.json --package /tmp/doc-converter_v0_2_26_1117.zip --require-policy
+      - name: Inspect pinned public converter for dual-entry follow-up
+        run: |
+          python collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/msc_dual_entry_candidate.py --inspect /tmp/doc-converter_v0_2_26_1117.zip
       - name: Fail closed for changed candidate skill ZIPs in this commit
         run: |
           python - <<'PY'
