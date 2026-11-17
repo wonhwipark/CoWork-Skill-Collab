@@ -93,3 +93,20 @@ jobs:
             git commit -m 'dev(auto-approval): pin verified v0.2.25 per-review budget candidate'
             git push origin HEAD:dev/auto-review-budget-policy-20261117
           fi
+
+      - name: Confirm remote PRIVATE candidate bytes and SHA-256 after push
+        run: |
+          git fetch --depth=1 origin dev/auto-review-budget-policy-20261117
+          git show FETCH_HEAD:collab/projects/COWORK-AUTO-APPROVAL-20261115-001/candidates/skill-collab-watcher_v0_2_25_1117.zip > /tmp/remote_v025.zip
+          git show FETCH_HEAD:collab/projects/COWORK-AUTO-APPROVAL-20261115-001/candidates/AUTO_REVIEW_BUDGET_V025_BUILD_RESULT.json > /tmp/remote_v025_result.json
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib, json,zipfile
+          blob=Path("/tmp/remote_v025.zip").read_bytes()
+          result=json.loads(Path("/tmp/remote_v025_result.json").read_text())
+          assert result["size"]==len(blob)
+          assert result["sha256"]==hashlib.sha256(blob).hexdigest()
+          with zipfile.ZipFile("/tmp/remote_v025.zip") as z:
+              assert z.testzip() is None
+          print("REMOTE_BYTE_READBACK_PASS",result["size"],result["sha256"])
+          PY
