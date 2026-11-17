@@ -1,0 +1,40 @@
+{
+  "request_id": "REQ-COWORK-ACE-PEC-HOP-ACON-DESIGN-R1-20261118",
+  "request_revision": "1",
+  "package_sha256": "5f56a23e8c962da273cd24ca2c64c4a6239f85ef588411633aa9c20b823b0431",
+  "verdict": "ACCEPT_WITH_CHANGE",
+  "review_status": "PASS_SCOPE_LIMITED",
+  "review_cycle": "CLOSED_NO_AUTOMATIC_REREVIEW",
+  "deployment_ready": false,
+  "findings": [
+    {
+      "id": "N1",
+      "decision": "ACCEPT_WITH_CHANGE",
+      "summary": "reuse ordered Work decisions and explicit authorization; conflicts HOLD; ACE-02 counterexample"
+    },
+    {
+      "id": "N2",
+      "decision": "ACCEPT_WITH_CHANGE",
+      "summary": "compare source pinned bytes/offset SHA-256 against quoted ranges; PEC-01/03 corruption tests"
+    },
+    {
+      "id": "N3",
+      "decision": "ACCEPT_WITH_CHANGE_CONDITIONAL",
+      "summary": "controlled baseline/compressed repetitions >=3 each only when calls/budget authorized; else NOT_RUN"
+    },
+    {
+      "id": "N4",
+      "decision": "ACCEPT",
+      "summary": "ACE role names are existing manual workflow stages; no new subagents or paid calls"
+    }
+  ],
+  "source_document_path": "collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/GPT_ACE_PEC_HOP_ACON_R1_REVIEW_DISPOSITION_r0001_20261118_KST.md",
+  "source_document_git_blob": "c16bbb8205ee88fdf65e5ad949297789a707cd9e",
+  "source_verification": "GPT_REMOTE_BYTES_VERIFIED_SIGNATURE_CRYPTO_NOT_INDEPENDENTLY_VERIFIED",
+  "cost_in_receipt": false,
+  "cost_independently_verified": false,
+  "request_sha256_verified": "65ce9a817105fc7dbabeaab90630d7a04edf7ae133f2f3810e544f2e6abbf1c4",
+  "ready_sha256_verified": "c1b20829452db75095cd17e39fc0e48333ea5c702e97dc2d104815c70250f3f7",
+  "review_sha256_verified": "8fdd182ecb0548f95ae55137d3ab8e4574813c15fa06ff9aa05c456d93bc79ae",
+  "cycle_policy": "ONE_REVIEW_THEN_GPT_DISPOSITION_NO_AUTOMATIC_REREVIEW"
+}
