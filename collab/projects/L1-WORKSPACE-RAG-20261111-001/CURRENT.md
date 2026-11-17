@@ -1,5 +1,15 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 최신 감사 — MSC 설계 리뷰 최초 SOURCE_PIN 계약 위반 확인 (2026-11-17 KST)
+
+- **사용자 요청·판정:** 리뷰 요청이 규칙대로 진행됐는지 검토. [직접 감사 결과 r0001](L1_MSC_REVIEW_REQUEST_RULE_AUDIT_r0001_20261117_KST.md). **최초 입력 계약은 미충족**: GPT 작성 SOURCE_PIN의 `repo_id`가 숫자였고, 당시 v0.2.23 승인 코드의 문자열 비교에서 거부됨. 현재 pin의 타입 보정은 PASS이며 원래 REQUEST/ZIP/commit A는 유지. 원격 바이트 일치와 승인 계약 적합성을 혼동하지 않음.
+- **실제 확인:** 고정 REQUEST 3609 B/ZIP 29111 B의 현재·commit A bytes 일치, ZIP CRC/경로/5개 manifest 항목·실제 기존 secret scanner PASS. 실제 v0.2.23 승인 비교식과 공통 pin 검사에서 원본 FAIL/수정본 PASS를 격리 재현. 실제 signer/키/READY/모델 호출 0. 전체 Windows 승인·호스트 회귀를 PASS로 표시하지 않음.
+- **범위 구분:** 기존 요청은 USD 1·1회 **한정 R1 설계 검토**, 종합 R2/R3 완료 근거가 아님. 현행 USD 3 설계 기본 및 신규 REQUEST의 LIVE select/check 사전 게이트는 이후 변경으로, 과거 요청에 소급 적용/무단 변환하지 않음. 기존 보호 위임과 현재 Windows 상태는 실제 호스트 검증 필요.
+- **현재 관측·한계:** snapshot `2c1e2ee3187c1c0548c56d353fd4388f8e3a1d24`에서 해당 요청의 APPROVAL_SIG/READY/DISPATCH/REVIEW_RESULT/실행 RECEIPT `NOT_OBSERVED`. Guard의 로컬 `AUTO_SIGNING_UNCERTAIN` 보고를 MSC 상태 확정으로 복사하지 않음. 입력 보정만으로 기존 불확실 예약이 해소·자동 재실행됐다고 보고하지 않음.
+- **NEXT_ONE_ACTION:** 기존 Windows 완료 인계로 MSC request_id/revision의 로컬 예약·서명·호출·비용·현재 승인 범위를 **읽기 전용 정산**. 정상 처리 조건이 입증될 때만 기존 1사이클 진행, 불확실·중복이면 보류 근거 게시. 이번 감사에서 REQUEST/ZIP/pin·운영 DB/위임·정책 변경/새 리뷰/재큐잉 없음. 기존 다른 품질·Guard·공개 인계 흐름 보존.
+
+---
+
 ## 최신 상태 — 스킬 릴리스 무결성·Kernel 실행 회귀·MSC 계약 검사 적용 (2026-11-17 KST)
 
 - **사용자 1·2 수정 요청 완료(코드/자체시험/PRIVATE main):** [실행·판정 보고](GPT_SKILL_RELEASE_QUALITY_AND_MSC_CONTRACT_FIX_RESULT_r0001_20261117_KST.md). 기존 1번(릴리스 version/manifest 무결성 자동 검사 + 실제 Kernel SVG Evidence export 회귀), 2번(Workflow/Updater MSC 입력 클래스·두 관리 액션 `--view-mode` 정책 도달성)을 기존 L1 Work에서 최소 보완. 소유권·운영 설치·새 엔진·유료 리뷰 변경 없음.
