@@ -44,10 +44,10 @@
       "id": "COWORK-SKILL-DISCOVERY-20261112-001",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md",
-      "status": "문서상 진행",
+      "status": "검증 진행 중",
       "title": "COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT",
-      "tone": "neutral",
-      "topic": "ACE·PEC-HOP·ACON 독립 설계 리뷰 완료: ACCEPT_WITH_CHANGE, BLOCKING 0 (2026-11-18 KST)"
+      "tone": "warning",
+      "topic": "2026-11-18 KST — ACE·PEC-HOP·ACON R1 승인·READY·리뷰 최종 정산 및 GPT 판정"
     },
     {
       "id": "ISSUE-ANALYZER-20261114-001",
