@@ -17,10 +17,10 @@
       "id": "COWORK-AUTO-APPROVAL-20261115-001",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/COWORK-AUTO-APPROVAL-20261115-001/CURRENT.md",
-      "status": "검증 진행 중",
+      "status": "문서상 진행",
       "title": "COWORK-AUTO-APPROVAL-20261115-001 — CURRENT",
-      "tone": "warning",
-      "topic": "2026-11-17 최신 정책 — 일·월 상한 전면 폐기, 일반 스킬 $1.5·디자인 $3"
+      "tone": "neutral",
+      "topic": "2026-11-17 v0.2.25 Windows Claude Code 독립 R2 리뷰 정식 요청 게시"
     },
     {
       "id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
