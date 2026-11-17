@@ -63,7 +63,7 @@ def run():
         # Kernel often renames/folders files when publishing.
         md_maps=[x for x in mappings if x.get("sha256")==hashlib.sha256(md.read_bytes()).hexdigest()
                  and str(x.get("published_path","")).endswith(".md")]
-        published_md=[dest / str(x["published_path"]) for x in md_maps]
+        published_md=[dest / "works" / wid / str(x["published_path"]) for x in md_maps]
         links=[]
         for target in published_md:
             if not target.is_file():
@@ -76,7 +76,7 @@ def run():
                               "status":"VALID" if resolved.is_file() and resolved in htmls else "BROKEN"})
         status=("PASS" if correct and actual_mapping and links and all(x["status"]=="VALID" for x in links) else "BLOCKED")
         result={"status":status,"scope":"SYNTHETIC_KERNEL_WRITER_ONLY",
-                "md_mapping":bool(md_maps),"published_relative_links":links,
+                "md_mapping":bool(md_maps),"published_md_mapping_paths":[str(x.get("published_path","")) for x in md_maps],"published_relative_links":links,
                 "record_evidence":e,"work_docs_export":export_status,
                 "html_published":correct,"html_mapping":actual_mapping,
                 "files":files[:35],"updater_g0":"NOT_VERIFIED",
