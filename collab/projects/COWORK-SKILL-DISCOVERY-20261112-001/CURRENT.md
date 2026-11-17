@@ -1,5 +1,18 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 2026-11-18 KST — ACE·PEC-HOP·ACON 스킬 실제 원문 정독·최소 변경 설계·협업 리뷰 사전 인계
+
+- **사용자 지시:** 최신 개별 스킬 원본을 읽은 후 ACE/PEC-HOP/ACON 통합 설계하고 협업 독립 리뷰 요청. 업무용 l1-knowledge-updater는 실제 설치본 직접 접근 불가하므로 업무 GPT **설계 적용 제안서/READ_ONLY G0 검토**로 분리.
+- **원본 직접 확인:** [8종 ZIP·SKILL.md 읽기/정적 감사](ACE_PEC_HOP_ACON_SKILL_SOURCE_AUDIT_r0001_20261118_KST.md). 공개 L1Work 기준 code-analyzer 0.15.2, issue-analyzer 0.11.50, doc-converter 0.2.26, p4-code-owner 0.6.7, hld-composer 0.4.32. PRIVATE 개발 후보 l1-fix-workflow 1.6.70, l1-github 0.3.59, kernel 0.7.43은 development_not_for_deployment, PUBLIC 차단/호스트 미검증 유지. 업무 Updater와 추가 내부 버전은 G0 미접근.
+- **통합 설계:** [ACE/PEC-HOP/ACON 설계 r0001](ACE_PEC_HOP_ACON_INTEGRATED_SKILL_DESIGN_r0001_20261118_KST.md). 기존 지도/CURRENT/Work/Evidence·CODE FACT·source pin·MSC trace·피드백 재사용, 새 메모리/DB/원장/Kernel schema/자동 학습 추가 금지. ACE/PEC/ACON/안전 회귀 12개 수용 기준은 설계만 작성, 실제 실행 NOT_RUN.
+- **업무 GPT 인계 PUBLIC 게시:** [L1Work handoffs/설계 적용 제안서](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_KNOWLEDGE_UPDATER_ACE_PEC_HOP_ACON_DESIGN_APPLICATION_PROPOSAL_r0001_20261118_KST.md) (commit 7b028cc4e9ff2423d407ba6d0a44d7942ce0d37e), 공개 handoffs/README 링크 추가(commit d71a63cc6c244ebc92ca3efdace57da51e702995). **업무 GPT 실제 검토 수신/설치 G0=NOT_RUN**. 이전 Updater 동기화 설계 R1 완료를 이번 새 설계 리뷰로 오해하지 않음.
+- **Windows Claude 독립 협업 리뷰:** [단일 Windows LIVE 사전검증→정식 REQUEST/READY→결과/영수증 인계](ACE_PEC_HOP_ACON_WINDOWS_INDEPENDENT_DESIGN_REVIEW_PREFLIGHT_HANDOFF_r0001_20261118_KST.md) 게시·원격 본문 readback PASS. 현 Windows LOCAL reviewer.config.json 조회/실제 review_request_gate.py select/check를 GPT가 실행할 수 없어 **PREPUBLICATION_PREFLIGHT=NOT_RUN / FORMAL_REQUEST=NOT_POSTED / SIGNED_READY=NOT_RUN / INDEPENDENT_REVIEW=NOT_RUN**. 사전 검증 전에 formal REQUEST·ZIP을 게시하는 규칙 위반 재발 방지. 문서 게시만으로 호스트 자동 시작하지 않음.
+- **기존 작업 경계:** 기존 MSC R1 완료·기존 Guard AUTO_SIGNING_UNCERTAIN·Watcher v0.2.25 조건부 배포와 이번 설계 검토를 분리. 기존 요청/비용/서명/READY 재실행·수정 0, 새로운 유료 모델 호출/운영 변경/업무 Knowledge write/공개 스킬 ZIP 수정 0.
+- **실제 시험:** GitHub 원격 각 문서 create/readback 일치 확인 PASS, ZIP/SKILL 원문 정적 검사 PASS_SCOPE_LIMITED; code/호스트/E2E 시험과 독립 리뷰 NOT_RUN.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 정확한 위 인계 경로를 열어 실제 LIVE 정책과 유효 비용 승인/중복 상태를 read-only select/check하여 PASS일 때만 1회 정식 고정 리뷰 요청 및 결과/영수증까지 수행; 미통과 시 정확한 BLOCKED 근거를 같은 Work로 회수. 업무 GPT의 Updater READ_ONLY G0 검토는 별도 회신 대기.
+
+---
+
 ## 2026-11-18 KST — 후속 조치가 있는 응답의 마지막 문장 규칙 반영
 
 - **사용자 요청:** 다음 조치가 남으면 마지막을 정확히 “조치에대해 처리 진행할까요?”로 마무리하는 선호를 GitHub 규칙에도 게시.
