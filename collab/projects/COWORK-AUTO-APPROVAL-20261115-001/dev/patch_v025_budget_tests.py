@@ -59,6 +59,32 @@ def test_design_tier_cannot_escalate_past_protected_delegation(auto):
     assert not approval_posted(auto.env, "REQ-A")
     assert type(auto.signer).calls == 0
 ''')
+    # Legacy unattended rolling-day caps are now intentionally ignored at BOTH
+    # preflight and atomic claim, while per-run --max-budget-usd remains enforced.
+    p=root/"tests"/"test_phase4_unattended.py"
+    one(p, '''    assert runner.calls == 1
+    assert any(e == "DAILY_LIMIT_BLOCKED" for e, _d in names(store))
+    assert len(store.list_pending()) == 1''',
+        '''    assert runner.calls == 2
+    assert not any(e == "DAILY_LIMIT_BLOCKED" for e, _d in names(store))
+    assert len(store.list_pending()) == 0''')
+    one(p, '''    assert runner.calls == 1  # first: 0 + 1.0 <= 1.5; its cost was never recorded, so it counts as 1.0
+    assert store.spend_since() == 1.0
+    assert any(e == "DAILY_BUDGET_BLOCKED" for e, _d in names(store))''',
+        '''    assert runner.calls == 2  # both are allowed by independent per-run budgets
+    assert store.spend_since() == 2.0  # telemetry still records both reservations
+    assert not any(e == "DAILY_BUDGET_BLOCKED" for e, _d in names(store))''')
+    one(p,
+        'assert (cfg.review_policy.daily_budget_usd, cfg.review_policy.max_dispatches_per_day) == (3.0, 4)',
+        'assert (cfg.review_policy.daily_budget_usd, cfg.review_policy.max_dispatches_per_day) == (None, None)')
+    one(p, '''    with pytest.raises(ConfigError):
+        Config.load(write_config(tmp_path, **review))''',
+        '''    cfg = Config.load(write_config(tmp_path, **review))
+    assert cfg.review_policy.daily_budget_usd is None
+    assert cfg.review_policy.max_dispatches_per_day is None''')
+    one(p,
+        'assert (policy.daily_budget_usd, policy.max_dispatches_per_day) == (2.0, 5)',
+        'assert (policy.daily_budget_usd, policy.max_dispatches_per_day) == (None, None)')
     p=root/"tests"/"test_auto_policy_gpt_proto.py"
     one(p,
         'self.assertEqual(self.verdict(c=replace(self.c, estimated_cents=101))[1], "PER_REQUEST_COST")',
