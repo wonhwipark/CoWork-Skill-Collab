@@ -1,5 +1,13 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-18 KST — 기존 MSC 리뷰 완료 원문 재확인·승인 보류 재발 방지 코드 연결
+
+- **리뷰는 완료:** 기존 요청 `REQ-L1-MSC-DUAL-ENTRY-DESIGN-R1-20261117` rev1의 REQUEST/서명/READY/DISPATCH/REVIEW_RESULT/RECEIPT 및 아래 기존 GPT 판정을 이번 작업에서 직접 수신. actual bytes·ID/revision·ZIP SHA·processing_key·발급/만료 내 예약 대조 PASS. **COMPLETED / ACCEPT_WITH_CHANGE / 차단 0 / 권고 2 / REVIEW_CYCLE=CLOSED**. 기존 판정을 반복하거나 입력/결과를 수정하지 않음.
+- **실제 개발 연결:** [기존 자동 승인 Work의 v0.2.26 구현·검증 결과](../COWORK-AUTO-APPROVAL-20261115-001/GPT_REQUEST_PIN_PREFLIGHT_AND_WAIT_FIX_RESULT_r0001_20261118_KST.md). pin 사전/최종검사 통일·예약 전 오류 차단·정확한 보류 알림/중복 억제·도구 동봉 코드와 새 회귀 61개 포함 974 PASS(Linux 범위, 35 SKIP/원본 실패 34개 제외). 운영 설치/Notifier 적용/독립 리뷰는 미실행. 개발 후보를 승인된 기존 v0.2.25 설치 원본으로 대체하지 않음.
+- **NEXT_ONE_ACTION:** L1은 아래 완료된 판정·설계 보완을 재사용하며 MSC 새 리뷰/재큐잉 0. Guard 불확실 이력 및 업무 G0/E3는 분리 유지. 운영 재발 방지의 후속은 연결된 자동 승인 Work에서 관리.
+
+---
+
 ## 2026-11-18 KST — MSC 두 진입 독립 R1 완료·GPT 판정 종료 / Guard 별도 유지
 - **완료 확인:** REQ-L1-MSC-DUAL-ENTRY-DESIGN-R1-20261117 rev1의 APPROVAL_SIG/READY/DISPATCH/REVIEW_RESULT/RECEIPT 원격 확인. 결과 COMPLETED/ACCEPT_WITH_CHANGE, 영수증 ok=true, processing_key·REQUEST/READY SHA-256 결속 PASS. 과거 NOT_OBSERVED는 당시 조회 이력으로 보존.
 - **GPT 판정:** [상세 판정](GPT_MSC_DUAL_ENTRY_R1_DISPOSITION_r0001_20261118_KST.md) ACCEPT_WITH_CHANGE, 차단 0·비차단 권고 2, REVIEW_CYCLE=CLOSED. 기존 파일명 유지+링크 문구로 'MSC 작업 안내/MSC 상세 원본' 구별, Work/개인 지식/그룹 문서별 기존 writer 단일 소유·마커 미확인 Preview/HOLD를 설계 보완으로 기록. 코드 반영·회귀·업무 E3 완료 아님.

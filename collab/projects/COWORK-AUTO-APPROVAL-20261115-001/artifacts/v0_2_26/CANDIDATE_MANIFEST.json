@@ -1,0 +1,37 @@
+{
+  "skill": "skill-collab-watcher",
+  "version": "0.2.26",
+  "status": "development_not_for_deployment",
+  "baseline": {
+    "version": "0.2.25",
+    "path": "collab/packages/skill-collab-watcher_v0_2_25_1117.zip",
+    "sha256": "26d63c8a03290499b13b2ceb8ff0b70c06eb1b1bcc1a25fe3d8f65fcc213d228"
+  },
+  "candidate": {
+    "path": "collab/projects/COWORK-AUTO-APPROVAL-20261115-001/artifacts/v0_2_26/skill-collab-watcher_v0_2_26_1118.zip",
+    "size_bytes": 308737,
+    "sha256": "f08adb6099d06daf494362ed7e33ea66aabcbf749cfd2c027a7f70bcba5540fe",
+    "git_blob": "d788d196e66acb1ae95a9495e55f562644fa11a4",
+    "members": 113
+  },
+  "validation": {
+    "portable_passed": 974,
+    "skipped": 35,
+    "baseline_failures_deselected": 34,
+    "new_regressions_passed": 61,
+    "full_suite_pass": false,
+    "windows_test": "NOT_RUN",
+    "independent_review": "NOT_RUN",
+    "live_install": "NOT_RUN",
+    "notifier_adapter_applied": "NOT_VERIFIED"
+  },
+  "existing_msc_review": {
+    "request_id": "REQ-L1-MSC-DUAL-ENTRY-DESIGN-R1-20261117",
+    "status": "COMPLETED_REMOTE_VERIFIED",
+    "gpt_disposition": "ACCEPT_WITH_CHANGE",
+    "cycle": "CLOSED"
+  },
+  "operating_changes": 0,
+  "operating_keys_created": 0,
+  "paid_model_calls_by_this_task": 0
+}

@@ -1,5 +1,15 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-18 KST — REQUEST pin·보류 원인 재발 방지 v0.2.26 실제 구현·PRIVATE 후보
+
+- **사용자 지시·실제 변경:** “해결하라고”에 따라 [구현·검증 결과](GPT_REQUEST_PIN_PREFLIGHT_AND_WAIT_FIX_RESULT_r0001_20261118_KST.md). 자동 예약 전/최종 승인/signer가 같은 pin 검증 사용, 숫자형 입력은 예약 전에 차단. 실제 AutoResult를 WAIT_INPUT 원인으로 연결, READY 성공 뒤 낡은 대기 알림 억제, 원인·다음 조치/실행·비용 미확인 표시와 중복 방지. 기존 prepublication 도구 2개/시험을 ZIP에 포함.
+- **시험·후보:** 새 회귀 **61 PASS**, Linux 가능 회귀 **974 PASS / 35 SKIP / 원본 실패 34개 제외**. 기준 v0.2.25 전체 Linux는 913 PASS/34 FAIL/35 SKIP로 기록. 전체/Windows PASS 아님. [ZIP](artifacts/v0_2_26/skill-collab-watcher_v0_2_26_1118.zip) **308737 B**, SHA-256 `f08adb6099d06daf494362ed7e33ea66aabcbf749cfd2c027a7f70bcba5540fe`, CRC/경로/전집합 manifest/비밀 검사·재현 빌드 PASS. **development_not_for_deployment**.
+- **운영·독립 구분:** v0.2.26 독립 리뷰·Windows 설치/운영 Notifier 연결 `NOT_RUN/NOT_VERIFIED`. 기존 v0.2.25 조건부 배포 승인·고정 SHA를 바꾸지 않음. 운영 키/DB/정책/위임/Task 변경 및 새 REQUEST/READY/유료 모델 호출 0. 기존 UNCERTAIN은 보존·자동 재큐잉 없음.
+- **MSC 완료 회수:** 작업 중 기존 MSC R1의 서명/READY/DISPATCH/REVIEW_RESULT/RECEIPT와 GPT 판정 원문 직접 확인, bytes·결속 PASS. **COMPLETED / ACCEPT_WITH_CHANGE / 차단 0·권고 2 / 사이클 종료**. [연결 근거](artifacts/v0_2_26/MSC_CHAIN_VERIFICATION.json). 이번 코드 개발이 운영에 적용돼 리뷰를 재개시켰다는 인과는 주장하지 않음.
+- **NEXT_ONE_ACTION:** Windows의 기존 v0.2.25 운영 작업 상태와 후보 플랫폼 시험·기존 Notifier 어댑터 연결을 확인해 회수. 이 개발 후보는 실제 게이트 충족 전 운영 설치하지 않음. MSC는 재리뷰 없이 종료 보존, Guard 정산 별도.
+
+---
+
 ## 2026-11-18 KST — 사용자 조건부 Windows LIVE v0.2.25 배포 승인 / 원샷 인계 게시
 
 - **사용자 승인:** GPT가 제안한 'Windows 격리시험 → 운영 백업 → 검증 PASS 시 v0.2.25 설치·단일 LIVE 활성화 → 두 주기/재시작 시험 → 실패 시 안전 롤백'에 사용자 “그래”. 같은 범위 재승인 불필요, 새로운 유료 리뷰·키/토큰 생성·DB 이행/공개 게시 금지.

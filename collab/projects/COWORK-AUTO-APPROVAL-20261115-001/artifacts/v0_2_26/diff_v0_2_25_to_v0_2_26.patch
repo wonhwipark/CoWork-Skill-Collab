@@ -1,0 +1,1262 @@
+--- a/README.md
++++ b/README.md
+@@ -0,0 +1,11 @@
++# Skill Collab Watcher v0.2.26 개발 후보
++
++**development_not_for_deployment** — REQUEST pin 타입 오류를 예약 전에 차단하고 승인 보류 원인을 기존 audit/notification 경로로 전달.
++
++기준: SHA-256 고정 v0.2.25. 기존 운영 키·DB·정책·REQUEST/ZIP/SOURCE_PIN·서명/READY를 변경하지 않으며 과거 UNCERTAIN을 자동 재실행하지 않음.
++
++변경·호스트 적용 경계: [REQUEST_PIN_REPAIR](docs/REQUEST_PIN_REPAIR.md).
++신규 REQUEST 사전 검사: `python -m tools.review_request_gate --help`.
++pin 생성·검증: `python -m tools.source_pin --help`.
++
++위 도구는 입력 검사만 수행. 실제 보호된 Windows 승인·서명·READY·독립 리뷰·영수증을 대체하지 않음.
+--- a/docs/CUTOVER_RUNBOOK.md
++++ b/docs/CUTOVER_RUNBOOK.md
+@@ -1,4 +1,4 @@
+-# Cutover runbook: Dropbox to GitHub (v0.2.25, development_not_for_deployment)
++# Cutover runbook: Dropbox to GitHub (v0.2.26, development_not_for_deployment)
+ 
+ Status: a design with isolated test evidence. Nothing here installs, starts or switches anything on the
+ operating host. Each step marked APPROVAL needs an explicit decision by the user.
+--- a/docs/REQUEST_PIN_REPAIR.md
++++ b/docs/REQUEST_PIN_REPAIR.md
+@@ -0,0 +1,19 @@
++# v0.2.26 — REQUEST 입력·승인 보류 재발 방지 후보
++
++상태: **development_not_for_deployment**. v0.2.25 승인 원본/현재 운영 설치본을 이 후보로 대체하지 않음.
++
++## 실제 수정
++
++- `approval.validate_source_pin`: V1 schema/정확한 필드·문자열 numeric repo_id·고정 commit 검사. 자동 승인 예약 전과 최종 승인 검증이 같은 함수를 호출. 게시된 숫자형 pin은 강제 변환하지 않고 거부.
++- 잘못된 pin은 `AUTO_NOT_ELIGIBLE / PIN_MISMATCH / PIN_REPO_ID_TYPE`으로 예약·signer 호출 전에 차단. 기존 UNCERTAIN/READY/완료 기록을 초기화하거나 재큐잉하지 않음.
++- 기존 orchestrator가 AutoResult를 WAIT_INPUT에 연결. 성공적으로 READY가 게시된 주기에 'READY 없음' 대기 이벤트를 기록하지 않음.
++- 기존 `notify_events.run_once`가 보류 단계·오류 코드·다음 한 조치를 출력. 이전 실행/누적 비용을 0으로 추정하지 않고 오류 예외 원문은 알림에 노출하지 않음. 같은 단계/원인은 1회, 원인이 바뀌면 1회; 기존 watermark·delivered 계약 유지.
++- PRIVATE 정본의 `source_pin.py`, `review_request_gate.py` 원문과 각각의 시험을 패키지 `tools/`·`tests/`에 포함. 신규 REQUEST 작성자는 실제 LIVE config를 입력해 select/check를 수행해야 함. 사전 호환 검사 PASS는 서명·금액 승인이나 실행 권한이 아님.
++
++## 남은 실제 호스트 게이트
++
++기존 Windows Notifier는 별도 운영 프로그램. 이 패키지의 메시지 함수 구현/합성 전달 시험과 운영 Notifier의 실제 import/호출 적용은 별개. 실제 운영 어댑터·watermark와 이 라이브러리 호출을 확인·연결하기 전 Telegram 적용 PASS로 보고하지 않음. 새 발송 시험·Notifier 설치/설정 변경은 해당 승인 범위가 필요.
++
++기존 숫자형 pin으로 이미 생성된 UNCERTAIN은 이 수정으로 자동 재시도하지 않음. 기존 MSC 요청의 로컬 예약/서명/호출/비용을 읽기 전용으로 정산하고 원래 유효 범위에서 정상 처리 가능한지를 판정. 새 REQUEST/자동 재리뷰/DB 삭제/READY 수동 조작으로 회피하지 않음.
++
++실제 Windows 회귀·독립 리뷰·배포·보호 위임과 live 적용은 별도 미완료 게이트. 이 ZIP 게시나 Linux 합성 PASS는 기존 MSC 리뷰 완료 근거가 아님.
+--- a/skill_collab_watcher/__init__.py
++++ b/skill_collab_watcher/__init__.py
+@@ -1 +1 @@
+-__version__ = "0.2.25"
++__version__ = "0.2.26"
+--- a/skill_collab_watcher/approval.py
++++ b/skill_collab_watcher/approval.py
+@@ -48,6 +48,28 @@
+ 
+ class ApprovalRejected(Exception):
+     """The approval exists but does not match what it claims to approve."""
++
++
++def validate_source_pin(pin: object, *, expected_repo_id: str | None = None) -> dict:
++    """One strict V1 contract for pre-reservation and final approval checks.
++
++    Never coerce published JSON: a numeric repo_id can otherwise reserve a
++    request before the final signature check rejects its different type.
++    """
++    if (not isinstance(pin, dict) or set(pin) != {"schema", "commit", "repo_id"}
++            or pin.get("schema") != PIN_SCHEMA):
++        raise ApprovalRejected("PIN_SCHEMA_MISMATCH")
++    repo_id = pin["repo_id"]
++    if type(repo_id) is not str:
++        raise ApprovalRejected("PIN_REPO_ID_TYPE")
++    if re.fullmatch(r"[1-9][0-9]*", repo_id) is None:
++        raise ApprovalRejected("PIN_REPO_ID_FORMAT")
++    commit = pin["commit"]
++    if not isinstance(commit, str) or re.fullmatch(r"[0-9a-f]{40}", commit) is None:
++        raise ApprovalRejected("PIN_COMMIT_INVALID")
++    if expected_repo_id is not None and repo_id != expected_repo_id:
++        raise ApprovalRejected("REPO_ID_MISMATCH")
++    return pin
+ 
+ 
+ class TrustRootError(ValueError):
+@@ -385,7 +407,7 @@
+         raise ApprovalRejected("TRUST_ROOT_FROZEN")
+ 
+     approval = _parse(approval_raw, APPROVAL_SCHEMA, "APPROVAL")
+-    pin = _parse(pin_raw, PIN_SCHEMA, "PIN")
++    pin = validate_source_pin(_parse(pin_raw, PIN_SCHEMA, "PIN"), expected_repo_id=trust.repo_id)
+     payload = approval.get("payload")
+     signature = approval.get("signature")
+     if not isinstance(payload, dict) or payload.get("schema") != PAYLOAD_SCHEMA:
+--- a/skill_collab_watcher/auto_approval.py
++++ b/skill_collab_watcher/auto_approval.py
+@@ -24,14 +24,13 @@
+ from pathlib import Path
+ 
+ from . import auto_policy
+-from .approval import ApprovalRejected, NotConfigured, check_clock, verify_approval
++from .approval import ApprovalRejected, NotConfigured, PIN_SCHEMA, check_clock, validate_source_pin, verify_approval
+ from .transport_base import AuthRequired, RemoteNotFound, TransportError, UploadConflict
+ from .validator import SAFE_NAME, ValidationOutcome, parse_front_matter, validate
+ from .zip_safety import UnsafeZip, package_secret_findings, safe_extract
+ 
+ DELEGATION_SCHEMA = "AUTO_DELEGATION_V1"
+ KST = timezone(timedelta(hours=9))
+-PIN_SCHEMA = "SKILL_COLLAB_SOURCE_PIN_V1"
+ MAX_PACKAGE_BYTES = 5 * 1024 * 1024         # a review input, never a deployment: a bigger package is not eligible for automatic approval
+ 
+ 
+@@ -475,12 +474,13 @@
+             self._once("AUTO_NOT_ELIGIBLE", rid, f"identity or pin unreadable: {type(exc).__name__}")
+             return AutoResult("IDENTITY_UNREADABLE")
+         try:
+-            pin = json.loads(pin_raw)
+-        except ValueError:
+-            pin = {}
+-        commit = str(pin.get("commit", ""))
+-        pins_ok = (pin.get("schema") == PIN_SCHEMA and re.fullmatch(r"[0-9a-f]{40}", commit) is not None
+-                   and str(pin.get("repo_id")) == server_repo == delegation.repo_id)
++            pin = validate_source_pin(json.loads(pin_raw), expected_repo_id=server_repo)
++        except (ValueError, ApprovalRejected) as exc:
++            reason = str(exc) if isinstance(exc, ApprovalRejected) else "PIN_NOT_JSON"
++            self._once("AUTO_NOT_ELIGIBLE", rid, f"PIN_MISMATCH: {reason}; no reservation or signer call")
++            return AutoResult("PIN_MISMATCH", reason)
++        commit = pin["commit"]
++        pins_ok = server_repo == delegation.repo_id
+ 
+         pid, wid = front.get("project_id"), front.get("work_id")
+         if pid and wid and str(pid) != str(wid):
+@@ -695,7 +695,7 @@
+     def _resume(self, transport, store, policy, base, rid, rev, claim, delegation, front, request_raw) -> AutoResult:
+         stage = claim["stage"]
+         if stage in ("READY_POSTED", "UNCERTAIN", "POLICY_STOPPED"):
+-            return AutoResult(stage)
++            return AutoResult(stage, claim.get("detail") or "")
+         now = int(self.now_fn())
+         if stage == "RESERVED":
+             # Nothing was ever published (a publication needs a stored signature). A restart before the signature may sign ONCE more, never twice.
+--- a/skill_collab_watcher/notify_events.py
++++ b/skill_collab_watcher/notify_events.py
+@@ -9,6 +9,7 @@
+ from __future__ import annotations
+ 
+ import json
++import re
+ import sqlite3
+ from dataclasses import dataclass, field
+ from datetime import datetime, timedelta
+@@ -18,7 +19,7 @@
+     "COMPLETED", "FAILED", "REVIEW_UNCERTAIN", "UPLOAD_FAILED", "CONFLICT",
+     "AUTH_REQUIRED", "REJECTED", "LEGACY_SIDECAR_BLOCKED", "PENDING_HELD",
+     "CLAUDE_AUTH_REQUIRED", "USAGE_LIMIT_DEFERRED", "DAILY_BUDGET_BLOCKED", "DAILY_LIMIT_BLOCKED",
+-    "AUTO_SIGNING_UNCERTAIN",
++    "AUTO_SIGNING_UNCERTAIN", "WAIT_INPUT",
+ )
+ 
+ 
+@@ -80,6 +81,63 @@
+     return (parts[0] or "?", parts[1] if len(parts) > 1 else "?")
+ 
+ 
++def _reason_code(value: object) -> str:
++    text = str(value or "")
++    return text if re.fullmatch(r"[A-Z][A-Z0-9_]{0,79}", text) else "NOT_VERIFIED"
++
++
++def approval_wait_detail(request_id: str, revision: str, status: str, detail: str = "") -> str:
++    """Keep a bounded reason in the existing audit detail, never exception text.
++
++    Automatic approval does not invoke the model. This records only this step;
++    the total historical call count must be read from the existing receipts.
++    """
++    known_pin_error = re.search(r"\b(PIN_[A-Z_]+|REPO_ID_MISMATCH)\b", detail or "")
++    code = (_reason_code(known_pin_error.group(1)) if known_pin_error
++            else _reason_code(detail) if status == "PIN_MISMATCH" else _reason_code(status))
++    return json.dumps({"request_id": request_id, "revision": revision,
++                       "approval_stage": _reason_code(status), "reason_code": code}, sort_keys=True)
++
++
++def _wait_codes(detail: str | None) -> tuple[str, str]:
++    try:
++        data = json.loads(detail or "")
++    except (ValueError, TypeError):
++        data = {}
++    if not isinstance(data, dict):
++        data = {}
++    return _reason_code(data.get("approval_stage")), _reason_code(data.get("reason_code"))
++
++
++def _approval_action(stage: str, code: str) -> str:
++    if code.startswith("PIN_") or code == "REPO_ID_MISMATCH":
++        return "SOURCE_PIN 타입·고정 원본 검증"
++    if stage in ("UNCERTAIN", "SIGNING_UNCERTAIN", "DUPLICATE_OR_UNCERTAIN"):
++        return "기존 서명·호출 이력을 읽기 전용 정산"
++    if stage == "PER_REQUEST_COST":
++        return "기존 승인 금액과 실제 설치 정책 대조"
++    if stage in ("PRE_EXISTING_REQUEST", "RETROACTIVE_OR_FUTURE_REQUEST"):
++        return "소급 승인 제외 여부를 기존 기록과 대조"
++    if stage == "IN_PROGRESS":
++        return "진행 중인 기존 서명 결과 확인"
++    return "보호 위임·등록 정책과 해당 요청의 보류 기록 확인"
++
++
++def _wait_superseded(conn: sqlite3.Connection, key: str | None) -> bool:
++    """Read existing rows only: a queued old wait must not follow READY/result."""
++    rid, revision = _split_key(key)
++    tables = {r[0] for r in conn.execute("SELECT name FROM sqlite_master WHERE type='table'")}
++    if "auto_claims" in tables:
++        row = conn.execute("SELECT stage FROM auto_claims WHERE request_id=? AND revision=?", (rid, revision)).fetchone()
++        if row and row[0] == "READY_POSTED":
++            return True
++    if "jobs" in tables:
++        rows = conn.execute("SELECT state FROM jobs WHERE request_id=? AND request_revision=?", (rid, revision))
++        if any(r[0] in {"CLAIMED", "REVIEW_RUNNING", "COMPLETED", "UPLOAD_FAILED", "REVIEW_UNCERTAIN", "FAILED"} for r in rows):
++            return True
++    return False
++
++
+ def _location(provider: str, repo: str | None, request_id: str, revision: str) -> str:
+     if provider == "github":
+         if not repo:
+@@ -90,6 +148,12 @@
+ 
+ 
+ def build_message(event: str, key: str | None, detail: str | None, provider: str, repo: str | None = None) -> str:
++    if event == "WAIT_INPUT":
++        request_id, revision = _split_key(key)
++        stage, code = _wait_codes(detail)
++        return (f"[리뷰 처리 보류] {request_id} r{revision}\n단계: {stage}\n오류: {code}\n"
++                "실행 여부: 이번 승인 단계의 새 모델 호출 없음; 이전 실행·누적 비용은 미확인\n"
++                f"다음 조치: {_approval_action(stage, code)}")
+     if event == "REJECTED":
+         return f"[요청 거부] {detail or ''}"
+     if event == "PENDING_HELD":
+@@ -105,8 +169,11 @@
+     if event == "DAILY_LIMIT_BLOCKED":
+         return "[일일 리뷰 횟수 상한] 오늘 한도에 도달해 새 리뷰를 시작하지 않습니다. 요청은 대기 상태로 보존됩니다."
+     if event == "AUTO_SIGNING_UNCERTAIN":
+-        return (f"[자동 서명 불확실] {key or ''}: 자동 서명·게시를 멈췄습니다. 새로 서명하거나 모델을 호출하지 않았습니다. "
+-                f"사람이 확인해야 합니다. ({detail or ''})")
++        _stage, code = _wait_codes(approval_wait_detail("", "", "UNCERTAIN", detail or ""))
++        return (f"[자동 서명 불확실] {key or ''}: 자동 서명·게시를 멈췄습니다. 이번 처리에서 모델을 호출하지 않았습니다. "
++                "이전 실행·누적 비용은 미확인입니다.\n단계: SIGNING_UNCERTAIN\n"
++                f"오류: {code}\n"
++                "다음 조치: 기존 서명·호출 이력을 읽기 전용 정산")
+     request_id, revision = _split_key(key)
+     where = _location(provider, repo, request_id, revision)
+     if event == "COMPLETED":
+@@ -176,6 +243,22 @@
+     for row_id, event, pkey, detail in rows:
+         if event in NOTIFY_EVENTS:
+             marker = f"{key}|{event}|{pkey or detail or ''}"
++            if event == "WAIT_INPUT":
++                if _wait_superseded(conn, pkey):
++                    state.watermarks[key] = row_id
++                    if persist is not None:
++                        persist()
++                    continue
++                stage, code = _wait_codes(detail)
++                rid, _revision = _split_key(pkey)
++                # The primary uncertainty alert already describes this stop.
++                uncertain = f"{key}|AUTO_SIGNING_UNCERTAIN|{rid}"
++                if stage == "UNCERTAIN" and uncertain in state.delivered:
++                    state.watermarks[key] = row_id
++                    if persist is not None:
++                        persist()
++                    continue
++                marker += f"|{stage}|{code}"
+             if marker not in state.delivered:
+                 send(build_message(event, pkey, detail, provider, repo))
+                 state.delivered.add(marker)
+--- a/skill_collab_watcher/orchestrator.py
++++ b/skill_collab_watcher/orchestrator.py
+@@ -19,7 +19,7 @@
+ from .transport_base import (
+     AuthRequired, EntryMeta, RemoteNotFound, Transport, TransportError, UploadConflict,
+ )
+-from .validator import SAFE_NAME, LocalPolicy, validate
++from .validator import SAFE_NAME, LocalPolicy, parse_front_matter, validate
+ from .zip_safety import UnsafeZip, package_secret_findings, safe_extract
+ 
+ REMOTE_CURSOR_NAME = "skill_collab_root"
+@@ -582,7 +582,16 @@
+         if auto is not None and allowed and ready_text is None and pre.outcome == ValidationOutcome.WAIT_INPUT:
+             # A valid REQUEST without READY: the only place where automatic approval may act. It never dispatches a review itself;
+             # it can only publish an approval and a READY that the unchanged checks below must accept on a later cycle.
+-            auto.process(transport, store, policy, remote_root, request_id, request_text, request_raw)
++            auto_result = auto.process(transport, store, policy, remote_root, request_id, request_text, request_raw)
++            if auto_result.status == "READY_POSTED":
++                # The auto approver already logged READY. Do not emit a stale
++                # "no matching READY" wait after publishing it successfully.
++                return GroupResult(retry=True)
++            from .notify_events import approval_wait_detail
++            revision = str(parse_front_matter(request_text).get("request_revision"))
++            store.log_event_once("WAIT_INPUT", processing_key=f"{request_id}|{revision}",
++                                 detail=approval_wait_detail(request_id, revision, auto_result.status, auto_result.detail))
++            return GroupResult(retry=True)
+         store.log_event_once(pre.outcome.value, processing_key=pre.processing_key, detail=f"{request_id}: {pre.reason}")
+         return GroupResult(retry=pre.outcome == ValidationOutcome.WAIT_INPUT)
+ 
+--- a/tests/bundle.py
++++ b/tests/bundle.py
+@@ -13,7 +13,7 @@
+ from skill_collab_watcher.validator import LocalPolicy
+ 
+ ROOT = "/SKILL-COLLAB"
+-REPO_ID = "repo-synthetic-1"
++REPO_ID = "123456789"  # synthetic numeric GitHub ID, serialized as a string
+ KEY_ID = "key-synthetic-1"
+ PUBLIC = "SYNTHETIC-PUBLIC-KEY-NOT-A-SECRET"
+ NONCE = "synthetic-nonce-0123456789"
+--- a/tests/fake_github.py
++++ b/tests/fake_github.py
+@@ -35,7 +35,7 @@
+         self._head: str | None = None
+         self._count = 0
+         self.calls: list[tuple[str, str]] = []
+-        self.repo_id = "repo-synthetic-1"
++        self.repo_id = "123456789"
+         self._inject: list[dict] = []
+         self._times: dict[str, float] = {}
+         self._corrupt: set[str] = set()
+--- a/tests/test_approval_wait_notify_v026.py
++++ b/tests/test_approval_wait_notify_v026.py
+@@ -0,0 +1,94 @@
++"""Precise wait reasons through the actual scan and injected, non-network sender."""
++import json
++
++from auto_helpers import auto, make_request, remote
++from fake_github import j, rp
++from skill_collab_watcher.notify_events import NotifyState, approval_wait_detail, build_message, run_once
++from skill_collab_watcher.state_store import StateStore
++
++
++def test_real_scan_records_pin_reason_instead_of_generic_ready_wait(auto):
++    make_request(auto.env.http)
++    path = "requests/REQ-A/SOURCE_PIN.json"
++    pin = json.loads(remote(auto.env, path))
++    pin["repo_id"] = 123456789
++    auto.env.http.commit({rp(path): j(pin)})
++    state = NotifyState()
++    state.bootstrap(auto.env.store.conn, "github", 1)
++    auto.cycle()
++    sent = []
++    assert run_once(auto.env.store.conn, state, provider="github", repo="owner/repo", send=sent.append) == 1
++    assert "REQ-A r1" in sent[0] and "PIN_REPO_ID_TYPE" in sent[0]
++    assert "SOURCE_PIN" in sent[0] and "이전 실행·누적 비용은 미확인" in sent[0]
++    assert "비용은 아직 0" not in sent[0]
++    auto.cycle()
++    assert run_once(auto.env.store.conn, state, provider="github", repo="owner/repo", send=sent.append) == 0
++
++
++def test_ready_published_does_not_log_a_stale_missing_ready_wait(auto):
++    make_request(auto.env.http)
++    state = NotifyState()
++    state.bootstrap(auto.env.store.conn, "github", 1)
++    auto.cycle()
++    sent = []
++    run_once(auto.env.store.conn, state, provider="github", repo="owner/repo", send=sent.append)
++    assert sent == []
++    assert auto.env.store.conn.execute("SELECT COUNT(*) FROM audit_log WHERE event='WAIT_INPUT'").fetchone()[0] == 0
++
++
++def test_old_queued_wait_is_suppressed_after_corrected_pin_reaches_ready(auto):
++    make_request(auto.env.http)
++    path = "requests/REQ-A/SOURCE_PIN.json"
++    valid = remote(auto.env, path)
++    pin = json.loads(valid)
++    pin["repo_id"] = 123456789
++    auto.env.http.commit({rp(path): j(pin)})
++    state = NotifyState()
++    state.bootstrap(auto.env.store.conn, "github", 1)
++    auto.cycle()
++    auto.env.http.commit({rp(path): valid})
++    auto.cycle()
++    sent = []
++    assert run_once(auto.env.store.conn, state, provider="github", repo="owner/repo", send=sent.append) == 0
++    assert sent == []
++
++
++def test_wait_reason_changes_are_delivered_once_and_survive_restart(tmp_path):
++    store = StateStore(tmp_path / "state.sqlite3")
++    state = NotifyState()
++    state.bootstrap(store.conn, "github", 1)
++    sent = []
++    for status, detail in [("PIN_MISMATCH", "PIN_REPO_ID_TYPE"), ("PIN_MISMATCH", "PIN_REPO_ID_TYPE"),
++                           ("PER_REQUEST_COST", ""), ("PER_REQUEST_COST", "")]:
++        store.log_event("WAIT_INPUT", processing_key="REQ-A|1",
++                        detail=approval_wait_detail("REQ-A", "1", status, detail))
++    path = tmp_path / "notify.json"
++    assert run_once(store.conn, state, provider="github", repo="owner/repo", send=sent.append,
++                    persist=lambda: state.save(path)) == 2
++    resumed = NotifyState.load(path)
++    assert run_once(store.conn, resumed, provider="github", repo="owner/repo", send=sent.append) == 0
++    store.close()
++
++
++def test_untrusted_exception_detail_never_appears_in_user_message():
++    raw = "sensitive exception text: synthetic-secret-do-not-echo"
++    detail = approval_wait_detail("REQ-A", "1", "PIN_MISMATCH", raw)
++    message = build_message("WAIT_INPUT", "REQ-A|1", detail, "github", "owner/repo")
++    assert raw not in detail and raw not in message
++    assert "NOT_VERIFIED" in message
++    message = build_message("AUTO_SIGNING_UNCERTAIN", "REQ-A", raw, "github", "owner/repo")
++    assert raw not in message and "이전 실행·누적 비용은 미확인" in message
++    precise = build_message("AUTO_SIGNING_UNCERTAIN", "REQ-A", "signer: REPO_ID_MISMATCH", "github", "owner/repo")
++    assert "오류: REPO_ID_MISMATCH" in precise and "signer:" not in precise
++
++
++def test_primary_uncertainty_alert_suppresses_duplicate_wait_message(tmp_path):
++    store = StateStore(tmp_path / "state.sqlite3")
++    state = NotifyState()
++    state.bootstrap(store.conn, "github", 1)
++    store.log_event("AUTO_SIGNING_UNCERTAIN", processing_key="REQ-A", detail="signing failed")
++    store.log_event("WAIT_INPUT", processing_key="REQ-A|1",
++                    detail=approval_wait_detail("REQ-A", "1", "UNCERTAIN", "signing failed"))
++    sent = []
++    assert run_once(store.conn, state, provider="github", repo="owner/repo", send=sent.append) == 1
++    store.close()
+--- a/tests/test_phase5_signer.py
++++ b/tests/test_phase5_signer.py
+@@ -21,7 +21,7 @@
+ from skill_collab_watcher.validator import LocalPolicy  # noqa: E402
+ from tools import approval_signer, trust_root_tool  # noqa: E402
+ 
+-REPO = "repo-id-synthetic"
++REPO = "987654321"  # synthetic numeric GitHub repository ID
+ KEY = "signer-key-1"
+ 
+ 
+--- a/tests/test_review_request_gate_tool_v026.py
++++ b/tests/test_review_request_gate_tool_v026.py
+@@ -0,0 +1,217 @@
++"""Pure local regression: no network, watcher, signing, READY or paid calls."""
++import contextlib
++import io
++import hashlib
++import json
++from pathlib import Path
++import sys
++import tempfile
++import unittest
++import zipfile
++
++sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
++from tools import review_request_gate as gate
++
++REQ = "REQ-COWORK-REVIEW-GATE-R2-20261117"
++SHA_COMMIT = "f" * 40
++REPO_ID = "1451933830"
++
++
++class GateTests(unittest.TestCase):
++    def setUp(self):
++        self.ctx = tempfile.TemporaryDirectory()
++        self.addCleanup(self.ctx.cleanup)
++        self.root = Path(self.ctx.name)
++        self.package = self.root / "candidate.zip"
++        with zipfile.ZipFile(self.package, "w") as z:
++            z.writestr("skill_collab_watcher/__init__.py", "# test package\n")
++        self.config = self.root / "reviewer.config.json"
++        self.policy_map = {
++            "POLICY-STATIC-V1": {"max_budget_usd": 1.0},
++            "POLICY-STATIC-V1-LARGE": {"max_budget_usd": 3.0},
++        }
++        self.save_config()
++        self.request = self.root / "REQUEST.md"
++        self.fields = {
++            "schema": "SKILL_COLLAB_REVIEW_REQUEST_V1", "state": "SUBMITTED",
++            "request_id": REQ, "request_revision": "1",
++            "project_id": "COWORK-AUTO-APPROVAL-20261115-001",
++            "work_id": "COWORK-AUTO-APPROVAL-20261115-001",
++            "skill_id": "cowork-review-watcher",
++            "package_path": "/SKILL-COLLAB/packages/candidate.zip",
++            "package_sha256": hashlib.sha256(self.package.read_bytes()).hexdigest(),
++            "package_size_bytes": str(self.package.stat().st_size),
++            "reviewer_os": "WINDOWS", "test_policy": "STATIC_ONLY",
++            "run_policy_ref": "POLICY-STATIC-V1-LARGE",
++        }
++        self.save_request()
++
++    def save_config(self):
++        self.config.write_text(json.dumps({"review_policy": {"known_run_policy_refs": self.policy_map}}), encoding="utf-8")
++
++    def save_request(self):
++        self.request.write_text("---\n" + "".join(f"{key}: {val}\n" for key, val in self.fields.items()) +
++                                "knowledge_refs: []\n---\n\n# Review\n", encoding="utf-8")
++
++    def pass_check(self, intent="design", max_usd="3.00"):
++        return gate.check_request(self.request, self.package, self.config,
++                                  intent=intent, required_budget=gate._target_money(max_usd))
++
++    def run_cli(self, *args):
++        out, err = io.StringIO(), io.StringIO()
++        with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
++            code = gate.main(list(args))
++        return code, out.getvalue(), err.getvalue()
++
++    def test_old_live_legacy_large_design_passes(self):
++        r = self.pass_check()
++        self.assertEqual(r["run_policy_ref"], "POLICY-STATIC-V1-LARGE")
++        self.assertEqual(r["authorization"], "NOT_CHECKED")
++        self.assertEqual(r["request_sha256"], hashlib.sha256(self.request.read_bytes()).hexdigest())
++        self.assertEqual(r["model_calls"], 0)
++
++    def test_new_design_preference_when_installed(self):
++        self.policy_map["POLICY-STATIC-V1-DESIGN"] = {"max_budget_usd": 3.0}
++        self.save_config()
++        self.assertEqual(gate.select_policy(gate._json(self.config), "design", gate._target_money("3")),
++                         "POLICY-STATIC-V1-DESIGN")
++
++    def test_self_bootstrap_mismatch_is_blocked(self):
++        self.fields["run_policy_ref"] = "POLICY-STATIC-V1-DESIGN"
++        self.save_request()
++        with self.assertRaisesRegex(gate.GateReject, "RUN_POLICY_NOT_LIVE_MATCH"):
++            self.pass_check()
++
++    def test_no_host_evidence_fails_closed(self):
++        self.config.unlink()
++        with self.assertRaises(gate.GateReject):
++            self.pass_check()
++
++    def test_unknown_tier_fails_closed(self):
++        self.policy_map = {"POLICY-STATIC-V1": {"max_budget_usd": 1.0}}
++        self.save_config()
++        with self.assertRaisesRegex(gate.GateReject, "POLICY_NOT_INSTALLED"):
++            self.pass_check()
++
++    def test_configured_cost_disagrees_with_expected(self):
++        self.policy_map["POLICY-STATIC-V1-LARGE"] = {"max_budget_usd": 6.0}
++        self.save_config()
++        with self.assertRaisesRegex(gate.GateReject, "POLICY_COST_MISMATCH"):
++            self.pass_check()
++
++    def test_basic_legacy_one_dollar_not_silently_upgraded(self):
++        self.fields["run_policy_ref"] = "POLICY-STATIC-V1"
++        self.save_request()
++        with self.assertRaisesRegex(gate.GateReject, "POLICY_COST_MISMATCH"):
++            self.pass_check("skill", "1.50")
++
++    def test_basic_after_live_config_change(self):
++        self.policy_map["POLICY-STATIC-V1"] = {"max_budget_usd": 1.5}
++        self.save_config()
++        self.fields["run_policy_ref"] = "POLICY-STATIC-V1"
++        self.save_request()
++        self.assertEqual(self.pass_check("skill", "1.50")["run_policy_ref"], "POLICY-STATIC-V1")
++
++    def test_missing_or_unparseable_registry(self):
++        for bad in ({}, {"review_policy": {}}, {"review_policy": {"known_run_policy_refs": ["POLICY-STATIC-V1-LARGE"]}}):
++            self.config.write_text(json.dumps(bad), encoding="utf-8")
++            with self.assertRaises(gate.GateReject):
++                self.pass_check()
++
++    def test_bad_numbers_rejected(self):
++        for v in ("3.0", True, 0, -3, float("inf"), float("nan"), 3.001):
++            self.policy_map["POLICY-STATIC-V1-LARGE"] = {"max_budget_usd": v}
++            self.save_config()
++            with self.assertRaises(gate.GateReject):
++                self.pass_check()
++
++    def test_modified_package_rejected(self):
++        self.package.write_bytes(self.package.read_bytes() + b"modified")
++        with self.assertRaisesRegex(gate.GateReject, "PACKAGE_SIZE_MISMATCH"):
++            self.pass_check()
++
++    def test_bad_sha_rejected(self):
++        self.fields["package_sha256"] = "f" * 64
++        self.save_request()
++        with self.assertRaisesRegex(gate.GateReject, "PACKAGE_SHA256_MISMATCH"):
++            self.pass_check()
++
++    def test_malformed_zip_rejected(self):
++        self.package.write_bytes(b"not a zip")
++        self.fields["package_sha256"] = hashlib.sha256(self.package.read_bytes()).hexdigest()
++        self.fields["package_size_bytes"] = str(self.package.stat().st_size)
++        self.save_request()
++        with self.assertRaisesRegex(gate.GateReject, "INVALID_PACKAGE_ZIP"):
++            self.pass_check()
++
++    def test_zip_traversal_rejected(self):
++        with zipfile.ZipFile(self.package, "w") as z:
++            z.writestr("../escape.txt", "bad")
++        self.fields["package_sha256"] = hashlib.sha256(self.package.read_bytes()).hexdigest()
++        self.fields["package_size_bytes"] = str(self.package.stat().st_size)
++        self.save_request()
++        with self.assertRaisesRegex(gate.GateReject, "UNSAFE_PACKAGE_MEMBER"):
++            self.pass_check()
++
++    def test_duplicate_policy_field_rejected(self):
++        self.request.write_text(self.request.read_text().replace(
++            "run_policy_ref: POLICY-STATIC-V1-LARGE\n", "run_policy_ref: POLICY-STATIC-V1-LARGE\nrun_policy_ref: POLICY-STATIC-V1-DESIGN\n"), encoding="utf-8")
++        with self.assertRaisesRegex(gate.GateReject, "REQUEST_DUPLICATE_FIELD"):
++            self.pass_check()
++
++    def test_wrong_scope_rejected(self):
++        self.fields["work_id"] = "COWORK-OTHER"
++        self.save_request()
++        with self.assertRaisesRegex(gate.GateReject, "PROJECT_WORK_SCOPE_MISMATCH"):
++            self.pass_check()
++
++    def test_invalid_request_path_rejected(self):
++        self.fields["package_path"] = "/SKILL-COLLAB/packages/../candidate.zip"
++        self.save_request()
++        with self.assertRaisesRegex(gate.GateReject, "INVALID_PACKAGE_PATH"):
++            self.pass_check()
++
++    def test_source_pin_string_passes(self):
++        pin = self.root / "SOURCE_PIN.json"
++        pin.write_text(json.dumps({"schema": "SKILL_COLLAB_SOURCE_PIN_V1", "commit": SHA_COMMIT, "repo_id": REPO_ID}))
++        gate.check_source_pin(pin, REPO_ID, SHA_COMMIT)
++
++    def test_source_pin_numeric_and_wrong_commit_rejected(self):
++        pin = self.root / "SOURCE_PIN.json"
++        for bad in ({"schema": "SKILL_COLLAB_SOURCE_PIN_V1", "commit": SHA_COMMIT, "repo_id": 1451933830},
++                    {"schema": "SKILL_COLLAB_SOURCE_PIN_V1", "commit": "e" * 40, "repo_id": REPO_ID}):
++            pin.write_text(json.dumps(bad))
++            with self.assertRaises(gate.GateReject):
++                gate.check_source_pin(pin, REPO_ID, SHA_COMMIT)
++
++    def test_select_cli_is_not_approval(self):
++        code, out, _ = self.run_cli("select", "--live-config", str(self.config), "--intent", "design")
++        self.assertEqual(code, 0)
++        self.assertEqual(json.loads(out)["status"], "POLICY_COMPATIBLE_NOT_APPROVED")
++
++    def test_check_cli_blocked_is_nonzero(self):
++        self.fields["run_policy_ref"] = "POLICY-STATIC-V1-DESIGN"
++        self.save_request()
++        code, out, err = self.run_cli("check", "--live-config", str(self.config), "--intent", "design",
++                                      "--request", str(self.request), "--package", str(self.package))
++        self.assertEqual(code, 2)
++        self.assertFalse(out)
++        self.assertIn("REQUEST_PREFLIGHT_BLOCKED", err)
++
++    def test_check_cli_pass_is_prepublication_only(self):
++        code, out, err = self.run_cli("check", "--live-config", str(self.config), "--intent", "design",
++                                      "--request", str(self.request), "--package", str(self.package))
++        self.assertEqual((code, err), (0, ""))
++        self.assertEqual(json.loads(out)["status"], "PASS_PREPUBLICATION_ONLY")
++        self.assertEqual(json.loads(out)["request_sha256"], hashlib.sha256(self.request.read_bytes()).hexdigest())
++
++    def test_incomplete_source_pin_cli_is_blocked(self):
++        code, out, err = self.run_cli("check", "--live-config", str(self.config), "--intent", "design",
++                                      "--request", str(self.request), "--package", str(self.package),
++                                      "--expected-repo-id", REPO_ID)
++        self.assertEqual(code, 2)
++        self.assertIn("INCOMPLETE_SOURCE_PIN_CHECK", err)
++
++
++if __name__ == "__main__":
++    unittest.main()
+--- a/tests/test_source_pin_preclaim_v026.py
++++ b/tests/test_source_pin_preclaim_v026.py
+@@ -0,0 +1,89 @@
++"""The real numeric-pin failure must stop before a reservation or signer call."""
++import json
++
++import pytest
++
++from auto_helpers import auto, make_request, remote, puts, has
++from bundle import REPO_ID
++from fake_github import j, rp
++from datetime import datetime, timezone
++from skill_collab_watcher.approval import ApprovalRejected, validate_source_pin
++from test_phase1_approval import _pair, _verify
++from tools import approval_signer
++from types import SimpleNamespace
++
++
++def test_signer_rejects_invalid_repo_before_private_key_or_request_access(capsys):
++    args = SimpleNamespace(source_commit="a" * 40, valid_hours=1, repo_id="repo-name-is-not-an-id")
++    assert approval_signer.cmd_sign(args) == 2
++    assert "PIN_REPO_ID_FORMAT" in capsys.readouterr().err
++
++
++@pytest.mark.parametrize("value", [123456789, 123456789.0, True, None, [], {}])
++def test_final_approval_uses_the_same_strict_pin_contract(value):
++    now = datetime.now(timezone.utc)
++    approval, raw = _pair(now)
++    pin = json.loads(raw)
++    pin["repo_id"] = value
++    with pytest.raises(ApprovalRejected, match="PIN_REPO_ID_TYPE"):
++        validate_source_pin(pin, expected_repo_id=REPO_ID)
++    with pytest.raises(ApprovalRejected, match="PIN_REPO_ID_TYPE"):
++        _verify(approval, j(pin), now)
++
++
++@pytest.mark.parametrize("value", [123456789, 123456789.0, True, None, [], {}])
++def test_non_string_repo_id_is_rejected_before_reservation(auto, value):
++    make_request(auto.env.http)
++    path = "requests/REQ-A/SOURCE_PIN.json"
++    pin = json.loads(remote(auto.env, path))
++    pin["repo_id"] = value
++    auto.env.http.commit({rp(path): j(pin)})
++    auto.cycle()
++    assert auto.env.store.auto_get_claim("REQ-A", "1") is None
++    assert type(auto.signer).calls == 0
++    assert auto.env.runner.calls == 0
++    assert not puts(auto.env, "APPROVAL_SIG.json") and not puts(auto.env, "READY.md")
++    assert has(auto.env, "AUTO_NOT_ELIGIBLE", "PIN_REPO_ID_TYPE")
++
++
++@pytest.mark.parametrize("value", [[], None, "bad pin", 1])
++def test_non_object_pin_is_a_precise_input_rejection(auto, value):
++    make_request(auto.env.http)
++    auto.env.http.commit({rp("requests/REQ-A/SOURCE_PIN.json"): j(value)})
++    auto.cycle()
++    assert auto.env.store.auto_get_claim("REQ-A", "1") is None
++    assert type(auto.signer).calls == auto.env.runner.calls == 0
++    assert has(auto.env, "AUTO_NOT_ELIGIBLE", "PIN_SCHEMA_MISMATCH")
++    assert not has(auto.env, "AUTO_ERROR")
++
++
++def test_corrected_pin_can_proceed_when_no_reservation_was_created(auto):
++    make_request(auto.env.http)
++    path = "requests/REQ-A/SOURCE_PIN.json"
++    valid = remote(auto.env, path)
++    pin = json.loads(valid)
++    pin["repo_id"] = 123456789
++    auto.env.http.commit({rp(path): j(pin)})
++    auto.cycle()
++    assert auto.env.store.auto_get_claim("REQ-A", "1") is None
++    auto.env.http.commit({rp(path): valid})
++    auto.cycle()
++    assert len(puts(auto.env, "READY.md")) == 1
++    auto.cycle()
++    auto.cycle()
++    assert auto.env.runner.calls == type(auto.signer).calls == 1
++
++
++def test_existing_uncertain_reservation_is_never_reset_or_retried(auto):
++    make_request(auto.env.http)
++    store = auto.env.store
++    store.ensure_auto_tables()
++    assert store.auto_claim("REQ-A", "1", "a" * 64, 100, "{}", 1,
++                            max_day_calls=2, max_day_cents=300, max_month_cents=1000) == "CLAIMED"
++    store.auto_update("REQ-A", "1", 2, stage="UNCERTAIN", detail="old signing attempt")
++    before = dict(store.auto_get_claim("REQ-A", "1"))
++    auto.cycle()
++    auto.cycle()
++    assert dict(store.auto_get_claim("REQ-A", "1")) == before
++    assert type(auto.signer).calls == auto.env.runner.calls == 0
++    assert not puts(auto.env, "READY.md")
+--- a/tests/test_source_pin_tool_v026.py
++++ b/tests/test_source_pin_tool_v026.py
+@@ -0,0 +1,101 @@
++"""Deterministic SOURCE_PIN_V1 tests: no repo, network or watcher operations."""
++import contextlib
++import io
++import json
++import pathlib
++import sys
++import tempfile
++import unittest
++
++sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
++from tools import source_pin
++
++COMMIT = "939b5b9f4c59534d908bc48ced59cfd25a4e8f64"
++REPO = "1451933830"
++
++
++class SourcePinTests(unittest.TestCase):
++    def test_integer_producer_input_is_quoted_json_string(self):
++        text = source_pin.dumps_source_pin(source_commit=COMMIT, repo_id=1451933830)
++        self.assertIn('"repo_id": "1451933830"', text)
++        self.assertIs(type(json.loads(text)["repo_id"]), str)
++
++    def test_string_producer_input_is_still_string(self):
++        self.assertEqual(source_pin.make_source_pin(source_commit=COMMIT, repo_id=REPO)["repo_id"], REPO)
++
++    def test_existing_numeric_json_is_fail_closed_not_normalized(self):
++        bad = {"schema": source_pin.SCHEMA, "commit": COMMIT, "repo_id": 1451933830}
++        with self.assertRaisesRegex(source_pin.SourcePinError, "JSON string"):
++            source_pin.verify_source_pin(bad, expected_repo_id=REPO)
++
++    def test_valid_string_pin_matches_trust_root(self):
++        pin = json.loads(source_pin.dumps_source_pin(source_commit=COMMIT, repo_id=REPO))
++        self.assertEqual(source_pin.verify_source_pin(pin, expected_repo_id=REPO), pin)
++
++    def test_wrong_repo_rejected(self):
++        pin = source_pin.make_source_pin(source_commit=COMMIT, repo_id=REPO)
++        with self.assertRaisesRegex(source_pin.SourcePinError, "REPO_ID_MISMATCH"):
++            source_pin.verify_source_pin(pin, expected_repo_id="123")
++
++    def test_bool_and_float_not_integer_repo_ids(self):
++        for value in (True, False, 1451933830.0, None, "0", "0012", "-1"):
++            with self.subTest(value=value), self.assertRaises(source_pin.SourcePinError):
++                source_pin.make_source_pin(source_commit=COMMIT, repo_id=value)
++
++    def test_commit_must_be_pinned_sha(self):
++        for commit in ("", "not-a-sha", "A" * 40, "f" * 39, "f" * 41):
++            with self.subTest(commit=commit), self.assertRaises(source_pin.SourcePinError):
++                source_pin.make_source_pin(source_commit=commit, repo_id=REPO)
++
++    def test_schema_and_extra_keys_fail_closed(self):
++        pin = source_pin.make_source_pin(source_commit=COMMIT, repo_id=REPO)
++        for change in ({"schema": "V2"}, {"READY": "READY"}, {"repo_id": 1451933830}):
++            with self.subTest(change=change), self.assertRaises(source_pin.SourcePinError):
++                source_pin.verify_source_pin({**pin, **change})
++
++    def test_cli_create_to_stdout_without_remote_write(self):
++        out = io.StringIO()
++        with contextlib.redirect_stdout(out):
++            status = source_pin.main(["create", "--repo-id", REPO, "--commit", COMMIT])
++        self.assertEqual(status, 0)
++        self.assertEqual(json.loads(out.getvalue())["repo_id"], REPO)
++
++    def test_cli_refuses_overwrite_existing_file(self):
++        with tempfile.TemporaryDirectory() as td:
++            path = pathlib.Path(td) / "SOURCE_PIN.json"
++            path.write_text("historical pin is immutable", encoding="utf-8")
++            with contextlib.redirect_stderr(io.StringIO()):
++                rc = source_pin.main(["create", "--repo-id", REPO, "--commit", COMMIT, "--output", str(path)])
++            self.assertEqual(rc, 2)
++            self.assertEqual(path.read_text(encoding="utf-8"), "historical pin is immutable")
++
++    def test_audit_repo_fails_closed_on_malformed_request_pin(self):
++        with tempfile.TemporaryDirectory() as td:
++            base = pathlib.Path(td) / "collab" / "requests" / "REQ-1"
++            base.mkdir(parents=True)
++            pin = base / "SOURCE_PIN.json"
++            pin.write_text(source_pin.dumps_source_pin(source_commit=COMMIT, repo_id=REPO), encoding="utf-8")
++            self.assertEqual(source_pin.audit_source_pins(pathlib.Path(td), expected_repo_id=REPO), 1)
++            pin.write_text(json.dumps({"schema": source_pin.SCHEMA, "commit": COMMIT, "repo_id": 1451933830}), encoding="utf-8")
++            with self.assertRaises(source_pin.SourcePinError):
++                source_pin.audit_source_pins(pathlib.Path(td), expected_repo_id=REPO)
++
++    def test_audit_rejects_empty_repo(self):
++        with tempfile.TemporaryDirectory() as td:
++            (pathlib.Path(td) / "collab" / "requests").mkdir(parents=True)
++            with self.assertRaises(source_pin.SourcePinError):
++                source_pin.audit_source_pins(pathlib.Path(td), expected_repo_id=REPO)
++
++    def test_cli_check_accepts_new_pin_and_rejects_legacy_numeric(self):
++        with tempfile.TemporaryDirectory() as td:
++            path = pathlib.Path(td) / "pin.json"
++            path.write_text(source_pin.dumps_source_pin(source_commit=COMMIT, repo_id=REPO), encoding="utf-8")
++            with contextlib.redirect_stdout(io.StringIO()):
++                self.assertEqual(source_pin.main(["check", str(path), "--expected-repo-id", REPO]), 0)
++            path.write_text(json.dumps({"schema": source_pin.SCHEMA, "commit": COMMIT, "repo_id": 1451933830}), encoding="utf-8")
++            with contextlib.redirect_stderr(io.StringIO()):
++                self.assertEqual(source_pin.main(["check", str(path), "--expected-repo-id", REPO]), 2)
++
++
++if __name__ == "__main__":
++    unittest.main()
+--- a/tools/approval_signer.py
++++ b/tools/approval_signer.py
+@@ -32,7 +32,7 @@
+ 
+ from skill_collab_watcher.approval import (  # noqa: E402
+     APPROVAL_SCHEMA, PAYLOAD_SCHEMA, PIN_SCHEMA, ApprovalRejected, NotConfigured, TrustRootError, canonical,
+-    fingerprint_of, knowledge_refs_hash, load_trust_root, verify_approval,
++    fingerprint_of, knowledge_refs_hash, load_trust_root, validate_source_pin, verify_approval,
+ )
+ 
+ MAX_VALID_HOURS = 168
+@@ -164,6 +164,11 @@
+         print(f"REFUSED: --valid-hours must be between 1 and {MAX_VALID_HOURS}", file=sys.stderr)
+         return 2
+     try:
++        pin = validate_source_pin({"schema": PIN_SCHEMA, "repo_id": args.repo_id, "commit": args.source_commit})
++    except ApprovalRejected as exc:
++        print(f"REFUSED: {exc}", file=sys.stderr)
++        return 2
++    try:
+         fields = expected_fields(Path(args.request), Path(args.ready), Path(args.package), args.package_path,
+                                  args.policy_revision)
+         key = Ed25519PrivateKey.from_private_bytes(load_private_bytes(Path(args.private_key).read_text(encoding="ascii")))
+@@ -184,7 +189,6 @@
+     }
+     approval = {"schema": APPROVAL_SCHEMA, "key_id": args.key_id, "payload": payload,
+                 "signature": base64.b64encode(key.sign(canonical(payload))).decode("ascii")}
+-    pin = {"schema": PIN_SCHEMA, "repo_id": args.repo_id, "commit": args.source_commit}
+     out_dir.mkdir(parents=True, exist_ok=True)
+     approval_path.write_text(json.dumps(approval, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
+     pin_path.write_text(json.dumps(pin, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
+--- a/tools/review_request_gate.py
++++ b/tools/review_request_gate.py
+@@ -0,0 +1,250 @@
++#!/usr/bin/env python3
++"""Fail-closed, offline CoWork REQUEST prepublication policy compatibility gate.
++
++Reads the actual local Windows reviewer configuration. No GitHub writes, approval,
++READY, signing, watcher calls, model calls or local config modification.
++This is NOT an authorization check; the host approve_request check is separate.
++"""
++from __future__ import annotations
++
++import argparse
++from decimal import Decimal, InvalidOperation
++import hashlib
++import json
++from pathlib import Path, PurePosixPath
++import re
++import stat
++import sys
++import zipfile
++
++REQ_ID = re.compile(r"REQ-[A-Z0-9][A-Z0-9-]{3,120}\Z")
++SHA256 = re.compile(r"[0-9a-f]{64}\Z")
++REF = re.compile(r"[A-Z0-9][A-Z0-9-]{2,100}\Z")
++COMMIT = re.compile(r"[0-9a-f]{40}\Z")
++REPO_ID = re.compile(r"[1-9][0-9]*\Z")
++INTENTS = {
++    "skill": ("POLICY-STATIC-V1",),
++    "design": ("POLICY-STATIC-V1-DESIGN", "POLICY-STATIC-V1-LARGE"),
++}
++DEFAULT_BUDGETS = {"skill": "1.50", "design": "3.00"}
++MAX_REQUEST = 256_000
++MAX_PACKAGE = 32 * 1024 * 1024
++
++
++class GateReject(ValueError):
++    pass
++
++
++def _read_file(path: Path, *, limit: int) -> bytes:
++    if path.is_symlink() or not path.is_file() or path.stat().st_size > limit:
++        raise GateReject("MISSING_OR_UNSAFE_INPUT_FILE")
++    return path.read_bytes()
++
++
++def _json(path: Path, *, limit: int = MAX_REQUEST) -> dict:
++    raw = _read_file(path, limit=limit)
++    try:
++        obj = json.loads(raw)
++    except (ValueError, UnicodeDecodeError) as e:
++        raise GateReject("INVALID_LOCAL_JSON") from e
++    if not isinstance(obj, dict):
++        raise GateReject("INVALID_LOCAL_JSON_ROOT")
++    return obj
++
++
++def _money(value: object) -> Decimal:
++    if type(value) not in (float, int):
++        raise GateReject("INVALID_POLICY_COST_TYPE")
++    try:
++        v = Decimal(str(value))
++    except InvalidOperation as e:
++        raise GateReject("INVALID_POLICY_COST") from e
++    if not v.is_finite() or v <= 0 or v > 100 or v.as_tuple().exponent < -2:
++        raise GateReject("INVALID_POLICY_COST")
++    return v
++
++
++def _target_money(s: str) -> Decimal:
++    try:
++        d = Decimal(s)
++    except InvalidOperation as e:
++        raise GateReject("INVALID_REQUIRED_BUDGET") from e
++    if not d.is_finite() or d <= 0 or d > 100 or d.as_tuple().exponent < -2:
++        raise GateReject("INVALID_REQUIRED_BUDGET")
++    return d
++
++
++def _registered_policy_map(config: dict) -> dict:
++    rp = config.get("review_policy")
++    if not isinstance(rp, dict):
++        raise GateReject("LIVE_REVIEW_POLICY_MISSING")
++    refs = rp.get("known_run_policy_refs")
++    if not isinstance(refs, dict) or not refs:
++        raise GateReject("LIVE_POLICY_REGISTRY_MISSING")
++    return refs
++
++
++def select_policy(config: dict, intent: str, required_budget: Decimal) -> str:
++    """Choose only explicitly registered local tiers; legacy LARGE boots design."""
++    if intent not in INTENTS:
++        raise GateReject("UNKNOWN_REVIEW_INTENT")
++    refs = _registered_policy_map(config)
++    selected = next((name for name in INTENTS[intent] if name in refs), None)
++    if not selected:
++        raise GateReject("POLICY_NOT_INSTALLED")
++    entry = refs[selected]
++    if not isinstance(entry, dict):
++        raise GateReject("POLICY_CONFIG_INVALID")
++    configured = _money(entry.get("max_budget_usd"))
++    if configured != required_budget:
++        raise GateReject("POLICY_COST_MISMATCH")
++    return selected
++
++
++def _front_matter(text: str) -> dict[str, str]:
++    if not text.startswith("---\n"):
++        raise GateReject("REQUEST_FRONTMATTER_MISSING")
++    end = text.find("\n---\n", 4)
++    if end < 0 or end > 40_000:
++        raise GateReject("REQUEST_FRONTMATTER_INVALID")
++    fields: dict[str, str] = {}
++    # Read simple top-level scalars; disallow duplicate keys. Nested knowledge refs ignored.
++    for raw in text[4:end].splitlines():
++        if not raw.strip() or raw.startswith("  - ") or raw.startswith("    "):
++            continue
++        match = re.fullmatch(r"([a-z][a-z0-9_]*):(?: (.*))?", raw)
++        if match is None:
++            raise GateReject("REQUEST_FRONTMATTER_UNSUPPORTED")
++        key = match.group(1)
++        if key in fields:
++            raise GateReject("REQUEST_DUPLICATE_FIELD")
++        fields[key] = (match.group(2) or "").strip()
++    return fields
++
++
++def _check_package(package: Path, *, sha: str, size: int) -> None:
++    if package.is_symlink() or not package.is_file() or size <= 0 or size > MAX_PACKAGE:
++        raise GateReject("PACKAGE_MISSING_OR_UNSAFE")
++    if package.stat().st_size != size:
++        raise GateReject("PACKAGE_SIZE_MISMATCH")
++    h = hashlib.sha256()
++    with package.open("rb") as f:
++        for chunk in iter(lambda: f.read(1 << 20), b""):
++            h.update(chunk)
++    if h.hexdigest() != sha:
++        raise GateReject("PACKAGE_SHA256_MISMATCH")
++    try:
++        with zipfile.ZipFile(package) as archive:
++            if archive.testzip() is not None:
++                raise GateReject("PACKAGE_ZIP_CRC_FAILURE")
++            seen: set[str] = set()
++            for member in archive.infolist():
++                name = member.filename
++                p = PurePosixPath(name)
++                if (not name or name.startswith("/") or "\\" in name
++                        or ".." in p.parts or "" in p.parts
++                        or name in seen or stat.S_IFMT(member.external_attr >> 16) == stat.S_IFLNK):
++                    raise GateReject("UNSAFE_PACKAGE_MEMBER")
++                seen.add(name)
++    except (zipfile.BadZipFile, RuntimeError, OSError) as e:
++        raise GateReject("INVALID_PACKAGE_ZIP") from e
++
++
++def check_request(request: Path, package: Path, live_config: Path,
++                  *, intent: str, required_budget: Decimal) -> dict:
++    request_bytes = _read_file(request, limit=MAX_REQUEST)
++    fields = _front_matter(request_bytes.decode("utf-8"))
++    if (fields.get("schema") != "SKILL_COLLAB_REVIEW_REQUEST_V1"
++            or fields.get("state") != "SUBMITTED"
++            or fields.get("request_revision") != "1"
++            or fields.get("test_policy") != "STATIC_ONLY"
++            or fields.get("reviewer_os") != "WINDOWS"):
++        raise GateReject("REQUEST_CONTRACT_MISMATCH")
++    request_id = fields.get("request_id", "")
++    if not REQ_ID.fullmatch(request_id):
++        raise GateReject("INVALID_REQUEST_ID")
++    if fields.get("project_id") != fields.get("work_id"):
++        raise GateReject("PROJECT_WORK_SCOPE_MISMATCH")
++    for key in ("project_id", "skill_id"):
++        value = fields.get(key, "")
++        if not value or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{2,100}", value):
++            raise GateReject("INVALID_REQUEST_SCOPE")
++    policy = fields.get("run_policy_ref", "")
++    if not REF.fullmatch(policy):
++        raise GateReject("INVALID_RUN_POLICY_REF")
++    target = select_policy(_json(live_config), intent, required_budget)
++    if policy != target:
++        raise GateReject(f"RUN_POLICY_NOT_LIVE_MATCH: requested={policy} supported={target}")
++    rawpath = fields.get("package_path", "")
++    if not rawpath.startswith("/SKILL-COLLAB/packages/") or ".." in PurePosixPath(rawpath).parts:
++        raise GateReject("INVALID_PACKAGE_PATH")
++    if Path(rawpath).name != package.name or not package.name.endswith(".zip"):
++        raise GateReject("PACKAGE_BASENAME_MISMATCH")
++    sha = fields.get("package_sha256", "")
++    if not SHA256.fullmatch(sha):
++        raise GateReject("INVALID_PACKAGE_SHA256")
++    try:
++        count = int(fields.get("package_size_bytes", ""))
++    except ValueError as e:
++        raise GateReject("INVALID_PACKAGE_SIZE") from e
++    _check_package(package, sha=sha, size=count)
++    return {"status": "PASS_PREPUBLICATION_ONLY", "request_id": request_id,
++            "request_sha256": hashlib.sha256(request_bytes).hexdigest(),
++            "run_policy_ref": policy, "expected_max_budget_usd": str(required_budget),
++            "package_sha256": sha, "package_size_bytes": count,
++            "authorization": "NOT_CHECKED", "ready": "NOT_CREATED", "model_calls": 0}
++
++
++def check_source_pin(pin_path: Path, expected_repo_id: str, expected_commit: str) -> None:
++    if not REPO_ID.fullmatch(expected_repo_id) or not COMMIT.fullmatch(expected_commit):
++        raise GateReject("INVALID_EXPECTED_SOURCE_PIN")
++    pin = _json(pin_path, limit=8192)
++    if set(pin) != {"schema", "commit", "repo_id"} or pin.get("schema") != "SKILL_COLLAB_SOURCE_PIN_V1":
++        raise GateReject("SOURCE_PIN_SCHEMA_MISMATCH")
++    if type(pin.get("repo_id")) is not str or pin["repo_id"] != expected_repo_id:
++        raise GateReject("SOURCE_PIN_REPO_ID_MISMATCH")
++    if type(pin.get("commit")) is not str or pin["commit"] != expected_commit:
++        raise GateReject("SOURCE_PIN_COMMIT_MISMATCH")
++
++
++def main(argv: list[str] | None = None) -> int:
++    parser = argparse.ArgumentParser(description="Offline prepublish gate; never approves/executes/posts")
++    subs = parser.add_subparsers(dest="command", required=True)
++    for command in ("select", "check"):
++        p = subs.add_parser(command)
++        p.add_argument("--live-config", type=Path, required=True,
++                       help="actual Windows local reviewer.config.json, never GitHub")
++        p.add_argument("--intent", choices=sorted(INTENTS), required=True)
++        p.add_argument("--required-budget-usd", default=None,
++                       help="required per-review budget, default skill=1.5 / design=3")
++        if command == "check":
++            p.add_argument("--request", required=True, type=Path, help="new REQUEST before publish")
++            p.add_argument("--package", required=True, type=Path, help="exact local ZIP bytes")
++            p.add_argument("--source-pin", type=Path, help="optional post-commit pin check")
++            p.add_argument("--expected-repo-id", help="required with --source-pin")
++            p.add_argument("--expected-source-commit", help="required with --source-pin")
++    args = parser.parse_args(argv)
++    try:
++        budget = _target_money(args.required_budget_usd or DEFAULT_BUDGETS[args.intent])
++        if args.command == "select":
++            ref = select_policy(_json(args.live_config), args.intent, budget)
++            print(json.dumps({"status": "POLICY_COMPATIBLE_NOT_APPROVED",
++                              "selected_run_policy_ref": ref,
++                              "expected_max_budget_usd": str(budget), "approval": "NOT_CHECKED"}))
++        else:
++            result = check_request(args.request, args.package, args.live_config,
++                                   intent=args.intent, required_budget=budget)
++            if any((args.source_pin, args.expected_repo_id, args.expected_source_commit)):
++                if not all((args.source_pin, args.expected_repo_id, args.expected_source_commit)):
++                    raise GateReject("INCOMPLETE_SOURCE_PIN_CHECK")
++                check_source_pin(args.source_pin, args.expected_repo_id, args.expected_source_commit)
++                result["source_pin"] = "PASS"
++            print(json.dumps(result, sort_keys=True))
++    except (GateReject, OSError, UnicodeError) as e:
++        print("REQUEST_PREFLIGHT_BLOCKED: " + str(e), file=sys.stderr)
++        return 2
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+--- a/tools/source_pin.py
++++ b/tools/source_pin.py
+@@ -0,0 +1,131 @@
++#!/usr/bin/env python3
++"""Canonical CoWork SOURCE_PIN V1 serializer and strict pre-publication verifier.
++
++Local/offline helper only: no GitHub writes, READY, signing, watcher, or LLM calls.
++A blocked/uncertain review must be reconciled separately; never patch its pinned
++inputs in place to force another processing attempt.
++"""
++from __future__ import annotations
++
++import argparse
++import json
++from pathlib import Path
++import re
++import sys
++
++SCHEMA = "SKILL_COLLAB_SOURCE_PIN_V1"
++_COMMIT_RE = re.compile(r"[0-9a-f]{40}\Z")
++_REPO_ID_RE = re.compile(r"[1-9][0-9]*\Z")
++_EXACT_KEYS = frozenset({"schema", "commit", "repo_id"})
++
++
++class SourcePinError(ValueError):
++    """Malformed pin or unsafe publication input; refuse rather than coerce."""
++
++
++def canonical_repo_id(value: str | int) -> str:
++    """Normalize only producer inputs. Never silently normalize a published pin."""
++    if type(value) is int:
++        value = str(value)
++    if not isinstance(value, str) or _REPO_ID_RE.fullmatch(value) is None:
++        raise SourcePinError("repo_id must be a nonzero decimal identifier")
++    return value
++
++
++def make_source_pin(*, source_commit: str, repo_id: str | int) -> dict[str, str]:
++    if not isinstance(source_commit, str) or _COMMIT_RE.fullmatch(source_commit) is None:
++        raise SourcePinError("commit must be the exact lowercase, 40-hex source commit A")
++    return {"schema": SCHEMA, "commit": source_commit, "repo_id": canonical_repo_id(repo_id)}
++
++
++def verify_source_pin(pin: object, *, expected_repo_id: str | None = None) -> dict[str, str]:
++    """Strict consumer/pre-publish check. Numeric JSON repo_id is ALWAYS invalid."""
++    if not isinstance(pin, dict) or set(pin) != _EXACT_KEYS or pin.get("schema") != SCHEMA:
++        raise SourcePinError("invalid SOURCE_PIN_V1 schema or keys")
++    commit, repo_id = pin["commit"], pin["repo_id"]
++    if not isinstance(commit, str) or _COMMIT_RE.fullmatch(commit) is None:
++        raise SourcePinError("invalid commit pin")
++    if type(repo_id) is not str or _REPO_ID_RE.fullmatch(repo_id) is None:
++        raise SourcePinError("repo_id MUST be a JSON string, not a number")
++    if expected_repo_id is not None and repo_id != canonical_repo_id(expected_repo_id):
++        raise SourcePinError("REPO_ID_MISMATCH")
++    return pin
++
++
++def dumps_source_pin(*, source_commit: str, repo_id: str | int) -> str:
++    pin = make_source_pin(source_commit=source_commit, repo_id=repo_id)
++    verify_source_pin(pin)
++    return json.dumps(pin, ensure_ascii=False, indent=2) + "\n"
++
++
++def _read_checked(path: Path, expected_repo_id: str | None) -> dict[str, str]:
++    if path.is_symlink() or not path.is_file() or path.stat().st_size > 8192:
++        raise SourcePinError("unsafe or oversized input path")
++    pin = json.loads(path.read_text(encoding="utf-8"))
++    return verify_source_pin(pin, expected_repo_id=expected_repo_id)
++
++
++def audit_source_pins(root: Path, *, expected_repo_id: str) -> int:
++    """Check all published request pins; no GitHub API or mutation.
++
++    A malformed historical pin is a failure, never silently rewritten.
++    """
++    base = root / "collab" / "requests"
++    if base.is_symlink() or not base.is_dir():
++        raise SourcePinError("missing or unsafe collab/requests directory")
++    count = 0
++    for directory in sorted(base.iterdir()):
++        if directory.is_symlink() or not directory.is_dir():
++            continue
++        path = directory / "SOURCE_PIN.json"
++        if path.is_symlink():
++            raise SourcePinError(f"unsafe source pin: {path}")
++        if path.exists():
++            try:
++                _read_checked(path, expected_repo_id)
++            except (SourcePinError, json.JSONDecodeError) as exc:
++                raise SourcePinError(f"{path}: {exc}") from exc
++            count += 1
++    if count == 0:
++        raise SourcePinError("no published SOURCE_PIN.json found")
++    return count
++
++
++def main(argv: list[str] | None = None) -> int:
++    parser = argparse.ArgumentParser(description="Offline CoWork SOURCE_PIN_V1 generator / validator")
++    sub = parser.add_subparsers(dest="command", required=True)
++    make = sub.add_parser("create", help="build new pin; never change existing REQUEST or READY")
++    make.add_argument("--commit", required=True, help="verified source commit A (40 lowercase hex)")
++    make.add_argument("--repo-id", required=True, help="numeric GitHub repository ID (encoded as JSON string)")
++    make.add_argument("--output", type=Path, help="local new file only; refuses overwrite")
++    audit = sub.add_parser("audit", help="check all published pins without modifying them")
++    audit.add_argument("--root", type=Path, default=Path("."))
++    audit.add_argument("--expected-repo-id", required=True)
++    check = sub.add_parser("check", help="validate existing file without modifying it")
++    check.add_argument("path", type=Path)
++    check.add_argument("--expected-repo-id", required=True)
++    args = parser.parse_args(argv)
++    try:
++        if args.command == "create":
++            content = dumps_source_pin(source_commit=args.commit, repo_id=args.repo_id)
++            if args.output is None:
++                sys.stdout.write(content)
++            else:
++                # No implicit directories or writes to existing pinned input.
++                with args.output.open("x", encoding="utf-8", newline="\n") as out:
++                    out.write(content)
++                print("CREATED: local SOURCE_PIN candidate only; no request/READY posted")
++        elif args.command == "audit":
++            count = audit_source_pins(args.root, expected_repo_id=args.expected_repo_id)
++            print(f"PASS: {count} SOURCE_PIN_V1 files match the repo_id string contract")
++        else:
++            _read_checked(args.path, args.expected_repo_id)
++            print("PASS: SOURCE_PIN_V1 repo_id is a JSON string and matches trust root")
++    except (SourcePinError, json.JSONDecodeError, OSError, UnicodeError) as exc:
++        print(f"SOURCE_PIN_REJECTED: {exc}", file=sys.stderr)
++        return 2
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())

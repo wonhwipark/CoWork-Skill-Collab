@@ -1,0 +1,58 @@
+{
+  "request_id": "REQ-L1-MSC-DUAL-ENTRY-DESIGN-R1-20261117",
+  "revision": "1",
+  "request_ready_binding": "PASS",
+  "package_sha256": "e5c2da38fda253781b2cf0179c46d3cd6dbefdc5f5efb3f0603ddaaf7d03b91c",
+  "processing_key": "REQ-L1-MSC-DUAL-ENTRY-DESIGN-R1-20261117|1|e5c2da38fda253781b2cf0179c46d3cd6dbefdc5f5efb3f0603ddaaf7d03b91c|1",
+  "remote_execution": "COMPLETED",
+  "receipt_ok": true,
+  "gpt_disposition": "ACCEPT_WITH_CHANGE",
+  "findings_blocking": 0,
+  "recommendations": 2,
+  "cryptographic_reverification": "NOT_RUN",
+  "cost_independent_verification": "NOT_AVAILABLE",
+  "files": [
+    {
+      "key": "msc_request",
+      "blob": "b952af9ffd8c05abbdb25e663517b8151973f754",
+      "bytes": 3609,
+      "sha256": "16f375c166104161f0e0bdc836bdd5bb1db89568faf1edb5f99b776695ef82b5"
+    },
+    {
+      "key": "msc_ready",
+      "blob": "652cbc2cd3509540fb6a7145cb91f0d7dfb41345",
+      "bytes": 420,
+      "sha256": "4d241d83d3a922765ce33cf13d8cec81aa7a2992ff62edebca04cad7b79737af"
+    },
+    {
+      "key": "msc_sig",
+      "blob": "9544e56745c3cf97e28725a5e9378d11bfd9c82a",
+      "bytes": 1168,
+      "sha256": "0b8cfcf66c29fbac2f3d3994e4cf061dafc7676e7f1de34bd1637126690debfa"
+    },
+    {
+      "key": "msc_dispatch",
+      "blob": "c68aa4e78f846a0aa55e07eb538845e9424b4eff",
+      "bytes": 424,
+      "sha256": "be71e46542dbb21ff13bdf23807e23d73762eefc75815b01b93c958eb6233dae"
+    },
+    {
+      "key": "msc_result",
+      "blob": "a8c3279e5858c98ec1d9a49d2bb3123844a4fa48",
+      "bytes": 8469,
+      "sha256": "19208aa837cfff73186cd9b8f7efe369014bbc5daaac3833cf025f0465743c81"
+    },
+    {
+      "key": "msc_receipt",
+      "blob": "2503ab12c780d6ab0de19e762bc9278bc11a319f",
+      "bytes": 341,
+      "sha256": "813d8ca4a2716d98e0263243b9bdd8507d3a18756f6964e0bfdf5f5f99593f68"
+    },
+    {
+      "key": "msc_gpt",
+      "blob": "a6c127a26cb60c0bf156c7618750c6c6c09d2dc9",
+      "bytes": 5623,
+      "sha256": "2c33814d9ba5430a89ca9155e6a8b637c4f82ab263c188cc62b86f4879a1fb72"
+    }
+  ]
+}

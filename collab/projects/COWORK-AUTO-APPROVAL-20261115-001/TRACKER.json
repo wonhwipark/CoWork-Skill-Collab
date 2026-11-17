@@ -7,9 +7,9 @@
       "title": "GPT→GitHub REQUEST 자동 서명·READY (제한된 사전 위임)",
       "phase": "DISPOSITION",
       "owner": "Windows Claude Code 조건부 LIVE 적용 / GPT 최종 판정",
-      "self_test": "PASS",
-      "independent_review": "PASS",
-      "next_action": "2026-11-18: 사용자가 v0.2.25 Windows LIVE 원샷 조건부 배포 승인. 고정 ZIP v0.2.25의 Windows 격리 회귀·SHADOW·백업·위임/설정 정책 확인 PASS 시 설치·검증, 아니면 fail-closed. HOST_APPLIED=NOT_RUN; Windows 실행 결과 필요."
+      "self_test": "PASS_SCOPE_LIMITED",
+      "independent_review": "PENDING",
+      "next_action": "기존 v0.2.25 고정 SHA 조건부 Windows 배포 승인 유지. 별도 v0.2.26 입력/보류 재발 방지 후보(61개 새 회귀 포함 Linux 974 PASS, 원본 실패 34개 제외)는 PRIVATE 개발본; Windows/Notifier 연결·독립 리뷰 미완료로 운영 적용 전 게이트 필요. MSC R1 완료·판정 종료 원문 회수, 재리뷰 0."
     }
   ]
 }
