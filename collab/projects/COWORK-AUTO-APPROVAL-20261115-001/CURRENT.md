@@ -1,5 +1,17 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-17 — 원샷 리뷰 재개용 기존 LARGE $3 신규 REQUEST 고정
+
+- **신규 GPT 작성 REQUEST:** [REQ-COWORK-BUDGET-V025-LARGE-R2-20261117](../../requests/REQ-COWORK-BUDGET-V025-LARGE-R2-20261117/REQUEST.md) revision 1, `run_policy_ref=POLICY-STATIC-V1-LARGE`, `skill_id=cowork-review-watcher`, USD 3.00 최대, 동일 v0.2.25 ZIP SHA-256 `26d63c8a03290499b13b2ceb8ff0b70c06eb1b1bcc1a25fe3d8f65fcc213d228`, 283930 bytes. 이전 DESIGN 요청은 동작 없음/변조 없음/재큐잉 없음.
+- **GitHub 실제 고정 및 readback:** commit A `d649921581c32fb5ed8e56b858f3881f029bca91`에 신규 REQUEST와 기존 Git blob `660ff3591defd8ccc4abdf3e9b2bf24f21b13918`인 ZIP이 존재하고 요청 정책 및 크기 확인. commit B `d1995fdfa4c3efc1f202f2b45b5132f938a39297`에 [SOURCE_PIN.json](../../requests/REQ-COWORK-BUDGET-V025-LARGE-R2-20261117/SOURCE_PIN.json) 게시, commit A 결속·repo_id JSON 문자열 `"1451933830"` 및 readback PASS.
+- **실행/승인 상태:** 기존 Windows Claude Code 사용자 보고로 v0.2.23 로컬 `POLICY-STATIC-V1-LARGE` USD 3 등록 확인. 그러나 `review_request_gate.py`의 **이번 정확한 요청에 대한 Windows 실호스트 사전 CLI 검증은 NOT_RUN**. 원샷 수행을 위해 사용자 Windows 보고에 근거해 REQUEST만 먼저 고정했으며 **신규 필수 PREPUBLICATION 검증의 형식적 순서는 충족하지 못했다**. 절차 예외를 일반 PASS로 전환 금지. Windows에서 직접 `select/check` 및 원본 요청 bytes·SOURCE_PIN SHA 검증 **통과 전** 서명·READY·유료 실행 금지. 기존 운영 승인·서명·유효한 범위도 별도로 `approve_request.py check`로 확인. 요청 게시=유료 승인 아님.
+- **한 번에 처리할 Windows 단계:** 실설정 정책 선검증 → 신규 REQUEST/SOURCE_PIN/원본 ZIP 검증 → 기존 유효 $3 수동 서명 `approve --max-usd 3.0 --execute` → READY LAST → watcher 1회 독립 R2 리뷰 → 결과/영수증 원격 readback → 동일 CURRENT 갱신. 사전 검증/위임 미통과 시 서명·READY·리뷰 0, 정확한 BLOCKED 근거만 게시. 기존 불확실 건과 DB/키/Task/LIVE 상태 수정 금지.
+- **현재 판정:** `REQUEST=POSTED`, `SOURCE_PIN=POSTED`, `HOST_PREFLIGHT=NOT_RUN`, `APPROVAL_SIG=NOT_VERIFIED`, `READY=NOT_VERIFIED`, `INDEPENDENT_REVIEW=PENDING`, `LIVE_INSTALL=NOT_RUN`. GPT 최종 결과 판정은 실리뷰 결과가 게시된 다음 별도 권한으로 수행.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 신규 REQUEST ID의 정확한 입력으로 위 1회 순서를 끝까지 실행하고 원격 결과를 게시. 모델·비용 검증 없이 기존 DESIGN 요청을 재실행하거나 보호 위임을 수정하지 않음.
+
+---
+
+
 ## 2026-11-17 — REQUEST 신규 게시 전 LIVE 정책 사전 검증 게이트
 
 - **요청/원인:** 사용자 “정책사전검증 빠지지 않는 방안” 후 “진행해줘”. v0.2.25 리뷰에서 미설치 `POLICY-STATIC-V1-DESIGN`으로 REQUEST를 고정해 Windows v0.2.23이 서명/READY를 차단한 결함 재발 방지. 기존 동일 Work의 PREPUBLICATION 개발/검증만, 신규 리뷰 REQUEST/READY/비용/Windows LIVE 변경 없음.
