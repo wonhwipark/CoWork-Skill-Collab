@@ -1,0 +1,9 @@
+{
+  "name": "skill-collab-watcher_v0_2_25_1117.zip",
+  "size": 283930,
+  "sha256": "26d63c8a03290499b13b2ceb8ff0b70c06eb1b1bcc1a25fe3d8f65fcc213d228",
+  "source_name": "skill-collab-watcher_v0_2_24_1117.zip",
+  "source_sha256": "3c78699b734d88202a34ef5fd430f5f278ab1692a437b6affb6b6c64d24ca360",
+  "qa": "LINUX_SUPPORTED_TESTS_PASS_WINDOWS_INDEPENDENT_REVIEW_NOT_RUN",
+  "release": "DEVELOPMENT_NOT_FOR_DEPLOYMENT"
+}
