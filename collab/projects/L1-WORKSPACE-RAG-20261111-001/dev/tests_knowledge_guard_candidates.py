@@ -169,25 +169,6 @@ def smoke():
             p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in knowledge.glob("*.md")
         }
         print("KERNEL_EXPORTER_T01_T02_PASS", digest_after)
-        # Functional SVG regression setup: inspect actual public API, not source tokens.
-        import inspect
-        from work_ledger_kernel import work_ux as ux_module
-        print("KERNEL_EVIDENCE_APIS", [
-            (n, str(inspect.signature(getattr(ledger, n))))
-            for n in dir(ledger) if any(k in n for k in ("evidence", "artifact", "work_create", "work_add"))
-            and callable(getattr(ledger, n))
-        ])
-        print("WORK_UX_CLASSES", [
-            (n, str(inspect.signature(getattr(ux_module, n))))
-            for n in dir(ux_module) if n in ("WorkUX", "export_docs")
-        ])
-        if hasattr(ux_module, "WorkUX"):
-            print("WORK_UX_EXPORT_SIGNATURE", inspect.signature(ux_module.WorkUX.export_docs))
-            code = inspect.getsource(ux_module.WorkUX.export_docs)
-            lines = code.splitlines()
-            for i, line in enumerate(lines):
-                if any(k in line.lower() for k in ("evidence", "svg", "artifact", "work_id")):
-                    print("WORK_UX_EXPORT_LINE", i + 1, line[:180])
         print("TARGETED_SMOKE_PASS (T01/T02, workflow/git local guards; hard OS gate still NOT_RUN)")
 
 
