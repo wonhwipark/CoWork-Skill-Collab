@@ -49,3 +49,7 @@
 - [용어·저장소·실행 환경 표기 원칙](../ops/CONTRACTS/TERMINOLOGY_AND_ACCESS_SCOPE_V1.md) — 신규 설명/인계/답변에서는 실제 저장소·접근 권한·작업 PC/실행 호스트로 구분한다. 이전 문서의 원문·파일명·해시·기록은 보존한다.
 
 [개선 검토](../projects/COWORK-SKILL-DISCOVERY-20261112-001/NEW_CHAT_CONTEXT_BOOTSTRAP_REVIEW_r0001_20261114.md)의 단일 브리프+관련 CURRENT 문서 경로를 적용. 자동 로더·프로젝트 설정 변경은 수행하지 않음.
+
+## 사용자 응답 마무리 규칙
+
+후속 조치가 있는 최종 응답의 마지막 문장은 [AGENTS.md의 응답 마무리 규칙](../../AGENTS.md#후속-조치가-있는-응답의-마무리)을 따른다. 정본 문구는 이 포인터에 중복 복사하지 않는다.

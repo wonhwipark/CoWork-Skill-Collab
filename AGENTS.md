@@ -20,3 +20,7 @@
 
 GPT가 새 REQUEST를 작성·게시하기 **전에** `collab/ops/CONTRACTS/REVIEW_TIER_TOKEN_BUDGET_V1.md`의 신규 'REQUEST 게시 전 정책 호환성 필수 게이트'를 따라야 한다. `collab/ops/review_request_gate.py`의 `select` / `check`에 Windows 실제 LIVE `reviewer.config.json` 및 신규 ZIP 바이트를 사용하고 `PASS_PREPUBLICATION_ONLY`를 확인한다. LIVE 설정 직접 조회가 불가능하면 Windows Claude Code에 읽기 전용 검증을 요청하고, 검증 전에는 REQUEST를 게시하지 않는다. GPT가 개발 예정 정책명을 선택해 기존 LIVE를 막는 자기 참조를 금지. SOURCE_PIN/서명/READY는 기존 계약대로 별도 검증하며 이 절차로 유료 모델을 호출하거나 운영 설정을 변경하지 않는다.
 
+## 후속 조치가 있는 응답의 마무리
+
+- 사용자 명시 요청(2026-11-18 KST): **다음 조치가 남아 있는 사용자 대상 최종 응답은 마지막 문장을 정확히 “조치에대해 처리 진행할까요?”로 마무리한다.** 문구의 공백·표기를 임의로 바꾸지 않는다. 다음 조치가 없으면 이 질문을 덧붙이지 않는다.
+- 기존 유효 승인 범위의 작업은 끝까지 수행한 뒤 남은 조치에 이 응답 형식을 적용한다. 이 문구를 이유로 기승인 작업 중간에 반복 승인을 요청하지 않으며, 문구 자체를 새 유료 호출·운영 변경·설치·배포 승인으로 해석하지 않는다.
