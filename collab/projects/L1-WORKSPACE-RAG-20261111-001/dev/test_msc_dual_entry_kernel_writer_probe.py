@@ -34,6 +34,9 @@ def run():
             for ix in hits[:45]:
                 keep.update(range(max(0,ix-3),min(len(lines),ix+5)))
             print("KERNEL_WRITER_SOURCE_EXCERPTS",len(lines),"hits",len(hits))
+            for lo,hi in ((800,915),(1061,1079)):
+                print("KERNEL_OWNER_BLOCK",lo,hi)
+                for n in range(lo-1,min(hi,len(lines))):print("KERNEL_OWNER",f"{n+1:04}",lines[n][:260])
             for ix in sorted(keep)[:220]:print("KERNEL_SOURCE",f"{ix+1:04}",lines[ix][:240])
         sys.path.insert(0,str(root))
         from work_ledger_kernel.kernel import WorkLedgerKernel
