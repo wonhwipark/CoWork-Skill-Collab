@@ -9,7 +9,7 @@
       "owner": "Windows 운영 호스트 (자동 승인 LIVE) / GPT 판정",
       "self_test": "PASS",
       "independent_review": "PENDING",
-      "next_action": "v0.2.25 디자인 R2: 새 POLICY-STATIC-V1-DESIGN 미등록, 서명/READY 차단. 기존 v0.2.23 LARGE $3 수동 승인 경로와 유효 위임 확인 후 1회 리뷰; 과거 v0.2.23 LIVE PASS 이력 별도 보존."
+      "next_action": "v0.2.25 리뷰 계속 BLOCKED/미서명; 신규 REQUEST 사전 검증 게이트 자체 CI 36 PASS. 다음은 Windows 실제 LIVE config로 select/check 읽기 전용 검증. 유효 보호 위임·READY 없이 유료 리뷰/실행 금지."
     }
   ]
 }
