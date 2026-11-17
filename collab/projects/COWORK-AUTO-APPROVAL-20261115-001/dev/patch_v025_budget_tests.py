@@ -59,6 +59,16 @@ def test_design_tier_cannot_escalate_past_protected_delegation(auto):
     assert not approval_posted(auto.env, "REQ-A")
     assert type(auto.signer).calls == 0
 ''')
+    p=root/"tests"/"test_auto_policy_gpt_proto.py"
+    one(p,
+        'self.assertEqual(self.verdict(c=replace(self.c, estimated_cents=101))[1], "PER_REQUEST_COST")',
+        'self.assertEqual(self.verdict(c=replace(self.c, estimated_cents=151))[1], "PER_REQUEST_COST")')
+    one(p,
+        'self.assertEqual(self.verdict(e=replace(self.e, day_cents_used_or_reserved=250))[1], "DAY_COST_LIMIT")',
+        'self.assertTrue(self.verdict(e=replace(self.e, day_cents_used_or_reserved=250))[0])')
+    one(p,
+        'self.assertEqual(self.verdict(e=replace(self.e, month_cents_used_or_reserved=950))[1], "MONTH_COST_LIMIT")',
+        'self.assertTrue(self.verdict(e=replace(self.e, month_cents_used_or_reserved=950))[0])')
     # v0.2.24 legacy findings switched to day-cost stops; now that is gone.
     p=root/"tests"/"test_v022_findings.py"
     one(p, 'assert outcomes.count("CLAIMED") == 2 and outcomes.count("DAY_COST_LIMIT") == 4',
