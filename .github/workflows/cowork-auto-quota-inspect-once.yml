@@ -60,4 +60,21 @@ jobs:
               for n,line in enumerate(lines,1):
                   if 'DAY_CALL_LIMIT' in line or 'max_day_calls' in line or 'day_calls_used_or_reserved' in line:
                       print('SOURCE_REF',name,n,line[:190])
+          print("ZIP_NAMES_START",names[:35])
+          print("PACKAGE_META")
+          for name in names:
+              if name.lower().endswith(('.skill-release.json', 'version', 'skill.md', 'version.md','package_contents.sha256','manifest_sha256.json')):
+                  print('META_FILE',name,repr(z.read(name).decode('utf8')[:280]))
+          for name,lo,hi in (
+              ('tests/test_v022_findings.py',102,126),
+              ('tests/test_v022_findings.py',169,201),
+              ('tests/test_auto_policy_gpt_proto.py',59,104),
+              ('tests/test_auto_approval.py',822,840),
+              ('skill_collab_watcher/auto_policy.py',70,102),
+              ('skill_collab_watcher/state_store.py',345,378),
+          ):
+              if name not in names:continue
+              lines=z.read(name).decode('utf8').splitlines()
+              print('EXCERPT',name,lo,hi)
+              for i in range(lo-1,min(hi,len(lines))):print(f'EXLINE {name} {i+1}: {lines[i]}')
           PY
