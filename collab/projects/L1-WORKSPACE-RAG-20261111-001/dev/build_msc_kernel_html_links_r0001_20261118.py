@@ -3,12 +3,13 @@
 from __future__ import annotations
 import argparse, hashlib, json, compileall, tempfile
 from pathlib import Path
-from build_l1_knowledge_guard_candidates_r0001_20261117 import safe_unzip, refresh_package_metadata, rezip
+from build_l1_knowledge_guard_candidates_r0001_20261117 import safe_unzip, refresh_package_metadata
+from reproducible_zip import rezip
 from skill_release_quality_gate import validate
 
 VERSION_FROM="0.7.43"
-VERSION_TO="0.7.44"
-OUT_NAME="work-ledger-kernel_v0_7_44_1118.zip"
+VERSION_TO="0.7.45"
+OUT_NAME="work-ledger-kernel_v0_7_45_1118.zip"
 EXPECTED_SHA="80c955790aaa65f695c061f7ec2664bd1c7c5ba7e0a7534045960eea7fe2d5f6"
 def digest(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def once(path,before,after):
@@ -43,7 +44,7 @@ def patch(root):
     once(p,before,after)
     sk=root/"SKILL.md"
     sk.write_text(sk.read_text(encoding="utf-8")+
-        "\n\n### MSC Work-root 안내 링크 정합성 (개발 후보 0.7.44)\n"
+        "\n\n### MSC Work-root 안내 링크 정합성 (개발 후보 0.7.45)\n"
         "- 기존 Work-root MSC_VIEW.md는 Kernel writer만 관리. Converter 상세 MSC_VIEW.md Evidence bytes 불변.\n"
         "- 실제 게시된 doc-converter HTML Evidence의 published_path를 같은 Work 안내에 MSC HTML 다운로드 링크로 표시.\n"
         "- 수동 편집/기존 생성 해시 불일치 시 기존 write_communication 정책대로 보류. 개인 knowledge/ 쓰기 없음.\n"
