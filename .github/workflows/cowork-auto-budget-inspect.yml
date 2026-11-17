@@ -45,4 +45,20 @@ jobs:
                       for i,l in enumerate(lines):
                           if any(t in l for t in ('max_request','max_day','max_month','run_policy_ref','POLICY-STATIC','DAY_COST_LIMIT','MONTH_COST_LIMIT')):
                               print(f'SRC {name} {i+1} {l}')
+          with zipfile.ZipFile(zpath) as z:
+              for name,ranges in (
+                  ('skill_collab_watcher/auto_approval.py',[(12,83),(209,237),(460,562)]),
+                  ('skill_collab_watcher/auto_policy.py',[(61,94)]),
+                  ('skill_collab_watcher/state_store.py',[(385,440)]),
+                  ('skill_collab_watcher/validator.py',[(138,225)]),
+                  ('skill_collab_watcher/config.py',[(1,200)]),
+                  ('tests/test_auto_approval.py',[(1,120),(245,325)]),
+                  ('tests/conftest.py',[(1,105)]),
+              ):
+                  if name not in z.namelist():continue
+                  lines=z.read(name).decode('utf8').splitlines()
+                  for lo,hi in ranges:
+                      print('INSPECT',name,lo,hi)
+                      for j in range(lo-1,min(len(lines),hi)):
+                          print(f'FOCUSED {name} {j+1} {lines[j]}')
           PY
