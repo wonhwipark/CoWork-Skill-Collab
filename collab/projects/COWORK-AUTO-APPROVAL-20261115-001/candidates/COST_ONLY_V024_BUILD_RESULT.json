@@ -1,0 +1,8 @@
+{
+  "name": "skill-collab-watcher_v0_2_24_1117.zip",
+  "bytes": 282548,
+  "sha256": "3c78699b734d88202a34ef5fd430f5f278ab1692a437b6affb6b6c64d24ca360",
+  "source_sha256": "f941be8a6b53d00baa10a9b097f234b159470e2aa1242ecc33bcf0bdee080ea7",
+  "status": "DEVELOPMENT_NOT_FOR_DEPLOYMENT",
+  "tests": "FULL_CI_PASS"
+}
