@@ -1,5 +1,13 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-18 KST — L1Work 공개 배송 요청: G0 인계 MD POSTED, 스킬 ZIP BLOCKED
+
+- **실제 PUBLIC 게시:** [업무 GPT MSC writer G0 숫자 확인 MD](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_MSC_DUAL_ENTRY_WRITER_G0_READONLY_HANDOFF_r0001_20261118_KST.md) `handoffs/` 신설, [handoffs/README.md](https://github.com/wonhwipark/L1Work/blob/main/handoffs/README.md)에서 바로가기 연결. main commit `6c17e54c474a6d97486d40e7749aefba20747d81` / 인덱스 commit `6da224419625cdf810fc1119884ea5dd7dc75d69`, 원격 blob/내용 readback PASS. [배송·게이트 상세 판정](GPT_MSC_DUAL_ENTRY_L1WORK_PUBLIC_DELIVERY_DISPOSITION_r0001_20261118_KST.md).
+- **패키지 공개 차단 유지:** 개발 `doc-converter v0.2.28`, `l1-fix-workflow v1.6.72`, `work-ledger-kernel v0.7.45` 3 ZIP은 `development_not_for_deployment`, 신규 코드 독립 리뷰·Knowledge writer 보호/G0/E3·상세 MSC 원본 링크가 미충족. 실제 PUBLIC main 루트 3종 신규 ZIP **NOT_POSTED** 재확인. 사용자의 배송 지시만으로 `PUBLIC_RELEASE_GATE.md`를 해제하지 않음.
+- **NEXT_ONE_ACTION:** 공개 G0 MD를 업무 GPT/Linux Agent에서 읽기 전용 점검해 A~J 숫자 결과 회수. 이어 불충족 안전/링크/호환 게이트만 보완하고 최종 ZIP 별도 승인·PUBLIC 게이트 판정.
+
+---
+
 ## 2026-11-18 KST — MSC 두 진입 Kernel HTML 실링크 수정·후속 패키지 재현성 검증
 
 - **실제 후속 구현:** [상세 결과·근거](GPT_MSC_DUAL_ENTRY_G0_LINK_AND_REPRO_VALIDATION_RESULT_r0001_20261118_KST.md) (PRIVATE main). 기존 R1 설계 독립 리뷰 COMPLETED/ACCEPT_WITH_CHANGE/CLOSED 상태 보존, 재요청 없음.
