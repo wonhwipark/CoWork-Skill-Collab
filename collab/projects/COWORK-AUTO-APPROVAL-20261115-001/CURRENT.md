@@ -1,5 +1,14 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## v0.2.25 독립 R2 완료 (LARGE $3, 수동 승인): BLOCKING 0·MAJOR 1(범위 공백) (2026-11-17 KST)
+
+- 요청: `REQ-COWORK-BUDGET-V025-LARGE-R2-20261117` rev1, `POLICY-STATIC-V1-LARGE`, 패키지 `26d63c8a0329…` 283930 B. 수동 승인 도구 `approve_request.py`(16/16 점검 PASS, `review_request_gate.py`는 운영 트리에 없음)로 서명·READY 마지막 게시, 감시기(v0.2.23) 1회 실행·`COMPLETED`.
+- 결과: [`REVIEW_RESULT_1.md`](../../reviews/REQ-COWORK-BUDGET-V025-LARGE-R2-20261117/REVIEW_RESULT_1.md) (SHA-256 `8d682974537e06589a2fb11f41a4c48808a3c6a905bec4cfe2ab79f5477d0181`), [`RECEIPT_1.md`](../../receipts/REQ-COWORK-BUDGET-V025-LARGE-R2-20261117/RECEIPT_1.md) `ok=true`, [`DISPATCH_1.md`](../../dispatch/REQ-COWORK-BUDGET-V025-LARGE-R2-20261117/DISPATCH_1.md). 비용 USD 0.8061916, num_turns 24, 모델 호출 1회.
+- **BLOCKING 0.** **MAJOR 1(M1):** `collab/ops/review_request_gate.py`가 리뷰 패키지·file index에 없어 독립 검토 불가 — 코드 결함이 아니라 범위 공백. GPT가 포함 여부 판단 필요.
+- **MINOR/관찰 6건**(대부분 확인 사항): 예산 파싱·NaN/Infinity 처리·일월 상한 제거 일관성·위임의 LARGE/DESIGN 자동서명 차단·신뢰 체인·미등록 정책 fail-closed 모두 리뷰어가 직접 읽고 확인.
+- **운영 변경(사용자 지시):** 전역 일일 지출·횟수 상한(`daily_budget_usd`/`max_dispatches_per_day`)을 운영 설정에서 제거(백업 보존). 보호 위임 자체 한도(요청당 $1·일 2회 $3·월 $10)는 불변.
+- 다음 한 동작: GPT 판정, 특히 M1(review_request_gate.py 검토 범위) 처리 방침.
+
 ## 2026-11-17 — 원샷 리뷰 재개용 기존 LARGE $3 신규 REQUEST 고정
 
 - **신규 GPT 작성 REQUEST:** [REQ-COWORK-BUDGET-V025-LARGE-R2-20261117](../../requests/REQ-COWORK-BUDGET-V025-LARGE-R2-20261117/REQUEST.md) revision 1, `run_policy_ref=POLICY-STATIC-V1-LARGE`, `skill_id=cowork-review-watcher`, USD 3.00 최대, 동일 v0.2.25 ZIP SHA-256 `26d63c8a03290499b13b2ceb8ff0b70c06eb1b1bcc1a25fe3d8f65fcc213d228`, 283930 bytes. 이전 DESIGN 요청은 동작 없음/변조 없음/재큐잉 없음.
