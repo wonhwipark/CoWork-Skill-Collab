@@ -20,7 +20,7 @@
       "status": "검증 진행 중",
       "title": "COWORK-AUTO-APPROVAL-20261115-001 — CURRENT",
       "tone": "warning",
-      "topic": "2026-11-17 KST — GPT 독립 R2 최종 판정: ACCEPT_WITH_CHANGE (1사이클 종료)"
+      "topic": "G0 호스트 검증 완료 — v0.2.25 LARGE R2 후속 3항목 확인 (2026-11-18 KST)"
     },
     {
       "id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
@@ -535,9 +535,9 @@
     {
       "evidence": "프로젝트 TRACKER.json 신고 값 · 운영 근거 별도 확인 필요",
       "independent_review": "PASS",
-      "next_action": "GPT ACCEPT_WITH_CHANGE: v0.2.25 정적 리뷰 1회 완료, M1 게이트 독립 검토 NOT_RUN. Windows 실설정 사전검증/운영 변경 승인·백업을 비용 0 읽기 전용 확인. 배포 미승인.",
+      "next_action": "2026-11-18: GPT ACCEPT_WITH_CHANGE 후속 G0 호스트 검증 완료. review_request_gate.py는 운영 트리(v0.2.23)·리뷰 ZIP 모두에 없어 select/check NOT_RUN 확정(정확). 전역 상한 제거(daily_budget_usd/max_d",
       "owner": "Windows 운영 호스트 (자동 승인 LIVE) / GPT 판정",
-      "phase": "DISPOSITION",
+      "phase": "COMPLETE",
       "record_source": "REGISTERED_METADATA_UNVERIFIED",
       "self_test": "PASS",
       "skill": "cowork-review-watcher",
