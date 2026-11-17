@@ -6,10 +6,10 @@
       "skill": "l1-knowledge-updater",
       "title": "l1-knowledge-updater",
       "phase": "REVIEW",
-      "owner": "GPT(로컬-first 설계·Kernel 격리시험 PASS) / 업무 GPT(Linux G0 예정) / Windows Claude(독립 설계 리뷰 미실행)",
+      "owner": "GPT(전환 설계·합성시험·리뷰 Windows 원샷/업무 지시 초안 PRIVATE 게시) / Windows Claude(사전 보호검증·독립 설계 리뷰 대기) / 업무 GPT(Linux READ_ONLY G0 A~P)",
       "self_test": "PASS",
       "independent_review": "PENDING",
-      "next_action": "LOCAL-FIRST: Linux 설치본·work_docs 역할·Git remote 의존·백업/기존 웹·ACL·Updater/group writer G0 A~P 16숫자 READ_ONLY 결과 회수. 개인 SHADOW viewer(현 Git mode 유지)·동료 HTTPS 승인·authority cutover/그룹 writer E3는 각각 G2~G6 검증과 별도 승인 전 NOT_RUN. PRIVATE 설계/결과·PUBLIC G0 handoff/README 게시 verified, 독립 리뷰 handoff만 게시(REQUEST/READY/유료 실행 0)."
+      "next_action": "Windows Claude Code에서 PRIVATE main GPT_L1_WORKSPACE_LOCAL_VIEWER_CLAUDE_ONE_CYCLE_REVIEW_REQUEST_r0001_20261118_KST.md의 LIVE 위임/예산/select-check preflight 확인→유효하면 신규 정식 요청/Claude 독립 리뷰 1회→결과/영수증 게시. GPT가 판정한 뒤 업무 GPT용 지시 MD 최종화 및 L1Work/main/handoffs PUBLIC 게시. Linux G0는 기존 읽기 전용 인계로 가능; 원본·웹/그룹 운영 변경은 NOT_RUN."
     }
   ]
 }
