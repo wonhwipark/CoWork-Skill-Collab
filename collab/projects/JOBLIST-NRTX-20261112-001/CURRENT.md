@@ -1,5 +1,16 @@
 # JOBLIST-NRTX-20261112-001 — CURRENT
 
+## 2026-11-18 KST — Job-list handoff 리뷰 원샷 준비·LIVE v0.2.25 최신 상태 반영
+
+- **최신 정본 조회:** Windows 결과에 따르면 watcher **v0.2.25 LIVE 설치·활성화 보고**. 일반 정책 `POLICY-STATIC-V1 = USD 1.50`는 등록, 그러나 `auto_delegation.json` 보호 위임의 요청당 한도는 **USD 1.00 유지**. 따라서 v0.2.25 설치/정책 등록만으로 이번 USD 1.50 리뷰 자동 서명이 허용되지 않음. 실제 Windows 프로세스·유효 수동 권한은 현장 검증 필요.
+- **비실행 산출물 게시 PASS:** [정식 REQUEST 비실행 초안](JOBLIST_V0438_HANDOFF_REVIEW_REQUEST_DRAFT_r0001_20261118_KST.md)와 [Windows Claude Code 원샷 계속 실행서](CLAUDE_JOBLIST_V0438_HANDOFF_REVIEW_ONESHOT_r0002_20261118_KST.md)를 기존 Work에 게시하고 원격 본문 readback PASS. 고정 PUBLIC 입력 commit `fb2e0d3e4cad67c3b3759b1d82d41731036aef2b`/SHA-256 `2cbf73b2caa3c35f15f270ec4fcbd061b14cd88118616f7380d4e2514facec54` 유지. 기존 r0001 리뷰 질문·인계 재사용.
+- **실제 게이트 상태:** `HOST_POLICY_PREFLIGHT=NOT_RUN`, `REVIEW_INPUT_ZIP=NOT_BUILT`, `FORMAL_REQUEST=NOT_POSTED`, `SOURCE_PIN=NOT_POSTED`, `APPROVAL_SIG/READY=NOT_POSTED`, `INDEPENDENT_REVIEW=NOT_RUN`, `MODEL_CALLS=0`. 신규 정식 REQUEST 전 실제 Windows LIVE config 기반 select/check 필요.
+- **승인 범위·보존:** 사용자 독립 리뷰 진행 지시 확인, 하지만 자동 위임 한도를 임의 상향하거나 승인 권한을 추정하지 않음. 유효 수동 USD 1.50 범위가 있으면 반복 승인 없이 실행, 없으면 `BLOCKED_APPROVAL` 및 모델 0. 기존 소비 Job 재큐잉·운영 MCP·Watcher 설정/DB/키/LIVE 변경 없음. 이 작업에서는 문서만 게시.
+- **NEXT_ONE_ACTION:** Windows Claude Code에서 [r0002 원샷](CLAUDE_JOBLIST_V0438_HANDOFF_REVIEW_ONESHOT_r0002_20261118_KST.md)을 읽고 **현재 LIVE 정책 prepublication select → 비민감 리뷰 입력 패키징·check → 실제 보호된 승인 판단**을 순서대로 수행. 호환/유효 권한이 통과되면 고정 REQUEST·SOURCE_PIN·READY LAST·독립 리뷰 1회·영수증까지, 차단되면 같은 Work에 정확한 근거만 게시.
+
+---
+
+
 ## 2026-11-18 KST — L1Work 공개 handoff 독립 리뷰 요청 인계 / Windows 사전 게이트 대기
 
 - **사용자 요청:** “핸드오프문서 협업 리뷰요청해줘”. 대상은 L1Work PUBLIC `handoffs/JOBLIST_V0438_MCP_RECOVERY_STATUS_HANDOFF_r0001_20261117_KST.md` **한 문서**(commit `fb2e0d3e4cad67c3b3759b1d82d41731036aef2b`, Git blob `211d3b082f859dd80c5e8177e85c96e2c5c202df`, SHA-256 `2cbf73b2caa3c35f15f270ec4fcbd061b14cd88118616f7380d4e2514facec54`).
