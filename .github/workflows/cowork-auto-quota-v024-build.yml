@@ -1,0 +1,82 @@
+name: CoWork auto approval cost-only v0.2.24 candidate QA
+on:
+  push:
+    branches: [dev/auto-quota-cost-only-20261117]
+    paths:
+      - '.github/workflows/cowork-auto-quota-v024-build.yml'
+      - 'collab/projects/COWORK-AUTO-APPROVAL-20261115-001/dev/*.py'
+permissions:
+  contents: write
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Build SHA-pinned development ZIP from immutable v0.2.23
+        run: |
+          mkdir -p .tmp-cost-only
+          python collab/projects/COWORK-AUTO-APPROVAL-20261115-001/dev/build_v024_cost_only.py --repo . --out .tmp-cost-only
+      - name: Install test-only dependencies in runner
+        run: |
+          python -m pip install -q pytest cryptography
+      - name: Run pinned candidate behavioral regression (model calls zero)
+        run: |
+          mkdir -p .tmp-cost-only/unpacked
+          python - <<'PY'
+          import pathlib,zipfile,stat
+          zpath=pathlib.Path(".tmp-cost-only/skill-collab-watcher_v0_2_24_1117.zip")
+          with zipfile.ZipFile(zpath) as z:
+              assert z.testzip() is None
+              names=z.namelist()
+              assert len(names)==len(set(names))
+              for i in z.infolist():
+                  assert not i.filename.startswith("/") and ".." not in pathlib.PurePosixPath(i.filename).parts
+                  assert stat.S_IFMT(i.external_attr>>16)!=stat.S_IFLNK
+              z.extractall(".tmp-cost-only/unpacked")
+          PY
+          cd .tmp-cost-only/unpacked
+          python -m pytest -q tests su_l1
+      - name: Verify hard monetary gates and cost-only behavior
+        run: |
+          python - <<'PY'
+          import pathlib
+          p=pathlib.Path(".tmp-cost-only/unpacked/skill_collab_watcher")
+          policy=(p/"auto_policy.py").read_text()
+          store=(p/"state_store.py").read_text()
+          assert "DAY_CALL_LIMIT" not in policy and "DAY_CALL_LIMIT" not in store
+          assert "DAY_COST_LIMIT" in policy and "DAY_COST_LIMIT" in store
+          assert "MONTH_COST_LIMIT" in policy and "MONTH_COST_LIMIT" in store
+          assert "c.max_calls != 1 or c.attempt != 1" in policy
+          assert "BEGIN IMMEDIATE" in store and "PRIMARY KEY (request_id, revision)" in store
+          print("COST_ONLY_POLICY_AND_ONE_SHOT_PASS")
+          PY
+      - name: Publish tested development candidate to PRIVATE branch only
+        run: |
+          python - <<'PY'
+          import hashlib,json,pathlib,shutil
+          path=pathlib.Path("collab/projects/COWORK-AUTO-APPROVAL-20261115-001/candidates")
+          path.mkdir(parents=True,exist_ok=True)
+          src=pathlib.Path(".tmp-cost-only/skill-collab-watcher_v0_2_24_1117.zip")
+          dst=path/src.name
+          if dst.exists() and dst.read_bytes()!=src.read_bytes():
+              raise SystemExit("IMMUTABLE_CANDIDATE_PATH_COLLISION")
+          shutil.copy2(src,dst)
+          result=dict(name=dst.name,bytes=dst.stat().st_size,sha256=hashlib.sha256(dst.read_bytes()).hexdigest(),
+                      source_sha256="f941be8a6b53d00baa10a9b097f234b159470e2aa1242ecc33bcf0bdee080ea7",
+                      status="DEVELOPMENT_NOT_FOR_DEPLOYMENT",tests="FULL_CI_PASS")
+          (path/"COST_ONLY_V024_BUILD_RESULT.json").write_text(json.dumps(result,indent=2)+"\n")
+          print(json.dumps(result,indent=2))
+          PY
+          git config user.name 'CoWork developer CI'
+          git config user.email 'cowork-dev-ci@users.noreply.github.com'
+          git add collab/projects/COWORK-AUTO-APPROVAL-20261115-001/candidates
+          if ! git diff --cached --quiet; then
+            git commit -m 'dev(auto-approval): package cost-only v0.2.24 verified candidate'
+            git push origin HEAD:dev/auto-quota-cost-only-20261117
+          fi
