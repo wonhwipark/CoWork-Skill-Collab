@@ -37,3 +37,8 @@
 - 원본 재분석·모델/Job 재호출 없음. 기존 Guard `AUTO_SIGNING_UNCERTAIN` 이력과 LIVE 운영 계약 무변경.
 
 **NEXT_ONE_ACTION:** 업무 GPT/호스트에서 기존 Updater·실 writer의 G0를 읽기 전용으로 대조하고, 별도의 비민감 합성 Work에서 승인된 writer로 HTML·설명 MD 게시 경로/Preview-HOLD·부분 실패를 확인. 불일치 상세 링크·호스트 E3가 해소되고 코드 독립 리뷰/배포 승인이 충족되기 전 PUBLIC 승격 금지.
+
+## 5. 후속 CI fail-closed 확인
+- 새 검사 코드 [test_msc_dual_entry_kernel_writer_probe.py](dev/test_msc_dual_entry_kernel_writer_probe.py)는 root HTML link·SHA mapping·멱등·수동편집 보존 조건이 FAIL이면 **CI exit 1**로 차단하도록 수정. 일시 진단용 원본 source dump 제거.
+- [최신 PRIVATE main CI 44130067446](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/44130067446) **SUCCESS**. 변경된 fail-closed gate에서도 전체 빌드 재현성/Kernel 합성 E2E/root link 검증 PASS. 세 ZIP의 내용·SHA-256은 위 표와 동일(동일 고정 입력). 기존 44129301281도 보존.
+- 이는 설치·업무 G0/E3·독립 코드 리뷰의 대체 근거가 아니다.
