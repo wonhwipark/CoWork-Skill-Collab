@@ -37,4 +37,27 @@ jobs:
                   a=max(0,i-5);e=min(len(lines),i+24)
                   print('SOURCE_LINES',name,a+1,e)
                   print('\n'.join(f'{j+1}: {lines[j]}' for j in range(a,e)))
+          print("PACKAGE_VERSION_AND_POLICY_FILES")
+          for name in names:
+              if name in ('VERSION','SKILL.md','MANIFEST_SHA256.json','.skill-release.json','VERSION.md','.skill-main.json') or name.endswith('/VERSION'):
+                  try:
+                      val=z.read(name).decode('utf8')
+                      print('META',name,repr(val[:430]))
+                  except Exception as e: print("META_ERR",name,str(e))
+          print("REFERENCES_IN_TESTS")
+          for name in names:
+              if not name.endswith('.py') or not name.startswith('tests/'):
+                  continue
+              lines=z.read(name).decode('utf8').splitlines()
+              for n,line in enumerate(lines,1):
+                  if 'DAY_CALL_LIMIT' in line or 'max_day_calls' in line or 'day_calls_used_or_reserved' in line:
+                      print('TEST_REF',name,n,line[:190])
+          print("REFERENCES_IN_SOURCES")
+          for name in names:
+              if not name.startswith('skill_collab_watcher/') or not name.endswith('.py'):
+                  continue
+              lines=z.read(name).decode('utf8').splitlines()
+              for n,line in enumerate(lines,1):
+                  if 'DAY_CALL_LIMIT' in line or 'max_day_calls' in line or 'day_calls_used_or_reserved' in line:
+                      print('SOURCE_REF',name,n,line[:190])
           PY
