@@ -1,6 +1,6 @@
 # CoWork 리뷰 등급 / 토큰·비용 예산 계약 V1
 
-> **2026-11-17 최신 정책:** 일/월 리뷰 호출 횟수 상한은 폐기. 횟수는 관측 지표만 허용하며 요청당 1회 중복 방지, 하루 USD 3·월 USD 10·요청 USD 1 비용 한도는 그대로 적용. [관련 결정](../../projects/COWORK-AUTO-APPROVAL-20261115-001/GPT_COST_ONLY_AUTO_APPROVAL_POLICY_r0001_20261117_KST.md).
+> **2026-11-17 최신 정책(r0002):** 일반 스킬 독립 리뷰 `POLICY-STATIC-V1` **USD 1.50/건**, 디자인 독립 리뷰 `POLICY-STATIC-V1-DESIGN` **USD 3.00/건**. **일·월 호출 횟수 및 누적 비용 상한 모두 폐기**. 보호 위임에서 승인한 요청별 금액·프로젝트/스킬/만료·중복 방지·서명/READY는 유지. 두 비용은 로컬 `review_policy.known_run_policy_refs`에서 향후 조정 가능. [결정·개발 후보·실제 시험](../../projects/COWORK-AUTO-APPROVAL-20261115-001/GPT_AUTO_REVIEW_BUDGET_POLICY_r0002_20261117_KST.md). LIVE 적용은 미실행. 아래 2026-11-14 R0~R3 기존 표와 사용자별 과거 $1/$3/$6 승인 사실은 **역사적 정책/특정 리뷰의 계약**이며 신규 자동 리뷰 기본 정책으로 사용하지 않음.
 2026-11-14 KST · USER_REQUESTED_DESIGN · CONFIG_NOT_DEPLOYED
 Applies to: CoWork watcher 독립 Claude 리뷰 및 L1Work PUBLIC ZIP·handoff MD 링크 리뷰
 Canonical repo: PRIVATE `wonhwipark/CoWork-Skill-Collab`, `main`
