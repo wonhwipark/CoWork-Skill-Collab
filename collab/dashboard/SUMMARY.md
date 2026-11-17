@@ -6,8 +6,8 @@
 
 - 문서가 있는 프로젝트: **10개**
 - GitHub REQUEST 파일 관측: **14개** (검증 안 됨)
-- GitHub REVIEW 파일 관측: **8개** (검증 안 됨)
-- GitHub RECEIPT 파일 관측: **8개** (검증 안 됨)
+- GitHub REVIEW 파일 관측: **9개** (검증 안 됨)
+- GitHub RECEIPT 파일 관측: **9개** (검증 안 됨)
 
 ## 협업 흐름과 상태 · 역할 기준
 
@@ -39,7 +39,7 @@ flowchart TB
 | GitHub 전환 | **기록 미관측** | 호스트 보고·GPT 판정과 신규 요청 실전 검증은 별개 |
 | Windows 실행·SHADOW | **기록 미관측** | 실제 호스트 실행 증거 필요 |
 | Claude Code 독립 리뷰 | **기록 미관측** | 자체 시험과 구분 |
-| GitHub 요청·결과·영수증 | **요청 14 · 결과 8 · 영수증 8** | PRIVATE 파일 관측 수일 뿐 완료 건수가 아님 |
+| GitHub 요청·결과·영수증 | **요청 14 · 결과 9 · 영수증 9** | PRIVATE 파일 관측 수일 뿐 완료 건수가 아님 |
 | 공개 Work 대시보드 | **기록 미관측** | L1Work에 승인된 비식별 상태만 자동 요약 · PRIVATE 원문은 비공개 |
 
 [전환·Windows 원문](../projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) · [대시보드 원문](../projects/COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md)
@@ -88,7 +88,14 @@ flowchart TB
 
 | 요청 | Work | 단계 | GPT 판정 |
 |---|---|---|---|
-| [REQ-COWORK-ACE-PEC-HOP-ACON-DESIGN-R1-20261118](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-COWORK-ACE-PEC-HOP-ACON-DESIGN-R1-20261118/REQUEST.md) | COWORK-SKILL-DISCOVERY-20261112-001 | REVIEW_NOT_OBSERVED | NOT_VERIFIED |
+| [REQ-COWORK-ACE-PEC-HOP-ACON-DESIGN-R1-20261118](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-COWORK-ACE-PEC-HOP-ACON-DESIGN-R1-20261118/REQUEST.md) | COWORK-SKILL-DISCOVERY-20261112-001 | GPT_NOT_OBSERVED | NOT_VERIFIED |
+| ↳ R1 | (ACE 신규 저장 필요성):** 문서가 제시한 근거(기존 Work 재개·append-only 결정·Evidence가 이미 존재)에 기반하면 신규 영속 저장은 불필요해 보인다. 다 | NOT_ADJUDICATED | - |
+| ↳ R2 | (PEC 중복 생성 방지 경계):** §4.2에서 producer별 책임이 명확히 분리되어 있어 중복 생성 위험은 낮다. | NOT_ADJUDICATED | - |
+| ↳ R3 | (식별자/조건 보존 가능성):** 표(§4.1)가 필요한 필드를 모두 열거하나, 검증 수단이 서술적이라 개선안 2 필요. | NOT_ADJUDICATED | - |
+| ↳ R4 | (Updater writer 충돌):** §6, 03문서 §2·§6에서 "Updater만 지식 WRITE 요청자, Workflow read-only"로 명확히 분리하고 하드 권한  | NOT_ADJUDICATED | - |
+| ↳ R5 | (ACON 모델 편차 구분):** 원칙은 있으나 구체적 재현 횟수 기준 없음(개선안 3). 정확도 우선 게이트(ACON-01/02)는 유효하게 설계됨. | NOT_ADJUDICATED | - |
+| ↳ R6 | (reviewer watcher 정책 보존):** 01문서 §2 마지막 행, 02문서 §8-6에서 기존 승인/서명/READY/예산/중복 방지를 변경 없이 유지한다고 명시 — 문서상 | NOT_ADJUDICATED | - |
+| ↳ R7 | (과도한 신규 시스템 반례):** 가장 위험한 후보는 Generator/Reflector/Curator 명명(개선안 4)이며, 그 외 신규 enum(의미 분류)은 "문서 표현일 뿐 | NOT_ADJUDICATED | - |
 | [REQ-COWORK-AUTO-APPROVAL-V023-R2-20261115](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-COWORK-AUTO-APPROVAL-V023-R2-20261115/REQUEST.md) | COWORK-AUTO-APPROVAL-20261115-001 | GPT_NOT_OBSERVED | NOT_VERIFIED |
 | [REQ-COWORK-BUDGET-V025-DESIGN-R1-20261117](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-COWORK-BUDGET-V025-DESIGN-R1-20261117/REQUEST.md) | COWORK-AUTO-APPROVAL-20261115-001 | READY_NOT_OBSERVED | NOT_VERIFIED |
 | [REQ-COWORK-BUDGET-V025-LARGE-R2-20261117](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-COWORK-BUDGET-V025-LARGE-R2-20261117/REQUEST.md) | COWORK-AUTO-APPROVAL-20261115-001 | GPT_RECORDED_UNAUTHENTICATED | ACCEPT_WITH_CHANGE |
