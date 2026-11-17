@@ -158,7 +158,7 @@
       "findings": [],
       "flags": {
         "gpt": false,
-        "ready": false,
+        "ready": true,
         "receipt": false,
         "request": true,
         "review": false
@@ -166,13 +166,13 @@
       "id": "REQ-COWORK-BUDGET-V025-LARGE-R2-20261117",
       "paths": {
         "gpt": "",
-        "ready": "",
+        "ready": "collab/requests/REQ-COWORK-BUDGET-V025-LARGE-R2-20261117/READY.md",
         "receipt": "",
         "request": "collab/requests/REQ-COWORK-BUDGET-V025-LARGE-R2-20261117/REQUEST.md",
         "review": ""
       },
       "revision": "1",
-      "stage": "READY_NOT_OBSERVED",
+      "stage": "REVIEW_NOT_OBSERVED",
       "tone": "warning",
       "trust": "DOCUMENT_FIELDS_MATCH_ONLY_SIGNATURE_NOT_VERIFIED",
       "work_id": "COWORK-AUTO-APPROVAL-20261115-001"
