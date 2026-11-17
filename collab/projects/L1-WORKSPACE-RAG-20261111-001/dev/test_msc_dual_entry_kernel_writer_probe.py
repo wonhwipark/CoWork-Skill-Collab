@@ -89,9 +89,32 @@ def run():
                 resolved=(target.parent/href).resolve()
                 links.append({"published_md":str(target.relative_to(dest)),"href":href,
                               "status":"VALID" if resolved.is_file() and resolved in htmls else "BROKEN"})
-        status=("PASS" if correct and actual_mapping and links and all(x["status"]=="VALID" for x in links) else "BLOCKED")
+        root_md=dest/"works"/wid/"MSC_VIEW.md"
+        root_links=[]
+        if root_md.is_file():
+            for label,href in __import__("re").findall(r"\[([^\]]+)\]\(([^)]+)\)",root_md.read_text(encoding="utf-8")):
+                if not href.endswith(".html"): continue
+                from urllib.parse import unquote
+                normalized=unquote(href)
+                target=(root_md.parent/normalized).resolve()
+                root_links.append({"label":label,"href":href,
+                                   "status":"VALID" if target in htmls and target.is_file() else "BROKEN"})
+        root_link_ok=bool(root_links) and all(x["status"]=="VALID" for x in root_links)
+        export_idempotent=False
+        manual_preserved=False
+        if root_md.is_file():
+            prior=root_md.read_bytes()
+            k.work_docs_export(str(dest),wid)
+            export_idempotent=root_md.read_bytes()==prior
+            # Change only the generated Work navigation to emulate a human edit.
+            edited=prior.decode("utf-8")+"\\nMANUAL_EDIT_DO_NOT_OVERWRITE\\n"
+            root_md.write_text(edited,encoding="utf-8")
+            k.work_docs_export(str(dest),wid)
+            manual_preserved=root_md.read_text(encoding="utf-8")==edited
+        status=("PASS" if correct and actual_mapping and root_link_ok
+                and export_idempotent and manual_preserved else "BLOCKED")
         result={"status":status,"scope":"SYNTHETIC_KERNEL_WRITER_ONLY",
-                "md_mapping":bool(md_maps),"published_md_mapping_paths":[str(x.get("published_path","")) for x in md_maps],"published_relative_links":links,
+                "root_html_links":root_links,"root_link_ok":root_link_ok,"export_idempotent":export_idempotent,"manual_edit_preserved":manual_preserved,"md_mapping":bool(md_maps),"published_md_mapping_paths":[str(x.get("published_path","")) for x in md_maps],"published_relative_links":links,
                 "record_evidence":e,"work_docs_export":export_status,
                 "html_published":correct,"html_mapping":actual_mapping,
                 "files":files[:35],"updater_g0":"NOT_VERIFIED",
