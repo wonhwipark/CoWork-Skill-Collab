@@ -37,3 +37,9 @@
 ## 4. NEXT_ONE_ACTION
 
 업무 GPT/허용 Linux Agent가 공개 `L1_WORKSPACE_LOCAL_WEB_VIEWER_LINUX_G0_READONLY_HANDOFF_r0001_20261118_KST.md`를 읽고 **A~P 16개 숫자**로 현재 호스트 근거를 회신하도록 한다(실제 실행/유료 Job 없음). 그 결과로 기존 웹 서비스/백업/권한/실 Writer가 확인되면 같은 Work에서 개인 SHADOW viewer의 구체 서비스/코드·수락 시험을 확정한다. G0 미확인/실패 시 현행 Git/원본/권한을 그대로 유지하며 `LOCAL_AUTHORITY_CUTOVER=BLOCKED`.
+## 5. 최종 정본 동기화(추가 기록)
+
+- 기존 Work `CURRENT.md` 최상단에 위 설계·실제 시험·G0·차단/다음 행동 반영: commit `5a5d0b0f8b264ba85cb2f59c03840c8c856dc0ab`, 원격 blob `a3e254b5a0c7c2c238fc800692940c9e2b2d63ca`.
+- 기존 파생 `TRACKER.json`의 소유/독립 리뷰 PENDING/다음 행동 정합화: commit `4d9bb31bbaa7c24feeae124c5467bc7a8724e657`, 원격 blob `cfc1acce0f0ad233dd1d6839429a91ed04dd8f18`.
+- CoWork 구조·스킬 책임 변경 전이므로 `CONTEXT_BRIEF.md`·`SKILL_CAPABILITY_CATALOG.md`를 불필요하게 재작성하지 않음. Work/기존 완료 리뷰·영수증/원격 내용 보존.
+
