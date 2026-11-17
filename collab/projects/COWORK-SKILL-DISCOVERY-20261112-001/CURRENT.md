@@ -1,5 +1,15 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 2026-11-18 KST — ACE·PEC-HOP·ACON R1 비차단 개선 4건 설계 r0002 반영 완료
+
+- **사용자 실행 요청:** “그래반영해줘”. 이미 종료된 독립 리뷰 R1의 GPT 판정 N1~N4만 기존 Work 통합 설계 수용 기준에 보완. r0001 리뷰 고정 입력·ZIP·SOURCE_PIN·서명·READY·리뷰/비용·결과/영수증은 변경·재실행 0.
+- **개정 설계 정본:** [ACE·PEC-HOP·ACON 통합 설계 r0002](ACE_PEC_HOP_ACON_INTEGRATED_SKILL_DESIGN_r0002_20261118_KST.md) (commit `2e6ddaaa8df85790fe1fdbf3f4d2a6c631a5bcf7`; **24,705 UTF-8 bytes**, SHA-256 `8959c5785da37d0a7f48687fbbe17576c4f0f517be93ffcd9befc029a1c6def1`; Git blob `3e071dac12083998bbc9b8949f692655c13e7ef0`). 원격 readback 정확 일치. [원래 r0001](ACE_PEC_HOP_ACON_INTEGRATED_SKILL_DESIGN_r0001_20261118_KST.md) blob `11b3680be92fb12734f2fa998dc57674716a59b8` 불변 확인.
+- **최소 보완:** N1 ACE-02 — 동일 Work 유효 판정의 승인 범위·원문·append/revision 순서, 불명확하면 HOLD; N2 PEC-01/PEC-03 — pinned raw bytes/구간 digest 비교, 1-byte 변조·offset 미확인 반례; N3 ACON-01 — 같은 모델·설정/원본 baseline/compressed 각 3회 이상은 **허용된 실험 시에만**, 호출 승인 없으면 NOT_RUN; N4 SAFE-01 — ACE 역할은 기존 수동 프로세스 단계, 신규 subagent/추가 모델 호출/상시 자동화 0. SAFE-03 기존 R1 재실행 0 명시.
+- **정적 시험:** 기존 수용 시험 **12개 ID 모두 1회씩 유지 PASS**, 핵심 N1~N4 문구·조정 범위/REUSE 원칙·새 기능 금지 명시 PASS, 원격 파일 SHA256/PATH/원문 r0001 보존 PASS. **합성 입력을 실제 실행한 기능 테스트, ACON 반복 모델 호출, Windows/업무 호스트 시험=NOT_RUN**. `REVIEW_CYCLE=CLOSED`, `DEPLOYMENT_READY=NO`, PUBLIC ZIP/업무 Knowledge write 0.
+- **다음 한 행동:** 기존 승인된 비민감 합성 테스트 환경에서 읽기 전용 ACE-02/PEC-01·03/SAFE-01을 실제 재현·판정해 기존 Work에 결과 보고. ACON 모델 3+3 실험은 별도의 유효 호출 승인·예산/호스트 조건 확인 전 NOT_RUN, 업무 GPT Updater 설치 G0도 별도. 이번 설계 반영에 신규 독립 리뷰는 요구하지 않음.
+
+---
+
 ## 2026-11-18 KST — ACE·PEC-HOP·ACON R1 승인·READY·리뷰 최종 정산 및 GPT 판정
 
 - **사용자 알림 조회:** 최초 `[승인 대기]`는 이후 처리 전의 이벤트. 실제 PRIVATE main에서 `REQUEST.md`, `SOURCE_PIN.json`, `APPROVAL_SIG.json`, **`READY.md`**, `DISPATCH_1.md`, `REVIEW_RESULT_1.md`, `RECEIPT_1.md` 전체 원격 직접 조회. `RECEIPT.ok=true`, wrapper `COMPLETED`, watcher v0.2.25.
