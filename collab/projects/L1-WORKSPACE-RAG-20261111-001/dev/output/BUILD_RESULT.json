@@ -3,7 +3,7 @@
     "baseline": "collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates/l1-fix-workflow_v1_6_69_1115.zip",
     "baseline_sha256": "d4ba119298cd5763fd18ace2d54223fff010a8d2a1703ebab80eb4fa1b35846b",
     "output": "/home/runner/work/CoWork-Skill-Collab/CoWork-Skill-Collab/collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/output/l1-fix-workflow_v1_6_70_1117.zip",
-    "output_sha256": "89316e969f7227b2bb9f0c6d8c032d0fe6776e7ab509d60269d7dce1280af208",
+    "output_sha256": "c9187ee6f8d0cdba8fe3fdae0f072f6c16d83323083b798d30937d7692999017",
     "size_bytes": 758119,
     "verification": "ZIP_CRC_AND_PYTHON_COMPILE_AND_RELEASE_GATE_PASS",
     "release": "development_not_for_deployment"
@@ -12,7 +12,7 @@
     "baseline": "collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates/l1-github_v0_3_57_1114.zip",
     "baseline_sha256": "f1b8fb43d3af427f2c5d52864051c65894f3cb45969ab35ca502f344735611ce",
     "output": "/home/runner/work/CoWork-Skill-Collab/CoWork-Skill-Collab/collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/output/l1-github_v0_3_59_1117.zip",
-    "output_sha256": "5797d5a1d108412975fc0e09d1bb6806c60c2b9377a077f8c88cbb7168060e09",
+    "output_sha256": "6351b96bcb984f6388fd195cc579a60fa809fac6e14caab0c0c860e2d30b7cf6",
     "size_bytes": 567266,
     "verification": "ZIP_CRC_AND_PYTHON_COMPILE_AND_RELEASE_GATE_PASS",
     "release": "development_not_for_deployment"
@@ -21,7 +21,7 @@
     "baseline": "artifacts/work-ledger-kernel_v0_7_42_1116.zip",
     "baseline_sha256": "ece2bce143ef35a1c8cc3bc12ddf6a73e27e0f218fc69fec87844759d9dfc164",
     "output": "/home/runner/work/CoWork-Skill-Collab/CoWork-Skill-Collab/collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/output/work-ledger-kernel_v0_7_43_1117.zip",
-    "output_sha256": "f8eb75da7ca47b0a26fb1f8c8b2de1297d347dae425431bc78398b034bd37eb9",
+    "output_sha256": "0efb8a83b5bb219ffe1f53c04fe6a179b9359cb5ce0c96fe302b56ffc78146e3",
     "size_bytes": 319792,
     "verification": "ZIP_CRC_AND_PYTHON_COMPILE_AND_RELEASE_GATE_PASS",
     "release": "development_not_for_deployment"
