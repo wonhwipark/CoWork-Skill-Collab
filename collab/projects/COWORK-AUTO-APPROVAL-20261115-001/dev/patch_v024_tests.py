@@ -31,11 +31,11 @@ def patch_tests(root:Path):
     assert s.auto_claim("R", "4", "a" * 64, 100, cj, _kst_day(1), **kw) == "CLAIMED"''')
     p=root/"tests/test_auto_policy_gpt_proto.py"
     one(p,'''    def test_policy_limit_expansion(self):
-        self.assertEqual(self.verdict(d=replace(self.d, max_day_calls=3))[1], "UNSUPPORTED_DELEGATION_LIMIT"''',
+        self.assertEqual(self.verdict(d=replace(self.d, max_day_calls=3))[1], "UNSUPPORTED_DELEGATION_LIMIT")''',
         '''    def test_legacy_day_call_limit_is_ignored(self):
         self.assertTrue(self.verdict(d=replace(self.d, max_day_calls=3))[0])''')
     one(p,'''    def test_day_call_limit(self):
-        self.assertEqual(self.verdict(e=replace(self.e, day_calls_used_or_reserved=2))[1], "DAY_CALL_LIMIT"''',
+        self.assertEqual(self.verdict(e=replace(self.e, day_calls_used_or_reserved=2))[1], "DAY_CALL_LIMIT")''',
         '''    def test_call_count_telemetry_does_not_reject_request(self):
         self.assertTrue(self.verdict(e=replace(self.e, day_calls_used_or_reserved=200))[0])''')
     p=root/"tests/test_v022_findings.py"
