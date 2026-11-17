@@ -9,7 +9,7 @@
       "owner": "GPT",
       "self_test": "PASS",
       "independent_review": "NOT_RUN",
-      "next_action": "호스트 G0 확인 전 후보 패키지 검증 범위 유지"
+      "next_action": "Linux 업무 LLM에서 기존 RACH 산출물과 Worker 영수증 확인 → DONE/SUCCESS 단계 확정 (운영 재실행·변경 미승인)"
     }
   ]
 }
