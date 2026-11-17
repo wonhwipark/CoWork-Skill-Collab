@@ -1,5 +1,15 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-18 KST — MSC 두 진입 후속 코드 구현·개발 후보/회귀 PASS
+
+- **상태:** 기존 설계 R1 `COMPLETED / ACCEPT_WITH_CHANGE / REVIEW_CYCLE=CLOSED` 유지. 사용자의 후속 구현 요청으로 [구현·시험·후속 제한 상세 결과](GPT_MSC_DUAL_ENTRY_FOLLOWUP_IMPLEMENTATION_RESULT_r0001_20261118_KST.md) 작성.
+- **실제 코드:** pinned PUBLIC `doc-converter v0.2.26`에 `ISSUE --html-viewer` 선택 HTML 생성(기본 ISSUE/PROCEDURE_FEATURE 보존) 및 기존 2개 관리 action 정책을 반영한 개발 후보 `v0.2.27`. pinned PRIVATE Workflow 후보 `v1.6.70`의 기존 MSC handoff에 ISSUE/HTML opt-in 계약을 전달한 개발 후보 `v1.6.71`. 실제 수정 빌더 [dev/msc_dual_entry_candidate.py](dev/msc_dual_entry_candidate.py) PRIVATE main에 게시.
+- **실행 시험:** [PRIVATE main CI 44125496802](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/44125496802) **SUCCESS**. 신규 Converter 4사례, Workflow 3사례 및 양 action policy/gateway/릴리스 CRC/전체 SHA gate **PASS**. 개발 ZIP `doc-converter_v0_2_27_1118.zip` 169567 B/SHA-256 `4bc457794a5de80c19559d27c83f79485be579dd15da05b88b86bc8908232558`, `l1-fix-workflow_v1_6_71_1118.zip` 758424 B/SHA-256 `d47605f234fccda7e5941caddf3404eac668d2dfc3e5ba5e2faf6928aa5f6615`. PRIVATE Action artifact `msc-dual-entry-development-1118` (ID 14348015313, 7일 보관), `development_not_for_deployment`.
+- **구분/차단:** 실제 Updater 원문·writer G0, Kernel/개인/그룹 문서 link remap·마커 충돌, runner/업무 E3 **NOT_VERIFIED/NOT_RUN**. R1 권고(문서 안내 vs 상세 원본 명칭, 단일 writer·Preview/HOLD)는 후보 SKILL 설명과 책임 판정에 반영했으나 실 writer 개조/설치 PASS가 아님. **새 독립 코드 리뷰=NOT_RUN; PUBLIC 새 ZIP/업무 설치/지식 게시=NOT_RUN**. 기존 Guard AUTO_SIGNING_UNCERTAIN·운영 상태와 무관. 재큐잉·새 REQUEST/READY 없음.
+- **NEXT_ONE_ACTION:** 업무 환경의 실제 Updater/Kernel 기존 writer G0를 확인하고 승인된 합성/샘플 Work에서 opt-in HTML 게시 경로·수동 편집 충돌/부분 실패 E3를 검증한 후 배포 게이트 재판정.
+
+---
+
 ## 2026-11-18 KST — Knowledge Updater ACE·PEC-HOP·ACON 설계 적용 제안서 공개 전달
 
 - **범위:** 지식 업데이트의 기존 두 진입/개인 Workspace Work·Knowledge/그룹 writer 설계를 보존하고 ACE·PEC-HOP·ACON의 원리만 최소 적용하는 제안. 기존 L1 MSC R1과 Guard R1의 독립 리뷰/승인 상태는 변경하지 않음.
