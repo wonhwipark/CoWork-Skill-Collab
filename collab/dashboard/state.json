@@ -510,10 +510,10 @@
   "work_items": [
     {
       "evidence": "프로젝트 TRACKER.json 신고 값 · 운영 근거 별도 확인 필요",
-      "independent_review": "PASS",
-      "next_action": "v0.2.23 LIVE 호스트 보고 유지. SOURCE_PIN 숫자 repo_id 원인 확인·두 요청 문자열 타입 보정(원격 PASS). Guard AUTO_SIGNING_UNCERTAIN 로컬 상태 해제 미확인. Windows 읽기 전용 예약/서명/비용 이력 대조가 다음 단계; 승인 게이트 우",
+      "independent_review": "PENDING",
+      "next_action": "v0.2.25 디자인 R2: 새 POLICY-STATIC-V1-DESIGN 미등록, 서명/READY 차단. 기존 v0.2.23 LARGE $3 수동 승인 경로와 유효 위임 확인 후 1회 리뷰; 과거 v0.2.23 LIVE PASS 이력 별도 보존.",
       "owner": "Windows 운영 호스트 (자동 승인 LIVE) / GPT 판정",
-      "phase": "COMPLETE",
+      "phase": "BLOCKED",
       "record_source": "REGISTERED_METADATA_UNVERIFIED",
       "self_test": "PASS",
       "skill": "cowork-review-watcher",
