@@ -41,13 +41,13 @@ class KernelSvgFunctionalTest(unittest.TestCase):
         self.ledger = self.Kernel(self.base / "ledger")
 
     def add(self, kind, name, content, work_title):
-        work = self.ledger.work_create(work_title)
+        work = self.ledger.work_create(work_title, profile="BUG")
         wid = work["work_id"]
         source = self.base / ("in-" + wid) / name
         source.parent.mkdir(parents=True)
         source.write_text(content, encoding="utf-8")
         evidence = self.ledger.record_evidence(
-            wid, source, kind, "analysis", "doc-converter", "0.2.26",
+            wid, source, kind, "utility", "doc-converter", "0.2.26",
             "test-source-rev", "Synthetic test artifact", "AUTO_CANDIDATE",
         )
         self.assertIsInstance(evidence, dict)
@@ -55,7 +55,7 @@ class KernelSvgFunctionalTest(unittest.TestCase):
 
     def test_msc_svg_is_published_with_hash_and_idempotent(self):
         wid, source, e = self.add(
-            "msc", "scenario.svg",
+            "render_output", "msc_scenario.svg",
             '<svg xmlns="http://www.w3.org/2000/svg"><rect width="2" height="2"/></svg>',
             "MSC SVG export",
         )
@@ -78,7 +78,7 @@ class KernelSvgFunctionalTest(unittest.TestCase):
 
     def test_large_msc_svg_is_rejected(self):
         wid, source, e = self.add(
-            "msc", "oversize.svg",
+            "render_output", "msc_oversize.svg",
             '<svg xmlns="http://www.w3.org/2000/svg">' + " " * 256 + "</svg>",
             "Large MSC SVG",
         )
@@ -90,7 +90,7 @@ class KernelSvgFunctionalTest(unittest.TestCase):
         print("KERNEL_MSC_SVG_SIZE_FAIL_CLOSED_PASS", wid)
 
     def test_unrelated_svg_does_not_break_md_export(self):
-        work = self.ledger.work_create("Unrelated SVG plus MD")
+        work = self.ledger.work_create("Unrelated SVG plus MD", profile="BUG")
         wid = work["work_id"]
         source_dir = self.base / "unrelated"
         source_dir.mkdir()
@@ -100,7 +100,7 @@ class KernelSvgFunctionalTest(unittest.TestCase):
         md.write_text("# Existing evidence\n", encoding="utf-8")
         for path in (svg, md):
             self.ledger.record_evidence(
-                wid, path, "analysis", "analysis", "code-analyzer", "0.15.3",
+                wid, path, "impact", "analyze", "code-analyzer", "0.15.3",
                 "test-rev", "Existing evidence", "AUTO_CANDIDATE",
             )
         dest = self.base / "published-unrelated"
