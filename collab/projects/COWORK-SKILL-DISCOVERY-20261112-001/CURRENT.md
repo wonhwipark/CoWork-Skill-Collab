@@ -1,5 +1,16 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 2026-11-18 KST — ACE·PEC-HOP·ACON R1 승인·READY·리뷰 최종 정산 및 GPT 판정
+
+- **사용자 알림 조회:** 최초 `[승인 대기]`는 이후 처리 전의 이벤트. 실제 PRIVATE main에서 `REQUEST.md`, `SOURCE_PIN.json`, `APPROVAL_SIG.json`, **`READY.md`**, `DISPATCH_1.md`, `REVIEW_RESULT_1.md`, `RECEIPT_1.md` 전체 원격 직접 조회. `RECEIPT.ok=true`, wrapper `COMPLETED`, watcher v0.2.25.
+- **무결성 GPT 직접 시험:** pinned commit A와 현행 REQUEST/ZIP blob 동일, ZIP raw 18,500 B SHA `5f56a23e8c962da273cd24ca2c64c4a6239f85ef588411633aa9c20b823b0431`; APPROVAL_SIG payload의 REQUEST `65ce9a81…`/READY `c1b20829…`/ZIP 해시, SOURCE_PIN 문자열 repo_id, DISPATCH 시간 유효 구간 **모두 PASS**. GitHub bytes 결속 검증과 Windows 보호 signer 암호학적 직접 검증은 구분.
+- **Windows Claude 호스트 결과 재조회:** [원샷 보고](CLAUDE_ACE_PEC_HOP_ACON_DESIGN_REVIEW_RESULT_FOR_GPT_20261118.md): 실제 LIVE v0.2.25 `select/check` PASS, **수동 승인** `approve_request.py` 16/16 PASS, 자동 위임 건당 USD 1.00 변경 0. 모델 호출 1회·6턴, **USD 0.3825 HOST_REPORTED**. 원격 영수증에는 비용 정보 없어 직접 비용 검증은 NOT_VERIFIED.
+- **최종 판정 완료:** [GPT 상세 판정](GPT_ACE_PEC_HOP_ACON_R1_REVIEW_DISPOSITION_r0001_20261118_KST.md) `ACCEPT_WITH_CHANGE` / 차단 0·비차단 4. N1 결정 기록 우선순위, N2 코드 발췌 바이트 검증, N3 ACON 최소 반복 조건부, N4 개념적 ACE 역할의 실제 에이전트화 금지를 각각 수용/수정 수용. [GPT_DISPOSITION.json](../../reviews/REQ-COWORK-ACE-PEC-HOP-ACON-DESIGN-R1-20261118/GPT_DISPOSITION.json) 게시·원격 확인.
+- **마감:** `INDEPENDENT_REVIEW=PASS_SCOPE_LIMITED`, `GPT_DISPOSITION=ACCEPT_WITH_CHANGE`, `REVIEW_CYCLE=CLOSED_NO_AUTOMATIC_REREVIEW`, `DEPLOYMENT_READY=NO`. 동일 REQUEST 승인/READY/유료 리뷰 재실행 0. 업무 GPT Updater G0와 실제 통합 회귀 NOT_RUN 유지.
+- **NEXT_ONE_ACTION:** 기존 Work 통합 설계의 ACE-02/PEC-01·03/ACON-01/SAFE 수용 시험 문구에 위 비차단 4건을 최소 반영. 별도 신규 유료 검토/업무 Knowledge 쓰기/배포는 시작하지 않음.
+
+---
+
 ## ACE·PEC-HOP·ACON 독립 설계 리뷰 완료: ACCEPT_WITH_CHANGE, BLOCKING 0 (2026-11-18 KST)
 
 - 결과: `CLAUDE_ACE_PEC_HOP_ACON_DESIGN_REVIEW_RESULT_FOR_GPT_20261118.md` (PRIVATE `main`, commit `2554f5d3e8d6`, SHA-256 `5946fe1c7867cf08c4cbc9689afd466412bb1c4160ec24e137d820b43663a39b`).
