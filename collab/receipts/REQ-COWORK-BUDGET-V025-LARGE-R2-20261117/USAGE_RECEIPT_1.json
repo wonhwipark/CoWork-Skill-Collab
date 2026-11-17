@@ -1,0 +1,37 @@
+{
+  "schema": "COWORK_REVIEW_USAGE_RECEIPT_V1",
+  "request_id": "REQ-COWORK-BUDGET-V025-LARGE-R2-20261117",
+  "request_revision": "1",
+  "processing_key": "REQ-COWORK-BUDGET-V025-LARGE-R2-20261117|1|26d63c8a03290499b13b2ceb8ff0b70c06eb1b1bcc1a25fe3d8f65fcc213d228|1",
+  "target": {
+    "package_sha256": "26d63c8a03290499b13b2ceb8ff0b70c06eb1b1bcc1a25fe3d8f65fcc213d228",
+    "package_size_bytes": 283930
+  },
+  "review": {
+    "policy": "POLICY-STATIC-V1-LARGE",
+    "effort": "medium",
+    "model_calls": 1,
+    "success": true
+  },
+  "usage": {
+    "total_cost_usd": 0.8061916,
+    "num_turns": 24,
+    "output_tokens": 13481,
+    "cache_write_tokens": 68728,
+    "cache_read_tokens": 626962,
+    "subtype": "success"
+  },
+  "limits": {
+    "max_budget_usd": 3.0,
+    "budget_respected": true
+  },
+  "source": {
+    "audit_log_ids": {
+      "REVIEW_DISPATCHED": 8867,
+      "REVIEW_COST": 8868,
+      "COMPLETED": 8869
+    },
+    "watcher_version": "0.2.23",
+    "note": "publish-only supplement written by the Windows host from the watcher's own audit records; the v0.2.23 watcher does not produce this file; no model call was made to create it"
+  }
+}
