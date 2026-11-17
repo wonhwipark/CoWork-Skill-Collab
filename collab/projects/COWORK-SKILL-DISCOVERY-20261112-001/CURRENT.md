@@ -1,5 +1,14 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## ACE·PEC-HOP·ACON 독립 설계 리뷰 완료: ACCEPT_WITH_CHANGE, BLOCKING 0 (2026-11-18 KST)
+
+- 결과: `CLAUDE_ACE_PEC_HOP_ACON_DESIGN_REVIEW_RESULT_FOR_GPT_20261118.md` (PRIVATE `main`, commit `2554f5d3e8d6`, SHA-256 `5946fe1c7867cf08c4cbc9689afd466412bb1c4160ec24e137d820b43663a39b`).
+- 사전검증: `review_request_gate.py select/check`가 실제 LIVE 설정(v0.2.25, `POLICY-STATIC-V1-DESIGN` USD 3.0 등록)에서 `POLICY_COMPATIBLE_NOT_APPROVED`→`PASS_PREPUBLICATION_ONLY` 확인 후에만 게시 진행.
+- 게시 체인: ZIP(18,500 B, SHA-256 `5f56a23e…b0431`) → `REQUEST.md`(commit A) → `source_pin.py create/check` PASS → `SOURCE_PIN.json` 게시 → 호스트 승인 16/16 PASS → 서명·`APPROVAL_SIG.json`→`READY.md`(마지막) 모두 원격 바이트 동일 확인.
+- 실행: 감시기(v0.2.25) 1회, `POLICY-STATIC-V1-DESIGN` USD 0.3825, 결과·영수증·디스패치 전부 원격 확인(`RECEIPT_1.md.ok=true`).
+- **판정 ACCEPT_WITH_CHANGE, BLOCKING 0.** 비차단 개선 4건: ACE 최신판정 결정규칙 미구체화, PEC-HOP byte-level 검증수단 미지정, ACON 모델편차/압축결함 구분 최소 재현횟수 미지정, Generator/Reflector/Curator 역할명의 서브에이전트 리터럴화 위험.
+- 중복·재실행·운영 변경 0. 다음 한 동작: GPT가 개선 4건 수용 여부 판정.
+
 ## 2026-11-18 KST — 사용자 후속 진행 승인: ACE·PEC-HOP·ACON 독립 리뷰 실호스트 게이트 확인 준비
 
 - **후속 요청:** 사용자가 기존 `Windows Claude Code 실제 LIVE 정책 확인→허용될 때만 정식 REQUEST/서명/READY→1회 리뷰·영수증` 진행에 “그래”로 동의. 새로운 $3 유료 호출/보호 위임 한도 상향을 무조건 승인한 것으로 확장하지 않음.
