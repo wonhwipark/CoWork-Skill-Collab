@@ -27,8 +27,8 @@ PINS = {
     'github': {
         'path': 'collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates/l1-github_v0_3_57_1114.zip',
         'sha256': 'f1b8fb43d3af427f2c5d52864051c65894f3cb45969ab35ca502f344735611ce',
-        'version_from': '0.3.57', 'version_to': '0.3.58',
-        'output': 'l1-github_v0_3_58_1117.zip', 'root': '',
+        'version_from': '0.3.57', 'version_to': '0.3.59',
+        'output': 'l1-github_v0_3_59_1117.zip', 'root': '',
     },
     'kernel': {
         'path': 'artifacts/work-ledger-kernel_v0_7_42_1116.zip',
@@ -169,24 +169,70 @@ GITHUB_GUARD = '''\n\ndef assert_work_docs_knowledge_unchanged(root: Path | str)
 \n'''
 
 
+
+GITHUB_OUTBOUND_GUARD = r'''
+
+def assert_work_docs_outbound_knowledge_unchanged(root: Path | str) -> dict:
+    """Deny a Work-docs push if an outgoing commit changes knowledge/.
+
+    This is a local defense; a raw Git command with shared write credentials
+    can bypass it, so host OS/credential isolation remains a separate gate.
+    """
+    root = Path(root).expanduser().resolve()
+
+    def call(*args: str) -> bytes:
+        try:
+            cp = subprocess.run(['git', '-C', str(root), *args],
+                                capture_output=True, timeout=12, check=False)
+        except (OSError, subprocess.TimeoutExpired):
+            raise PushGuardError('WORK_DOCS_OUTBOUND_GIT_UNVERIFIED') from None
+        if cp.returncode:
+            raise PushGuardError('WORK_DOCS_OUTBOUND_GIT_UNVERIFIED')
+        return cp.stdout.strip()
+
+    upstream = call('rev-parse', '--symbolic-full-name', '@{upstream}').decode('utf-8')
+    if not upstream.startswith('refs/remotes/') or '..' in upstream:
+        raise PushGuardError('WORK_DOCS_OUTBOUND_UPSTREAM_UNVERIFIED')
+    commits = call('rev-list', '--reverse', upstream + '..HEAD').splitlines()
+    if len(commits) > 500:
+        raise PushGuardError('WORK_DOCS_OUTBOUND_HISTORY_TOO_LARGE')
+    for raw_sha in commits:
+        sha = raw_sha.decode('ascii')
+        paths = call('diff-tree', '--root', '-m', '--no-renames', '--name-only',
+                     '-r', '-z', sha).split(b'\x00')
+        for raw in paths:
+            if not raw:
+                continue
+            path = raw.decode('utf-8', 'surrogateescape').replace('\\', '/')
+            parts = path.split('/')
+            if not path or any(p in ('', '.', '..') for p in parts):
+                raise PushGuardError('WORK_DOCS_OUTBOUND_PATH_UNSAFE')
+            if parts[0].casefold() == 'knowledge':
+                raise PushGuardError('WORK_DOCS_COMMITTED_KNOWLEDGE_BLOCKED')
+    return {'ok': True, 'action': 'WORK_DOCS_OUTBOUND_HISTORY_PASS',
+            'inspected_commits': len(commits), 'hard_enforcement': False}
+
+'''
+
+
 def patch_github(root: Path) -> None:
     p = root / 'scripts/push_guard.py'
-    replace_once(p, '\ndef verify(*, root:', GITHUB_GUARD + '\ndef verify(*, root:', label='github shared protection declaration')
+    replace_once(p, '\ndef verify(*, root:', GITHUB_GUARD + GITHUB_OUTBOUND_GUARD + '\ndef verify(*, root:', label='github shared protection declaration')
     script = root / 'scripts/l1_github.py'
     s = script.read_text(encoding='utf-8')
     for tag in ('work_docs_commit', 'work_docs_push'):
         before = f'        return cross_host_git.{tag}(args, globals())'
-        after = '        push_guard.assert_work_docs_knowledge_unchanged(repo_root())\n' + before
+        after = '        push_guard.assert_work_docs_knowledge_unchanged(repo_root())\n' + (('        push_guard.assert_work_docs_outbound_knowledge_unchanged(repo_root())\n') if tag == 'work_docs_push' else '') + before
         if s.count(before) != 1:
             raise RuntimeError(f'github {tag} anchor count={s.count(before)}')
         s = s.replace(before, after)
     script.write_text(s, encoding='utf-8', newline='\n')
     sk = root / 'SKILL.md'
     txt = sk.read_text(encoding='utf-8')
-    txt += '\n\n### Workflow 개인 Knowledge 경로 보호 (개발 후보 v0.3.58)\n'
+    txt += '\n\n### Workflow 개인 Knowledge 경로 보호 (개발 후보 v0.3.59)\n'
     txt += '- Work-docs commit/push entrypoint의 status-staged/unstaged/untracked 경로에 `knowledge/` 변경이 있으면 fail-closed.\n'
     txt += '- raw Git/동일 자격증명 우회 가능성은 별도 호스트 권한 경계의 G0 검증 조건이며 본 guard만으로 완전 차단 주장 금지.\n'
-    sk.write_text(txt.replace('0.3.57','0.3.58'), encoding='utf-8', newline='\n')
+    sk.write_text(txt.replace('0.3.57','0.3.59'), encoding='utf-8', newline='\n')
 
 
 def patch_kernel(root: Path) -> None:
@@ -220,6 +266,40 @@ def patch_kernel(root: Path) -> None:
 def refresh_package_metadata(root: Path, row: dict) -> None:
     """Regenerate only existing package metadata; keep candidate non-deployable."""
     version = row["version_to"]
+    # Update only canonical header declarations; retain historical version notes.
+    import re
+    skill_md = root / "SKILL.md"
+    if skill_md.is_file():
+        text = skill_md.read_text(encoding="utf-8")
+        lines = text.splitlines(keepends=True)
+        for i, line in enumerate(lines[:45]):
+            match = re.match(
+                r"^(\s*(?:(?:version|skill_version|버전)|(?:[-#* ]{0,6}(?:current version|현재 버전)))\s*[:：]\s*[\"\x27]?)v?\d+\.\d+\.\d+",
+                line, re.I)
+            if match:
+                lines[i] = line[:match.start()] + match.group(1) + version + line[match.end():]
+        skill_md.write_text("".join(lines), encoding="utf-8", newline="\n")
+    version_md = root / "VERSION.md"
+    if version_md.is_file():
+        content = version_md.read_text(encoding="utf-8")
+        lines = content.splitlines(keepends=True)
+        for i, line in enumerate(lines[:15]):
+            if re.search(r"\d+\.\d+\.\d+", line):
+                lines[i] = re.sub(r"(?<!\d)v?\d+\.\d+\.\d+(?!\d)",
+                                  "v" + version, line, count=1)
+                break
+        version_md.write_text("".join(lines), encoding="utf-8", newline="\n")
+    # The embedded skillsilent policy manifest carries the hosting skill version.
+    # Synchronize only the package-owned version keys, never skillsilent's tool version.
+    policy_manifest = root / "skillsilent" / "manifest.json"
+    if policy_manifest.is_file():
+        meta = json.loads(policy_manifest.read_text(encoding="utf-8"))
+        for key in ("skill_version", "package_version"):
+            if key in meta:
+                meta[key] = version
+        policy_manifest.write_text(
+            json.dumps(meta, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8")
     version_file = root / "VERSION"
     if version_file.is_file():
         version_file.write_text(version + "\n", encoding="utf-8")
@@ -246,35 +326,28 @@ def refresh_package_metadata(root: Path, row: dict) -> None:
             if str(meta.get("skill_version", "")) in (row["version_from"], version):
                 meta["skill_version"] = version
             main_meta.write_text(json.dumps(meta, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    # Derive the hash universe from the files that will actually ship in ZIP.
+    # Never reuse an old manifest's key set: it silently loses newly added files.
+    rels = sorted(
+        p.relative_to(root).as_posix() for p in root.rglob("*")
+        if p.is_file()
+        and p.name not in ("MANIFEST_SHA256.json", "PACKAGE_CONTENTS.sha256")
+        and "__pycache__" not in p.relative_to(root).parts
+        and p.suffix != ".pyc"
+        and p.relative_to(root).parts[0] != "artifacts"
+    )
     manifest = root / "MANIFEST_SHA256.json"
-    if manifest.is_file():
-        m = json.loads(manifest.read_text(encoding="utf-8"))
-        if not isinstance(m, dict):
-            raise RuntimeError("MANIFEST_STRUCTURE_UNSUPPORTED")
-        new = {}
-        for rel in m:
-            if rel == "MANIFEST_SHA256.json":
-                raise RuntimeError("MANIFEST_SELF_REFERENCE_UNSUPPORTED")
-            file_path = root / rel
-            if not file_path.is_file() or not file_path.resolve().is_relative_to(root.resolve()):
-                raise RuntimeError(f"MANIFEST_MISSING_INPUT: {rel}")
-            new[rel] = sha(file_path)
-        manifest.write_text(json.dumps(new, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     listing = root / "PACKAGE_CONTENTS.sha256"
+    if not manifest.is_file() and not listing.is_file():
+        raise RuntimeError("RELEASE_HASH_MANIFEST_MISSING")
+    digest_map = {rel: sha(root / rel) for rel in rels}
+    if manifest.is_file():
+        manifest.write_text(json.dumps(digest_map, ensure_ascii=False, indent=2,
+                                       sort_keys=True) + "\n", encoding="utf-8")
     if listing.is_file():
-        records = []
-        for ln in listing.read_text(encoding="utf-8").splitlines():
-            parts = ln.split(maxsplit=1)
-            if len(parts) != 2:
-                raise RuntimeError("PACKAGE_CONTENTS_STRUCTURE_UNSUPPORTED")
-            rel = parts[1].strip()
-            if rel == "PACKAGE_CONTENTS.sha256":
-                raise RuntimeError("PACKAGE_CONTENTS_SELF_REFERENCE_UNSUPPORTED")
-            fp = root / rel
-            if not fp.is_file() or not fp.resolve().is_relative_to(root.resolve()):
-                raise RuntimeError(f"PACKAGE_CONTENTS_MISSING_INPUT: {rel}")
-            records.append(f"{sha(fp)}  {rel}")
-        listing.write_text("\n".join(records) + "\n", encoding="utf-8")
+        listing.write_text("".join(f"{digest_map[rel]}  {rel}\n" for rel in rels),
+                           encoding="utf-8")
+
 
 def rezip(root: Path, output: Path) -> None:
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -311,9 +384,11 @@ def run_build(workdir: Path, outdir: Path, *, skip_pin: bool = False) -> dict:
                 raise RuntimeError(f'PYTHON_COMPILE_FAIL: {key}')
             output = outdir / row['output']
             rezip(x, output)
+            from skill_release_quality_gate import validate
+            checked = validate(output, row["version_to"])
             out[key] = {'baseline':row['path'],'baseline_sha256':actual,'output':str(output),
                         'output_sha256':sha(output),'size_bytes':output.stat().st_size,
-                        'verification':'ZIP_CRC_AND_PYTHON_COMPILE_PASS',
+                        'verification':'ZIP_CRC_AND_PYTHON_COMPILE_AND_RELEASE_GATE_PASS',
                         'release':'development_not_for_deployment'}
     return out
 
