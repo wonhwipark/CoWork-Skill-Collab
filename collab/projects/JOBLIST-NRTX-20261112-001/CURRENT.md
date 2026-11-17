@@ -1,5 +1,17 @@
 # JOBLIST-NRTX-20261112-001 — CURRENT
 
+## 최신 현재 요약 — 2026-11-17 KST / v0.4.38 모바일 Agent 복구 시도 결과
+
+- **호스트 상태:** Skill-Updater 인증 정상화 및 Job-list `v0.4.38` 설치는 사용자·모바일 MCP 보고로 관측. NR L1 Tx Init RACH Job의 `DONE/SUCCESS` 기록은 존재하지만 `run_id=null`, `worker_started_at=null`, CODE_FACTS·MSC 실재 미확인. **분석 완료 UNKNOWN**.
+- **실행 경계:** r0003 인계는 모바일 Agent에서 읽었으나 이 Agent의 MCP는 `READ/PLAN`만 확인. `remote_enqueue/remote_retry/remote_cancel/apply_patch`는 `NOT_IMPLEMENTED`, 운영 Linux와 실행 machine이 달라 원격 복구 **NOT_APPLIED**, 시험 **NOT_RUN**. Linux 로컬 CLI/Runner까지 불가능하다고 단정하지 않음.
+- **남은 불일치:** `RESULT_UNSUPPORTED`, 대상 Job 미포함 result allowlist, Catalog/Registry/Bootstrap 9/6/5건의 역할 관계 미확인. 무작정 allowlist 확장·Registry 항목 동기화·Job 재실행 금지.
+- **정본:** [최신 원격 실행 경계·복구 판정](JOBLIST_V0438_MCP_REMOTE_BOUNDARY_STATUS_r0001_20261117_KST.md) / [L1Work 현황 인계](https://github.com/wonhwipark/L1Work/blob/main/handoffs/JOBLIST_V0438_MCP_RECOVERY_STATUS_HANDOFF_r0001_20261117_KST.md) / [r0003 복구 지시](https://github.com/wonhwipark/L1Work/blob/main/handoffs/JOB_LIST_V0438_LINUX_MCP_ROOTCAUSE_RECOVERY_PROMPT_r0003_20261117_KST.md).
+- **NEXT_ONE_ACTION:** Linux 운영 호스트 파일에 접근 가능한 업무 LLM이 **기존 RACH 산출물 디렉터리와 실제 Worker/Queue 영수증**을 읽어 결과 실재 여부 및 `DONE/SUCCESS` 단계 의미를 함께 확정. 기존 승인 범위를 넘는 운영 변경·모델 호출·소비 Job 재큐잉은 별도 확인 전 금지.
+- 본 문서 게시 및 연계는 **GitHub 기록만 변경**하며, MCP 운영 패치·서비스 재시작·Job 실행·READY·모델 호출은 수행하지 않음.
+
+---
+
+
 ## 현재 요약 — 2026-11-14 KST (기존 기록 정리)
 
 - Goal: NR L1 Tx Init RACH·UL SCell 구성/활성/비활성 분석과 MSC/지식 후보. 실제 그룹 게시와 구분.
