@@ -685,8 +685,8 @@
     {
       "evidence": "프로젝트 TRACKER.json 신고 값 · 운영 근거 별도 확인 필요",
       "independent_review": "PENDING",
-      "next_action": "LOCAL-FIRST: Linux 설치본·work_docs 역할·Git remote 의존·백업/기존 웹·ACL·Updater/group writer G0 A~P 16숫자 READ_ONLY 결과 회수. 개인 SHADOW viewer(현 Git mode 유지)·동료 HTTPS 승인·authority",
-      "owner": "GPT(로컬-first 설계·Kernel 격리시험 PASS) / 업무 GPT(Li",
+      "next_action": "Windows Claude Code에서 PRIVATE main GPT_L1_WORKSPACE_LOCAL_VIEWER_CLAUDE_ONE_CYCLE_REVIEW_REQUEST_r0001_20261118_KST.md의 LIVE 위임/예산/select-check preflight 확인→유효하면 신규 ",
+      "owner": "GPT(전환 설계·합성시험·리뷰 Windows 원샷/업무 지시 초안 PRIVATE",
       "phase": "REVIEW",
       "record_source": "REGISTERED_METADATA_UNVERIFIED",
       "self_test": "PASS",
