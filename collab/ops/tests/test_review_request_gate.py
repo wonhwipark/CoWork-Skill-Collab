@@ -67,6 +67,7 @@ class GateTests(unittest.TestCase):
         r = self.pass_check()
         self.assertEqual(r["run_policy_ref"], "POLICY-STATIC-V1-LARGE")
         self.assertEqual(r["authorization"], "NOT_CHECKED")
+        self.assertEqual(r["request_sha256"], hashlib.sha256(self.request.read_bytes()).hexdigest())
         self.assertEqual(r["model_calls"], 0)
 
     def test_new_design_preference_when_installed(self):
@@ -202,6 +203,7 @@ class GateTests(unittest.TestCase):
                                       "--request", str(self.request), "--package", str(self.package))
         self.assertEqual((code, err), (0, ""))
         self.assertEqual(json.loads(out)["status"], "PASS_PREPUBLICATION_ONLY")
+        self.assertEqual(json.loads(out)["request_sha256"], hashlib.sha256(self.request.read_bytes()).hexdigest())
 
     def test_incomplete_source_pin_cli_is_blocked(self):
         code, out, err = self.run_cli("check", "--live-config", str(self.config), "--intent", "design",
