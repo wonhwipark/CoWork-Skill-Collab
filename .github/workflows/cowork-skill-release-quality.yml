@@ -1,0 +1,60 @@
+name: CoWork skill release quality gate
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/cowork-skill-release-quality.yml'
+      - 'collab/ops/CONTRACTS/MSC_SKILL_IO_MATRIX_V1.json'
+      - 'collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/*.py'
+      - 'collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates/*.zip'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Executable release and MSC contract negative cases
+        run: |
+          python -m unittest discover -v -s collab/projects/L1-WORKSPACE-RAG-20261111-001/dev -p 'test_*gate.py'
+      - name: Actual Kernel SVG Evidence export regressions
+        env:
+          KERNEL_TEST_ARCHIVE: collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates/work-ledger-kernel_v0_7_43_1117.zip
+        run: |
+          python collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/test_kernel_export_svg_evidence.py
+      - name: Existing public converter immutable release and action policy
+        run: |
+          curl --fail --location --retry 3 --silent --show-error -o /tmp/doc-converter_v0_2_26_1117.zip https://raw.githubusercontent.com/wonhwipark/L1Work/main/doc-converter_v0_2_26_1117.zip
+          echo 'b0ebd0aa4d771adc30648ab2bce23a3c1648e408984bedb36d0e3da45108312c  /tmp/doc-converter_v0_2_26_1117.zip' | sha256sum --check
+          python collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/skill_release_quality_gate.py --zip /tmp/doc-converter_v0_2_26_1117.zip --expected-version 0.2.26
+          python collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/msc_skill_contract_gate.py --matrix collab/ops/CONTRACTS/MSC_SKILL_IO_MATRIX_V1.json --package /tmp/doc-converter_v0_2_26_1117.zip --require-policy
+      - name: Fail closed for changed candidate skill ZIPs in this commit
+        run: |
+          python - <<'PY'
+          import re, subprocess, sys
+          from pathlib import Path
+          sys.path.insert(0, 'collab/projects/L1-WORKSPACE-RAG-20261111-001/dev')
+          from skill_release_quality_gate import validate
+          cp=subprocess.run(['git','diff','--name-only','HEAD^','HEAD'],text=True,capture_output=True,check=True)
+          count=0
+          for raw in cp.stdout.splitlines():
+              if not raw.startswith('collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates/'):
+                  continue
+              m=re.search(r'_v(\d+)_(\d+)_(\d+)_\d{4}\.zip$',raw)
+              if not m:
+                  continue
+              p=Path(raw)
+              if p.is_file():
+                  expected='.'.join(m.groups())
+                  print('CHANGED_CANDIDATE_GATE',validate(p,expected))
+                  count+=1
+          print('CHANGED_CANDIDATE_CHECKED',count)
+          PY
