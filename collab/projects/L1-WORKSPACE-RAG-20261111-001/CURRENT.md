@@ -1,5 +1,16 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-18 KST — MSC 두 진입 Kernel HTML 실링크 수정·후속 패키지 재현성 검증
+
+- **실제 후속 구현:** [상세 결과·근거](GPT_MSC_DUAL_ENTRY_G0_LINK_AND_REPRO_VALIDATION_RESULT_r0001_20261118_KST.md) (PRIVATE main). 기존 R1 설계 독립 리뷰 COMPLETED/ACCEPT_WITH_CHANGE/CLOSED 상태 보존, 재요청 없음.
+- **합성 E2E 결함/수정:** Kernel v0.7.43의 Evidence HTML/MSC_VIEW.md 최종 파일명 remap으로 상세 원본 MD의 `01_AS_IS.html` 상대 링크 BROKEN 재현. Kernel 기존 writer와 verified published_path를 재사용한 **Work-root MSC_VIEW.md 직접 HTML 링크** 최소 보완 v0.7.45: `root_link_ok=true`, HTML SHA/map PASS, 동일 export 멱등·수동 편집 보존 PASS. 원본 상세 MD bytes/링크는 변경하지 않아 상세 원본 내부 링크 BROKEN은 미해결로 분리.
+- **검증된 개발 ZIP 3종:** Converter `v0.2.28` 169567 B SHA-256 `3fcd89d02aab9be4f29c8a49a9146de6561ce4d956f7397d1dc397bb8ebe6729`; Workflow `v1.6.72` 758427 B SHA `0eb190e704d7e06d8bddf642bff858319fceb399814c83282a480502d377af02`; Kernel `v0.7.45` 320195 B SHA `1bccbbffeaafcefda27b75ca8f430e502bc8c2b475b63bd76425ca7ee1c5d7f8`. 기존 임시 ZIP의 타임스탬프 비결정성을 고정 ZIP writer로 해결하고 3종 각각 **2회 bit-for-bit 재빌드 PASS**. 전부 `development_not_for_deployment`, 구버전 보존.
+- **시험:** [PRIVATE main CI 44129301281](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/44129301281) SUCCESS; SHA/CRC/manifest/version PASS. 격리 핵심 MSC Converter pytest 28 PASS, Kernel 연동 Workflow pytest 15 PASS. 전체 Converter 시험은 완료 검증 아님. Actions artifact `msc-dual-entry-development-1118` ID 14348323312 (7일 보관), 빌더/회귀 코드는 PRIVATE main 정본.
+- **차단:** 업무 Updater 최신 설치·개인/group writer G0, 상세 원본 내부 링크 재매핑, 실제 Workflow runner·브라우저 URL·업무 E3, 이 변경 독립 코드 리뷰 `NOT_RUN/NOT_VERIFIED`; PUBLIC ZIP/호스트 설치/지식 쓰기 `NOT_POSTED/NOT_RUN`. Guard 불확실 이력·provider LIVE 별개.
+- **NEXT_ONE_ACTION:** 업무 호스트에서 Updater/writer 실제 G0 및 기존 마커·Preview/HOLD·published_path를 읽기 전용 대조하고 샘플 Work에서 승인된 writer·링크 정합성 E3를 검증. 이후 코드 독립 리뷰·최종 PUBLIC 전달 게이트를 별도 판정.
+
+---
+
 ## 2026-11-18 KST — MSC 두 진입 후속 코드 구현·개발 후보/회귀 PASS
 
 - **상태:** 기존 설계 R1 `COMPLETED / ACCEPT_WITH_CHANGE / REVIEW_CYCLE=CLOSED` 유지. 사용자의 후속 구현 요청으로 [구현·시험·후속 제한 상세 결과](GPT_MSC_DUAL_ENTRY_FOLLOWUP_IMPLEMENTATION_RESULT_r0001_20261118_KST.md) 작성.
