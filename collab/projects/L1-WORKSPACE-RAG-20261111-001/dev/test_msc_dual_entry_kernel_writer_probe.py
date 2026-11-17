@@ -69,7 +69,7 @@ def run():
             if not target.is_file():
                 links.append({"published_md":str(target.relative_to(dest)),"status":"MAPPING_FILE_NOT_FOUND"})
                 continue
-            for label,href in __import__("re").findall(r"\\[([^\\]]+)\\]\\(([^)]+)\\)",target.read_text(encoding="utf-8")):
+            for label,href in __import__("re").findall(r"\[([^\]]+)\]\(([^)]+)\)",target.read_text(encoding="utf-8")):
                 if not href.endswith(".html"): continue
                 resolved=(target.parent/href).resolve()
                 links.append({"published_md":str(target.relative_to(dest)),"href":href,
