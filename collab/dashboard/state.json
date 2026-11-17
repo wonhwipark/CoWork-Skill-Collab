@@ -89,10 +89,10 @@
       "id": "L1-WORKSPACE-RAG-20261111-001",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md",
-      "status": "검증 진행 중",
+      "status": "문서상 진행",
       "title": "L1-WORKSPACE-RAG-20261111-001 — CURRENT",
-      "tone": "warning",
-      "topic": "최신 상태 — 스킬 릴리스 무결성·Kernel 실행 회귀·MSC 계약 검사 적용 (2026-11-17 KST)"
+      "tone": "neutral",
+      "topic": "최신 감사 — MSC 설계 리뷰 최초 SOURCE_PIN 계약 위반 확인 (2026-11-17 KST)"
     },
     {
       "id": "NR-L1TX-CODE-ANALYSIS-20261115-001",
