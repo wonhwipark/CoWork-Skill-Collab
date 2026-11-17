@@ -1,0 +1,40 @@
+name: Inspect protected auto-quota source (no release)
+on:
+  push:
+    branches: [dev/auto-quota-cost-only-20261117]
+    paths:
+      - '.github/workflows/cowork-auto-quota-inspect-once.yml'
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Inspect pinned watcher source without modifying ZIP
+        run: |
+          python - <<'PY'
+          import hashlib,io,zipfile,re,ast
+          from pathlib import Path
+          p=Path('collab/packages/skill-collab-watcher_v0_2_23_1115_DEV_NOT_FOR_DEPLOYMENT.zip')
+          b=p.read_bytes()
+          print('ZIP_BYTES',len(b),'SHA256',hashlib.sha256(b).hexdigest())
+          z=zipfile.ZipFile(io.BytesIO(b))
+          print('ZIP_CRC',z.testzip())
+          names=z.namelist()
+          print('SOURCE_NAMES',[x for x in names if x.endswith(('state_store.py','auto_approval.py','config.py','test_auto_approval.py'))])
+          for name in names:
+              if not (name.endswith('state_store.py') or name.endswith('auto_approval.py') or name.endswith('config.py')):
+                  continue
+              s=z.read(name).decode('utf8')
+              print('SOURCE',name,'LENGTH',len(s))
+              lines=s.splitlines()
+              indexes=[i for i,l in enumerate(lines) if any(x in l for x in ('def _auto_usage_locked','def auto_reserve','def auto_claim','day_call','monthly_call','daily_call','max_calls','DAY_CALL_LIMIT','AUTO_RESERVED','reserved_cents','POLICY_STOPPED','AUTO_SIGNING_UNCERTAIN','max_reviews_per_day'))]
+              for i in indexes[:50]:
+                  a=max(0,i-5);e=min(len(lines),i+24)
+                  print('SOURCE_LINES',name,a+1,e)
+                  print('\n'.join(f'{j+1}: {lines[j]}' for j in range(a,e)))
+          PY
