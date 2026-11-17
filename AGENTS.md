@@ -18,5 +18,5 @@
 
 ## CoWork 리뷰 REQUEST 사전 검증 (신규 요청만)
 
-GPT가 새 REQUEST를 작성·게시하기 **전에** \`collab/ops/CONTRACTS/REVIEW_TIER_TOKEN_BUDGET_V1.md\`의 신규 'REQUEST 게시 전 정책 호환성 필수 게이트'를 따라야 한다. \`collab/ops/review_request_gate.py\`의 \`select\` / \`check\`에 Windows 실제 LIVE \`reviewer.config.json\` 및 신규 ZIP 바이트를 사용하고 \`PASS_PREPUBLICATION_ONLY\`를 확인한다. LIVE 설정 직접 조회가 불가능하면 Windows Claude Code에 읽기 전용 검증을 요청하고, 검증 전에는 REQUEST를 게시하지 않는다. GPT가 개발 예정 정책명을 선택해 기존 LIVE를 막는 자기 참조를 금지. SOURCE_PIN/서명/READY는 기존 계약대로 별도 검증하며 이 절차로 유료 모델을 호출하거나 운영 설정을 변경하지 않는다.
+GPT가 새 REQUEST를 작성·게시하기 **전에** `collab/ops/CONTRACTS/REVIEW_TIER_TOKEN_BUDGET_V1.md`의 신규 'REQUEST 게시 전 정책 호환성 필수 게이트'를 따라야 한다. `collab/ops/review_request_gate.py`의 `select` / `check`에 Windows 실제 LIVE `reviewer.config.json` 및 신규 ZIP 바이트를 사용하고 `PASS_PREPUBLICATION_ONLY`를 확인한다. LIVE 설정 직접 조회가 불가능하면 Windows Claude Code에 읽기 전용 검증을 요청하고, 검증 전에는 REQUEST를 게시하지 않는다. GPT가 개발 예정 정책명을 선택해 기존 LIVE를 막는 자기 참조를 금지. SOURCE_PIN/서명/READY는 기존 계약대로 별도 검증하며 이 절차로 유료 모델을 호출하거나 운영 설정을 변경하지 않는다.
 
