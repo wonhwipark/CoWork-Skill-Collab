@@ -30,9 +30,12 @@ jobs:
           KERNEL_TEST_ARCHIVE: collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates/work-ledger-kernel_v0_7_43_1117.zip
         run: |
           python collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/test_kernel_export_svg_evidence.py
-      - name: Synthetic Kernel HTML Evidence writer probe (read-only diagnosis)
+      - name: Build pinned Kernel Work-root MSC HTML link development candidate
+        run: |
+          python collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/build_msc_kernel_html_links_r0001_20261118.py --source collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates/work-ledger-kernel_v0_7_43_1117.zip --out /tmp/msc-dual-entry-development
+      - name: Synthetic Kernel HTML Evidence writer probe (candidate and preservation)
         env:
-          KERNEL_TEST_ARCHIVE: collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates/work-ledger-kernel_v0_7_43_1117.zip
+          KERNEL_TEST_ARCHIVE: /tmp/msc-dual-entry-development/work-ledger-kernel_v0_7_44_1118.zip
         run: |
           python collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/test_msc_dual_entry_kernel_writer_probe.py
       - name: Existing public converter immutable release and action policy
