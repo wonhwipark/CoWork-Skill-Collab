@@ -17,10 +17,10 @@
       "id": "COWORK-AUTO-APPROVAL-20261115-001",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/COWORK-AUTO-APPROVAL-20261115-001/CURRENT.md",
-      "status": "문서상 진행",
+      "status": "검증 진행 중",
       "title": "COWORK-AUTO-APPROVAL-20261115-001 — CURRENT",
-      "tone": "neutral",
-      "topic": "새 SOURCE_PIN repo_id 포맷 오류 보정 — 로컬 AUTO_SIGNING_UNCERTAIN 정산 대기 (2026-11-17 KST)"
+      "tone": "warning",
+      "topic": "2026-11-17 정책 변경 — 일·월 리뷰 횟수 제한 폐기 / 비용·중복 보호 유지"
     },
     {
       "id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
