@@ -1,0 +1,23 @@
+{
+  "key_id": "cowork-approver-1",
+  "payload": {
+    "expires_at": "2026-11-17T17:00:39.290363+00:00",
+    "issued_at": "2026-11-17T15:00:39.290363+00:00",
+    "knowledge_refs_hash": "d84c599b38b661764ac1ef97be223d823d5a916ea7a4dfcabaf4d575e82c6652",
+    "local_policy_revision": "1",
+    "nonce": "319dc578911a29c9f5c4c710aaf847c6",
+    "package_path": "/SKILL-COLLAB/packages/l1-msc-dual-entry-design_r0001_1117_REVIEW_INPUT.zip",
+    "package_sha256": "e5c2da38fda253781b2cf0179c46d3cd6dbefdc5f5efb3f0603ddaaf7d03b91c",
+    "package_size_bytes": 29111,
+    "ready_sha256": "4d241d83d3a922765ce33cf13d8cec81aa7a2992ff62edebca04cad7b79737af",
+    "repo_id": "1451933830",
+    "request_id": "REQ-L1-MSC-DUAL-ENTRY-DESIGN-R1-20261117",
+    "request_revision": "1",
+    "request_sha256": "16f375c166104161f0e0bdc836bdd5bb1db89568faf1edb5f99b776695ef82b5",
+    "run_policy_ref": "POLICY-STATIC-V1",
+    "schema": "SKILL_COLLAB_APPROVAL_PAYLOAD_V1",
+    "source_commit": "939b5b9f4c59534d908bc48ced59cfd25a4e8f64"
+  },
+  "schema": "SKILL_COLLAB_APPROVAL_SIG_V1",
+  "signature": "kme6PorEW1GEcvTpKGVypwL79/5JOntyo0xmh/HlZJjiBYAP3rSxVKA4RD+F47rNTCHRlDoxRVsokoCB8H1WDg=="
+}
