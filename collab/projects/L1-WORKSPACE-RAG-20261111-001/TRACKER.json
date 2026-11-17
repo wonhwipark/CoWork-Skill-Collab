@@ -6,10 +6,10 @@
       "skill": "l1-knowledge-updater",
       "title": "l1-knowledge-updater",
       "phase": "REVIEW",
-      "owner": "GPT (MSC 설계 R1 판정 종료) → Windows Claude Code (Guard 불확실 이력 정산), 업무 GPT (G0 별도)",
+      "owner": "GPT(로컬-first 설계·Kernel 격리시험 PASS) / 업무 GPT(Linux G0 예정) / Windows Claude(독립 설계 리뷰 미실행)",
       "self_test": "PASS",
       "independent_review": "PENDING",
-      "next_action": "L1Work main handoffs/MSC writer G0 READ_ONLY MD POSTED·README link 검증 PASS. 스킬 3 ZIP development_not_for_deployment/public gate BLOCKED; 업무 GPT A~J 숫자 G0 결과 회수 후 보호/상세 MSC 링크·코드 리뷰·호스트 E3 확인 및 최종 PUBLIC 게이트 재판정. 기존 Guard 불확실 이력과 요청/영수증 보존, 무단 재큐잉·설치 금지."
+      "next_action": "LOCAL-FIRST: Linux 설치본·work_docs 역할·Git remote 의존·백업/기존 웹·ACL·Updater/group writer G0 A~P 16숫자 READ_ONLY 결과 회수. 개인 SHADOW viewer(현 Git mode 유지)·동료 HTTPS 승인·authority cutover/그룹 writer E3는 각각 G2~G6 검증과 별도 승인 전 NOT_RUN. PRIVATE 설계/결과·PUBLIC G0 handoff/README 게시 verified, 독립 리뷰 handoff만 게시(REQUEST/READY/유료 실행 0)."
     }
   ]
 }
