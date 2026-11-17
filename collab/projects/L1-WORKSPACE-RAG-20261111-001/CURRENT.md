@@ -1,5 +1,16 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-18 KST — Knowledge Updater ACE·PEC-HOP·ACON 설계 적용 제안서 공개 전달
+
+- **범위:** 지식 업데이트의 기존 두 진입/개인 Workspace Work·Knowledge/그룹 writer 설계를 보존하고 ACE·PEC-HOP·ACON의 원리만 최소 적용하는 제안. 기존 L1 MSC R1과 Guard R1의 독립 리뷰/승인 상태는 변경하지 않음.
+- **설계 위치:** [CoWork 개별 8종 최신 접근 가능 ZIP·SKILL 원문 감사](../COWORK-SKILL-DISCOVERY-20261112-001/ACE_PEC_HOP_ACON_SKILL_SOURCE_AUDIT_r0001_20261118_KST.md) → [CoWork 통합 설계](../COWORK-SKILL-DISCOVERY-20261112-001/ACE_PEC_HOP_ACON_INTEGRATED_SKILL_DESIGN_r0001_20261118_KST.md).
+- **업무 GPT 전용:** PUBLIC L1Work main의 [l1-knowledge-updater 설계 적용 제안서](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_KNOWLEDGE_UPDATER_ACE_PEC_HOP_ACON_DESIGN_APPLICATION_PROPOSAL_r0001_20261118_KST.md) 게시 및 handoffs/README 인덱스 연결 완료. 대상 스킬은 업무 호스트 설치본 원문 미접근으로 **READ_ONLY_G0_REVIEW_REQUESTED_AS_DOCUMENT / BUSINESS_GPT_FEEDBACK=NOT_RECEIVED**, 코드·호스트·실제 그룹 게시 NOT_RUN. 기존 11-17 Updater 개인/그룹 R1 수신 완료와 새 설계 리뷰 완료를 혼동하지 않음.
+- **협업 독립 검토 경계:** [Windows Claude 원샷 사전검증 인계](../COWORK-SKILL-DISCOVERY-20261112-001/ACE_PEC_HOP_ACON_WINDOWS_INDEPENDENT_DESIGN_REVIEW_PREFLIGHT_HANDOFF_r0001_20261118_KST.md) 게시. Windows 실제 LIVE config의 select/check 불가로 정식 REQUEST/READY/유료 리뷰 **NOT_RUN / NOT_POSTED**, 사용자 요청을 무효 승인으로 승격하지 않음.
+- **선행 보안/배포 차단 유지:** Knowledge Guard 3종 개발 후보 PUBLIC 차단, 개인 knowledge/ 단일 writer 하드 보호/그룹 CAS·E3 미검증, 기존 Guard AUTO_SIGNING_UNCERTAIN 분리. 이번 설계 변경으로 과거 Work/소스/Evidence·완료된 MSC 리뷰 재실행 없음.
+- **NEXT_ONE_ACTION:** 업무 GPT는 공개 제안서에 따라 실제 Updater 설치본과 기존 writer/Workbench G0를 읽기 전용 대조해 REUSE/CONNECT/EXTEND/보류 회신. Windows 협업 독립 리뷰 요청은 별도 CoWork Work에서 유효 정책 사전검증 후에만 진행.
+
+---
+
 ## 2026-11-18 KST — 기존 MSC 리뷰 완료 원문 재확인·승인 보류 재발 방지 코드 연결
 
 - **리뷰는 완료:** 기존 요청 `REQ-L1-MSC-DUAL-ENTRY-DESIGN-R1-20261117` rev1의 REQUEST/서명/READY/DISPATCH/REVIEW_RESULT/RECEIPT 및 아래 기존 GPT 판정을 이번 작업에서 직접 수신. actual bytes·ID/revision·ZIP SHA·processing_key·발급/만료 내 예약 대조 PASS. **COMPLETED / ACCEPT_WITH_CHANGE / 차단 0 / 권고 2 / REVIEW_CYCLE=CLOSED**. 기존 판정을 반복하거나 입력/결과를 수정하지 않음.
