@@ -9,7 +9,7 @@
       "owner": "GPT",
       "self_test": "PASS",
       "independent_review": "PASS",
-      "next_action": "2026-11-18: REQ-COWORK-ACE-PEC-HOP-ACON-DESIGN-R1-20261118 R1 1회 완료, GPT ACCEPT_WITH_CHANGE/BLOCKING 0/비차단 4건 수용, REVIEW_CYCLE=CLOSED_NO_AUTOMATIC_REREVIEW. Windows 호스트 보고 비용 USD 0.3825/1회 6턴, 자동 위임 $1 불변·수동 승인 16/16 PASS. GitHub REQUEST/SOURCE_PIN/APPROVAL_SIG/READY/DISPATCH/REVIEW_RESULT/RECEIPT 해시 결속 PASS. 후속: 기존 통합 설계 수용 시험 ACE-02/PEC-01/03/ACON-01/SAFE 문서 보완만, 업무 Updater G0 별도. 독립 비용·호스트 signer 직접 검증 아님."
+      "next_action": "2026-11-18: ACE·PEC-HOP·ACON 통합 설계 r0002 PRIVATE main 게시/readback PASS(24,705 B, SHA256 8959c5785da37d0a7f48687fbbe17576c4f0f517be93ffcd9befc029a1c6def1). R1 ACCEPT_WITH_CHANGE 비차단 N1~N4 수용 기준 최소 반영: ACE-02 결정 우선순위/HOLD, PEC-01/03 원문 byte digest·변조 반례, ACON-01 각 3회 조건부(유료 호출 0), SAFE-01 신규 subagent/모델 호출/상시자동화 0. 기존 12 수용 시험 ID 정적 일치 PASS; r0001와 R1 고정 요청/ZIP/READY/영수증 불변, REVIEW_CYCLE=CLOSED, 신규 리뷰 0. NEXT: 승인된 비민감 합성 자료로 ACE/PEC/SAFE 읽기 전용 재현 시험(실제 NOT_RUN), ACON·Updater G0 별도 승인/환경 확인."
     }
   ]
 }
