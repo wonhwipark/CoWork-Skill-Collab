@@ -12,20 +12,32 @@ ARCHIVE = Path(__file__).resolve().parent / "output" / "work-ledger-kernel_v0_7_
 
 
 class KernelSvgFunctionalTest(unittest.TestCase):
-    def setUp(self):
-        self.temp = tempfile.TemporaryDirectory(prefix="kernel-svg-functional-")
-        self.addCleanup(self.temp.cleanup)
-        self.base = Path(self.temp.name)
-        root = self.base / "package"
+    @classmethod
+    def setUpClass(cls):
+        cls.temp = tempfile.TemporaryDirectory(prefix="kernel-svg-functional-")
+        cls.root = Path(cls.temp.name) / "package"
         with zipfile.ZipFile(ARCHIVE) as archive:
-            self.assertIsNone(archive.testzip())
-            archive.extractall(root)
-        sys.path.insert(0, str(root))
-        self.addCleanup(lambda: sys.path.remove(str(root)))
+            if archive.testzip():
+                raise AssertionError("KERNEL_ZIP_CRC_INVALID")
+            archive.extractall(cls.root)
+        reg = cls.root / "contracts" / "registry_v1.json"
+        cls.registry = json.loads(reg.read_text(encoding="utf-8"))
+        print("KERNEL_REGISTRY_KEYS", list(cls.registry.keys()))
+        print("KERNEL_REGISTRY_HEAD", str(cls.registry)[:4400])
+        sys.path.insert(0, str(cls.root))
         from work_ledger_kernel.kernel import WorkLedgerKernel
         from work_ledger_kernel.work_ux import WorkUX
-        self.Kernel = WorkLedgerKernel
-        self.WorkUX = WorkUX
+        cls.Kernel = WorkLedgerKernel
+        cls.WorkUX = WorkUX
+
+    @classmethod
+    def tearDownClass(cls):
+        sys.path.remove(str(cls.root))
+        cls.temp.cleanup()
+
+    def setUp(self):
+        self.base = Path(self.temp.name) / self._testMethodName
+        self.base.mkdir()
         self.ledger = self.Kernel(self.base / "ledger")
 
     def add(self, kind, name, content, work_title):
