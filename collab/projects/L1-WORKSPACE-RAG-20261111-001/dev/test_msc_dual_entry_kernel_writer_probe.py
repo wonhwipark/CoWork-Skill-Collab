@@ -33,7 +33,7 @@ def run():
         md=fixtures/"MSC_VIEW.md"
         md.write_text("# MSC 상세 원본\\n\\n[MSC HTML 다운로드](01_AS_IS.html)\\n",encoding="utf-8")
         e=[]
-        for p,kind in ((html,"render_output"),(md,"asis_msc")):
+        for p,kind in ((html,"render_output"),(md,"render_output")):
             try:
                 record=k.record_evidence(wid,p,kind,"utility","doc-converter","0.2.27",
                                          "synthetic-rev","Synthetic only","AUTO_CANDIDATE")
@@ -59,8 +59,24 @@ def run():
         actual_mapping=any(x.get("sha256")==hashlib.sha256(html.read_bytes()).hexdigest()
                            and str(x.get("published_path","")).endswith(".html")
                            for x in mappings)
-        status=("PASS" if correct and actual_mapping else "BLOCKED")
+        # A preserved source relative link is not evidence of a valid published link:
+        # Kernel often renames/folders files when publishing.
+        md_maps=[x for x in mappings if x.get("sha256")==hashlib.sha256(md.read_bytes()).hexdigest()
+                 and str(x.get("published_path","")).endswith(".md")]
+        published_md=[dest / str(x["published_path"]) for x in md_maps]
+        links=[]
+        for target in published_md:
+            if not target.is_file():
+                links.append({"published_md":str(target.relative_to(dest)),"status":"MAPPING_FILE_NOT_FOUND"})
+                continue
+            for label,href in __import__("re").findall(r"\\[([^\\]]+)\\]\\(([^)]+)\\)",target.read_text(encoding="utf-8")):
+                if not href.endswith(".html"): continue
+                resolved=(target.parent/href).resolve()
+                links.append({"published_md":str(target.relative_to(dest)),"href":href,
+                              "status":"VALID" if resolved.is_file() and resolved in htmls else "BROKEN"})
+        status=("PASS" if correct and actual_mapping and links and all(x["status"]=="VALID" for x in links) else "BLOCKED")
         result={"status":status,"scope":"SYNTHETIC_KERNEL_WRITER_ONLY",
+                "md_mapping":bool(md_maps),"published_relative_links":links,
                 "record_evidence":e,"work_docs_export":export_status,
                 "html_published":correct,"html_mapping":actual_mapping,
                 "files":files[:35],"updater_g0":"NOT_VERIFIED",
