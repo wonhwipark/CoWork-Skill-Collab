@@ -30,6 +30,11 @@ jobs:
           KERNEL_TEST_ARCHIVE: collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates/work-ledger-kernel_v0_7_43_1117.zip
         run: |
           python collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/test_kernel_export_svg_evidence.py
+      - name: Synthetic Kernel HTML Evidence writer probe (read-only diagnosis)
+        env:
+          KERNEL_TEST_ARCHIVE: collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates/work-ledger-kernel_v0_7_43_1117.zip
+        run: |
+          python collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/test_msc_dual_entry_kernel_writer_probe.py
       - name: Existing public converter immutable release and action policy
         run: |
           curl --fail --location --retry 3 --silent --show-error -o /tmp/doc-converter_v0_2_26_1117.zip https://raw.githubusercontent.com/wonhwipark/L1Work/main/doc-converter_v0_2_26_1117.zip
