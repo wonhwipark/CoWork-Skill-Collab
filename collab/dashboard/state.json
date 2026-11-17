@@ -89,10 +89,10 @@
       "id": "L1-WORKSPACE-RAG-20261111-001",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md",
-      "status": "검증 진행 중",
+      "status": "문서상 진행",
       "title": "L1-WORKSPACE-RAG-20261111-001 — CURRENT",
-      "tone": "warning",
-      "topic": "2026-11-18 KST — MSC 두 진입 Kernel HTML 실링크 수정·후속 패키지 재현성 검증"
+      "tone": "neutral",
+      "topic": "2026-11-18 KST — L1Work 공개 배송 요청: G0 인계 MD POSTED, 스킬 ZIP BLOCKED"
     },
     {
       "id": "NR-L1TX-CODE-ANALYSIS-20261115-001",
@@ -645,7 +645,7 @@
     {
       "evidence": "프로젝트 TRACKER.json 신고 값 · 운영 근거 별도 확인 필요",
       "independent_review": "PENDING",
-      "next_action": "MSC 후속 개발/합성 E2E PASS·ZIP 3종 반복재빌드 PASS. 업무 GPT에서 Updater/Kernel/group writer G0 및 승인된 샘플 Work의 published_path·마커 충돌·상세 MD 상대 링크 E3 확인. 이후 코드 독립 리뷰·PUBLIC 릴리스 별도 판정.",
+      "next_action": "L1Work main handoffs/MSC writer G0 READ_ONLY MD POSTED·README link 검증 PASS. 스킬 3 ZIP development_not_for_deployment/public gate BLOCKED; 업무 GPT A~J 숫자 G0 결과 회수 후 보호/",
       "owner": "GPT (MSC 설계 R1 판정 종료) → Windows Claude Code (",
       "phase": "REVIEW",
       "record_source": "REGISTERED_METADATA_UNVERIFIED",
