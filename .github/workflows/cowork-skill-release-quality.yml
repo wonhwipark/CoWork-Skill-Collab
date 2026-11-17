@@ -33,9 +33,12 @@ jobs:
       - name: Build pinned Kernel Work-root MSC HTML link development candidate
         run: |
           python collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/build_msc_kernel_html_links_r0001_20261118.py --source collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates/work-ledger-kernel_v0_7_43_1117.zip --out /tmp/msc-dual-entry-development
+          python collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/build_msc_kernel_html_links_r0001_20261118.py --source collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates/work-ledger-kernel_v0_7_43_1117.zip --out /tmp/msc-dual-entry-recheck
+          cmp /tmp/msc-dual-entry-development/work-ledger-kernel_v0_7_45_1118.zip /tmp/msc-dual-entry-recheck/work-ledger-kernel_v0_7_45_1118.zip
+          echo REPRODUCIBLE_KERNEL_ZIP_PASS
       - name: Synthetic Kernel HTML Evidence writer probe (candidate and preservation)
         env:
-          KERNEL_TEST_ARCHIVE: /tmp/msc-dual-entry-development/work-ledger-kernel_v0_7_44_1118.zip
+          KERNEL_TEST_ARCHIVE: /tmp/msc-dual-entry-development/work-ledger-kernel_v0_7_45_1118.zip
         run: |
           python collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/test_msc_dual_entry_kernel_writer_probe.py
       - name: Existing public converter immutable release and action policy
@@ -47,6 +50,10 @@ jobs:
       - name: Build and regression-test pinned dual-entry development candidates
         run: |
           python collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/msc_dual_entry_candidate.py --converter /tmp/doc-converter_v0_2_26_1117.zip --workflow collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates/l1-fix-workflow_v1_6_70_1117.zip --out /tmp/msc-dual-entry-development
+          python collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/msc_dual_entry_candidate.py --converter /tmp/doc-converter_v0_2_26_1117.zip --workflow collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates/l1-fix-workflow_v1_6_70_1117.zip --out /tmp/msc-dual-entry-recheck
+          cmp /tmp/msc-dual-entry-development/doc-converter_v0_2_28_1118.zip /tmp/msc-dual-entry-recheck/doc-converter_v0_2_28_1118.zip
+          cmp /tmp/msc-dual-entry-development/l1-fix-workflow_v1_6_72_1118.zip /tmp/msc-dual-entry-recheck/l1-fix-workflow_v1_6_72_1118.zip
+          echo REPRODUCIBLE_CONVERTER_WORKFLOW_ZIPS_PASS
       - name: Preserve verified development candidates (not PUBLIC release)
         uses: actions/upload-artifact@v4
         with:
