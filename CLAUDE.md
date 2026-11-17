@@ -20,5 +20,5 @@
 
 ## 신규 REQUEST의 정책 사전 호환성
 
-GPT가 신규 리뷰 요청을 준비할 때 Windows Claude Code는 LIVE 운영 설정을 **읽기 전용** 조회하고, \`collab/ops/review_request_gate.py select/check\`를 기존 승인 범위 내에서 실행해 정책명·건당 예산·고정 ZIP SHA/CRC가 호환되는지만 보고한다. 로컬 설정 파일의 내용·토큰·개인키는 GitHub/대화/로그에 복사하지 않는다. \`POLICY_COMPATIBLE_NOT_APPROVED\` 및 \`PASS_PREPUBLICATION_ONLY\`는 승인/서명/READY/모델 실행의 증거가 아니다. 실제 승인·서명 전에는 별도 \`approve_request.py check\`의 보호 범위·만료·권한 검사를 수행한다. 설계 후보에만 있는 미등록 정책으로 기존 LIVE 리뷰를 요청하지 않는다. 조회·시험 실패 시 BLOCKED, 직접 정책 설정/위임을 우회 변경하지 않는다.
+GPT가 신규 리뷰 요청을 준비할 때 Windows Claude Code는 LIVE 운영 설정을 **읽기 전용** 조회하고, `collab/ops/review_request_gate.py select/check`를 기존 승인 범위 내에서 실행해 정책명·건당 예산·고정 ZIP SHA/CRC가 호환되는지만 보고한다. 로컬 설정 파일의 내용·토큰·개인키는 GitHub/대화/로그에 복사하지 않는다. `POLICY_COMPATIBLE_NOT_APPROVED` 및 `PASS_PREPUBLICATION_ONLY`는 승인/서명/READY/모델 실행의 증거가 아니다. 실제 승인·서명 전에는 별도 `approve_request.py check`의 보호 범위·만료·권한 검사를 수행한다. 설계 후보에만 있는 미등록 정책으로 기존 LIVE 리뷰를 요청하지 않는다. 조회·시험 실패 시 BLOCKED, 직접 정책 설정/위임을 우회 변경하지 않는다.
 
