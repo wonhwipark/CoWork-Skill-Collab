@@ -1,5 +1,16 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-18 KST — 사용자 지시: Claude 리뷰 1회 우선 요청 → 업무 GPT 작업지시 MD 준비
+
+- **현재 확인 상태:** 사용자 요청에 따라 Linux local-first Workspace + read-only viewer의 **새로운 독립 설계 리뷰 실행 원샷** [문서](GPT_L1_WORKSPACE_LOCAL_VIEWER_CLAUDE_ONE_CYCLE_REVIEW_REQUEST_r0001_20261118_KST.md)를 PRIVATE main에 게시·remote readback PASS. 기존 [Windows R01~R22 인계](CLAUDE_L1_WORKSPACE_LOCAL_FIRST_WEB_VIEWER_INDEPENDENT_DESIGN_REVIEW_HANDOFF_r0001_20261118_KST.md)를 재사용. 이전 MSC R1 완료 리뷰 재실행 금지.
+- **리뷰 실행 경계:** 실제 Windows LIVE 위임/정책/select-check/잔여 한도·UNCERTAIN 읽기 전용 preflight는 이 GPT 세션에서 실행 불가. 따라서 신규 **정식 REQUEST/SOURCE_PIN/APPROVAL_SIG/READY/모델 호출=NOT_RUN**, Claude 독립 리뷰 결과/영수증=NOT_RECEIVED. 단순 문서 게시를 독립 리뷰 요청 전송 완료/실제 실행으로 표시하지 않음.
+- **업무 GPT 사용 초안:** [Linux 전체 제안·P0~P6·G0~G6·G0 A~P·스킬 책임·시험/승인/롤백 작업 지시 MD](L1_WORKSPACE_LOCAL_VIEWER_LINUX_PROPOSAL_AND_WORK_ORDER_DRAFT_r0001_20261118_KST.md) PRIVATE main 게시·remote readback PASS. **REVIEW_PENDING_DRAFT / NOT_APPROVED_FOR_OPERATION**. 실제 리뷰·GPT 판정을 반영한 최종 업무 GPT용 비민감 MD만 `wonhwipark/L1Work/main/handoffs/`에 배송; 현재 PUBLIC 최종본 **NOT_POSTED**. 기존 G0 READ_ONLY 인계 PUBLIC 게시 상태 유지.
+- **원본/호스트 경계:** Linux Workspace/Git 원본·Windows LIVE/DB·서명/키·스킬 ZIP·웹 호스트/동료 공개·Knowledge writer 변경 0. 기존 설계·합성 시험 상태 보존.
+- **NEXT_ONE_ACTION:** Windows Claude Code에서 위 원샷 MD를 단 한 번 전달받아 실제 사전 승인/중복/비용 gate 확인 후 유효한 경우 **새 local-viewer 설계 R1 1회** 정식 요청·실행·결과/영수증 게시. 완료 결과를 GPT가 판정한 뒤 업무용 최종 지시 MD 수정·L1Work PUBLIC handoffs 게시/원격 확인. 리뷰 대기 중 G0는 기존 PUBLIC MD로 읽기 전용 진행 가능.
+
+---
+
+
 ## 2026-11-18 KST — 로컬 Linux Workspace + Read-only Web Viewer 안전 전환 설계·G0 인계 게시
 
 - **결론:** 기존 GitHub 기반 Work writer를 즉시 중단하지 않고 (1) **Git/Kernel 원본 유지 + 격리 개인 SHADOW viewer** → (2) 선택 Work 동료 READ_ONLY HTTPS/ACL → (3) **별도 승인·백업복원/단일 writer/코드 리뷰 후** 로컬 authority cutover의 3단계로 분리. 웹 문서는 원본이 아닌 파생 복제본, 그룹 Knowledge 게시/승인/revision 불변.
