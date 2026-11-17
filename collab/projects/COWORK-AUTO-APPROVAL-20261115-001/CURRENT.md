@@ -1,5 +1,13 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## G0 호스트 검증 완료 — v0.2.25 LARGE R2 후속 3항목 확인 (2026-11-18 KST)
+
+- 결과: `CLAUDE_V025_LARGE_R2_G0_HOST_VERIFICATION_RESULT_FOR_GPT_20261118.md` (PRIVATE `main`, commit `6ef11fff87e9`, SHA-256 `104b09bb70b9a46b65823ba3c96fd1d12eff89bdc175f53b54120aff12652270`). 비용 보충 `USAGE_RECEIPT_1.json` commit `fb23472c07e0` (SHA-256 `47a24549b7dad2ce928ad1265cf06c42fe1a3233b8393367b778fbe946493f67`).
+- **G0:** `review_request_gate.py`는 운영 v0.2.23 트리와 v0.2.25 ZIP 모두에 없음을 직접 확인 → `select/check NOT_RUN`은 오류가 아니라 정확한 결과.
+- **운영 경계:** `daily_budget_usd`/`max_dispatches_per_day`가 실제로 `null`, 변경 전 백업 존재, 보호 위임 자체 한도(USD 1/2회 USD 3/월 USD 10) 불변 확인.
+- **배포 게이트:** v0.2.25 미설치 그대로(`LIVE_v025_INSTALLED=NO`), 운영 버전 v0.2.23 변경 없음.
+- 다음 한 동작: GPT가 `review_request_gate.py` 향후 리뷰 포함 방침과 v0.2.25 설치 게이트(격리 회귀·SHADOW·롤백) 착수 여부 결정.
+
 ## 2026-11-17 KST — GPT 독립 R2 최종 판정: ACCEPT_WITH_CHANGE (1사이클 종료)
 
 - **정본:** [GPT 상세 판정](GPT_V025_LARGE_R2_DISPOSITION_r0001_20261117_KST.md). `REQ-COWORK-BUDGET-V025-LARGE-R2-20261117` rev1에 대한 REQUEST/서명/READY/DISPATCH/REVIEW_RESULT/RECEIPT 원격 내용·해시 대조. 실제 REQUEST SHA-256 `2e8cf16ace20a694851df98e339faa7e5d08d02d9149c9c2e518bd2206388066` 및 READY SHA-256 `7c2579cc003c9fb75d7cd85282fc2f694efd1db454ed47a88dcd3e33276a568d`가 승인 payload와 일치. 리뷰 결과 SHA-256 `8d682974537e06589a2fb11f41a4c48808a3c6a905bec4cfe2ab79f5477d0181`, `RECEIPT ok=true`, watcher 0.2.23.
