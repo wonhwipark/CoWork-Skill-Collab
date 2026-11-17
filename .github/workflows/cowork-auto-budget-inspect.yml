@@ -85,4 +85,20 @@ jobs:
                   lines=z.read(name).decode('utf8').splitlines()
                   for lo,hi in ranges:
                       for j in range(lo-1,min(len(lines),hi)):print(f'CAPCODE {name} {j+1} {lines[j]}')
+          import ast
+          with zipfile.ZipFile(zpath) as z:
+              name='tests/test_phase4_unattended.py'
+              source=z.read(name).decode('utf-8')
+              lines=source.splitlines()
+              wanted=('test_daily_dispatch_ceiling_blocks_the_next_request_and_keeps_it_pending',
+                      'test_daily_budget_counts_an_unrecorded_cost_at_its_cap',
+                      'test_ceilings_default_to_off_and_parse_when_present',
+                      'test_a_wrong_ceiling_stops_the_program_instead_of_disabling_the_cap',
+                      'test_the_ceilings_reach_the_policy_the_orchestrator_uses')
+              for node in ast.walk(ast.parse(source)):
+                  if isinstance(node,(ast.FunctionDef,ast.AsyncFunctionDef)) and node.name in wanted:
+                      start=min([node.lineno]+[d.lineno for d in node.decorator_list])
+                      print('TEST_FUNCTION',node.name,start,node.end_lineno)
+                      for i in range(start-1,node.end_lineno):
+                          print(f'PHASE4 {name} {i+1} {lines[i]}')
           PY
