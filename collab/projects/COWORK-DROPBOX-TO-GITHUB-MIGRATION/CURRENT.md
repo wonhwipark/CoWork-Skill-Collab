@@ -1,5 +1,13 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 2026-11-18 KST — pending·Guard 조치 도구 구현·34회귀 PASS / Windows 원샷 준비
+- **실행 지시·코드:** 사용자 “이제 조치해줘”. 기존 StateStore/reconcile/parser를 재사용한 [읽기 전용 정산 도구](../../ops/pending_requests_audit.py) 구현. 현재 입력 id/revision/ZIP 일치 완료만 분리, UNCERTAIN/부분 게시·다른 scope·입력 미확인은 보류/미확인. 원시 행·claim·audit/서명/READY 변경 없음.
+- **시험:** 기존 v0.2.23/v0.2.25 실제 SQLite API/CLI 각각 **17 PASS**(Linux, 총34). 9행 합성은 추적9/완료4/보류1/대기4로 구분, 원본 행 보존. 실제 운영 건수/집계 수정 PASS가 아님. 기존 PRIVATE CI에 두 버전 회귀 연결. [상세 결과·SHA](GPT_PENDING_GUARD_AUDIT_IMPLEMENTATION_RESULT_r0001_20261118_KST.md).
+- **호스트 경계:** 현재 연결에 Windows 명령/DB 접근 도구 없어 실제 Guard 정산·공식 수동 처리/리뷰·운영 표시 수정은 **NOT_RUN**. 새 요청/유료 모델·운영 DB/Task·v0.2.25 승인 ZIP·별도 v0.2.26 후보 변경 0. 두 배포 흐름과 정산을 혼동하지 않음.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 [원샷 실행서](GPT_PENDING_GUARD_WINDOWS_ONE_SHOT_r0001_20261118_KST.md)로 실제 설치/DB/입력 최신성 확인→읽기 전용 정산→유효한 기존 공식 경로에서 Guard 1회 처리 가능성 판정·가능한 최소 표시 수정→동일 Work 결과/영수증 게시. 불확실 이력 임의 초기화·재큐잉 금지.
+
+---
+
 ## 2026-11-18 KST — pending 9건 재분류·MSC 실제 완료 정산
 - **분류:** pending_requests 9/미해결 5/완료 잔존 4는 Windows 호스트 보고. GPT가 완료 4건의 원격 영수증 ok=true·결과 존재를 직접 확인. 원시 행 수를 실행 대기로 표시하는 집계/표시 결함 후보 수용; DB/설치 코드 원인·수정은 NOT_RUN.
 - **미해결 해석:** 구 v0.2.25 DESIGN은 같은 ZIP의 LARGE R2 완료로 추가 리뷰 불필요한 미시작 대체 이력(로컬 종결 미적용). Guard는 AUTO_SIGNING_UNCERTAIN 읽기 전용 정산 우선. 기존 대화형 MSC는 정식 watcher 미실행과 구분; 구 Knowledge 설계는 후속 FIXED R1과 중복 범위 확인; 대시보드는 승인 범위 미확인 대기. 일괄 재실행/행 삭제 없음.

@@ -7,6 +7,8 @@ on:
       - '.github/workflows/cowork-dashboard.yml'
       - 'collab/dashboard/*.py'
       - 'collab/ops/source_pin.py'
+      - 'collab/ops/pending_requests_audit.py'
+      - 'collab/ops/tests/test_pending_requests_audit.py'
       - 'collab/ops/review_request_gate.py'
       - 'collab/ops/tests/test_review_request_gate.py'
       - 'collab/ops/tests/test_source_pin.py'
@@ -39,12 +41,15 @@ jobs:
         with:
           ref: main
           persist-credentials: false
-      - name: Build and test without external API or dependencies
+      - name: Install existing watcher parser dependency for isolated tests
+        run: python3 -m pip install --disable-pip-version-check --target "${RUNNER_TEMP}/cowork-test-deps" 'PyYAML>=6.0,<7'
+      - name: Build and test without model calls
         run: |
           # Existing PRIVATE dashboard state is the deduplication baseline.
           # No new ledger, watcher, Telegram sender or Claude/GPT invocation.
           cp collab/dashboard/state.json "${RUNNER_TEMP}/cowork-review-before.json"
-          python3 -m unittest discover -s collab/ops/tests -v
+          PYTHONPATH="${RUNNER_TEMP}/cowork-test-deps${PYTHONPATH:+:${PYTHONPATH}}" python3 -m unittest discover -s collab/ops/tests -v
+          WATCHER_PACKAGE_VERSION=0.2.23 PYTHONPATH="${RUNNER_TEMP}/cowork-test-deps${PYTHONPATH:+:${PYTHONPATH}}" python3 -m unittest discover -s collab/ops/tests -p test_pending_requests_audit.py -v
           sha256sum collab/ops/review_request_gate.py collab/ops/tests/test_review_request_gate.py
           python3 collab/ops/source_pin.py audit --root . --expected-repo-id 1451933830
           python3 -m unittest discover -s collab/dashboard/tests -v

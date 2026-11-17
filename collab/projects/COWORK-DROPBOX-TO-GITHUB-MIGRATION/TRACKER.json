@@ -9,7 +9,7 @@
       "owner": "GPT / Claude Code",
       "self_test": "PASS",
       "independent_review": "PASS",
-      "next_action": "GitHub 단일 LIVE 유지. SOURCE_PIN repo_id JSON 문자열 수정(Guard R1·MSC R1) 및 PRIVATE CI 11/11 pin·13/13 자체시험 PASS. Guard AUTO_SIGNING_UNCERTAIN은 Windows 로컬 정산 필요. 서명/READY/결과 미관측; 자동 재큐잉 금지."
+      "next_action": "pending/Guard 정산 도구 v0.2.23·v0.2.25 각각 17 PASS. Windows에서 GPT_PENDING_GUARD_WINDOWS_ONE_SHOT_r0001_20261118_KST.md 실행: 실제 DB/입력 정산→기존 공식 승인 경로만 판정→실제 표시 최소 보완·결과 게시. HOST_ACTION=NOT_RUN, 자동 재큐잉/DB 삭제/새 유료 리뷰 금지. 기존 transport 완료는 유지."
     }
   ]
 }
