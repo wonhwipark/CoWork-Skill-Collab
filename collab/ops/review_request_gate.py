@@ -152,7 +152,8 @@ def _check_package(package: Path, *, sha: str, size: int) -> None:
 
 def check_request(request: Path, package: Path, live_config: Path,
                   *, intent: str, required_budget: Decimal) -> dict:
-    fields = _front_matter(_read_file(request, limit=MAX_REQUEST).decode("utf-8"))
+    request_bytes = _read_file(request, limit=MAX_REQUEST)
+    fields = _front_matter(request_bytes.decode("utf-8"))
     if (fields.get("schema") != "SKILL_COLLAB_REVIEW_REQUEST_V1"
             or fields.get("state") != "SUBMITTED"
             or fields.get("request_revision") != "1"
@@ -188,6 +189,7 @@ def check_request(request: Path, package: Path, live_config: Path,
         raise GateReject("INVALID_PACKAGE_SIZE") from e
     _check_package(package, sha=sha, size=count)
     return {"status": "PASS_PREPUBLICATION_ONLY", "request_id": request_id,
+            "request_sha256": hashlib.sha256(request_bytes).hexdigest(),
             "run_policy_ref": policy, "expected_max_budget_usd": str(required_budget),
             "package_sha256": sha, "package_size_bytes": count,
             "authorization": "NOT_CHECKED", "ready": "NOT_CREATED", "model_calls": 0}
