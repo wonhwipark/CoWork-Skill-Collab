@@ -83,10 +83,11 @@ class KernelSvgFunctionalTest(unittest.TestCase):
             "Large MSC SVG",
         )
         from work_ledger_kernel.errors import KernelError
-        with self.assertRaisesRegex(KernelError, "MSC_SVG_TOO_LARGE"):
+        with self.assertRaises(KernelError) as caught:
             self.WorkUX(self.ledger).export_docs(
                 str(self.base / "published-large"), work_id=wid, max_copy_bytes=64,
             )
+        self.assertEqual(getattr(caught.exception, "code", None), "MSC_SVG_TOO_LARGE")
         print("KERNEL_MSC_SVG_SIZE_FAIL_CLOSED_PASS", wid)
 
     def test_unrelated_svg_does_not_break_md_export(self):
