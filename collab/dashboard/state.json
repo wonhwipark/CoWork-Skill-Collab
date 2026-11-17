@@ -17,10 +17,10 @@
       "id": "COWORK-AUTO-APPROVAL-20261115-001",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/COWORK-AUTO-APPROVAL-20261115-001/CURRENT.md",
-      "status": "문서상 진행",
+      "status": "검증 진행 중",
       "title": "COWORK-AUTO-APPROVAL-20261115-001 — CURRENT",
-      "tone": "neutral",
-      "topic": "v0.2.25 Windows LIVE 조건부 배포 완료: HOST_APPLIED=PASS_PARTIAL (2026-11-18 KST)"
+      "tone": "warning",
+      "topic": "v0.2.26 Windows 플랫폼·Notifier 검증 완료 (2026-11-18 KST)"
     },
     {
       "id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
@@ -540,8 +540,8 @@
   "work_items": [
     {
       "evidence": "프로젝트 TRACKER.json 신고 값 · 운영 근거 별도 확인 필요",
-      "independent_review": "PENDING",
-      "next_action": "2026-11-18: v0.2.25 LIVE 전환 완료(HOST_APPLIED=PASS_PARTIAL). 설치 v0.2.23->v0.2.25, 정책맵 1.50/3.00/DESIGN-3.00 반영, 상한 null 유지, 2주기+재시작 PASS, 모델호출 0, 신규요청 0. 격리 회귀 7건 실패 전",
+      "independent_review": "NOT_RUN",
+      "next_action": "2026-11-18: v0.2.26 Windows 전체 회귀(1010P/21F/12S) + Linux기준실패34개 직접재실행(28P/6F, 비회귀) + Notifier 연결확인 완료. 21건 전부 비회귀(상한제거 설계6 + 게이트테스트 CRLF하우징15, 코드결함아님). PIN_REPO_ID_T",
       "owner": "Windows Claude Code 기존 조건부 v0.2.25 배포·v0.2.26",
       "phase": "DISPOSITION",
       "record_source": "REGISTERED_METADATA_UNVERIFIED",
