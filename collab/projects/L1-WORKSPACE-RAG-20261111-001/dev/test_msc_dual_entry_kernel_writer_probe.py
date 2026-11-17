@@ -23,6 +23,18 @@ def run():
         with zipfile.ZipFile(ARCHIVE) as z:
             assert z.testzip() is None
             z.extractall(root)
+        # Inspects the already published development skill; never reads business code.
+        source=root/"work_ledger_kernel"/"work_ux.py"
+        if source.is_file():
+            lines=source.read_text(encoding="utf-8").splitlines()
+            hits=[i for i,line in enumerate(lines) if any(
+                k in line for k in ("MSC_VIEW.md","artifact_publish_map",
+                                   "published_path","render_output", "write_communication"))]
+            keep=set()
+            for ix in hits[:45]:
+                keep.update(range(max(0,ix-3),min(len(lines),ix+5)))
+            print("KERNEL_WRITER_SOURCE_EXCERPTS",len(lines),"hits",len(hits))
+            for ix in sorted(keep)[:220]:print("KERNEL_SOURCE",f"{ix+1:04}",lines[ix][:240])
         sys.path.insert(0,str(root))
         from work_ledger_kernel.kernel import WorkLedgerKernel
         k=WorkLedgerKernel(base/"ledger")
