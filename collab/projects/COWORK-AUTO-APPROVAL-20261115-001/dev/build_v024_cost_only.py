@@ -68,6 +68,8 @@ def build(repo:Path,out:Path):
                 names.add(info.filename)
             z.extractall(root)
         patch(root)
+        from patch_v024_tests import patch_tests
+        patch_tests(root)
         out.mkdir(parents=True,exist_ok=True)
         dst=out/OUT
         with zipfile.ZipFile(dst,"w",zipfile.ZIP_DEFLATED,compresslevel=8) as z:
