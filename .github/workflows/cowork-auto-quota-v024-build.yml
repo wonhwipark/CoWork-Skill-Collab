@@ -24,7 +24,13 @@ jobs:
           python collab/projects/COWORK-AUTO-APPROVAL-20261115-001/dev/build_v024_cost_only.py --repo . --out .tmp-cost-only
       - name: Install test-only dependencies in runner
         run: |
-          python -m pip install -q pytest cryptography
+          python -m pip install -q pytest
+          python - <<'PY'
+          import zipfile,pathlib
+          z=zipfile.ZipFile(".tmp-cost-only/skill-collab-watcher_v0_2_24_1117.zip")
+          pathlib.Path(".tmp-cost-only/requirements.txt").write_bytes(z.read("requirements.txt"))
+          PY
+          python -m pip install -q -r .tmp-cost-only/requirements.txt
       - name: Run pinned candidate behavioral regression (model calls zero)
         run: |
           mkdir -p .tmp-cost-only/unpacked
