@@ -1,5 +1,16 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-17 21:09 KST — v0.2.25 독립 R2 리뷰 정책 미등록 BLOCKED (사용자 전달 Windows Claude Code 결과)
+
+- **새 관측:** 사용자 전달 Windows Claude Code 점검: PRIVATE `main`의 최신 `421ef6524bf9`는 dashboard refresh, 이번 비용 정책과 무관. `REQ-COWORK-BUDGET-V025-DESIGN-R1-20261117`는 **미서명/미READY**. Windows Claude Code는 이번 REQUEST 본문을 읽거나 실행하지 않았다고 보고하며, 이전 정책 미등록 `BLOCKED` 상태 지속.
+- **GPT 원격 직접 대조:** 해당 REQUEST 및 SOURCE_PIN 있음; 해당 APPROVAL_SIG, READY, REVIEW_RESULT, RECEIPT 없음. **정식 리뷰 요청 게시 ≠ Windows 실행/유효 승인 ≠ 유료 리뷰 개시**. `REVIEW_v025=NOT_RUN`; `REVIEW_ADMISSION=BLOCKED_POLICY_NOT_REGISTERED`. Windows LIVE 설치본·위임/DB/비용은 사용자 보고 이외 직접 검증하지 않음.
+- **구조적 차단 원인:** 신규 `POLICY-STATIC-V1-DESIGN` / USD 3 등급은 미설치 v0.2.25 후보의 기능인데, 이를 v0.2.25 자기 리뷰의 REQUEST에 사용하여 기존 LIVE v0.2.23의 `POLICY-STATIC-V1`/요청 $1 보호 위임으로는 서명 불가. 원본 REQUEST/SOURCE_PIN/ZIP을 임의 변경하거나 READY를 위조해 우회하지 않음.
+- **현행 TRACKER 정합화:** `TRACKER.json`의 기존 `phase=COMPLETE`, `independent_review=PASS`는 **v0.2.23 LIVE 및 과거 R2 시험의 역사적 상태**로서 v0.2.25에 적용하면 오표시. 이번 동일 Work의 현재 후속 작업만 `phase=BLOCKED`, `independent_review=PENDING`, `self_test=PASS`로 갱신. 과거 PASS 상세는 아래 이전 기록에 보존.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 과거 v0.2.23에서 실제 사용했던 `POLICY-STATIC-V1-LARGE` USD 3 **수동 서명/READY** 리뷰 경로의 현재 로컬 등록·보호 승인 범위를 먼저 읽기 전용 확인. 유효한 USD 3 독립 R2 **1회 승인**이 확인될 때에만 그 기존 등급으로 **별도의 신규 고정 REQUEST**를 합법적으로 준비해 v0.2.25 ZIP을 1회 리뷰; 미승인/미등록이면 BLOCKED 유지하고 필요한 정확한 승인·호스트 상태만 보고. 원래 DESIGN 요청은 미시작 이력으로 보존, 기존 동일 ID를 무단 재편집/재큐잉하지 않음. 독립 리뷰 완료 전 LIVE 교체 금지.
+
+---
+
+
 ## 2026-11-17 v0.2.25 Windows Claude Code 독립 R2 리뷰 정식 요청 게시
 
 - **요청:** [REQ-COWORK-BUDGET-V025-DESIGN-R1-20261117](../../requests/REQ-COWORK-BUDGET-V025-DESIGN-R1-20261117/REQUEST.md) / `request_revision=1` / `skill_id=cowork-review-watcher` / `POLICY-STATIC-V1-DESIGN` **디자인·보안 R2, USD 3.00 이내 1회**. 기존 [상세 인계서](CLAUDE_V025_BUDGET_POLICY_INDEPENDENT_REVIEW_HANDOFF_r0001_20261117_KST.md)와 최신 예산 r0002 재사용, 새 Work 생성/기존 REQUEST 재시도 없음.
