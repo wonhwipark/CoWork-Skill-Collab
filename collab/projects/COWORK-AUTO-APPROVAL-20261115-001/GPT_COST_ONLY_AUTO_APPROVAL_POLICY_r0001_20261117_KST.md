@@ -1,5 +1,7 @@
 # GPT 결정 — 자동 리뷰의 일·월 횟수 상한 제거 / 비용 기준 유지
 
+> **대체된 정책:** 2026-11-17 최신 사용자 지시에 따라 [r0002 — 일반 스킬 USD 1.50, 디자인 USD 3.00, 일/월 누적 상한 없음](GPT_AUTO_REVIEW_BUDGET_POLICY_r0002_20261117_KST.md)이 신규 목표 정책. 아래 USD 1/일 3/월 10은 r0001 당시 결정 이력이며 LIVE 적용 근거가 아님.
+
 - 날짜: 2026-11-17 KST
 - 정본: PRIVATE `wonhwipark/CoWork-Skill-Collab/main`
 - Work: `COWORK-AUTO-APPROVAL-20261115-001`
