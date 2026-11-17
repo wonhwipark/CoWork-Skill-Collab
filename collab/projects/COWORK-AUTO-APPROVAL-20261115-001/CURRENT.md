@@ -1,5 +1,17 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-17 정책 변경 — 일·월 리뷰 횟수 제한 폐기 / 비용·중복 보호 유지
+
+- **사용자 최신 지시:** 일/월 자동 리뷰 횟수 상한 컨셉 삭제. [GPT 비용만 사용하는 승인 정책](GPT_COST_ONLY_AUTO_APPROVAL_POLICY_r0001_20261117_KST.md) 확정. 과거 Windows LIVE의 `max_day_calls=2`는 당시 이력; 신규 정책에는 적용 금지. 요청당 1회/동일 REQUEST 재실행 금지, USD 1/요청·USD 3/KST 일·USD 10/KST 월, 서명/READY/위임 만료·프로젝트/스킬 정확 일치 유지.
+- **수정 대상 직접 확인:** 원본 `v0.2.23` ZIP 282340 B SHA `f941be8a6b53d00baa10a9b097f234b159470e2aa1242ecc33bcf0bdee080ea7`에서 `auto_policy.py`의 COUNT 판단, `state_store.py::auto_claim`의 `DAY_CALL_LIMIT`, `auto_approval.py`의 입력·표시 사용을 확인. 실제 집계의 비용 예약은 그대로 보수 유지. `UNCERTAIN/POLICY_STOPPED`의 자동 비용 해제는 새 코드에서 수행하지 않음(증거 없이 해제 금지).
+- **개발 후보 ZIP:** `dev/auto-quota-cost-only-20261117` / `collab/projects/COWORK-AUTO-APPROVAL-20261115-001/candidates/skill-collab-watcher_v0_2_24_1117.zip`, 282548 B, SHA-256 `3c78699b734d88202a34ef5fd430f5f278ab1692a437b6affb6b6c64d24ca360`. 원본 고정 빌더·시험 코드 `dev/build_v024_cost_only.py`, `dev/patch_v024_tests.py`, branch CI `.github/workflows/cowork-auto-quota-v024-build.yml`. `DEVELOPMENT_NOT_FOR_DEPLOYMENT`.
+- **실제 개발 자체시험:** [Actions #44002235785](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/44002235785) **SUCCESS**, 변경 표적 25 PASS/2 SKIP 및 Linux 허용 전체 회귀 578 PASS/30 SKIP/1 DESELECTED. KST 사용·원자 중복/비용 차단 코드 검사 PASS. Windows 전용 lock/SHADOW 사례는 Linux에서 제외되어 **WINDOWS_FULL_REGRESSION=NOT_RUN**. 실서명/유료 모델 호출 0.
+- **계약 게시:** [이전 자동 승인 설계의 최신 결정](AUTOMATIC_SIGNING_MINIMAL_DESIGN_r0001_20261115.md), [공통 비용/리뷰 예산 계약](../../ops/CONTRACTS/REVIEW_TIER_TOKEN_BUDGET_V1.md)에서 기존 횟수상한의 현행 적용 해제. PRIVATE main 문서 반영만 수행했으며 **설치된 LIVE v0.2.23 / Windows 로컬 보호 위임·DB·키/Task·Notifier는 불변**. 새 REQUEST/READY/독립 유료 리뷰 미생성.
+- **판정:** `COUNT_POLICY_DESIGN=REMOVED`, `CANDIDATE=BUILT_PRIVATE`, `LINUX_SELF_TEST=PASS`, `INDEPENDENT_CODE_REVIEW=PENDING`, `WINDOWS_HOST_TEST=NOT_RUN`, `LIVE_COUNT_LIMIT_REMOVAL=NOT_APPLIED`, `PUBLIC_RELEASE=NOT_RUN`.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 같은 브랜치 고정 후보의 바이트·SHA 및 소스 diff를 독립 확인하고 Windows 운영 인터프리터 전체 회귀·격리 SHADOW·롤백 리허설 후 코드를 독립 리뷰. PASS/유효 승인 범위 확인 전 LIVE 교체 금지. 기존 `REQ-L1-WORK-KNOWLEDGE-GUARD-CODE-R1-20261117`의 미정산 예약은 자동 재큐잉하지 않음.
+
+---
+
 ## 새 SOURCE_PIN repo_id 포맷 오류 보정 — 로컬 AUTO_SIGNING_UNCERTAIN 정산 대기 (2026-11-17 KST)
 - **원인:** Windows Claude Code 보고 `ApprovalRejected: REPO_ID_MISMATCH`: 신뢰 루트 `repo_id` 문자열 `"1451933830"`와 신규 SOURCE_PIN JSON 숫자 `1451933830`의 타입 불일치. watcher의 fail-closed 정상 동작이며 signer/승인 정책 결함으로 보지 않음. Guard `AUTO_SIGNING_UNCERTAIN`은 사용자 전달된 Windows 호스트 상태, GPT 호스트 DB 직접 확인 아님.
 - **생성 측 보정:** [협업 운송 결과](../COWORK-DROPBOX-TO-GITHUB-MIGRATION/SOURCE_PIN_REPO_ID_STRING_REPAIR_RESULT_r0001_20261117_KST.md) — 공통 생성기 `collab/ops/source_pin.py`와 총 13개 회귀, 기존 Guard·MSC SOURCE_PIN의 `repo_id` 타입만 문자열 보정·원격 검증. GitHub Actions 실제 SOURCE_PIN 11/11 타입 검사 PASS. signer/READY/watcher 로컬 버전·DB·키·Notifier·위임 정책 **변경 없음**.
