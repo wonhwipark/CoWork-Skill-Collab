@@ -12,7 +12,7 @@ from pathlib import Path
 BASE = Path(__file__).resolve().parent / "output"
 V = [
     ("workflow", BASE / "l1-fix-workflow_v1_6_70_1117.zip"),
-    ("github", BASE / "l1-github_v0_3_58_1117.zip"),
+    ("github", BASE / "l1-github_v0_3_59_1117.zip"),
     ("kernel", BASE / "work-ledger-kernel_v0_7_43_1117.zip"),
 ]
 
@@ -50,7 +50,7 @@ def smoke():
                         print("META", name, p.relative_to(target), txt[:800].replace("\n", " "))
         # Validate regenerated candidate version/release/hash manifests.
         import hashlib
-        expected = {"workflow": "1.6.70", "github": "0.3.58", "kernel": "0.7.43"}
+        expected = {"workflow": "1.6.70", "github": "0.3.59", "kernel": "0.7.43"}
         for name, path in V:
             folder = folders[name] / ("l1-fix-workflow" if name == "workflow" else "")
             release_file = folder / ".skill-release.json"
@@ -111,6 +111,27 @@ def smoke():
         (repo / "knowledge").rmdir()
         assert guard.assert_work_docs_knowledge_unchanged(repo)["ok"]
         print("GITHUB_GUARD_SMOKE_PASS")
+
+        # Outbound commits are not visible to git status; compare commits with upstream.
+        remote = Path(tmp) / "bare"
+        remote.mkdir()
+        git(remote, "init", "--bare", "-q")
+        git(repo, "branch", "-M", "main")
+        git(repo, "remote", "add", "origin", str(remote))
+        git(repo, "push", "-q", "-u", "origin", "main")
+        assert guard.assert_work_docs_outbound_knowledge_unchanged(repo)["inspected_commits"] == 0
+        (repo / "works" / "a.md").write_text("normal outbound edit\n")
+        git(repo, "add", "works/a.md")
+        git(repo, "commit", "-q", "-m", "work docs only")
+        assert guard.assert_work_docs_outbound_knowledge_unchanged(repo)["inspected_commits"] == 1
+        git(repo, "push", "-q", "origin", "main")
+        (repo / "knowledge").mkdir(exist_ok=True)
+        (repo / "knowledge" / "blocked.md").write_text("unpublished knowledge\n")
+        git(repo, "add", "knowledge/blocked.md")
+        git(repo, "commit", "-q", "-m", "forbidden already committed knowledge")
+        assert not git(repo, "status", "--porcelain").strip()
+        assert_raises(guard.assert_work_docs_outbound_knowledge_unchanged, repo)
+        print("GITHUB_COMMITTED_KNOWLEDGE_DENY_PASS")
         # Kernel only navigation check here; full real Work export will be separate.
         kern = folders["kernel"]
         src = (kern / "work_ledger_kernel" / "work_ux.py").read_text(encoding="utf-8")
