@@ -6,6 +6,7 @@
 - **실제 확인:** 고정 REQUEST 3609 B/ZIP 29111 B의 현재·commit A bytes 일치, ZIP CRC/경로/5개 manifest 항목·실제 기존 secret scanner PASS. 실제 v0.2.23 승인 비교식과 공통 pin 검사에서 원본 FAIL/수정본 PASS를 격리 재현. 실제 signer/키/READY/모델 호출 0. 전체 Windows 승인·호스트 회귀를 PASS로 표시하지 않음.
 - **범위 구분:** 기존 요청은 USD 1·1회 **한정 R1 설계 검토**, 종합 R2/R3 완료 근거가 아님. 현행 USD 3 설계 기본 및 신규 REQUEST의 LIVE select/check 사전 게이트는 이후 변경으로, 과거 요청에 소급 적용/무단 변환하지 않음. 기존 보호 위임과 현재 Windows 상태는 실제 호스트 검증 필요.
 - **현재 관측·한계:** snapshot `2c1e2ee3187c1c0548c56d353fd4388f8e3a1d24`에서 해당 요청의 APPROVAL_SIG/READY/DISPATCH/REVIEW_RESULT/실행 RECEIPT `NOT_OBSERVED`. Guard의 로컬 `AUTO_SIGNING_UNCERTAIN` 보고를 MSC 상태 확정으로 복사하지 않음. 입력 보정만으로 기존 불확실 예약이 해소·자동 재실행됐다고 보고하지 않음.
+- **사용자 후속·실행 연결:** 상태 설명 반복을 중단하고 기존 요청 완료를 우선. [같은 Windows 완료 인계](GPT_MSC_DUAL_ENTRY_EXISTING_REVIEW_CLOSEOUT_HANDOFF_r0001_20261117_KST.md)에 확인된 pin 결함/수정·MSC 로컬 상태 분리·단일 세션 정산→유효 승인→기존 리뷰 1회→결과/영수증 게시 및 차단 시 정확한 근거 보고를 반영. 사용자 재승인 반복이나 신규 REQUEST 생성 없이 기존 유효 범위로 처리. GPT의 Windows 실행 연결 부재는 유지되며 인계 게시를 실행 완료로 표시하지 않음.
 - **NEXT_ONE_ACTION:** 기존 Windows 완료 인계로 MSC request_id/revision의 로컬 예약·서명·호출·비용·현재 승인 범위를 **읽기 전용 정산**. 정상 처리 조건이 입증될 때만 기존 1사이클 진행, 불확실·중복이면 보류 근거 게시. 이번 감사에서 REQUEST/ZIP/pin·운영 DB/위임·정책 변경/새 리뷰/재큐잉 없음. 기존 다른 품질·Guard·공개 인계 흐름 보존.
 
 ---
