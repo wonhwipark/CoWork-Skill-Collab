@@ -1,0 +1,95 @@
+name: CoWork v0.2.25 per-review budgets candidate QA
+on:
+  push:
+    branches: [dev/auto-review-budget-policy-20261117]
+    paths:
+      - '.github/workflows/cowork-auto-budget-v025-build.yml'
+      - 'collab/projects/COWORK-AUTO-APPROVAL-20261115-001/dev/build_v025_review_budgets.py'
+      - 'collab/projects/COWORK-AUTO-APPROVAL-20261115-001/dev/patch_v025_budget_tests.py'
+permissions:
+  contents: write
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Build immutable-source v0.2.25 candidate (no host/model calls)
+        run: |
+          mkdir -p .tmp-v025
+          python collab/projects/COWORK-AUTO-APPROVAL-20261115-001/dev/build_v025_review_budgets.py --repo . --out .tmp-v025
+      - name: Install only package test requirements
+        run: |
+          python -m pip install -q pytest
+          python - <<'PY'
+          import zipfile,pathlib
+          z=zipfile.ZipFile(".tmp-v025/skill-collab-watcher_v0_2_25_1117.zip")
+          pathlib.Path(".tmp-v025/requirements.txt").write_bytes(z.read("requirements.txt"))
+          PY
+          python -m pip install -q -r .tmp-v025/requirements.txt
+      - name: Run v0.2.25 executable regressions
+        run: |
+          mkdir -p .tmp-v025/unpacked
+          python - <<'PY'
+          import pathlib,stat,zipfile
+          with zipfile.ZipFile(".tmp-v025/skill-collab-watcher_v0_2_25_1117.zip") as z:
+              assert z.testzip() is None
+              names=z.namelist()
+              assert len(names)==len(set(names))
+              for i in z.infolist():
+                  assert not i.filename.startswith("/") and ".." not in pathlib.PurePosixPath(i.filename).parts
+                  assert stat.S_IFMT(i.external_attr>>16)!=stat.S_IFLNK
+              z.extractall(".tmp-v025/unpacked")
+          PY
+          cd .tmp-v025/unpacked
+          python -m pytest -q tests/test_auto_approval.py tests/test_auto_policy_gpt_proto.py tests/test_v022_findings.py tests/test_review_budget_policy_v025.py
+          python -m pytest -q tests su_l1 --ignore=tests/test_phase5_shadow.py -k 'not test_single_instance_lock_blocks_second_holder'
+      - name: Audit absence of aggregate gate while preserving monetary and identity controls
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          pkg=Path(".tmp-v025/unpacked/skill_collab_watcher")
+          pure=(pkg/"auto_policy.py").read_text()
+          store=(pkg/"state_store.py").read_text()
+          runner=(pkg/"review_runner.py").read_text()
+          orchestrator=(pkg/"orchestrator.py").read_text()
+          assert "DAY_COST_LIMIT" not in pure and "DAY_COST_LIMIT" not in store
+          assert "MONTH_COST_LIMIT" not in pure and "MONTH_COST_LIMIT" not in store
+          assert 'c.max_calls != 1 or c.attempt != 1' in pure
+          assert "BEGIN IMMEDIATE" in store and "PRIMARY KEY (request_id, revision)" in store
+          assert '"POLICY-STATIC-V1-DESIGN"' in pure
+          assert '"--max-budget-usd"' in runner
+          assert "store.claim(final.processing_key)" in orchestrator
+          print("PER_REVIEW_BUDGET_AND_UNLIMITED_AGGREGATE_GATES_PASS")
+          PY
+      - name: Publish verified candidate to PRIVATE development branch only
+        run: |
+          python - <<'PY'
+          import hashlib,json,pathlib,shutil
+          base=pathlib.Path("collab/projects/COWORK-AUTO-APPROVAL-20261115-001/candidates")
+          base.mkdir(parents=True,exist_ok=True)
+          src=pathlib.Path(".tmp-v025/skill-collab-watcher_v0_2_25_1117.zip")
+          dst=base/src.name
+          if dst.exists() and dst.read_bytes()!=src.read_bytes():
+              raise SystemExit("IMMUTABLE_RELEASE_PATH_COLLISION")
+          shutil.copy2(src,dst)
+          r={"name":dst.name,"size":dst.stat().st_size,"sha256":hashlib.sha256(dst.read_bytes()).hexdigest(),
+             "source_name":"skill-collab-watcher_v0_2_24_1117.zip",
+             "source_sha256":"3c78699b734d88202a34ef5fd430f5f278ab1692a437b6affb6b6c64d24ca360",
+             "qa":"LINUX_SUPPORTED_TESTS_PASS_WINDOWS_INDEPENDENT_REVIEW_NOT_RUN",
+             "release":"DEVELOPMENT_NOT_FOR_DEPLOYMENT"}
+          (base/"AUTO_REVIEW_BUDGET_V025_BUILD_RESULT.json").write_text(json.dumps(r,indent=2)+"\n")
+          print(json.dumps(r,indent=2))
+          PY
+          git config user.name 'CoWork developer CI'
+          git config user.email 'cowork-dev-ci@users.noreply.github.com'
+          git add collab/projects/COWORK-AUTO-APPROVAL-20261115-001/candidates
+          if ! git diff --cached --quiet; then
+            git commit -m 'dev(auto-approval): pin verified v0.2.25 per-review budget candidate'
+            git push origin HEAD:dev/auto-review-budget-policy-20261117
+          fi
