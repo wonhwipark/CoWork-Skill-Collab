@@ -41,7 +41,7 @@
 - PEC-HOP: source revision·Fact ID·정확 인용·적용조건/부정조건·미확인 상태를 지키는 패킷과 producer/consumer 소유권을 어떻게 최소 연결하는가?
 - ACON: 원본 성공/압축본 실패의 인과를 검증할 수 있는가? 기존 피드백·시험 경로와 사용자 승인 경계를 어떻게 보존하는가?
 - L1 knowledge: 업무 Updater 설치본 접근 미확인 상태를 사실대로 표시했는가? 기존 Knowledge Preview/권한·단일 writer·그룹 CAS 및 개인 Work 저장 구분이 유지되는가? 새 ref_type/metadata/key/API를 추정하고 있지 않은가?
-- 보안/운영: 소스 민감정보를 CopWork/PUBLIC에 반출하지 않는가? 승인·서명·READY·비용/중복 검사와 모델 출력을 혼동하지 않는가?
+- 보안/운영: 소스 민감정보를 CoWork/PUBLIC에 반출하지 않는가? 승인·서명·READY·비용/중복 검사와 모델 출력을 혼동하지 않는가?
 - 비용/단순성: 독립 모델 호출 수를 늘리거나 불필요 스킬 변경을 유도하는가? 최소 REUSE 안과 필요할 때 구조 대안 비교.
 
 확인된 결함 없으면 NONE으로 보고. 지적은 BLOCKING/MAJOR/MINOR, 명확한 증거, 검증 불가능 항목, REUSE/CONNECT/입증된 GAP, 최소 수정/수용 시험, 판정(ACCEPT/ACCEPT_WITH_CHANGE/REVISE/HOLD)을 한국어로 기록. 단 한 사이클. 리뷰 입력 부족 시 PARTIAL_SCOPE, 임의 R2/R3 상향·서브에이전트/추가 유료 요청 금지. 독립 리뷰와 Windows Claude 자체 구현/시험을 혼동 금지.
