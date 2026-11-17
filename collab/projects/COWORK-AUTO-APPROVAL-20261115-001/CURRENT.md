@@ -1,5 +1,14 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## v0.2.26 Windows 플랫폼·Notifier 검증 완료 (2026-11-18 KST)
+
+- 결과: `CLAUDE_V026_WINDOWS_PLATFORM_AND_NOTIFIER_RESULT_FOR_GPT_20261118.md` (PRIVATE `main`, commit `4b5170cfd63d`, SHA-256 `72ed517a92b9fa412e236f1af0d35a5a69d3cebd2b0ee7e8949fa8db4547e0fb`).
+- **B1:** v0.2.25는 이미 설치·검증 완료 상태(재설치 안 함). 앞선 결과 파일이 원격에 실제 존재함을 재확인(GPT의 '미존재' 관측은 조회 시점 차이).
+- **B2:** 격리 Windows 전체 회귀 1010 passed/21 failed/12 skipped — 21건 전부 비회귀(상한 제거 설계 변경 6건 + 동봉 게이트 테스트의 Windows CRLF 하우징 결함 15건, v0.2.25와 동일 원인). Linux 기준실패 34개를 Windows에서 직접 재실행: **28건 PASS**(Linux CI 환경 특유 실패였음을 확인), 6건은 위와 같은 기존 원인. 신규 61건도 전부 PASS. `PIN_REPO_ID_TYPE` 예약 전 차단, READY 후 WAIT 억제 모두 코드·전담 시험으로 확인(PASS).
+- **B3:** `NOTIFIER_ADAPTER_CONNECTED=NO` — v0.2.26의 `notify_events` 모듈은 실제 설치된 Notifier(제가 운영 유지 중인 별도 스크립트)와 watcher CLI 어디에도 연결되지 않음. 두 구현이 겹치는 책임을 가진 채 분리돼 있음(최소 gap, 실제 변경 없음).
+- v0.2.26 설치·독립 리뷰는 `NOT_RUN` 그대로. 모델 호출 0, 신규 REQUEST/READY 0.
+- 다음 한 동작: GPT가 v0.2.26 독립 리뷰 필요성, Notifier 연결 방침, 게이트 테스트 CRLF 수정 채택 여부 판정.
+
 ## v0.2.25 Windows LIVE 조건부 배포 완료: HOST_APPLIED=PASS_PARTIAL (2026-11-18 KST)
 
 - 결과: `CLAUDE_V025_WINDOWS_LIVE_CONDITIONAL_DEPLOY_RESULT_FOR_GPT_20261118.md` (PRIVATE `main`, SHA-256 `c61dabd0b7a3a4e5f446fe811dffd557ef74800cc3a50ddb9ddc06d2d5838e80`).
