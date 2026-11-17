@@ -5,11 +5,11 @@
       "work_id": "COWORK-AUTO-APPROVAL-20261115-001",
       "skill": "cowork-review-watcher",
       "title": "GPT→GitHub REQUEST 자동 서명·READY (제한된 사전 위임)",
-      "phase": "COMPLETE",
-      "owner": "Windows 운영 호스트 (자동 승인 LIVE) / GPT 판정",
+      "phase": "DISPOSITION",
+      "owner": "Windows Claude Code 조건부 LIVE 적용 / GPT 최종 판정",
       "self_test": "PASS",
       "independent_review": "PASS",
-      "next_action": "2026-11-18: GPT ACCEPT_WITH_CHANGE 후속 G0 호스트 검증 완료. review_request_gate.py는 운영 트리(v0.2.23)·리뷰 ZIP 모두에 없어 select/check NOT_RUN 확정(정확). 전역 상한 제거(daily_budget_usd/max_dispatches_per_day=null)가 설정에 실제 적용·백업 보존·위임 자체 한도 불변 확인. v0.2.25 미설치(LIVE_v025_INSTALLED=NO) 유지. R2 비용 영수증 공백을 USAGE_RECEIPT_1.json로 보완(USD 0.8061916, 모델 1회). 다음: GPT가 review_request_gate.py 포함 방침과 v0.2.25 설치 게이트 착수 여부 결정."
+      "next_action": "2026-11-18: 사용자가 v0.2.25 Windows LIVE 원샷 조건부 배포 승인. 고정 ZIP v0.2.25의 Windows 격리 회귀·SHADOW·백업·위임/설정 정책 확인 PASS 시 설치·검증, 아니면 fail-closed. HOST_APPLIED=NOT_RUN; Windows 실행 결과 필요."
     }
   ]
 }

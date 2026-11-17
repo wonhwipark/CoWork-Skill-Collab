@@ -1,5 +1,16 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-18 KST — 사용자 조건부 Windows LIVE v0.2.25 배포 승인 / 원샷 인계 게시
+
+- **사용자 승인:** GPT가 제안한 'Windows 격리시험 → 운영 백업 → 검증 PASS 시 v0.2.25 설치·단일 LIVE 활성화 → 두 주기/재시작 시험 → 실패 시 안전 롤백'에 사용자 “그래”. 같은 범위 재승인 불필요, 새로운 유료 리뷰·키/토큰 생성·DB 이행/공개 게시 금지.
+- **실행 정본:** [GPT_V025_WINDOWS_LIVE_CONDITIONAL_DEPLOY_ONE_SHOT_r0001_20261118_KST.md](GPT_V025_WINDOWS_LIVE_CONDITIONAL_DEPLOY_ONE_SHOT_r0001_20261118_KST.md). Windows Claude Code가 이 한 문서로 설치 전 정책/위임/rollback 확인, SHA-256 고정 v0.2.25 ZIP 검증, 격리 회귀·SHADOW, 유효 보호 범위 내 설정 정합화, 안전 교체, LIVE 검증, 결과·영수증 게시까지 일괄 수행. USER_AUTHORIZATION=CONDITIONAL_DEPLOY, HOST_APPLIED=NOT_RUN.
+- **이미 확인한 최신 G0:** v0.2.23 운영, v0.2.25 미설치. 보호 위임 max_request_usd=1.0 및 일 2회/$3/월 $10은 **계속 유효**로 보고되어 목표 $1.50/$3·상한 폐기와 충돌. 이번 배포는 실제 로컬에서 유효 보호 위임 변경 권한/승인 수단이 확인되고 모든 사전 게이트를 통과할 때만 활성화. 임의 위임/키 편집·정책 우회 금지. R2 M1은 패키지 외 사전 게이트 독립 리뷰 공백으로 별도 유지하며 유료 재리뷰 없음.
+- **동작 경계:** PRIVATE 문서 게시만으로 Windows 호스트가 자동 실행되지 않음. 모델 호출/READY/패키지 재빌드·LIVE 설치 이번 GPT 세션에서 0. 실제 Windows 결과 `CLAUDE_V025_WINDOWS_LIVE_CONDITIONAL_DEPLOY_RESULT_FOR_GPT_20261118.md` 게시 및 원격 확인 전에는 LIVE_v025=NOT_RUN.
+- **NEXT_ONE_ACTION:** Windows Claude Code에 위 원샷 인계서 **경로 한 번만** 전달하여 조건부 배포 작업을 끝까지 시행하고 결과·CURRENT·TRACKER를 PRIVATE main에 게시. 시험 실패 또는 위임 범위 미충족 시 안전 중지/롤백 후 BLOCKED 판정.
+
+---
+
+
 ## G0 호스트 검증 완료 — v0.2.25 LARGE R2 후속 3항목 확인 (2026-11-18 KST)
 
 - 결과: `CLAUDE_V025_LARGE_R2_G0_HOST_VERIFICATION_RESULT_FOR_GPT_20261118.md` (PRIVATE `main`, commit `6ef11fff87e9`, SHA-256 `104b09bb70b9a46b65823ba3c96fd1d12eff89bdc175f53b54120aff12652270`). 비용 보충 `USAGE_RECEIPT_1.json` commit `fb23472c07e0` (SHA-256 `47a24549b7dad2ce928ad1265cf06c42fe1a3233b8393367b778fbe946493f67`).
