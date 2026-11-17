@@ -1,5 +1,16 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-18 KST — 로컬 Linux Workspace + Read-only Web Viewer 안전 전환 설계·G0 인계 게시
+
+- **결론:** 기존 GitHub 기반 Work writer를 즉시 중단하지 않고 (1) **Git/Kernel 원본 유지 + 격리 개인 SHADOW viewer** → (2) 선택 Work 동료 READ_ONLY HTTPS/ACL → (3) **별도 승인·백업복원/단일 writer/코드 리뷰 후** 로컬 authority cutover의 3단계로 분리. 웹 문서는 원본이 아닌 파생 복제본, 그룹 Knowledge 게시/승인/revision 불변.
+- **정본:** [안전 전환 상세 설계 r0001](L1_WORKSPACE_LOCAL_FIRST_WEB_VIEWER_SAFE_TRANSITION_DESIGN_r0001_20261118_KST.md) (PRIVATE main, 원격 readback PASS, SHA-256 `8acb1e57c9dbf1a8568c09045893426f89228b08f259280c8b73d45c4da94cad`), [GPT 직접 실행·검증 결과](GPT_L1_WORKSPACE_LOCAL_WEB_VIEWER_SAFE_TRANSITION_PREP_RESULT_r0001_20261118_KST.md) (비민감 분석/시험/차단·원격 증빙).
+- **실제 자체시험:** 개발 Kernel v0.7.45 `work_docs_export()` Git 없는 별도 synthetic 로컬 폴더에 12파일 생성·재export 파일 SHA 불변 **PASS**. 기존 관련 packaged pytest **5 PASS**. 개발 Workflow v1.6.72 원문에서 `docs_sync` 등록 origin/clean tree, `docs_push` commit/push/remote readback 필수 확인. 실제 Linux 설치본/업무 writer·HTML 호스팅 G0 **NOT_VERIFIED**.
+- **인계:** [업무 GPT Linux G0 A~P 16숫자 확인 요청](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_WORKSPACE_LOCAL_WEB_VIEWER_LINUX_G0_READONLY_HANDOFF_r0001_20261118_KST.md) PUBLIC `L1Work/main/handoffs/` 게시/인덱스/remote readback PASS. [Windows Claude R01~R22 독립 설계 리뷰 핸드오프](CLAUDE_L1_WORKSPACE_LOCAL_FIRST_WEB_VIEWER_INDEPENDENT_DESIGN_REVIEW_HANDOFF_r0001_20261118_KST.md) PRIVATE main 게시/원격 검증 PASS. 실제 Windows 전달·유효 정책/위임 select/check/정식 REQUEST·READY·유료 리뷰·결과·영수증 **NOT_RUN / NOT_POSTED**.
+- **보호/차단 유지:** 업무 회사 코드·상세 MSC·토큰 외부 게시 0. Linux root/Git/backup/ACL·서비스·group writer·Knowledge write/서버 기동·호스트 정본 전환/스킬 ZIP PUBLIC 배포 **NOT_RUN/BLOCKED**. 기존 MSC 설계 R1 완료, 이전 Guard 불확실 이력·자동 승인 정책 무변경. 본 설계 게시를 설치·운영 전환으로 취급하지 않음.
+- **NEXT_ONE_ACTION:** 업무 Linux G0 A~P 16숫자 read-only 검증 결과를 받고 기존 서비스·백업/권한·Writer 실제 계약을 확인한 후 같은 Work에서 개인 SHADOW viewer의 최소 코드/수락 테스트·안전 실행 승인을 판정. G0 미확인 동안 원격 Git mode·원본·동료 접근은 그대로 유지.
+
+---
+
 ## 2026-11-18 KST — L1Work 공개 배송 요청: G0 인계 MD POSTED, 스킬 ZIP BLOCKED
 
 - **실제 PUBLIC 게시:** [업무 GPT MSC writer G0 숫자 확인 MD](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_MSC_DUAL_ENTRY_WRITER_G0_READONLY_HANDOFF_r0001_20261118_KST.md) `handoffs/` 신설, [handoffs/README.md](https://github.com/wonhwipark/L1Work/blob/main/handoffs/README.md)에서 바로가기 연결. main commit `6c17e54c474a6d97486d40e7749aefba20747d81` / 인덱스 commit `6da224419625cdf810fc1119884ea5dd7dc75d69`, 원격 blob/내용 readback PASS. [배송·게이트 상세 판정](GPT_MSC_DUAL_ENTRY_L1WORK_PUBLIC_DELIVERY_DISPOSITION_r0001_20261118_KST.md).
