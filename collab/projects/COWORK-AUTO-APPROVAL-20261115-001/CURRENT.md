@@ -1,5 +1,17 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-17 — REQUEST 신규 게시 전 LIVE 정책 사전 검증 게이트
+
+- **요청/원인:** 사용자 “정책사전검증 빠지지 않는 방안” 후 “진행해줘”. v0.2.25 리뷰에서 미설치 `POLICY-STATIC-V1-DESIGN`으로 REQUEST를 고정해 Windows v0.2.23이 서명/READY를 차단한 결함 재발 방지. 기존 동일 Work의 PREPUBLICATION 개발/검증만, 신규 리뷰 REQUEST/READY/비용/Windows LIVE 변경 없음.
+- **실제 코드:** [`collab/ops/review_request_gate.py`](../../ops/review_request_gate.py) 신규. 실제 Windows 로컬 `reviewer.config.json`의 `review_policy.known_run_policy_refs`를 **반드시 입력**받는 `select`(호환 정책 선택)와 `check`(REQUEST 정확한 bytes SHA-256, ZIP SHA-256·크기·CRC·경로/심볼릭 링크, 기존 SOURCE_PIN 타입/commit 옵션 검사). 목적 `design`의 $3는 DESIGN 등록 시 DESIGN, 미등록이고 기존 `POLICY-STATIC-V1-LARGE` $3가 등록돼 있을 때만 LARGE 선택. 등록/금액 불일치·호스트 설정 없음·원본 불일치 시 exit 2/BLOCKED. `skill` 기본 $1.50 미지원 LIVE는 자동 업그레이드 금지/차단.
+- **표준 절차 연결:** [기존 비용 계약](../../ops/CONTRACTS/REVIEW_TIER_TOKEN_BUDGET_V1.md), [AGENTS.md](../../../AGENTS.md), [CLAUDE.md](../../../CLAUDE.md)에 *REQUEST 작성 전 Windows LIVE read-only 조회 → draft 검증 PASS → 동일 원본 SHA의 commit A → SOURCE_PIN → 별도 Windows `approve_request.py check`/유효 승인·READY LAST*를 필수 절차로 명시. 기존 PRIVATE dashboard Actions에서 신규 테스트 자동 실행. 이 PREPUBLICATION PASS는 실제 서명/운영 보호 위임 승인이나 리뷰 실행이 아님.
+- **실제 시험:** PRIVATE [CI #44093146832](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/44093146832) **SUCCESS**. 협업 ops unittest **36 PASS (신규 preflight 23 PASS + 기존 source-pin 13 PASS)**, dashboard **77 PASS**, 공개 미리보기 **8 PASS**. 테스트는 synthetic/local이며 모델 호출/Windows LIVE 0. 원격 CI 실제 bytes SHA-256: gate `08bcfd6633a16a1a3f57fdf896024756bdd32f52bf7154c359100ae6980b4eb1`; test `d2fcc4798e81c7d27004c5dc878e9c10c1e47d5566f431e2536b49ef1f41102b`.
+- **한계/검증:** `HOST_INSTALLED_CONFIG_PREFLIGHT=NOT_RUN`, `WINDOWS_E2E=NOT_RUN`, `INDEPENDENT_REVIEW=NOT_RUN` (이번 신규 코드). 실제 Windows LIVE 정책의 내용·보호 위임은 GPT 접근 불가. PRIVATE `main`의 필수 status-check/브랜치 보호가 없는 환경에서 **모든 직접 GitHub API 쓰기를 코드만으로 차단하지는 못함**. 표준 작성 흐름의 CLI와 AGENTS/Claude 진입점에 fail-closed 검증을 도입했고, 기존 보호된 Windows 서명·READY가 최종 실행 차단. 이전 v0.2.25 DESIGN 요청은 여전히 BLOCKED, 변경·재큐잉 없음.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 **읽기 전용** 실제 호스트 설정에서 `select`를 실행해 설치 정책과 금액의 호환성을 확인·결과만 GPT에 전달. 이후 신규 REQUEST가 필요해지면 해당 원본으로 `check` PASS를 받은 다음 GPT가 게시. 신규 모델 호출/서명/설치·보호 위임 변경은 현재 범위 밖.
+
+---
+
+
 ## 2026-11-17 21:09 KST — v0.2.25 독립 R2 리뷰 정책 미등록 BLOCKED (사용자 전달 Windows Claude Code 결과)
 
 - **새 관측:** 사용자 전달 Windows Claude Code 점검: PRIVATE `main`의 최신 `421ef6524bf9`는 dashboard refresh, 이번 비용 정책과 무관. `REQ-COWORK-BUDGET-V025-DESIGN-R1-20261117`는 **미서명/미READY**. Windows Claude Code는 이번 REQUEST 본문을 읽거나 실행하지 않았다고 보고하며, 이전 정책 미등록 `BLOCKED` 상태 지속.
