@@ -1,5 +1,16 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-17 v0.2.25 Windows Claude Code 독립 R2 리뷰 정식 요청 게시
+
+- **요청:** [REQ-COWORK-BUDGET-V025-DESIGN-R1-20261117](../../requests/REQ-COWORK-BUDGET-V025-DESIGN-R1-20261117/REQUEST.md) / `request_revision=1` / `skill_id=cowork-review-watcher` / `POLICY-STATIC-V1-DESIGN` **디자인·보안 R2, USD 3.00 이내 1회**. 기존 [상세 인계서](CLAUDE_V025_BUDGET_POLICY_INDEPENDENT_REVIEW_HANDOFF_r0001_20261117_KST.md)와 최신 예산 r0002 재사용, 새 Work 생성/기존 REQUEST 재시도 없음.
+- **Commit A 정식 고정:** `40cd39ceeb258cb93a238a4c81fdac1b6e687a61`에 `collab/packages/skill-collab-watcher_v0_2_25_1117.zip` **283930 B**, Git blob `660ff3591defd8ccc4abdf3e9b2bf24f21b13918`, SHA-256 `26d63c8a03290499b13b2ceb8ff0b70c06eb1b1bcc1a25fe3d8f65fcc213d228` 및 원본 `REQUEST.md`를 함께 원자 게시. PRIVATE development ZIP에서 동일 Git blob을 재사용했으므로 바이트가 동일하며 이미 [CI #44011874422](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/44011874422)에서 원격 SHA/CRC PASS.
+- **[SOURCE_PIN.json](../../requests/REQ-COWORK-BUDGET-V025-DESIGN-R1-20261117/SOURCE_PIN.json)**: commit A `40cd39ce...`, repo_id JSON **문자열** `"1451933830"`. commit `e4f14b7970811cda5e6f6317fec186b703c1ac84`, 원격 readback PASS. 실제 commit A에서 REQUEST 텍스트·후보 Git blob/283930 B 재확인 PASS.
+- **최신 원격 게시 상태 (조회 시점):** `REQUEST=POSTED`, `SOURCE_PIN=POSTED`, `APPROVAL_SIG=NOT_POSTED`, `READY=NOT_POSTED`, `REVIEW_RESULT=NOT_POSTED`; `INDEPENDENT_REVIEW=PENDING`. 현재 Windows LIVE v0.2.23 보고된 보호 위임은 USD 1/건 및 `POLICY-STATIC-V1`만, 이번 `POLICY-STATIC-V1-DESIGN` USD 3을 승인하지 못함. **실서명·모델 호출·비용 사용·실제 Windows 리뷰 시작 미확인**. 요청 게시 = Windows 호스트 직접 실행 또는 금액 승인 아님.
+- **다음 한 동작:** Windows Claude Code가 이번 정확한 REQUEST ID 및 기게시 핀/ZIP을 읽고 기존 위임·서명 보호 범위의 현재 유효성을 점검하여 독립 리뷰 실행 가능성/차단을 기록. 보호된 LIVE 정책/키/DB/Task 변경이 필요하면 사용자 기존 승인 범위를 확인하고 승인 밖 작업은 BLOCKED. `READY`를 우회 작성하거나 구식 `POLICY-STATIC-V1` $1로 무단 다운그레이드해 실행하지 않음. 필요시 허용된 별도 독립 Windows 정적 점검을 유료 호출 0으로 수행하고 같은 Work에 결과 게시.
+
+---
+
+
 
 ## 2026-11-17 최신 정책 — 일·월 상한 전면 폐기, 일반 스킬 $1.5·디자인 $3
 
