@@ -62,10 +62,10 @@
       "id": "JOBLIST-NRTX-20261112-001",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/JOBLIST-NRTX-20261112-001/CURRENT.md",
-      "status": "문서상 진행",
+      "status": "검증 진행 중",
       "title": "JOBLIST-NRTX-20261112-001 — CURRENT",
-      "tone": "neutral",
-      "topic": "현재 요약 — 2026-11-14 KST (기존 기록 정리)"
+      "tone": "warning",
+      "topic": "최신 현재 요약 — 2026-11-17 KST / v0.4.38 모바일 Agent 복구 시도 결과"
     },
     {
       "id": "JOBLIST-SMOKE-20261114-001",
@@ -101,7 +101,7 @@
       "status": "검증 진행 중",
       "title": "NR-L1TX-CODE-ANALYSIS-20261115-001 — CURRENT",
       "tone": "warning",
-      "topic": "TD-003 실제 인계 E2E 재개 — Linux MCP 직접 접근 차단 / 기존 Job one-shot 인계 게시 (2026-11-15 KST)"
+      "topic": "최신 인계 — 2026-11-17 KST / Init RACH 분석 실증 여전히 미확인"
     }
   ],
   "review_chains": [
@@ -600,7 +600,7 @@
     {
       "evidence": "프로젝트 TRACKER.json 신고 값 · 운영 근거 별도 확인 필요",
       "independent_review": "NOT_RUN",
-      "next_action": "호스트 G0 확인 전 후보 패키지 검증 범위 유지",
+      "next_action": "Linux 업무 LLM에서 기존 RACH 산출물과 Worker 영수증 확인 → DONE/SUCCESS 단계 확정 (운영 재실행·변경 미승인)",
       "owner": "GPT",
       "phase": "DEVELOPMENT",
       "record_source": "REGISTERED_METADATA_UNVERIFIED",
