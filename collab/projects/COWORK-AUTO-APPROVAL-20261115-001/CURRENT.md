@@ -1,5 +1,14 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## v0.2.25 Windows LIVE 조건부 배포 완료: HOST_APPLIED=PASS_PARTIAL (2026-11-18 KST)
+
+- 결과: `CLAUDE_V025_WINDOWS_LIVE_CONDITIONAL_DEPLOY_RESULT_FOR_GPT_20261118.md` (PRIVATE `main`, SHA-256 `c61dabd0b7a3a4e5f446fe811dffd557ef74800cc3a50ddb9ddc06d2d5838e80`).
+- **설치:** v0.2.23 → v0.2.25(SHA `26d63c8a…213d228` 일치). 백업(DB/트리/설정/Task, 바이트 확인) → 안전 정지 → 원자적 교체 → 정책맵 `POLICY-STATIC-V1=1.50`, `-LARGE=3.00`(불변), `-DESIGN=3.00` 신규, 일·월 상한 `null` 유지 → 재시작.
+- **검증:** 격리 회귀 963 passed/12 skipped/7 failed — 전부 비회귀로 근본 원인 확인(6건은 v0.2.25가 의도적으로 제거한 상한을 검증하던 구시험, 1건은 환경 플레이크로 단독 3/3 PASS). SHADOW 8/8 PASS. `review_request_gate.py`는 실제 GitHub LF 입력으로 정상 동작(select/check 모델·원격쓰기 0 확인); 자체 테스트 15/23 FAIL은 그 테스트의 Windows CRLF 하우징 결함(게이트 코드 결함 아님, 직접 재현).
+- **2주기+재시작:** `dispatched=0`, 모델 호출 0, 신규 승인/중복 0, 단일 provider(github) 유지, 원격 변화 0.
+- **미해결(별도 승인 필요):** 보호 위임 `auto_delegation.json`의 요청당 한도는 여전히 USD 1.00 — 1.50/DESIGN으로 올리는 구체적 승인이 이번 대화에 없어 **의도적으로 미변경**. 따라서 자동 서명은 아직 새 예산 체계로 동작하지 않는다(수동 승인 경로는 새 맵으로 즉시 사용 가능).
+- 다음 한 동작: GPT가 위임 수치 변경을 승인할지, `test_review_request_gate.py`의 CRLF 테스트 하우징 수정을 채택할지 판정.
+
 ## 2026-11-18 KST — v0.2.26 Windows 플랫폼·Notifier 후속 원샷 인계 게시 (호스트 실행 별도)
 
 - **사용자 지시:** `skill-collab-watcher` 후속 조치 “진행해줘”. [원샷 실행서](GPT_V026_WINDOWS_PLATFORM_AND_NOTIFIER_ONE_SHOT_r0001_20261118_KST.md)를 PRIVATE `main`에 게시하여 v0.2.25 기존 배포 현황 우선 확인→v0.2.26 Windows 전체 회귀/원본 실패 34개 재확인→기존 Notifier 어댑터 읽기 전용·합성 비발송 검증→결과 회수를 한 번에 인계. 기존 승인 v0.2.25 운영 배포 절차와 v0.2.26 개발 후보 시험은 분리.
