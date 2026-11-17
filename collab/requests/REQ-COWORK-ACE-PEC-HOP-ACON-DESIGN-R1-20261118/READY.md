@@ -1,0 +1,12 @@
+---
+schema: SKILL_COLLAB_READY_V1
+state: READY
+request_id: REQ-COWORK-ACE-PEC-HOP-ACON-DESIGN-R1-20261118
+request_revision: 1
+request_path: /SKILL-COLLAB/requests/REQ-COWORK-ACE-PEC-HOP-ACON-DESIGN-R1-20261118/REQUEST.md
+request_sha256: 65ce9a817105fc7dbabeaab90630d7a04edf7ae133f2f3810e544f2e6abbf1c4
+package_sha256: 5f56a23e8c962da273cd24ca2c64c4a6239f85ef588411633aa9c20b823b0431
+baseline_id: COWORK-LIVE-A-20261114
+---
+
+# ready
