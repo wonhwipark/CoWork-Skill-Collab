@@ -92,7 +92,7 @@
       "status": "검증 진행 중",
       "title": "L1-WORKSPACE-RAG-20261111-001 — CURRENT",
       "tone": "warning",
-      "topic": "2026-11-18 KST — 로컬 Linux Workspace + Read-only Web Viewer 안전 전환 설계·G0 인계 게시"
+      "topic": "2026-11-18 KST — 사용자 지시: Claude 리뷰 1회 우선 요청 → 업무 GPT 작업지시 MD 준비"
     },
     {
       "id": "NR-L1TX-CODE-ANALYSIS-20261115-001",
