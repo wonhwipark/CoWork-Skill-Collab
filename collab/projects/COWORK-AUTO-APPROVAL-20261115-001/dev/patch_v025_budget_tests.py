@@ -13,9 +13,9 @@ def patch_tests(root: Path) -> None:
       'd.max_request_cents == 100 and d.max_day_calls == 0 and d.max_day_cents == 300 and d.max_month_cents == 1000',
       'd.max_request_cents == 150 and d.max_day_calls == 0 and d.max_day_cents == 0 and d.max_month_cents == 0')
     # The protected limit is now per request, not aggregate.
-    one(p, '{"max_request_usd": 1.5}, {},', '{"max_request_usd": 0.0}, {},')
-    one(p, '{"max_day_usd": 4.0}, {},', '')
-    one(p, '{"max_month_usd": 11.0}, {},', '')
+    one(p, '({"max_request_usd": 1.5}, {}),', '({"max_request_usd": 0.0}, {}),')
+    one(p, '({"max_day_usd": 4.0}, {}),', '')
+    one(p, '({"max_month_usd": 11.0}, {}),', '')
     one(p, '''def test_day_count_is_unlimited_until_cost_budget_is_consumed(auto):
     for rid in ("REQ-A", "REQ-B", "REQ-C", "REQ-D"):
         make_request(auto.env.http, rid)
