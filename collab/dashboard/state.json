@@ -29,7 +29,7 @@
       "status": "검증 진행 중",
       "title": "COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태",
       "tone": "warning",
-      "topic": "2026-11-18 KST — pending 9건 재분류·MSC 실제 완료 정산"
+      "topic": "2026-11-18 KST — pending·Guard 조치 도구 구현·34회귀 PASS / Windows 원샷 준비"
     },
     {
       "id": "COWORK-GITHUB-DASHBOARD-20261111-001",
@@ -89,9 +89,9 @@
       "id": "L1-WORKSPACE-RAG-20261111-001",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md",
-      "status": "문서상 진행",
+      "status": "검증 진행 중",
       "title": "L1-WORKSPACE-RAG-20261111-001 — CURRENT",
-      "tone": "neutral",
+      "tone": "warning",
       "topic": "2026-11-18 KST — 기존 MSC 리뷰 완료 원문 재확인·승인 보류 재발 방지 코드 연결"
     },
     {
@@ -554,7 +554,7 @@
     {
       "evidence": "프로젝트 TRACKER.json 신고 값 · 운영 근거 별도 확인 필요",
       "independent_review": "PASS",
-      "next_action": "GitHub 단일 LIVE 유지. SOURCE_PIN repo_id JSON 문자열 수정(Guard R1·MSC R1) 및 PRIVATE CI 11/11 pin·13/13 자체시험 PASS. Guard AUTO_SIGNING_UNCERTAIN은 Windows 로컬 정산 필요. 서명/READY/결",
+      "next_action": "pending/Guard 정산 도구 v0.2.23·v0.2.25 각각 17 PASS. Windows에서 GPT_PENDING_GUARD_WINDOWS_ONE_SHOT_r0001_20261118_KST.md 실행: 실제 DB/입력 정산→기존 공식 승인 경로만 판정→실제 표시 최소 보완·결과 게시.",
       "owner": "GPT / Claude Code",
       "phase": "COMPLETE",
       "record_source": "REGISTERED_METADATA_UNVERIFIED",
@@ -645,7 +645,7 @@
     {
       "evidence": "프로젝트 TRACKER.json 신고 값 · 운영 근거 별도 확인 필요",
       "independent_review": "PENDING",
-      "next_action": "MSC 두 진입 독립 R1 COMPLETED/ok=true 원격 확인·GPT ACCEPT_WITH_CHANGE, 1사이클 종료. Guard CODE R1 AUTO_SIGNING_UNCERTAIN은 별도 유지. Windows signing audit/jobs/예약/비용 읽기 전용 정산 후 기존 유",
+      "next_action": "MSC 독립 R1 판정 종료 보존. Guard는 migration Work의 GPT_PENDING_GUARD_WINDOWS_ONE_SHOT_r0001_20261118_KST.md로 Windows 실제 signing audit/jobs/예약/비용을 정산하고 기존 공식 경로만 판정. helper 1",
       "owner": "GPT (MSC 설계 R1 판정 종료) → Windows Claude Code (",
       "phase": "REVIEW",
       "record_source": "REGISTERED_METADATA_UNVERIFIED",
