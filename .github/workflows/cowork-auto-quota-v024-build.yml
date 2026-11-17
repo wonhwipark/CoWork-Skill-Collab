@@ -76,7 +76,7 @@ jobs:
           shutil.copy2(src,dst)
           result=dict(name=dst.name,bytes=dst.stat().st_size,sha256=hashlib.sha256(dst.read_bytes()).hexdigest(),
                       source_sha256="f941be8a6b53d00baa10a9b097f234b159470e2aa1242ecc33bcf0bdee080ea7",
-                      status="DEVELOPMENT_NOT_FOR_DEPLOYMENT",tests="FULL_CI_PASS")
+                      status="DEVELOPMENT_NOT_FOR_DEPLOYMENT",tests="LINUX_SUPPORTED_SUITE_PASS_WINDOWS_ONLY_NOT_RUN")
           (path/"COST_ONLY_V024_BUILD_RESULT.json").write_text(json.dumps(result,indent=2)+"\n")
           print(json.dumps(result,indent=2))
           PY
