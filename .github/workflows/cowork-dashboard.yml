@@ -7,6 +7,8 @@ on:
       - '.github/workflows/cowork-dashboard.yml'
       - 'collab/dashboard/*.py'
       - 'collab/ops/source_pin.py'
+      - 'collab/ops/review_request_gate.py'
+      - 'collab/ops/tests/test_review_request_gate.py'
       - 'collab/ops/tests/test_source_pin.py'
       - 'collab/dashboard/handoff_registry.json'
       - 'collab/dashboard/tests/**'

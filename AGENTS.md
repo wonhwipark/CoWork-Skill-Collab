@@ -14,3 +14,9 @@
 이 지침은 스킬 원문·상위 사용자 지시·프로젝트 CURRENT를 대체하지 않는다. 문서 게시만으로 Claude/Job/자동 감시를 실행하지 않으며, 운영 변경·PUBLIC 게시·LIVE 전환에는 해당 승인과 게이트가 필요하다. 제한 자료는 PRIVATE에도 게시하지 않는다.
 
 **표현 규칙:** [용어·저장소·실행 환경 표기 원칙](collab/ops/CONTRACTS/TERMINOLOGY_AND_ACCESS_SCOPE_V1.md)을 따른다. 장소/망 접두어 없이 **GitHub PRIVATE/PUBLIC**, 업무용 Git 역할, 작업 PC, Linux 실행 호스트 등 실제 대상을 지칭한다. 파일명·기존 경로·과거 감사·보안 권한은 바꾸지 않는다. 신규 문서와 응답부터 적용한다.
+
+
+## CoWork 리뷰 REQUEST 사전 검증 (신규 요청만)
+
+GPT가 새 REQUEST를 작성·게시하기 **전에** \`collab/ops/CONTRACTS/REVIEW_TIER_TOKEN_BUDGET_V1.md\`의 신규 'REQUEST 게시 전 정책 호환성 필수 게이트'를 따라야 한다. \`collab/ops/review_request_gate.py\`의 \`select\` / \`check\`에 Windows 실제 LIVE \`reviewer.config.json\` 및 신규 ZIP 바이트를 사용하고 \`PASS_PREPUBLICATION_ONLY\`를 확인한다. LIVE 설정 직접 조회가 불가능하면 Windows Claude Code에 읽기 전용 검증을 요청하고, 검증 전에는 REQUEST를 게시하지 않는다. GPT가 개발 예정 정책명을 선택해 기존 LIVE를 막는 자기 참조를 금지. SOURCE_PIN/서명/READY는 기존 계약대로 별도 검증하며 이 절차로 유료 모델을 호출하거나 운영 설정을 변경하지 않는다.
+

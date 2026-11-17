@@ -1,5 +1,16 @@
 # CoWork 리뷰 등급 / 토큰·비용 예산 계약 V1
 
+## REQUEST 게시 전 정책 호환성 필수 게이트 (2026-11-17 재발 방지)
+
+**모든 신규 CoWork 정식 리뷰 REQUEST는 게시 이전에 Windows 설치 LIVE의 실제 reviewer.config.json 기준으로 \`collab/ops/review_request_gate.py\`를 실행해 호환성을 확인한다.** GPT는 현행 설치 상태를 추정하거나 개발 후보에만 존재하는 정책명을 선택하지 않는다. 코드·문서 배포만으로 이 단계가 자동 실행됐다고 표시하지 않는다.
+
+1. GPT는 리뷰 목적(\`skill\` / \`design\`)과 건당 금액(현행 기본 $1.50/$3.00)을 고정하고 Windows Claude Code에 \`select --live-config <실제 Windows 로컬 reviewer.config.json> --intent design\` 형태의 **읽기 전용 호스트 정책 조회**를 요청한다. \`POLICY_COMPATIBLE_NOT_APPROVED\`인 선택명만 사용할 수 있다. \`design\`은 LIVE에 DESIGN 등록 시 DESIGN, 없고 기존 LARGE $3이 실제 등록돼 있으면 LARGE를 선택한다. 모델/자동 리뷰 비용 승인 아님.
+2. GPT가 작성한 신규 REQUEST 초안 및 고정 ZIP 실제 바이트로 \`check --live-config <실제 로컬 config> --intent design --request <신규 REQUEST.md> --package <원본 ZIP>\` 실행. 결과가 \`PASS_PREPUBLICATION_ONLY\`이거나 Windows 격리 검증 근거가 동일하게 확인된 경우에만 REQUEST와 ZIP을 commit A로 게시. \`MISSING / UNVERIFIED / POLICY_* / SHA 오류\`는 **NOT_POSTED / BLOCKED**; 임의 정책 변경·구두 확인·경험칙으로 PASS 대체 금지.
+3. commit A의 실제 원격 ZIP 바이트·REQUEST 본문 확인 후 기존 \`source_pin.py\`로 문자열 repo_id의 SOURCE_PIN을 생성·검증하고 마지막 원격 읽기 확인. Windows에서 기존 \`approve_request.py check\`와 유효 보호 위임/정상 승인 범위를 **별도 필수 검증**하고, 해당 승인에서만 서명·READY를 마지막으로 게시. 사전 게이트는 **정책 호환성**이며 서명·READY·금액 권한을 부여하지 않는다.
+
+**강제 범위:** 이 게이트는 협업 REQUEST 작성자의 표준 절차 및 자동화 진입 코드에 적용한다. GitHub PRIVATE \`main\`에 브랜치 보호/필수 status check가 현재 설치·확인되지 않았으므로 임의 직접 API 쓰기 전체를 기술적으로 차단한다고 주장하지 않는다. 이를 보완하는 최종 fail-closed 안전장치는 기존 Windows 보호된 서명/READY 검증. 과거 고정 REQUEST/영수증·불확실 이력은 수정/재실행하지 않는다.
+
+
 > **2026-11-17 최신 정책(r0002):** 일반 스킬 독립 리뷰 `POLICY-STATIC-V1` **USD 1.50/건**, 디자인 독립 리뷰 `POLICY-STATIC-V1-DESIGN` **USD 3.00/건**. **일·월 호출 횟수 및 누적 비용 상한 모두 폐기**. 보호 위임에서 승인한 요청별 금액·프로젝트/스킬/만료·중복 방지·서명/READY는 유지. 두 비용은 로컬 `review_policy.known_run_policy_refs`에서 향후 조정 가능. [결정·개발 후보·실제 시험](../../projects/COWORK-AUTO-APPROVAL-20261115-001/GPT_AUTO_REVIEW_BUDGET_POLICY_r0002_20261117_KST.md). LIVE 적용은 미실행. 아래 2026-11-14 R0~R3 기존 표와 사용자별 과거 $1/$3/$6 승인 사실은 **역사적 정책/특정 리뷰의 계약**이며 신규 자동 리뷰 기본 정책으로 사용하지 않음.
 2026-11-14 KST · USER_REQUESTED_DESIGN · CONFIG_NOT_DEPLOYED
 Applies to: CoWork watcher 독립 Claude 리뷰 및 L1Work PUBLIC ZIP·handoff MD 링크 리뷰
