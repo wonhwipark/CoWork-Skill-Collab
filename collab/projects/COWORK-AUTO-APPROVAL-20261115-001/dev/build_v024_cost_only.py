@@ -40,6 +40,8 @@ def patch(root:Path):
     p=d/"__init__.py"
     text=p.read_text(encoding="utf8")
     if "0.2.23" in text:p.write_text(text.replace("0.2.23","0.2.24"),encoding="utf8")
+    p=root/"docs/CUTOVER_RUNBOOK.md"
+    one(p, "Cutover runbook: Dropbox to GitHub (v0.2.23,", "Cutover runbook: Dropbox to GitHub (v0.2.24,")
     p=root/"docs/AUTO_APPROVAL.md"
     p.write_text(p.read_text(encoding="utf8")+
         "\n\n### v0.2.24 development cost-only admission\n"
