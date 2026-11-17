@@ -113,7 +113,7 @@ def apply(root: Path) -> None:
     replace_one(cfg, 'max_budget_usd=_check_budget(rp.get("max_budget_usd", 1.0)),',
                 'max_budget_usd=_check_budget(rp.get("max_budget_usd", 1.5)),')
     replace_one(cfg,
-        '    if isinstance(value, bool) or not isinstance(value, (int, float)) or value <= 0:\n        raise ConfigError(f"{name} must be a number greater than 0 or null, got {value!r}")',
+        '    if isinstance(value, bool) or not isinstance(value, (int, float)) or not value > 0:\n        raise ConfigError(f"{name} must be a number greater than 0 or null, got {value!r}")',
         '    if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or value <= 0:\n        raise ConfigError(f"{name} must be a finite number greater than 0 or null, got {value!r}")')
     replace_one(cfg,
         '            if isinstance(amount, bool) or not isinstance(amount, (int, float)) or not amount > 0:',
