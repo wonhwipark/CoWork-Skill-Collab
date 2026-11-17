@@ -2,13 +2,14 @@
 """Actual Kernel Work/Evidence -> export_docs regression (not source-token checks)."""
 import hashlib
 import json
+import os
 import sys
 import tempfile
 import unittest
 import zipfile
 from pathlib import Path
 
-ARCHIVE = Path(__file__).resolve().parent / "output" / "work-ledger-kernel_v0_7_43_1117.zip"
+ARCHIVE = Path(os.environ["KERNEL_TEST_ARCHIVE"]) if os.environ.get("KERNEL_TEST_ARCHIVE") else (Path(__file__).resolve().parent / "output" / "work-ledger-kernel_v0_7_43_1117.zip")
 
 
 class KernelSvgFunctionalTest(unittest.TestCase):
