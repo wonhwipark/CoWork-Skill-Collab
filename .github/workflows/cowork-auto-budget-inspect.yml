@@ -76,4 +76,13 @@ jobs:
                   for lo,hi in ranges:
                       for j in range(lo-1,min(len(lines),hi)):
                           print(f'DETAIL {name} {j+1} {lines[j]}')
+          with zipfile.ZipFile(zpath) as z:
+              for name,ranges in (
+                  ('skill_collab_watcher/orchestrator.py',[(545,573),(710,724)]),
+                  ('skill_collab_watcher/state_store.py',[(260,305)]),
+                  ('tests/test_auto_approval.py',[(274,325)]),
+              ):
+                  lines=z.read(name).decode('utf8').splitlines()
+                  for lo,hi in ranges:
+                      for j in range(lo-1,min(len(lines),hi)):print(f'CAPCODE {name} {j+1} {lines[j]}')
           PY
