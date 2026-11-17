@@ -9,7 +9,7 @@
       "owner": "GPT (MSC 설계 R1 판정 종료) → Windows Claude Code (Guard 불확실 이력 정산), 업무 GPT (G0 별도)",
       "self_test": "PASS",
       "independent_review": "PENDING",
-      "next_action": "MSC 독립 R1 판정 종료 보존. Guard는 migration Work의 GPT_PENDING_GUARD_WINDOWS_ONE_SHOT_r0001_20261118_KST.md로 Windows 실제 signing audit/jobs/예약/비용을 정산하고 기존 공식 경로만 판정. helper 17×2 PASS는 호스트 정산/리뷰 완료가 아님. 불확실 초기화·재큐잉 금지."
+      "next_action": "MSC 후속 개발/합성 E2E PASS·ZIP 3종 반복재빌드 PASS. 업무 GPT에서 Updater/Kernel/group writer G0 및 승인된 샘플 Work의 published_path·마커 충돌·상세 MD 상대 링크 E3 확인. 이후 코드 독립 리뷰·PUBLIC 릴리스 별도 판정. 기존 Guard AUTO_SIGNING_UNCERTAIN은 migration Work의 읽기 전용 정산으로 분리, 무단 재큐잉 금지."
     }
   ]
 }
