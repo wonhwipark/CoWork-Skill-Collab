@@ -22,8 +22,6 @@ class KernelSvgFunctionalTest(unittest.TestCase):
             archive.extractall(cls.root)
         reg = cls.root / "contracts" / "registry_v1.json"
         cls.registry = json.loads(reg.read_text(encoding="utf-8"))
-        print("KERNEL_REGISTRY_KEYS", list(cls.registry.keys()))
-        print("KERNEL_REGISTRY_HEAD", str(cls.registry)[:4400])
         sys.path.insert(0, str(cls.root))
         from work_ledger_kernel.kernel import WorkLedgerKernel
         from work_ledger_kernel.work_ux import WorkUX
