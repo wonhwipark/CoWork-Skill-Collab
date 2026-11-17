@@ -1,5 +1,14 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-18 KST — v0.2.26 Windows 플랫폼·Notifier 후속 원샷 인계 게시 (호스트 실행 별도)
+
+- **사용자 지시:** `skill-collab-watcher` 후속 조치 “진행해줘”. [원샷 실행서](GPT_V026_WINDOWS_PLATFORM_AND_NOTIFIER_ONE_SHOT_r0001_20261118_KST.md)를 PRIVATE `main`에 게시하여 v0.2.25 기존 배포 현황 우선 확인→v0.2.26 Windows 전체 회귀/원본 실패 34개 재확인→기존 Notifier 어댑터 읽기 전용·합성 비발송 검증→결과 회수를 한 번에 인계. 기존 승인 v0.2.25 운영 배포 절차와 v0.2.26 개발 후보 시험은 분리.
+- **현재 관측:** `CLAUDE_V025_WINDOWS_LIVE_CONDITIONAL_DEPLOY_RESULT_FOR_GPT_20261118.md` 원격 `NOT_FOUND`(GPT 조회 기준). v0.2.26 `development_not_for_deployment`, Linux 신규 회귀 61 PASS/가능 범위 974 PASS, 기준 실패 34개 제외. 기존 v0.2.25 단일 LIVE 조건부 승인·SHA는 불변.
+- **변경 범위:** 원샷 MD + 이 CURRENT/파생 TRACKER 갱신만. Windows 호스트 시험·v0.2.25 실제 배포·v0.2.26 운영 설치·Notifier 실제 연계·신규 독립 유료 리뷰·REQUEST/READY/모델 호출 **이번 GPT 세션에서 NOT_RUN / 0회**. 원격 인계 게시만으로 Windows Claude Code 자동 실행은 발생하지 않음.
+- **NEXT_ONE_ACTION:** 기존 Windows Claude Code 세션에 위 원샷 실행서 정확한 PRIVATE `main` 상대 경로를 **한 번** 전달하여 현장 검증·결과 파일 `CLAUDE_V026_WINDOWS_PLATFORM_AND_NOTIFIER_RESULT_FOR_GPT_20261118.md`·원격 readback까지 수행. 차단 게이트는 우회/재큐잉 없이 부분 결과로 회수.
+
+---
+
 ## 2026-11-18 KST — REQUEST pin·보류 원인 재발 방지 v0.2.26 실제 구현·PRIVATE 후보
 
 - **사용자 지시·실제 변경:** “해결하라고”에 따라 [구현·검증 결과](GPT_REQUEST_PIN_PREFLIGHT_AND_WAIT_FIX_RESULT_r0001_20261118_KST.md). 자동 예약 전/최종 승인/signer가 같은 pin 검증 사용, 숫자형 입력은 예약 전에 차단. 실제 AutoResult를 WAIT_INPUT 원인으로 연결, READY 성공 뒤 낡은 대기 알림 억제, 원인·다음 조치/실행·비용 미확인 표시와 중복 방지. 기존 prepublication 도구 2개/시험을 ZIP에 포함.
