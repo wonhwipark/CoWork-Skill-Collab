@@ -18,13 +18,14 @@ from unittest import mock
 from argparse import Namespace
 
 from build_l1_knowledge_guard_candidates_r0001_20261117 import (
-    safe_unzip, refresh_package_metadata, rezip)
+    safe_unzip, refresh_package_metadata)
+from reproducible_zip import rezip
 from skill_release_quality_gate import validate as release_validate
 
 BASE_SHA256 = "b0ebd0aa4d771adc30648ab2bce23a3c1648e408984bedb36d0e3da45108312c"
 WORKFLOW_SHA256 = "1e08302b6a533d2894101427f5a7bb94b43102e00a98f2c6e0b19f534a885ceb"
-CONVERTER_VERSION = "0.2.27"
-WORKFLOW_VERSION = "1.6.71"
+CONVERTER_VERSION = "0.2.28"
+WORKFLOW_VERSION = "1.6.72"
 FLAG = "--html-viewer"
 
 def sha(path: Path) -> str:
@@ -58,13 +59,13 @@ def patch_converter(root: Path):
         a["boolean_flags"].append(FLAG)
     policy_file.write_text(json.dumps(policy,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     sk=root/"SKILL.md"
-    sk.write_text(sk.read_text(encoding="utf-8")+"\n\n### MSC 독립 HTML 선택 출력 (개발 후보 0.2.27)\n"
+    sk.write_text(sk.read_text(encoding="utf-8")+"\n\n### MSC 독립 HTML 선택 출력 (개발 후보 0.2.28)\n"
       "- `--view-mode ISSUE`의 이슈/AS-IS/TO-BE 문서 의미는 유지. 명시적 `--html-viewer`일 때에만 B HTML 추가 생성.\n"
       "- `PROCEDURE_FEATURE`의 기존 HTML 기본 출력은 유지. 다른 action 및 기본 ISSUE 호출은 무변경.\n"
       "- SVG 렌더 성공 시에만 HTML/manifest 경로 기록. Converter는 Git/Knowledge writer가 아님.\n"
       "- Work-root MSC 작업 안내와 Converter MSC 상세 원본은 서로 다른 역할. 게시 경로와 열람 URL은 최종 writer/readback 확인 후 확정.\n",encoding="utf-8")
     refresh_package_metadata(root,dict(version_from="0.2.26",version_to=CONVERTER_VERSION,
-                               output="doc-converter_v0_2_27_1118.zip"))
+                               output="doc-converter_v0_2_28_1118.zip"))
 
 def patch_workflow(root: Path):
     p=root/"l1_fix_workflow/scenario_msc.py"
@@ -74,13 +75,13 @@ def patch_workflow(root: Path):
         "                       'view_mode':'ISSUE','html_viewer_flag':'--html-viewer',\n"
         "                       'html_viewer_opt_in':True,")
     sk=root/"SKILL.md"
-    sk.write_text(sk.read_text(encoding="utf-8")+"\n\n### MSC 이슈 HTML 전달 (개발 후보 1.6.71)\n"
+    sk.write_text(sk.read_text(encoding="utf-8")+"\n\n### MSC 이슈 HTML 전달 (개발 후보 1.6.72)\n"
        "- 기존 Work MSC 요청은 `ISSUE` 목적을 유지하고, 검증된 scenario IR가 있을 때 doc-converter `msc-scenario-build --view-mode ISSUE --html-viewer`를 전달하는 **계획**만 생성.\n"
        "- 실제 CLI 실행은 승인된 기존 Agent/runner가 담당. Updater 선행 호출/지식 자동 쓰기/Work 신규 발급을 요구하지 않음.\n"
        "- Work MSC 작업 안내/Converter MSC 상세 원본/HTML 확대 보기 또는 다운로드 표기 구분. 실제 URL은 최종 writer가 게시 후 검증.\n"
        "- 수동 문서의 단일 writer 마커·revision 미확인 및 충돌은 Preview/HOLD. 자동 덮어쓰기 금지.\n",encoding="utf-8")
     refresh_package_metadata(root,dict(version_from="1.6.70",version_to=WORKFLOW_VERSION,
-                               output="l1-fix-workflow_v1_6_71_1118.zip"))
+                               output="l1-fix-workflow_v1_6_72_1118.zip"))
 
 def verify_converter(root: Path) -> dict:
     scripts=root/"scripts"
@@ -179,8 +180,8 @@ def run(source: Path, workflow: Path, output: Path):
     with tempfile.TemporaryDirectory(prefix="msc-dual-candidates-") as t:
         work=Path(t)
         for key,archive,root_name,version,out_name,patch,test in [
-            ("doc-converter",source,"doc-converter",CONVERTER_VERSION,"doc-converter_v0_2_27_1118.zip",patch_converter,verify_converter),
-            ("l1-fix-workflow",workflow,"l1-fix-workflow",WORKFLOW_VERSION,"l1-fix-workflow_v1_6_71_1118.zip",patch_workflow,verify_workflow)]:
+            ("doc-converter",source,"doc-converter",CONVERTER_VERSION,"doc-converter_v0_2_28_1118.zip",patch_converter,verify_converter),
+            ("l1-fix-workflow",workflow,"l1-fix-workflow",WORKFLOW_VERSION,"l1-fix-workflow_v1_6_72_1118.zip",patch_workflow,verify_workflow)]:
             extraction=work/key;extraction.mkdir()
             safe_unzip(archive,extraction)
             root=extraction/root_name
