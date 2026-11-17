@@ -1,5 +1,15 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-17 KST — GPT 독립 R2 최종 판정: ACCEPT_WITH_CHANGE (1사이클 종료)
+
+- **정본:** [GPT 상세 판정](GPT_V025_LARGE_R2_DISPOSITION_r0001_20261117_KST.md). `REQ-COWORK-BUDGET-V025-LARGE-R2-20261117` rev1에 대한 REQUEST/서명/READY/DISPATCH/REVIEW_RESULT/RECEIPT 원격 내용·해시 대조. 실제 REQUEST SHA-256 `2e8cf16ace20a694851df98e339faa7e5d08d02d9149c9c2e518bd2206388066` 및 READY SHA-256 `7c2579cc003c9fb75d7cd85282fc2f694efd1db454ed47a88dcd3e33276a568d`가 승인 payload와 일치. 리뷰 결과 SHA-256 `8d682974537e06589a2fb11f41a4c48808a3c6a905bec4cfe2ab79f5477d0181`, `RECEIPT ok=true`, watcher 0.2.23.
+- **판정:** `INDEPENDENT_STATIC_REVIEW=PASS_SCOPE_LIMITED`, `GPT_DISPOSITION=ACCEPT_WITH_CHANGE`, `REVIEW_CYCLE=CLOSED`, `DEPLOYMENT_READY=NO`. BLOCKING 0 / M1 1: review_request_gate.py·테스트는 고정 ZIP 밖으로 독립 리뷰 미수행(범위 공백, 코드 결함 아님). N1 레거시 정책 list 축소 예산은 주의, N2~N6은 리뷰어가 정적 읽기 확인. 새 유료 리뷰 요청/재호출 0.
+- **비용:** Windows 호스트 USD 0.8061916/1회, 24턴 보고; GitHub 영수증 자체에 비용 필드 부재(`COST_INDEPENDENT_VERIFIED=NO`). 별도 운영 변경 보고로 `daily_budget_usd/max_dispatches_per_day` 제거(백업 있음), **변경 승인 범위는 GPT 미확인**. Windows `review_request_gate.py select/check` 실제 운영 사전검증도 `NOT_RUN`(기존 approve_request 점검과 별개). 과거 완료를 소급 PASS로 변경하지 않음.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 유료 호출·새 리뷰 없이 실호스트 정책/신규 REQUEST 게이트 경로 및 보고된 설정 변경의 유효 승인·백업을 읽기 전용 확인해 같은 Work에 증빙 게시. v0.2.25 호스트 시험/배포·LIVE 설치는 미승인/미검증 범위로 별도 유지.
+
+---
+
+
 ## v0.2.25 독립 R2 완료 (LARGE $3, 수동 승인): BLOCKING 0·MAJOR 1(범위 공백) (2026-11-17 KST)
 
 - 요청: `REQ-COWORK-BUDGET-V025-LARGE-R2-20261117` rev1, `POLICY-STATIC-V1-LARGE`, 패키지 `26d63c8a0329…` 283930 B. 수동 승인 도구 `approve_request.py`(16/16 점검 PASS, `review_request_gate.py`는 운영 트리에 없음)로 서명·READY 마지막 게시, 감시기(v0.2.23) 1회 실행·`COMPLETED`.

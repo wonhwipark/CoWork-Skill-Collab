@@ -1,0 +1,38 @@
+{
+  "request_id": "REQ-COWORK-BUDGET-V025-LARGE-R2-20261117",
+  "request_revision": "1",
+  "package_sha256": "26d63c8a03290499b13b2ceb8ff0b70c06eb1b1bcc1a25fe3d8f65fcc213d228",
+  "verdict": "ACCEPT_WITH_CHANGE",
+  "review_status": "PASS_SCOPE_LIMITED",
+  "review_cycle": "CLOSED_NO_AUTOMATIC_REREVIEW",
+  "deployment_ready": false,
+  "findings": [
+    {
+      "id": "M1",
+      "decision": "ACCEPT_SCOPE_GAP",
+      "summary": "review_request_gate.py and test are outside pinned 104-file snapshot, independent inspection NOT_RUN; not verified code flaw"
+    },
+    {
+      "id": "N1",
+      "decision": "ACCEPT_OBSERVATION",
+      "summary": "legacy list policy refs inherit basic default budget; fail-safe under-provision"
+    },
+    {
+      "id": "N2-N6",
+      "decision": "ACCEPT_STATIC_VERIFICATION",
+      "summary": "aggregate caps, finite budgets, protected delegation, signature trust boundaries, unregistered tier validation reviewed by reading"
+    }
+  ],
+  "cost_usd_host_reported": 0.8061916,
+  "cost_in_receipt": false,
+  "model_calls_host_reported": 1,
+  "request_sha256_verified": "2e8cf16ace20a694851df98e339faa7e5d08d02d9149c9c2e518bd2206388066",
+  "ready_sha256_verified": "7c2579cc003c9fb75d7cd85282fc2f694efd1db454ed47a88dcd3e33276a568d",
+  "review_sha256_verified": "8d682974537e06589a2fb11f41a4c48808a3c6a905bec4cfe2ab79f5477d0181",
+  "host_preflight": "NOT_RUN_REPORTED",
+  "host_config_change": "HOST_REPORTED_SCOPE_UNVERIFIED",
+  "source_document_path": "collab/projects/COWORK-AUTO-APPROVAL-20261115-001/GPT_V025_LARGE_R2_DISPOSITION_r0001_20261117_KST.md",
+  "source_document_git_blob": "3cb2f3183737c61cd4203c474d36dc217e53c5c5",
+  "source_verification": "GPT_REMOTE_BYTES_VERIFIED_SIGNATURE_CRYPTO_NOT_INDEPENDENTLY_VERIFIED",
+  "cycle_policy": "ONE_REVIEW_THEN_GPT_DISPOSITION_NO_AUTOMATIC_REREVIEW"
+}
