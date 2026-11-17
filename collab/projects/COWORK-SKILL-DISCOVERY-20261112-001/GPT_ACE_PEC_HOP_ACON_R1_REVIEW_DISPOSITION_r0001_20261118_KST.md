@@ -21,6 +21,8 @@
 6. [REVIEW_RESULT_1.md](../../reviews/REQ-COWORK-ACE-PEC-HOP-ACON-DESIGN-R1-20261118/REVIEW_RESULT_1.md): COMPLETED, 리뷰어 본문 `ACCEPT_WITH_CHANGE`, 차단 0, 비차단 개선 4.
 7. [RECEIPT_1.md](../../receipts/REQ-COWORK-ACE-PEC-HOP-ACON-DESIGN-R1-20261118/RECEIPT_1.md): `ok=true`, watcher v0.2.25. REQUEST/RESULT/DISPATCH/RECEIPT의 request_id, revision, package_sha256, processing_key 일치.
 
+**별도 Windows Claude Code 실행 보고 회수(기존 입력 검증과 구분):** [실호스트 원샷 결과](CLAUDE_ACE_PEC_HOP_ACON_DESIGN_REVIEW_RESULT_FOR_GPT_20261118.md)에는 LIVE v0.2.25 `select/check` PASS, 수동 `approve_request.py check` 16/16 PASS, 기존 자동 보호 위임 USD 1.00 **변경 없이 수동 승인 경로로 USD 3.00 상한 리뷰 실행**, 모델 호출 1회·6턴·**USD 0.3825**가 기록됨. 해당 비용은 **HOST_REPORTED**, GitHub RECEIPT에 비용 필드가 없으므로 **COST_INDEPENDENT_VERIFIED=NO**. 실호스트 보고의 바이트 원격 조회 PASS, GPT의 로컬 보호 서명/DB 직접 시험은 NOT_RUN.
+
 실제 원격 UTF-8 bytes 및 ZIP(base64→raw bytes) 계산값:
 
 | 파일 | bytes | SHA-256 |
@@ -55,5 +57,5 @@
 - `REQUEST_READY_BINDING=PASS`; `DISPATCH_RESULT_RECEIPT_REMOTE_CHAIN=PASS`.
 - `INDEPENDENT_DESIGN_REVIEW=COMPLETED_ACCEPT_WITH_CHANGE`; `GPT_DISPOSITION=ACCEPT_WITH_CHANGE`; `REVIEW_CYCLE=CLOSED_NO_AUTOMATIC_REREVIEW`.
 - `DESIGN_ACCEPTANCE_CRITERIA_ADDENDUM=RECORDED_IN_THIS_DISPOSITION`, `IMPLEMENTATION_TESTS=NOT_RUN`, `DEPLOYMENT_READY=NO`.
-- `COST_IN_RECEIPT=NO`, `COST_INDEPENDENT_VERIFIED=NO`, `WINDOWS_APPROVAL_CRYPTO_DIRECT_VERIFIED=NO`, `HOST_PREFLIGHT_LOG_INDEPENDENT_VERIFIED=NO`. 이 미확인 때문에 **완료된 리뷰를 재실행하지 않음**; 필요하면 Windows에서 기존 실행 감사·비용 영수증만 읽기 전용 보충.
+- `COST_IN_RECEIPT=NO`, `COST_HOST_REPORTED_USD=0.3825`, `COST_INDEPENDENT_VERIFIED=NO`, `WINDOWS_APPROVAL_CRYPTO_DIRECT_VERIFIED=NO`, `HOST_PREFLIGHT_LOG_INDEPENDENT_VERIFIED=NO`. 이 미확인 때문에 **완료된 리뷰를 재실행하지 않음**; 필요하면 Windows에서 기존 실행 감사·비용 영수증만 읽기 전용 보충.
 - **NEXT_ONE_ACTION:** 같은 Work의 기존 설계/ACE-02·PEC-01/03·ACON-01·SAFE 수용 시험 체크리스트에 N1~N4를 **문서·격리 회귀 수준으로만 최소 반영**. 업무 GPT의 Updater G0 회신·실제 테스트 승인/비용은 별도 경계. 추가 리뷰 요청·READY/서명·유료 모델 재호출 없음.
