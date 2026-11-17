@@ -1,5 +1,18 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+
+## 2026-11-17 최신 정책 — 일·월 상한 전면 폐기, 일반 스킬 $1.5·디자인 $3
+
+- **사용자 최신 지시:** “상한 삭제, 디자인리뷰 3달러, 기본스킬 1.5 달러 추후수정가능하도록 변경해줘”. [최신 정책·개발 결과 r0002](GPT_AUTO_REVIEW_BUDGET_POLICY_r0002_20261117_KST.md)로 이전 건당 $1/일 $3/월 $10 r0001 **대체**. **일·월 리뷰 횟수/누적 비용 상한 모두 없음**, 요청당 일반 스킬 `POLICY-STATIC-V1` USD **1.50**, 디자인 `POLICY-STATIC-V1-DESIGN` USD **3.00**. 기존 요청마다 max_calls=1, UNIQUE/UNCERTAIN fail-closed, 서명/READY LAST, 프로젝트/스킬·만료/핀 확인은 그대로.
+- **코드 수정:** 기존 Work/dev/auto-review-budget-policy-20261117에서 원본 v0.2.24 ZIP SHA 고정 → v0.2.25 빌더/테스트 및 `auto_policy/auto_approval/state_store/config/orchestrator`의 일·월 예산·횟수 게이트 제거. 실제 건당 예산 `--max-budget-usd`는 유지, `review_policy.known_run_policy_refs`의 **기존 로컬 설정 맵**으로 두 tier 금액을 후속 변경 가능. 디자인 tier는 로컬에 등록되고 **보호 위임 max_request_usd=3 이상**이 실제 허용된 경우에만 승인. 설정·위임이 현재 1달러라면 신규 금액의 LIVE 반영은 당연히 불가.
+- **개발 후보 PRIVATE (PUBLIC NOT_POSTED):** `dev/auto-review-budget-policy-20261117`의 `collab/projects/COWORK-AUTO-APPROVAL-20261115-001/candidates/skill-collab-watcher_v0_2_25_1117.zip`, 283930 bytes, SHA-256 `26d63c8a03290499b13b2ceb8ff0b70c06eb1b1bcc1a25fe3d8f65fcc213d228`, `DEVELOPMENT_NOT_FOR_DEPLOYMENT`. [결과 JSON](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/dev/auto-review-budget-policy-20261117/collab/projects/COWORK-AUTO-APPROVAL-20261115-001/candidates/AUTO_REVIEW_BUDGET_V025_BUILD_RESULT.json).
+- **실제 개발 자체시험:** [CI 44011746881](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/44011746881) PASS: 표적 29 PASS/2 SKIP, Linux 지원 전체 582 PASS/30 SKIP/1 DESELECTED. [원격 실제 ZIP 재조회 CI 44011874422](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/44011874422) **REMOTE_BYTE_READBACK_PASS 283930 SHA 동일**. 실모델 호출/서명/READY 신규 생성/운영 설정·DB 변경 0.
+- **독립 리뷰 인계:** [CLAUDE_V025_BUDGET_POLICY_INDEPENDENT_REVIEW_HANDOFF_r0001_20261117_KST.md](CLAUDE_V025_BUDGET_POLICY_INDEPENDENT_REVIEW_HANDOFF_r0001_20261117_KST.md) PRIVATE main 게시·원격 readback PASS. Windows Claude Code 독립 리뷰·Windows venv/SHADOW/복구 리허설은 **NOT_RUN**. 인계서 자체는 REQUEST/READY 또는 유료 리뷰 실행 승인이 아님.
+- **상태:** `POLICY_DESIGN=COMPLETE`, `CODE_CANDIDATE=PRIVATE_BUILT`, `LINUX_SELF_TEST=PASS`, `REMOTE_SHA_VERIFIED=PASS`, `INDEPENDENT_REVIEW=NOT_RUN`, `WINDOWS_HOST_TEST=NOT_RUN`, `LIVE_CONFIG/PROTECTED_DELEGATION=NOT_APPLIED`, `LIVE_WATCHER_v025=NOT_INSTALLED`, `PUBLIC_RELEASE=NOT_RUN`. 마지막 확인된 LIVE 호스트 보고 v0.2.23, 기존 설정이 아직 실제 작동할 가능성 유지; 문서로 활성화 주장 금지.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 동일 Work의 고정 candidate를 독립 코드 리뷰·Windows 격리 시험하고 결과를 PRIVATE main에 게시. 운영 보호 위임/버전 설치는 정확한 별도 유효 승인·백업/롤백 조건과 시험 결과 확인 뒤에만. 과거 불확실 요청 자동 환급·재큐잉 없음.
+
+---
+
 ## 2026-11-17 정책 변경 — 일·월 리뷰 횟수 제한 폐기 / 비용·중복 보호 유지
 
 - **사용자 최신 지시:** 일/월 자동 리뷰 횟수 상한 컨셉 삭제. [GPT 비용만 사용하는 승인 정책](GPT_COST_ONLY_AUTO_APPROVAL_POLICY_r0001_20261117_KST.md) 확정. 과거 Windows LIVE의 `max_day_calls=2`는 당시 이력; 신규 정책에는 적용 금지. 요청당 1회/동일 REQUEST 재실행 금지, USD 1/요청·USD 3/KST 일·USD 10/KST 월, 서명/READY/위임 만료·프로젝트/스킬 정확 일치 유지.
