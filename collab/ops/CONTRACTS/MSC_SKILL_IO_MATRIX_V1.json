@@ -1,0 +1,50 @@
+{
+  "contract": "MSC_SKILL_IO_MATRIX_V1",
+  "scope": "read_only_release_validation",
+  "authorities": {
+    "code-analyzer": "CODE_FACT_ONLY",
+    "issue-analyzer": "FIX_DIRECTION_APPROVAL",
+    "doc-converter": "PRESENTATION_ONLY",
+    "work-ledger-kernel": "WORK_AND_EVIDENCE_RECORD",
+    "l1-knowledge-updater": "KNOWLEDGE_CANDIDATE_AND_PREVIEW",
+    "approved-writer": "POST_AND_READBACK"
+  },
+  "routes": [
+    {
+      "entry": "WORKFLOW_ISSUE_MSC",
+      "source_class": "VERIFIED_SCENARIO_IR",
+      "output_class": "MSC_HTML",
+      "raw_puml_direct": false,
+      "advance_lifecycle": false
+    },
+    {
+      "entry": "UPDATER_PROCEDURE_FEATURE_MSC",
+      "source_class": "VERIFIED_SEMANTIC_SPEC",
+      "output_class": "MSC_HTML",
+      "raw_puml_direct": false,
+      "advance_lifecycle": false
+    }
+  ],
+  "modes": [
+    "ISSUE",
+    "PROCEDURE_FEATURE"
+  ],
+  "managed_action_flags": [
+    {
+      "action": "msc-package",
+      "flag": "--view-mode",
+      "package": "doc-converter"
+    },
+    {
+      "action": "msc-scenario-build",
+      "flag": "--view-mode",
+      "package": "doc-converter"
+    }
+  ],
+  "security_notes": [
+    "Do not turn prior report text into CODE_CONFIRMED",
+    "Unverified facts retain RN",
+    "OpenCode unmanaged direct invocation does not imply skillsilent policy is in use",
+    "Policy gate applies only to packages that ship skillsilent/policy.json"
+  ]
+}
