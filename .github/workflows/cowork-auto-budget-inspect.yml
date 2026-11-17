@@ -61,4 +61,19 @@ jobs:
                       print('INSPECT',name,lo,hi)
                       for j in range(lo-1,min(len(lines),hi)):
                           print(f'FOCUSED {name} {j+1} {lines[j]}')
+          with zipfile.ZipFile(zpath) as z:
+              for n in z.namelist():
+                  if n.startswith('skill_collab_watcher/') and n.endswith('.py'):
+                      for i,line in enumerate(z.read(n).decode('utf8').splitlines(),1):
+                          if any(k in line for k in ('daily_budget_usd','max_dispatches_per_day','run_budgets','known_run_policy_refs','max_budget_usd','def _cents','def _optional_cap')):
+                              print(f'FIND {n} {i} {line[:200]}')
+              for name,ranges in (
+                  ('skill_collab_watcher/auto_approval.py',[(172,190)]),
+                  ('skill_collab_watcher/config.py',[(142,232)]),
+                  ('tests/test_auto_approval.py',[(1,120),(277,320)]),
+              ):
+                  lines=z.read(name).decode('utf8').splitlines()
+                  for lo,hi in ranges:
+                      for j in range(lo-1,min(len(lines),hi)):
+                          print(f'DETAIL {name} {j+1} {lines[j]}')
           PY
