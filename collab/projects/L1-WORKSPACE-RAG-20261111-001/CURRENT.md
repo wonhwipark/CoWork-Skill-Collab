@@ -1,5 +1,15 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 최신 상태 — 스킬 릴리스 무결성·Kernel 실행 회귀·MSC 계약 검사 적용 (2026-11-17 KST)
+
+- **사용자 1·2 수정 요청 완료(코드/자체시험/PRIVATE main):** [실행·판정 보고](GPT_SKILL_RELEASE_QUALITY_AND_MSC_CONTRACT_FIX_RESULT_r0001_20261117_KST.md). 기존 1번(릴리스 version/manifest 무결성 자동 검사 + 실제 Kernel SVG Evidence export 회귀), 2번(Workflow/Updater MSC 입력 클래스·두 관리 액션 `--view-mode` 정책 도달성)을 기존 L1 Work에서 최소 보완. 소유권·운영 설치·새 엔진·유료 리뷰 변경 없음.
+- **실제 시험:** [PRIVATE main quality CI 43984576507](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43984576507) **SUCCESS**, synthetic negative tests 13 PASS, Kernel 등록된 Work/Evidence의 SVG 정상 게시/해시·멱등, 과대 SVG fail-closed, 무관 SVG+MD 무회귀 실제 함수시험 3 PASS. 기존 PUBLIC `doc-converter v0.2.26` SHA-256/manifest 89개/버전 및 skillsilent 두 action의 정책 플래그 static 검증 PASS.
+- **개발 빌더:** [branch CI 43984284554](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/43984284554) PASS. `dev/build_l1_knowledge_guard_candidates_r0001_20261117.py`에서 포함 파일 전집합 manifest 생성·SKILL.md YAML 인용부호·skillsilent package metadata 동기화, 빌드 즉시 fail-closed gate 적용. `main`의 검증 스크립트·[read-only quality workflow](../../../.github/workflows/cowork-skill-release-quality.yml)는 현재 정본; 후보 바이트·해시는 결과 보고서와 dev branch `BUILD_RESULT.json` 참조.
+- **릴리스·호스트 경계:** `QUALITY_CODE=POSTED_REMOTE_VERIFIED` / `TARGETED_TEST=PASS` / `MAIN_CI=PASS` / `INDEPENDENT_REVIEW_THIS_CHANGE=NOT_RUN` / `REAL_SKILLSILENT_RUNNER=NOT_RUN` / `HOST_G0_E3=NOT_VERIFIED` / **`KNOWLEDGE_GUARD_PUBLIC=BLOCKED_NOT_POSTED`**. 기존 개발 후보 `development_not_for_deployment`과 별개, Public의 최종 doc-converter v0.2.26 변경 없음. `main` CI의 신규 ZIP 변경 검사 경로는 이번 commit 대상 0건으로 후속 파일럿이나 자동 publisher 동작 PASS 아님.
+- **NEXT_ONE_ACTION:** 기존 Knowledge Guard 코드 R1 결과/영수증과 호스트 writer G0 확인 후 새 후보의 릴리스 게이트를 판정. 실제 NR 분석 E2E는 기존 TD-003/NR Work에서 별도 유지하고 새 REQUEST/READY·호스트 재실행은 만들지 않음.
+
+---
+
 ## Guard 코드 R1·MSC 설계 R1 SOURCE_PIN 문자열 포맷 수정 (2026-11-17 KST)
 - **실제 수정:** Guard `REQ-L1-WORK-KNOWLEDGE-GUARD-CODE-R1-20261117` 및 MSC `REQ-L1-MSC-DUAL-ENTRY-DESIGN-R1-20261117`의 기존 `SOURCE_PIN.json` `repo_id` 숫자 `1451933830` → JSON 문자열 `"1451933830"`. 두 변경 외 Commit A, `SKILL_COLLAB_SOURCE_PIN_V1` schema, REQUEST ID/revision, ZIP SHA·고정 리뷰 입력 불변. 변경 전·후 Git blob 원격 확인. 승인 서명/READY를 GPT가 게시하지 않음.
 - **재발 방지:** 신규 공통 생성기 `collab/ops/source_pin.py`의 문자형 생성·엄격 검증을 CoWork START_HERE/PRIVATE Actions에 연결. [상세 결과](../COWORK-DROPBOX-TO-GITHUB-MIGRATION/SOURCE_PIN_REPO_ID_STRING_REPAIR_RESULT_r0001_20261117_KST.md). 실 CI 13/13 SOURCE_PIN 시험 + 전체 11/11 타입 검사, 대시보드 77/77 + 미리보기 8/8 PASS.
