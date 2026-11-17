@@ -1,5 +1,16 @@
 # JOBLIST-NRTX-20261112-001 — CURRENT
 
+## 2026-11-18 KST — L1Work 공개 handoff 독립 리뷰 요청 인계 / Windows 사전 게이트 대기
+
+- **사용자 요청:** “핸드오프문서 협업 리뷰요청해줘”. 대상은 L1Work PUBLIC `handoffs/JOBLIST_V0438_MCP_RECOVERY_STATUS_HANDOFF_r0001_20261117_KST.md` **한 문서**(commit `fb2e0d3e4cad67c3b3759b1d82d41731036aef2b`, Git blob `211d3b082f859dd80c5e8177e85c96e2c5c202df`, SHA-256 `2cbf73b2caa3c35f15f270ec4fcbd061b14cd88118616f7380d4e2514facec54`).
+- **비실행 인계 PASS:** [Windows Claude Code 리뷰 사전검증·고정 입력·질문·승인 경계](CLAUDE_JOBLIST_V0438_HANDOFF_REVIEW_PREFLIGHT_r0001_20261118_KST.md) 작성, PRIVATE main 원격 readback PASS. 기존 Job-list 상태 상세는 [최근 진단](JOBLIST_V0438_MCP_REMOTE_BOUNDARY_STATUS_r0001_20261117_KST.md) 참조.
+- **현재 상태:** `HOST_POLICY_PREFLIGHT=NOT_RUN`, `FORMAL_REQUEST=NOT_POSTED`, `SOURCE_PIN/APPROVAL_SIG/READY=NOT_POSTED`, `INDEPENDENT_REVIEW=NOT_RUN`, `MODEL_CALLS=0`. 최신 리뷰 계약상 Windows 실제 LIVE `reviewer.config.json`으로 prepublication select/check를 통과하기 전 정식 REQUEST를 게시할 수 없음. 이 GPT 세션은 해당 Windows 실행 경로에 접근하지 못해 우회하지 않음.
+- **승인 범위:** 사용자 문서 독립 리뷰 지시를 받았으나 서명·보호 위임·정책 등록·예산을 GitHub 본문만으로 인정하지 않음. 기존 유효 범위 확인 후 최대 1회 리뷰. 운영 MCP/Job/Watcher/키/DB/설정/LIVE·PUBLIC 배송 변경 없음. 이미 소비된 RACH Job 재실행 금지.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 위 인계서와 현재 LIVE 정책을 읽기 전용 대조하고 정식 REVIEW_INPUT ZIP/REQUEST의 사전검증 가능성을 판정; PASS 및 유효 승인 확인 시에만 기존 계약대로 고정 REQUEST·SOURCE_PIN·서명·READY LAST 후 **독립 리뷰 1회 → GPT 판정**. 실패하면 `BLOCKED_PREPUBLICATION`/모델 호출 0을 기존 Work에 게시.
+
+---
+
+
 ## 최신 현재 요약 — 2026-11-17 KST / v0.4.38 모바일 Agent 복구 시도 결과
 
 - **호스트 상태:** Skill-Updater 인증 정상화 및 Job-list `v0.4.38` 설치는 사용자·모바일 MCP 보고로 관측. NR L1 Tx Init RACH Job의 `DONE/SUCCESS` 기록은 존재하지만 `run_id=null`, `worker_started_at=null`, CODE_FACTS·MSC 실재 미확인. **분석 완료 UNKNOWN**.
