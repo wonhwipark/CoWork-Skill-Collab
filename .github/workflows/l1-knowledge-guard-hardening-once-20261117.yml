@@ -40,6 +40,9 @@ jobs:
         run: |
           curl --fail --location --retry 3 --silent --show-error -o /tmp/doc-converter_v0_2_26_1117.zip https://raw.githubusercontent.com/wonhwipark/L1Work/main/doc-converter_v0_2_26_1117.zip
           python collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/msc_skill_contract_gate.py --matrix collab/ops/CONTRACTS/MSC_SKILL_IO_MATRIX_V1.json --package /tmp/doc-converter_v0_2_26_1117.zip --require-policy
+      - name: Validate public doc-converter release metadata without modifying bytes
+        run: |
+          python collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/skill_release_quality_gate.py --zip /tmp/doc-converter_v0_2_26_1117.zip --expected-version 0.2.26
       - name: ZIP CRC plus traversal/symlink and manifest checks
         run: |
           python - <<'PY'
