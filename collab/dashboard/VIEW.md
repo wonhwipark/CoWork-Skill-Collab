@@ -38,7 +38,7 @@ flowchart TB
 | GitHub 전환 | **기록 미관측** | 호스트 보고·GPT 판정과 신규 요청 실전 검증은 별개 |
 | Windows 실행·SHADOW | **기록 미관측** | 실제 호스트 실행 증거 필요 |
 | Claude Code 독립 리뷰 | **기록 미관측** | 자체 시험과 구분 |
-| GitHub 요청·결과·영수증 | **요청 13 · 결과 7 · 영수증 7** | PRIVATE 파일 관측 수일 뿐 완료 건수가 아님 |
+| GitHub 요청·결과·영수증 | **요청 13 · 결과 8 · 영수증 8** | PRIVATE 파일 관측 수일 뿐 완료 건수가 아님 |
 | 공개 Work 대시보드 | **기록 미관측** | L1Work에 승인된 비식별 상태만 자동 요약 · PRIVATE 원문은 비공개 |
 
 [전환·Windows 원문](../projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) · [대시보드 원문](../projects/COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md)
@@ -48,7 +48,7 @@ flowchart TB
 
 | 현재 프로젝트 | GitHub REQUEST | GitHub REVIEW | GitHub RECEIPT |
 |:---:|:---:|:---:|:---:|
-| **10** | **13** | **7** | **7** |
+| **10** | **13** | **8** | **8** |
 
 **파일 수 = 검증 완료 건수 아님.** 아직 GitHub로 이관되지 않은 자료는 미확인입니다.
 
@@ -65,8 +65,8 @@ HTML은 GitHub에서 소스로 표시되므로 다운로드 후 브라우저로 
 
 - 문서가 있는 프로젝트: **10개**
 - GitHub REQUEST 파일 관측: **13개** (검증 안 됨)
-- GitHub REVIEW 파일 관측: **7개** (검증 안 됨)
-- GitHub RECEIPT 파일 관측: **7개** (검증 안 됨)
+- GitHub REVIEW 파일 관측: **8개** (검증 안 됨)
+- GitHub RECEIPT 파일 관측: **8개** (검증 안 됨)
 
 
 
@@ -132,7 +132,8 @@ HTML은 GitHub에서 소스로 표시되므로 다운로드 후 브라우저로 
 | ↳ Q7 | — Cost/gates, reservation vs. ceilings, SHADOW | NOT_ADJUDICATED | - |
 | ↳ Q8 | — Interaction with v0.2.18, locking, seal_interrupted, publish-only retry | NOT_ADJUDICATED | - |
 | [REQ-COWORK-V0220-R1-20261115](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-COWORK-V0220-R1-20261115/REQUEST.md) | COWORK-DROPBOX-TO-GITHUB-MIGRATION | GPT_NOT_OBSERVED | NOT_VERIFIED |
-| [REQ-L1-MSC-DUAL-ENTRY-DESIGN-R1-20261117](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-L1-MSC-DUAL-ENTRY-DESIGN-R1-20261117/REQUEST.md) | L1-WORKSPACE-RAG-20261111-001 | REVIEW_NOT_OBSERVED | NOT_VERIFIED |
+| [REQ-L1-MSC-DUAL-ENTRY-DESIGN-R1-20261117](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-L1-MSC-DUAL-ENTRY-DESIGN-R1-20261117/REQUEST.md) | L1-WORKSPACE-RAG-20261111-001 | GPT_NOT_OBSERVED | NOT_VERIFIED |
+| ↳ Q9 | (과잉 설계 여부)**: 섹션 2, 5, 7에서 신규 엔진/Kernel 상태기계/Evidence enum/Work profile 확장을 명시적으로 기본안에서 제외했습니다. 재사용  | NOT_ADJUDICATED | - |
 | [REQ-L1-MSC-MD-LINK-STRUCTURE-20261115-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-L1-MSC-MD-LINK-STRUCTURE-20261115-001/REQUEST.md) | L1-WORKSPACE-RAG-20261111-001 | READY_NOT_OBSERVED | NOT_VERIFIED |
 | [REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-001/REQUEST.md) | L1-WORKSPACE-RAG-20261111-001 | READY_NOT_OBSERVED | NOT_VERIFIED |
 | [REQ-L1-WORK-KNOWLEDGE-FIXED-R1-20261116](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-L1-WORK-KNOWLEDGE-FIXED-R1-20261116/REQUEST.md) | L1-WORKSPACE-RAG-20261111-001 | GPT_RECORDED_UNAUTHENTICATED | ACCEPT_WITH_CHANGE |
