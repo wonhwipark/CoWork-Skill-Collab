@@ -23,21 +23,6 @@ def run():
         with zipfile.ZipFile(ARCHIVE) as z:
             assert z.testzip() is None
             z.extractall(root)
-        # Inspects the already published development skill; never reads business code.
-        source=root/"work_ledger_kernel"/"work_ux.py"
-        if source.is_file():
-            lines=source.read_text(encoding="utf-8").splitlines()
-            hits=[i for i,line in enumerate(lines) if any(
-                k in line for k in ("MSC_VIEW.md","artifact_publish_map",
-                                   "published_path","render_output", "write_communication"))]
-            keep=set()
-            for ix in hits[:45]:
-                keep.update(range(max(0,ix-3),min(len(lines),ix+5)))
-            print("KERNEL_WRITER_SOURCE_EXCERPTS",len(lines),"hits",len(hits))
-            for lo,hi in ((800,915),(1061,1079)):
-                print("KERNEL_OWNER_BLOCK",lo,hi)
-                for n in range(lo-1,min(hi,len(lines))):print("KERNEL_OWNER",f"{n+1:04}",lines[n][:260])
-            for ix in sorted(keep)[:220]:print("KERNEL_SOURCE",f"{ix+1:04}",lines[ix][:240])
         sys.path.insert(0,str(root))
         from work_ledger_kernel.kernel import WorkLedgerKernel
         k=WorkLedgerKernel(base/"ledger")
@@ -120,7 +105,7 @@ def run():
                 "files":files[:35],"updater_g0":"NOT_VERIFIED",
                 "group_writer_g0":"NOT_VERIFIED","business_host_e3":"NOT_RUN"}
         print("MSC_KERNEL_WRITER_G0_PROBE",json.dumps(result,ensure_ascii=False,sort_keys=True))
-        return 0  # A blocked probe is evidence, not a CI regression in existing Kernel.
+        return 0 if status == "PASS" else 1  # fail-closed release gate
 
 if __name__=="__main__":
     sys.exit(run())
