@@ -9,7 +9,7 @@
       "owner": "GPT",
       "self_test": "PASS",
       "independent_review": "NOT_RUN",
-      "next_action": "Windows Claude Code에서 공개 handoff 고정 입력의 LIVE 정책 사전검증 → 조건 충족 시 정식 독립 리뷰 1회 요청"
+      "next_action": "Windows Claude Code에서 handoff 리뷰 r0002 원샷의 실설정 사전검증/정식 요청 가능성 판정 후 허용된 리뷰 1회"
     }
   ]
 }
