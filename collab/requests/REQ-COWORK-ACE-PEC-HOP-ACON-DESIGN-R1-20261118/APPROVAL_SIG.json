@@ -1,0 +1,23 @@
+{
+  "key_id": "cowork-approver-1",
+  "payload": {
+    "expires_at": "2026-11-18T01:11:31.454981+00:00",
+    "issued_at": "2026-11-17T23:11:31.454981+00:00",
+    "knowledge_refs_hash": "d84c599b38b661764ac1ef97be223d823d5a916ea7a4dfcabaf4d575e82c6652",
+    "local_policy_revision": "1",
+    "nonce": "680b1d6b0e7e14dca2e949f1c81d40e4",
+    "package_path": "/SKILL-COLLAB/packages/ace_pec_hop_acon_design_r0001_1118_REVIEW_INPUT.zip",
+    "package_sha256": "5f56a23e8c962da273cd24ca2c64c4a6239f85ef588411633aa9c20b823b0431",
+    "package_size_bytes": 18500,
+    "ready_sha256": "c1b20829452db75095cd17e39fc0e48333ea5c702e97dc2d104815c70250f3f7",
+    "repo_id": "1451933830",
+    "request_id": "REQ-COWORK-ACE-PEC-HOP-ACON-DESIGN-R1-20261118",
+    "request_revision": "1",
+    "request_sha256": "65ce9a817105fc7dbabeaab90630d7a04edf7ae133f2f3810e544f2e6abbf1c4",
+    "run_policy_ref": "POLICY-STATIC-V1-DESIGN",
+    "schema": "SKILL_COLLAB_APPROVAL_PAYLOAD_V1",
+    "source_commit": "c3f7138f2f4b81030143473aeba0e1fcbbaa97b9"
+  },
+  "schema": "SKILL_COLLAB_APPROVAL_SIG_V1",
+  "signature": "Hlu6do33lmU50GZ5XS/ANZ/Ba/krzlwMEaihoIjC77zoBse0uheEikGPxV62BE/m+hhBdawwrN2wOtESqMpfCA=="
+}
