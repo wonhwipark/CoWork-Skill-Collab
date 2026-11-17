@@ -148,16 +148,13 @@ def apply(root: Path) -> None:
                         daily_budget_usd=policy.daily_budget_usd,
                         this_run_usd=policy.run_budgets_usd.get(str(final.fields["request"]["run_policy_ref"]), 0.0))''',
         '''    claim = store.claim(final.processing_key)  # only atomic exactly-once; no aggregate quotas''')
-    replace_one(orch,
-        '''    if claim == "COUNT_CEILING":
-        store.log_event_once("DAILY_LIMIT_BLOCKED", processing_key=final.processing_key,
-                             detail="daily review count ceiling reached (reserved atomically); the request stays pending")
-        return GroupResult(retry=True)
-    if claim == "BUDGET_CEILING":
-        store.log_event_once("DAILY_BUDGET_BLOCKED", processing_key=final.processing_key,
-                             detail="daily spending ceiling reached (reserved atomically); the request stays pending")
-        return GroupResult(retry=True)
-''', '')
+    s = orch.read_text(encoding="utf-8")
+    begin = s.find('    if claim == "COUNT_CEILING":\n')
+    next_gate = s.find('    if claim != "CLAIMED":\n', begin)
+    if begin < 0 or next_gate <= begin:
+        raise RuntimeError("ORCHESTRATOR_POSTCLAIM_GATE_ANCHOR_MISSING")
+    s = s[:begin] + s[next_gate:]
+    orch.write_text(s, encoding="utf-8", newline="\n")
     # Keep the old method's signature for migrations but disable the aggregate checks.
     s = store.read_text(encoding="utf-8")
     start = s.find('            if max_dispatches is not None or daily_budget_usd is not None:\n')
