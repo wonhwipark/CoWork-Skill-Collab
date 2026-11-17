@@ -1,5 +1,17 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 2026-11-18 KST — 사용자 후속 진행 승인: ACE·PEC-HOP·ACON 독립 리뷰 실호스트 게이트 확인 준비
+
+- **후속 요청:** 사용자가 기존 `Windows Claude Code 실제 LIVE 정책 확인→허용될 때만 정식 REQUEST/서명/READY→1회 리뷰·영수증` 진행에 “그래”로 동의. 새로운 $3 유료 호출/보호 위임 한도 상향을 무조건 승인한 것으로 확장하지 않음.
+- **최신 PRIVATE main 중복 확인:** `collab/requests/` 및 `collab/reviews/` 원격 목록/후보 ID 직접 확인. `REQ-COWORK-ACE-PEC-HOP-ACON-DESIGN-R1-20261118` 정식 REQUEST·리뷰 결과 **미게시**. Windows 로컬 예약/DB는 미접근이므로 전체 중복 부재를 인증하지 않음.
+- **Windows 실호스트 현황:** 마지막 확인된 2026-11-18 Windows 호스트 보고는 reviewer watcher **v0.2.23**, v0.2.25 아직 미설치, protected delegation `max_request_usd=1.00`. 현행 설계 리뷰 정책 `intent=design`은 **USD 3.00**이므로 최신 LIVE 정책/위임 검사 없이 서명·READY·새 유료 호출 불가. 실제 설치 상태가 갱신됐는지는 **NOT_VERIFIED**.
+- **실제 코드 확인:** `collab/ops/review_request_gate.py`의 `select/check --live-config ... --intent design --required-budget-usd 3.00`와 `POLICY_COMPATIBLE_NOT_APPROVED/PASS_PREPUBLICATION_ONLY`, 문자열 repo_id `source_pin.py`를 읽기 전용 확인. 현재 연결은 Windows 로컬 config·signer/DB 접근이나 Windows Claude Code 직접 실행 기능을 지원하지 않아 HOST_SELECT_CHECK=NOT_RUN.
+- **새 비실행 초안 게시:** [ACE/PEC/ACON 리뷰 REQUEST 로컬 초안·실호스트 원샷](ACE_PEC_HOP_ACON_REVIEW_REQUEST_LOCAL_DRAFT_AND_HOST_PREFLIGHT_r0001_20261118_KST.md). 실제 원본 3개 bytes/SHA 고정, 독립 리뷰 질문, 로컬 ZIP/REQUEST 생성, 현재 LIVE 정책/위임 사전검증 후에만 정식 게시하는 조건 및 fail-closed 절차 정리. 이 파일은 `collab/requests/` 밖의 **DRAFT_ONLY**, 실행 트리거가 아님.
+- **실제 수행/차단:** `GITHUB_DUPLICATE_PRECHECK=PASS_REMOTE_SCOPE`, `LOCAL_REQUEST_DRAFT=POSTED_READBACK_PASS`, `WINDOWS_LIVE_SELECT_CHECK=NOT_RUN`, `FORMAL_REQUEST=NOT_POSTED`, `APPROVAL_SIG/READY=NOT_POSTED`, `INDEPENDENT_REVIEW=NOT_RUN`, `NEW_MODEL_CALLS=0`. 기존 완료 리뷰·불확실 요청·운영 설정/키/DB·업무 Knowledge·PUBLIC 스킬 변경 없음.
+- **NEXT_ONE_ACTION:** Windows Claude Code 세션에서 위 DRAFT_ONLY 원샷의 실제 LIVE config + 보호 위임을 read-only 확인하고, 유효 승인/비용 범위 내에 있을 때만 고정 REQUEST→READY→1회 실행→영수증. 실제 건당 한도가 아직 $1이면 정책/서명 우회 없이 구체적 blocker와 필요한 승인 항목만 PRIVATE 기존 Work에 게시.
+
+---
+
 ## 2026-11-18 KST — ACE·PEC-HOP·ACON 스킬 실제 원문 정독·최소 변경 설계·협업 리뷰 사전 인계
 
 - **사용자 지시:** 최신 개별 스킬 원본을 읽은 후 ACE/PEC-HOP/ACON 통합 설계하고 협업 독립 리뷰 요청. 업무용 l1-knowledge-updater는 실제 설치본 직접 접근 불가하므로 업무 GPT **설계 적용 제안서/READ_ONLY G0 검토**로 분리.
