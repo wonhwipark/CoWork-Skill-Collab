@@ -1,0 +1,58 @@
+{
+  "schema": "COWORK_PENDING_GUARD_AUDIT_V1",
+  "generated_at_kst": "2026-11-18",
+  "scope": "github",
+  "mode": "READ_ONLY",
+  "watcher_root_version": "0.2.25",
+  "state_store_sha256_prefix": "23d703c6a5387caf",
+  "raw_tool_output": {
+    "tracked_total": 9,
+    "completed_by_local_jobs_table": 0,
+    "held": 1,
+    "waiting": 8,
+    "unverified": 0,
+    "unresolved_total": 9
+  },
+  "note": "The real jobs table has no row for the four oldest completed reviews (pre-dates current job bookkeeping); the audit tool, by design, does not treat remote REVIEW_RESULT/RECEIPT existence as proof of local completion. Cross-checked those four directly against GitHub below.",
+  "remote_cross_check_completed": {
+    "REQ-COWORK-V0214-R1-20261114": {
+      "review_files": 1,
+      "receipt_files": 2
+    },
+    "REQ-COWORK-V0217-R2-20261114": {
+      "review_files": 1,
+      "receipt_files": 2
+    },
+    "REQ-COWORK-V0219-R2-20261114": {
+      "review_files": 1,
+      "receipt_files": 2
+    },
+    "REQ-COWORK-V0220-R1-20261115": {
+      "review_files": 1,
+      "receipt_files": 2
+    }
+  },
+  "display_breakdown_for_the_user_facing_pending_count": {
+    "tracked": 9,
+    "remote_verified_completed": 4,
+    "held": 1,
+    "unresolved_display": 5
+  },
+  "guard": {
+    "request_id": "REQ-L1-WORK-KNOWLEDGE-GUARD-CODE-R1-20261117",
+    "category": "HELD",
+    "auto_claims_stage": "UNCERTAIN",
+    "auto_claims_attempts": 1,
+    "requeue_allowed": false,
+    "manual_admission_check": "APPROVABLE (cap USD 1.5, 1 call) via approve_request.py check",
+    "manual_admission_decision": "NOT_SIGNED (HOLD) - the registered POLICY-STATIC-V1 cap has risen to USD 1.50 since this request was first attempted on 2026-11-16 at the then-USD-1.00 scope; signing now would silently admit it under a wider budget than originally approved for this specific request"
+  },
+  "crlf_fix_commit": "9b9141bc015a5930a2e57de26b6ab2f73be8223a",
+  "crlf_fix_file_sha256": "409c956d0220e87d20d490fdfe38786044eb586e63e1c549d8e500818ee8e3ed",
+  "crlf_fix_windows_test_result": "24 passed (23 existing + 1 new LF-fixture regression), 0 failed; against the unchanged review_request_gate.py",
+  "crlf_fix_scope": "collab/ops/tests/test_review_request_gate.py only; review_request_gate.py unchanged; the packaged v0.2.26 candidate ZIP was not modified and its internal 15 CRLF failures are unaffected",
+  "model_calls": 0,
+  "new_request_ready": 0,
+  "protected_delegation_changed": false,
+  "v026_install": "NOT_RUN"
+}
