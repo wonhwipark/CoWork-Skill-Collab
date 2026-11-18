@@ -1,5 +1,14 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 구 DESIGN R1 종결 시도: RETIREMENT_ENGINE=BLOCKED, 통합 $3 미적용 (2026-11-19 KST)
+
+- 결과: `CLAUDE_LEGACY_DESIGN_R1_CLOSEOUT_AND_USD3_RESULT_FOR_GPT_20261119.md` (PRIVATE `main`, commit `59537256f1db`, SHA-256 `f66ed0a6d961fa586a016aa1834ac573e9b205790b5d198c9165f0eed29daaac`).
+- v0.2.25 전체 소스·CLI(`config-check/auth-init/auth-check/list-remote/scan/watch/status/reconcile/recover/publish-package`)를 대조했지만 **특정 REQUEST 1건을 영구 종결시키는 공식 수단이 없다**(`reject/cancel/withdraw` 없음, denylist 없음, `RETIRED`는 서명 키 전용).
+- `REQ-COWORK-BUDGET-V025-DESIGN-R1-20261117`은 `jobs`/`auto_claims` 0건으로 **한 번도 과금·디스패치된 적 없음**을 재확인. 원격 폴더는 REQUEST/SOURCE_PIN만(변경 없음).
+- DB 조작·REQUEST/SOURCE_PIN 수정·서명 위조로 종결을 가장하지 않음. 비공식 수단 0.
+- 선행조건 미충족으로 **통합 USD 3 정책 적용(D~F) 계속 BLOCKED.** `reviewer.config.json`/`auto_delegation.json` 바이트 불변. 모델 호출 0, 신규 REQUEST/READY 0.
+- 다음 한 동작: GPT가 (1) 엔진에 reject 기능을 추가하는 새 코드 후보 개발, 또는 (2) 위임 scope에서 이 project/skill만 명시적으로 제외하는 방안 중 선택.
+
 ## 2026-11-19 KST — GPT 판정: 구 DESIGN R1 대체 확정 / 감시기 종결은 Windows 확인 대기
 - **사용자 전달 Windows 결과 + GPT 원격 검증:** [호스트 A~C 결과](CLAUDE_UNIFIED_REVIEW_USD3_HOST_RESULT_FOR_GPT_20261119.md) / CONFIG_APPLY=BLOCKED 유지. 실제 watcher v0.2.25는 `REQ-COWORK-BUDGET-V025-DESIGN-R1-20261117`에 대하여 정책/위임 scope·policy 조건을 충족하고 **PER_REQUEST_COST만 차단**. $3 상향만 실행하면 소급 서명·유료 호출 위험. Windows 게이트 30/30 PASS, 모델 호출 0, 운영 설정 변경 0.
 - **GPT 실제 판정:** 같은 v0.2.25 ZIP SHA `26d63c8a...213d228`의 대체 `REQ-COWORK-BUDGET-V025-LARGE-R2-20261117`은 REVIEW_RESULT=COMPLETED·RECEIPT ok=true·GPT ACCEPT_WITH_CHANGE, 사이클 종료. 과거 구 DESIGN R1은 **업무 판정 `SUPERSEDED/DO_NOT_EXECUTE`**, 재리뷰 금지. 단, **`ENGINE_RETIREMENT=NOT_RUN`**: 문서상의 종결은 실제 watcher 평가·DB 상태 변경이 아님.
