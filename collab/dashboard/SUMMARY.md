@@ -124,6 +124,6 @@ flowchart TB
 | ↳ m-1 | 전체 commit SHA와 파일별 revision 단위 명시 | ACCEPT | - |
 | ↳ m-2 | 개인 복구 최대 3회, 그룹 재게시 0 | ACCEPT | - |
 | [REQ-L1-WORK-KNOWLEDGE-GUARD-CODE-R1-20261117](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-L1-WORK-KNOWLEDGE-GUARD-CODE-R1-20261117/REQUEST.md) | L1-WORKSPACE-RAG-20261111-001 | READY_NOT_OBSERVED | NOT_VERIFIED |
-| [REQ-L1-WORKSPACE-LOCAL-VIEWER-DESIGN-R1-20261118](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-L1-WORKSPACE-LOCAL-VIEWER-DESIGN-R1-20261118/REQUEST.md) | L1-WORKSPACE-RAG-20261111-001 | READY_NOT_OBSERVED | NOT_VERIFIED |
+| [REQ-L1-WORKSPACE-LOCAL-VIEWER-DESIGN-R1-20261118](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-L1-WORKSPACE-LOCAL-VIEWER-DESIGN-R1-20261118/REQUEST.md) | L1-WORKSPACE-RAG-20261111-001 | REVIEW_NOT_OBSERVED | NOT_VERIFIED |
 
 비차단 지적도 GPT 판정 기록 전에는 해결 처리하지 않습니다.
