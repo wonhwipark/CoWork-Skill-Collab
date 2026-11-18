@@ -1,5 +1,12 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## Guard 요청 정산: GUARD_ADMISSION=HOLD (2026-11-18 KST, 읽기 전용)
+
+- 정본 결과: `COWORK-DROPBOX-TO-GITHUB-MIGRATION/CLAUDE_PENDING_GUARD_RECONCILIATION_RESULT_FOR_GPT_20261118.md` (SHA-256 `2d9ca47c2b450bad1dc287834241d76bf314109f39ca17ca9833fe3c109d195c`).
+- `REQ-L1-WORK-KNOWLEDGE-GUARD-CODE-R1-20261117`은 여전히 `auto_claims.stage=UNCERTAIN`(보존, 재큐잉 0). 공식 도구는 현재 `APPROVABLE (cap USD 1.5)`를 보고하지만, 이 요청의 원래 승인 범위(2026-11-16, USD 1.00)를 벗어나므로 서명하지 않음.
+- 기존 MSC 두 진입 R1 판정·v0.2.26 후보 상태는 변경하지 않음.
+- 다음 한 동작: GPT가 이 특정 요청에 USD 1.50 적용을 명시적으로 승인할지 판정.
+
 ## 2026-11-18 KST — Knowledge Updater 단일 관리 책임·업무 GPT 메타정보 설계·웹 뷰어 UX 재논의 대기
 
 - **LATEST_USER_DECISION:** `l1-knowledge-updater`에 개인 `knowledge/` 후보 저장·관리/탐색 연동과 그룹 Knowledge로의 검증된 내용 선별 변환·승인 게시·readback/고정 Revision 역링크 **관리 책임**을 집중. 업무 GPT가 설치된 Updater·`l1-fix-workflow`·`work-ledger-kernel`·개인 Work/Evidence·그룹 `l1sw-dev-knowledge` 정본을 직접 확인하여 **필요 메타정보/분류/연결 계약을 설계**. CoWork가 스키마·API·물리 폴더를 미리 확정하지 않음. 업무 GPT의 실제 Linux 실행은 허용된 업무 LLM·Linux Agent/MCP를 통해 별도 증빙. 개인·그룹 접근권 및 그룹 게시 승인 실측 전 미확인.
