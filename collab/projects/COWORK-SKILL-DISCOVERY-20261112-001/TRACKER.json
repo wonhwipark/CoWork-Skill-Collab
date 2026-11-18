@@ -9,7 +9,7 @@
       "owner": "GPT",
       "self_test": "PASS",
       "independent_review": "PASS",
-      "next_action": "2026-11-18: ACE·PEC-HOP·SAFE r0002 비민감 합성 계약회귀 V8 26 PASS/0 FAIL: STATIC 5, ACE-02 6, PEC-01/03 9, SAFE-01/03 6. test_ace_pec_safe_synthetic_r0001.js 및 GPT_ACE_PEC_SAFE_SYNTHETIC_REGRESSION_RESULT_r0001_20261118_KST.md PRIVATE main posted/readback PASS. PASS는 순수 contract oracle에 한정; 실제 설치 스킬·Windows/Linux Node CLI·업무 G0/ACON 모델 반복/E2E=NOT_RUN. 기존 R1 리뷰 CLOSED(새 요청·READY·모델 호출 0). NEXT: 기존 스킬/업무 호스트 실제 reader/Evidence/권한 계약 읽기 전용 G0 대조 후 최소 통합 회귀 판정."
+      "next_action": "2026-11-18: SOURCE_CANDIDATE_G0=PASS_SCOPE_LIMITED, PRIVATE 후보 ZIP 3개 관련 Python 모듈을 실제 해제하고 메서드/IO 정적 대조. GPT_ACE_PEC_SAFE_SOURCE_G0_INTERFACE_MAPPING_r0001_20261118_KST.md 원격 게시/readback PASS (12708 B, SHA256 ff31cc700a6a3f3e0432b4d3b9f8630594a51c93716b9bd97b51ea7f00da6e0b). ACE inspect_work/Kernel resume REUSE, PEC feature_evidence preview/전체파일 SHA REUSE, 원문 byte-range digest CONNECT_GAP_POSSIBLE, SAFE LedgerStorage root.mkdir 주의; 실제 업무 Linux 설치 G0/업무 GPT Updater/실 스킬 E2E NOT_VERIFIED/NOT_RUN. 기존 합성 계약 26 PASS 유지, R1 독립 리뷰 CLOSED, 신규 모델 호출/승인/READY 0. NEXT: 허용된 Linux 업무 Agent가 실제 설치본과 synthetic fixture 전후 read-only 무변경을 검증한 비민감 결과 회신."
     }
   ]
 }
