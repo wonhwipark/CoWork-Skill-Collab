@@ -1,5 +1,16 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-18 KST — Knowledge Updater 단일 관리 책임·업무 GPT 메타정보 설계·웹 뷰어 UX 재논의 대기
+
+- **LATEST_USER_DECISION:** `l1-knowledge-updater`에 개인 `knowledge/` 후보 저장·관리/탐색 연동과 그룹 Knowledge로의 검증된 내용 선별 변환·승인 게시·readback/고정 Revision 역링크 **관리 책임**을 집중. 업무 GPT가 설치된 Updater·`l1-fix-workflow`·`work-ledger-kernel`·개인 Work/Evidence·그룹 `l1sw-dev-knowledge` 정본을 직접 확인하여 **필요 메타정보/분류/연결 계약을 설계**. CoWork가 스키마·API·물리 폴더를 미리 확정하지 않음. 업무 GPT의 실제 Linux 실행은 허용된 업무 LLM·Linux Agent/MCP를 통해 별도 증빙. 개인·그룹 접근권 및 그룹 게시 승인 실측 전 미확인.
+- **UX_USER_FEEDBACK:** 사용자는 실제로 본 웹 뷰어 페이지가 **가독성이 떨어지고 보기 불편하다**고 보고. 사용자 관찰은 `USER_REPORTED`; 이 GPT가 현재 서비스 URL/운영 Revision·화면/호스트 실측을 확인하지 못했으므로 `HOST_G0/E3=NOT_VERIFIED` 유지. 트리/경로/Markdown/MSC/반응형 등 **UX 개선은 사용자와 별도 디스커션 후 확정**, UI/서비스 설정 변경 `NOT_RUN`.
+- **PRESERVED:** Viewer r0002 전 업무 트리 READ_ONLY·형식별 렌더·보안/승인 E0~E5; 개인 Knowledge r0003 D-1~D-4/Module→Feature→Scenario·PK-G01~G08; Workflow/Kernel `works/`·Evidence·원장과 그룹 정본·승인 정책, K0~K8, Claude 독립 리뷰 생략. Workflow `knowledge/` 직접 WRITE 금지 후보와 Updater의 인가된 쓰기를 분리, 기존 Work 원본 불변.
+- **DOC_POSTED:** [PRIVATE 책임/UX 델타 r0004](L1_WORKSPACE_KNOWLEDGE_UPDATER_OWNERSHIP_AND_VIEWER_UX_DELTA_r0004_20261118_KST.md), CoWork commit `b30bcb0f73ac54bf6fbcbfd43d2df7dae104065e` (원격 본문 readback PASS). PUBLIC `wonhwipark/L1Work/main/handoffs/L1_WORKSPACE_LOCAL_VIEWER_R0002_BUSINESS_GPT_DETAILED_REVIEW_AND_G0_HANDOFF_r0001_20261118_KST.md` **15절** 추가, commit `d726270491a1910da406537f45c205be513877f3`; `handoffs/README.md` 최신 링크 갱신, commit `61d2c4b3efc4a45399cb3cc52760d2b84fbdb242`. 원격 UTF-8 본문 readback PASS.
+- **STATUS:** `DOC_CHANGE=POSTED`; `INDEPENDENT_REVIEW=NOT_RUN/USER_WAIVED_THIS_HANDOFF`; `UPDATER_HOST_G0/API/METADATA=NOT_VERIFIED`; `SKILL_CODE_AND_TESTS=NOT_RUN`; `VIEWER_UX_REDESIGN=DISCUSSION_PENDING`; `UI_CHANGE/LINUX_SERVICE_CHANGE/SHARING/GROUP_WRITE/REQUEST_READY=NOT_RUN_BY_THIS_TASK`.
+- **NEXT_ONE_ACTION:** 업무 GPT가 최신 인계서 **13+14+15절**과 실제 설치본에서 기존 Knowledge Updater/Workflow/Kernel/그룹 Knowledge READ_ONLY 비교 및 최소 메타정보/연계 설계를 수행. 뷰어 UX는 사용자의 추가 디스커션 전 별도 OPEN으로 유지. 실제 WRITE/설치/새 리뷰/유료 호출은 인계만으로 시작하지 않음.
+
+---
+
 ## 2026-11-18 KST — 사용자 제공 업무 GPT 설계 변경 합의 복원·Viewer/Personal Knowledge 인계 동기화
 
 - **USER_INPUT_RECOVERED:** 사용자 전달 업무 GPT 협의 화면 2장으로 기존 `l1-knowledge-updater` 분석 유지 + 개인 `l1-workspace/knowledge/` 지속 후보 저장·관리(D-1~D-4 DEFER 최소 EXTEND), Module→Feature→Scenario 탐색, Work/Evidence/Revision/Coverage·검증/게시 링크, 기존 그룹 포맷 Preview·선별 변환·승인 후 `l1-github` 게시/readback 및 고정 Revision 역링크, Workflow Bootstrap `knowledge/` WRITE 차단, K5.8 회귀 러너 점검 합의를 복원. 개인 Knowledge와 그룹 물리 폴더 동형 복제 불필요. 사용자가 제공한 절대 로컬 경로와 화면 원본은 PRIVATE/PUBLIC에 게시하지 않음.
