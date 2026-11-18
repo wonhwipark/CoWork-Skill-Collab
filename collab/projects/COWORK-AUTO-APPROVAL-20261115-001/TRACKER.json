@@ -9,7 +9,7 @@
       "owner": "GPT 단일 USD3 정책/사전 게이트 정본 완료 → Windows Claude Code 보호 위임 조건부 정합화",
       "self_test": "PASS",
       "independent_review": "NOT_RUN",
-      "next_action": "2026-11-19: 사용자 승인 신규 통합 리뷰 비용 $3/request, 일/월 호출 및 비용 상한 없음. PRIVATE main ops preflight '--intent unified'와 거부 회귀 6개·정책/원샷 반영; 신형 preflight PASS는 Windows LIVE/유효 서명 확인 전 인증·적용 아님. 기존 v0.2.25 LIVE/보호 위임 $1 유지. Windows Claude Code가 GPT_UNIFIED_REVIEW_USD3_CONDITIONAL_APPLY_r0001_20261119_KST.md A~F를 1회 실행, 레거시 pending 소급 차단 + 보호 권한 + SHA/ACL/SHADOW/rollback PASS 시만 보호 위임·설정 최소 정합화 후 PRIVATE 결과/영수증·readback 게시. 신규 유료 리뷰/REQUEST/READY/모델호출=0."
+      "next_action": "2026-11-19: 사용자 승인 신규 통합 리뷰 비용 $3/request, 일/월 호출 및 비용 상한 없음. PRIVATE main ops preflight '--intent unified'와 거부 회귀 6개·정책/원샷 반영; GitHub Actions #44333532481의 ops 단위시험 60 PASS(신규 6 포함), 0 FAIL. 신규 preflight PASS는 Windows LIVE/유효 서명 확인 전 인증·적용 아님. 기존 v0.2.25 LIVE/보호 위임 $1 유지. Windows Claude Code가 GPT_UNIFIED_REVIEW_USD3_CONDITIONAL_APPLY_r0001_20261119_KST.md A~F를 1회 실행, 레거시 pending 소급 차단 + 보호 권한 + SHA/ACL/SHADOW/rollback PASS 시만 보호 위임·설정 최소 정합화 후 PRIVATE 결과/영수증·readback 게시. 신규 유료 리뷰/REQUEST/READY/모델호출=0."
     }
   ]
 }
