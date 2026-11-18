@@ -1,5 +1,17 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 2026-11-18 KST — ACE·PEC-HOP·SAFE 실제 후보 스킬 소스 G0 대조 완료(설치·호스트 G0 제외)
+
+- **진행 지시:** “진행”. 기존 합성 계약 시험 26 PASS와 실제 스킬 reader/Evidence 간 연결 경계를 **READ_ONLY** 조사. Work/업무 호스트·스킬 설치·PUBLIC ZIP·기존 독립 리뷰 R1 재실행 0.
+- **원격 원본 직접 확인:** PRIVATE 후보 3종 ZIP `l1-fix-workflow_v1_6_70_1117.zip`(758117 B, blob `5849cbdc…`), `work-ledger-kernel_v0_7_43_1117.zip`(319793 B, blob `cbfaa05e…`), `code-analyzer_v0_15_3_1114.zip`(574469 B, blob `a661219a…`). ZIP 중앙 디렉터리·실제 관련 모듈 압축 해제/비압축 길이 비교 PASS, 함수 정의·조건 코드 원문 대조. 세 파일은 **개발 후보**이며 실제 Linux 설치본과 동일하다고 단정하지 않음.
+- **결과 문서:** [실제 함수 인터페이스 G0 매핑](GPT_ACE_PEC_SAFE_SOURCE_G0_INTERFACE_MAPPING_r0001_20261118_KST.md) commit `34ee9caf4e33dd4ef0cb34982becb160979e51c9`, **12,708 UTF-8 B**, SHA-256 `ff31cc700a6a3f3e0432b4d3b9f8630594a51c93716b9bd97b51ea7f00da6e0b` / blob `8103d80dbbf5832edc2d74cfdc9992a4221f609e`. PRIVATE main 원격 본문 readback PASS.
+- **확인된 기존 경계:** Workflow `work_inspection.inspect_work`·Kernel `TLContinuity.resume/WorkReferences.read`는 Work 조회 **REUSE**; `feature_evidence.attach_evidence(...apply=False)`는 provenance/registry/전체 파일 SHA와 preview를 제공하나 **발췌 구간 byte digest는 확인 안 됨 → CONNECT_GAP_POSSIBLE / 설치본 G0 대기**. Kernel Evidence meta `sha256/provider/version/code_rev/confidence_state` 재사용, 새 영속 필드 제안 없음. Code Analyzer `reuse_validator.validate`는 fingerprint/build/dependency 비교이지 발췌 digest 아님.
+- **중요 SAFE 위험:** Kernel `LedgerStorage.__init__`이 `root.mkdir(parents=True, exist_ok=True)` 호출. 따라서 이름상 read-only라도 초기화에서 신규 폴더 생성 위험; 실제 격리 G0는 fixture 전후 모든 파일/디렉터리 목록·mtime·SHA 차이 0을 확인해야 PASS. Workflow의 `brief.decisions` 날짜/ref 없는 합성 항목만으로 ACE 최신 유효 판정 확정 금지(HOLD).
+- **구분:** `SOURCE_CANDIDATE_G0=PASS_SCOPE_LIMITED`, `HOST_INSTALLED_G0=NOT_VERIFIED`, `ACTUAL_SKILL_FUNCTION_TEST=NOT_RUN`, `UPDATER_G0=NOT_RUN`, `ACON_MODEL_REPEAT=NOT_RUN`, `NEW_MODEL_CALLS=0`, `DEPLOYMENT_READY=NO`. 기존 완료 R1 변경·재리뷰 없음.
+- **NEXT_ONE_ACTION:** 업무 GPT/허용된 Linux Agent가 실제 설치된 reader/Evidence/provider 경로·revision을 **READ_ONLY** G0로 확인하고 비민감 합성 fixture에서 `inspect_work`·`attach_evidence(apply=False)`와 디렉터리/파일 전후 불변을 실측. 결과 중 비민감 요약만 기존 Work로 회수 후 최소 CONNECT 범위 판정. 회사 코드/로그/상세 MSC는 CoWork 게시 금지.
+
+---
+
 ## 2026-11-18 KST — ACE·PEC-HOP·SAFE 비민감 합성 계약 회귀 26/26 PASS
 
 - **사용자 지시:** 이전 r0002 설계 수용 조건의 ACE-02·PEC-01/03·SAFE-01 격리 회귀시험 “진행해줘”. 기존 리뷰 R1 완료·동일 고정 REQUEST/READY/ZIP/영수증·PUBLIC 배포·업무 Knowledge 원본 무변경.
