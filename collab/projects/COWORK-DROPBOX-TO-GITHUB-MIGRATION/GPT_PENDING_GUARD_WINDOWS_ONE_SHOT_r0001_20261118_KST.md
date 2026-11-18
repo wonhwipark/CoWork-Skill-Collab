@@ -1,4 +1,12 @@
 # Windows 원샷 — Guard 정산·pending 표시 분리
+
+## 최신 실행 보충 (2026-11-18 KST / GPT 운영 판정)
+- Windows 호스트의 최근 실측 보고: **GitHub 단일 LIVE / watcher v0.2.25 이미 설치·검증**. 이 원샷에서는 v0.2.25를 **재설치하지 말고** 시작 시 Task·프로세스·DB·배포 결과만 읽기 전용 대조. 호스트 최신 상태가 다르면 원인부터 기록.
+- GPT 새 판정: [자동 협업 최소 조치 결과](GPT_AUTO_COLLAB_REMEDIATION_DISPOSITION_r0001_20261118_KST.md). 운영 정책맵 예산과 별개로 보호 위임 요청당 USD 1.00은 미변경. 위임 숫자·허용 리터럴을 **신규 승인 없이 변경하지 않음**.
+- CRLF 시험 fixture 저장소 정본 수정 커밋 `9b9141bc015a5930a2e57de26b6ab2f73be8223a`를 격리 Windows에서 1회 시험할 수 있음. `python -m unittest discover -s collab/ops/tests -p test_review_request_gate.py -v` (모델 호출·키·원격쓰기 0). 이 시험은 **PRIVATE 저장소의 독립 도구**이며 기존 v0.2.26 ZIP 내부 15개 CRLF 실패가 해결됐다는 의미가 아님.
+- 최신 조회 시 이 원샷의 Windows 결과 MD/감사 JSON은 원격 미게시. **실행·결과 확인 전에는 완료라고 보고 금지**. 기존 9행·Guard UNCERTAIN은 READ_ONLY 우선, 완료 4행 데이터 삭제·재호출 금지.
+- Windows 기존 세션이 작업 수행 후 결과를 게시할 때 `HOST_GUARD_AUDIT`, `DISPLAY_APPLIED`, `GATE_TEST_WINDOWS`, `MODEL_CALLS`를 구분하여 기입. 새로운 유료 리뷰·REQUEST/READY·설치/Notifier 변경 금지.
+
 - 정확한 저장소: GitHub PRIVATE `wonhwipark/CoWork-Skill-Collab`, branch `main`.
 - 이 인계의 상대경로: `collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/GPT_PENDING_GUARD_WINDOWS_ONE_SHOT_r0001_20261118_KST.md`.
 - 사용자 최신 실행 지시: “이제 조치해줘”. 기존 Work `COWORK-DROPBOX-TO-GITHUB-MIGRATION` 및 Guard의 `L1-WORKSPACE-RAG-20261111-001`을 이어감.
