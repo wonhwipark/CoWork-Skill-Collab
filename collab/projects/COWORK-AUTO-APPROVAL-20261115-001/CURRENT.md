@@ -1,5 +1,14 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-18 KST — GPT 최소 수정 채택·독립 리뷰/운영 게이트 판정
+- `collab/ops/tests/test_review_request_gate.py`의 Windows CRLF REQUEST fixture를 bytes/LF 고정으로 수정, 회귀 1개 추가. PRIVATE commit `9b9141bc015a5930a2e57de26b6ab2f73be8223a`, remote readback PASS, SHA-256 `409c956d0220e87d20d490fdfe38786044eb586e63e1c549d8e500818ee8e3ed`. 실제 Windows 재시험 `NOT_RUN`; **v0.2.26 ZIP 내부 CRLF 시험 15건은 변경 없음**.
+- **선결 판정:** v0.2.26은 `development_not_for_deployment`. 신규 코드/시험 통합 → 새 버전 후보·Windows 전체 회귀 → 승인된 독립 리뷰 1회 → GPT 판정 → 별도 운영 적용 게이트. 현재 REQUEST/READY·유료 리뷰·설치 0. 기존 LIVE v0.2.25 보존.
+- **Notifier:** 실제 기존 별도 Notifier 경로 유지, 후보 `notify_events`는 호출 지점 미확인(호스트 검증상 NONE). 실제 연결/키/Telegram 전송 변경하지 않음. 중복 발송 없는 입증된 gap만 후속 후보에서 수정.
+- **보호 위임:** `max_request_usd=1.00` 유지. `POLICY-STATIC-V1=1.50`, `-LARGE=3.00`, `-DESIGN=3.00` 정책 등록과 보호 승인 유효성은 별개. 새 보호 위임 수치/허용 리터럴 변경은 적정 승인·호스트 범위 확인 전 BLOCKED. [종합 조치 판정](../COWORK-DROPBOX-TO-GITHUB-MIGRATION/GPT_AUTO_COLLAB_REMEDIATION_DISPOSITION_r0001_20261118_KST.md).
+- **NEXT_ONE_ACTION:** 이관 Work의 Windows Guard/pending 실측 결과부터 회수하고, 별도 Windows 게이트 fixture 회귀를 재실행·게시. v0.2.26 배포/독립 리뷰 요청은 현재 게이트 미충족.
+
+---
+
 ## v0.2.26 Windows 플랫폼·Notifier 검증 완료 (2026-11-18 KST)
 
 - 결과: `CLAUDE_V026_WINDOWS_PLATFORM_AND_NOTIFIER_RESULT_FOR_GPT_20261118.md` (PRIVATE `main`, commit `4b5170cfd63d`, SHA-256 `72ed517a92b9fa412e236f1af0d35a5a69d3cebd2b0ee7e8949fa8db4547e0fb`).
