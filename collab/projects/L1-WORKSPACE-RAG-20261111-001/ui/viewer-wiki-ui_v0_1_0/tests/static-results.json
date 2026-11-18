@@ -1,0 +1,85 @@
+{
+  "scope": "STATIC_SOURCE_ONLY",
+  "counts": {
+    "PASS": 19,
+    "FAIL": 0
+  },
+  "results": [
+    {
+      "test": "JS syntax assets/app.js",
+      "result": "PASS"
+    },
+    {
+      "test": "JS syntax assets/markdown.js",
+      "result": "PASS"
+    },
+    {
+      "test": "JS syntax adapters/adapter.js",
+      "result": "PASS"
+    },
+    {
+      "test": "JS syntax fixtures/demo-data.js",
+      "result": "PASS"
+    },
+    {
+      "test": "JS syntax tests/harness.js",
+      "result": "PASS"
+    },
+    {
+      "test": "No innerHTML/outerHTML/eval/document.write",
+      "result": "PASS"
+    },
+    {
+      "test": "No fetch/XHR/WebSocket in demo",
+      "result": "PASS"
+    },
+    {
+      "test": "No write storage API",
+      "result": "PASS"
+    },
+    {
+      "test": "Demo CSP disables connect/frame/object",
+      "result": "PASS"
+    },
+    {
+      "test": "No external asset references",
+      "result": "PASS"
+    },
+    {
+      "test": "Search accessible name survives mobile",
+      "result": "PASS"
+    },
+    {
+      "test": "No filesystem service/backend in package",
+      "result": "PASS"
+    },
+    {
+      "test": "Critical text contrast body 6.88:1",
+      "result": "PASS"
+    },
+    {
+      "test": "Critical text contrast navigation 6.29:1",
+      "result": "PASS"
+    },
+    {
+      "test": "Critical text contrast active 6.17:1",
+      "result": "PASS"
+    },
+    {
+      "test": "Critical text contrast preview 5.12:1",
+      "result": "PASS"
+    },
+    {
+      "test": "Critical text contrast draft 5.26:1",
+      "result": "PASS"
+    },
+    {
+      "test": "Critical text contrast published 5.82:1",
+      "result": "PASS"
+    },
+    {
+      "test": "Critical text contrast unknown 4.59:1",
+      "result": "PASS"
+    }
+  ]
+}

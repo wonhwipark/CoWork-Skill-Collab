@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; font-src 'self'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="description" content="L1 Workspace 팀 위키형 UI · 합성 데이터 기반 읽기 전용 데모">
+  <title>L1 Workspace · 팀 위키</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/style.css">
+  <script defer src="fixtures/demo-data.js"></script>
+  <script defer src="adapters/adapter.js"></script>
+  <script defer src="assets/markdown.js"></script>
+  <script defer src="assets/app.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">본문으로 건너뛰기</a>
+<header class="topbar">
+  <button class="icon-button mobile-only" id="tree-toggle" aria-label="탐색 메뉴 열기" aria-controls="sidebar" aria-expanded="false"><span data-icon="menu"></span></button>
+  <a class="brand" href="#/work/rach-overview" aria-label="L1 Workspace 시작"><span class="brand-mark">L1<span></span></span><span>Workspace<span class="brand-sub">TEAM KNOWLEDGE</span></span></a>
+  <span class="top-divider"></span><span class="workspace-label">엔지니어링 위키</span>
+  <button class="search-trigger" id="search-open" aria-label="예시 문서 검색"><span data-icon="search"></span><span>예시 문서 검색</span><kbd>/</kbd></button>
+  <span class="demo-label"><span></span>합성 데모</span>
+  <button class="avatar" id="about-open" aria-label="데모 정보 보기">L1</button>
+</header>
+<div class="layout">
+  <aside class="sidebar" id="sidebar" aria-label="문서 탐색">
+    <div class="panel-mobile-heading"><strong>문서 탐색</strong><button class="icon-button" data-close-panel aria-label="탐색 메뉴 닫기"><span data-icon="close"></span></button></div>
+    <div class="space-card"><span class="space-icon" data-icon="layers"></span><span><strong>L1 Engineering</strong><small>함께 쌓는 기술 지식</small></span><span class="space-chevron" data-icon="chevron-down"></span></div>
+    <nav class="view-nav" aria-label="탐색 범위">
+      <button data-view="work"><span data-icon="briefcase"></span>Work<span class="nav-note">업무</span></button>
+      <button data-view="knowledge"><span data-icon="book-open"></span>Knowledge<span class="nav-note">지식</span></button>
+      <button data-view="files"><span data-icon="folder"></span>전체 파일<span class="nav-note">탐색</span></button>
+    </nav>
+    <div class="tree-heading"><span id="tree-title">WORK 페이지</span><span class="read-label" data-icon="lock"></span></div>
+    <nav id="page-tree" aria-label="페이지 계층"></nav>
+    <div class="sidebar-bottom"><span data-icon="shield"></span><div><strong>읽기 전용 워크스페이스</strong><p>지식의 작성·게시 상태는 원본에서 관리</p></div></div>
+    <div class="build-label">Wiki UI <span>v0.1.0 · 합성 데이터</span></div>
+  </aside>
+  <main id="main" tabindex="-1">
+    <div class="page-toolbar"><nav id="breadcrumbs" aria-label="현재 위치"></nav><div class="toolbar-actions"><button class="icon-button" id="copy-link" aria-label="현재 문서 링크 복사" title="링크 복사"><span data-icon="link"></span></button><button class="icon-button" id="meta-toggle" aria-label="목차 및 문서 정보 열기" aria-controls="right-panel" aria-expanded="false"><span data-icon="panel-right"></span></button></div></div>
+    <div id="loading" role="status" hidden>문서를 불러오는 중…</div>
+    <div id="document-layout" class="document-layout">
+      <div class="reading-column">
+        <div class="doc-heading"><div id="doc-eyebrow" class="eyebrow"></div><h1 id="doc-title"></h1><p id="doc-description" class="doc-description"></p><div id="doc-byline" class="doc-byline"></div></div>
+        <div id="doc-actions" class="doc-actions"></div>
+        <article id="article" class="prose" aria-label="문서 본문"></article>
+        <section id="related" class="related" aria-label="연결 문서"></section>
+        <footer class="document-footer"><span data-icon="check-circle"></span><span>합성 예시로 화면과 탐색 동작을 확인하고 있어요.</span><span>원본 수정 없음</span></footer>
+      </div>
+      <aside id="right-panel" class="right-panel" aria-label="목차 및 문서 정보"><div class="panel-mobile-heading"><strong>목차 및 문서 정보</strong><button class="icon-button" data-close-panel aria-label="문서 정보 닫기"><span data-icon="close"></span></button></div><div class="right-sticky"><p class="rail-heading">이 페이지에서</p><nav id="toc" aria-label="본문 목차"></nav><div id="metadata" class="metadata"></div></div></aside>
+    </div>
+  </main>
+</div>
+<div id="panel-backdrop" class="panel-backdrop" hidden></div>
+<dialog id="search-dialog" class="search-dialog" aria-labelledby="search-title"><div class="search-dialog-head"><span data-icon="search"></span><h2 id="search-title" class="sr-only">예시 문서 검색</h2><input id="search-input" type="search" placeholder="문서 제목, 모듈, 키워드 검색" autocomplete="off" aria-label="예시 문서 검색어"><button class="icon-button" id="search-close" aria-label="검색 닫기"><span data-icon="close"></span></button></div><div class="search-scope"><span>합성 fixture 문서만 검색</span><span id="search-count" aria-live="polite"></span></div><div id="search-results"></div><div class="search-footer">Tab으로 이동 · Enter로 열기 · Esc로 닫기</div></dialog>
+<dialog id="about-dialog" class="about-dialog" aria-labelledby="about-title"><span class="eyebrow">L1 WORKSPACE / UI PREVIEW</span><h2 id="about-title">함께 읽기 좋은 위키</h2><p>HTML/CSS/JS로 구현한 읽기 전용 데모예요. 모든 문서·인물·revision·MSC는 합성 예시입니다.</p><p>실제 Linux Viewer와 API·계정·권한은 연결되지 않았어요. 업무 GPT의 현장 연동·검증이 필요해요.</p><button class="primary-button" id="about-close">확인</button></dialog>
+<div id="toast" role="status" class="toast" hidden></div>
+</body>
+</html>
