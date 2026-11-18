@@ -50,8 +50,8 @@ class GateTests(unittest.TestCase):
         self.config.write_text(json.dumps({"review_policy": {"known_run_policy_refs": self.policy_map}}), encoding="utf-8")
 
     def save_request(self):
-        self.request.write_text("---\n" + "".join(f"{key}: {val}\n" for key, val in self.fields.items()) +
-                                "knowledge_refs: []\n---\n\n# Review\n", encoding="utf-8")
+        self.request.write_bytes(("---\n" + "".join(f"{key}: {val}\n" for key, val in self.fields.items()) +
+                                  "knowledge_refs: []\n---\n\n# Review\n").encode("utf-8"))
 
     def pass_check(self, intent="design", max_usd="3.00"):
         return gate.check_request(self.request, self.package, self.config,
@@ -62,6 +62,11 @@ class GateTests(unittest.TestCase):
         with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
             code = gate.main(list(args))
         return code, out.getvalue(), err.getvalue()
+
+    def test_request_fixture_has_lf_newlines_on_all_platforms(self):
+        request_bytes = self.request.read_bytes()
+        self.assertTrue(request_bytes.startswith(b"---\n"))
+        self.assertNotIn(b"\r\n", request_bytes)
 
     def test_old_live_legacy_large_design_passes(self):
         r = self.pass_check()
@@ -154,8 +159,8 @@ class GateTests(unittest.TestCase):
             self.pass_check()
 
     def test_duplicate_policy_field_rejected(self):
-        self.request.write_text(self.request.read_text().replace(
-            "run_policy_ref: POLICY-STATIC-V1-LARGE\n", "run_policy_ref: POLICY-STATIC-V1-LARGE\nrun_policy_ref: POLICY-STATIC-V1-DESIGN\n"), encoding="utf-8")
+        self.request.write_bytes(self.request.read_bytes().replace(
+            b"run_policy_ref: POLICY-STATIC-V1-LARGE\n", b"run_policy_ref: POLICY-STATIC-V1-LARGE\nrun_policy_ref: POLICY-STATIC-V1-DESIGN\n"))
         with self.assertRaisesRegex(gate.GateReject, "REQUEST_DUPLICATE_FIELD"):
             self.pass_check()
 
