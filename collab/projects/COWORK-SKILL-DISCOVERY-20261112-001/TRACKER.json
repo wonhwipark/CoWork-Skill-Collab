@@ -5,11 +5,11 @@
       "work_id": "COWORK-SKILL-DISCOVERY-20261112-001",
       "skill": "skill-discovery",
       "title": "skill-discovery",
-      "phase": "DISPOSITION",
+      "phase": "TEST",
       "owner": "GPT",
       "self_test": "PASS",
       "independent_review": "PASS",
-      "next_action": "2026-11-18: ACE·PEC-HOP·ACON 통합 설계 r0002 PRIVATE main 게시/readback PASS(24,705 B, SHA256 8959c5785da37d0a7f48687fbbe17576c4f0f517be93ffcd9befc029a1c6def1). R1 ACCEPT_WITH_CHANGE 비차단 N1~N4 수용 기준 최소 반영: ACE-02 결정 우선순위/HOLD, PEC-01/03 원문 byte digest·변조 반례, ACON-01 각 3회 조건부(유료 호출 0), SAFE-01 신규 subagent/모델 호출/상시자동화 0. 기존 12 수용 시험 ID 정적 일치 PASS; r0001와 R1 고정 요청/ZIP/READY/영수증 불변, REVIEW_CYCLE=CLOSED, 신규 리뷰 0. NEXT: 승인된 비민감 합성 자료로 ACE/PEC/SAFE 읽기 전용 재현 시험(실제 NOT_RUN), ACON·Updater G0 별도 승인/환경 확인."
+      "next_action": "2026-11-18: ACE·PEC-HOP·SAFE r0002 비민감 합성 계약회귀 V8 26 PASS/0 FAIL: STATIC 5, ACE-02 6, PEC-01/03 9, SAFE-01/03 6. test_ace_pec_safe_synthetic_r0001.js 및 GPT_ACE_PEC_SAFE_SYNTHETIC_REGRESSION_RESULT_r0001_20261118_KST.md PRIVATE main posted/readback PASS. PASS는 순수 contract oracle에 한정; 실제 설치 스킬·Windows/Linux Node CLI·업무 G0/ACON 모델 반복/E2E=NOT_RUN. 기존 R1 리뷰 CLOSED(새 요청·READY·모델 호출 0). NEXT: 기존 스킬/업무 호스트 실제 reader/Evidence/권한 계약 읽기 전용 G0 대조 후 최소 통합 회귀 판정."
     }
   ]
 }
