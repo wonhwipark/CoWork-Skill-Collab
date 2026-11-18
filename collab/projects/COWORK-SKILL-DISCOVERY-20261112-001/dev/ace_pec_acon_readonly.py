@@ -73,7 +73,8 @@ def acon_compare_existing_results(*, baseline: Sequence[Mapping[str, Any]],
     """
     if len(baseline) < 3 or len(compressed) < 3:
         return {"status": "NOT_RUN", "reason": "INSUFFICIENT_EXISTING_REPETITIONS"}
-    if not pinned_model_config or not pinned_source_revision or not evidence_ids        or any(not isinstance(i, str) or not i for i in evidence_ids):
+    if not pinned_model_config or not pinned_source_revision or not evidence_ids \
+       or any(not isinstance(i, str) or not i for i in evidence_ids):
         return {"status": "HOLD", "reason": "PIN_OR_EVIDENCE_UNVERIFIED"}
     required = set(evidence_ids)
     all_rows = list(baseline) + list(compressed)
