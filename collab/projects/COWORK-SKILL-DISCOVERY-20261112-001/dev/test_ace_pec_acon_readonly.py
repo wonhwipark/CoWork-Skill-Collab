@@ -54,6 +54,13 @@ class ReadOnlyContractTests(unittest.TestCase):
         r=self.compare(self.make_runs(),self.make_runs(False,())); self.assertEqual(r["status"],"REVIEW_NEEDED");self.assertFalse(r["causality_proven"])
     def test_acon_repetitions(self):
         self.assertEqual(self.compare(self.make_runs()[:2],self.make_runs())["status"],"NOT_RUN")
+    def test_acon_reports_partial_missing_evidence(self):
+        compressed=self.make_runs()
+        compressed[0]["retained_evidence_ids"]=[]
+        result=self.compare(self.make_runs(),compressed)
+        self.assertEqual(result["status"],"REVIEW_NEEDED")
+        self.assertEqual(result["evidence_missing_from_any_compressed_run"],["E1"])
+        self.assertFalse(result["causality_proven"])
     def test_acon_model_variance(self):
         r=self.make_runs();r[0]["model_config"]="different";self.assertEqual(self.compare(r,self.make_runs())["status"],"HOLD")
     def test_acon_revision(self):
