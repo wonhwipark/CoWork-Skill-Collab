@@ -5,11 +5,11 @@
       "work_id": "L1-WORKSPACE-RAG-20261111-001",
       "skill": "l1-knowledge-updater",
       "title": "l1-knowledge-updater",
-      "phase": "REVIEW",
-      "owner": "GPT($1.50 사용자 리뷰 승인 기록·r0002 REQUEST 사전검증 초안·Windows HOST_ONE_SHOT 게시) / Windows Claude(호스트 정책/수동 보호 signer 검증 → 정식 요청/READY → 리뷰 1회 실행 대기) / 업무 GPT(Linux G0 대기)",
+      "phase": "DISPOSITION",
+      "owner": "GPT / Windows Claude Code",
       "self_test": "PASS",
-      "independent_review": "PREFLIGHT_PENDING",
-      "next_action": "사용자 이번 R1 Claude 독립 리뷰 1회 최대 USD1.50 승인 완료. Windows Claude Code: PRIVATE main collab/requests/REQ-L1-WORKSPACE-LOCAL-VIEWER-DESIGN-R1-20261118/HOST_SUBMIT_ONESHOT_150USD_AND_LIMIT_CLEANUP_20261118.md 실행. Windows live reviewer.config.json select/check(POLICY-STATIC-V1 USD1.50) PASS 전에 정식 REQUEST 게시 금지. 고정 r0002 ZIP 91324B SHA6a013a104ebfefeae6dc452965ce99ce5a3f9637ed538c778d8cb5189d5a7e5f. PASS면 Commit A→SOURCE_PIN→유효 수동 signer/APPROVAL_SIG→READY 마지막→LIVE watcher 1회→결과/영수증→임시 예외 설정만 정리. 전역 건당 보호/서명·중복은 유지; $1.5 초안에 대한 호스트 사전검증 아직 NOT_RUN. 이 GPT 세션 모델 호출 0."
+      "independent_review": "PASS",
+      "next_action": "2026-11-18: L1 Workspace 로컬 뷰어 r0002 독립 리뷰 1회 완료(ACCEPT_WITH_CHANGE). BLOCKING 3건: B1 path containment canonicalize 미구체화, B2 전체공개 전환 시 비밀탐지 서술 부족(fail-closed 필요), B3 MSC HTML sandbox 별도 origin 구현 미정의. 비차단 4건. REQ `REQ-L1-WORKSPACE-LOCAL-VIEWER-DESIGN-R1-20261118`, 비용 USD 0.6055119, 모델 1회. REQUEST/SOURCE_PIN/APPROVAL_SIG/READY/결과/영수증 전부 원격 게시·readback 확인. 임시 한도 override 없었음(원복 대상 없음), 보호 위임/정책 불변. 다음: GPT가 BLOCKING 3건 수용 여부 판정."
     }
   ]
 }
