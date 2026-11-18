@@ -76,7 +76,7 @@ HTML은 GitHub에서 소스로 표시되므로 다운로드 후 브라우저로 
 
 | Work ID | 스킬 | 진행 단계(신고) | 담당 | 시험(신고) | 독립 리뷰(신고) | 다음 조치 |
 |---|---|---|---|---|---|---|
-| [COWORK-AUTO-APPROVAL-20261115-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-AUTO-APPROVAL-20261115-001/CURRENT.md) | 미지정 | 단계 미확인 | 미등록 | NOT_VERIFIED | NOT_VERIFIED | CURRENT.md 최신 상태 및 다음 담당 확인 |
+| [COWORK-AUTO-APPROVAL-20261115-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-AUTO-APPROVAL-20261115-001/CURRENT.md) | cowork-review-watcher | GPT 판정 | GPT 단일 USD3 정책/사전 게이트 정본 완료 → Windows Claude  | PASS | NOT_RUN | 2026-11-19: 단일 USD3 정책 조건부 적용 결과 CONFIG_APPLY=BLOCKED. A(G0)/C(gate 30/30 PASS Windows) 완료. B에서 소급 위험 발견: REQ-COWORK-BUDGET-V025-DESIGN-R1-20261117이 위임 scope/policy  |
 | [COWORK-DROPBOX-TO-GITHUB-MIGRATION](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) | cowork-review-watcher | 완료 신고 (검증 필요) | GPT / Claude Code | PASS | PASS | 2026-11-18: GPT CRLF 독립 게이트 fixture 최소 수정·원격 readback PASS (commit 9b9141b, sha256 409c956d…). 운영 GitHub LIVE/v0.2.25는 기존 호스트 보고 유지. Windows pending/Guard 원샷 실행 결과 미 |
 | [COWORK-GITHUB-DASHBOARD-20261111-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md) | cowork-dashboard | 독립 리뷰 | GPT | PASS | PENDING | 대시보드의 두 진입·개인/그룹 구분을 확인. 실제 Updater→Workspace 저장 연결은 L1 Work에서 업무 GPT의 설치본 매핑으로 확인. |
 | [COWORK-SKILL-DISCOVERY-20261112-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md) | 미지정 | 단계 미확인 | 미등록 | NOT_VERIFIED | NOT_VERIFIED | CURRENT.md 최신 상태 및 다음 담당 확인 |
@@ -94,7 +94,7 @@ HTML은 GitHub에서 소스로 표시되므로 다운로드 후 브라우저로 
 
 | 프로젝트 | 문서상 상태 | 근거 |
 |---|---|---|
-| COWORK-AUTO-APPROVAL-20261115-001 | 검증 진행 중 | [CURRENT.md](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-AUTO-APPROVAL-20261115-001/CURRENT.md) |
+| COWORK-AUTO-APPROVAL-20261115-001 | 문서상 진행 | [CURRENT.md](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-AUTO-APPROVAL-20261115-001/CURRENT.md) |
 | COWORK-DROPBOX-TO-GITHUB-MIGRATION | 검증 진행 중 | [CURRENT.md](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) |
 | COWORK-GITHUB-DASHBOARD-20261111-001 | 검증 진행 중 | [CURRENT.md](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md) |
 | COWORK-SKILL-DISCOVERY-20261112-001 | 검증 진행 중 | [CURRENT.md](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md) |
