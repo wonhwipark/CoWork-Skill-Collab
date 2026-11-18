@@ -90,5 +90,5 @@ def acon_compare_existing_results(*, baseline: Sequence[Mapping[str, Any]],
     compressed_passes = sum(r["passed"] for r in compressed)
     return {"status": "REVIEW_NEEDED", "baseline_passes": baseline_passes,
             "baseline_runs": len(baseline), "compressed_passes": compressed_passes,
-            "compressed_runs": len(compressed), "evidence_missing_from_all_compressed_runs": missing,
+            "compressed_runs": len(compressed), "evidence_missing_from_any_compressed_run": missing,
             "causality_proven": False}
