@@ -1,5 +1,17 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 2026-11-19 KST — ACE·PEC-HOP·ACON 순수 읽기용 연결 후보 19 PASS / L1Work ZIP 공개 게이트 차단
+
+- **최신 사용자 지시:** “적용해줘”→“진행하자”→“l1work 에 배포까지해줘”. 기존 Work 재사용. 기존 설계 r0002·Claude 독립 설계 리뷰 `ACCEPT_WITH_CHANGE/CLOSED`·26개 합성 계약 PASS 재사용. **PUBLIC 배송 승인**은 받았지만 릴리스 게이트 미충족 자동 면제 아님.
+- **실제 구현(로컬 독립 후보, 통합 ZIP 아님):** [읽기 전용 순수 Python 연결 코드](dev/ace_pec_acon_readonly.py) `ace_decision_candidate`(원문 append/권한 검증 근거 없으면 HOLD; 권한 직접 부여 금지), `pec_verify_excerpt`(pinned raw 파일/byte offset/구간 SHA·1-byte 변조 FAIL), `acon_compare_existing_results`(기존 3+3 결과 비교만, 모델 API 호출 0). 공개/PRIVATE 제공 스킬에 설치된 신규 기능이라고 주장하지 않음.
+- **실제 시험:** [Python unittest 19건](dev/test_ace_pec_acon_readonly.py), `19 PASS / 0 FAIL` 격리 합성 실행. 7 ACE+7 PEC+5 ACON; Linux 비민감 합성 fixture/실설치 스킬·full regression/모델 3+3 실제 실험 **NOT_RUN**. 파일/지식/Git/MCP/모델/Watcher/Job/READY 동작 0.
+- **GitHub 원격 정합성:** 코드 5,711 B SHA256 `98517157a572115bf8cbe24ff05ca2e0d178e51a4cffb4b6c0156b88f929b234` blob `0be43253e6d4ae2e845f72c7da1052f398c072df` commit `fbb7246a585cb87004ca8993fc2eece7538b1e64`; 단위시험 4,255 B SHA256 `3b55d23dff307d4a137497ec5bd778122e948ee1052b13663da0383a376c6561` blob `2db1a67ddacc9baa6c4a48f8da0aba86d1082160` commit `07bebeeb1a6e81f0db4209ee60405966f2c05d40`. 로컬 `git hash-object`과 GitHub main 원격 blob·readback **일치 PASS**.
+- **결과/배포 판정:** [GPT ACE PEC ACON 개발·PUBLIC 게이트 판정 r0001](GPT_ACE_PEC_ACON_READONLY_CONNECTOR_DEV_AND_PUBLIC_GATE_r0001_20261119_KST.md) commit `5e6f406d055ce8515c0df476bda12ac1187ea4a3` readback PASS. 기존 L1Work 공개 Workflow/Kernel/Analyzer는 새 코드 미통합, 관련 기존 PRIVATE 보호 후보의 `development_not_for_deployment`, raw Git/write credential·경합/CAS·호스트/그룹 writer 검증·전체 회귀·독립 코드 리뷰 미충족. `PUBLIC_SKILL_ZIP=BLOCKED_NOT_POSTED`; 기존 L1Work ZIP 덮어쓰기·개발 ZIP 공개 전환 **0**.
+- **실행/미확인:** `DEVELOPMENT=PURE_CONNECTOR_CANDIDATE_ONLY`, `SELF_TEST=19_PASS_SCOPE_LIMITED`, `ACTUAL_SKILL_INTEGRATION=NOT_RUN`, `INDEPENDENT_CODE_REVIEW=NOT_RUN`, `LINUX_HOST_G0/E3=NOT_RUN`, `UPDATER_BUSINESS_ONLY_SOURCE=NOT_EXPORTED`, `DEPLOYMENT_READY=NO`. 기존 디자인 R1 결과는 별개 보존; 신규 모델 비용/REQUEST/READY/Watcher/운영 설정/Job·지식 WRITE 0.
+- **NEXT_ONE_ACTION:** 실제 업무 GPT의 기존 [PUBLIC ACE/PEC/ACON 인계서 §§9~10](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_KNOWLEDGE_UPDATER_ACE_PEC_HOP_ACON_DESIGN_APPLICATION_PROPOSAL_r0001_20261118_KST.md)에서 미확인 Linux 활성 reader/Writer 경계 **비민감 결과**만 받아 기존 배포 대상 스킬 전체 source pin 확정 → 필요한 순수 함수만 최소 연결·전체 회귀·권한/보안 게이트·독립 코드 리뷰 후 **최종 새 ZIP**만 L1Work root에 공개·SHA 검증. 호스트·Updater 원본을 Github에 옮기지 않음.
+
+---
+
 ## 2026-11-19 KST — ACE·PEC-HOP·ACON 재개: 실제 사용·업무 전용 Updater·모바일 수정 루프 확정
 
 - **사용자 최신 지시·보존:** “잠시 중지” 이후 “이어서 진행해줘”로 같은 목적의 기존 Work 재개. 2026-11-19 사용자 확인: 기존 스킬 패키지는 업무 환경에 전달·실사용 중, 문제 발생 시 모바일로 수정 요청. **USER_CONFIRMED_IN_USE**, 정확한 설치 버전/호스트 SHA 및 모델·호스트 E2E **HOST_VERIFIED 아님**. 업무 전용 `l1-knowledge-updater`는 GitHub에 소스 ZIP/SKILL.md 반출 요구하지 않음. 이 변경은 설계/인계 운영 경계 보완이며 원본 코드 수정·스킬 설치 승인 아님.
