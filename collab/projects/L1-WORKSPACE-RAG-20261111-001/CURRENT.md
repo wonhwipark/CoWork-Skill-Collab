@@ -1,5 +1,16 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-18 KST — 사용자 제공 업무 GPT 설계 변경 합의 복원·Viewer/Personal Knowledge 인계 동기화
+
+- **USER_INPUT_RECOVERED:** 사용자 전달 업무 GPT 협의 화면 2장으로 기존 `l1-knowledge-updater` 분석 유지 + 개인 `l1-workspace/knowledge/` 지속 후보 저장·관리(D-1~D-4 DEFER 최소 EXTEND), Module→Feature→Scenario 탐색, Work/Evidence/Revision/Coverage·검증/게시 링크, 기존 그룹 포맷 Preview·선별 변환·승인 후 `l1-github` 게시/readback 및 고정 Revision 역링크, Workflow Bootstrap `knowledge/` WRITE 차단, K5.8 회귀 러너 점검 합의를 복원. 개인 Knowledge와 그룹 물리 폴더 동형 복제 불필요. 사용자가 제공한 절대 로컬 경로와 화면 원본은 PRIVATE/PUBLIC에 게시하지 않음.
+- **UNCHANGED:** Viewer r0002 전체 업무 트리 읽기 전용 탐색·Markdown/MSC/형식별 렌더 및 A/B G0·보안 Gate; Updater K0~K8, K5.5~K5.8, K6 대표 MSC 정책, Classification Baseline v0.9.1; 기존 `works/`·Evidence·Kernel 원본, 그룹 Knowledge 구조·writer. 개인 후보 보관과 그룹 승인 게시를 별도 판정. Viewer 자체 쓰기 권한 없음. Workflow의 `knowledge/` 금지는 기존 Work/Evidence 쓰기 금지가 아님.
+- **DESIGN_DELTA_POSTED:** [개인 Knowledge TO-BE × Viewer r0003](L1_WORKSPACE_VIEWER_PERSONAL_KNOWLEDGE_TOBE_DELTA_r0003_20261118_KST.md) — 기존 r0002 원문/ZIP/리뷰 이력 보존. PRIVATE 문서 commit `07b1ba77b3a188e13893537a0d82c2f6ed0ae682`.
+- **PUBLIC_HANDOFF_UPDATED:** 같은 기존 경로 `wonhwipark/L1Work/main/handoffs/L1_WORKSPACE_LOCAL_VIEWER_R0002_BUSINESS_GPT_DETAILED_REVIEW_AND_G0_HANDOFF_r0001_20261118_KST.md`에 14절 추가(PK-G01~G08). 기존 13절 E0~E5 유지. PUBLIC commit `51428cf9d5166e898dd046d234e5e42d2b0e87cf`, `handoffs/README.md` index 갱신 commit `74eafc21c34c66a6efb134a6d172694142359cc6`. 원격 본문/바이트 검증은 실제 readback 판정에 따른다.
+- **STATUS:** `DESIGN_CHANGE_RECORDED`; `DOC_PUBLICATION=POSTED`; `VIEWER_HOST_G0=NOT_VERIFIED`; `KNOWLEDGE_UPDATER_V1_8_INSTALLED=NOT_VERIFIED`; `D1_D4_PERSONAL_STORE/WORKFLOW_GUARD/CODE_MODIFICATION=NOT_RUN`; `WORK_OR_GROUP_WRITES=NOT_RUN`; `INDEPENDENT_REVIEW=NOT_RUN/USER_WAIVED_THIS_HANDOFF`; `REQUEST_READY/WATCHER=NOT_RUN`; `HOST_INSTALL/START/SHARING=NOT_RUN`.
+- **NEXT_ONE_ACTION:** 업무 GPT가 L1Work 동일 인계서 **13절+14절**로 기존 Viewer A~S 미확인과 PK-G01~G08을 허용된 Linux Agent/MCP **읽기 전용 G0**에서 함께 대조하고, REUSE/CONNECT/입증된 최소 EXTEND/차단·별도 승인·PK-T01~T10 시험 계획을 하나의 결과로 회신. 최신 승인 없는 설치·WRITE·서비스 공개·유료 리뷰/재리뷰 없음.
+
+---
+
 ## 2026-11-18 KST — 개인 Linux PC 웹 서비스 실제 구현 업무 LLM 실행 인계 보강
 
 - **USER_INTENT_DETAIL:** 업무 GPT가 인계서를 검토·필요시 최소 수정한 후 기존 Linux Agent/MCP를 통해 업무 LLM에 **개인 Linux PC의 실제 l1-workspace 웹 뷰어 구현·시험 작업을 단계적으로 지시**하도록 요청. 단순한 G0 응답 문서가 아니라 **실제 웹 서비스 도입까지 관리 가능한 실행 계획**을 요구. 이 지시를 곧바로 미확인 Linux 서비스 기동·설정 변경·네트워크 공개의 포괄 승인으로 확대하지 않음.
