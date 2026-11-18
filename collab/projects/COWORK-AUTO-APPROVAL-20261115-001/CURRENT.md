@@ -1,5 +1,13 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 단일 USD3 정책 조건부 적용: CONFIG_APPLY=BLOCKED (소급 위험 발견) (2026-11-19 KST)
+
+- 결과: `CLAUDE_UNIFIED_REVIEW_USD3_HOST_RESULT_FOR_GPT_20261119.md` (PRIVATE `main`, commit `f9a2f641b67b`, SHA-256 `0ce4a1bf6edc260f89162bc1e3e4f78032a9a1cd32f4347f6b815277ea7cce3f`).
+- A(G0 읽기 전용)·C(게이트 시험 Windows 30/30 PASS) 완료. **B에서 구체적 BLOCKING 발견**: `REQ-COWORK-BUDGET-V025-DESIGN-R1-20261117`이 보호 위임의 project/skill/policy 범위와 정확히 일치하고, 소급제외(`enabled_at_first_seen=0`)에도 걸리지 않고, 종결(UNCERTAIN) 상태도 아니라서 **현재 USD 1 per-request cap이 유일한 방어선**이다. `known_run_policy_refs`와 위임 한도를 $3로 올리면 다음 스캔에서 이 오래된 요청이 자동 서명될 위험이 있다.
+- 다른 대기 3건(DASHBOARD-PRESENTATION, MSC-MD-LINK-STRUCTURE, WORK-KNOWLEDGE-DESIGN)은 소급제외로 안전, Guard는 UNCERTAIN 종결로 안전 — 직접 DB 대조로 확인.
+- **D(설정 변경) 미실행.** `reviewer.config.json`/`auto_delegation.json` 바이트 변경 0, 모델 호출 0, 신규 REQUEST/READY 0.
+- 다음 한 동작: GPT가 `REQ-COWORK-BUDGET-V025-DESIGN-R1-20261117`을 엔진이 더 이상 평가하지 않도록(예: 명시적 종결/철회) 먼저 처리한 뒤, 이 원샷의 D~F를 재시도.
+
 ## 2026-11-19 KST — 신규 독립 리뷰 단일 USD 3 승인 / GPT 정본·게이트 반영 (Windows 조건부 적용 대기)
 - **사용자 확정:** 일반 스킬과 설계의 금액 구분 폐기, 모든 **신규** Claude 독립 리뷰 최대 USD 3/건, 일·월 리뷰 횟수 및 누적 비용 상한 없음. 같은 REQUEST 최대 1회·중복/UNCERTAIN 재시도 0, 유효 프로젝트·스킬·만료·서명·SOURCE_PIN·READY 보호 유지.
 - **GPT 코드/문서:** `collab/ops/review_request_gate.py`에 신규 `--intent unified`(고정 ref `POLICY-STATIC-V1`/USD 3) 추가, 예산 override·기존 $1/$1.50 LIVE 불일치 거부, 기존 skill/design 호환 모드·고정 REQUEST 불변. `collab/ops/tests/test_review_request_gate.py`에 신규 6회귀 추가. 코드는 PRIVATE main commit `f0a11fee`/`52769ffd`/`2187dd99`/`9e148408` (실제 CI는 개별 결과로 검증). [정책 계약](../../ops/CONTRACTS/REVIEW_TIER_TOKEN_BUDGET_V1.md) 최신 절 반영.
