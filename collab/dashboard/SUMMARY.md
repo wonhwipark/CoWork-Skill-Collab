@@ -5,7 +5,7 @@
 이 문서는 GitHub Actions가 생성하는 안내 화면이며 리뷰·설치·배포 승인이나 자동 실행 결과가 아닙니다.
 
 - 문서가 있는 프로젝트: **10개**
-- GitHub REQUEST 파일 관측: **14개** (검증 안 됨)
+- GitHub REQUEST 파일 관측: **15개** (검증 안 됨)
 - GitHub REVIEW 파일 관측: **9개** (검증 안 됨)
 - GitHub RECEIPT 파일 관측: **9개** (검증 안 됨)
 
@@ -39,7 +39,7 @@ flowchart TB
 | GitHub 전환 | **기록 미관측** | 호스트 보고·GPT 판정과 신규 요청 실전 검증은 별개 |
 | Windows 실행·SHADOW | **기록 미관측** | 실제 호스트 실행 증거 필요 |
 | Claude Code 독립 리뷰 | **기록 미관측** | 자체 시험과 구분 |
-| GitHub 요청·결과·영수증 | **요청 14 · 결과 9 · 영수증 9** | PRIVATE 파일 관측 수일 뿐 완료 건수가 아님 |
+| GitHub 요청·결과·영수증 | **요청 15 · 결과 9 · 영수증 9** | PRIVATE 파일 관측 수일 뿐 완료 건수가 아님 |
 | 공개 Work 대시보드 | **기록 미관측** | L1Work에 승인된 비식별 상태만 자동 요약 · PRIVATE 원문은 비공개 |
 
 [전환·Windows 원문](../projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) · [대시보드 원문](../projects/COWORK-GITHUB-DASHBOARD-20261111-001/CURRENT.md)
@@ -124,5 +124,6 @@ flowchart TB
 | ↳ m-1 | 전체 commit SHA와 파일별 revision 단위 명시 | ACCEPT | - |
 | ↳ m-2 | 개인 복구 최대 3회, 그룹 재게시 0 | ACCEPT | - |
 | [REQ-L1-WORK-KNOWLEDGE-GUARD-CODE-R1-20261117](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-L1-WORK-KNOWLEDGE-GUARD-CODE-R1-20261117/REQUEST.md) | L1-WORKSPACE-RAG-20261111-001 | READY_NOT_OBSERVED | NOT_VERIFIED |
+| [REQ-L1-WORKSPACE-LOCAL-VIEWER-DESIGN-R1-20261118](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-L1-WORKSPACE-LOCAL-VIEWER-DESIGN-R1-20261118/REQUEST.md) | L1-WORKSPACE-RAG-20261111-001 | READY_NOT_OBSERVED | NOT_VERIFIED |
 
 비차단 지적도 GPT 판정 기록 전에는 해결 처리하지 않습니다.
