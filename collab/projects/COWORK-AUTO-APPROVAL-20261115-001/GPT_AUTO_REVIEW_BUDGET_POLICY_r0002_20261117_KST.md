@@ -1,5 +1,7 @@
 # GPT 결정 · 실행 판정 — 리뷰별 비용 $1.50/$3.00, 일·월 합계 상한 폐기 r0002
 
+> **최신 정책 (2026-11-19 KST):** [신규 단일 USD 3 리뷰 정책·Windows 조건부 적용](GPT_UNIFIED_REVIEW_USD3_CONDITIONAL_APPLY_r0001_20261119_KST.md)이 본 문서의 과거 $1.50/$3 분할 및 과거 일/월 한도 설명보다 우선. 기존 설계·이력 및 실제 보호 로컬 승인 범위는 별개로 보존. **Windows LIVE 적용=NOT_RUN**.
+
 - 날짜: 2026-11-17 KST
 - 저장소: PRIVATE `wonhwipark/CoWork-Skill-Collab`, 정본 branch `main`
 - 기존 Work: `collab/projects/COWORK-AUTO-APPROVAL-20261115-001`
