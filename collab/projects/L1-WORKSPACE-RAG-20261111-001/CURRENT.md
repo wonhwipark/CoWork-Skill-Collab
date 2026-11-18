@@ -1,5 +1,15 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-18 KST — 로컬 Viewer r0002 재개·GitHub 중복 조회 (GPT read-only)
+
+- **USER_RESUME_SCOPE:** 사용자의 명시적 재개 지시로 이전 SAFE_STOP을 **Claude 독립 설계 리뷰 1회 → GPT 판정 → L1Work PUBLIC 업무 GPT 최종 작업 지시서** 흐름에 한해서 해제. 별도 Linux G0·설치·서비스 개방·Git writer cutover·그룹 Knowledge 변경 승인으로 확대하지 않음.
+- **RECHECK (PRIVATE main, 이번 GPT 직접 조회):** 동일 ID `REQ-L1-WORKSPACE-LOCAL-VIEWER-DESIGN-R1-20261118`의 정식 `REQUEST.md`, `SOURCE_PIN.json`, `APPROVAL_SIG.json`, `READY.md`, `collab/reviews/<ID>/REVIEW_RESULT_1.md`, `collab/receipts/<ID>/RECEIPT_1.md`, `CLAUDE_LOCAL_VIEWER_R0002_150USD_REVIEW_SUBMISSION_RESULT_FOR_GPT_20261118.md` 모두 GitHub Contents main에서 NOT_FOUND. Windows LIVE DB·UNCERTAIN·서명기·현재 유효 위임 상태는 **미접근/NOT_VERIFIED**이므로 원격 부재만으로 미실행을 단정하거나 동일 리뷰를 재큐잉하지 않음.
+- **INPUT/APPROVAL REUSE:** 기존 r0002 ZIP 91,324 B, SHA-256 `6a013a104ebfefeae6dc452965ce99ce5a3f9637ed538c778d8cb5189d5a7e5f`, 검증 manifest와 USD 1.50/1회 사용자 승인 **재사용**. `collab/requests/REQ-L1-WORKSPACE-LOCAL-VIEWER-DESIGN-R1-20261118/HOST_SUBMIT_ONESHOT_150USD_AND_LIMIT_CLEANUP_20261118.md`의 Windows 현장 preflight/중복·서명/READY 계약 변경·재발행 불필요.
+- **이번 GPT 작업 실제 결과:** GitHub read-only 검증 및 본 CURRENT 상태 갱신만. Windows `review_request_gate.py select/check`, 승인 서명, READY, watcher 유료 독립 리뷰, 영수증, GPT 후속 최종 판정, L1Work 최종 지시서 게시, Linux 설치/원본/Knowledge 변경 = **NOT_RUN**. 독립 리뷰를 GPT 자체 검토로 대체하지 않음.
+- **NEXT_ONE_ACTION:** 실제 Windows Claude Code가 **기존 원샷 경로 한 개**를 실행해 live DB/중복/정책 `POLICY-STATIC-V1` USD 1.50/사전검증 → 승인된 수동 서명 → READY 마지막 → LIVE watcher 독립 리뷰 **최대 1회** → 결과·영수증 원격 확인. 선행 오류/UNCERTAIN이면 fail-closed·모델 0·재큐잉 0. 이후에만 GPT 리뷰 판정과 L1Work PUBLIC 업무 GPT 최종 작업 지시서 게시.
+
+---
+
 ## 2026-11-18 KST — 사용자 USD 1.50 리뷰 1회 승인 반영 / 보호 사전검증 미실행 / 설정 정리 지시
 
 - **최신 사용자 지시:** 이번 Linux Workspace 전체 URL 뷰어 r0002의 Claude 독립 설계 리뷰 **1회, 최대 USD 1.50** 진행 승인. “요청후 한도관련설정 삭제”는 요청 후 임시 구형 상한/설정 예외의 안전 정리로 분리; 운영 보호 건당 한도/서명·중복/만료 삭제는 모델 호출 무제한 위험·fail-closed 파손 우려로 실행 보류(별도 범위 확인 후).
