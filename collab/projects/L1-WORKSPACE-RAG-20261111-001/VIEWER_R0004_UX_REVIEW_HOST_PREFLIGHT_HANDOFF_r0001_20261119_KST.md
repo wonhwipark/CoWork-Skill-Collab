@@ -1,0 +1,9 @@
+# Windows Claude Code — Viewer r0004 UX 델타 정식 협업 리뷰 사전점검 인계 r0001
+- PRIVATE `wonhwipark/CoWork-Skill-Collab`, branch `main`, Work `collab/projects/L1-WORKSPACE-RAG-20261111-001/`.
+- 신규 제안 Request ID: `REQ-L1-WORKSPACE-VIEWER-UX-OWNER-R1-20261119` rev1. 동일 목적 기존 Work를 재사용하고 동일 R1 완료 리뷰 `REQ-L1-WORKSPACE-LOCAL-VIEWER-DESIGN-R1-20261118`은 **재큐잉하지 않음**.
+- 신규 리뷰 입력: `VIEWER_R0004_UX_INDEPENDENT_REVIEW_SCOPE_r0001_20261119_KST.md`, `VIEWER_CURRENT_DESIGN_LAYOUT_REVIEW_SAMPLE_r0001_20261119_KST.html`, 최신 r0002/r0003/r0004 MD, 기존 완료 REVIEW_RESULT_1.md(기존 요청 경로). 모두 source revision/byte/hash 고정하고 비민감 ZIP manifest 생성. 신규 r0004 UX 개선 요구를 구 r0002 완료 리뷰로 소급하여 판정하지 않음.
+- 현재 GPT가 Windows LIVE config/보호 위임·signer·DB를 직접 열 수 없음. 보호 위임 요청당 USD 1.00, `POLICY-STATIC-V1` 등록 USD 1.50 보고는 **2026-11-18 확인 시점**. 이전 USD 1.50 사용자 승인은 **r0002 이전 리뷰 1회 전용**이므로 신규 입력에 사용하지 말 것. 이번 '정식 리뷰 요청' 지시는 실행 의사로 기록하되 정확한 신규 유료 비용 승인의 유효성은 호스트 정책에 따라 확인. 미충족이면 `APPROVAL_PENDING`.
+- **허용된 작업:** Windows에서 설치·정본·동일 목적 중복/UNCERTAIN·리뷰 범위를 읽기 전용 확인, 예산과 정책 사전 선택, 새 비민감 고정 ZIP 후보 제작·CRC/manifest/원격 SHA 검증, 사전검증 REQUEST **초안** 작성. 이는 새 유료 리뷰 호출·READY를 승인하지 않음.
+- 정식 실행은 `review_request_gate.py select/check`로 실제 live policy/예산/고정 ZIP/REQUEST bytes를 선검증하고, 이 신규 입력에 적용되는 현재 **유효 비용 승인·수동 signer 또는 허용된 자동 위임**이 확인될 때만 `collab/requests/<new-id>/REQUEST.md`(Commit A)→ `source_pin.py` 문자열 repo_id+Commit A→승인서명→READY 최종게시→기존 단일 LIVE watcher 1회. 불일치/불확실은 fail-closed, model 0, 재큐잉 0.
+- 기존 r0002 result/receipt, r0003/r0004 설계 원문, 운영 정책/키/DB/LIVE/Notifier는 덮어쓰기 금지. 이번에는 다른 스킬의 코드·배포/웹 공개/그룹 writer도 건드리지 말 것.
+- 결과 예상 위치: `collab/reviews/REQ-L1-WORKSPACE-VIEWER-UX-OWNER-R1-20261119/REVIEW_RESULT_1.md`, `collab/receipts/REQ-L1-WORKSPACE-VIEWER-UX-OWNER-R1-20261119/RECEIPT_1.md`; 승인 부족/미실행이면 같은 Work 결과 MD에 `PREFLIGHT_ONLY/NOT_RUN` 증거와 정확한 차단점을 남길 것. 본 인계 게시만으로 Windows Claude Code 시작·유료 실행 발생하지 않음.
