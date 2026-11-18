@@ -1,5 +1,17 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-19 KST — Viewer r0002 기존 정식 R1 완료 재확인 / r0004 신규 UX 델타 리뷰 사전준비
+- **기존 리뷰 실측:** `REQ-L1-WORKSPACE-LOCAL-VIEWER-DESIGN-R1-20261118` REQUEST·SOURCE_PIN·APPROVAL_SIG·READY·REVIEW_RESULT_1.md·RECEIPT_1.md가 PRIVATE main에 실제 존재. receipt `ok=true`, Claude `COMPLETED/ACCEPT_WITH_CHANGE`; B1 경로 containment, B2 파일내용 비밀 검사, B3 MSC origin 격리 **3개 G2/G3 BLOCKING**, 캐시/상태표기 등 비차단 제언. **기존 r0002 리뷰 재큐잉·재과금 0**, Linux 실제 G0/E3 시험 없음. 현 CURRENT의 이전 미수신 표기는 과거 확인 시점의 이력.
+- **사용자 새 요청:** r0004 Knowledge Updater 단일 관리 책임+업무 GPT 메타정보 설계와 실제 웹뷰어 가독성 저하의 신규 독립 리뷰 및 개선 제안. r0002와 같은 Work를 재사용하되 구 리뷰와 신규 델타 범위를 분리.
+- **사용자에게 전달한 합성 HTML:** `L1_WORKSPACE_VIEWER_ASIS_CONCEPT_20261119_KST.html` (대화 아티팩트, 15,142 bytes, SHA-256 `2662d44b10a727ff4b810433620f8bbe761f9448cb4d4749def11a6846bf9179`), PC/모바일 Chromium `pageerror=0`, nav→Knowledge/원문 전환 PASS, 폭 overflow 0. 실제 운영 화면과 바이트/레이아웃 동일하지 않음.
+- **신규 PRIVATE 게시:** [리뷰용 축약 HTML](VIEWER_CURRENT_DESIGN_LAYOUT_REVIEW_SAMPLE_r0001_20261119_KST.html), [신규 델타 R28~R35 검토 범위](VIEWER_R0004_UX_INDEPENDENT_REVIEW_SCOPE_r0001_20261119_KST.md), [Windows 승인·중복·예산 사전점검 인계](VIEWER_R0004_UX_REVIEW_HOST_PREFLIGHT_HANDOFF_r0001_20261119_KST.md), [GPT 잠정 가독성 B안 제안](VIEWER_R0004_UX_READABILITY_PROPOSAL_r0001_20261119_KST.md). 이 자료는 합성/비민감 문서이며 실제 UI/업무 데이터 미게시.
+- **신규 협업 요청 상태:** 후보 `REQ-L1-WORKSPACE-VIEWER-UX-OWNER-R1-20261119`, 현재 `REVIEW_INPUT_DOCS=POSTED`, `HOST_SELECT_CHECK=NOT_RUN`, `NEW_PACKAGE_PIN=NOT_CREATED`, `FORMAL_REQUEST/SOURCE_PIN/APPROVAL_SIG/READY=NOT_POSTED`, `CLAUDE_DELTA_REVIEW=NOT_RUN`. 과거 r0002 전용 USD 1.50 승인으로 이 새 입력 유료 호출을 자동 승인하지 않으며, Windows LIVE 실제 정책·보호 위임과 현 입력 승인 유효 범위를 먼저 확인. 무권한 유료 호출/반복 실행/보호 설정 변경 0.
+- **UX 판정:** B안(Work/Knowledge/전체파일 진입 → 독서 중심 문서·접이식 Explorer/목차 → 독립 전체폭 MSC)을 잠정 추천. 실제 서비스 URL·CSS/설치본, 업무 사용자 시연, read-only·보안 B1~B3와 E3/E4는 `NOT_VERIFIED/NOT_RUN`. Updater Writer/그룹 Knowledge/Host/Git authority 변경 없음.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 위 사전점검 인계의 신규 델타만 고정해 live select/check + 기존/신규 승인 유효성 확인. 유효한 승인·서명 없으면 `APPROVAL_PENDING`에서 멈추고 모델 0. 실제 운영 화면의 비민감 캡처/사용자 피드백과 독립 리뷰 결과를 받은 뒤 UX 개선 범위 최종 판정.
+
+---
+
+
 ## L1 Workspace 로컬 뷰어 r0002 독립 리뷰 완료: ACCEPT_WITH_CHANGE, BLOCKING 3 (2026-11-18 KST)
 
 - 결과: `CLAUDE_LOCAL_VIEWER_R0002_150USD_REVIEW_SUBMISSION_RESULT_FOR_GPT_20261118.md` (PRIVATE `main`, commit `c55e405c4168`, SHA-256 `3b294980790e07b827379b03f6b7379aff32e2d1616763b8dc16c3c06bd6e505`).
