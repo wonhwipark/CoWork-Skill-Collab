@@ -1,5 +1,14 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-18 KST — 전체 Workspace URL 탐색·파일별 렌더 r0002 반영, Claude R1 실행 차단 유지
+
+- **사용자 요구 반영:** Linux `l1-workspace` 전체 업무 폴더를 업무망 URL로 탐색·읽기 전용 제공. Work별 공개 목록은 기본 필수 아님. Markdown은 읽을 때 HTML 렌더하며 기존 MSC HTML·SVG/JSON/PDF/이미지는 각 뷰어 재사용. 전체 MD→HTML 파일 사전 변환 **불필요**. 네트워크 공개/비밀 보호·업무 Work 원본/Group Knowledge writer는 별도 경계.
+- **정본:** [r0002 변경 설계](L1_WORKSPACE_FULL_TREE_WEB_RENDER_VIEWER_DESIGN_DELTA_r0002_20261118_KST.md), [최신 Claude R1 실행 인계](GPT_L1_WORKSPACE_LOCAL_VIEWER_CLAUDE_REVIEW_HANDOFF_r0002_20261118_KST.md), [r0002 리뷰 패키지 manifest](review-inputs/REQ-L1-WORKSPACE-LOCAL-VIEWER-DESIGN-R1-20261118/REVIEW_MANIFEST_r0002.md). 신규 고정 `collab/packages/l1-workspace-local-viewer-design_r0002_1118_REVIEW_INPUT.zip` **91,324 B**, SHA-256 `6a013a104ebfefeae6dc452965ce99ce5a3f9637ed538c778d8cb5189d5a7e5f`. 원격 Git blob `dcb42fca58f5cd5c281fc3622fc6e6bfccb02285`, 9개 파일 CRC/경로 readback **PASS**. 기존 r0001 ZIP 보존.
+- **실제 협업 상태:** 2026-11-18 Windows Claude Code 실제 preflight `POLICY_COST_MISMATCH` (등록 최소 USD 1.50 > 보호 자동 위임 USD 1.00) 근거 보존. 이번 변경은 **추가 유료 리뷰 승인 아님**. 정식 REQUEST/SOURCE_PIN/서명/READY/Claude 결과 `NOT_RUN`, 업무 Linux G0/웹 서비스/원본 전환 `NOT_VERIFIED/NOT_RUN`.
+- **NEXT_ONE_ACTION:** 사용자 이번 Claude R1 1회 정책 USD 1.50 또는 USD 3.00 사용의 명시적 확인 후 Windows에서 최신 **r0002 고정 ZIP**으로 정책·승인·비용·중복 사전검증을 수행하고, PASS일 때만 정식 REQUEST→서명/READY→리뷰 1회→결과/영수증→GPT 최종 판정→L1Work PUBLIC 업무 GPT 작업 지시서. 불충족이면 HOLD/모델 0. 기존 완료 리뷰·Windows LIVE·Linux Work·Knowledge 원본 변경 없음.
+
+---
+
 ## L1 Workspace 로컬 뷰어 설계 독립 리뷰: PREFLIGHT_BLOCKED (2026-11-18 KST)
 
 - 결과: `CLAUDE_L1_WORKSPACE_LOCAL_VIEWER_DESIGN_REVIEW_PREFLIGHT_BLOCKED_FOR_GPT_20261118.md` (PRIVATE `main`, commit `09593dfa95af`, SHA-256 `70adc5fb6598e800ee47829523b5e26a36507deeeb416635db79cbeeda28cb96`).
