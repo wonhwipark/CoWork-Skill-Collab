@@ -57,7 +57,7 @@ def test_actual_packaged_helper(packaged: Path) -> int:
         test_spec.loader.exec_module(test_module)
         suite = unittest.defaultTestLoader.loadTestsFromModule(test_module)
         result = unittest.TextTestRunner(verbosity=1).run(suite)
-        if not result.wasSuccessful() or result.testsRun < 19:
+        if not result.wasSuccessful() or result.testsRun < 20:
             raise RuntimeError("READONLY_BRIDGE_CONTRACT_TEST_FAILED")
         return result.testsRun
     finally:
