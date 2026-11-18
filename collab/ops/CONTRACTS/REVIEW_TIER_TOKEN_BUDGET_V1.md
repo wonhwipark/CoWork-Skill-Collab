@@ -1,5 +1,16 @@
 # CoWork 리뷰 등급 / 토큰·비용 예산 계약 V1
 
+## 2026-11-19 KST — 최신 승인: 신규 독립 리뷰 단일 건당 USD 3.00 (r0003)
+
+- **사용자 명시 승인:** 기존 일반/설계 비용 분할 대신 모든 신규 정식 Claude Code 독립 리뷰에 **동일한 건당 최대 USD 3.00**, 일·월 호출 횟수 및 누적 비용 제한 **없음**. R0~R3 리뷰 깊이는 참고·범위 선택만 가능하며 유료 등급·자동 승급의 근거 아님.
+- **신규 요청 단일 참조:** 기존 `POLICY-STATIC-V1`을 **건당 USD 3.00**으로 등록해 공통 사용. 별도 새 정책 ID/원장/승인 스키마 생성 없음. 기존 `-LARGE`, `-DESIGN` 등은 역사·고정 REQUEST 호환 이력으로만 보존. 새 요청의 승인 경로는 `--intent unified`, 결과 `selected_run_policy_ref=POLICY-STATIC-V1`, `expected_max_budget_usd=3.00`.
+- **사용자 승인 ≠ 호스트 보호 정책 설치:** Windows watcher v0.2.25 운영 설정은 마지막 호스트 보고상 STATIC $1.50/DESIGN $3, 보호된 `auto_delegation.json`은 건당 $1.00. 현재 **신규 $3 자동 서명=NOT_OPERATIONAL**. 보호 위임은 Windows 호스트가 원본·서명 권한·ACL·만료·허용 프로젝트/스킬·레거시 pending 소급 실행 방지와 롤백을 확인해 **유효한 보호 경로에서만** 최소 변경. GitHub MD가 서명 승인 자체를 대체하지 않음.
+- **요청마다 1회** `max_model_calls=1`, 기존 고정 입력 SHA/크기·SOURCE_PIN·서명·READY 마지막·중복·불확실/만료·scope fail-closed **유지**. 하루·월간 집계는 관측값일 수 있으나 실행 제한으로 쓰지 않음. `--max-budget-usd=3`은 플랫폼 청구액 절대 보장 아님.
+- **과거 완료/대기 요청** 재서명·재큐잉·다른 예산으로의 소급 자동 승인 금지. Windows 적용 전 기존 pending/Guard 정산·선별·보존 조건 확인. 무허가 재실행 가능성이 있으면 **활성화 BLOCKED**. 기존 v0.2.25 LIVE watcher는 별도 적용 성공 전 계속 유지.
+- **정본 실행 인계:** [통합 비용 조건부 적용](../../projects/COWORK-AUTO-APPROVAL-20261115-001/GPT_UNIFIED_REVIEW_USD3_CONDITIONAL_APPLY_r0001_20261119_KST.md). 신규 REQUEST 자체는 생성하지 않으며 유료 모델 호출 0.
+
+> 아래 2026-11-17 r0002의 $1.50/$3.00 설명 및 이전 R0~R3 표·가격은 **당시 결정/기술 참조 이력**. 이 절이 신규 요청의 단일 정책에 우선한다.
+
 ## REQUEST 게시 전 정책 호환성 필수 게이트 (2026-11-17 재발 방지)
 
 **모든 신규 CoWork 정식 리뷰 REQUEST는 게시 이전에 Windows 설치 LIVE의 실제 reviewer.config.json 기준으로 `collab/ops/review_request_gate.py`를 실행해 호환성을 확인한다.** GPT는 현행 설치 상태를 추정하거나 개발 후보에만 존재하는 정책명을 선택하지 않는다. 코드·문서 배포만으로 이 단계가 자동 실행됐다고 표시하지 않는다.
