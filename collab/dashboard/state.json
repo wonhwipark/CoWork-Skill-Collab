@@ -92,7 +92,7 @@
       "status": "검증 진행 중",
       "title": "L1-WORKSPACE-RAG-20261111-001 — CURRENT",
       "tone": "warning",
-      "topic": "2026-11-19 KST — 2안 팀 위키형 UI GPT 구현 + 업무 GPT Linux 연동 인계"
+      "topic": "2026-11-19 KST — 2안 모던 팀 위키 UI v0.1.0 구현·시험·ZIP·PRIVATE 원격 검증 완료"
     },
     {
       "id": "NR-L1TX-CODE-ANALYSIS-20261115-001",
@@ -739,9 +739,9 @@
     },
     {
       "evidence": "프로젝트 TRACKER.json 신고 값 · 운영 근거 별도 확인 필요",
-      "independent_review": "PASS",
-      "next_action": "2026-11-18: L1 Workspace 로컬 뷰어 r0002 독립 리뷰 1회 완료(ACCEPT_WITH_CHANGE). BLOCKING 3건: B1 path containment canonicalize 미구체화, B2 전체공개 전환 시 비밀탐지 서술 부족(fail-closed 필요), B3",
-      "owner": "GPT / Windows Claude Code",
+      "independent_review": "NOT_RUN",
+      "next_action": "2026-11-19: 2안 모던 팀 위키 UI v0.1.0 구현·Chromium 56/56·정적 19/19·ZIP 267140B·PRIVATE 실제 바이트 검증 완료. 같은 Work ui/viewer-wiki-ui_v0_1_0/INTEGRATION.md로 업무 GPT가 기존 Linux 별도 Vi",
+      "owner": "GPT / 업무 GPT (현장 연동)",
       "phase": "DISPOSITION",
       "record_source": "REGISTERED_METADATA_UNVERIFIED",
       "self_test": "PASS",
