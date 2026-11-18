@@ -1,5 +1,15 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## Pending·Guard 읽기 전용 정산 완료 (2026-11-18 KST)
+
+- 결과: `CLAUDE_PENDING_GUARD_RECONCILIATION_RESULT_FOR_GPT_20261118.md` (PRIVATE `main`, SHA-256 `2d9ca47c2b450bad1dc287834241d76bf314109f39ca17ca9833fe3c109d195c`), 비민감 artifact `artifacts/pending_guard_audit_20261118.json`.
+- **HOST_AUDIT=PASS**: 운영 v0.2.25 재설치 없음, 바이트 복사 DB로 `pending_requests_audit.py` 실행. tracked=9, 로컬 jobs 기준 completed=0(4건은 jobs 행 없음, 원격 결과·영수증으로 개별 재확인해 완료로 분리), held=1(Guard), waiting=8 -> 실제 미해결 5건.
+- **GUARD_ADMISSION=HOLD**: 공식 도구는 `APPROVABLE (cap USD 1.5)`를 보고하지만, 이 요청은 2026-11-16 당시 USD 1.00 범위로 처음 시도됐다. 등록 상한이 그 뒤 $1.5로 바뀌어, 지금 서명하면 원래 승인 범위를 벗어난다. 서명하지 않음. GUARD_REVIEW=NOT_RUN.
+- **GATE_TEST_WINDOWS=PASS**: CRLF 수정 커밋 `9b9141bc015a5930a2e57de26b6ab2f73be8223a`를 격리 Windows에서 시험 — 24/24 PASS(이전 8/23). v0.2.26 ZIP은 미수정.
+- **DISPLAY_APPLIED=PARTIAL**: breakdown 산출·게시(위 artifact). 설치된 코드의 "pending: N" 텍스트 자체는 보호 코드라 미패치.
+- 모델 호출 0, 보호 위임·DB·Task·v0.2.26 설치 변경 0.
+- 다음 한 동작: GPT가 Guard의 USD 1.50 적용 여부를 판정.
+
 ## 2026-11-18 KST — 자동 협업 진단 후 최소 조치·판정 (Windows 후속 대기)
 - **GPT 실제 변경:** CRLF 취약 REQUEST fixture 독립 회귀 `collab/ops/tests/test_review_request_gate.py`를 LF/바이트 고정으로 수정·원격 재조회 PASS. commit `9b9141bc015a5930a2e57de26b6ab2f73be8223a`, 텍스트 SHA-256 `409c956d0220e87d20d490fdfe38786044eb586e63e1c549d8e500818ee8e3ed`. **v0.2.26 ZIP·운영 v0.2.25·보호 위임·DB·Task 수정 0**.
 - **현재 진단:** GitHub 단일 LIVE/v0.2.25 설치는 Windows 호스트 보고. 원시 pending 9(완료 잔존 4/미해결 5)와 Guard UNCERTAIN은 아직 Windows 재정산 NOT_RUN. 원샷 출력 결과 MD/JSON이 원격에 없음. 자동 정책 비용맵 $1.50/$3와 보호 위임 $1.00 불일치 유지. GPT 무인 자동 판정 없음.
