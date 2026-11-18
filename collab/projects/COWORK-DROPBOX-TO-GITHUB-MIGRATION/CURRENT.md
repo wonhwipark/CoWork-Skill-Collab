@@ -1,5 +1,13 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 2026-11-18 KST — 자동 협업 진단 후 최소 조치·판정 (Windows 후속 대기)
+- **GPT 실제 변경:** CRLF 취약 REQUEST fixture 독립 회귀 `collab/ops/tests/test_review_request_gate.py`를 LF/바이트 고정으로 수정·원격 재조회 PASS. commit `9b9141bc015a5930a2e57de26b6ab2f73be8223a`, 텍스트 SHA-256 `409c956d0220e87d20d490fdfe38786044eb586e63e1c549d8e500818ee8e3ed`. **v0.2.26 ZIP·운영 v0.2.25·보호 위임·DB·Task 수정 0**.
+- **현재 진단:** GitHub 단일 LIVE/v0.2.25 설치는 Windows 호스트 보고. 원시 pending 9(완료 잔존 4/미해결 5)와 Guard UNCERTAIN은 아직 Windows 재정산 NOT_RUN. 원샷 출력 결과 MD/JSON이 원격에 없음. 자동 정책 비용맵 $1.50/$3와 보호 위임 $1.00 불일치 유지. GPT 무인 자동 판정 없음.
+- **판정 정본:** [자동 협업 조치·권한 게이트 판정](GPT_AUTO_COLLAB_REMEDIATION_DISPOSITION_r0001_20261118_KST.md) / 원격 확인 PASS. v0.2.26 새로운 독립 리뷰·운영 설치·Notifier 연동은 수행하지 않음. 합성 Linux 34개 회귀와 별도로 새 Windows 시험 필요.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 기존 [Guard 정산 원샷](GPT_PENDING_GUARD_WINDOWS_ONE_SHOT_r0001_20261118_KST.md)을 **한 번** 실행해 실제 DB/검증·표시 상태·비용/Guard 지원 경로 판정 후 결과/영수증 게시. 기존 UNCERTAIN 재큐잉·미승인 위임 상향·새 유료 리뷰 0.
+
+---
+
 ## 2026-11-18 KST — pending·Guard 조치 도구 구현·34회귀 PASS / Windows 원샷 준비
 - **실행 지시·코드:** 사용자 “이제 조치해줘”. 기존 StateStore/reconcile/parser를 재사용한 [읽기 전용 정산 도구](../../ops/pending_requests_audit.py) 구현. 현재 입력 id/revision/ZIP 일치 완료만 분리, UNCERTAIN/부분 게시·다른 scope·입력 미확인은 보류/미확인. 원시 행·claim·audit/서명/READY 변경 없음.
 - **시험:** 기존 v0.2.23/v0.2.25 실제 SQLite API/CLI 각각 **17 PASS**(Linux, 총34). 9행 합성은 추적9/완료4/보류1/대기4로 구분, 원본 행 보존. 실제 운영 건수/집계 수정 PASS가 아님. 기존 PRIVATE CI에 두 버전 회귀 연결. [상세 결과·SHA](GPT_PENDING_GUARD_AUDIT_IMPLEMENTATION_RESULT_r0001_20261118_KST.md).
