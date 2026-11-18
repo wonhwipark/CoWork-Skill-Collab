@@ -6,10 +6,10 @@
       "skill": "l1-knowledge-updater",
       "title": "l1-knowledge-updater",
       "phase": "REVIEW",
-      "owner": "GPT(전환 설계·합성시험·리뷰 Windows 원샷/업무 지시 초안 PRIVATE 게시) / Windows Claude(사전 보호검증·독립 설계 리뷰 대기) / 업무 GPT(Linux READ_ONLY G0 A~P)",
+      "owner": "GPT(r0002 전체 트리/파일 렌더 설계·ZIP 검증) / Windows Claude(정식 리뷰 사전검증 차단, 결과 없음) / 업무 GPT(Linux G0·향후 승인된 설치/시험)",
       "self_test": "PASS",
-      "independent_review": "PENDING",
-      "next_action": "Windows Claude Code에서 PRIVATE main collab/projects/L1-WORKSPACE-RAG-20261111-001/GPT_L1_WORKSPACE_LOCAL_VIEWER_CLAUDE_ONE_CYCLE_REVIEW_REQUEST_r0001_20261118_KST.md를 실행. 고정 76,097 B 입력 ZIP이 PRIVATE main에 존재·SHA 검증됨. 실호스트 승인/위임·USD1 이하/정책/중복/UNCERTAIN/select-check preflight PASS일 때만 신규 정식 REQUEST/SOURCE_PIN→기존 signer APPROVAL_SIG/READY→독립 Claude 리뷰 1회→결과/영수증. 현재 FORMAL_REQUEST=BLOCKED_NOT_POSTED, Windows host preflight NOT_RUN. 완료 후 GPT 판정·PUBLIC L1Work handoffs 최종 지시서. 임의 유료 실행·원본 변경 없음."
+      "independent_review": "PREFLIGHT_BLOCKED",
+      "next_action": "최신 r0002 전체 트리+on-demand Markdown/HTML/MSC/JSON/PDF 뷰어 설계 및 9파일 R1 ZIP(91,324 B SHA256 6a013a104ebfefeae6dc452965ce99ce5a3f9637ed538c778d8cb5189d5a7e5f) PRIVATE main 원격 검증 PASS. Windows 실제 사전검증 POLICY_COST_MISMATCH(최소 USD1.50, 보호 자동위임 USD1.00). 현재 REQUEST/SOURCE_PIN/READY/Claude 리뷰=NOT_RUN. 사용자 유료 비용 명시 승인 후 최신 r0002 ZIP으로 정식 요청 1회, 결과 판정 후 L1Work PUBLIC 업무 지시 MD. Linux 운영 변경 없음."
     }
   ]
 }
