@@ -5,11 +5,11 @@
       "work_id": "COWORK-AUTO-APPROVAL-20261115-001",
       "skill": "cowork-review-watcher",
       "title": "GPT→GitHub REQUEST 자동 서명·READY (제한된 사전 위임)",
-      "phase": "HOST_CLOSEOUT_PENDING",
+      "phase": "DISPOSITION",
       "owner": "GPT supersession verdict PASS; Windows Claude Code legacy-design engine closeout → conditional USD3 config",
       "self_test": "PASS",
       "independent_review": "NOT_RUN",
-      "next_action": "2026-11-19: GPT는 구 REQ-COWORK-BUDGET-V025-DESIGN-R1-20261117을 완료 LARGE R2 동일 ZIP의 SUPERSEDED/DO_NOT_EXECUTE로 판정(실제 watcher 엔진 종결 NOT_RUN). Windows A/C PASS와 B 소급 실행 위험 확인; HOST_CONFIG_APPLY=BLOCKED 보존. 정확한 PRIVATE main 원샷 GPT_LEGACY_DESIGN_R1_SUPERSESSION_AND_HOST_CLOSEOUT_r0001_20261119_KST.md 1회 실행: 기존 공식 terminal 경로 존재/유효 권한 확인→해당 ID 1건만 안전 종결→가상 $3 격리 재평가에서 영구 재실행 0 PASS→조건부 D~F 적용, 결과/영수증/commit·SHA 게시. 공식 지원 없는 경우 임의 DB 수정 금지/기존 LIVE v0.2.25 보호 위임 USD1 유지/신규 유료 모델 0."
+      "next_action": "2026-11-19: 구 REQ-COWORK-BUDGET-V025-DESIGN-R1-20261117 공식 종결 시도 - RETIREMENT_ENGINE=BLOCKED. v0.2.25 소스/CLI 전체 대조 결과 요청 1건을 영구 차단하는 지원 수단이 없음(reject/cancel/withdraw CLI 없음, denylist 없음, RETIRED는 서명키 전용). jobs/auto_claims 0건으로 미과금 재확인. 선행조건 미충족으로 HOST_CONFIG_APPLY=BLOCKED(통합 $3 미적용). DB/REQUEST/SOURCE_PIN/정책/위임 바이트 불변, 모델호출 0. 다음: GPT가 (1)엔진에 reject 기능을 추가하는 새 후보 개발 또는 (2)위임 scope에서 이 project/skill만 명시 제외하는 방안 중 선택."
     }
   ]
 }
