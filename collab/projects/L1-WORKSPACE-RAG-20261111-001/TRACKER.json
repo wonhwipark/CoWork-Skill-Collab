@@ -9,7 +9,7 @@
       "owner": "GPT(전환 설계·합성시험·리뷰 Windows 원샷/업무 지시 초안 PRIVATE 게시) / Windows Claude(사전 보호검증·독립 설계 리뷰 대기) / 업무 GPT(Linux READ_ONLY G0 A~P)",
       "self_test": "PASS",
       "independent_review": "PENDING",
-      "next_action": "Windows Claude Code에서 PRIVATE main GPT_L1_WORKSPACE_LOCAL_VIEWER_CLAUDE_ONE_CYCLE_REVIEW_REQUEST_r0001_20261118_KST.md의 LIVE 위임/예산/select-check preflight 확인→유효하면 신규 정식 요청/Claude 독립 리뷰 1회→결과/영수증 게시. GPT가 판정한 뒤 업무 GPT용 지시 MD 최종화 및 L1Work/main/handoffs PUBLIC 게시. Linux G0는 기존 읽기 전용 인계로 가능; 원본·웹/그룹 운영 변경은 NOT_RUN."
+      "next_action": "Windows Claude Code에서 PRIVATE main collab/projects/L1-WORKSPACE-RAG-20261111-001/GPT_L1_WORKSPACE_LOCAL_VIEWER_CLAUDE_ONE_CYCLE_REVIEW_REQUEST_r0001_20261118_KST.md를 실행. 고정 76,097 B 입력 ZIP이 PRIVATE main에 존재·SHA 검증됨. 실호스트 승인/위임·USD1 이하/정책/중복/UNCERTAIN/select-check preflight PASS일 때만 신규 정식 REQUEST/SOURCE_PIN→기존 signer APPROVAL_SIG/READY→독립 Claude 리뷰 1회→결과/영수증. 현재 FORMAL_REQUEST=BLOCKED_NOT_POSTED, Windows host preflight NOT_RUN. 완료 후 GPT 판정·PUBLIC L1Work handoffs 최종 지시서. 임의 유료 실행·원본 변경 없음."
     }
   ]
 }
