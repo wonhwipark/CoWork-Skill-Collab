@@ -1,5 +1,15 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 2026-11-18 KST — ACE·PEC-HOP·SAFE 비민감 합성 계약 회귀 26/26 PASS
+
+- **사용자 지시:** 이전 r0002 설계 수용 조건의 ACE-02·PEC-01/03·SAFE-01 격리 회귀시험 “진행해줘”. 기존 리뷰 R1 완료·동일 고정 REQUEST/READY/ZIP/영수증·PUBLIC 배포·업무 Knowledge 원본 무변경.
+- **실제 산출물:** [순수 JS 격리 회귀시험 코드](test_ace_pec_safe_synthetic_r0001.js), commit `d6d0348b09866147a80815a6dce4dc51640b6eef`, 8,815 bytes, SHA-256 `407e8f2fcccd341444c912fde09f79d97f7dc650b2f03d9e98f52db51a87a330`. [실행 결과·시험 범위·미확인](GPT_ACE_PEC_SAFE_SYNTHETIC_REGRESSION_RESULT_r0001_20261118_KST.md), commit `e73cda0e6035d7d455443920a20af38f5ad4a8bb`. 두 파일 PRIVATE main 게시·원격 readback PASS.
+- **실제 실행:** V8 JS 순수 함수로 실제 GitHub 원격 r0001/r0002 원문 및 비민감 메모리 내 합성 결정·raw bytes 입력을 사용해 **26 PASS / 0 FAIL**. STATIC 문서+SHA 5, ACE-02 6, PEC-01/03 9, SAFE-01/03 6. ACE 최신 유효 결정·상충/미검증 HOLD, PEC 1-byte 변조 FAIL·offset/권한/개정 차이 HOLD, SAFE 신규 모델/서브에이전트/READY/Job 금지 및 재큐잉 방지 합성 계약 확인.
+- **한계:** 이 PASS는 `PURE_IN_MEMORY_CONTRACT_ORACLE`만 뜻하며 실제 설치된 CoWork/업무 스킬 reader·writer·E2E의 PASS 아님. Windows/Linux Node CLI 별도 구동, 실제 watcher 보안 E2E, 업무 GPT Updater G0, ACON 모델 반복 **NOT_RUN**. 사용자 비용 승인 없는 신규 유료 모델/Claude 리뷰/호스트 호출·키/DB/운영 변경/스킬 ZIP 변경 **0**.
+- **NEXT_ONE_ACTION:** 관련 실제 소스·설치 계약을 읽기 전용 G0로 대조한 다음만 기존 기능에 연결할 최소 통합 회귀 범위를 판정. 회사 코드/로그/상세 MSC는 CoWork에도 게시 금지. 기존 R1 독립 리뷰 사이클은 그대로 CLOSED.
+
+---
+
 ## 2026-11-18 KST — ACE·PEC-HOP·ACON R1 비차단 개선 4건 설계 r0002 반영 완료
 
 - **사용자 실행 요청:** “그래반영해줘”. 이미 종료된 독립 리뷰 R1의 GPT 판정 N1~N4만 기존 Work 통합 설계 수용 기준에 보완. r0001 리뷰 고정 입력·ZIP·SOURCE_PIN·서명·READY·리뷰/비용·결과/영수증은 변경·재실행 0.
