@@ -1,5 +1,14 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-19 KST — GPT 판정: 구 DESIGN R1 대체 확정 / 감시기 종결은 Windows 확인 대기
+- **사용자 전달 Windows 결과 + GPT 원격 검증:** [호스트 A~C 결과](CLAUDE_UNIFIED_REVIEW_USD3_HOST_RESULT_FOR_GPT_20261119.md) / CONFIG_APPLY=BLOCKED 유지. 실제 watcher v0.2.25는 `REQ-COWORK-BUDGET-V025-DESIGN-R1-20261117`에 대하여 정책/위임 scope·policy 조건을 충족하고 **PER_REQUEST_COST만 차단**. $3 상향만 실행하면 소급 서명·유료 호출 위험. Windows 게이트 30/30 PASS, 모델 호출 0, 운영 설정 변경 0.
+- **GPT 실제 판정:** 같은 v0.2.25 ZIP SHA `26d63c8a...213d228`의 대체 `REQ-COWORK-BUDGET-V025-LARGE-R2-20261117`은 REVIEW_RESULT=COMPLETED·RECEIPT ok=true·GPT ACCEPT_WITH_CHANGE, 사이클 종료. 과거 구 DESIGN R1은 **업무 판정 `SUPERSEDED/DO_NOT_EXECUTE`**, 재리뷰 금지. 단, **`ENGINE_RETIREMENT=NOT_RUN`**: 문서상의 종결은 실제 watcher 평가·DB 상태 변경이 아님.
+- **정확한 Windows 후속 원샷:** [GPT_LEGACY_DESIGN_R1_SUPERSESSION_AND_HOST_CLOSEOUT_r0001_20261119_KST.md](GPT_LEGACY_DESIGN_R1_SUPERSESSION_AND_HOST_CLOSEOUT_r0001_20261119_KST.md). v0.2.25 설치본이 지원하는 공식 1건 철회/대체/종결 인터페이스를 먼저 확인→실제 지원+유효 승인/백업 시에만 정확한 ID 한 건 종결→가상 $3 적격성 실패/과거 미해결 0 재호출 검증→이전 D~F 조건부 재개→결과/영수증 원격 게시. 임의 DB UPDATE/INSERT·불확실 상태 조작·REQUEST/READY 편집 금지.
+- **운영 상태:** `GPT_SUPERSESSION_DISPOSITION=PASS`, `ENGINE_RETIREMENT=NOT_RUN`, `HOST_CONFIG_APPLY=BLOCKED`, `AUTO_SIGNING_USD3=NOT_APPLIED`, `NEW_PAID_CALLS=0`; 기존 LIVE v0.2.25/$1 보호 위임 유지. 현재 GitHub 작업은 PRIVATE 문서/판정뿐.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 상기 기존 Work 원샷을 1회 수행해 `CLAUDE_LEGACY_DESIGN_R1_CLOSEOUT_AND_USD3_RESULT_FOR_GPT_20261119.md` 및 CURRENT/TRACKER 원격 commit·bytes SHA 검증 결과 게시. 지원 없는 공식 종결이면 BLOCKED 보존, 신규 유료 리뷰 시작 0.
+
+---
+
 ## 단일 USD3 정책 조건부 적용: CONFIG_APPLY=BLOCKED (소급 위험 발견) (2026-11-19 KST)
 
 - 결과: `CLAUDE_UNIFIED_REVIEW_USD3_HOST_RESULT_FOR_GPT_20261119.md` (PRIVATE `main`, commit `f9a2f641b67b`, SHA-256 `0ce4a1bf6edc260f89162bc1e3e4f78032a9a1cd32f4347f6b815277ea7cce3f`).
