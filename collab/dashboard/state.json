@@ -618,16 +618,16 @@
       "work_id": "COWORK-GITHUB-DASHBOARD-20261111-001"
     },
     {
-      "evidence": "프로젝트 TRACKER.json 신고 값 · 운영 근거 별도 확인 필요",
-      "independent_review": "PASS",
-      "next_action": "2026-11-18: ACE·PEC-HOP·ACON 통합 설계 r0002 PRIVATE main 게시/readback PASS(24,705 B, SHA256 8959c5785da37d0a7f48687fbbe17576c4f0f517be93ffcd9befc029a1c6def1). R1 ACCEPT_",
-      "owner": "GPT",
-      "phase": "DISPOSITION",
-      "record_source": "REGISTERED_METADATA_UNVERIFIED",
-      "self_test": "PASS",
-      "skill": "skill-discovery",
+      "evidence": "CURRENT 문서 관측. 단계·진행률은 증명되지 않음",
+      "independent_review": "NOT_VERIFIED",
+      "next_action": "CURRENT.md 최신 상태 및 다음 담당 확인",
+      "owner": "미등록",
+      "phase": "UNKNOWN",
+      "record_source": "CURRENT_ONLY_UNSTRUCTURED",
+      "self_test": "NOT_VERIFIED",
+      "skill": "미지정",
       "source": "collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md",
-      "title": "skill-discovery",
+      "title": "COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT",
       "work_id": "COWORK-SKILL-DISCOVERY-20261112-001"
     },
     {
