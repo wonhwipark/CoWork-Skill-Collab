@@ -1,5 +1,16 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-19 KST — 2안 모던 팀 위키 UI v0.1.0 구현·시험·ZIP·PRIVATE 원격 검증 완료
+
+- **현재 상태:** FRONTEND_DEMO=COMPLETE / BROWSER_SELF_TEST=PASS 56/56 / STATIC_SELF_TEST=PASS 19/19 / PRIVATE_SOURCE_AND_ZIP=POSTED/READBACK_PASS / development_not_for_deployment. 본문 16px·선명한 제목/상태·PC 3영역·모바일 드로어·전체 파일·합성 13문서·MSC 6/12명 placeholder 구현.
+- **결과/산출물:** [구현·시험·패키징 판정](L1_WORKSPACE_WIKI_UI_IMPLEMENTATION_RESULT_r0001_20261119_KST.md) · [소스/설계/현장 인계](ui/viewer-wiki-ui_v0_1_0/README.md) · [업무 GPT INTEGRATION.md](ui/viewer-wiki-ui_v0_1_0/INTEGRATION.md) · [단일 실행 HTML](ui/viewer-wiki-ui_v0_1_0/L1_Workspace_Wiki_UI_v0_1_0_20261119_KST.html) · [원격 검증 영수증](L1_WORKSPACE_WIKI_UI_PUBLICATION_RECEIPT_r0001_20261119_KST.md).
+- **고정 게시:** content commit `17ac2b39ad01dc3e01df467ada698fbac8b5c399`. ZIP `collab/packages/l1-workspace-wiki-ui_v0_1_0_1119.zip` **267140 bytes**, SHA-256 `411553e74e76bb82237fd2ebef65169769e4dbe4cfd2231afb5afd38559b10a9`. 원격 ZIP actual bytes/CRC·source tree 23개 blob/size·INTEGRATION 본문 일치 PASS.
+- **검증 범위:** 합성 Chromium 1920/1440/1024/720/390/320 CSS px, 가로 overflow 0, Markdown/TOC/deep link/뒤로가기·검색/빈/오류·XSS·상태·모바일 초점·합성 MSC 확대/폭맞춤/접기. 실제 키보드에서 검색 Esc 1회 닫기·모바일 검색 accessible name 보완·재시험. 실제 사용자 수락·실기기·실제 doc-converter B형 원본은 NOT_RUN.
+- **미검증/보존:** LINUX_HOST_API/REVISION=NOT_VERIFIED; HOST_INTEGRATION/INSTALL/NETWORK_SHARING=NOT_RUN; INDEPENDENT_CODE_REVIEW=NOT_RUN; GROUP_WRITE=NOT_RUN. 기존 r0002 정식 독립 설계 리뷰 ACCEPT_WITH_CHANGE 및 **B1/B2/B3 BLOCKING 유지**. 새 REQUEST/서명/READY·유료 호출·기존 완료 요청 재실행·PUBLIC 배포 0. 기존 Work/Evidence·그룹 Knowledge·실제 서비스/설정 불변.
+- **다음 한 행동:** 업무 GPT가 받은 ZIP의 `viewer-wiki-ui/INTEGRATION.md`로 기존 Linux 별도 Viewer의 실제 저장소·브랜치·revision·읽기 API/권한·renderer를 G0 대조하고 adapter/기존 UI 최소 연결 및 현장 E3/E4 시험을 진행. 미확인 API/스키마·새 writer/서비스를 임의 정의하지 않음.
+
+---
+
 ## 2026-11-19 KST — 2안 팀 위키형 UI GPT 구현 + 업무 GPT Linux 연동 인계
 
 - **LATEST_USER_DECISION:** 상용 문서 UI 4종 중 2안(Confluence 계열 팀 위키형)을 선택. 기존 GPT 잠정 B안(Work 중심 홈)보다 최신 사용자 선택 우선. 실제 Viewer는 업무용 Linux 별도 서비스(사용자 확인), 소스/Framework/API/Revision은 NOT_VERIFIED.
