@@ -5,11 +5,11 @@
       "work_id": "COWORK-AUTO-APPROVAL-20261115-001",
       "skill": "cowork-review-watcher",
       "title": "GPT→GitHub REQUEST 자동 서명·READY (제한된 사전 위임)",
-      "phase": "DISPOSITION",
-      "owner": "GPT 단일 USD3 정책/사전 게이트 정본 완료 → Windows Claude Code 보호 위임 조건부 정합화",
+      "phase": "HOST_CLOSEOUT_PENDING",
+      "owner": "GPT supersession verdict PASS; Windows Claude Code legacy-design engine closeout → conditional USD3 config",
       "self_test": "PASS",
       "independent_review": "NOT_RUN",
-      "next_action": "2026-11-19: 단일 USD3 정책 조건부 적용 결과 CONFIG_APPLY=BLOCKED. A(G0)/C(gate 30/30 PASS Windows) 완료. B에서 소급 위험 발견: REQ-COWORK-BUDGET-V025-DESIGN-R1-20261117이 위임 scope/policy 모두 일치하고 소급제외(enabled_at_first_seen=0)·UNCERTAIN 종결 어느 쪽에도 안 걸려 현재 PER_REQUEST_COST만으로 막혀 있음. $3 적용 시 다음 스캔에서 자동 서명될 위험 있어 D 미실행(설정 변경 0). 다른 대기 3건/Guard는 소급제외 또는 UNCERTAIN 종결로 안전 확인. 다음: GPT가 해당 요청을 먼저 종결시킨 뒤 D~F 재시도."
+      "next_action": "2026-11-19: GPT는 구 REQ-COWORK-BUDGET-V025-DESIGN-R1-20261117을 완료 LARGE R2 동일 ZIP의 SUPERSEDED/DO_NOT_EXECUTE로 판정(실제 watcher 엔진 종결 NOT_RUN). Windows A/C PASS와 B 소급 실행 위험 확인; HOST_CONFIG_APPLY=BLOCKED 보존. 정확한 PRIVATE main 원샷 GPT_LEGACY_DESIGN_R1_SUPERSESSION_AND_HOST_CLOSEOUT_r0001_20261119_KST.md 1회 실행: 기존 공식 terminal 경로 존재/유효 권한 확인→해당 ID 1건만 안전 종결→가상 $3 격리 재평가에서 영구 재실행 0 PASS→조건부 D~F 적용, 결과/영수증/commit·SHA 게시. 공식 지원 없는 경우 임의 DB 수정 금지/기존 LIVE v0.2.25 보호 위임 USD1 유지/신규 유료 모델 0."
     }
   ]
 }
