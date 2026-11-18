@@ -634,16 +634,16 @@
   "visibility": "PRIVATE_REPO_ONLY",
   "work_items": [
     {
-      "evidence": "프로젝트 TRACKER.json 신고 값 · 운영 근거 별도 확인 필요",
-      "independent_review": "NOT_RUN",
-      "next_action": "2026-11-19: 단일 USD3 정책 조건부 적용 결과 CONFIG_APPLY=BLOCKED. A(G0)/C(gate 30/30 PASS Windows) 완료. B에서 소급 위험 발견: REQ-COWORK-BUDGET-V025-DESIGN-R1-20261117이 위임 scope/policy ",
-      "owner": "GPT 단일 USD3 정책/사전 게이트 정본 완료 → Windows Claude ",
-      "phase": "DISPOSITION",
-      "record_source": "REGISTERED_METADATA_UNVERIFIED",
-      "self_test": "PASS",
-      "skill": "cowork-review-watcher",
+      "evidence": "CURRENT 문서 관측. 단계·진행률은 증명되지 않음",
+      "independent_review": "NOT_VERIFIED",
+      "next_action": "CURRENT.md 최신 상태 및 다음 담당 확인",
+      "owner": "미등록",
+      "phase": "UNKNOWN",
+      "record_source": "CURRENT_ONLY_UNSTRUCTURED",
+      "self_test": "NOT_VERIFIED",
+      "skill": "미지정",
       "source": "collab/projects/COWORK-AUTO-APPROVAL-20261115-001/CURRENT.md",
-      "title": "GPT→GitHub REQUEST 자동 서명·READY (제한된 사전 위임)",
+      "title": "COWORK-AUTO-APPROVAL-20261115-001 — CURRENT",
       "work_id": "COWORK-AUTO-APPROVAL-20261115-001"
     },
     {
