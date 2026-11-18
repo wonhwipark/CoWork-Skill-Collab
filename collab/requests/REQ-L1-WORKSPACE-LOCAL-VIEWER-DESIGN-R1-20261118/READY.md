@@ -1,0 +1,12 @@
+---
+schema: SKILL_COLLAB_READY_V1
+state: READY
+request_id: REQ-L1-WORKSPACE-LOCAL-VIEWER-DESIGN-R1-20261118
+request_revision: 1
+request_path: /SKILL-COLLAB/requests/REQ-L1-WORKSPACE-LOCAL-VIEWER-DESIGN-R1-20261118/REQUEST.md
+request_sha256: cd488efff623cccb5c7c96982f823f1697606ff59a8ea744d9fe3a1699c22e46
+package_sha256: 6a013a104ebfefeae6dc452965ce99ce5a3f9637ed538c778d8cb5189d5a7e5f
+baseline_id: COWORK-LIVE-A-20261114
+---
+
+# ready
