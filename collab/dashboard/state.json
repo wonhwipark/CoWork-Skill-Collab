@@ -17,10 +17,10 @@
       "id": "COWORK-AUTO-APPROVAL-20261115-001",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/COWORK-AUTO-APPROVAL-20261115-001/CURRENT.md",
-      "status": "문서상 진행",
+      "status": "검증 진행 중",
       "title": "COWORK-AUTO-APPROVAL-20261115-001 — CURRENT",
-      "tone": "neutral",
-      "topic": "단일 USD3 정책 조건부 적용: CONFIG_APPLY=BLOCKED (소급 위험 발견) (2026-11-19 KST)"
+      "tone": "warning",
+      "topic": "2026-11-19 KST — GPT 판정: 구 DESIGN R1 대체 확정 / 감시기 종결은 Windows 확인 대기"
     },
     {
       "id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
