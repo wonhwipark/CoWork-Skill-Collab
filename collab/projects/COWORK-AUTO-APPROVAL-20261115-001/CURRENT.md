@@ -1,5 +1,16 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## v0.2.27 개발 후보: DESIGN 자동승인 최소 수정 완료, 독립 리뷰 대기 (2026-11-19 KST)
+
+- 결과: `CLAUDE_UNIFIED_USD3_ADMISSION_FIX_DEV_RESULT_FOR_GPT_20261119.md` (PRIVATE `main`, commit `550fc2f3ed77`, SHA-256 `228576584ccdcbc325b71379247fe36d9e79069b54de1155952a453d3ddcc787`).
+- 후보 ZIP: `artifacts/v0_2_27/skill-collab-watcher_v0_2_27_1119_DEV_NOT_FOR_DEPLOYMENT.zip` (commit `9994ffbbb698`, SHA-256 `baf5a856fbe1e34d0c3b235a5ccd5a7895ad342a18cf448360b53773ac8669e0`, 309187 B, 113개 항목).
+- **수정:** `auto_policy.py::assess`의 한 줄만 변경 — 자동 승인이 이제 `POLICY-STATIC-V1`만 허용(기존 `-DESIGN` 제거). v0.2.26 베이스(퇴행 없음). 6파일/135줄 diff.
+- **검증:** 구 `REQ-COWORK-BUDGET-V025-DESIGN-R1-20261117`의 실제 project/skill/policy 값을 그대로 재현해 가정상 $3 위임으로도 거부됨을 직접 확인(검증용 임시 시험, 출하 diff엔 없음). 대조군 STATIC/$3은 정상 허용.
+- Windows 전체 회귀 1010 passed/21 failed(전부 v0.2.26과 동일한 기존 비회귀)/12 skipped, e2e 8/8 PASS, 재빌드·추출 무결성 PASS.
+- **단서:** 순수 타임스탬프 기반 소급 보호는 가격과 무관해 안전하지만, 향후 실제 USD3 위임 활성화 시 `enabled_at`도 그 시각으로 갱신해야 같은 노출이 재발하지 않는다.
+- 독립 리뷰·LIVE 설치·위임 변경 전부 `NOT_RUN`/0. 모델 호출 0.
+- 다음 한 동작: GPT가 이 후보의 독립 리뷰 필요성을 판정.
+
 ## GPT 후속 판정 — 단일 USD3 정책 STATIC-only 최소 엔진 수정 채택 (2026-11-19 KST)
 - **최종 선택:** 구 DESIGN R1을 REQUEST 단위 공식 종결하는 지원 기능이 v0.2.25에 없으므로, `project/skill` 전체 제외는 신규 정상 watcher 리뷰까지 막을 위험이 있어 기각. **기존 `auto_policy.assess`에서 신규 자동 리뷰 `POLICY-STATIC-V1`만 허용**, 옛 `POLICY-STATIC-V1-DESIGN` 자동 승인을 거부하는 최소 코드 후보와 요청 생성 시점/고정 원본의 **정책 전환 컷오프 재검증**을 채택. 별도 reject CLI/DB 수동 terminal/denylist는 입증된 gap이 있을 때만 고려.
 - **원샷 정본:** [GPT_UNIFIED_USD3_LEGACY_ADMISSION_FIX_DECISION_AND_ONE_SHOT_r0001_20261119_KST.md](GPT_UNIFIED_USD3_LEGACY_ADMISSION_FIX_DECISION_AND_ONE_SHOT_r0001_20261119_KST.md). Windows Claude Code는 v0.2.26 pin/wait/CRLF 등 기존 기능을 퇴행시키지 않고 신규 패치 버전 후보·전체 회귀·원격 원본 bytes/SHA를 게시. 기존 DESIGN R1에 가상 $3 위임을 적용해 signer/READY/model 0, Guard UNCERTAIN·완료 LARGE R2·기타 소급 요청 0을 입증할 것.
