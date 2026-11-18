@@ -1,0 +1,135 @@
+diff -ru '--exclude=__pycache__' /d/User/whpark/cowork-phase1/live/v026_scratch/x026/docs/BUDGET_POLICY_CONFIGURATION.md cand027/docs/BUDGET_POLICY_CONFIGURATION.md
+--- /d/User/whpark/cowork-phase1/live/v026_scratch/x026/docs/BUDGET_POLICY_CONFIGURATION.md	2026-11-18 01:38:40.951426400 +0900
++++ cand027/docs/BUDGET_POLICY_CONFIGURATION.md	2026-11-19 08:12:54.553750800 +0900
+@@ -1,12 +1,15 @@
+-# Per-review budget policy (v0.2.25 development)
++# Per-review budget policy (v0.2.27 development)
+ 
+-Current requested defaults: skill review USD 1.50; design review USD 3.00.
+-No daily/monthly cost or count ceilings. Do not auto-upgrade a request.
++Unified default for every new independent review: USD 3.00, single `run_policy_ref=POLICY-STATIC-V1`.
++No daily/monthly cost or count ceilings. Do not auto-upgrade a request. The DESIGN/LARGE names below
++exist only for manual approval (`approve_request.py`) of individual requests; the automatic signer
++never admits them, at any registered budget or delegation headroom.
+ 
+ Configure the existing local reviewer.config.json review_policy block:
+-  "max_budget_usd": 1.5,
++  "max_budget_usd": 3.0,
+   "known_run_policy_refs": {
+-    "POLICY-STATIC-V1": {"max_budget_usd": 1.5},
++    "POLICY-STATIC-V1": {"max_budget_usd": 3.0},
++    "POLICY-STATIC-V1-LARGE": {"max_budget_usd": 3.0},
+     "POLICY-STATIC-V1-DESIGN": {"max_budget_usd": 3.0}
+   },
+   "daily_budget_usd": null,
+@@ -16,15 +19,15 @@
+   "policy": "POLICY-STATIC-V1",
+   "max_request_usd": 3.0
+ 
+-The request names only run_policy_ref, never the price. Both tiers require
+-the pre-existing permitted project/skill and valid SOURCE_PIN/signature/READY.
+-Design tier is available only when the local config explicitly lists its name,
+-and the protected delegation permits its price. Do not silently convert an
+-unapproved request from BASIC to DESIGN. The existing max_request_usd=1.0
+-continues to deny higher budget requests until authorized host changes.
++The request names only run_policy_ref, never the price. `POLICY-STATIC-V1` requires the
++pre-existing permitted project/skill and valid SOURCE_PIN/signature/READY, same as before.
++`POLICY-STATIC-V1-LARGE` and `POLICY-STATIC-V1-DESIGN` are REVIEW_POLICY-refused by the
++automatic engine unconditionally (v0.2.27, `auto_policy.py::assess`) -- registering either name
++at any budget, or raising the delegation's `max_request_usd`, does not make them auto-eligible.
++Those two names remain usable only through the existing manual approval tool. Do not silently
++convert an unapproved request from one tier to another.
+ 
+-Only change the two local values via the existing protected policy process;
+-ensure new settings, SHA pins, backup/rollback, and Windows host regression.
+-The published ZIP and this document do not install or activate LIVE settings.
+-Legacy max_day_usd/max_month_usd/max_day_calls keys are accepted but ignored.
+-Existing UNCERTAIN requests remain permanently claimed; history is preserved.
++Only change the local values via the existing protected policy process; ensure new settings,
++SHA pins, backup/rollback, and Windows host regression. The published ZIP and this document do
++not install or activate LIVE settings. Legacy max_day_usd/max_month_usd/max_day_calls keys are
++accepted but ignored. Existing UNCERTAIN requests remain permanently claimed; history is preserved.
+diff -ru '--exclude=__pycache__' /d/User/whpark/cowork-phase1/live/v026_scratch/x026/docs/CUTOVER_RUNBOOK.md cand027/docs/CUTOVER_RUNBOOK.md
+--- /d/User/whpark/cowork-phase1/live/v026_scratch/x026/docs/CUTOVER_RUNBOOK.md	2026-11-18 01:38:40.952426400 +0900
++++ cand027/docs/CUTOVER_RUNBOOK.md	2026-11-19 08:12:14.824585900 +0900
+@@ -1,4 +1,4 @@
+-# Cutover runbook: Dropbox to GitHub (v0.2.26, development_not_for_deployment)
++# Cutover runbook: Dropbox to GitHub (v0.2.27, development_not_for_deployment)
+ 
+ Status: a design with isolated test evidence. Nothing here installs, starts or switches anything on the
+ operating host. Each step marked APPROVAL needs an explicit decision by the user.
+diff -ru '--exclude=__pycache__' /d/User/whpark/cowork-phase1/live/v026_scratch/x026/skill_collab_watcher/__init__.py cand027/skill_collab_watcher/__init__.py
+--- /d/User/whpark/cowork-phase1/live/v026_scratch/x026/skill_collab_watcher/__init__.py	2026-11-18 01:38:40.957428200 +0900
++++ cand027/skill_collab_watcher/__init__.py	2026-11-19 08:08:37.714473900 +0900
+@@ -1 +1 @@
+-__version__ = "0.2.26"
++__version__ = "0.2.27"
+diff -ru '--exclude=__pycache__' /d/User/whpark/cowork-phase1/live/v026_scratch/x026/skill_collab_watcher/auto_policy.py cand027/skill_collab_watcher/auto_policy.py
+--- /d/User/whpark/cowork-phase1/live/v026_scratch/x026/skill_collab_watcher/auto_policy.py	2026-11-18 01:38:40.960426900 +0900
++++ cand027/skill_collab_watcher/auto_policy.py	2026-11-19 08:08:46.442096900 +0900
+@@ -70,7 +70,7 @@
+         return False, "REPOSITORY_OR_BRANCH"
+     if not d.projects or not d.skills or c.project not in d.projects or c.skill not in d.skills:
+         return False, "SCOPE"
+-    if c.policy not in ("POLICY-STATIC-V1", "POLICY-STATIC-V1-DESIGN") or c.max_calls != 1 or c.attempt != 1:
++    if c.policy != "POLICY-STATIC-V1" or c.max_calls != 1 or c.attempt != 1:
+         return False, "REVIEW_POLICY"
+     if c.state not in ("REQUESTED", "SUBMITTED") or not c.request_id or c.revision < 1:
+         return False, "REQUEST_FORMAT"
+diff -ru '--exclude=__pycache__' /d/User/whpark/cowork-phase1/live/v026_scratch/x026/tests/test_auto_approval.py cand027/tests/test_auto_approval.py
+--- /d/User/whpark/cowork-phase1/live/v026_scratch/x026/tests/test_auto_approval.py	2026-11-18 01:38:41.031519800 +0900
++++ cand027/tests/test_auto_approval.py	2026-11-19 08:09:20.065995700 +0900
+@@ -890,20 +890,24 @@
+     auto.cycle()
+     assert auto.env.store.auto_get_claim("REQ-A", "1")["stage"] == "UNCERTAIN" and has(auto.env, "AUTO_SIGNING_UNCERTAIN")
+ 
+-def test_configurable_basic_and_design_tiers_are_signed_only_when_locally_allowed(auto):
++def test_only_the_unified_static_tier_is_signed_design_is_always_refused(auto):
++    """v0.2.27: the automatic path accepts only the literal POLICY-STATIC-V1 tier. A DESIGN-tier request is refused by
++    REVIEW_POLICY regardless of registered budget, delegation headroom, or project/skill match -- it must go through
++    manual approval (approve_request.py) instead."""
+     write_delegation(auto.delegation, max_request_usd=3.0)
+     auto.policy.known_run_policy_refs.append("POLICY-STATIC-V1-DESIGN")
+-    auto.policy.run_budgets_usd["POLICY-STATIC-V1"] = 1.5
++    auto.policy.run_budgets_usd["POLICY-STATIC-V1"] = 3.0
+     auto.policy.run_budgets_usd["POLICY-STATIC-V1-DESIGN"] = 3.0
+     make_request(auto.env.http, "REQ-A", policy_ref="POLICY-STATIC-V1")
+     make_request(auto.env.http, "REQ-B", policy_ref="POLICY-STATIC-V1-DESIGN")
+     auto.cycle()
+     assert approval_posted(auto.env, "REQ-A")
+-    assert approval_posted(auto.env, "REQ-B")
+-    assert type(auto.signer).calls == 2
++    assert not approval_posted(auto.env, "REQ-B")
++    assert type(auto.signer).calls == 1
++    assert has(auto.env, "AUTO_NOT_ELIGIBLE", "REVIEW_POLICY")
+ 
+-def test_design_tier_cannot_escalate_past_protected_delegation(auto):
+-    write_delegation(auto.delegation, max_request_usd=1.5)
++def test_design_tier_is_refused_even_with_full_delegation_headroom(auto):
++    write_delegation(auto.delegation, max_request_usd=3.0)
+     auto.policy.known_run_policy_refs.append("POLICY-STATIC-V1-DESIGN")
+     auto.policy.run_budgets_usd["POLICY-STATIC-V1-DESIGN"] = 3.0
+     make_request(auto.env.http, "REQ-A", policy_ref="POLICY-STATIC-V1-DESIGN")
+diff -ru '--exclude=__pycache__' /d/User/whpark/cowork-phase1/live/v026_scratch/x026/tests/test_review_budget_policy_v025.py cand027/tests/test_review_budget_policy_v025.py
+--- /d/User/whpark/cowork-phase1/live/v026_scratch/x026/tests/test_review_budget_policy_v025.py	2026-11-18 01:38:41.050520700 +0900
++++ cand027/tests/test_review_budget_policy_v025.py	2026-11-19 08:12:00.700097600 +0900
+@@ -33,13 +33,16 @@
+     with pytest.raises(ConfigError):
+         _parse_run_policy_refs({"POLICY-STATIC-V1-DESIGN":{"max_budget_usd":float("inf")}})
+ 
+-def test_basic_and_design_allow_unlimited_aggregate_telemetry():
++def test_basic_tier_allows_unlimited_aggregate_telemetry_design_is_refused():
++    """v0.2.27: only the unified POLICY-STATIC-V1 tier is ever automatically eligible. DESIGN is REVIEW_POLICY
++    regardless of its registered budget or the delegation's per-request headroom -- it must go through manual
++    approval (approve_request.py) instead."""
+     d,c,e=scenario()
+     assert assess(d,c,e)[0]
+     assert assess(d,replace(c,policy="POLICY-STATIC-V1-DESIGN",
+-                            estimated_cents=300),e)[0]
++                            estimated_cents=300),e)[1]=="REVIEW_POLICY"
+     assert assess(d,replace(c,policy="POLICY-STATIC-V1-DESIGN",
+-                            estimated_cents=301),e)[1]=="PER_REQUEST_COST"
++                            estimated_cents=301),e)[1]=="REVIEW_POLICY"
+ 
+ def test_scope_and_exactly_once_prevent_untrusted_escalation():
+     d,c,e=scenario()
