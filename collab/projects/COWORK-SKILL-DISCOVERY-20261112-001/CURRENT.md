@@ -1,5 +1,18 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 2026-11-19 KST — Workflow v1.6.73 실제 개발 ZIP·20 PASS·릴리스 게이트 추적
+
+- **사용자 단일 실행 지시:** “진행해 배포할때까지 스탑하지마” → 기존 Work·기존 빌더·기존 MSC 계보 재사용, **최종 L1Work/main 루트 배송 승인 유지**. 이전 설계 R1 완료 요청은 그대로 CLOSED.
+- **실제 개발/통합:** [Workflow v1.6.73 재현 빌더](dev/build_ace_pec_acon_workflow_v1673_1119.py)에서 고정 Workflow v1.6.70 ZIP → 기존 MSC v1.6.72 패치 → 순수 ACE·PEC-HOP·ACON `l1_fix_workflow/ace_pec_acon_readonly.py` 포함 → 전체 SKILL/VERSION/release metadata/manifest 재생성. 단순 독립 코드 파일이 아닌 **실제 개발 ZIP 생성 PASS**, 별도 신규 스킬/Agent/업무 원본/Knowledge/Git writer 변경 없음.
+- **실행 CI 시험 결과:** [PRIVATE main GitHub Actions run 44422077963](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/44422077963), head `1c64a666eb0e93f27742e94d0b273f49cf80a9bb` **success**. 대상 개발 ZIP `l1-fix-workflow_v1_6_73_1119.zip`, **760,970 bytes**, SHA256 **`4e435a165a692f9c77c816067d6dd7d11f920def4c808d4ecb06b44b613a5c77`**. 패키지 **실제 모듈 import** 합성 단위시험 **20 PASS/0 FAIL**(ACE 7 PEC 7 ACON 6), 기존 MSC 3-contract PASS, ZIP 311 members/manifest 310, CRC/version/전체 manifest/python compile PASS, 동일 입력 **2회 ZIP byte-for-byte 동일 PASS**. 신규 유료 리뷰·업무 Linux 설치/E3·모델 호출 0.
+- **정확한 소스:** 코드 SHA256 `6c7fe329fd1d4b88b1a063200ab84bd29993a27ebcd74cb274df4b6dd98ad9fa`, 시험 `855db77cd12baab29dd33e077ec68df702ad1911b5d14a606cd40213763bbad2`, 빌더 `9d83dd7bbf5b1802f24c4b4de67165d0101a1b2b43ee6d77112e614f02d93d95`. CI artifact `ace-pec-acon-workflow-development-1119`(ID 14482227360; 기한 2026-11-25 UTC)이며 원본+고정 빌더는 PRIVATE main으로 재생성 가능. `development_not_for_deployment` **개발 후보**만 존재.
+- **판정·정식 리뷰 인계:** [v1.6.73 개발 ZIP/Gate 실제 결과](GPT_ACE_PEC_ACON_WORKFLOW_V1673_DEV_CI_RELEASE_GATE_RESULT_r0001_20261119_KST.md), commit `d8625b15f1194949b5a80100f91635f4bbf236cc`, remote readback PASS. [Windows 독립 코드 리뷰+업무 G0 원샷](ACE_PEC_ACON_WORKFLOW_V1673_INDEPENDENT_CODE_REVIEW_AND_RELEASE_GATES_r0001_20261119_KST.md), commit `0e1511169801d8774d34af01f9a621da1ba0b820`, remote readback PASS. **현재 Windows LIVE 정책/보호 위임 USD3 적용은 별도 Work에서 BLOCKED**, 실호스트 preflight 미수행 → 신규 정식 REQUEST/READY/유료 리뷰 **NOT_POSTED/NOT_RUN**. 실제 업무 Linux G0/기존 writer 보호(credential/lock/CAS)·FULL REGRESSION 미확인 → PUBLIC 최종 ZIP **BLOCKED_NOT_POSTED**; 기존 PUBLIC ZIP 불변.
+- **PUBLIC 인계 현황:** L1Work 업무 GPT ACE·PEC·ACON 기존 [§12 최신](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_KNOWLEDGE_UPDATER_ACE_PEC_HOP_ACON_DESIGN_APPLICATION_PROPOSAL_r0001_20261118_KST.md)와 [handoffs/README.md](https://github.com/wonhwipark/L1Work/blob/main/handoffs/README.md)에 개발 패키지 QA/최종 ZIP 미게시·업무 GPT G0 최소 입력 표기. 인계 commit 각각 `b81be1348523009f19047e01f0a44938ec025701` / `b495ce5dea2e54705588bd2155624d394c58267f`, 원격 readback PASS. **PUBLIC ZIP 배송 성공이 아님**.
+- **조건부 추적:** “배포 때까지 계속” 사용자 요청에 따라 기존 허용된 자동화 도구로 **1시간 간격 condition_watch** 등록: `ACE·PEC·ACON 배포 게이트 추적` (automation `Automation_45c6a9d7f0f48191b60649bcfaf74bb7`, `ENABLED` 도구 확인). 실정본 리뷰/G0/릴리스 PASS 때만 갱신·배송 가능성 판정, 미변경 알림 생략, **유료 리뷰/READY/Job/업무 설치/권한 변경 자동 시작 금지**. 등록은 호스트 연결/실제 ZIP 배송이 아니며 첫 실행 아직 미관측.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 최신 v1.6.73 diff에 대해 실제 LIVE preflight/유효 승인 범위 안에서 코드 독립 리뷰를 수행하고, 업무 GPT가 현장 Workflow/Writer의 관련 READ_ONLY G0 비민감 요약을 제공. 결과와 영수증 확인 후 필요한 범위 최소 보완 → 별도 최종 릴리스 ZIP (development channel 아님) → 이미 승인된 L1Work/main 루트 게시·원격 bytes/SHA 검증. 어느 Gate라도 미충족이면 기존 ZIP 보존/모델·Job/운영 전환 0.
+
+---
+
 ## 2026-11-19 KST — L1Work 수정 ZIP 배포 재요청: 최신 원격 전수 대조, 게이트 미해소
 
 - **명시적 사용자 지시:** “수정 패키지 배포장소인 l1work 에 업로드까지 진행해줘.” 목적지는 `wonhwipark/L1Work/main` **루트 최종 스킬 ZIP**. 배송 지시는 수용하며 후보·미완료 검증을 최종 릴리스로 재분류하는 권한으로 해석하지 않음.
