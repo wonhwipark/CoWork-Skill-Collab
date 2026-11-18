@@ -1,5 +1,15 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-18 KST — 개인 Linux PC 웹 서비스 실제 구현 업무 LLM 실행 인계 보강
+
+- **USER_INTENT_DETAIL:** 업무 GPT가 인계서를 검토·필요시 최소 수정한 후 기존 Linux Agent/MCP를 통해 업무 LLM에 **개인 Linux PC의 실제 l1-workspace 웹 뷰어 구현·시험 작업을 단계적으로 지시**하도록 요청. 단순한 G0 응답 문서가 아니라 **실제 웹 서비스 도입까지 관리 가능한 실행 계획**을 요구. 이 지시를 곧바로 미확인 Linux 서비스 기동·설정 변경·네트워크 공개의 포괄 승인으로 확대하지 않음.
+- **PUBLIC_HANDOFF_AMENDED:** 기존 `wonhwipark/L1Work/main/handoffs/L1_WORKSPACE_LOCAL_VIEWER_R0002_BUSINESS_GPT_DETAILED_REVIEW_AND_G0_HANDOFF_r0001_20261118_KST.md`에 **13절**을 추가. 업무 GPT/업무 LLM/Agent 역할, E0 실제 서비스·Workspace G0 → E1 기존 서비스 A vs snapshot B → E2 허용된 synthetic 실험 → E3 별도 승인된 localhost 설치·브라우저 시험 → E4 별도 업무망 공개 승인·두 계정 시험 → E5 복구·수락의 순서를 구체화. 형식별 렌더·기존 MSC HTML·검색·캐시·원본 SHA/비밀 보호·보안 부정시험·최소 변경, 업무 GPT에 바로 전달 가능한 지시문과 출력 양식 포함. **기존 인계 파일 경로/링크 유지**. Published commit `9fc25f4a6540fcfdf7b5dca6ef379ed0de7a56e3`, blob `48331187b87cbd120d65fdff467274e862d4dd70`, 원격 UTF-8 본문 비교 PASS.
+- **PUBLIC_INDEX:** `wonhwipark/L1Work/main/handoffs/README.md` 첫 항목에 13절 구현 부록을 표시, commit `db46d1b35cd519a1b5d6923f4e19b090908fc697`, 원격 readback PASS. 기존 SAFE_STOP·과거 G0 안내·r0002 설계 원문 보존.
+- **STATUS:** HANDOFF_EXECUTION_PLAYBOOK=POSTED; CLAUDE_INDEPENDENT_REVIEW=NOT_RUN/USER_WAIVED_THIS_HANDOFF; HOST_G0=NOT_VERIFIED; WEB_SERVICE_INSTALL/START/SHARING=NOT_RUN; LOCAL_AUTHORITY_CUTOVER=NOT_RUN; GROUP_WRITE=NOT_RUN. 실제 Linux 모델/Job/호스트 변경 없음.
+- **NEXT_ONE_ACTION:** 업무 GPT가 위 인계의 **13.4 지시문**을 따라 허용된 설치본 READ_ONLY G0 A~S 조사·웹 서비스 A/B 적합성 판정과 실행 가능 구현 계획을 산출. G0 결과에서 설치·서비스 실행·네트워크 공유가 요구되면 **해당 호스트의 기존 유효 승인·위임**을 확인하고 범위 밖 변경에 대해서만 별도 승인. 독립 리뷰 재요청/중복 REQUEST/READY 금지.
+
+---
+
 ## 2026-11-18 KST — 사용자 최신 지시: Claude R1 생략·업무 GPT 상세 인계 PUBLIC 게시
 
 - **LATEST_USER_SCOPE:** 직전의 Claude 독립 리뷰 1회→GPT 판정 순서를 사용자가 변경하여 **이번 로컬 Viewer r0002 인계에서는 Claude 독립 리뷰를 생략**, 업무 GPT가 직접 상세 설계 검토하도록 지시. 이전 R1에 대한 사용자 USD 1.50 1회 승인 기록은 **과거 이력으로 보존**하며, 지금 새 REQUEST/SOURCE_PIN/서명/READY·유료 모델 호출·watcher 재큐잉을 수행하지 않음. 과거 '리뷰 후 최종 문서' 조건은 **최신 사용자 인계 경로 변경에 한해** 교체. `INDEPENDENT_REVIEW=NOT_RUN / USER_WAIVED_THIS_HANDOFF`; 리뷰 완료·PASS로 소급 판정 금지.
