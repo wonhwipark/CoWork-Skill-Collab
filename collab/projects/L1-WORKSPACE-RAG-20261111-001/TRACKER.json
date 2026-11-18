@@ -6,10 +6,10 @@
       "skill": "l1-knowledge-updater",
       "title": "l1-knowledge-updater",
       "phase": "DISPOSITION",
-      "owner": "GPT / Windows Claude Code",
+      "owner": "GPT / 업무 GPT (현장 연동)",
       "self_test": "PASS",
-      "independent_review": "PASS",
-      "next_action": "2026-11-18: L1 Workspace 로컬 뷰어 r0002 독립 리뷰 1회 완료(ACCEPT_WITH_CHANGE). BLOCKING 3건: B1 path containment canonicalize 미구체화, B2 전체공개 전환 시 비밀탐지 서술 부족(fail-closed 필요), B3 MSC HTML sandbox 별도 origin 구현 미정의. 비차단 4건. REQ `REQ-L1-WORKSPACE-LOCAL-VIEWER-DESIGN-R1-20261118`, 비용 USD 0.6055119, 모델 1회. REQUEST/SOURCE_PIN/APPROVAL_SIG/READY/결과/영수증 전부 원격 게시·readback 확인. 임시 한도 override 없었음(원복 대상 없음), 보호 위임/정책 불변. 다음: GPT가 BLOCKING 3건 수용 여부 판정."
+      "independent_review": "NOT_RUN",
+      "next_action": "2026-11-19: 2안 모던 팀 위키 UI v0.1.0 구현·Chromium 56/56·정적 19/19·ZIP 267140B·PRIVATE 실제 바이트 검증 완료. 같은 Work ui/viewer-wiki-ui_v0_1_0/INTEGRATION.md로 업무 GPT가 기존 Linux 별도 Viewer G0·adapter 최소 연결·현장 E3/E4 진행. 실제 API/revision·B1/B2/B3 미검증, 신규 독립 코드 리뷰 NOT_RUN. 기존 r0002 독립 설계 리뷰/영수증은 CURRENT에 보존."
     }
   ]
 }
