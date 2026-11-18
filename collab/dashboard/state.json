@@ -92,7 +92,7 @@
       "status": "검증 진행 중",
       "title": "L1-WORKSPACE-RAG-20261111-001 — CURRENT",
       "tone": "warning",
-      "topic": "2026-11-18 KST — 사용자 지시: Claude 리뷰 1회 우선 요청 → 업무 GPT 작업지시 MD 준비"
+      "topic": "2026-11-18 KST — 로컬 Viewer 정식 Claude R1 리뷰 입력 고정, Windows preflight 대기"
     },
     {
       "id": "NR-L1TX-CODE-ANALYSIS-20261115-001",
@@ -685,7 +685,7 @@
     {
       "evidence": "프로젝트 TRACKER.json 신고 값 · 운영 근거 별도 확인 필요",
       "independent_review": "PENDING",
-      "next_action": "Windows Claude Code에서 PRIVATE main GPT_L1_WORKSPACE_LOCAL_VIEWER_CLAUDE_ONE_CYCLE_REVIEW_REQUEST_r0001_20261118_KST.md의 LIVE 위임/예산/select-check preflight 확인→유효하면 신규 ",
+      "next_action": "Windows Claude Code에서 PRIVATE main collab/projects/L1-WORKSPACE-RAG-20261111-001/GPT_L1_WORKSPACE_LOCAL_VIEWER_CLAUDE_ONE_CYCLE_REVIEW_REQUEST_r0001_20261118_KST.md를",
       "owner": "GPT(전환 설계·합성시험·리뷰 Windows 원샷/업무 지시 초안 PRIVATE",
       "phase": "REVIEW",
       "record_source": "REGISTERED_METADATA_UNVERIFIED",
