@@ -5,11 +5,11 @@
       "work_id": "COWORK-AUTO-APPROVAL-20261115-001",
       "skill": "cowork-review-watcher",
       "title": "GPT→GitHub REQUEST 자동 서명·READY (제한된 사전 위임)",
-      "phase": "MINIMAL_ENGINE_FIX_DEV_HANDOFF",
+      "phase": "DISPOSITION",
       "owner": "Windows Claude Code candidate implementation/tests; GPT policy verdict and final disposition",
       "self_test": "PASS",
       "independent_review": "NOT_RUN",
-      "next_action": "2026-11-19 GPT 결정: 대안1을 최소 구현(static-only auto_policy + 새 정책 epoch 소급 차단 재확인)으로 채택, 대안2 project/skill 전체 scope 제외 기각. HOST_CONFIG_APPLY=BLOCKED, 현재 v0.2.25/USD1 보호 위임 유지. 정확한 PRIVATE main 인계 GPT_UNIFIED_USD3_LEGACY_ADMISSION_FIX_DECISION_AND_ONE_SHOT_r0001_20261119_KST.md A~E를 한 번 실행하여 새 버전 후보·합성 old DESIGN R1/USD3 signer=0·legacy/static 소급 0·Windows 회귀·bytes SHA 원격 게시. 독립 유료 리뷰/운영 설치/새 REQUEST/READY는 유효 승인 게이트 전 금지."
+      "next_action": "2026-11-19: v0.2.27 개발 후보 완료(ENGINE_POLICY_FIX=PASS). auto_policy.assess 1줄 수정(DESIGN 자동승인 제거, STATIC만 허용), 6파일/135줄 diff. 구 DESIGN-R1 실제 식별값 반례 거부 확인(검증 후 제거), 대조군 STATIC/$3 정상 허용. Windows 전체회귀 1010P/21F(기존 비회귀)/12S, e2e 8/8, 재빌드/추출 무결성 PASS. ZIP baf5a856...8669e0 309187B/113개. 독립리뷰·LIVE설치·위임변경 NOT_RUN/0. 다음: GPT가 독립리뷰 필요성 판정; LIVE 적용 시 enabled_at도 함께 갱신 권고."
     }
   ]
 }
