@@ -1,5 +1,14 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-18 KST — 사용자 USD 1.50 리뷰 1회 승인 반영 / 보호 사전검증 미실행 / 설정 정리 지시
+
+- **최신 사용자 지시:** 이번 Linux Workspace 전체 URL 뷰어 r0002의 Claude 독립 설계 리뷰 **1회, 최대 USD 1.50** 진행 승인. “요청후 한도관련설정 삭제”는 요청 후 임시 구형 상한/설정 예외의 안전 정리로 분리; 운영 보호 건당 한도/서명·중복/만료 삭제는 모델 호출 무제한 위험·fail-closed 파손 우려로 실행 보류(별도 범위 확인 후).
+- **등록 준비 정본:** [Windows 원샷](../../requests/REQ-L1-WORKSPACE-LOCAL-VIEWER-DESIGN-R1-20261118/HOST_SUBMIT_ONESHOT_150USD_AND_LIMIT_CLEANUP_20261118.md)과 [정식 REQUEST 사전검증 초안](REQUEST_PREFLIGHT_DRAFT_LOCAL_VIEWER_R0002_150USD_20261118.md)을 PRIVATE main 게시, 원격 본문 blob readback PASS. 최신 고정 r0002 ZIP 91,324 B / SHA-256 `6a013a104ebfefeae6dc452965ce99ce5a3f9637ed538c778d8cb5189d5a7e5f` 보존; $3 디자인으로 자동 승급 금지.
+- **정식 리뷰 상태:** Windows 실제 설치 `review_request_gate.py select/check` **이번 $1.50 초안에는 NOT_RUN**; 서명 정책과 Windows DB 상태 실시간 미확인. `collab/requests/REQ-L1-WORKSPACE-LOCAL-VIEWER-DESIGN-R1-20261118/REQUEST.md`, `SOURCE_PIN.json`, `APPROVAL_SIG.json`, `READY.md`, 결과/영수증 **NOT_POSTED**. 문서 인계는 **정식 요청 등록·리뷰 실행을 뜻하지 않음**. 비용/모델 호출 이 GPT 작업에서는 0.
+- **다음 한 행동:** Windows Claude Code가 위 **HOST_SUBMIT_ONESHOT** 1회 실행 → live policy `POLICY-STATIC-V1` USD1.50 prepublication select/check → PASS 시에만 사전검증한 REQUEST 본문을 정식 경로로 게시하고 commit A + 문자열 repo_id SOURCE_PIN → 실제 유효 수동 signer + APPROVAL_SIG → READY 마지막 → 단일 LIVE watcher 리뷰 1회/receipt → 임시 설정만 안전 정리 → 원격 결과 게시. 오류는 fail-closed/모델 0. 결과 후 GPT 판정·L1Work PUBLIC 업무 GPT 지시서.
+
+---
+
 ## 2026-11-18 KST — 전체 Workspace URL 탐색·파일별 렌더 r0002 반영, Claude R1 실행 차단 유지
 
 - **사용자 요구 반영:** Linux `l1-workspace` 전체 업무 폴더를 업무망 URL로 탐색·읽기 전용 제공. Work별 공개 목록은 기본 필수 아님. Markdown은 읽을 때 HTML 렌더하며 기존 MSC HTML·SVG/JSON/PDF/이미지는 각 뷰어 재사용. 전체 MD→HTML 파일 사전 변환 **불필요**. 네트워크 공개/비밀 보호·업무 Work 원본/Group Knowledge writer는 별도 경계.
