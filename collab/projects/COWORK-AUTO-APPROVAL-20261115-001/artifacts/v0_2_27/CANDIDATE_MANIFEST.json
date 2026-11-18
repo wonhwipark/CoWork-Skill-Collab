@@ -1,0 +1,51 @@
+{
+  "skill": "skill-collab-watcher",
+  "version": "0.2.27",
+  "status": "development_not_for_deployment",
+  "baseline": {
+    "version": "0.2.26",
+    "sha256": "f08adb6099d06daf494362ed7e33ea66aabcbf749cfd2c027a7f70bcba5540fe"
+  },
+  "candidate": {
+    "name": "skill-collab-watcher_v0_2_27_1119_DEV_NOT_FOR_DEPLOYMENT.zip",
+    "size_bytes": 309187,
+    "sha256": "baf5a856fbe1e34d0c3b235a5ccd5a7895ad342a18cf448360b53773ac8669e0",
+    "members": 113,
+    "rebuild_sha256_identical": true
+  },
+  "change": {
+    "files_changed": 6,
+    "diff_lines": 135,
+    "summary": "auto_policy.py::assess now admits only the literal 'POLICY-STATIC-V1' tier for automatic signing (removed 'POLICY-STATIC-V1-DESIGN'); version bump; 2 stale tests updated to the new behavior; 2 docs corrected to stop claiming DESIGN is auto-eligible at any budget"
+  },
+  "windows_test": {
+    "interpreter": "Python 3.11.9",
+    "full_suite": "1010 passed, 21 failed, 12 skipped, 15 subtests passed",
+    "failed_classification": "all 21 are the same pre-existing, already-explained non-regressions carried from v0.2.26 (6 intentional-ceiling-removal stale tests + 15 Windows-CRLF test-housing defect in the bundled gate tool's own tests, unrelated to this change)",
+    "new_or_fixed_tests_passed": [
+      "test_only_the_unified_static_tier_is_signed_design_is_always_refused",
+      "test_design_tier_is_refused_even_with_full_delegation_headroom",
+      "test_basic_tier_allows_unlimited_aggregate_telemetry_design_is_refused",
+      "test_the_runbook_describes_the_design_the_code_actually_has"
+    ],
+    "auto_approval_e2e": "8/8 passed (real CLI, fake GitHub, throw-away key)",
+    "counterexample_against_real_request_identity": {
+      "request_id": "REQ-COWORK-BUDGET-V025-DESIGN-R1-20261117",
+      "reproduced_project": "COWORK-AUTO-APPROVAL-20261115-001",
+      "reproduced_skill": "cowork-review-watcher",
+      "reproduced_policy": "POLICY-STATIC-V1-DESIGN",
+      "under_hypothetical_delegation_max_request_usd": 3.0,
+      "result": "DENIED (AUTO_NOT_ELIGIBLE: REVIEW_POLICY, 0 signer calls) -- scratch test run and removed before packaging, not part of the shipped diff",
+      "control_case_unified_static_v1_at_usd3": "ALLOWED (1 signer call)"
+    },
+    "rebuild_determinism": "PASS (rebuilt ZIP byte-identical)",
+    "extracted_zip_regression": "PASS (same 1010/21/12 result as the source tree)",
+    "crc_path_secret_scan": "PASS (0 findings)"
+  },
+  "paid_model_calls": 0,
+  "new_request_ready": 0,
+  "independent_review": "NOT_RUN",
+  "windows_live_install": "NOT_RUN",
+  "protected_delegation_changed": false,
+  "operating_config_changed": false
+}
