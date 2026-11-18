@@ -29,7 +29,7 @@
       "status": "검증 진행 중",
       "title": "COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태",
       "tone": "warning",
-      "topic": "2026-11-18 KST — 자동 협업 진단 후 최소 조치·판정 (Windows 후속 대기)"
+      "topic": "Pending·Guard 읽기 전용 정산 완료 (2026-11-18 KST)"
     },
     {
       "id": "COWORK-GITHUB-DASHBOARD-20261111-001",
@@ -89,10 +89,10 @@
       "id": "L1-WORKSPACE-RAG-20261111-001",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md",
-      "status": "검증 진행 중",
+      "status": "상태 확인 필요",
       "title": "L1-WORKSPACE-RAG-20261111-001 — CURRENT",
-      "tone": "warning",
-      "topic": "2026-11-18 KST — Knowledge Updater 단일 관리 책임·업무 GPT 메타정보 설계·웹 뷰어 UX 재논의 대기"
+      "tone": "neutral",
+      "topic": "Guard 요청 정산: GUARD_ADMISSION=HOLD (2026-11-18 KST, 읽기 전용)"
     },
     {
       "id": "NR-L1TX-CODE-ANALYSIS-20261115-001",
