@@ -23,10 +23,13 @@ REF = re.compile(r"[A-Z0-9][A-Z0-9-]{2,100}\Z")
 COMMIT = re.compile(r"[0-9a-f]{40}\Z")
 REPO_ID = re.compile(r"[1-9][0-9]*\Z")
 INTENTS = {
+    # New requests use a single policy and a single per-review budget.
+    # Historical intents remain available for validating frozen legacy inputs.
+    "unified": ("POLICY-STATIC-V1",),
     "skill": ("POLICY-STATIC-V1",),
     "design": ("POLICY-STATIC-V1-DESIGN", "POLICY-STATIC-V1-LARGE"),
 }
-DEFAULT_BUDGETS = {"skill": "1.50", "design": "3.00"}
+DEFAULT_BUDGETS = {"unified": "3.00", "skill": "1.50", "design": "3.00"}
 MAX_REQUEST = 256_000
 MAX_PACKAGE = 32 * 1024 * 1024
 
@@ -85,7 +88,7 @@ def _registered_policy_map(config: dict) -> dict:
 
 
 def select_policy(config: dict, intent: str, required_budget: Decimal) -> str:
-    """Choose only explicitly registered local tiers; legacy LARGE boots design."""
+    """Choose only locally registered refs; unified selects POLICY-STATIC-V1 at USD 3."""
     if intent not in INTENTS:
         raise GateReject("UNKNOWN_REVIEW_INTENT")
     refs = _registered_policy_map(config)
@@ -216,7 +219,7 @@ def main(argv: list[str] | None = None) -> int:
                        help="actual Windows local reviewer.config.json, never GitHub")
         p.add_argument("--intent", choices=sorted(INTENTS), required=True)
         p.add_argument("--required-budget-usd", default=None,
-                       help="required per-review budget, default skill=1.5 / design=3")
+                       help="required per-review budget, default unified=3 (legacy skill=1.5/design=3)")
         if command == "check":
             p.add_argument("--request", required=True, type=Path, help="new REQUEST before publish")
             p.add_argument("--package", required=True, type=Path, help="exact local ZIP bytes")
