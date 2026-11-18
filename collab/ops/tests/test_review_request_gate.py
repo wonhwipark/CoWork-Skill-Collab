@@ -68,6 +68,64 @@ class GateTests(unittest.TestCase):
         self.assertTrue(request_bytes.startswith(b"---\n"))
         self.assertNotIn(b"\r\n", request_bytes)
 
+    def test_unified_three_dollar_policy_passes_both_review_subjects(self):
+        """Same USD 3 limit and run_policy_ref for all new independent reviews."""
+        self.policy_map["POLICY-STATIC-V1"] = {"max_budget_usd": 3.0}
+        self.save_config()
+        self.fields["run_policy_ref"] = "POLICY-STATIC-V1"
+        self.save_request()
+        result = self.pass_check("unified", "3.00")
+        self.assertEqual(result["run_policy_ref"], "POLICY-STATIC-V1")
+        self.assertEqual(result["expected_max_budget_usd"], "3.00")
+        self.assertEqual(result["authorization"], "NOT_CHECKED")
+        self.assertEqual(gate.select_policy(gate._json(self.config), "unified",
+                                            gate._target_money("3.00")), "POLICY-STATIC-V1")
+
+    def test_unified_rejects_old_one_and_one_fifty_config(self):
+        self.fields["run_policy_ref"] = "POLICY-STATIC-V1"
+        self.save_request()
+        for configured in (1.0, 1.5):
+            self.policy_map["POLICY-STATIC-V1"] = {"max_budget_usd": configured}
+            self.save_config()
+            with self.assertRaisesRegex(gate.GateReject, "POLICY_COST_MISMATCH"):
+                self.pass_check("unified", "3.00")
+
+    def test_unified_rejects_legacy_design_ref_despite_three_dollar_registration(self):
+        self.policy_map["POLICY-STATIC-V1"] = {"max_budget_usd": 3.0}
+        self.save_config()
+        # Existing DESIGN and LARGE refs can stay installed for legacy requests.
+        for legacy in ("POLICY-STATIC-V1-DESIGN", "POLICY-STATIC-V1-LARGE"):
+            self.fields["run_policy_ref"] = legacy
+            self.save_request()
+            with self.assertRaisesRegex(gate.GateReject, "RUN_POLICY_NOT_LIVE_MATCH"):
+                self.pass_check("unified", "3.00")
+
+    def test_unified_cli_prepublication_is_not_approval(self):
+        self.policy_map["POLICY-STATIC-V1"] = {"max_budget_usd": 3.0}
+        self.save_config()
+        self.fields["run_policy_ref"] = "POLICY-STATIC-V1"
+        self.save_request()
+        code, out, err = self.run_cli("select", "--live-config", str(self.config),
+                                      "--intent", "unified")
+        self.assertEqual((code, err), (0, ""))
+        self.assertEqual(json.loads(out)["selected_run_policy_ref"], "POLICY-STATIC-V1")
+        self.assertEqual(json.loads(out)["expected_max_budget_usd"], "3.00")
+        self.assertEqual(json.loads(out)["approval"], "NOT_CHECKED")
+        code, out, err = self.run_cli("check", "--live-config", str(self.config),
+                                      "--intent", "unified", "--request", str(self.request),
+                                      "--package", str(self.package))
+        self.assertEqual((code, err), (0, ""))
+        self.assertEqual(json.loads(out)["status"], "PASS_PREPUBLICATION_ONLY")
+
+    def test_unified_stale_or_missing_policy_fail_closed(self):
+        self.policy_map.pop("POLICY-STATIC-V1")
+        self.save_config()
+        with self.assertRaisesRegex(gate.GateReject, "POLICY_NOT_INSTALLED"):
+            gate.select_policy(gate._json(self.config), "unified", gate._target_money("3"))
+        self.config.unlink()
+        with self.assertRaises(gate.GateReject):
+            self.pass_check("unified", "3.00")
+
     def test_old_live_legacy_large_design_passes(self):
         r = self.pass_check()
         self.assertEqual(r["run_policy_ref"], "POLICY-STATIC-V1-LARGE")
