@@ -91,6 +91,8 @@ def select_policy(config: dict, intent: str, required_budget: Decimal) -> str:
     """Choose only locally registered refs; unified selects POLICY-STATIC-V1 at USD 3."""
     if intent not in INTENTS:
         raise GateReject("UNKNOWN_REVIEW_INTENT")
+    if intent == "unified" and required_budget != Decimal(DEFAULT_BUDGETS["unified"]):
+        raise GateReject("UNIFIED_REVIEW_BUDGET_MISMATCH")
     refs = _registered_policy_map(config)
     selected = next((name for name in INTENTS[intent] if name in refs), None)
     if not selected:
