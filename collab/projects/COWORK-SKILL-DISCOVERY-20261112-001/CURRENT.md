@@ -1,5 +1,16 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 2026-11-19 KST — L1Work 수정 ZIP 배포 재요청: 최신 원격 전수 대조, 게이트 미해소
+
+- **명시적 사용자 지시:** “수정 패키지 배포장소인 l1work 에 업로드까지 진행해줘.” 목적지는 `wonhwipark/L1Work/main` **루트 최종 스킬 ZIP**. 배송 지시는 수용하며 후보·미완료 검증을 최종 릴리스로 재분류하는 권한으로 해석하지 않음.
+- **현재 PUBLIC main 루트 직접 재조회:** Workflow `l1-fix-workflow_v1_6_67_1110.zip`, Kernel `work-ledger-kernel_v0_7_42_1116.zip`, Code Analyzer `code-analyzer_v0_15_2_1107.zip`, Git `l1-github_v0_3_56_1110.zip`. ACE·PEC-HOP·ACON 최소 통합 신버전 ZIP **없음**. 공개 기존 ZIP은 변경하지 않음.
+- **추가로 확인한 후속 개발 계보:** 관련 L1 Workspace Work의 [MSC 두 진입 후속](../L1-WORKSPACE-RAG-20261111-001/GPT_MSC_DUAL_ENTRY_G0_LINK_AND_REPRO_VALIDATION_RESULT_r0001_20261118_KST.md)은 `l1-fix-workflow v1.6.72` / `work-ledger-kernel v0.7.45` / `doc-converter v0.2.28` 합성 QA·고정 빌드 성공으로 보고. 그러나 **모두 `development_not_for_deployment`**이고 PRIVATE CI artifact/빌더만으로는 최종 PUBLIC 배포물 아님. 기존 PRIVATE main `candidates/`의 Workflow v1.6.70 / Kernel v0.7.43 / Analyzer v0.15.3도 현 설치/최신 코드 기준이라고 확정 불가.
+- **실제 차단:** (1) 직전 읽기 전용 연결 후보는 Python standalone 19 PASS로, 기존 최종 스킬 패키지에 실제 편입·E2E되지 않음 (2) 새 코드 독립 리뷰 NOT_RUN (3) 최신 소스/기존 릴리스의 충돌 방지·raw Git credential/동시 writer 보호 G0/E3 NOT_VERIFIED (4) 전체 회귀·릴리스 메타/바이트·정보등급·최종 ZIP 공개 전 게이트 NOT_RUN. 기존 코드 정적/합성 PASS와 별도. `PUBLIC_SKILL_ZIP=BLOCKED_NOT_POSTED`, `HOST_INSTALL=NOT_RUN`, `DEPLOYMENT_READY=NO`.
+- **무변경 경계:** 업무 전용 `l1-knowledge-updater` 원본/SKILL.md 반출 요구 0. 기존 Work·REQUEST/READY/리뷰 영수증·PUBLIC ZIP/운영 설정·업무 Knowledge·Job·모델 호출 모두 무변경. 이전 설계 R1 완료·CLOSED 보존, 새 유료 코드 리뷰 자동 요청/서명·READY 생성 0.
+- **NEXT_ONE_ACTION:** 정확한 최근 최종 통합 소스/호스트 연결 계약을 업무 GPT·기존 허용 Agent에서 **비민감 G0 판정만** 회수한 뒤, CoWork 기존 Work에서 관련 개발 후보 계보를 무손실 통합·안전 회귀·필요 독립 코드 리뷰로 최종 ZIP 배포 게이트 충족. 충족 시 이미 요청된 L1Work/main 루트 공개 배송을 반복 승인 없이 실행하고 ZIP SHA 원격 readback 검증.
+
+---
+
 ## 2026-11-19 KST — ACE·PEC-HOP·ACON 순수 읽기용 연결 후보 19 PASS / L1Work ZIP 공개 게이트 차단
 
 - **최신 사용자 지시:** “적용해줘”→“진행하자”→“l1work 에 배포까지해줘”. 기존 Work 재사용. 기존 설계 r0002·Claude 독립 설계 리뷰 `ACCEPT_WITH_CHANGE/CLOSED`·26개 합성 계약 PASS 재사용. **PUBLIC 배송 승인**은 받았지만 릴리스 게이트 미충족 자동 면제 아님.
