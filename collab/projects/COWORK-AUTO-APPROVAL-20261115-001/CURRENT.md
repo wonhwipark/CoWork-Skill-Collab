@@ -4,7 +4,7 @@
 - **사용자 확정:** 일반 스킬과 설계의 금액 구분 폐기, 모든 **신규** Claude 독립 리뷰 최대 USD 3/건, 일·월 리뷰 횟수 및 누적 비용 상한 없음. 같은 REQUEST 최대 1회·중복/UNCERTAIN 재시도 0, 유효 프로젝트·스킬·만료·서명·SOURCE_PIN·READY 보호 유지.
 - **GPT 코드/문서:** `collab/ops/review_request_gate.py`에 신규 `--intent unified`(고정 ref `POLICY-STATIC-V1`/USD 3) 추가, 예산 override·기존 $1/$1.50 LIVE 불일치 거부, 기존 skill/design 호환 모드·고정 REQUEST 불변. `collab/ops/tests/test_review_request_gate.py`에 신규 6회귀 추가. 코드는 PRIVATE main commit `f0a11fee`/`52769ffd`/`2187dd99`/`9e148408` (실제 CI는 개별 결과로 검증). [정책 계약](../../ops/CONTRACTS/REVIEW_TIER_TOKEN_BUDGET_V1.md) 최신 절 반영.
 - **Windows 실행 인계:** [단일 USD 3 자동 승인 조건부 원샷](GPT_UNIFIED_REVIEW_USD3_CONDITIONAL_APPLY_r0001_20261119_KST.md). 실제 보호된 LOCAL 위임의 사용자·서명 권한, DB pending/Guard 소급 위험, expiry·allowlist, 백업·SHADOW·roll-back PASS 때만 사용자 승인 범위의 최소 CONFIG 정합화. 보호된 JSON 직접 임의 편집/기존 요청 재서명 금지.
-- **분리 판정:** `GPT_CODE_POSTED=PASS`, `GITHUB_READBACK=PASS`, `WINDOWS_LIVE_POLICY_USD3=NOT_RUN`, `PROTECTED_AUTO_DELEGATION_USD3=NOT_RUN`, `NEW_PAID_CALLS=0`. 유료 독립 리뷰 자동 생성 안 함. 기존 운영 v0.2.25/보호 위임 USD 1은 호스트 적용 완료가 입증되기 전 계속 유지.
+- **분리 판정:** `GPT_CODE_POSTED=PASS`, `GITHUB_READBACK=PASS`, `GITHUB_CI_60_TESTS=PASS` ([Actions #44333532481](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/44333532481): 60 PASS/0 FAIL, 신규 6개 포함), `WINDOWS_LIVE_POLICY_USD3=NOT_RUN`, `PROTECTED_AUTO_DELEGATION_USD3=NOT_RUN`, `NEW_PAID_CALLS=0`. 유료 독립 리뷰 자동 생성 안 함. 기존 운영 v0.2.25/보호 위임 USD 1은 호스트 적용 완료가 입증되기 전 계속 유지.
 - **NEXT_ONE_ACTION:** Windows Claude Code가 단일 인계 파일의 A~F를 한 번 실행하고 `CLAUDE_UNIFIED_REVIEW_USD3_HOST_RESULT_FOR_GPT_20261119.md`·CURRENT/TRACKER/원격 bytes SHA를 게시. 소급 차단/보호 승인 불확실하면 BLOCKED로 보고하되 합성 검증과 원격 보고는 계속.
 
 ---
