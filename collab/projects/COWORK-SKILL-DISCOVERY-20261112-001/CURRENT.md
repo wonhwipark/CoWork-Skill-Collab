@@ -1,5 +1,17 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 2026-11-19 KST — ACE·PEC-HOP·ACON 재개: 실제 사용·업무 전용 Updater·모바일 수정 루프 확정
+
+- **사용자 최신 지시·보존:** “잠시 중지” 이후 “이어서 진행해줘”로 같은 목적의 기존 Work 재개. 2026-11-19 사용자 확인: 기존 스킬 패키지는 업무 환경에 전달·실사용 중, 문제 발생 시 모바일로 수정 요청. **USER_CONFIRMED_IN_USE**, 정확한 설치 버전/호스트 SHA 및 모델·호스트 E2E **HOST_VERIFIED 아님**. 업무 전용 `l1-knowledge-updater`는 GitHub에 소스 ZIP/SKILL.md 반출 요구하지 않음. 이 변경은 설계/인계 운영 경계 보완이며 원본 코드 수정·스킬 설치 승인 아님.
+- **GPT 판단:** 사용자 사실·제약 **수용**. GitHub 공개/PRIVATE 후보는 기존 감사 결과 재사용, 업무 전용 Updater의 구현·실행 판정은 업무 GPT/허용된 Linux Agent가 현장에 보존하고 CoWork에는 **비민감 기능/제약/시험 등급만 HOST_REPORTED** 수신. 확인 불가를 기능 없음/설계 blocker로 단정하지 않음. 스킬이 사용 중이라는 사실만으로 현재 개별 활성 버전·통합 E2E/그룹 게시 PASS를 선언하지 않음.
+- **정본 인계 반영:** 기존 [L1Work PUBLIC 업무 GPT ACE·PEC-HOP·ACON 인계서](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_KNOWLEDGE_UPDATER_ACE_PEC_HOP_ACON_DESIGN_APPLICATION_PROPOSAL_r0001_20261118_KST.md) 끝에 **§10** 추가: 실제 사용 등급, Updater 원본 비반출, 기존 §7~9 G0의 미확인 부분만 선택 검증, ACE/PEC/ACON별 최소 비민감 회신, 모바일 수정 요청→기존 Work 재개→소유 스킬별 개발·QA→필요 승인/최종 ZIP/업무 적용 확인. 문서 commit `395a5a9b3ee516f5595dbf0cbc1c9b48f43338db`, Git blob `cbbd18eae35878446f5cd724c0f5ba1eee22f034`, **28,587 UTF-8 B**, SHA-256 `4dd4cac3c0cb543206a971abf7cc0ebe2705cb28642edbd994dccbb04b62c451`, 원격 본문 readback PASS/기존 §§1~9 보존.
+- **INDEX 갱신:** [L1Work PUBLIC handoffs/README.md](https://github.com/wonhwipark/L1Work/blob/main/handoffs/README.md)에 최신 §10 링크 추가, commit `bdc5470a3670de58a7247c72cea31719871bbb72`, blob `be962259c88c9f2141961b1c42468e5c84ec94ae`, **12,507 UTF-8 B**, SHA-256 `e67c3fbcd826e68b1ceeec5f950c72f2f3f5db06f739334d43a277698d8a3330`, 원격 readback PASS.
+- **기존 근거/경계:** 독립 설계 리뷰 `REQ-COWORK-ACE-PEC-HOP-ACON-DESIGN-R1-20261118` = `ACCEPT_WITH_CHANGE/CLOSED`, r0002 설계 유지, 합성 계약 `26 PASS/0 FAIL` (실제 스킬 E2E 아님). 기존 ZIP/REQUEST·서명·READY·리뷰/영수증 변경 없음. 자동 승인·유료 재리뷰·새 스킬/Agent·운영/업무 Host 변경·그룹 Knowledge WRITE **0**.
+- **상태:** `OPERATION_BOUNDARY_DOC=POSTED_READBACK_PASS`; `USER_CONFIRMED_IN_USE=YES`; `UPDATER_SOURCE_EXPORT=NOT_REQUIRED`; `ACTIVE_REVISIONS=NOT_VERIFIED`; `UPDATER_HOST_CONTRACT=HOST_REPORTED_OR_PENDING`; `INTEGRATION/E2E=NOT_RUN`; `REVIEW_R1=CLOSED`; `DEPLOYMENT_READY=NO`.
+- **NEXT_ONE_ACTION:** 실제 ACE·PEC-HOP·ACON 연결이나 새 모바일 오류 수정 요청이 발생하면 업무 GPT가 관련 부분만 **기존 기능·지원 범위·실제 버전/시험 등급**으로 요약해 비민감 회신. GPT는 같은 Work에서 REUSE/CONNECT/증명된 최소 EXTEND를 판정하고 허용된 품질·배포 절차만 진행. 정상 사용 스킬의 일괄 재설치, Updater 코드 반출, 중복 G0·리뷰/Job 실행을 요구하지 않음.
+
+---
+
 ## 2026-11-18 KST — ACE·PEC-HOP·SAFE 실제 Linux 호스트 READ_ONLY G0 원샷 인계·점검기 QA 완료
 
 - **사용자 실행 지시:** “진행”. 기존 [소스 후보 G0 매핑](GPT_ACE_PEC_SAFE_SOURCE_G0_INTERFACE_MAPPING_r0001_20261118_KST.md)과 26개 합성 계약시험 재사용. **실제 Linux 설치본 G0 접근은 현 도구 연결에 없음**; 비민감 PUB 인계·정적 host probe QA부터 완료. Linux Agent가 실행했다고 주장하지 않음.
