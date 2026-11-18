@@ -117,6 +117,18 @@ class GateTests(unittest.TestCase):
         self.assertEqual((code, err), (0, ""))
         self.assertEqual(json.loads(out)["status"], "PASS_PREPUBLICATION_ONLY")
 
+    def test_unified_rejects_per_request_override_to_cheaper_tier(self):
+        self.policy_map["POLICY-STATIC-V1"] = {"max_budget_usd": 1.5}
+        self.save_config()
+        self.fields["run_policy_ref"] = "POLICY-STATIC-V1"
+        self.save_request()
+        with self.assertRaisesRegex(gate.GateReject, "UNIFIED_REVIEW_BUDGET_MISMATCH"):
+            self.pass_check("unified", "1.50")
+        self.policy_map["POLICY-STATIC-V1"] = {"max_budget_usd": 3.0}
+        self.save_config()
+        with self.assertRaisesRegex(gate.GateReject, "UNIFIED_REVIEW_BUDGET_MISMATCH"):
+            self.pass_check("unified", "6.00")
+
     def test_unified_stale_or_missing_policy_fail_closed(self):
         self.policy_map.pop("POLICY-STATIC-V1")
         self.save_config()
