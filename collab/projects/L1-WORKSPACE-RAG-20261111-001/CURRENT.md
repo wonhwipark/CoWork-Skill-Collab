@@ -1,5 +1,13 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-18 KST — 로컬 Viewer 정식 Claude R1 리뷰 입력 고정, Windows preflight 대기
+
+- **현재 상태:** 사용자 승인 “그래”에 따라 새 Linux 로컬 Workspace/Read-only Viewer 설계 R1 리뷰용 7파일 ZIP을 **실제 PRIVATE main에 게시**. `collab/packages/l1-workspace-local-viewer-design_r0001_1118_REVIEW_INPUT.zip` 76,097 bytes / SHA-256 `e2b1a2462b3b8eededea394bb662c3782671711ef32ab23620aa11c95a9305eb` / Git blob `72fb645e8ac7f6917827329f9d544f6c3d1e0921` / commit `bf5fe36d292aa7a5e96105de38455908aba33f68`. 원격 ZIP raw bytes/7개 CRC32/manifest readback **PASS**. [리뷰 고정 입력 manifest](review-inputs/REQ-L1-WORKSPACE-LOCAL-VIEWER-DESIGN-R1-20261118/REVIEW_MANIFEST.md) 및 [실행·차단 사유](GPT_LOCAL_VIEWER_FORMAL_REVIEW_REQUEST_PREP_RESULT_r0001_20261118_KST.md).
+- **정식 요청 상태 구분:** 신규 `REQ-L1-WORKSPACE-LOCAL-VIEWER-DESIGN-R1-20261118`의 REQUEST/REVIEW_RESULT는 GitHub PRIVATE main에 아직 없음. 실제 Windows v0.2.25 보호 위임(요청당 USD 1.00), 정책·대상 skill/project·잔여 한도·중복/UNCERTAIN·`review_request_gate.py select/check`를 이 세션에서 실행할 수 없어 **FORMAL_REQUEST=BLOCKED_NOT_POSTED / SOURCE_PIN=NOT_POSTED / APPROVAL_SIG/READY=NOT_POSTED / PAID_REVIEW=NOT_RUN / RESULT_RECEIPT=NOT_RECEIVED**. 정식 요청 전 필수 preflight를 문서/정적 검사로 대체하지 않음.
+- **다음 한 행동:** Windows Claude Code가 [고정 ZIP 해시·운영 사전검증·정식 등록/1회 리뷰 원샷](GPT_L1_WORKSPACE_LOCAL_VIEWER_CLAUDE_ONE_CYCLE_REVIEW_REQUEST_r0001_20261118_KST.md) 실행 → 실제 권한/예산/정책/중복 PASS면 원본 ZIP 재빌드 없이 REQUEST+SOURCE_PIN 고정, 기존 signer의 APPROVAL_SIG→READY 마지막 게시→Claude 설계 리뷰 1회→결과·영수증 readback. FAIL/미확인 시 HOLD/모델 0. 이후 GPT 결과 판정 및 최종 PUBLIC `L1Work/main/handoffs/` 업무 지시 MD 게시. 기존 Git/Windows/Linux/그룹 Knowledge 실운영 변경 없음.
+
+---
+
 ## 2026-11-18 KST — 사용자 지시: Claude 리뷰 1회 우선 요청 → 업무 GPT 작업지시 MD 준비
 
 - **현재 확인 상태:** 사용자 요청에 따라 Linux local-first Workspace + read-only viewer의 **새로운 독립 설계 리뷰 실행 원샷** [문서](GPT_L1_WORKSPACE_LOCAL_VIEWER_CLAUDE_ONE_CYCLE_REVIEW_REQUEST_r0001_20261118_KST.md)를 PRIVATE main에 게시·remote readback PASS. 기존 [Windows R01~R22 인계](CLAUDE_L1_WORKSPACE_LOCAL_FIRST_WEB_VIEWER_INDEPENDENT_DESIGN_REVIEW_HANDOFF_r0001_20261118_KST.md)를 재사용. 이전 MSC R1 완료 리뷰 재실행 금지.
