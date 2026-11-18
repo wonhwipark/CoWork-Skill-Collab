@@ -6,10 +6,10 @@
       "skill": "l1-knowledge-updater",
       "title": "l1-knowledge-updater",
       "phase": "REVIEW",
-      "owner": "GPT(r0002 전체 트리/파일 렌더 설계·ZIP 검증) / Windows Claude(정식 리뷰 사전검증 차단, 결과 없음) / 업무 GPT(Linux G0·향후 승인된 설치/시험)",
+      "owner": "GPT($1.50 사용자 리뷰 승인 기록·r0002 REQUEST 사전검증 초안·Windows HOST_ONE_SHOT 게시) / Windows Claude(호스트 정책/수동 보호 signer 검증 → 정식 요청/READY → 리뷰 1회 실행 대기) / 업무 GPT(Linux G0 대기)",
       "self_test": "PASS",
-      "independent_review": "PREFLIGHT_BLOCKED",
-      "next_action": "최신 r0002 전체 트리+on-demand Markdown/HTML/MSC/JSON/PDF 뷰어 설계 및 9파일 R1 ZIP(91,324 B SHA256 6a013a104ebfefeae6dc452965ce99ce5a3f9637ed538c778d8cb5189d5a7e5f) PRIVATE main 원격 검증 PASS. Windows 실제 사전검증 POLICY_COST_MISMATCH(최소 USD1.50, 보호 자동위임 USD1.00). 현재 REQUEST/SOURCE_PIN/READY/Claude 리뷰=NOT_RUN. 사용자 유료 비용 명시 승인 후 최신 r0002 ZIP으로 정식 요청 1회, 결과 판정 후 L1Work PUBLIC 업무 지시 MD. Linux 운영 변경 없음."
+      "independent_review": "PREFLIGHT_PENDING",
+      "next_action": "사용자 이번 R1 Claude 독립 리뷰 1회 최대 USD1.50 승인 완료. Windows Claude Code: PRIVATE main collab/requests/REQ-L1-WORKSPACE-LOCAL-VIEWER-DESIGN-R1-20261118/HOST_SUBMIT_ONESHOT_150USD_AND_LIMIT_CLEANUP_20261118.md 실행. Windows live reviewer.config.json select/check(POLICY-STATIC-V1 USD1.50) PASS 전에 정식 REQUEST 게시 금지. 고정 r0002 ZIP 91324B SHA6a013a104ebfefeae6dc452965ce99ce5a3f9637ed538c778d8cb5189d5a7e5f. PASS면 Commit A→SOURCE_PIN→유효 수동 signer/APPROVAL_SIG→READY 마지막→LIVE watcher 1회→결과/영수증→임시 예외 설정만 정리. 전역 건당 보호/서명·중복은 유지; $1.5 초안에 대한 호스트 사전검증 아직 NOT_RUN. 이 GPT 세션 모델 호출 0."
     }
   ]
 }
