@@ -9,7 +9,7 @@
       "owner": "GPT",
       "self_test": "PASS",
       "independent_review": "PASS",
-      "next_action": "2026-11-18: SOURCE_CANDIDATE_G0=PASS_SCOPE_LIMITED, PRIVATE 후보 ZIP 3개 관련 Python 모듈을 실제 해제하고 메서드/IO 정적 대조. GPT_ACE_PEC_SAFE_SOURCE_G0_INTERFACE_MAPPING_r0001_20261118_KST.md 원격 게시/readback PASS (12708 B, SHA256 ff31cc700a6a3f3e0432b4d3b9f8630594a51c93716b9bd97b51ea7f00da6e0b). ACE inspect_work/Kernel resume REUSE, PEC feature_evidence preview/전체파일 SHA REUSE, 원문 byte-range digest CONNECT_GAP_POSSIBLE, SAFE LedgerStorage root.mkdir 주의; 실제 업무 Linux 설치 G0/업무 GPT Updater/실 스킬 E2E NOT_VERIFIED/NOT_RUN. 기존 합성 계약 26 PASS 유지, R1 독립 리뷰 CLOSED, 신규 모델 호출/승인/READY 0. NEXT: 허용된 Linux 업무 Agent가 실제 설치본과 synthetic fixture 전후 read-only 무변경을 검증한 비민감 결과 회신."
+      "next_action": "2026-11-18: 실제 설치본 ACE PEC-HOP SAFE READ_ONLY G0 인계를 기존 L1Work PUBLIC 업무 GPT ACE/PEC/ACON 제안서 9절에 추가+README 연계, GitHub readback PASS. PUBLIC doc 22193 B SHA256 e56475acff2a8553cbff57ccb4483f433e0bd6143bcea00e22758faaf49a08fc. Embedded Python AST probe 3027 B SHA256 9fc117c5754b096f01f98d9130461aa0d92bd469b46b98ae280c63cda2fd024b, 격리 정상9개 함수/누락/인수/symlink/경로비노출 QA PASS. 이 GPT에는 업무 Linux Agent/MCP 직접 실행 도구 없음: LINUX_HOST_G0=NOT_RUN; 실제 설치본/reader/Evidence API/E2E=NOT_VERIFIED/NOT_RUN. 기존 R1 CLOSED, 유료 리뷰/READY/Job/호스트 변경 0. NEXT: 업무 GPT가 PUBLIC 9절로 허용된 Linux Agent READ_ONLY 조사+승인된 synthetic fixture 무변경 시험 후 비민감 결과 회신."
     }
   ]
 }
