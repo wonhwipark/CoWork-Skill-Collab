@@ -1,5 +1,13 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## L1 Workspace 로컬 뷰어 설계 독립 리뷰: PREFLIGHT_BLOCKED (2026-11-18 KST)
+
+- 결과: `CLAUDE_L1_WORKSPACE_LOCAL_VIEWER_DESIGN_REVIEW_PREFLIGHT_BLOCKED_FOR_GPT_20261118.md` (PRIVATE `main`, commit `09593dfa95af`, SHA-256 `70adc5fb6598e800ee47829523b5e26a36507deeeb416635db79cbeeda28cb96`).
+- **차단 원인:** `review_request_gate.py select --intent skill --required-budget-usd 1.00` 실측 -> `REQUEST_PREFLIGHT_BLOCKED: POLICY_COST_MISMATCH`. 운영에 정확히 USD 1.00 등급이 더 이상 없음(오늘 앞선 별도 작업에서 기본 등급이 $1.50로 변경됨). 최저 등록 등급($1.50)은 인계서의 안전 상한을 초과하고, 보호 위임의 요청당 한도도 여전히 USD 1.00이라 자동 서명도 불가.
+- `REQUEST/SOURCE_PIN/APPROVAL_SIG/READY` 게시 0, 모델 호출 0, 정책·위임 변경 0, 기존 완료 리뷰(DUAL-ENTRY-R1) 재실행 0.
+- 필요한 승인: 이번 리뷰에 USD 1.50(현재 기본 등급) 또는 USD 3.00(디자인 등급) 사용에 대한 명시적 확인.
+- 다음 한 동작: 사용자/GPT가 비용 등급을 확정하면 같은 사이클로 REQUEST→SOURCE_PIN→서명→READY→리뷰 1회→결과 게시까지 이어서 처리.
+
 ## 2026-11-18 KST — 로컬 Viewer 정식 Claude R1 리뷰 입력 고정, Windows preflight 대기
 
 - **현재 상태:** 사용자 승인 “그래”에 따라 새 Linux 로컬 Workspace/Read-only Viewer 설계 R1 리뷰용 7파일 ZIP을 **실제 PRIVATE main에 게시**. `collab/packages/l1-workspace-local-viewer-design_r0001_1118_REVIEW_INPUT.zip` 76,097 bytes / SHA-256 `e2b1a2462b3b8eededea394bb662c3782671711ef32ab23620aa11c95a9305eb` / Git blob `72fb645e8ac7f6917827329f9d544f6c3d1e0921` / commit `bf5fe36d292aa7a5e96105de38455908aba33f68`. 원격 ZIP raw bytes/7개 CRC32/manifest readback **PASS**. [리뷰 고정 입력 manifest](review-inputs/REQ-L1-WORKSPACE-LOCAL-VIEWER-DESIGN-R1-20261118/REVIEW_MANIFEST.md) 및 [실행·차단 사유](GPT_LOCAL_VIEWER_FORMAL_REVIEW_REQUEST_PREP_RESULT_r0001_20261118_KST.md).
