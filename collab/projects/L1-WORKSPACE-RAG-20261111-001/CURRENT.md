@@ -1,5 +1,15 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## L1 Workspace 로컬 뷰어 r0002 독립 리뷰 완료: ACCEPT_WITH_CHANGE, BLOCKING 3 (2026-11-18 KST)
+
+- 결과: `CLAUDE_LOCAL_VIEWER_R0002_150USD_REVIEW_SUBMISSION_RESULT_FOR_GPT_20261118.md` (PRIVATE `main`, commit `c55e405c4168`, SHA-256 `3b294980790e07b827379b03f6b7379aff32e2d1616763b8dc16c3c06bd6e505`).
+- 사전검증: `review_request_gate.py select/check`가 실제 LIVE(v0.2.25, `POLICY-STATIC-V1` USD 1.50)에서 `POLICY_COMPATIBLE_NOT_APPROVED`→`PASS_PREPUBLICATION_ONLY` 확인 후에만 게시.
+- 게시 체인: ZIP(91,324 B) → REQUEST(commit A) → `source_pin.py` PASS → 호스트 승인 16/16 PASS → 서명·READY(마지막) 전부 원격 바이트 동일.
+- 실행: 감시기 1회, USD 0.6055119, `RECEIPT_1.md.ok=true`.
+- **판정 ACCEPT_WITH_CHANGE, BLOCKING 3건:** B1 path containment canonicalize 미구체화, B2 전체공개 전환 시 비밀탐지 서술 부족, B3 MSC HTML sandbox 별도 origin 구현 미정의. 비차단 4건.
+- 요청 후 한도 정리: 이번 요청 전용 임시 override는 존재한 적이 없어 원복 대상 없음(`TEMP_LIMIT_CLEANUP=NOT_APPLICABLE`). 보호 위임(`max_request_usd=1.0`)·정책 맵·서명/READY/중복 검증 전부 불변.
+- 다음 한 동작: GPT가 BLOCKING 3건 수용 여부 판정.
+
 ## Guard 요청 정산: GUARD_ADMISSION=HOLD (2026-11-18 KST, 읽기 전용)
 
 - 정본 결과: `COWORK-DROPBOX-TO-GITHUB-MIGRATION/CLAUDE_PENDING_GUARD_RECONCILIATION_RESULT_FOR_GPT_20261118.md` (SHA-256 `2d9ca47c2b450bad1dc287834241d76bf314109f39ca17ca9833fe3c109d195c`).
