@@ -7,6 +7,16 @@
 - 요청 범위: **새로운 Linux-local Workspace + 선택적 read-only Web Viewer + Group Knowledge 연결 전환 설계만**. 이전 MSC 두 진입 설계 R1 완료 건을 재호출하지 않음.
 - 이 인계서는 **Windows 현장 실행을 위한 구체 작업 지시**이며 게시 자체는 REQUEST/승인/READY/모델 호출이 아님.
 
+## 2026-11-18 KST — 리뷰 입력 ZIP 고정 완료 / 정식 등록 이전 사전검증 차단
+
+- **리뷰 입력은 이미 생성·고정됨**: `collab/packages/l1-workspace-local-viewer-design_r0001_1118_REVIEW_INPUT.zip`; **76,097 bytes**, SHA-256 `e2b1a2462b3b8eededea394bb662c3782671711ef32ab23620aa11c95a9305eb`, Git blob `72fb645e8ac7f6917827329f9d544f6c3d1e0921`, 원격 package commit `bf5fe36d292aa7a5e96105de38455908aba33f68` (패키지 원본 source commit `84b9f74ab05750b1789ce254e85d09bce4fd3115`).
+- **입력 manifest**: `collab/projects/L1-WORKSPACE-RAG-20261111-001/review-inputs/REQ-L1-WORKSPACE-LOCAL-VIEWER-DESIGN-R1-20261118/REVIEW_MANIFEST.md`. ZIP에 설계 원문/Claude R01~R22/합성 시험/업무→지식 흐름/업무 GPT 작업 지시 초안을 모두 포함. 7개 ZIP entry의 원격 Git blob, CRC32, 경로, 크기 readback PASS. 신규 스킬 릴리스 ZIP이 아니며 PRIVATE 리뷰 입력만 해당.
+- **아직 하지 않은 일**: Windows 운영 실제 `review_request_gate.py select/check`, 정책의 `skill_id/project_id/consumer_profile` 지원 여부, 유효 사전 위임과 한도·잔액·UNCERTAIN 대조, **정식 `collab/requests/REQ-L1-WORKSPACE-LOCAL-VIEWER-DESIGN-R1-20261118/REQUEST.md` / `SOURCE_PIN.json` 작성, 서명/READY/유료 리뷰 = NOT_RUN**. 이를 문서 등록 완료라고 보고하지 말 것.
+- **최소 다음 동작(Windows)**: 설치된 v0.2.25 정책 및 signer 경로를 **read-only** 확인. 유효 승인된 정확한 요청 한도는 사용자가 다시 별도 승인하지 않는 한 **USD 1.00 이하**, 모델 호출 1회만 제안. 프로젝트/스킬 위임 불포함·잔여 한도 부족·불확실 예약·중복이면 `PREFLIGHT_BLOCKED`로 종결하고 모델 호출 0. 모두 PASS면 위 package를 **재빌드하지 말고** 기존 ZIP과 고정 해시로 정확한 스키마의 REQUEST+SOURCE_PIN 입력을 생성하여 Commit A/Pin/원격 바이트 readback; 기존 보호 signer가 READY 마지막 발행. **다른 이미 완료된 MSC R1 재사용/재큐잉 금지.**
+- 인계 문서 제목의 '정식 요청'은 **요청을 실행하는 절차 안내**이지 실제 GitHub watcher 등록 상태가 아님. 리뷰 완료 후만 최종 업무 GPT PUBLIC MD를 배송.
+
+---
+
 ## 1. 반드시 읽을 입력
 
 1. `collab/CONTEXT_BRIEF.md` → `collab/projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md` 최신 상단
