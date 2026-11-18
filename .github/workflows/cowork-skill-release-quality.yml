@@ -7,6 +7,7 @@ on:
       - 'collab/ops/CONTRACTS/MSC_SKILL_IO_MATRIX_V1.json'
       - 'collab/projects/L1-WORKSPACE-RAG-20261111-001/dev/*.py'
       - 'collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates/*.zip'
+      - 'collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/dev/*.py'
   workflow_dispatch:
 permissions:
   contents: read
@@ -54,6 +55,19 @@ jobs:
           cmp /tmp/msc-dual-entry-development/doc-converter_v0_2_28_1118.zip /tmp/msc-dual-entry-recheck/doc-converter_v0_2_28_1118.zip
           cmp /tmp/msc-dual-entry-development/l1-fix-workflow_v1_6_72_1118.zip /tmp/msc-dual-entry-recheck/l1-fix-workflow_v1_6_72_1118.zip
           echo REPRODUCIBLE_CONVERTER_WORKFLOW_ZIPS_PASS
+      - name: Build ACE PEC ACON packaged Workflow read-only development candidate
+        run: |
+          python collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/dev/build_ace_pec_acon_workflow_v1673_1119.py --out /tmp/ace-pec-acon-development
+          python collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/dev/build_ace_pec_acon_workflow_v1673_1119.py --out /tmp/ace-pec-acon-recheck
+          cmp /tmp/ace-pec-acon-development/l1-fix-workflow_v1_6_73_1119.zip /tmp/ace-pec-acon-recheck/l1-fix-workflow_v1_6_73_1119.zip
+          echo ACE_PEC_ACON_WORKFLOW_REPRODUCIBLE_DEV_ONLY_PASS
+      - name: Preserve verified ACE PEC ACON development package (not PUBLIC release)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ace-pec-acon-workflow-development-1119
+          path: /tmp/ace-pec-acon-development/*
+          if-no-files-found: error
+          retention-days: 7
       - name: Preserve verified development candidates (not PUBLIC release)
         uses: actions/upload-artifact@v4
         with:
