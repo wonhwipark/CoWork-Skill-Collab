@@ -1,5 +1,16 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 2026-11-18 KST — ACE·PEC-HOP·SAFE 실제 Linux 호스트 READ_ONLY G0 원샷 인계·점검기 QA 완료
+
+- **사용자 실행 지시:** “진행”. 기존 [소스 후보 G0 매핑](GPT_ACE_PEC_SAFE_SOURCE_G0_INTERFACE_MAPPING_r0001_20261118_KST.md)과 26개 합성 계약시험 재사용. **실제 Linux 설치본 G0 접근은 현 도구 연결에 없음**; 비민감 PUB 인계·정적 host probe QA부터 완료. Linux Agent가 실행했다고 주장하지 않음.
+- **기존 PUBLIC handoff 보완(중복 Work/인계서 없음):** [L1Work/main/업무 GPT ACE·PEC-HOP·ACON 제안서 9절](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_KNOWLEDGE_UPDATER_ACE_PEC_HOP_ACON_DESIGN_APPLICATION_PROPOSAL_r0001_20261118_KST.md#9-2026-11-18-kst--acepec-hopsafe-실제-linux-설치본-g0-읽기-전용-원샷). 실제 설치 Work/Kernel/Analyzer 3 root 명시적인 입력 → stdlib AST+SHA 읽기(모듈 import 없음) → 비민감 합성 fixture/reader/preview/byte range/SAFE 전후 파일·디렉터리 불변 점검 → 기존 Work 회신. `apply=True`·실제 회사 Work·설치/지식 WRITE/Job/READY/유료 모델 호출 금지. 최신 Updater 관리 책임은 L1 Workspace Work의 기존 결정 우선.
+- **원격 결과:** PUBLIC 파일 최종 commit `18723a21fce8315016f191a73b2bf4fc3a8c672c`, Git blob `10dd067c5bfa31f8e1cab6dccc43b340924c3192`, **22,193 UTF-8 B**, SHA-256 `e56475acff2a8553cbff57ccb4483f433e0bd6143bcea00e22758faaf49a08fc`; 기존 내용 보존·원격 readback PASS. [PUBLIC handoffs/README.md](https://github.com/wonhwipark/L1Work/blob/main/handoffs/README.md) 기존 해당 인덱스에 9절 링크 추가, commit `d0e14f15d16cca083f1f7c76ffe8d5f77e46d6cc`, readback PASS.
+- **합성 probe QA 실행:** PUBLIC 문서에 삽입된 실제 Python snippet 원문(3,027 B SHA-256 `9fc117c5754b096f01f98d9130461aa0d92bd469b46b98ae280c63cda2fd024b`)과 격리 Linux 테스트 파일의 바이트 SHA 일치 확인. Python 3 AST 파싱, 합성 정상 9개 symbol, `LedgerStorage.__init__` mkdir 위험 검출, 누락 파일/루트/인수·symlink 거부 및 경로 정보 비노출 **PASS**. 이는 **점검 스크립트 자체의 QA**이고 업무 Linux 설치본/업무 agent 호출 시험 아님.
+- **상태 구분:** `PUBLIC_HANDOFF=POSTED_READBACK_PASS`; `HOST_PROBE_SYNTHETIC_QA=PASS_SCOPE_LIMITED`; `LINUX_HOST_G0=NOT_RUN`; `INSTALLED_WORKFLOW_KERNEL_ANALYZER_UPDATER=NOT_VERIFIED`; `INTEGRATED_READER_EVIDENCE_TEST=NOT_RUN`; `ACON_PAID_REPETITION=NOT_RUN`; `REVIEW_R1=CLOSED_NO_AUTOMATIC_REREVIEW`; `DEPLOYMENT_READY=NO`; 신규 유료 모델·Watcher/Job 실행 0.
+- **NEXT_ONE_ACTION:** 업무 GPT가 PUBLIC 동일 handoff **9절**에서 확인된 설치 root만 이용해 허용된 Linux Agent/MCP READ_ONLY G0를 수행, 필요한 경우 *이미 있는 승인된 비민감 fixture*에서만 reader/preview 실행 및 무변경 전후 확인. 비민감 결과/실제 revision/블로커를 회신하면 이 기존 CoWork Work에서 통합 연결 최소 gap 판정. 호스트 연결 없는 GPT가 실행/완료로 승격하지 않음.
+
+---
+
 ## 2026-11-18 KST — ACE·PEC-HOP·SAFE 실제 후보 스킬 소스 G0 대조 완료(설치·호스트 G0 제외)
 
 - **진행 지시:** “진행”. 기존 합성 계약 시험 26 PASS와 실제 스킬 reader/Evidence 간 연결 경계를 **READ_ONLY** 조사. Work/업무 호스트·스킬 설치·PUBLIC ZIP·기존 독립 리뷰 R1 재실행 0.
