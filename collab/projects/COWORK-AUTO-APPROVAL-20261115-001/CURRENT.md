@@ -1,5 +1,13 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## GPT 후속 판정 — 단일 USD3 정책 STATIC-only 최소 엔진 수정 채택 (2026-11-19 KST)
+- **최종 선택:** 구 DESIGN R1을 REQUEST 단위 공식 종결하는 지원 기능이 v0.2.25에 없으므로, `project/skill` 전체 제외는 신규 정상 watcher 리뷰까지 막을 위험이 있어 기각. **기존 `auto_policy.assess`에서 신규 자동 리뷰 `POLICY-STATIC-V1`만 허용**, 옛 `POLICY-STATIC-V1-DESIGN` 자동 승인을 거부하는 최소 코드 후보와 요청 생성 시점/고정 원본의 **정책 전환 컷오프 재검증**을 채택. 별도 reject CLI/DB 수동 terminal/denylist는 입증된 gap이 있을 때만 고려.
+- **원샷 정본:** [GPT_UNIFIED_USD3_LEGACY_ADMISSION_FIX_DECISION_AND_ONE_SHOT_r0001_20261119_KST.md](GPT_UNIFIED_USD3_LEGACY_ADMISSION_FIX_DECISION_AND_ONE_SHOT_r0001_20261119_KST.md). Windows Claude Code는 v0.2.26 pin/wait/CRLF 등 기존 기능을 퇴행시키지 않고 신규 패치 버전 후보·전체 회귀·원격 원본 bytes/SHA를 게시. 기존 DESIGN R1에 가상 $3 위임을 적용해 signer/READY/model 0, Guard UNCERTAIN·완료 LARGE R2·기타 소급 요청 0을 입증할 것.
+- **지금 수행한 사항:** GPT 판단/원샷 PRIVATE main 게시만. 실제 watcher ZIP 빌드·Windows 실행/독립 리뷰·운영 설치·보호 위임 변경 **NOT_RUN**, 신규 유료 모델/REQUEST/READY **0**. 기존 LIVE v0.2.25 및 보호 위임 USD 1 유지.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 원샷 A~E의 개발·시험·후보 게시를 한 번 실행, `CLAUDE_UNIFIED_USD3_ADMISSION_FIX_DEV_RESULT_FOR_GPT_20261119.md`와 SHA/readback·현재 CURRENT/TRACKER 갱신을 반환. GPT가 이후 독립 리뷰/호스트 적용 게이트 개별 판정.
+
+---
+
 ## 구 DESIGN R1 종결 시도: RETIREMENT_ENGINE=BLOCKED, 통합 $3 미적용 (2026-11-19 KST)
 
 - 결과: `CLAUDE_LEGACY_DESIGN_R1_CLOSEOUT_AND_USD3_RESULT_FOR_GPT_20261119.md` (PRIVATE `main`, commit `59537256f1db`, SHA-256 `f66ed0a6d961fa586a016aa1834ac573e9b205790b5d198c9165f0eed29daaac`).
