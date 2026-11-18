@@ -1,5 +1,17 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-19 KST — 2안 팀 위키형 UI GPT 구현 + 업무 GPT Linux 연동 인계
+
+- **LATEST_USER_DECISION:** 상용 문서 UI 4종 중 2안(Confluence 계열 팀 위키형)을 선택. 기존 GPT 잠정 B안(Work 중심 홈)보다 최신 사용자 선택 우선. 실제 Viewer는 업무용 Linux 별도 서비스(사용자 확인), 소스/Framework/API/Revision은 NOT_VERIFIED.
+- **OWNER:** GPT는 설계·동작 가능한 HTML/CSS/JS·합성 fixture·read-only adapter 초안·브라우저 테스트·ZIP/SHA-256·INTEGRATION.md 제작. 업무 GPT는 실제 Linux 서비스 설치본·읽기 API/권한·보안 계약을 확인하고 현장 최소 연동을 설계. 업무 LLM/Agent는 좁은 연동·보완·현장 시험만 맡음.
+- **CANONICAL_HANDOFF:** [2안 UI GPT 구현 → 업무 GPT 현장 연동](L1_WORKSPACE_WIKI_UI_GPT_IMPLEMENTATION_TO_BUSINESS_GPT_HANDOFF_r0001_20261119_KST.md). PRIVATE main commit 5d57ded10436c5ae7464581e6f008dfe253c48b4, blob 5244482aee0a2e5b5ef019354f08d016608fa2af, 본문 readback PASS.
+- **PRESERVED:** Viewer r0002 전체 트리+doc-converter MSC B형, 개인 Knowledge r0003/Updater r0004 책임, Work/Evidence/Group Knowledge 불변, read-only, 기존 Claude r0002 독립 리뷰 ACCEPT_WITH_CHANGE와 B1/B2/B3 BLOCKING 유지. 새 r0004 UX 델타 리뷰는 마지막 조회 기준 정식 REQUEST/READY 미게시, 재큐잉/유료 호출 금지.
+- **STATUS:** HANDOFF=POSTED/READBACK_PASS; UI_CODE/ZIP=NOT_BUILT; BROWSER_TEST=NOT_RUN; LINUX_HOST_API/REVISION=NOT_VERIFIED; HOST_INSTALL/NETWORK_SHARING=NOT_RUN; GROUP_WRITE=NOT_RUN. 문서 게시로 운영 동작이나 승인 발생하지 않음.
+- **NEXT_ONE_ACTION:** 새 창 GPT가 이 핸드오프에 따라 2안 UI의 동작 코드와 합성 브라우저 시험·ZIP을 먼저 제작한 다음, 업무 GPT 연동 문서를 작성해 같은 Work CURRENT에 결과 갱신. 실제 호스트 통합/운영·유료 독립 리뷰·PUBLIC 전송은 기존 유효 승인/게이트 별도.
+
+---
+
+
 ## 2026-11-19 KST — Viewer r0002 기존 정식 R1 완료 재확인 / r0004 신규 UX 델타 리뷰 사전준비
 - **기존 리뷰 실측:** `REQ-L1-WORKSPACE-LOCAL-VIEWER-DESIGN-R1-20261118` REQUEST·SOURCE_PIN·APPROVAL_SIG·READY·REVIEW_RESULT_1.md·RECEIPT_1.md가 PRIVATE main에 실제 존재. receipt `ok=true`, Claude `COMPLETED/ACCEPT_WITH_CHANGE`; B1 경로 containment, B2 파일내용 비밀 검사, B3 MSC origin 격리 **3개 G2/G3 BLOCKING**, 캐시/상태표기 등 비차단 제언. **기존 r0002 리뷰 재큐잉·재과금 0**, Linux 실제 G0/E3 시험 없음. 현 CURRENT의 이전 미수신 표기는 과거 확인 시점의 이력.
 - **사용자 새 요청:** r0004 Knowledge Updater 단일 관리 책임+업무 GPT 메타정보 설계와 실제 웹뷰어 가독성 저하의 신규 독립 리뷰 및 개선 제안. r0002와 같은 Work를 재사용하되 구 리뷰와 신규 델타 범위를 분리.
