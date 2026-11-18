@@ -89,10 +89,10 @@
       "id": "L1-WORKSPACE-RAG-20261111-001",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md",
-      "status": "문서상 진행",
+      "status": "검증 진행 중",
       "title": "L1-WORKSPACE-RAG-20261111-001 — CURRENT",
-      "tone": "neutral",
-      "topic": "L1 Workspace 로컬 뷰어 r0002 독립 리뷰 완료: ACCEPT_WITH_CHANGE, BLOCKING 3 (2026-11-18 KST)"
+      "tone": "warning",
+      "topic": "2026-11-19 KST — Viewer r0002 기존 정식 R1 완료 재확인 / r0004 신규 UX 델타 리뷰 사전준비"
     },
     {
       "id": "NR-L1TX-CODE-ANALYSIS-20261115-001",
