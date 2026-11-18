@@ -92,7 +92,7 @@
       "status": "검증 진행 중",
       "title": "L1-WORKSPACE-RAG-20261111-001 — CURRENT",
       "tone": "warning",
-      "topic": "2026-11-19 KST — Viewer r0002 기존 정식 R1 완료 재확인 / r0004 신규 UX 델타 리뷰 사전준비"
+      "topic": "2026-11-19 KST — 2안 팀 위키형 UI GPT 구현 + 업무 GPT Linux 연동 인계"
     },
     {
       "id": "NR-L1TX-CODE-ANALYSIS-20261115-001",
