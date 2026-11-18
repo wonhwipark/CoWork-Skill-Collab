@@ -5,11 +5,11 @@
       "work_id": "COWORK-AUTO-APPROVAL-20261115-001",
       "skill": "cowork-review-watcher",
       "title": "GPT→GitHub REQUEST 자동 서명·READY (제한된 사전 위임)",
-      "phase": "DISPOSITION",
-      "owner": "GPT supersession verdict PASS; Windows Claude Code legacy-design engine closeout → conditional USD3 config",
+      "phase": "MINIMAL_ENGINE_FIX_DEV_HANDOFF",
+      "owner": "Windows Claude Code candidate implementation/tests; GPT policy verdict and final disposition",
       "self_test": "PASS",
       "independent_review": "NOT_RUN",
-      "next_action": "2026-11-19: 구 REQ-COWORK-BUDGET-V025-DESIGN-R1-20261117 공식 종결 시도 - RETIREMENT_ENGINE=BLOCKED. v0.2.25 소스/CLI 전체 대조 결과 요청 1건을 영구 차단하는 지원 수단이 없음(reject/cancel/withdraw CLI 없음, denylist 없음, RETIRED는 서명키 전용). jobs/auto_claims 0건으로 미과금 재확인. 선행조건 미충족으로 HOST_CONFIG_APPLY=BLOCKED(통합 $3 미적용). DB/REQUEST/SOURCE_PIN/정책/위임 바이트 불변, 모델호출 0. 다음: GPT가 (1)엔진에 reject 기능을 추가하는 새 후보 개발 또는 (2)위임 scope에서 이 project/skill만 명시 제외하는 방안 중 선택."
+      "next_action": "2026-11-19 GPT 결정: 대안1을 최소 구현(static-only auto_policy + 새 정책 epoch 소급 차단 재확인)으로 채택, 대안2 project/skill 전체 scope 제외 기각. HOST_CONFIG_APPLY=BLOCKED, 현재 v0.2.25/USD1 보호 위임 유지. 정확한 PRIVATE main 인계 GPT_UNIFIED_USD3_LEGACY_ADMISSION_FIX_DECISION_AND_ONE_SHOT_r0001_20261119_KST.md A~E를 한 번 실행하여 새 버전 후보·합성 old DESIGN R1/USD3 signer=0·legacy/static 소급 0·Windows 회귀·bytes SHA 원격 게시. 독립 유료 리뷰/운영 설치/새 REQUEST/READY는 유효 승인 게이트 전 금지."
     }
   ]
 }
