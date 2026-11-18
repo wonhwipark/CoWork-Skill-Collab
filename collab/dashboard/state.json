@@ -20,7 +20,7 @@
       "status": "검증 진행 중",
       "title": "COWORK-AUTO-APPROVAL-20261115-001 — CURRENT",
       "tone": "warning",
-      "topic": "v0.2.26 Windows 플랫폼·Notifier 검증 완료 (2026-11-18 KST)"
+      "topic": "2026-11-18 KST — GPT 최소 수정 채택·독립 리뷰/운영 게이트 판정"
     },
     {
       "id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
@@ -29,7 +29,7 @@
       "status": "검증 진행 중",
       "title": "COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태",
       "tone": "warning",
-      "topic": "2026-11-18 KST — pending·Guard 조치 도구 구현·34회귀 PASS / Windows 원샷 준비"
+      "topic": "2026-11-18 KST — 자동 협업 진단 후 최소 조치·판정 (Windows 후속 대기)"
     },
     {
       "id": "COWORK-GITHUB-DASHBOARD-20261111-001",
