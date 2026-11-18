@@ -1,5 +1,15 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-18 KST — 사용자 최신 지시: Claude R1 생략·업무 GPT 상세 인계 PUBLIC 게시
+
+- **LATEST_USER_SCOPE:** 직전의 Claude 독립 리뷰 1회→GPT 판정 순서를 사용자가 변경하여 **이번 로컬 Viewer r0002 인계에서는 Claude 독립 리뷰를 생략**, 업무 GPT가 직접 상세 설계 검토하도록 지시. 이전 R1에 대한 사용자 USD 1.50 1회 승인 기록은 **과거 이력으로 보존**하며, 지금 새 REQUEST/SOURCE_PIN/서명/READY·유료 모델 호출·watcher 재큐잉을 수행하지 않음. 과거 '리뷰 후 최종 문서' 조건은 **최신 사용자 인계 경로 변경에 한해** 교체. `INDEPENDENT_REVIEW=NOT_RUN / USER_WAIVED_THIS_HANDOFF`; 리뷰 완료·PASS로 소급 판정 금지.
+- **GPT_STATIC_DISPOSITION:** `ACCEPT_WITH_GATES`. r0002 최신 전체 업무 콘텐츠 폴더 트리 + on-demand Markdown/MSC/형식별 renderer 요구를 유지, Work별 선택 allowlist를 UX 기본 필수에서 제거. 시스템 비밀·업무 제한 자료·root containment·HTML sandbox/CSP/업무망 승인 필수. 기존 Git writer/local-authority cutover와 그룹 Knowledge writer는 별도 Gate. 이는 정적 설계 방향 검토이며 업무 Linux G0·E3/독립 코드 리뷰·운영 수락 PASS가 아님.
+- **NEW_PUBLIC_HANDOFF (실제 게시·원격 본문 확인):** `wonhwipark/L1Work` `main` `handoffs/L1_WORKSPACE_LOCAL_VIEWER_R0002_BUSINESS_GPT_DETAILED_REVIEW_AND_G0_HANDOFF_r0001_20261118_KST.md`. r0001/r0002 요구·차이·근거, 보안, 기존 스킬 책임, 선택지 A/B, 업무 GPT A~S(19) 실 설치 조회, P0~P6/G0~G6, T01~T34, 정적 판정·비민감 결과 계약을 **자가 포함형**으로 인계. 원격 blob `b27ae5bbe34eadca55f1e1ae69d2acc32aa8a9c3` 확인. L1Work `handoffs/README.md` 최상단 링크 추가, commit `e853c2fc1fd7a9b52b2141efcffbda4e84924bd1`, readback PASS. 기존 SAFE_STOP 인계·G0 A~P는 이력으로 보존; **최신 r0002 A~S 우선**.
+- **STATUS:** `BUSINESS_GPT_DETAILED_HANDOFF=POSTED`, `CLAUDE_DESIGN_REVIEW=NOT_RUN`, `CURRENT_REQUEST_READY=NOT_CREATED`, `WINDOWS_OPERATION=NOT_RUN`, `LINUX_G0=NOT_VERIFIED`, `VIEWER_INSTALL/URL/LINUX_OS_CHANGE=NOT_RUN`, `LOCAL_AUTHORITY_CUTOVER=NOT_RUN`, `GROUP_KNOWLEDGE_WRITE=NOT_RUN`. 이번 실제 변경은 PRIVATE 현재 상태 문서 및 PUBLIC 인계·인덱스의 비민감 Markdown 게시만.
+- **NEXT_ONE_ACTION:** 업무 GPT가 위 PUBLIC 상세 인계서를 먼저 읽어 r0002 정적 상세검토와 **기존 권한 내 Linux READ_ONLY G0 A~S**를 수행·판정. 기존 실측 답변은 재사용하고 미확인만 확인. 신규 모델/Job/설치·서비스 기동·포트/ACL/웹 공유·Git Writer 전환·그룹 게시/지식 변경은 별도 해당 Gate 승인 전 금지.
+
+---
+
 ## 2026-11-18 KST — 로컬 Viewer r0002 재개·GitHub 중복 조회 (GPT read-only)
 
 - **USER_RESUME_SCOPE:** 사용자의 명시적 재개 지시로 이전 SAFE_STOP을 **Claude 독립 설계 리뷰 1회 → GPT 판정 → L1Work PUBLIC 업무 GPT 최종 작업 지시서** 흐름에 한해서 해제. 별도 Linux G0·설치·서비스 개방·Git writer cutover·그룹 Knowledge 변경 승인으로 확대하지 않음.
