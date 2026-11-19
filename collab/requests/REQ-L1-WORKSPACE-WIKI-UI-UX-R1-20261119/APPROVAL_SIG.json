@@ -1,0 +1,23 @@
+{
+  "key_id": "cowork-approver-1",
+  "payload": {
+    "expires_at": "2026-11-19T05:36:07.258129+00:00",
+    "issued_at": "2026-11-19T03:36:07.258129+00:00",
+    "knowledge_refs_hash": "d84c599b38b661764ac1ef97be223d823d5a916ea7a4dfcabaf4d575e82c6652",
+    "local_policy_revision": "1",
+    "nonce": "a840050d0be573fca3d7872247a09ad3",
+    "package_path": "/SKILL-COLLAB/packages/l1-workspace-wiki-ui_v0_1_0_1119.zip",
+    "package_sha256": "411553e74e76bb82237fd2ebef65169769e4dbe4cfd2231afb5afd38559b10a9",
+    "package_size_bytes": 267140,
+    "ready_sha256": "0238c125ba649f8874a31fc077743f8fcbee47a0d414661fa7dd36680d42257f",
+    "repo_id": "1451933830",
+    "request_id": "REQ-L1-WORKSPACE-WIKI-UI-UX-R1-20261119",
+    "request_revision": "1",
+    "request_sha256": "112d38d9712c004c84a88002e1ef7e7a77dcd1e5e617036637500f973ce1eb4c",
+    "run_policy_ref": "POLICY-STATIC-V1-DESIGN",
+    "schema": "SKILL_COLLAB_APPROVAL_PAYLOAD_V1",
+    "source_commit": "cd9728263ca80b51d826dd48a0f6d9c335ab49e8"
+  },
+  "schema": "SKILL_COLLAB_APPROVAL_SIG_V1",
+  "signature": "KXfyXB6vLSmZcFdRc1krMxACYoyhqmq2/A/vGbk6BUCtdNI0el0usRatuW5f1iOvfEhED+wFXtLLF8c6ObnFCw=="
+}
