@@ -14,7 +14,8 @@ import subprocess
 from pathlib import Path
 
 ROUTES = {
-    "collab": ("COWORK-DROPBOX-TO-GITHUB-MIGRATION", ("리뷰", "claude", "watcher", "협업", "live", "승인", "서명")),
+    "collab": ("COWORK-DROPBOX-TO-GITHUB-MIGRATION", ("리뷰", "claude", "watcher", "협업", "live", "provider")),
+    "auto": ("COWORK-AUTO-APPROVAL-20261115-001", ("자동 승인", "보호 위임", "정책", "usd", "금액", "서명", "승인")),
     "skill": ("COWORK-SKILL-DISCOVERY-20261112-001", ("스킬", "skill", "zip", "버전", "배포", "맥락", "컨텍스트")),
     "dashboard": ("COWORK-GITHUB-DASHBOARD-20261111-001", ("대시보드", "dashboard", "화면", "가독성", "ui")),
     "execution": ("JOBLIST-NRTX-20261112-001", ("job", "linux", "mcp", "llm", "opencode", "실행", "분석")),
@@ -37,8 +38,8 @@ def choose(question: str, topic: str | None = None) -> tuple[str, str]:
     best = max((s for s, _ in scored), default=0)
     if best == 0:
         return "skill", ROUTES["skill"][0]
-    # UI and exact Knowledge queries are more specific than generic '리뷰/스킬'.
-    for key in ("dashboard", "knowledge", "execution", "collab", "skill"):
+    # Specific UX, Knowledge and auto-approval questions beat generic review/skill.
+    for key in ("dashboard", "knowledge", "auto", "execution", "collab", "skill"):
         if (best, key) in scored:
             return key, ROUTES[key][0]
     raise AssertionError("topic routing")
