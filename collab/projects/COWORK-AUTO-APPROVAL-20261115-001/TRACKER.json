@@ -5,11 +5,11 @@
       "work_id": "COWORK-AUTO-APPROVAL-20261115-001",
       "skill": "cowork-review-watcher",
       "title": "GPT→GitHub REQUEST 자동 서명·READY (제한된 사전 위임)",
-      "phase": "GPT_REVIEW_CONDITIONAL_ACCEPTANCE_HOST_PROOF_PENDING",
+      "phase": "REVIEW",
       "owner": "Windows Claude Code: host proof gates then conditional same-SHA LIVE; GPT evidence disposition complete",
       "self_test": "WINDOWS_HOST_REPORTED_PASS (1031P/0F/12S, package E2E SHADOW PASS; live host shadow NOT_RUN)",
-      "independent_review": "V028_R1_COMPLETED_MAJOR_1_ACCEPTED_WITH_HOST_MITIGATION_CONDITIONS_RECEIPT_OK",
-      "next_action": "GPT v0.2.28 R1 판정서 GPT_V028_R1_REVIEW_DISPOSITION_AND_HOST_GATE_r0001_20261120_KST.md: ACCEPT_WITH_CONDITIONS, HOLD_UNTIL_HOST_PROOF. 동일 SHA 9e6ee6d30170f0a2890237c7d1b9184e5c423213a18146926b848c5269b8c00c; R1 결과/영수증 ok=true, host audit cost $1.1914247 (receipt has no cost), no repeated review. Windows existing Work one-shot resumes read-only legacy/DB audit + synthetic cap-only retroactive exposure and cap+enabled_at mitigation proof + authorization/backup/rollback check; ONLY if all PASS protected same-SHA LIVE/STATIC $3 update and new epoch, shadow/restart and readback; otherwise BLOCKED/keep v0.2.25, delegation USD1. No review rerun, no READY re-post."
+      "independent_review": "V028_R1_COMPLETE_MAJOR_1_FIXED_IN_DEV_V029_REVIEW_NOT_RUN",
+      "next_action": "2026-11-20 follow-up: receipt settled from watcher DB (1 call, USD 1.1914247, COMPLETED). v0.2.28 review MAJOR 1 reproduced and fixed in dev v0.2.29 (cap-refused requests become POLICY_STOPPED and are never auto-signed after a cap raise). v0.2.29 ZIP skill-collab-watcher_v0_2_29_1120.zip 310753 B SHA256 c67bc342fe77547b000fc42e1b886396cbef035c0d265dbcd124947e267ed83f, artifacts/v0_2_29, tests 1034 PASS / 0 FAIL, independent review NOT_RUN, v0.2.28 PASS not inherited. LIVE v0.2.25, delegation USD1, enabled_at 2026-11-16 unchanged. HOLD: LIVE install and USD3 delegation change. Result CLAUDE_AUTO_REVIEW_FOLLOWUP_RESULT_FOR_GPT_20261120.md (commit 47060c5ba1c2). NEXT: GPT decides (1) a new independent review of v0.2.29 with separate USD 3 approval, or (2) option A on v0.2.28 bytes with the enabled_at procedure."
     }
   ]
 }
