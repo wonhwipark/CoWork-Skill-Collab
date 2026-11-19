@@ -1,5 +1,17 @@
 # COWORK-GITHUB-DASHBOARD-20261111-001 — CURRENT
 
+## 2026-11-20 KST — P1/P2 공개 B안 빠른 상황 요약·관계·변경분 적용 (사용자 독립 리뷰 생략)
+
+- **요청 범위:** 현재 구조 빠른 파악 P1과 관계/변경분 P2를 기존 B안에 최소 연결. 사용자는 이번 두 기능의 독립 리뷰 생략을 명시. 기존 다른 코드 리뷰/Watcher 승인에 적용하지 않음.
+- **PUBLIC 배송:** `wonhwipark/L1Work/main/docs/cowork-dashboard/index.html` (commit `56c042fb3283a8a223a7b3a391e63f27cdebfb61`) + 신규 `context-view.js` (commit `b70686e6859a042471c2da6a0bdcec4963ed4fec`). 기존 URL `https://wonhwipark.github.io/L1Work/cowork-dashboard/` 유지. HTML SHA256 `4cce5b380c6348a6036d5ef5ff07ba5c3a2382421fe6d00a3b7d1783566251e1`, JS SHA256 `dce69693255e96a69dde9b879de2044de89c96fcba740a1bf94d4b949ee1b164`, 원격 blob 검증 PASS.
+- **적용된 UI:** P1 4개 카드(협업/스킬/실행/Knowledge), P2 접힘 보기(5개 허용 업무 범주 중 4개에 대한 개념 관계와 세션 중 변경). 기존 3개 탭·board.js·status.json exporter/schema·공개 허용목록·최근 인계3건/120초 갱신 불변. 상태는 '공개 자료 마지막 변경'으로, 호스트 LIVE 확인이나 리뷰 PASS 추정 금지.
+- **검증:** 격리 V8 JS 구문 PASS, 합성 DOM 4카드/변경분/무효 공급자·비허용 카드 fail-closed PASS, GitHub Pages [#44579614254](https://github.com/wonhwipark/L1Work/actions/runs/44579614254) SUCCESS. 실제 PC/모바일 렌더·사용자 30초 이해·접근성/30문항 정량 실험 **NOT_RUN**. `INDEPENDENT_REVIEW=SKIP_BY_EXPLICIT_USER_REQUEST` (PASS 아님), 운영 LIVE/업무 호스트 변경 0.
+- **연결 결과:** [P1/P2 적용 근거·정확한 SHA](../COWORK-SKILL-DISCOVERY-20261112-001/P1_P2_CONTEXT_IMPLEMENTATION_RESULT_r0001_20261120_KST.md).
+- **NEXT_ONE_ACTION:** 기존 PUBLIC Pages 화면을 PC/모바일에서 실제 확인해 한 화면 요약과 P2 펼침의 가독성을 검증하고, 필요한 경우 이 Work에서 최소 UI 보완.
+
+---
+
+
 ## 현재 요약 — ⑦ Updater → ⑥ Workspace 화살표 수정 (2026-11-15 KST)
 
 - **사용자 지적 수용:** 이전에는 역할 설명만 반영하고 실제 역방향 연결선을 누락. ⑦ 카드 → ⑥ 카드의 녹색 실선·도착 화살촉과 ‘분석·초안·결정 저장/갱신’ 라벨을 추가.
