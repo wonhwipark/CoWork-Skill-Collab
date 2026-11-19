@@ -89,10 +89,10 @@
       "id": "L1-WORKSPACE-RAG-20261111-001",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md",
-      "status": "문서상 진행",
+      "status": "검증 진행 중",
       "title": "L1-WORKSPACE-RAG-20261111-001 — CURRENT",
-      "tone": "neutral",
-      "topic": "2026-11-19 KST — GPT 최종 판정: 완성 위키 UI/UX R1 ACCEPT_WITH_CHANGE / 리뷰 종결"
+      "tone": "warning",
+      "topic": "2026-11-20 KST — 위키 UI 수정방안·사용 편의성 추가 검토"
     },
     {
       "id": "NR-L1TX-CODE-ANALYSIS-20261115-001",
