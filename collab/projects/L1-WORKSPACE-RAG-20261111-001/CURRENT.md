@@ -1,5 +1,16 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-19 KST — 위키 UI/UX R1 독립 시각 리뷰 완료: ACCEPT_WITH_CHANGE (r0002 DESIGN/$3 수동 부트스트랩)
+
+- **결과:** `CLAUDE_WIKI_UI_UX_R1_RESUME_RESULT_FOR_GPT_20261119_KST.md` (PRIVATE main, commit `eea131928c23`, 6182 B). r0002 1~7단계 전부 완료, 모델 호출 1회, 실제 비용 USD 0.5441(상한 USD3 이내).
+- **등급 확정 경로:** 사용자가 "large 야"로 LARGE 등급 사용을 지시했으나, `review_request_gate.py`의 `--intent design` 선택 순서상 DESIGN이 LARGE보다 항상 먼저 선택됨(둘 다 등록 시)을 실제 실행으로 확인·사용자에게 재확인 후 `POLICY-STATIC-V1-DESIGN`으로 확정. 비용/호출 수는 두 등급 동일(USD3, 1회).
+- **게시 체인(전부 remote bytes 검증 PASS):** REQUEST.md(commit `cd9728263ca8`) → SOURCE_PIN.json(commit `fd6c34e9ac87`, repo_id JSON 문자열) → APPROVAL_SIG.json(commit `4f4af31a6668`) → READY.md(commit `6d7702c30bbe`, 마지막 게시). watcher v0.2.25 자동 디스패치: `VALIDATED→CLAIMED→REVIEW_DISPATCHED→REVIEW_COST→COMPLETED`.
+- **독립 리뷰 결론:** ACCEPT_WITH_CHANGE. `VISUAL_INSPECTION=PASS`(JPEG 4장 `wiki-1440/390/320.jpg`, `msc-12.jpg` 전부 실제 열람). P0 없음, P1 2건(MSC 가로 스크롤 "더 보기" 신호 부재, `style.css` 이중 미디어쿼리 레이어로 인한 향후 조용한 무효화 위험), P2 2건(320px byline 밀집, 깊은 트리 들여쓰기 반례). 4축 점수: 구성8/가독성8/스타일8/시인성7.
+- **보존:** r0001 BLOCKED 결과, PUBLIC `wonhwipark/L1Work` 전달(commit `c9e9be9e8462`), 운영 config/위임/키/DB/v0.2.27 개발 후보/`unified` 정책 상태 — 전부 무변경. 기존 완료 리뷰/서명 재큐잉 없음.
+- **BUSINESS_GPT_DELIVERY:** `GPT_DISPOSITION=PENDING`까지 `HOLD` 유지(이미 완료된 PUBLIC 배송 취소 아님). GPT가 REVIEW_RESULT_1.md를 최종 판정하고 P1 2건 반영 여부를 결정.
+
+---
+
 ## 2026-11-19 KST — 위키 UI/UX R1 리뷰 차단 개선: 기존 DESIGN/$3 수동 1회 부트스트랩 경로 준비
 - **최신 사용자 지시:** 기존 LIVE `POLICY-STATIC-V1=$1.50`이고 신규 `unified/STATIC=$3`이 미설치인 데 따른 `POLICY_COST_MISMATCH` 차단에 대해 “개선해줘”. **신규 통합 정책을 무리하게 설치하는 순환 의존성 해소**가 목적. 기존 자동 승인 Work `v0.2.27` 개발 후보 및 위임 $1은 무변경.
 - **정확히 1건 예외 판정/문서:** 신규 `REQ-L1-WORKSPACE-WIKI-UI-UX-R1-20261119` rev1을 기존 Windows LIVE에 등록돼 있다고 호스트가 확인한 `POLICY-STATIC-V1-DESIGN=$3`으로 **수동 승인 전송**하는 부트스트랩 경로. 기존 승인한 총 **1회·최대 $3** 비용 상한 유지. `unified` 기본 정책 폐기나 과거 일반/설계 비용 분할 복원 아님. 새 [r0002 비실행 REQUEST 초안](WIKI_UI_UX_R1_REQUEST_MANUAL_BOOTSTRAP_DRAFT_r0002_20261119_KST.md), [Windows 정식 리뷰 재개 원샷](WIKI_UI_UX_R1_WINDOWS_SUBMIT_ONESHOT_r0002_20261119_KST.md), [공통 비용 계약 한정 부트스트랩 예외](../../ops/CONTRACTS/REVIEW_TIER_TOKEN_BUDGET_V1.md) 게시. **기존 r0001 및 차단 결과 수정·삭제 없음**.
