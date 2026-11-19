@@ -11,6 +11,13 @@
 
 > 아래 2026-11-17 r0002의 $1.50/$3.00 설명 및 이전 R0~R3 표·가격은 **당시 결정/기술 참조 이력**. 이 절이 신규 요청의 단일 정책에 우선한다.
 
+## 2026-11-19 KST — 미설치 통합 정책의 순환 의존성 해소: UI/UX R1 *한 건만* 수동 부트스트랩
+
+- 현재 Windows LIVE에서 `POLICY-STATIC-V1`은 USD 1.50, 공통 USD 3 설정 및 v0.2.27은 미설치. 통합 USD 3을 먼저 설치해야만 그 설치 전에 필요한 코드/UX 독립 리뷰를 할 수 있다는 순환 의존성은 **운영 가격 변경이 아닌, 이미 등록된 정책의 유효한 수동 승인 경로**로만 해소.
+- 이번 **정확한 한 요청 `REQ-L1-WORKSPACE-WIKI-UI-UX-R1-20261119` rev 1**은 이미 승인된 한 건 USD 3 상한 안에서 현재 LIVE의 `POLICY-STATIC-V1-DESIGN` USD 3을 **수동 부트스트랩 transport**로 선택 가능. 사용자 “개선해줘”의 현재 차단 해소 요청을 적용. 신규 공통 비용 정책 `unified/STATIC=$3`과는 **별개**이며 일반/설계 가격 분리의 복원이 아님. 이전 UI Work의 `unified` 비실행 초안은 보존, 실제 수동 후보는 [r0002](../../projects/L1-WORKSPACE-RAG-20261111-001/WIKI_UI_UX_R1_REQUEST_MANUAL_BOOTSTRAP_DRAFT_r0002_20261119_KST.md). [Windows r0002 원샷](../../projects/L1-WORKSPACE-RAG-20261111-001/WIKI_UI_UX_R1_WINDOWS_SUBMIT_ONESHOT_r0002_20261119_KST.md)을 이 요청의 최신 지시로 사용.
+- **필수 선행 검증**: 설치된 로컬 config로 `select/check --intent design --required-budget-usd 3.00` 및 실제 ZIP·REQUEST bytes 고정 PASS, 이어서 호스트 기존 `approve_request.py check`와 **실제로 유효한 수동 서명/승인 자격** PASS. `POLICY_COMPATIBLE_NOT_APPROVED`는 승인 자체가 아니다. 호스트 허가/비용 범위가 부족하면 REQUEST/READY/모델 0. 보호 위임 USD 1, 운영 watcher/config/키/DB/Task 변경 0. 다른 요청·ID·revision은 이 예외로 승인하지 않음.
+- Commit A 실제 원격 readback/SOURCE_PIN(repo_id 문자열)/보호 서명/READY 마지막·중복·UNCERTAIN·모델 호출 1회·영수증 원칙 유지. 새 POLICY-STATIC-V1 통합 기본은 **실제 별도 배포가 검증되기 전까지 LIVE라고 주장하지 않음**.
+
 ## REQUEST 게시 전 정책 호환성 필수 게이트 (2026-11-17 재발 방지)
 
 **모든 신규 CoWork 정식 리뷰 REQUEST는 게시 이전에 Windows 설치 LIVE의 실제 reviewer.config.json 기준으로 `collab/ops/review_request_gate.py`를 실행해 호환성을 확인한다.** GPT는 현행 설치 상태를 추정하거나 개발 후보에만 존재하는 정책명을 선택하지 않는다. 코드·문서 배포만으로 이 단계가 자동 실행됐다고 표시하지 않는다.
