@@ -1,5 +1,16 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 2026-11-19 KST — PEC·ACE 2스킬 코드 리뷰 요청 재확인: HOST_PREFLIGHT_BLOCKED (POLICY_COST_MISMATCH)
+
+- **결과:** `CLAUDE_PEC_ACE_CODE_R1_RESULT_FOR_GPT_20261119_KST.md` (PRIVATE main, commit `d3f7d7e0d6e2`, 3952 B, remote bytes 검증 PASS).
+- 실제 Windows LIVE `reviewer.config.json`으로 `review_request_gate.py select --intent unified --required-budget-usd 3.00` 재실행 → `REQUEST_PREFLIGHT_BLOCKED: POLICY_COST_MISMATCH` (POLICY-STATIC-V1 여전히 USD1.50, $3 미등록).
+- **중요:** 이 인계서는 위키 UI/UX R1과 달리 이 요청에 **수동 DESIGN/LARGE $3 예외 사용을 명시적으로 금지**한다. 등록된 `-DESIGN`/`-LARGE`가 둘 다 $3로 살아있음을 확인했으나 이 ID에는 적용하지 않음.
+- `REQ-COWORK-PEC-ACE-TWO-SKILLS-CODE-R1-20261119` 중복 확인 PASS(신규, 0건). REQUEST/SOURCE_PIN/APPROVAL_SIG/READY 전부 미게시, 모델 호출 0. 2개 ZIP 재검증은 preflight 차단으로 단계 자체에 도달하지 않음(기존 CI 22 PASS·소스 보존 결과는 무변경 유효).
+- `FINAL_PUBLIC_ZIPS=BLOCKED_NOT_POSTED` 유지. 호스트 config/위임/키/DB 무변경.
+- **다음 한 동작:** `COWORK-AUTO-APPROVAL-20261115-001`의 단일 USD3 통합 정책이 실제 운영에 적용돼야만(소급 서명 위험 해소 후) 이 요청이 재개 가능. 그 결정은 GPT 소관.
+
+---
+
 ## 2026-11-19 KST — PEC·ACE 2스킬 신규 독립 코드 리뷰 명시 요청, Windows 사전승인 대기
 
 - **사용자 명시 실행 요청:** “리뷰 요청해줘” — PEC-HOP `code-analyzer v0.15.4` + ACE `l1-fix-workflow v1.6.74`의 **신규 독립 코드 리뷰 1회**, 기존 설계 R1은 CLOSED. 같은 Work의 [Windows 독립 코드 리뷰/배포 원샷](PEC_ACE_TWO_SKILL_CODE_REVIEW_AND_RELEASE_ONESHOT_r0001_20261119_KST.md) 최신 최상단에 리뷰 대상·정확한 고정 SHA/CI 근거·중복 확인·실 LIVE preflight→조건 충족 시 commit A/서명/READY→실 리뷰/영수증·배포 게이트까지 통합 지시. commit `2dff12b540cb768f45fbf80b003c346c6e2dbf7a`, blob `22e37c0f3e57bbef28e55954e987677f242761ce`, remote readback PASS.
