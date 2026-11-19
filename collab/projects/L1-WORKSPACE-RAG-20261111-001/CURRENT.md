@@ -1,5 +1,15 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-20 KST — UI 실제 사용 스킬 연동 적합성 검토: CONDITIONAL_CONNECT
+- **결론:** 별도 Linux Viewer가 UI·읽기 API/handler를 소유하고, Updater=지식 관리, Workflow/Kernel=Work/Evidence, doc-converter=B형 MSC 생성을 재사용하는 책임 분리는 적합. 실제 설치 Updater·Viewer API/원본 revision은 미접근으로 실사용 PASS 판정 불가.
+- **직접 확인:** 최신 PUBLIC 고정 tree `72ec441616f6ad0cdbb7f737b26c26e470e5b778`의 Workflow 1.6.74·Kernel 0.7.42·doc-converter 0.2.26 실제 ZIP 바이트/CRC/크기/Git blob 및 SKILL·관련 구현 정적 대조. 공개본과 설치본 동일성/스킬 실행/호스트 E2E는 NOT_VERIFIED/NOT_RUN.
+- **연결 변경점:** 개선 HTML의 WikiFixtures 직접 참조, 데모 CSP의 API/frame 차단, synthetic-placeholder 전용 MSC, 데모 상태/링크·형식 매핑, 전체 트리 조회 규모, 별도 origin MSC 내부 상태 복원의 범위를 확인. adapter만 교체하는 방식으로 완료 처리 금지. 상세 [연동 적합성 검토](WIKI_UI_SKILL_INTEGRATION_COMPATIBILITY_REVIEW_r0001_20261120_KST.md).
+- **근거 검증:** 검토 MD 11,264 B, SHA-256 `585ab56fdc53452a6bbcc1de2125ab856d24095904639a86b8b7754113a848dc`, PRIVATE main commit `01ba912f97629e1cbd0f30574cd3e719a2e7c5cc`, 원격 본문·실제 바이트 대조 PASS.
+- **시안 구분:** 대화로 제공한 69,919 B 개선 HTML은 합성 탐색/복귀/검색 유지/집중 보기 확인용 별도 아티팩트. 기존 v0.1.0 ZIP/정식 UX 리뷰 입력·P1 미반영 상태를 변경하지 않음. B1/B2/B3 BLOCKING, E3/E4 NOT_RUN 유지. 스킬/원본 Work/Knowledge/운영·PUBLIC 변경 없음.
+- **다음 한 동작:** 업무 GPT가 기존 G0 일부 보고를 재사용하고 실제 Viewer·설치 Updater/3종 스킬·읽기 API/형식별 handler를 READ_ONLY 대조해 문서 1건·기존 B형 MSC 1건의 매핑/미확인 결과를 회수. 전체 스키마·writer 변경 없이 확인된 연동 gap만 기존 Work에서 보완.
+
+---
+
 ## 2026-11-20 KST — 위키 UI 수정방안·사용 편의성 추가 검토
 - **결론:** 기존 UX R1 `ACCEPT_WITH_CHANGE / REVIEW_CYCLE=CLOSED` 유지. MSC 실제 가로 넘침에 따른 방향별 텍스트 안내와 CSS 중복 통합(P1 두 건)은 수용. 전체 스타일은 현행 위키 구조·보라색 강조·16px 본문 유지 권고.
 - **추가 권고:** 코드에서 읽기 위치 초기화·탭 전환 시 기본 문서 초기화·검색어 초기화를 확인. 읽던 위치 복귀/탭별 마지막 문서 기억을 우선 추가 후보로, 현재 문서 탐색 위치·실제 MSC 연결 대상 정합성·검색 문맥·집중 읽기를 후속 후보로 정리. 기존 P2 두 건 보류 유지.
