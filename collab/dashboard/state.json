@@ -20,7 +20,7 @@
       "status": "검증 진행 중",
       "title": "COWORK-AUTO-APPROVAL-20261115-001 — CURRENT",
       "tone": "warning",
-      "topic": "2026-11-20 KST — 5개 독립 창 연속 요청 격리 시뮬레이션 / 교차 Work 위험 확인"
+      "topic": "2026-11-20 KST — 5개 창 충돌 자동 복구 방안 확정 / mock 5회 시험"
     },
     {
       "id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
