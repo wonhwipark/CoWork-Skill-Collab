@@ -1,5 +1,13 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-20 KST — 5개 창 충돌 자동 복구 방안 확정 / mock 5회 시험
+- **GPT 결정:** [GPT_V029_FIVE_WINDOWS_AUTO_RECOVERY_DISPOSITION_r0001_20261120_KST.md](GPT_V029_FIVE_WINDOWS_AUTO_RECOVERY_DISPOSITION_r0001_20261120_KST.md) — 동일 스킬 수정은 최종 후보 review 전 최신 원본 재조회/rebase/재시험, GitHub CURRENT/TRACKER는 SHA 충돌 시 최신 읽기·무손실 병합·최대 3회 재시도, 게시 전 ID 중복은 유일 ID 재발급, UNCERTAIN은 실행 재호출 없이 DB/원격 증거로만 정산. 위임/정책 불일치는 임의 우회 금지.
+- **모델 시험:** SQLite+mock 5회 중 4회는 설계2+동일 스킬 수정3 모두 5/5 완료, 1회는 원격 결과 확인 불가로 설계2 완료·스킬 1 UNCERTAIN·후속 동일 스킬 2 WAIT_DEPENDENCY. 코드·JSON은 세션 sandbox 보존. **실제 v0.2.29 ZIP/Windows E2E NOT_RUN**, 독립 리뷰 NOT_RUN, 운영 LIVE v0.2.25/USD1 불변.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 실제 v0.2.29 ZIP과 기존 Work/Git writer·watcher recover를 대조해 위 복구 흐름을 격리 환경에서 5회 실행하고, 입증된 GAP만 최소 수정. 그 전 유료 리뷰/READY/LIVE/USD3 금지.
+
+---
+
+
 ## 2026-11-20 KST — 5개 독립 창 연속 요청 격리 시뮬레이션 / 교차 Work 위험 확인
 - **GPT 결과:** [GPT_V029_FIVE_CHAT_WINDOWS_SEQUENTIAL_REQUEST_SIMULATION_r0001_20261120_KST.md](GPT_V029_FIVE_CHAT_WINDOWS_SEQUENTIAL_REQUEST_SIMULATION_r0001_20261120_KST.md): 설계 2건+스킬 수정 3건을 서로 다른 창에서 연속 제출하는 SQLite+mock workflow 모델. 통합 STATIC/USD3·범위/원본 모두 유효한 **가상 설치 조건**에서는 5/5 COMPLETED, 재투입 0. 그러나 기존 DESIGN 정책은 자동 거부, scope 미포함은 차단, 공유 스킬 최신 base SHA 및 공통 CURRENT/TRACKER SHA 충돌은 별도 처리 필요. 5건 승인 예산 합산 USD15 가능(실제 비용 예측 아님).
 - **증빙 경계:** 9개 시나리오 모델 단언 PASS; 실제 v0.2.29 ZIP 기반 Python/Windows 5창 E2E=`NOT_RUN`, LIVE/위임 USD1 불변, 유료 모델/서명/READY 0. 실물 ZIP 사용 Windows 5창 병행 검증은 기존 5회 게이트의 한 회차에 포함해 무과금 진행.
