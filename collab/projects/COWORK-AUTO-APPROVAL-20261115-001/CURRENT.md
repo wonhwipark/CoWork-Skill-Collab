@@ -1,5 +1,15 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-19 KST — 사용자 원샷 실행 승인 / 자동 리뷰 정상화 0~6 통합 인계
+- **사용자 지시:** “한번에 진행하자. 너업무방식이 지치게 만들어” — 더 이상 사전검증/테스트/리뷰/배포를 단편적인 여러 인계로 나누지 않음. 기존 Work에서 **하나의 Windows 실행**에 조건부로 모두 묶고, 불가 단계만 BLOCKED로 보고.
+- **정본 실행서:** [GPT_V027_AUTO_REVIEW_COLLAB_ONE_SHOT_TO_LIVE_r0001_20261119_KST.md](GPT_V027_AUTO_REVIEW_COLLAB_ONE_SHOT_TO_LIVE_r0001_20261119_KST.md). 이전 `GPT_V027_INDEPENDENT_REVIEW_GATE_AND_HANDOFF_r0001_20261119_KST.md`의 무과금 preflight만 하고 중단하는 단계형 인계를 대체(기존 파일·이력 삭제하지 않음).
+- **통합 처리:** Windows v0.2.27/manifest/diff 원본 확인→기존 21 FAIL(구 quota 6, CRLF fixture 15) 최소 시험 정리 및 최종 ZIP(변경 시 신규 patch v0.2.28) 정확한 bytes 고정→LIVE에 이미 등록된 $3 수동 승인 경로의 **실제 preflight/서명 자격** 확인→유효할 경우만 신규 정식 REQUEST/READY·별도 Claude 독립 리뷰 **최대 1회/최대 USD3**→결과/영수증 확인·독립 검토 게이트→유효한 기존 보호 설치 권한 및 소급 거부를 통과하면 조건부 Windows LIVE ZIP+STATIC/USD3 위임 정합화·활성화 epoch 새로 고정·SHADOW/롤백→원격 통합 영수증/결과 게시. 사용자 중간 승인을 기본 반복 요구하지 않되 **호스트의 보호된 권한은 절대 우회하지 않음**.
+- **현재 GPT 직접 실행/게시:** 원샷 인계 문서 PRIVATE main 게시만. 실제 Windows 개발/정식 리뷰 REQUEST/READY·비용·설치/보호 위임·E2E는 아직 **NOT_RUN**, 기존 LIVE v0.2.25·보호 위임 USD1 유지. 파일·GitHub 게시 자체는 Windows watcher 자동 트리거 아님.
+- **완료 기준:** 구 DESIGN R1 / Guard UNCERTAIN / 과거 STATIC 등 레거시 소급 호출 0, 독립 리뷰 결과·영수증 실물, ZIP bytes 동일성, 운영 rollback·single provider, 일/월 상한 없음, 다음 실제 정상 리뷰를 위한 자동 서명 SHADOW. 새 LIVE에서 실제 유료 자동 E2E가 미실행이면 `LIVE_PAID_E2E=NOT_RUN`으로 분리. 유료 smoke/재리뷰 자동 발생 금지.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 상기 **단일 문서** 0~6을 중단 질문 없이 실행, `CLAUDE_AUTO_REVIEW_COLLAB_ONE_SHOT_RESULT_FOR_GPT_20261119.md`를 PRIVATE main에 게시·원격 bytes SHA 확인. GPT는 실제 결과를 확인해 최종 판정. 차단 시 불가능 항목만 명시하며 재실행·재큐잉 금지.
+
+---
+
 ## 2026-11-19 KST — GPT v0.2.27 독립 리뷰 REQUIRED / 새 정식 REQUEST는 preflight 대기
 - **판정:** v0.2.27은 유료 자동 승인 경계를 바꾸므로 `INDEPENDENT_REVIEW=REQUIRED`. 동일 ZIP의 과거 v0.2.25 R2 완료 및 개발자 Windows 자체시험은 새 변경 검토를 대체하지 않음. 현재 후보 `development_not_for_deployment`, 새 유료 호출·REQUEST·READY 0.
 - **실제 근거:** [Windows 개발 보고](CLAUDE_UNIFIED_USD3_ADMISSION_FIX_DEV_RESULT_FOR_GPT_20261119.md), [manifest+diff](artifacts/v0_2_27/CANDIDATE_MANIFEST.json). ZIP 309187 B, SHA-256 `baf5a856fbe1e34d0c3b235a5ccd5a7895ad342a18cf448360b53773ac8669e0`. Windows `1010 PASS/21 FAIL/12 SKIP`; E2E 8/8. 21 FAIL은 기존 실패라는 호스트 분류이지 전체회귀 PASS가 아님. 고정 tuple DESIGN R1 거부 scratch 시험은 후보에서 제외돼 independent 재확인 필요.
