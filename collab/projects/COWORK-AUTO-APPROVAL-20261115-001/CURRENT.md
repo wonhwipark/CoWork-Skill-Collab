@@ -1,5 +1,14 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-20 KST — 실제 v0.2.29 ZIP 무결성 PASS / 5창 실물 테스트 준비 / Windows 실행 NOT_RUN
+- **결과:** [GPT_V029_REAL_ZIP_FIVE_WINDOWS_GATED_VALIDATION_RESULT_r0001_20261120_KST.md](GPT_V029_REAL_ZIP_FIVE_WINDOWS_GATED_VALIDATION_RESULT_r0001_20261120_KST.md) — PRIVATE v0.2.29 ZIP 310753 B / SHA-256 `c67bc342fe77547b000fc42e1b886396cbef035c0d265dbcd124947e267ed83f`를 connector 원본 bytes 기반 직접 계산·검증. 기존 패키지 pytest fixture·가짜 transport/Claude CLI stub 확인.
+- **신규 테스트:** `artifacts/v0_2_29/validation/test_five_windows_actual_zip.py` 4개 실물 watcher 대상 회귀 + `artifacts/v0_2_29/validation/validate_v029_five_windows.py` SHA/CRC·독립 임시 폴더·전체 pytest 5회·SKIP 안전 게이트. Python `py_compile=PASS`, 없는 ZIP 입력 `BLOCKED_OR_FAIL, exit2`; 실제 ZIP Python/Windows 실행은 `NOT_RUN`. 5창 mock 모델은 재실행해 4회 5/5 완료, 1회 적법한 UNCERTAIN/의존 작업 보류.
+- **변경 불가:** 기존 후보 ZIP·호스트 LIVE v0.2.25 / 위임 USD1 / DB·서명키·Task 불변. 정식 유료 리뷰, GitHub REQUEST/READY, 모델 호출 0.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 정확한 SHA의 실제 ZIP으로 5창 테스트 x5 + 기존 Work writer의 같은 스킬 최신 원본 rebase·공통 TRACKER CAS·UNCERTAIN 정산을 격리 Windows에서 시험하고, 입증된 gap만 최소 DEV 보완·새 SHA로 다시 시험. 5회 PASS와 유효 리뷰 승인 전 유료 리뷰·LIVE/USD3 변경 HOLD.
+
+---
+
+
 ## 2026-11-20 KST — 5개 창 충돌 자동 복구 방안 확정 / mock 5회 시험
 - **GPT 결정:** [GPT_V029_FIVE_WINDOWS_AUTO_RECOVERY_DISPOSITION_r0001_20261120_KST.md](GPT_V029_FIVE_WINDOWS_AUTO_RECOVERY_DISPOSITION_r0001_20261120_KST.md) — 동일 스킬 수정은 최종 후보 review 전 최신 원본 재조회/rebase/재시험, GitHub CURRENT/TRACKER는 SHA 충돌 시 최신 읽기·무손실 병합·최대 3회 재시도, 게시 전 ID 중복은 유일 ID 재발급, UNCERTAIN은 실행 재호출 없이 DB/원격 증거로만 정산. 위임/정책 불일치는 임의 우회 금지.
 - **모델 시험:** SQLite+mock 5회 중 4회는 설계2+동일 스킬 수정3 모두 5/5 완료, 1회는 원격 결과 확인 불가로 설계2 완료·스킬 1 UNCERTAIN·후속 동일 스킬 2 WAIT_DEPENDENCY. 코드·JSON은 세션 sandbox 보존. **실제 v0.2.29 ZIP/Windows E2E NOT_RUN**, 독립 리뷰 NOT_RUN, 운영 LIVE v0.2.25/USD1 불변.
