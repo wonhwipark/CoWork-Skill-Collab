@@ -1,5 +1,16 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-20 KST — v0.2.28 최종 ZIP·독립 리뷰 1회 완료 / 릴리스 게이트 BLOCKED (MAJOR 1)
+
+- **결과:** `CLAUDE_AUTO_REVIEW_COLLAB_ONE_SHOT_RESULT_FOR_GPT_20261119.md` (PRIVATE main, commit `b953e86e91dd`). 원샷 0~6 중 1~2단계 완료, 3단계 게이트 미충족으로 **4단계(LIVE 설치·보호 위임 $3)는 착수하지 않음**.
+- **최종 ZIP:** `collab/packages/skill-collab-watcher_v0_2_28_1119.zip` 309367 B / SHA-256 `9e6ee6d30170f0a2890237c7d1b9184e5c423213a18146926b848c5269b8c00c` (commit `1fa042e1e86d`). v0.2.27 대비 7개 파일(엔진 코드는 버전 한 줄). Windows 전체 회귀 **1031 passed / 0 failed / 12 skipped**(소스·압축본 동일). 기존 21 실패는 시험 삭제·skip 없이 정리.
+- **독립 리뷰:** `REQ-COWORK-V028-AUTO-REVIEW-R1-20261120` 1회, host 비용 USD 1.1914, 32턴. **BLOCKING 0 / MAJOR 1 / MINOR 2.** MAJOR: 상한을 올릴 때 `enabled_at`을 함께 갱신하지 않으면, 이전에 `PER_REQUEST_COST`만으로 거절돼 claim이 없던 요청이 소급 승인될 수 있음(운영 절차 의존). MINOR: 승인 도구 인벤토리 서술 오류(제 REQUEST 문장), `AUTO_APPROVAL.md` 구 상한 서술.
+- **게이트:** 인계서 §3 요건(MAJOR=0 또는 동일 입력 재검증)을 충족하지 못해 `RELEASE_GATE=BLOCKED`. 수정하면 ZIP 바이트가 바뀌어 두 번째 유료 리뷰가 필요하고 이번 원샷은 1회로 한정.
+- **LIVE 불변:** v0.2.25, 등록 등급 STATIC 1.5 / LARGE 3 / DESIGN 3, 보호 위임 `max_request_usd=1.0`·`enabled_at` 2026-11-16, DB·서명 자격 변경 0. 소급 모델 호출 0, 유료 LIVE E2E `NOT_RUN`.
+- **NEXT_ONE_ACTION (GPT):** MAJOR #1 처분. A) 상한 상향과 `enabled_at` 갱신을 한 절차로 묶는 조건으로 수용하고 **같은 바이트**를 설치(이후 Windows에서 4단계 재개), 또는 B) v0.2.29로 문서·시험 보완 후 두 번째 리뷰(추가 USD 3 승인 필요).
+
+---
+
 ## 2026-11-19 KST — 사용자 원샷 실행 승인 / 자동 리뷰 정상화 0~6 통합 인계
 - **사용자 지시:** “한번에 진행하자. 너업무방식이 지치게 만들어” — 더 이상 사전검증/테스트/리뷰/배포를 단편적인 여러 인계로 나누지 않음. 기존 Work에서 **하나의 Windows 실행**에 조건부로 모두 묶고, 불가 단계만 BLOCKED로 보고.
 - **정본 실행서:** [GPT_V027_AUTO_REVIEW_COLLAB_ONE_SHOT_TO_LIVE_r0001_20261119_KST.md](GPT_V027_AUTO_REVIEW_COLLAB_ONE_SHOT_TO_LIVE_r0001_20261119_KST.md). 이전 `GPT_V027_INDEPENDENT_REVIEW_GATE_AND_HANDOFF_r0001_20261119_KST.md`의 무과금 preflight만 하고 중단하는 단계형 인계를 대체(기존 파일·이력 삭제하지 않음).
