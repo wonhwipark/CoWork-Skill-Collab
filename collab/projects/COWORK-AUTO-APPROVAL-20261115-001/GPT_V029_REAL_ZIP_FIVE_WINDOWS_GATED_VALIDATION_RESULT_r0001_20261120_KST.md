@@ -12,7 +12,7 @@
 | --- | --- | --- |
 | PRIVATE 실제 ZIP 바이트 재조회·SHA-256 | **PASS** | `artifacts/v0_2_29/skill-collab-watcher_v0_2_29_1120.zip`, 310753 B, SHA-256 `c67bc342fe77547b000fc42e1b886396cbef035c0d265dbcd124947e267ed83f` — connector binary base64 → JS SHA-256 직접 계산 및 manifest 일치 |
 | 실제 ZIP 내부 테스트 파일/픽스처 정적 확인 | **PASS (static)** | ZIP 114 entries, `tests/conftest.py`, `tests/auto_helpers.py`, `tests/bundle.py`, `tests/test_auto_approval_e2e.py`, `tests/test_v029_cost_refused_exclusion.py` 확인. 기존 fake Github/throw-away Ed25519/CLI stub 재사용 |
-| 새 5개 창 실물 패키지 pytest 4건 작성 | **PASS (문법 및 정본 게시)** | 테스트 파일 `collab/projects/COWORK-AUTO-APPROVAL-20261115-001/artifacts/v0_2_29/validation/test_five_windows_actual_zip.py`, SHA-256 `dd7ac768e1f61ff97abce386c38099759678c9fca02ac10e24ce623bf4bdb170`, GitHub blob SHA `70984bbac94451be1ecb6180570182772c46fca3` |
+| 새 5개 창 실물 패키지 pytest 4건 작성 | **PASS (문법 및 정본 게시)** | 테스트 파일 `collab/projects/COWORK-AUTO-APPROVAL-20261115-001/artifacts/v0_2_29/validation/test_five_windows_actual_zip.py`, SHA-256 `687e16e78bba45684f61a9275dd0bb1db33097b471c7c8538b0b56589068ea61`, GitHub blob SHA `a4dfaebebe1d5e06a9237ac24177fe64d65b596e` |
 | SHA/CRC/경로 검증 + 5회 새 임시 추출·pytest 반복 도구 작성 | **PASS (문법 및 정본 게시)** | 실행 파일 `collab/projects/COWORK-AUTO-APPROVAL-20261115-001/artifacts/v0_2_29/validation/validate_v029_five_windows.py`, SHA-256 `416427f09ce4c2f61b0a2e2a8c5cc10c713b8b741fa30f7f7884d3ef8a9450d2`, GitHub blob SHA `608ca9dc3766e797ba8047439aa9027b609b7098` |
 | runner 안전 실패 시험 | **PASS** | 없는 ZIP을 주면 `BLOCKED_OR_FAIL`, exit code 2, 0 rounds, actual paid 0. 실제 LIVE 경로는 참조하지 않음 |
 | 기존 5창 SQLite 격리 mock 복구 시험 재실행 | **PASS_MODEL_ONLY** | `cowork_5windows_auto_recovery_model_20261120.py` 5회: 4회 정상 5/5, 한 회 UNCERTAIN 1·dependent 2 HOLD, 중복 runner 0 |
@@ -30,7 +30,7 @@
   3. `PER_REQUEST_COST` 기존 요청을 `POLICY_STOPPED`로 영구 제외, 상향 후 신규 5건 정상.
   4. **실제 watcher CLI subprocess** (다만 localhost fake GitHub + counting Claude stub + 임시 키/DB만)로 순차 5건에 대해 mock dispatch 5회, RESULT/RECEIPT/READY, 재시작 후 추가 호출 0.
 - [5회 검증 실행기](artifacts/v0_2_29/validation/validate_v029_five_windows.py) — 매회 새 임시 폴더에 **SHA/CRC 검증된 정확한 ZIP** 추출, pytest 보조 4건 필수 PASS, 전체 테스트 최소 `1038 passed` (기존 Windows 1034 + 4), 5회 반복. 암호화 의존성 부족으로 security tests가 SKIP이면 최소 통과 수 불충족으로 FAIL. `--focused-only`는 smoke이고 릴리스 게이트 PASS로 사용 불가. 위험 경로 누락을 막기 위해 테스트 고정 SHA 검사 후 수행.
-- ChatGPT 세션 전달용 동일 스크립트 2종 압축: `cowork_v029_5window_host_gate_20261120.zip`, 4902 B / SHA-256 `168dd80cbe39c3956b47e4fd8cb5013c58badb486ba68c13686c1e4817dd1bb4` (사용자 대화 다운로드용, GitHub 정본은 상기 텍스트 두 파일).
+- ChatGPT 세션 전달용 동일 스크립트 2종 압축: `cowork_v029_5window_host_gate_20261120.zip`, 5050 B / SHA-256 `c2e82e4cce32b048929b2acef3579cc41d839f2abc3336d6c020be86b729afb7` (사용자 대화 다운로드용, GitHub 정본은 상기 텍스트 두 파일).
 
 ## 3. Windows Claude Code 단일 원샷 (아직 NOT_RUN)
 
