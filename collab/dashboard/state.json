@@ -44,10 +44,10 @@
       "id": "COWORK-SKILL-DISCOVERY-20261112-001",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md",
-      "status": "검증 진행 중",
+      "status": "문서상 진행",
       "title": "COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT",
-      "tone": "warning",
-      "topic": "2026-11-19 KST — PEC·ACE 2스킬 신규 독립 코드 리뷰 명시 요청, Windows 사전승인 대기"
+      "tone": "neutral",
+      "topic": "2026-11-19 KST — PEC·ACE 2스킬 코드 리뷰 요청 재확인: HOST_PREFLIGHT_BLOCKED (POLICY_COST_MISMATCH)"
     },
     {
       "id": "ISSUE-ANALYZER-20261114-001",
