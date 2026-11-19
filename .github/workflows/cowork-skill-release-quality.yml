@@ -55,6 +55,9 @@ jobs:
           cmp /tmp/msc-dual-entry-development/doc-converter_v0_2_28_1118.zip /tmp/msc-dual-entry-recheck/doc-converter_v0_2_28_1118.zip
           cmp /tmp/msc-dual-entry-development/l1-fix-workflow_v1_6_72_1118.zip /tmp/msc-dual-entry-recheck/l1-fix-workflow_v1_6_72_1118.zip
           echo REPRODUCIBLE_CONVERTER_WORKFLOW_ZIPS_PASS
+      - name: Inspect two pinned existing PEC and ACE skill interfaces (read-only)
+        run: |
+          python collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/dev/inspect_existing_pec_ace_interfaces_r0001.py
       - name: Build ACE PEC ACON packaged Workflow read-only development candidate
         run: |
           python collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/dev/build_ace_pec_acon_workflow_v1673_1119.py --out /tmp/ace-pec-acon-development
