@@ -150,11 +150,7 @@ def run(out: Path) -> dict:
                     for key in list(sys.modules):
                         if key.startswith("l1_fix_workflow"):
                             del sys.modules[key]
-                modname = "ca_core" if name == "code-analyzer" else "l1_fix_workflow"
-                tests = unittest.TestLoader().discover(str(suite.parent),
-                    pattern=suite.name, top_level_dir=str(suite.parent))
-                subset = [test for test in tests]
-                # test module detects which of the two extracted roots is available.
+                # Test module is imported only after the relevant extracted root is available.
                 test_case = importlib.import_module(suite.stem)
                 cases = test_case.run_package_contract(name, root)
             finally:
