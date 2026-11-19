@@ -24,6 +24,7 @@ class ContextQueryTests(unittest.TestCase):
     def test_router_and_fallback(self):
         self.assertEqual(context_query.choose("대시보드 화면 가독성")[0], "dashboard")
         self.assertEqual(context_query.choose("그룹 knowledge 반영")[0], "knowledge")
+        self.assertEqual(context_query.choose("USD3 보호 위임 정책")[0], "auto")
         self.assertEqual(context_query.choose("Linux MCP worker")[0], "execution")
         self.assertEqual(context_query.choose("스킬 zip 버전")[0], "skill")
         self.assertEqual(context_query.choose("arbitrary question")[0], "skill")
