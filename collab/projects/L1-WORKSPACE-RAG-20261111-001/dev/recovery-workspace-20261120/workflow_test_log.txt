@@ -1,0 +1,32 @@
+..........EFF...
+======================================================================
+ERROR: test_auto_sync_false_skips_implicit_but_not_explicit (workflow_test_personal_github_docs_v150.PersonalGithubDocsV150Test.test_auto_sync_false_skips_implicit_but_not_explicit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/853065b6dfbb/recovery_workspace_dev/packages/workflow/tests/test_personal_github_docs_v150.py", line 41, in test_auto_sync_false_skips_implicit_but_not_explicit
+    explicit=docs_sync(self.k,repo_root=None,work_id=self.wid,host_id='test-host',sync_trigger='explicit'); self.assertTrue(explicit['changed']); self.assertTrue((repo/'README.md').is_file()); self.assertTrue((repo/'index'/'active.json').is_file()); self.assertEqual(['preflight','commit','push','remote_readback'],explicit['git_plan']['sequence'])
+                                                                                                                            ~~~~~~~~^^^^^^^^^^^
+KeyError: 'changed'
+
+======================================================================
+FAIL: test_docs_push_local_git_commit_push_and_remote_sha_readback (workflow_test_personal_github_docs_v150.PersonalGithubDocsV150Test.test_docs_push_local_git_commit_push_and_remote_sha_readback)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/853065b6dfbb/recovery_workspace_dev/packages/workflow/tests/test_personal_github_docs_v150.py", line 60, in test_docs_push_local_git_commit_push_and_remote_sha_readback
+    self.assertTrue(out['ok'],out); self.assertEqual('SYNCED',out['action']); self.assertTrue(out['remote_verified']); self.assertEqual(out['commit_sha'],out['remote_sha'])
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : {'ok': False, 'repo_root': '/tmp/tmpj_zmbeak/docs-repo', 'layout_version': 2, 'exported': [{'work_id': '20261120-F9A8AEC4', 'path': 'works/20261120-F9A8AEC4', 'state_path': 'works/20261120-F9A8AEC4/state', 'layout_version': 2}], 'changed': True, 'changed_files': ['index/active.json', 'index/latest.json', 'works/20261120-F9A8AEC4/.generated_communication_hashes.json', 'works/20261120-F9A8AEC4/FOLLOW_UP.md', 'works/20261120-F9A8AEC4/ISSUE_OVERVIEW.md', 'works/20261120-F9A8AEC4/README.md', 'works/20261120-F9A8AEC4/WORK_DISCUSSION.md', 'works/20261120-F9A8AEC4/decisions.md', 'works/20261120-F9A8AEC4/state/work_snapshot.json', 'works/20261120-F9A8AEC4/문서안내.md'], 'portable_only': True, 'manual_conflicts': ['README.md'], 'generation_complete': False, 'migration': {'migrated': [], 'unresolved': [], 'legacy_layout_removed': True}, 'action': 'WORK_DOCS_MANUAL_EDIT_REVIEW_REQUIRED', 'reason': 'Existing document differs from last generated hash or is unowned; preserve it, review conflicts before publishing', 'sync_receipt': {'status': 'BLOCKED', 'remote_verified': False, 'error_code': 'WORK_DOCS_MANUAL_EDIT'}}
+
+======================================================================
+FAIL: test_docs_push_migrates_tracked_legacy_layout_in_one_commit (workflow_test_personal_github_docs_v150.PersonalGithubDocsV150Test.test_docs_push_migrates_tracked_legacy_layout_in_one_commit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/853065b6dfbb/recovery_workspace_dev/packages/workflow/tests/test_personal_github_docs_v150.py", line 80, in test_docs_push_migrates_tracked_legacy_layout_in_one_commit
+    self.assertTrue(out['ok'],out); self.assertEqual('SYNCED',out['action']); self.assertTrue(out['remote_verified'])
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : {'ok': False, 'repo_root': '/tmp/tmpohh124yf/legacy-docs', 'layout_version': 2, 'exported': [{'work_id': '20261120-0E409213', 'path': 'works/20261120-0E409213', 'state_path': 'works/20261120-0E409213/state', 'layout_version': 2}], 'changed': True, 'changed_files': ['active/Legacy__20261120-0E409213/README.md', 'active/Legacy__20261120-0E409213/work_snapshot.json', 'index.md', 'index/active.json', 'index/latest.json', 'works/20261120-0E409213/.generated_communication_hashes.json', 'works/20261120-0E409213/FOLLOW_UP.md', 'works/20261120-0E409213/ISSUE_OVERVIEW.md', 'works/20261120-0E409213/README.md', 'works/20261120-0E409213/WORK_DISCUSSION.md', 'works/20261120-0E409213/decisions.md', 'works/20261120-0E409213/state/work_snapshot.json', 'works/20261120-0E409213/문서안내.md'], 'portable_only': True, 'manual_conflicts': ['README.md', 'works/20261120-0E409213/README.md'], 'generation_complete': False, 'migration': {'migrated': [{'work_id': '20261120-0E409213', 'from': 'active/Legacy__20261120-0E409213', 'to': 'works/20261120-0E409213'}], 'unresolved': [], 'legacy_layout_removed': True}, 'action': 'WORK_DOCS_MANUAL_EDIT_REVIEW_REQUIRED', 'reason': 'Existing document differs from last generated hash or is unowned; preserve it, review conflicts before publishing', 'sync_receipt': {'status': 'BLOCKED', 'remote_verified': False, 'error_code': 'WORK_DOCS_MANUAL_EDIT'}}
+
+----------------------------------------------------------------------
+Ran 16 tests in 1.068s
+
+FAILED (failures=2, errors=1)

@@ -1,0 +1,86 @@
+{
+  "kernel": {
+    "tests": 84,
+    "passed": 84,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "failing_tests": [],
+    "new_regressions": [],
+    "files": [
+      {
+        "file": "test_recovery_reports_v0746.py",
+        "tests": 18
+      },
+      {
+        "file": "test_kernel.py",
+        "tests": 29
+      },
+      {
+        "file": "test_plus_registry_v0714.py",
+        "tests": 1
+      },
+      {
+        "file": "test_github_docs_layout_v077.py",
+        "tests": 3
+      },
+      {
+        "file": "test_work_docs_navigation_v0724.py",
+        "tests": 4
+      },
+      {
+        "file": "test_step12_profiles.py",
+        "tests": 6
+      },
+      {
+        "file": "test_step13_profiles_transfer.py",
+        "tests": 16
+      },
+      {
+        "file": "test_feature_stage4_export.py",
+        "tests": 2
+      },
+      {
+        "file": "test_multi_work_ux_v070.py",
+        "tests": 5
+      }
+    ]
+  },
+  "workflow": {
+    "tests": 16,
+    "passed": 13,
+    "failures": 2,
+    "errors": 1,
+    "skipped": 0,
+    "failing_tests": [
+      "test_auto_sync_false_skips_implicit_but_not_explicit",
+      "test_docs_push_local_git_commit_push_and_remote_sha_readback",
+      "test_docs_push_migrates_tracked_legacy_layout_in_one_commit"
+    ],
+    "new_regressions": [],
+    "files": [
+      {
+        "file": "test_recovery_intake_v1675.py",
+        "tests": 5
+      },
+      {
+        "file": "test_feature_stage4_evidence.py",
+        "tests": 2
+      },
+      {
+        "file": "test_github_docs_layout_v161.py",
+        "tests": 3
+      },
+      {
+        "file": "test_personal_github_docs_v150.py",
+        "tests": 6
+      }
+    ]
+  },
+  "status": "NEW_TESTS_PASS_BASELINE_FAILURES_UNCHANGED",
+  "baseline_failing_tests": [
+    "test_auto_sync_false_skips_implicit_but_not_explicit",
+    "test_docs_push_local_git_commit_push_and_remote_sha_readback",
+    "test_docs_push_migrates_tracked_legacy_layout_in_one_commit"
+  ]
+}

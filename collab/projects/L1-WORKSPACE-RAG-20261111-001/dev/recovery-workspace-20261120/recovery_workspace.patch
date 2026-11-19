@@ -1,0 +1,1093 @@
+diff --git a/packages/kernel/.skill-release.json b/packages/kernel/.skill-release.json
+index 937880d..98dc8eb 100644
+--- a/packages/kernel/.skill-release.json
++++ b/packages/kernel/.skill-release.json
+@@ -1,15 +1,17 @@
+ {
+-  "archive": "work-ledger-kernel_v0_7_45_1118.zip",
+-  "based_on": "0.7.43",
+-  "built_at": "2026-11-17T01:00:00+09:00",
++  "archive": "work-ledger-kernel_v0_7_46_1120.zip",
++  "based_on": "0.7.45",
++  "built_at": "2026-11-20T08:00:00+09:00",
+   "channel": "development_not_for_deployment",
++  "host_integration": "NOT_RUN",
+   "incorporates": "work inventory UX from v0.7.35 candidate",
++  "independent_review": "NOT_RUN",
+   "name": "work-ledger-kernel",
+-  "release_date": "2026-11-17",
++  "release_date": "2026-11-20",
+   "release_kind": "development_not_for_deployment",
+-  "revision": 45,
++  "revision": 46,
+   "schema_version": 1,
+   "skill_name": "work-ledger-kernel",
+-  "skill_version": "0.7.45",
+-  "version": "0.7.45"
++  "skill_version": "0.7.46",
++  "version": "0.7.46"
+ }
+diff --git a/packages/kernel/MANIFEST_SHA256.json b/packages/kernel/MANIFEST_SHA256.json
+index 15caa61..7a2269b 100644
+--- a/packages/kernel/MANIFEST_SHA256.json
++++ b/packages/kernel/MANIFEST_SHA256.json
+@@ -1,5 +1,5 @@
+ {
+-  ".skill-release.json": "75d51c4b822aac015f77194bfdb9874125c833b9f37e9dbed14b42ce87ed48b9",
++  ".skill-release.json": "4d878f1ebd6fb2b88a681d99010298b83a3bbb7cfcd8f59f5ce131a2613baa87",
+   "CHANGELOG.md": "395573a62e5099747cf135ec43b249a88e187f033a6f541cd102e4cb59b0e0d2",
+   "CODE_CHANGE_NOTE_USER_GUIDE.md": "80a2bfb9937f1dd8b349091369c0219a1651a62580bfba3d34af06bffead743c",
+   "IMPLEMENTATION_STAGE_0.md": "b6b25befa4da1d6d97ca2a8539268cf0d75d81859d0d7e806c78e5e08c5d658c",
+@@ -20,7 +20,7 @@
+   "RELEASE_NOTES_v0_7_34.md": "50f6d9e9cbf991fcf564bc2e8a25ee8a3ae37fb3225c3997bebcf28d239fa557",
+   "RELEASE_NOTES_v0_7_36.md": "afd874474f6bfc0b1de635e30ea0b5b6ab398735d27125f28045999f3ce17321",
+   "REVIEW_CORRECTIONS_20261103.md": "9bad64c0c84850651077ed79598424ff93fd5a1a579e350c0bd5de36b8a1b2be",
+-  "SKILL.md": "d8653161854af36abac2cf932a5827d6ddafb66e6e4ef65ec0143270f017fb73",
++  "SKILL.md": "b60f1de06ef54385ced90c13692d12d5f015179491ea73ae44f648180999a2b2",
+   "TEST_MATRIX.md": "296ce379b5f80df8c721b16b6e9775e341477c895a2e16aeb7edc22608c0f96d",
+   "UPDATER_COMPATIBILITY.md": "93788ff2ed3d8fab8c700d8e32f7d3dfe1016cbbc6902125ea8fc059a4ff757e",
+   "VALIDATION.md": "501ce4f4b236a36d9b114984874a15a5c5c19d26d122909e3b5ee1a9d2d66b0e",
+@@ -31,7 +31,7 @@
+   "VALIDATION_STAGE0.md": "b28288f2dd75f2c0e84c6214c08c95605022015ef651d2d75e884484fe33390e",
+   "VALIDATION_WORKFLOW_PERMISSION_v0734.md": "8adcfaebddddadec8dc79b226f62dcbb4d664f1e93188d226d2f0d08e9d238aa",
+   "VALIDATION_WORK_DOCS_RECONCILE_v0723.md": "b6c730fbd72ec094acc029c653e65a42184fc9296b326ff875db6ca4ba41ff45",
+-  "VERSION": "3542fcdb756937e14928d1a01ccb8954e5cd2d844ce8dc0c029467c25483aedf",
++  "VERSION": "00f5e47c24388cc68ff7494a5bcab2505c5c2177211e0b540c8c65c2e8f73d24",
+   "contracts/approval.schema.json": "3e57cbe338e807a37ba5e8a42aea4918b8fc9619881d18c0b5a2eb3bc9db71c0",
+   "contracts/blocker.schema.json": "706b1ef6ded85c60f81c364bcf443b415b5c55257cde89ee8ab7307100de8a13",
+   "contracts/discussion_context_event_v1.schema.json": "c8cc17eb244bf6f5aa98a620a294ca2cffb73f5e002fb1d062571ec48230b9fa",
+@@ -42,7 +42,7 @@
+   "contracts/intent.schema.json": "54d4b7911d36b5828117fa28e651dfbe345c9490305eae93d0d461f8fa5447c8",
+   "contracts/profile_policies_v1.json": "4aa159afe4d28190ba6b3eb1488c692c4474e85be19328915453b4f6361691dd",
+   "contracts/record.schema.json": "42b6886465932152a7b2a469c8b27378680ebbd8d1a8b015990a57501cf7b321",
+-  "contracts/registry_v1.json": "246b25f888c202ec2825e223236d2f3f766379985800aae355862ee12fc586ea",
++  "contracts/registry_v1.json": "0e089b68645897302310253a003c7dfb3c1f868df197f448390e6f3dd6d6873e",
+   "contracts/safety.schema.json": "de5927a372f7119a7b43e155274c3ceaa8bb5628e41977ee079b30fd709438da",
+   "contracts/spec.schema.json": "4f185f9050abeacd19dcaab6127e6816505854e8a5392932daa672088c3cdb8e",
+   "contracts/transfer_manifest_v1.schema.json": "38fff61290a6528121a767b784dec480c15875cdc30cbf3579f7a7d946eb674d",
+@@ -54,6 +54,7 @@
+   "docs/GITHUB_WORKSPACE_LAYOUT_v2_20261007.md": "540c2744f408d2dd0070aa5e0ffb93c4624ed0d09b3d1ca2d8343d649ff0380d",
+   "docs/HARD_MODE_SETUP.md": "70461eb91ce36722210dd512a6fafafbcc2705b8e893a881ee5ddedb7508de23",
+   "docs/MULTI_HOST_TRANSFER_v1.md": "386cd0e596055b31c7c1fecbbad7fa40a68612a101342dc26d69845cdfb1b248",
++  "docs/RECOVERY_REPORT_INTAKE.md": "4325e9b11e9501d3d9b9b8a66946b2cc3be08f85014d5509424bc19faabde222",
+   "docs/SOFT_MODE_RULES.md": "ad3de4d08de7787291f15db146bf4d52f75fcfa903bc0496d8dae626571ae218",
+   "docs/STEP1_ARCHITECTURE_FREEZE_20260929.md": "11af2a4a4a01de903e826942a6d16b18f421023d819cd5f8281eb7a364523ff2",
+   "docs/STEP2_IMPLEMENTATION_NOTES.md": "d6cf94e82a21d49fc2fc98e07b255edc4690b1b8479db09529535ed145a82bdb",
+@@ -80,7 +81,7 @@
+   "references/legacy_skill_guide_v0_7_16.md": "301b3640867cf90c2060f56a486c21321b00228ebc5e9bba19c2bdf9f4f0cf3b",
+   "scripts/install_claude_hooks.py": "8200b2cc1f44f5016368700f55c6ed2c43e7b13197f92b5881359a8aab1c0e17",
+   "skillsilent/contract.json": "fd196c43cfc31f0f3c1dc9763137a62fb13a2a481f870454a0b9ae0c574f6097",
+-  "skillsilent/manifest.json": "2db75efc4d0b486740bad0b071400ddd51a55b1588ef330f2086f3f02916299d",
++  "skillsilent/manifest.json": "348c0053ee67cb6a6ecfc8eda729c827a0345a16d706200133ace5789e65445a",
+   "tests/test_adopt_current_v072.py": "5960a223e78711a289db065d0eda5bcb0076cf8bfb41bc7d15b817cae2c6ef50",
+   "tests/test_change_note_v122.py": "d20f45abc88a8b0038d4fd719995b101c61e1875c4d00b467d8480a7007869c5",
+   "tests/test_cli_discovery_v072.py": "4cf5ad90cbf79accd2191183169c64bc11545897eafaa5b866b5197bc5fbcd4a",
+@@ -102,6 +103,7 @@
+   "tests/test_multi_work_ux_v070.py": "9ed0bec217ab14ffe084eba9385067fab9cf4fede1f7ad64be666ebf1c4b85b0",
+   "tests/test_phase1_identity_refs_v0715.py": "21fe498f68f3bd6469c45ed44ace8cf1f2dac99fe85905aa82169031e51fee9a",
+   "tests/test_plus_registry_v0714.py": "ddf0907c66cc2aca80f8a4322720b3ee2781d96dfaff3107369e1f77c52ad334",
++  "tests/test_recovery_reports_v0746.py": "bedac8a995f1669a9d53d3ecca1052321a65cfccc87c321808493b4aeefa6179",
+   "tests/test_registration_permission_v0733.py": "7010f1b63bc4d83b67c01f252926777d364e0044370f80da691925ea074e56d9",
+   "tests/test_safety_hooks.py": "7344812c824192e4a314ee5aebad4ec76afbfb8abccf765bae2b75fc84de8722",
+   "tests/test_scope_external_gate_v0710.py": "3fa8d464d44096e1972b8104134b4843184c4f4e55738a138042e6e847f2e7d9",
+@@ -117,11 +119,11 @@
+   "tests/test_workflow_permission_v0734.py": "48b1fc299d32bffa58d0bd863dd3d2ed8112b6904d02c836c6bf1ea97f5e9a6c",
+   "work-ledger-kernel": "fd374b7c8cd8af2d6c95364d91851806fdb71229cd3f3104de705874a139934e",
+   "work-ledger-kernel.cmd": "b3c799a21978c7855f0e8ba35696ab1b2072641189186395fcbaa0ea6b2af2d8",
+-  "work_ledger_kernel/__init__.py": "cbd18e66bc0e4cb0c497b949469e4b616bf8fc4e65974c59793898d1c27b63f9",
++  "work_ledger_kernel/__init__.py": "2b704abe7ccb179f92bdae404071c5273259e4f0e288fb9e405b46fc545ee22b",
+   "work_ledger_kernel/__main__.py": "79ee6f134c5c5193377cf9b189cbdcc3e2095e49ba9cec310114441c15a917c4",
+   "work_ledger_kernel/artifact_names.py": "979037c3ab3d03f2b913400c6bad350bd11b3eefc42195cd0ad9c8b90a963662",
+   "work_ledger_kernel/change_note.py": "5715d5f596f42b48d3a53dc52159ad0574977ad9928765f0e33a1a4e11140f0e",
+-  "work_ledger_kernel/cli.py": "c20323b759ccd3337c8af7b4b693337f28da9e1ff86f14c18a928a1061b21f30",
++  "work_ledger_kernel/cli.py": "f8b5e98cd853d6eb0b28bf625c88bc823b5eefdcd7658f307a0ec6c36c7909cb",
+   "work_ledger_kernel/code_rev.py": "aae0d860569d8f04e4ca17c246ed2df0f7461e59b8e1235253cb5dfd883653c2",
+   "work_ledger_kernel/communication_view.py": "043fb1d19657afea73155e984ae3ff97169a88580f912fd2cd845c7ab98fd33c",
+   "work_ledger_kernel/continuity.py": "025d2aa2aaa8829b0c6d1ec6d8829b7c59e83e2318f3d9a6513313867e1db4db",
+@@ -132,7 +134,7 @@
+   "work_ledger_kernel/contracts/intent.schema.json": "54d4b7911d36b5828117fa28e651dfbe345c9490305eae93d0d461f8fa5447c8",
+   "work_ledger_kernel/contracts/profile_policies_v1.json": "4aa159afe4d28190ba6b3eb1488c692c4474e85be19328915453b4f6361691dd",
+   "work_ledger_kernel/contracts/record.schema.json": "42b6886465932152a7b2a469c8b27378680ebbd8d1a8b015990a57501cf7b321",
+-  "work_ledger_kernel/contracts/registry_v1.json": "246b25f888c202ec2825e223236d2f3f766379985800aae355862ee12fc586ea",
++  "work_ledger_kernel/contracts/registry_v1.json": "0e089b68645897302310253a003c7dfb3c1f868df197f448390e6f3dd6d6873e",
+   "work_ledger_kernel/contracts/safety.schema.json": "de5927a372f7119a7b43e155274c3ceaa8bb5628e41977ee079b30fd709438da",
+   "work_ledger_kernel/contracts/spec.schema.json": "4f185f9050abeacd19dcaab6127e6816505854e8a5392932daa672088c3cdb8e",
+   "work_ledger_kernel/contracts/transfer_manifest_v1.schema.json": "38fff61290a6528121a767b784dec480c15875cdc30cbf3579f7a7d946eb674d",
+@@ -145,8 +147,9 @@
+   "work_ledger_kernel/generated_doc_registry.py": "b89068e8664ea9c22b9278499ce1630ddfafb190995b2f110f85b5a453059af4",
+   "work_ledger_kernel/hard_hook.py": "f7316716cd4799f9b28d3f063af1ec755a37774a6e325d31ffdcff2f8fe53e8c",
+   "work_ledger_kernel/hooks.py": "24b7a1c5388528e4a2ec53fcfcd67d257f95b2555e26d3e56823d91a95fe6586",
+-  "work_ledger_kernel/kernel.py": "fae1ab843ace7b5b5cb955230cd81bd61c6c79fa7c72f38d77922e6df365ebf1",
++  "work_ledger_kernel/kernel.py": "c3d4505b5321e26bda412878ddc78bf8929406b8f584c29769acb92402d03a09",
+   "work_ledger_kernel/locking.py": "7d2ef7ba6ca8f682c07981362bb9903b421e6f67de10ec5914a8e1eb3e183968",
++  "work_ledger_kernel/recovery_reports.py": "4e39c609b4678eef6f8811b0ff5a23864b66885828a98aaa33a52738782ab621",
+   "work_ledger_kernel/registration_permission.py": "7b170de9009e5e9d865eec45d93344a6ea1bb999c01aa7644098259aef4343b1",
+   "work_ledger_kernel/safety.py": "6490f14e71041956ea625c91e3e9e631ddedf99dc896643f206307204469a36d",
+   "work_ledger_kernel/session_hook.py": "bf509e35be63cdc8ad3edd356947f2f065a30c29b875d6f90fbbe6e78cbebf6c",
+@@ -159,6 +162,6 @@
+   "work_ledger_kernel/work_inventory.py": "3e46ef5ca73aa8646ce61c1c8c110e2c1245cb06c10b104318abe5d233f0409d",
+   "work_ledger_kernel/work_public_view.py": "9ccb9bb10d77d97881ad4ef14f861179a400dffc537631c0f1e13c300dced8ee",
+   "work_ledger_kernel/work_refs.py": "049e77fffe511dcb011621902f74e11b60b72b4e9294d059685deb82f7e694d9",
+-  "work_ledger_kernel/work_ux.py": "3b3bd34ef278dab299c1c9f4a5470250ccd58cc4d8124a770ecdeabdc313c032",
++  "work_ledger_kernel/work_ux.py": "0349620b4bbf26bdef5c02bf05b5ba96f2907f1ef3e8ab690cf901a9114e67b2",
+   "work_ledger_kernel/workflow_permission.py": "e76cd0dee5badc2094100e53372a95b633122b52f4fa4a27bcbc7d1ebee07b6f"
+ }
+diff --git a/packages/kernel/SKILL.md b/packages/kernel/SKILL.md
+index d8fe998..88f2872 100644
+--- a/packages/kernel/SKILL.md
++++ b/packages/kernel/SKILL.md
+@@ -1,9 +1,16 @@
+ ---
+ name: work-ledger-kernel
+-version: "0.7.45"
++version: "0.7.46"
+ description: Provides deterministic Work Ledger state, evidence, approval, safety, staleness, resume, and transfer guards for l1-fix-workflow.
+ ---
+ 
++## Recovery 보고서 보존 — 개발 후보 0.7.46
++
++- 기존 Work에 l1-channel-recovery의 후보 보고서를 부가 Evidence로 보존. 저장만으로 분석·검증 완료 전이 없음.
++- Work/루트 Recovery 보기와 recovery-list는 기존 원본·게시 hash를 참조. 개인 Knowledge/그룹 게시와 분리.
++- 실제 생산자와 연결할 때 [저장·조회 계약](docs/RECOVERY_REPORT_INTAKE.md)을 확인. 개발 후보이며 설치·업무 통합 성공을 주장하지 않음.
++
++
+ ## 개발 검증 후보 0.7.31-dev.1 (정식 배포 금지)
+ 
+ - 신규 `analyze-issue` Provider Registry에서 폐기 `l1-log-analysis` 제거. 과거 Evidence는 삭제하지 않음.
+diff --git a/packages/kernel/VERSION b/packages/kernel/VERSION
+index 7e17239..e9a2ec0 100644
+--- a/packages/kernel/VERSION
++++ b/packages/kernel/VERSION
+@@ -1 +1 @@
+-0.7.45
++0.7.46
+diff --git a/packages/kernel/contracts/registry_v1.json b/packages/kernel/contracts/registry_v1.json
+index 8450994..77b20ee 100644
+--- a/packages/kernel/contracts/registry_v1.json
++++ b/packages/kernel/contracts/registry_v1.json
+@@ -272,6 +272,25 @@
+         "baseline_measure",
+         "after_measure"
+       ]
++    },
++    {
++      "stage": "utility",
++      "capability": "attach-recovery-report",
++      "profiles": [
++        "BUG",
++        "BUG-NR",
++        "FEATURE",
++        "REFACTOR",
++        "PERF",
++        "MAINT",
++        "TOOLING"
++      ],
++      "providers": [
++        "l1-channel-recovery"
++      ],
++      "evidence_kinds": [
++        "recovery_analysis"
++      ]
+     }
+   ],
+   "rules": [
+diff --git a/packages/kernel/docs/RECOVERY_REPORT_INTAKE.md b/packages/kernel/docs/RECOVERY_REPORT_INTAKE.md
+new file mode 100644
+index 0000000..fac4de4
+--- /dev/null
++++ b/packages/kernel/docs/RECOVERY_REPORT_INTAKE.md
+@@ -0,0 +1,39 @@
++# Recovery 보고서 저장·조회 계약 — 개발 후보 0.7.46
++
++이 계약은 기존 Work의 부가 보고서를 보존하는 기능이에요. 분석기 실행, source 수정, lifecycle 전이, Knowledge 게시와 운영 설치는 포함하지 않아요.
++
++- 생산자: `l1-channel-recovery` / Evidence kind: `recovery_analysis`.
++- 기존 `utility` stage에 보고서 첨부용 `attach-recovery-report` 슬롯을 추가해요. 기존 profile·record schema·FSM은 그대로예요.
++- 보고서 형식은 UTF-8 Markdown 또는 JSON object, 최대 5 MiB예요. JSON에 provider/provider_version/code_rev가 있으면 선언과 일치해야 해요.
++- 버전·code_rev는 호출자가 제공하는 출처 선언이에요. 이 저장 API가 분석 실행·설치 버전·source revision의 실제 의미를 독립 검증했다고 해석하지 않아요.
++- 기존 코드 사실과 Recovery 판단은 각각 실제 생성한 provider로 등록해요. 제공자 이름을 바꿔 기존 슬롯을 우회하지 않아요.
++
++## 생산자→허용된 writer
++
++`kernel.recovery_report_preview(work_id, source_path, provider_version, code_rev, summary)`로 기존 Work와 파일을 대조해요. 반환의 `source_sha256`·`evidence_revision`을 고정한 뒤 허용된 writer가 `record_recovery_report(..., expected_sha256, expected_revision)`를 호출해요.
++
++Work ID는 명시한 기존 ID예요. 이 API는 Work를 만들거나 focus를 바꾸지 않아요. 같은 Work/본문 hash/생산자 버전/code_rev는 기존 `E-<12hex>` Evidence ID로 연결해요. 동일 재시도는 원본 byte hash와 선언을 대조하고 기존 Evidence를 반환해요. 파일명만 바뀌어도 같은 내용/출처는 중복 등록하지 않아요. summary가 다른 동일 ID, 원본 변조, 다른 보고서의 stale preview는 충돌로 거부해요. 다른 source revision·내용은 별도 Evidence로 보존해요.
++
++기존 record_evidence의 Work lock 안에서 등록·중복/수량 충돌을 검사해요. 읽은 보고서는 임시 고정 byte 복사본을 통해 기존 writer에 넘겨요. `AUTO_CANDIDATE`로 저장하며 저장 성공이 분석·수정·시험 성공이 되지 않아요. 거부/수정된 기존 confidence도 재시도에서 올리지 않아요.
++
++## 읽기와 파생 문서
++
++`work_recovery_reports(work_id)`와 아래 CLI는 본문을 실행하거나 분석을 재호출하지 않아요.
++
++```text
++<기존 Kernel launcher> recovery-list --work-id <기존 Work ID>
++```
++
++현재 등록 파일의 SHA/경로를 검사한 메타정보를 반환해요. 제품 효과나 적용성을 자동 판정하지 않아요. 기존 docs export는 해당 report의 실제 게시 매핑을 사용해 다음 파생 문서를 만들어요.
++
++- `works/<work_id>/RECOVERY.md`: 원본 보고서 링크·출처·후보 상태.
++- `works/<work_id>/state/recovery_reports.json`: 기존 Evidence 메타정보의 읽기 projection.
++- `RECOVERY.md`, `index/recovery.json`: 게시된 Work의 Recovery 탐색 모음.
++
++위 JSON은 재생성 가능한 조회 정보이며 새 Work 원장이나 기술 정본이 아니에요. 기존 Module→Feature→Scenario 분류를 대체하지 않아요. Viewer/Updater의 실제 mapping은 업무 GPT가 업무 환경에서 이 계약과 대조해요. 개인 `knowledge/`의 writer는 Updater로 유지해요.
++
++기존 수동 편집 보존·export hash·Git 게시 guard를 유지해요. 파생 문서 충돌은 기존 export 결과의 manual_conflicts로 표시해요. 보고서 등록, export, Git 게시, Viewer 열람은 별도 성공 단계예요. 게시 실패 때문에 분석이나 등록을 다시 시작하지 않아요.
++
++## 현재 적용 경계
++
++이 패키지는 PRIVATE 개발 후보예요. 업무 스킬의 실제 출력 매핑·독립 코드 리뷰·호스트 통합 시험은 별도예요. MCP 자료 제공 기능을 먼저 구현하거나 사용자에게 설치본 자료를 요구하는 흐름은 필요하지 않아요. 업무 GPT는 실제 생산자 결과 형식과 이 계약을 연결하는 설계를 진행해요.
+diff --git a/packages/kernel/skillsilent/manifest.json b/packages/kernel/skillsilent/manifest.json
+index 83e4b1d..c632380 100644
+--- a/packages/kernel/skillsilent/manifest.json
++++ b/packages/kernel/skillsilent/manifest.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "work-ledger-kernel",
+   "schema_version": 1,
+-  "skill_version": "0.7.45",
+-  "version": "0.7.42"
++  "skill_version": "0.7.46",
++  "version": "0.7.46"
+ }
+diff --git a/packages/kernel/tests/test_recovery_reports_v0746.py b/packages/kernel/tests/test_recovery_reports_v0746.py
+new file mode 100644
+index 0000000..dc7f409
+--- /dev/null
++++ b/packages/kernel/tests/test_recovery_reports_v0746.py
+@@ -0,0 +1,149 @@
++from __future__ import annotations
++import hashlib
++import json
++import tempfile
++import unittest
++from concurrent.futures import ThreadPoolExecutor
++from pathlib import Path
++from work_ledger_kernel.kernel import WorkLedgerKernel
++from work_ledger_kernel.errors import KernelError
++from work_ledger_kernel.cli import main
++from contextlib import redirect_stdout
++from io import StringIO
++
++CONTRACTS = Path(__file__).resolve().parents[1] / 'contracts'
++
++
++class RecoveryReportsTests(unittest.TestCase):
++    def setUp(self):
++        self.temp = tempfile.TemporaryDirectory(); self.root = Path(self.temp.name)
++        self.k = WorkLedgerKernel(self.root/'ledger', CONTRACTS)
++        self.wid = 'SYNTHETIC-RECOVERY'; self.k.new(self.wid, 'BUG', 'Synthetic report')
++        self.source = self.root/'report.md'; self.source.write_text('# Recovery\nCovered: 1\nHOLD: 1\nRuntime: NOT_RUN\n')
++
++    def tearDown(self): self.temp.cleanup()
++
++    def preview(self, **kw):
++        return self.k.recovery_report_preview(self.wid, kw.get('source',self.source), 'unverified', kw.get('rev','git:synthetic:one'), kw.get('summary','Synthetic candidates'))
++
++    def save(self, preview=None, **kw):
++        p=preview or self.preview(**kw)
++        return self.k.record_recovery_report(self.wid, kw.get('source',self.source),'unverified',kw.get('rev','git:synthetic:one'),kw.get('summary','Synthetic candidates'),p['source_sha256'],p['evidence_revision'])
++
++    def assert_code(self, code, fn):
++        with self.assertRaises(KernelError) as e: fn()
++        self.assertEqual(code,e.exception.code)
++
++    def test_preview_and_read_leave_record_and_journal_unchanged(self):
++        before={p:p.read_bytes() for p in (self.root/'ledger').rglob('*') if p.is_file()}
++        self.assertFalse(self.preview()['saved']);self.assertEqual(0,self.k.work_recovery_reports(self.wid)['count'])
++        self.assertEqual(before,{p:p.read_bytes() for p in (self.root/'ledger').rglob('*') if p.is_file()})
++
++    def test_saved_copy_survives_run_cleanup_without_lifecycle_promotion(self):
++        saved=self.save(); self.source.unlink(); r=self.k.work_recovery_reports(self.wid)
++        self.assertEqual(1,r['count']);self.assertEqual('MATCH',r['items'][0]['integrity'])
++        self.assertEqual(saved['source_sha256'],r['items'][0]['sha256'])
++        self.assertEqual('OPEN',r['lifecycle_state']);self.assertFalse(saved['provider_executed'])
++        self.assertEqual('AUTO_CANDIDATE',r['items'][0]['confidence_state'])
++
++    def test_retry_reuses_exact_evidence_without_second_write(self):
++        p=self.preview();a=self.save(p);before=self.k.storage.record_path(self.wid).read_bytes()
++        b=self.save(p);self.assertEqual(a['evidence_id'],b['evidence_id']);self.assertEqual(0,b['created'])
++        self.assertEqual(before,self.k.storage.record_path(self.wid).read_bytes())
++        self.assertEqual(1,len(self.k.load_record(self.wid)['evidence_index']))
++
++    def test_new_revision_preserves_previous_report(self):
++        a=self.save();b=self.save(rev='git:synthetic:two')
++        self.assertNotEqual(a['evidence_id'],b['evidence_id']);self.assertEqual(2,self.k.work_recovery_reports(self.wid)['count'])
++
++    def test_changed_summary_cannot_reuse_existing_identity(self):
++        self.save();self.assert_code('EVIDENCE_ID_CONFLICT',lambda:self.save(summary='Different assertion'))
++
++    def test_changed_bytes_reject_stale_preview_without_record(self):
++        p=self.preview();self.source.write_text('changed')
++        self.assert_code('RECOVERY_PREVIEW_STALE',lambda:self.save(p));self.assertEqual(0,self.k.work_recovery_reports(self.wid)['count'])
++
++    def test_competing_evidence_requires_fresh_preview(self):
++        p=self.preview();self.save();self.source.write_text('another run')
++        p2=self.preview();p2['evidence_revision']=p['evidence_revision']
++        self.assert_code('EVIDENCE_REVISION_CONFLICT',lambda:self.save(p2))
++        self.assertEqual(1,self.k.work_recovery_reports(self.wid)['count'])
++
++    def test_tampered_original_is_visible_and_cannot_be_reused(self):
++        p=self.preview();saved=self.save(p);e=saved['evidence'];(self.k.storage.work_dir(self.wid)/e['path']).write_text('tamper')
++        self.assertEqual('SHA_MISMATCH',self.k.work_recovery_reports(self.wid)['items'][0]['integrity'])
++        self.assert_code('EVIDENCE_ID_CONFLICT',lambda:self.save(p))
++
++    def test_same_report_concurrent_retry_is_one_evidence(self):
++        p=self.preview()
++        with ThreadPoolExecutor(max_workers=2) as pool: results=list(pool.map(lambda _:self.save(p),range(2)))
++        self.assertEqual([0,1],sorted(r['created'] for r in results))
++        self.assertEqual(1,self.k.work_recovery_reports(self.wid)['count'])
++
++    def test_supplementary_report_does_not_satisfy_any_profile_analysis_gate(self):
++        for profile in ['BUG','BUG-NR','FEATURE','REFACTOR','PERF','MAINT','TOOLING']:
++            wid='SYNTHETIC-'+profile;self.k.new(wid,profile,'Synthetic')
++            p=self.k.recovery_report_preview(wid,self.source,'unverified','synthetic','summary')
++            self.k.record_recovery_report(wid,self.source,'unverified','synthetic','summary',p['source_sha256'],0)
++            record=self.k.load_record(wid);self.assertEqual('OPEN',record['state']);self.assertFalse(self.k._analysis_valid(wid,record))
++
++    def test_existing_registry_still_rejects_wrong_kind_or_source_provider(self):
++        self.assert_code('REGISTRY_MISMATCH',lambda:self.k.record_evidence(self.wid,self.source,'impact','analyze','l1-channel-recovery','1','synthetic','s'))
++        self.assert_code('REGISTRY_MISMATCH',lambda:self.k.record_evidence(self.wid,self.source,'recovery_analysis','utility','code-analyzer','1','synthetic','s'))
++
++    def test_embedded_json_provenance_cannot_disagree(self):
++        source=self.root/'report.json';source.write_text(json.dumps({'provider':'code-analyzer'}))
++        self.assert_code('RECOVERY_PROVENANCE_MISMATCH',lambda:self.preview(source=source))
++        source.write_text('{invalid');self.assert_code('RECOVERY_REPORT_INVALID',lambda:self.preview(source=source))
++
++    def test_invalid_formats_sizes_and_work_ids_are_rejected(self):
++        self.source.write_bytes(b'\xff');self.assert_code('RECOVERY_REPORT_INVALID',self.preview)
++        self.source.write_bytes(b'x'*(5*1024*1024+1));self.assert_code('RECOVERY_SIZE_INVALID',self.preview)
++        self.source.write_text('valid');link=self.root/'link.md';link.symlink_to(self.source)
++        self.assert_code('RECOVERY_SOURCE_INVALID',lambda:self.preview(source=link))
++        self.assert_code('RECOVERY_WORK_INVALID',lambda:self.k.work_recovery_reports('../outside'))
++
++    def test_export_links_digests_repeat_and_manual_document_preservation(self):
++        saved=self.save();docs=self.root/'docs';out=self.k.work_docs_export(str(docs),self.wid)
++        self.assertTrue(out['generation_complete']);work=docs/'works'/self.wid
++        projection=json.loads((work/'state/recovery_reports.json').read_text());item=projection['items'][0]
++        artifact=work/item['published_path'];self.assertEqual(saved['source_sha256'],hashlib.sha256(artifact.read_bytes()).hexdigest())
++        self.assertIn('RECOVERY.md',(docs/'README.md').read_text());self.assertIn('RECOVERY.md',(work/'README.md').read_text())
++        self.assertEqual(self.wid,json.loads((docs/'index/recovery.json').read_text())['items'][0]['work_id'])
++        self.assertNotIn('work_category',json.loads((work/'state/work_snapshot.json').read_text()))
++        before={str(p.relative_to(docs)):p.read_bytes() for p in docs.rglob('*') if p.is_file()}
++        self.k.work_docs_export(str(docs),self.wid)
++        self.assertEqual(before,{str(p.relative_to(docs)):p.read_bytes() for p in docs.rglob('*') if p.is_file()})
++        (work/'RECOVERY.md').write_text('manual note')
++        changed=self.k.work_docs_export(str(docs),self.wid)
++        self.assertEqual('manual note',(work/'RECOVERY.md').read_text());self.assertFalse(changed['generation_complete'])
++
++    def test_cross_host_export_preserves_existing_recovery_projection(self):
++        self.save();docs=self.root/'docs';self.k.work_docs_export(str(docs),self.wid)
++        k2=WorkLedgerKernel(self.root/'other-ledger',CONTRACTS);k2.new('SYNTHETIC-OTHER','BUG','Other')
++        k2.work_docs_export(str(docs),'SYNTHETIC-OTHER')
++        self.assertEqual(self.wid,json.loads((docs/'index/recovery.json').read_text())['items'][0]['work_id'])
++
++    def test_cross_host_projection_cannot_override_work_identity_or_escape_link(self):
++        self.save();docs=self.root/'docs';self.k.work_docs_export(str(docs),self.wid)
++        path=docs/'works'/self.wid/'state/recovery_reports.json';data=json.loads(path.read_text())
++        data['items'][0].update(work_id='../outside',work_path='../outside',published_path='../../outside.md')
++        path.write_text(json.dumps(data))
++        k2=WorkLedgerKernel(self.root/'other-ledger',CONTRACTS);k2.new('SYNTHETIC-OTHER','BUG','Other')
++        k2.work_docs_export(str(docs),'SYNTHETIC-OTHER')
++        entry=json.loads((docs/'index/recovery.json').read_text())['items'][0]
++        self.assertEqual(self.wid,entry['work_id']);self.assertEqual('works/'+self.wid,entry['work_path'])
++        self.assertIsNone(entry['published_path']);self.assertEqual('PUBLISHED_UNVERIFIED',entry['integrity'])
++
++    def test_no_recovery_does_not_create_new_views(self):
++        docs=self.root/'docs';self.k.work_docs_export(str(docs),self.wid)
++        self.assertFalse((docs/'RECOVERY.md').exists());self.assertFalse((docs/'index/recovery.json').exists())
++
++    def test_read_cli_returns_existing_metadata_without_body_or_write(self):
++        self.save();before=self.k.storage.record_path(self.wid).read_bytes();out=StringIO()
++        with redirect_stdout(out):rc=main(['--root',str(self.root/'ledger'),'recovery-list','--work-id',self.wid])
++        self.assertEqual(0,rc);result=json.loads(out.getvalue());self.assertTrue(result['read_only'])
++        self.assertEqual(1,result['count']);self.assertNotIn('Covered: 1',out.getvalue())
++        self.assertEqual(before,self.k.storage.record_path(self.wid).read_bytes())
++
++if __name__=='__main__':unittest.main()
+diff --git a/packages/kernel/work_ledger_kernel/__init__.py b/packages/kernel/work_ledger_kernel/__init__.py
+index 735f555..4124439 100644
+--- a/packages/kernel/work_ledger_kernel/__init__.py
++++ b/packages/kernel/work_ledger_kernel/__init__.py
+@@ -1 +1 @@
+-__version__ = "0.7.42"
++__version__ = "0.7.46"
+diff --git a/packages/kernel/work_ledger_kernel/cli.py b/packages/kernel/work_ledger_kernel/cli.py
+index cf7124b..a1e81d4 100644
+--- a/packages/kernel/work_ledger_kernel/cli.py
++++ b/packages/kernel/work_ledger_kernel/cli.py
+@@ -58,6 +58,7 @@ def parser():
+     q=with_root(sp.add_parser("work-select")); q.add_argument("number",type=int); q.add_argument("--host-id"); q.add_argument("--session-id")
+     q=with_root(sp.add_parser("work-find")); q.add_argument("--query",required=True); q.add_argument("--include-archived",action="store_true"); q.add_argument("--limit",type=int,default=50)
+     q=with_root(sp.add_parser("work-refs")); q.add_argument("--work-id",required=True)
++    q=with_root(sp.add_parser("recovery-list",help="read-only supplementary Recovery report metadata; never runs analysis")); q.add_argument("--work-id",required=True)
+     q=with_root(sp.add_parser("work-ref-add")); q.add_argument("--work-id",required=True); q.add_argument("--type",required=True,choices=["jira","alias","github_pr","p4_cl","code_root"]); q.add_argument("--value",required=True)
+     q=with_root(sp.add_parser("work-link-workspace")); q.add_argument("--work-id",required=True); q.add_argument("--workspace",required=True); q.add_argument("--scm",default="unknown"); q.add_argument("--repo-id",default="unknown"); q.add_argument("--host-id")
+     q=with_root(sp.add_parser("work-workspace-links")); q.add_argument("--work-id"); q.add_argument("--workspace"); q.add_argument("--host-id")
+@@ -130,6 +131,7 @@ def main(argv=None):
+         elif args.cmd=="work-select": out=k.work_select(args.number,args.host_id,args.session_id)
+         elif args.cmd=="work-find": out=k.work_find(args.query,include_archived=args.include_archived,limit=args.limit)
+         elif args.cmd=="work-refs": out=k.work_references(args.work_id)
++        elif args.cmd=="recovery-list": out=k.work_recovery_reports(args.work_id)
+         elif args.cmd=="work-ref-add": out=k.work_reference_add(args.work_id,args.type,args.value)
+         elif args.cmd=="work-link-workspace": out=k.work_link_workspace(args.work_id,args.workspace,scm=args.scm,repo_id=args.repo_id,host_id=args.host_id)
+         elif args.cmd=="work-workspace-links": out=k.work_workspace_links(work_id=args.work_id,workspace=args.workspace,host_id=args.host_id)
+diff --git a/packages/kernel/work_ledger_kernel/contracts/registry_v1.json b/packages/kernel/work_ledger_kernel/contracts/registry_v1.json
+index 8450994..77b20ee 100644
+--- a/packages/kernel/work_ledger_kernel/contracts/registry_v1.json
++++ b/packages/kernel/work_ledger_kernel/contracts/registry_v1.json
+@@ -272,6 +272,25 @@
+         "baseline_measure",
+         "after_measure"
+       ]
++    },
++    {
++      "stage": "utility",
++      "capability": "attach-recovery-report",
++      "profiles": [
++        "BUG",
++        "BUG-NR",
++        "FEATURE",
++        "REFACTOR",
++        "PERF",
++        "MAINT",
++        "TOOLING"
++      ],
++      "providers": [
++        "l1-channel-recovery"
++      ],
++      "evidence_kinds": [
++        "recovery_analysis"
++      ]
+     }
+   ],
+   "rules": [
+diff --git a/packages/kernel/work_ledger_kernel/kernel.py b/packages/kernel/work_ledger_kernel/kernel.py
+index b37ee8d..a848991 100644
+--- a/packages/kernel/work_ledger_kernel/kernel.py
++++ b/packages/kernel/work_ledger_kernel/kernel.py
+@@ -534,7 +534,8 @@ class WorkLedgerKernel:
+     def record_evidence(self, work_id: str, source_path: Path, kind: str, stage: str, provider: str,
+                         provider_version: str, code_rev: str, summary: str,
+                         confidence_state: str="AUTO_CANDIDATE", spec_digest: Optional[str]=None,
+-                        evidence_id: Optional[str]=None) -> dict:
++                        evidence_id: Optional[str]=None, *, expected_evidence_count: Optional[int]=None,
++                        reuse_if_identical: bool=False) -> dict:
+         source_path=Path(source_path)
+         require(confidence_state in CONFIDENCE, "CONFIDENCE_STATE_INVALID", "Invalid confidence state", {"allowed":CONFIDENCE})
+         require(source_path.exists() and source_path.is_file(), "EVIDENCE_FILE_MISSING", f"Evidence file missing: {source_path}")
+@@ -546,6 +547,25 @@ class WorkLedgerKernel:
+             slots=self._slots(provider=provider,kind=kind,stage=stage,profile=record["profile"])
+             if not slots:
+                 raise KernelError("REGISTRY_MISMATCH", "Provider/kind/stage/profile not registered", {"provider":provider,"kind":kind,"stage":stage,"profile":record["profile"]})
++            if reuse_if_identical:
++                require((provider,kind,stage)==('l1-channel-recovery','recovery_analysis','utility')
++                        and bool(evidence_id), 'EVIDENCE_REUSE_UNSUPPORTED', 'Reuse is scoped to Recovery report intake')
++                existing=next((e for e in record['evidence_index'] if e.get('id')==evidence_id),None)
++                if existing is not None:
++                    base=self.storage.work_dir(work_id).resolve()
++                    rel=Path(str(existing.get('path') or ''))
++                    old=base/rel
++                    matches=(not rel.is_absolute() and '..' not in rel.parts and not old.is_symlink()
++                             and old.resolve().is_relative_to(base) and old.is_file()
++                             and all(existing.get(k)==v for k,v in
++                                 {'provider':provider,'kind':kind,'stage':stage,'provider_version':provider_version,
++                                  'code_rev':code_rev,'summary':summary}.items())
++                             and existing.get('sha256')==sha256_file(source_path)==sha256_file(old))
++                    require(matches,'EVIDENCE_ID_CONFLICT','Existing report identity/content differs; never overwrite it')
++                    return {'ok':True,'evidence':existing,'created':False}
++            if expected_evidence_count is not None:
++                require(expected_evidence_count==len(record['evidence_index']),
++                        'EVIDENCE_REVISION_CONFLICT','Evidence index changed; repeat preview')
+             if spec_digest is None and kind in {"oracle_manifest","eval_baseline","eval_after","change_provenance","behavior_delta_set","tooling_baseline","tooling_after","baseline_measure","after_measure"}:
+                 spec_digest=record.get("spec_digest")
+             if spec_digest is not None and record.get("spec_digest") and kind in {"oracle_manifest","eval_baseline","eval_after","change_provenance","tooling_baseline","tooling_after","baseline_measure","after_measure"}:
+@@ -581,7 +601,21 @@ class WorkLedgerKernel:
+                 if not committed:
+                     dest.unlink(missing_ok=True)
+                 raise
+-        return {"ok":True,"evidence":meta}
++        return {"ok":True,"evidence":meta, **({'created':True} if reuse_if_identical else {})}
++
++    def recovery_report_preview(self, work_id, source_path, provider_version, code_rev, summary):
++        from .recovery_reports import preview
++        return preview(self, work_id, source_path, provider_version, code_rev, summary)
++
++    def record_recovery_report(self, work_id, source_path, provider_version, code_rev, summary,
++                               expected_sha256, expected_revision):
++        from .recovery_reports import record
++        return record(self, work_id, source_path, provider_version, code_rev, summary,
++                      expected_sha256, expected_revision)
++
++    def work_recovery_reports(self, work_id):
++        from .recovery_reports import read
++        return read(self, work_id)
+ 
+     def _read_payload(self, evidence_path: Path):
+         try:
+diff --git a/packages/kernel/work_ledger_kernel/recovery_reports.py b/packages/kernel/work_ledger_kernel/recovery_reports.py
+new file mode 100644
+index 0000000..9e2a4c6
+--- /dev/null
++++ b/packages/kernel/work_ledger_kernel/recovery_reports.py
+@@ -0,0 +1,211 @@
++"""Supplementary Recovery reports: existing Evidence writer, derived read views.
++
++This module neither runs a provider nor advances the engineering lifecycle.
++"""
++from __future__ import annotations
++
++import hashlib
++import json
++import re
++import tempfile
++from pathlib import Path
++from urllib.parse import quote
++
++from .errors import KernelError
++
++PROVIDER = "l1-channel-recovery"
++KIND = "recovery_analysis"
++STAGE = "utility"
++MAX_BYTES = 5 * 1024 * 1024
++
++
++def _require(ok, code, message):
++    if not ok:
++        raise KernelError(code, message)
++
++
++def _work(kernel, work_id):
++    _require(isinstance(work_id, str) and re.fullmatch(r"[A-Za-z0-9_.-]{1,100}", work_id)
++             and work_id not in {".", ".."}, "RECOVERY_WORK_INVALID", "Exact Work ID required")
++    directory = kernel.storage.work_dir(work_id)
++    _require(not directory.is_symlink() and directory.resolve().is_relative_to(kernel.storage.root),
++             "RECOVERY_WORK_INVALID", "Work directory must remain inside this Ledger")
++    record = kernel.load_record(work_id)
++    _require(record["work_id"] == work_id, "RECOVERY_WORK_INVALID", "Work identity mismatch")
++    return record
++
++
++def _input(work_id, path, provider_version, code_rev, summary):
++    for value in (provider_version, code_rev, summary):
++        _require(isinstance(value, str) and value.strip() and len(value) <= 4096,
++                 "RECOVERY_PROVENANCE_REQUIRED", "Declared producer version, source revision and summary required")
++    source = Path(path).expanduser()
++    _require(not source.is_symlink(), "RECOVERY_SOURCE_INVALID", "Report symlink is not supported")
++    source = source.resolve(strict=True)
++    _require(source.is_file() and source.suffix.lower() in {".md", ".json"},
++             "RECOVERY_SOURCE_INVALID", "A local Markdown or JSON report is required")
++    with source.open("rb") as stream:
++        data = stream.read(MAX_BYTES + 1)
++    _require(0 < len(data) <= MAX_BYTES, "RECOVERY_SIZE_INVALID", "Report must be nonempty and at most 5 MiB")
++    try:
++        text = data.decode("utf-8")
++        if source.suffix.lower() == ".json":
++            payload = json.loads(text)
++            _require(isinstance(payload, dict), "RECOVERY_JSON_INVALID", "JSON report must be an object")
++            for key, expected in (("provider", PROVIDER), ("provider_version", provider_version), ("code_rev", code_rev)):
++                _require(key not in payload or payload[key] == expected,
++                         "RECOVERY_PROVENANCE_MISMATCH", "Embedded provenance differs from declaration")
++    except (UnicodeError, json.JSONDecodeError) as exc:
++        raise KernelError("RECOVERY_REPORT_INVALID", "Report must contain valid UTF-8/JSON") from exc
++    digest = hashlib.sha256(data).hexdigest()
++    identity = json.dumps([work_id, PROVIDER, KIND, provider_version, code_rev, digest], separators=(",", ":"))
++    # Preserve the existing immutable Evidence/publication naming contract.
++    eid = "E-" + hashlib.sha256(identity.encode()).hexdigest()[:12]
++    return source.name, data, digest, eid
++
++
++def preview(kernel, work_id, source_path, provider_version, code_rev, summary):
++    record = _work(kernel, work_id)
++    _, data, digest, eid = _input(work_id, source_path, provider_version, code_rev, summary)
++    return {"ok": True, "action": "RECOVERY_REPORT_PREVIEW", "saved": False,
++            "work_id": work_id, "provider": PROVIDER, "provider_version": provider_version,
++            "kind": KIND, "stage": STAGE, "code_rev": code_rev, "summary": summary,
++            "source_sha256": digest, "source_bytes": len(data), "evidence_id": eid,
++            "evidence_revision": len(record.get("evidence_index") or []),
++            "already_recorded": any(e.get("id") == eid for e in record.get("evidence_index") or []),
++            "confidence_state": "AUTO_CANDIDATE", "provider_executed": False, "git_push": False}
++
++
++def record(kernel, work_id, source_path, provider_version, code_rev, summary,
++           expected_sha256, expected_revision):
++    _work(kernel, work_id)
++    name, data, digest, eid = _input(work_id, source_path, provider_version, code_rev, summary)
++    _require(expected_sha256 == digest and isinstance(expected_revision, int) and not isinstance(expected_revision, bool),
++             "RECOVERY_PREVIEW_STALE", "Preview digest and Evidence revision are required")
++    # Freeze the bytes once: a producer editing its output must not change an
++    # artifact between preview validation and the existing Kernel copy operation.
++    with tempfile.TemporaryDirectory(prefix="recovery-report-") as td:
++        frozen = Path(td) / name
++        frozen.write_bytes(data)
++        result = kernel.record_evidence(work_id, frozen, KIND, STAGE, PROVIDER,
++                    provider_version, code_rev, summary, evidence_id=eid,
++                    expected_evidence_count=expected_revision, reuse_if_identical=True)
++    evidence = result["evidence"]
++    _require(evidence["sha256"] == digest, "RECOVERY_READBACK_FAILED", "Registered report digest differs")
++    return {"ok": True, "action": "RECOVERY_REPORT_RECORDED" if result["created"] else "RECOVERY_REPORT_ALREADY_RECORDED",
++            "saved": True, "created": int(result["created"]), "work_id": work_id,
++            "evidence_id": evidence["id"], "source_sha256": evidence["sha256"],
++            "evidence": evidence, "provider_executed": False, "git_push": False,
++            "lifecycle_advanced": False, "technical_verification": "NOT_ASSERTED"}
++
++
++def read(kernel, work_id):
++    record = _work(kernel, work_id)
++    base = kernel.storage.work_dir(work_id).resolve()
++    items = []
++    for evidence in record.get("evidence_index") or []:
++        if (evidence.get("provider"), evidence.get("kind"), evidence.get("stage")) != (PROVIDER, KIND, STAGE):
++            continue
++        item = dict(evidence)
++        relative = Path(str(item.get("path") or ""))
++        source = base / relative
++        if (relative.is_absolute() or ".." in relative.parts or source.is_symlink()
++                or not source.resolve().is_relative_to(base)):
++            integrity = "UNSAFE_PATH"
++        elif not source.is_file():
++            integrity = "MISSING"
++        elif source.stat().st_size > MAX_BYTES:
++            integrity = "TOO_LARGE"
++        else:
++            integrity = "MATCH" if hashlib.sha256(source.read_bytes()).hexdigest() == item.get("sha256") else "SHA_MISMATCH"
++        item["integrity"] = integrity
++        items.append(item)
++    return {"ok": True, "work_id": work_id, "category": "Recovery", "read_only": True,
++            "items": items, "count": len(items), "provider_executed": False,
++            "lifecycle_state": record["state"], "technical_verification": "NOT_ASSERTED"}
++
++
++def _cell(value):
++    return str(value or "-").replace("\n", " ").replace("\r", " ").replace("|", "\\|").replace("[", "\\[").replace("]", "\\]")[:220]
++
++
++def project_work(kernel, work_id, out_dir, artifact_entries, write_communication, write_if_changed):
++    result = read(kernel, work_id)
++    state_file = out_dir / "state" / "recovery_reports.json"
++    if not result["items"] and not state_file.exists():
++        return False
++    rows = []
++    lines = ["# Recovery 분석", "", "> 저장된 후보 보고서 모음. 코드 수정·제품 시험·안전 복귀의 검증 상태는 각 원본에서 확인하세요.", "",
++             "| Evidence | 요약 | 선언된 source revision | 근거 상태 | 원본 |", "|---|---|---|---|---|"]
++    for item in result["items"]:
++        mapping = artifact_entries.get(item["id"], {})
++        published = mapping.get("published_path")
++        valid = False
++        if isinstance(published, str):
++            rel = Path(published)
++            target = out_dir / rel
++            valid = (not rel.is_absolute() and ".." not in rel.parts and not target.is_symlink()
++                     and target.resolve().is_relative_to(out_dir.resolve()) and target.is_file()
++                     and mapping.get("sha256") == item["sha256"] and item["integrity"] == "MATCH"
++                     and hashlib.sha256(target.read_bytes()).hexdigest() == item["sha256"])
++        entry = {key: item.get(key) for key in ("id", "provider", "provider_version", "code_rev", "sha256", "summary", "confidence_state", "integrity")}
++        entry["published_path"] = published if valid else None
++        rows.append(entry)
++        link = "[보고서](" + quote(published, safe="/") + ")" if valid else "미게시/무결성 미확인"
++        lines.append("| " + " | ".join((_cell(item["id"]), _cell(item["summary"]), _cell(item["code_rev"]),
++                     _cell(item["confidence_state"] + " / " + item["integrity"]), link)) + " |")
++    payload = {"schema_version": 1, "derived": True, "work_id": work_id, "items": rows}
++    write_if_changed(state_file, json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n")
++    write_communication(out_dir, "RECOVERY.md", "\n".join(lines) + "\n")
++    return bool(rows)
++
++
++def project_index(root, dashboard_rows, write_communication, write_if_changed):
++    items = []
++    found_projection = False
++    for work in dashboard_rows:
++        wid = work["work_id"]
++        if not re.fullmatch(r"[A-Za-z0-9_.-]{1,100}", wid) or wid in {".", ".."}:
++            continue
++        directory = root / "works" / wid
++        path = directory / "state" / "recovery_reports.json"
++        if path.is_symlink() or not path.resolve().is_relative_to(root.resolve()) or not path.is_file():
++            continue
++        if path.stat().st_size > MAX_BYTES:
++            raise KernelError("RECOVERY_PROJECTION_INVALID", "Recovery projection exceeds size limit")
++        data = json.loads(path.read_text(encoding="utf-8"))
++        if data.get("schema_version") != 1 or data.get("work_id") != wid or data.get("derived") is not True:
++            raise KernelError("RECOVERY_PROJECTION_INVALID", "Recovery projection identity differs")
++        entries = data.get("items")
++        _require(isinstance(entries, list) and len(entries) <= 10000,
++                 "RECOVERY_PROJECTION_INVALID", "Invalid Recovery projection entries")
++        found_projection = True
++        for entry in entries:
++            _require(isinstance(entry, dict) and entry.get('provider') == PROVIDER
++                     and isinstance(entry.get('id'), str),
++                     "RECOVERY_PROJECTION_INVALID", "Invalid Recovery projection provenance")
++            selected = {key: entry.get(key) for key in ("id", "provider", "provider_version", "code_rev", "sha256", "summary", "confidence_state", "integrity", "published_path")}
++            published = selected.get('published_path')
++            if isinstance(published, str):
++                rel = Path(published)
++                target = directory / rel
++                safe = (not rel.is_absolute() and '..' not in rel.parts and not target.is_symlink()
++                        and target.resolve().is_relative_to(directory.resolve()) and target.is_file())
++                if not safe or hashlib.sha256(target.read_bytes()).hexdigest() != selected.get('sha256'):
++                    selected['published_path'] = None
++                    selected['integrity'] = 'PUBLISHED_UNVERIFIED'
++            items.append({**selected, "work_id": wid, "work_path": "works/" + wid})
++    if not found_projection:
++        return 0
++    items.sort(key=lambda x: (x["work_id"], x["id"]))
++    lines = ["# Recovery 분석 모음", "", "> 기존 Work/Evidence에서 파생한 탐색 목록. 분석·구현·시험 성공 판정은 원본과 구분하세요.", "",
++             "| Work | Evidence | 요약 | 원본 위치 |", "|---|---|---|---|"]
++    for item in items:
++        work_path = item["work_path"]
++        lines.append("| " + " | ".join((_cell(item["work_id"]), _cell(item["id"]), _cell(item["summary"]),
++                     "[Recovery 보기](" + work_path + "/RECOVERY.md)")) + " |")
++    write_communication(root, "RECOVERY.md", "\n".join(lines) + "\n")
++    write_if_changed(root / "index" / "recovery.json", json.dumps(
++        {"schema_version": 1, "derived": True, "category": "Recovery", "items": items},
++        ensure_ascii=False, indent=2, sort_keys=True) + "\n")
++    return len(items)
+diff --git a/packages/kernel/work_ledger_kernel/work_ux.py b/packages/kernel/work_ledger_kernel/work_ux.py
+index aa5b181..1a26bb1 100644
+--- a/packages/kernel/work_ledger_kernel/work_ux.py
++++ b/packages/kernel/work_ledger_kernel/work_ux.py
+@@ -913,6 +913,9 @@ class WorkUX:
+                     ensure_ascii=False,indent=2,sort_keys=True)+"\n")
+ 
+             display_name = self._display_name(wid, meta)
++            from .recovery_reports import project_work
++            has_recovery = project_work(self.kernel, wid, out_dir, artifact_entries,
++                                        write_communication, write_if_changed)
+             jira_keys = self.kernel.work_references(wid).get("jira") or []
+             work_title = _title_label(jira_keys, meta.get("work_name") or rec.get("title"), wid)
+             cp = brief.get("checkpoint") or {}
+@@ -998,6 +1001,8 @@ class WorkUX:
+                     readme.append(f"- {label}: {', '.join(_md(v, 120) for v in refs[kind])}")
+             readme += ["", "## 작업 산출물", ""]
+             readme += [f"- [{_md(Path(x).name)}]({quote(x, safe='/')})" for x in docs] or ["- 아직 연결된 분석/설계/검증 산출물 없음"]
++            if has_recovery:
++                readme += ["", "- [Recovery 분석](RECOVERY.md) — 후보·보호됨·기각·보류 결과의 원본 보기"]
+             readme += ["", "## 문서 쉽게 찾기", "",
+                        f"- [한글 문서 안내]({quote(NAV_FILENAME)}) — 분석·코드수정·설계·PC 이동 문서를 한곳에서 찾기", ""]
+             if (out_dir / "HANDOFF.md").is_file():
+@@ -1335,6 +1340,8 @@ class WorkUX:
+                     x['display_name'])
+         visible_rows = sorted(active_rows, key=board_rank)
+ 
++        from .recovery_reports import project_index
++        recovery_count = project_index(root, dashboard_rows, write_communication, write_if_changed)
+         latest_dashboard_record = dashboard_rows[0]["updated_at"] if dashboard_rows else ""
+         dashboard = ["# L1 Work Dashboard", "",
+                      "**L1 작업 문서 모음** — 이슈 제목으로 작업 내용을 확인하고, 문서 보기에서 분석·수정·설계 기록을 찾아보세요.", "",
+@@ -1365,6 +1372,8 @@ class WorkUX:
+         # Only a human navigation link; all knowledge files remain immutable to Kernel.
+         if knowledge_readme.is_file():
+             dashboard += ["## 개인 Knowledge", "", "[Knowledge 탐색](knowledge/README.md)", ""]
++        if recovery_count:
++            dashboard += ["## Recovery", "", "[Recovery 분석 모음](RECOVERY.md)", ""]
+         write_communication(root, "README.md", "\n".join(dashboard))
+ 
+         # Machine index for deterministic `last work` / active lookup.
+diff --git a/packages/workflow/.skill-release.json b/packages/workflow/.skill-release.json
+index 96d7175..ac27318 100644
+--- a/packages/workflow/.skill-release.json
++++ b/packages/workflow/.skill-release.json
+@@ -1,16 +1,18 @@
+ {
+-  "archive": "l1-fix-workflow_v1_6_74_1119.zip",
+-  "based_on": "1.6.70",
+-  "built_at": "2026-11-19T20:03:00+09:00",
+-  "channel": "public_release",
++  "archive": "l1-fix-workflow_v1_6_75_1120.zip",
++  "based_on": "1.6.74",
++  "built_at": "2026-11-20T08:00:00+09:00",
++  "channel": "development_not_for_deployment",
++  "host_integration": "NOT_RUN",
+   "independent_code_review": "SKIPPED_BY_USER_REQUEST",
++  "independent_review": "NOT_RUN",
+   "name": "l1-fix-workflow",
+-  "release_date": "2026-11-19",
+-  "release_kind": "user_explicit_delivery_with_independent_review_waived",
+-  "revision": 74,
++  "release_date": "2026-11-20",
++  "release_kind": "development_not_for_deployment",
++  "revision": 75,
+   "schema_version": 1,
+   "skill_name": "l1-fix-workflow",
+-  "skill_version": "1.6.74",
+-  "version": "1.6.74",
++  "skill_version": "1.6.75",
++  "version": "1.6.75",
+   "waiver_scope": "PEC_CODE_ANALYZER_AND_ACE_WORKFLOW_ONLY"
+ }
+diff --git a/packages/workflow/MANIFEST_SHA256.json b/packages/workflow/MANIFEST_SHA256.json
+index 0fee11f..dcf768c 100644
+--- a/packages/workflow/MANIFEST_SHA256.json
++++ b/packages/workflow/MANIFEST_SHA256.json
+@@ -1,5 +1,5 @@
+ {
+-  ".skill-release.json": "7ef2f19c8ff7a3def7aa78fb8592a2af0216f877645b26c1e9c15e435d2f8553",
++  ".skill-release.json": "f1b65b4c09b7e650a5e7406cc14374577b4856f1abcb596d0e1c5f7a34bfa537",
+   "CLAUDE_REVIEW_DISPOSITION_v1662_20261105.md": "ac17318e227240bd0b58be416617cc529efedb6d370473387f6b041d29c9e082",
+   "CODE_CHANGE_NOTE_USER_GUIDE.md": "80a2bfb9937f1dd8b349091369c0219a1651a62580bfba3d34af06bffead743c",
+   "DEVELOPMENT_PROVIDER_RETIREMENT_20261028.md": "49d4f5457c57ec6d4a6b741817540ae2a5079cf741f8049fe39ed3966d4e8384",
+@@ -38,7 +38,7 @@
+   "RELEASE_NOTES_v1_6_66.md": "046a8ef65da42bddd71f7964f68436bdd593eabb82d1b435e77f5a93709a6a99",
+   "RELEASE_NOTES_v1_6_67.md": "0390583d0b9a93da83c538e3f5b3369c3c36a8192913622238691d4d6546879a",
+   "REVIEW_CORRECTIONS_20261103.md": "f8c3f277225ffb0ad785a1160d636dd8304d434f4341d23a7ffca6a29dd776d1",
+-  "SKILL.md": "86e8e3ce52385524b4def8af30dbb9f6fa837c26bf31310e063653ab27a9c11e",
++  "SKILL.md": "f31d4fe380f1ac5feb62cfc88a1e107ad6ae56f022a44d222185792170417c2f",
+   "TEST_MATRIX.md": "f9ff9c4d40ce84a2099d131afee87df9e3bb2f48ca7aa9591ce95232b7594b85",
+   "UPDATER_COMPATIBILITY.md": "084b56fbfd23218d97b317f2bf2af2efd15cfb8b0be946639ea537f7c13dce07",
+   "VALIDATION.md": "a004fa7682eb5cee47cf3e79caa06b93b32944e5390d206994a1704c85b77358",
+@@ -46,7 +46,7 @@
+   "VALIDATION_CODE_CHANGE_NOTE.md": "b1579ffa4337735929c658b9123af165da72810e56fcc398f60e42759fc11e2c",
+   "VALIDATION_STAGE0.md": "b28288f2dd75f2c0e84c6214c08c95605022015ef651d2d75e884484fe33390e",
+   "VALIDATION_USER_CENTRIC_BRIEF.md": "dbda92d73b8cc0898f81efc0112e40783889bdc5e122c5e9dbd5a4ecd27f7c0d",
+-  "VERSION": "9050ae7e3bbf77f8db521056dc358897b02b9756f67bb68928d0f959a1a47371",
++  "VERSION": "0f7f44b0ddec1e4e430aeb4ebf24a67aa551b080448a32c2cee7560aa75fe8db",
+   "contracts/blocker.schema.json": "706b1ef6ded85c60f81c364bcf443b415b5c55257cde89ee8ab7307100de8a13",
+   "contracts/discussion_context_event_v1.schema.json": "c8cc17eb244bf6f5aa98a620a294ca2cffb73f5e002fb1d062571ec48230b9fa",
+   "contracts/discussion_draft_v1.schema.json": "bb1b4bfeb769a747fdeb7af45aac6283603649366416e260e601695b0cc39344",
+@@ -97,6 +97,7 @@
+   "docs/PROVIDER_INTEGRATION_STATUS.md": "439e17196992d8e51d62ed60b6c26a487122b07f5f6e22feb84ed3604a3e2480",
+   "docs/PROVIDER_PREFLIGHT_v1.md": "b0f4a2b542c99df76f7f77f245e53baeb796aeb88f0a9bd3e402636ca9b120dc",
+   "docs/PROVIDER_REPAIR.md": "bcd8006dc102e83d352f04edc174f37c1c17ebd9ad48dc89f5c13f7e45f4b340",
++  "docs/RECOVERY_REPORT_CONNECTION.md": "4bfa3f916b4fb0e1c68ac7dbf88e1d24cba037b3c0c14bad045dda9a68c1b6f9",
+   "docs/SOC417910_EVIDENCE_ENRICHMENT.md": "e050b81de3980d0efae2de2bf31ea5b40209093440abba344f9648ee568b87f3",
+   "docs/STEP10_COMPLETION_20260929.md": "b87e348dbcbc78dff447abc60f65abf68f20b84c4b4516ca4d2adbd56352b9e4",
+   "docs/STEP11_COMPLETION_20260929.md": "1262d243e9f174edcf6d6e25aab3f534901591a58e60085901ba3b46802b2678",
+@@ -130,7 +131,7 @@
+   "docs/WORK_DOCS_DIRTY_RECONCILE_GUIDE.md": "f8128638657c8b9a21a3bf31ac4e18850952c67544c8701201b9bfafbe523509",
+   "docs/WORK_ID_GITHUB_PHASE1_20261017.md": "7621bdd365cc7e933b3ff776d441be7feeea552a2a6afa3422d18d19fbea02b6",
+   "examples/tx_on_module_readme.md": "85ac11e86e7f22b9db64b72dcccdcc6366bca3ce2e16d0fb0a0d78db8be58690",
+-  "l1_fix_workflow/__init__.py": "22d6ce2b15fd9a9bfab2ca63b25a31373009b15728e17a7831290c238e46cdf4",
++  "l1_fix_workflow/__init__.py": "e861b12dda31b612d72faac8cc4695a447e67f05ca1180ad9c7276ee0847e8c1",
+   "l1_fix_workflow/__main__.py": "79ee6f134c5c5193377cf9b189cbdcc3e2095e49ba9cec310114441c15a917c4",
+   "l1_fix_workflow/ace_resume_readonly.py": "35990254de888edf3e14f00d596935a8fe5de131e82c7665c1ce4a2a6f4294d7",
+   "l1_fix_workflow/analysis_diagnostics.py": "31acb2797f0ad6f5a5ea1d1cc7b3fe47d00ae141c838d119b92b4451bc323d54",
+@@ -139,7 +140,7 @@
+   "l1_fix_workflow/auto_code_scope.py": "8dc97e217e9c187779066cb16f87f3f4aa0b1bca3c173bb2141d8803cb94d54a",
+   "l1_fix_workflow/blockers.py": "0b411f28f6818a5ae1987533722a7cf2355852dbcde07100116367e5cda78e64",
+   "l1_fix_workflow/chat_first.py": "e8699dbcfe939aa3f15d1985d07c50d8be28f60b5aee72d5d714fb769d7179a4",
+-  "l1_fix_workflow/cli.py": "e5305832cf14b93f60912869ce93bc59bdabf7e25aef179ff8542604b0a84536",
++  "l1_fix_workflow/cli.py": "bf12331d679087e5ef167a410703a369a03a2531541dfe1b33ea0ee44002c81b",
+   "l1_fix_workflow/clpr_existing_work_link.py": "41c742ea24d5340735c509a43c479e3d4a50c5741430eccd6eb752f3349121ce",
+   "l1_fix_workflow/code_analysis_adapter.py": "653d93161e5ab33be7c470c0eac71762b861b1f0e3f05d2336f06308a8e95089",
+   "l1_fix_workflow/code_fact_detail.py": "8885ae5aa9c4e87cceb89efa46a689719c967a604a8c7677499a8a099351ed8d",
+@@ -153,7 +154,7 @@
+   "l1_fix_workflow/docs_diverged.py": "bfd795547e2c1aaed1180aeba1c8f869c109808110536e0c6ec3e42067b38b79",
+   "l1_fix_workflow/docs_reconcile.py": "eac42228ebfa16550f15e6df965e69784ea97491413a6e724da5ba3cd2fa16ad",
+   "l1_fix_workflow/docs_security.py": "8c4a672a9eae41d91821c3fd66d6fa2551d64183ee965fd4a5be9f4cb9f24073",
+-  "l1_fix_workflow/feature_evidence.py": "f691be898cd4be1bed6e6f131d43c19acc6177a0972a950dadf722456b52e829",
++  "l1_fix_workflow/feature_evidence.py": "950b872cd3824853095b4513ec0c5174616432c126182046fa77713d505b5162",
+   "l1_fix_workflow/fla_local_execution.py": "a500951804b3eff582a289549868d7d67cec8f7ef576d7876d4e767458f75f8e",
+   "l1_fix_workflow/fla_local_worker.py": "3e79026b23564ec2e771fb00cefdf245282d3f289d374c99f921ddcceda5f8f5",
+   "l1_fix_workflow/github_docs.py": "85e634674835582f54561dbda8967af8f51e21d2fc8f6d028a519fcb10ec154a",
+@@ -200,7 +201,7 @@
+   "provider_contracts/provider_deployment_manifest.code-analyzer.example.json": "e6a3cdd18a35746db0bc3f9ec697790ec82e96d7c6d2315def522131dbba15de",
+   "provider_contracts/provider_deployment_manifest.example.json": "2189addcfbef81ff877994709883eaa42f26ddf56bc5e9ad68e4652f215fc9dd",
+   "provider_contracts/tooling_verification_handoff_v1.schema.json": "3d3feb5858a5fad95fc08304989587dc9af807c43aa6aa0a394d9c5e1fe23bc2",
+-  "pyproject.toml": "e0ec0d6020f068b9fe62c5e0dd4a18221f5c7139a9bcd0ce667e7096ab5f86d8",
++  "pyproject.toml": "5305dd4bc6ff5e8dba9394f03ea3df0358d53c7e3d377c637cdcced82b616003",
+   "references/generated_docs_communication.md": "e1e896f190c6fc86b803046479377e72b41423e5749a78a3b066306b7de448a0",
+   "review_evidence/CHANGE_LIST.json": "325888d1dc79944ec55e97bb4fc109f4d955d7e69489aa47c9e3cdd2b07b7f69",
+   "review_evidence/FULL_DIFF.patch": "dd779a9d062232f6d3a8e551733f81ae450f73d0b120ec717f0b649a3ddb3310",
+@@ -222,7 +223,7 @@
+   "review_evidence/candidate_work_view.xml": "b7652c18054cfacfa8dd6b0e890cf9d01f890614cfef4b721d8f7ecbfde26461",
+   "scripts/deploy_code_analyzer_provider.py": "ab03c780ac7bd2bdebb4e789f5da455c691ea2f3b3f170a476809591385959eb",
+   "skillsilent/contract.json": "aacca15cb2f0656afe9068e8ed06c0e8d0e26e5457e91534434a893a9a54b4fa",
+-  "skillsilent/manifest.json": "1924f477ecee3f7b9aa134e9546a1854a1301cdc28d0f93da65343f5535b9fd5",
++  "skillsilent/manifest.json": "51ef652aae761d71df13dc47e46362a0187dcc872e419a45cfe5fd62cbe35cbb",
+   "templates/BUG_ANALYZE_HANDOFF.md": "9f95ce753fdea22ac4965fdb690854eeac8868468464ab6ef8066cfaa6fc021a",
+   "templates/DELIVERY_HANDOFF.md": "b8d542ea77e6f015aacc91d1a82e171d65f1a97495de1fc900907c346d3a6d48",
+   "templates/FEATURE_WORK_DOCUMENTS.md": "eba08c9ba5e69c60fcd731accfc76161ea1218d99d8161d2aa8c3c6f7acb5de0",
+@@ -282,6 +283,7 @@
+   "tests/test_provider_repair_v1637.py": "437804f009ed7ed968e35ffcb7426a117f631f870c6beede1776dd0b69c47152",
+   "tests/test_provider_setup_v1617.py": "efe5265b7569afaefed07335ce5014156694c269b68d0f0ed98c761fb4db048f",
+   "tests/test_readability_fix_v1627.py": "774ebbcf2b8cb6cfb379df114bed81b5350e4db87920ffd6f897b012159426f9",
++  "tests/test_recovery_intake_v1675.py": "fab75b471ea0392cc9873bce86f059ea62fca5a7d2d0fd6f60adbe6dfbd8b7ee",
+   "tests/test_repo_status_v166.py": "87755477ca26a7ac63c6a6d887732af3c27e0ab7ab9c6fd08c1c2afd79eeba1f",
+   "tests/test_resume_boundary_v165.py": "17ed880f26237103f4f03f7c1fe9bbd133397c31d348869d33e8d92adc71fb22",
+   "tests/test_resume_tl_summary_v1643.py": "0ac9641694aab6d554bd3de16bd1dc292c5c593fb47c43c79bafeb5d5841b7b2",
+diff --git a/packages/workflow/SKILL.md b/packages/workflow/SKILL.md
+index 9caabb8..98cf693 100644
+--- a/packages/workflow/SKILL.md
++++ b/packages/workflow/SKILL.md
+@@ -1,9 +1,16 @@
+ ---
+ name: l1-fix-workflow
+-version: "1.6.74"
++version: "1.6.75"
+ description: Orchestrates L1 issue Work and TL continuity with deterministic Work Ledger policy and read-only MCP plan inspection.
+ ---
+ 
++## Recovery 결과 연결 — 개발 후보 1.6.75
++
++- l1-channel-recovery 결과는 기존 attach-evidence preview/apply로 같은 Work에 연결. 새 분석·Git 게시 경로 없음.
++- 해당 기능을 제공하는 Kernel과 기존 허용 Linux PC writer를 사용. MCP read-only 모드에서는 로컬 보고서 첨부를 거부.
++- [생산자 연결 계약](docs/RECOVERY_REPORT_CONNECTION.md)을 확인. 사용자에게 MCP 설치본 자료를 요구하는 절차를 선행하지 않음.
++
++
+ ## v1.6.67 — Plus 보고서 재사용·Code Analyzer 중복 실행 방지 (개발 후보)
+ 
+ - BUG/BUG-NR 기본 `l1sw-dev-log-analyzer-plus`는 로그·코드 조사·RCA·최종 보고서를 한 번에 수행한다. 완료 Plus 보고서와 재현 근거가 유효한 경우 일반 분석 재요청은 기술 Provider를 중복 실행하지 않는다.
+diff --git a/packages/workflow/VERSION b/packages/workflow/VERSION
+index c72e84f..63db16a 100644
+--- a/packages/workflow/VERSION
++++ b/packages/workflow/VERSION
+@@ -1 +1 @@
+-1.6.74
++1.6.75
+diff --git a/packages/workflow/docs/RECOVERY_REPORT_CONNECTION.md b/packages/workflow/docs/RECOVERY_REPORT_CONNECTION.md
+new file mode 100644
+index 0000000..fec53bf
+--- /dev/null
++++ b/packages/workflow/docs/RECOVERY_REPORT_CONNECTION.md
+@@ -0,0 +1,19 @@
++# Recovery 보고서를 기존 Work에 연결 — 개발 후보 1.6.75
++
++새 분석·Git 게시 경로를 만들지 않고 기존 `attach-evidence`의 preview/apply를 재사용해요. 지원 Kernel은 `recovery_report_preview`와 `record_recovery_report`를 제공하는 개발 후보 0.7.46 계약이에요. 미지원 Kernel은 `RECOVERY_KERNEL_UNSUPPORTED`로 답해요.
++
++```text
++<기존 Workflow launcher> attach-evidence --work-id <기존 ID> --file <결과 MD/JSON> --kind recovery_analysis --provider l1-channel-recovery --provider-version <실제 선언 버전> --code-rev <고정 대상 revision> --summary <보고서 요약>
++```
++
++preview는 저장하지 않아요. 로컬에서 이미 허용된 Linux PC writer가 preview의 `source_sha256`·`evidence_revision`을 사용해 같은 명령에 `--apply --expected-sha256 <hash> --expected-revision <revision> --actor <기존 identity> --session-id <기존 session>`을 붙여 저장해요.
++
++- 기존 인증된 로컬 writer 경계를 그대로 사용해요. writer 환경 플래그를 새로 활성화하는 설치 지시가 아니에요.
++- MCP read-only 모드에서는 파일 읽기 전에 이 로컬 첨부 경로를 거부해요. MCP 도구 등록/권한을 추가하지 않아요.
++- 실제 l1-channel-recovery가 생성한 보고서에만 해당 provider를 사용해요. source revision/생산자 선언의 실제 확인 근거는 업무 Work에 보존해요.
++- 후보/보호됨/기각/보류·미분석과 REQ→CNF timeout 제외를 원본 보고서에 유지해요. 보고서 본문을 자동 재작성하지 않아요.
++- 같은 내용/출처의 재시도는 기존 Evidence를 반환해요. 다른 내용·revision은 기존 원본을 덮어쓰지 않아요. 저장만으로 lifecycle을 전이하지 않아요.
++- 저장 후 기존 Kernel `recovery-list --work-id <ID>`와 docs export에서 원본·Recovery 파생 목록을 확인할 수 있어요. Git 게시와 Viewer 연결은 기존 허용 경로에서 별도로 확인해요.
++- 기존 code-analyzer/hld-composer 첨부는 기존 동작을 유지해요. 개인 Knowledge 분류는 Updater 책임이에요.
++
++개발·합성 확인과 실제 업무 호스트 설치·생산자 연결 완료는 구분해요. 업무 GPT가 이 구현 계약을 참고해 접근 가능한 설치본과 최소 연결 설계를 진행하며, 사용자에게 MCP 자료를 먼저 제공하라는 요청을 반복하지 않아요.
+diff --git a/packages/workflow/l1_fix_workflow/__init__.py b/packages/workflow/l1_fix_workflow/__init__.py
+index 8ee5cd6..62c56bd 100644
+--- a/packages/workflow/l1_fix_workflow/__init__.py
++++ b/packages/workflow/l1_fix_workflow/__init__.py
+@@ -1 +1 @@
+-__version__ = "1.6.68"
++__version__ = "1.6.75"
+diff --git a/packages/workflow/l1_fix_workflow/cli.py b/packages/workflow/l1_fix_workflow/cli.py
+index 6f698a0..c3c06f3 100644
+--- a/packages/workflow/l1_fix_workflow/cli.py
++++ b/packages/workflow/l1_fix_workflow/cli.py
+@@ -118,7 +118,7 @@ def parser():
+     q.add_argument('--work-id');q.add_argument('--items-json',help='JSON array of requirements/decisions/questions')
+     q.add_argument('--pending-id');q.add_argument('--digest');q.add_argument('--host-id')
+     q.add_argument('--session-id');q.add_argument('--actor')
+-    q=sp.add_parser('attach-evidence',help='Feature evidence: explicit Linux PC preview/apply; no automatic provider run')
++    q=sp.add_parser('attach-evidence',help='Existing Work evidence including Recovery: Linux PC preview/apply; no provider run')
+     q.add_argument('--work-id',required=True);q.add_argument('--file',required=True)
+     q.add_argument('--kind',required=True);q.add_argument('--provider',required=True)
+     q.add_argument('--provider-version',required=True);q.add_argument('--code-rev',required=True)
+diff --git a/packages/workflow/l1_fix_workflow/feature_evidence.py b/packages/workflow/l1_fix_workflow/feature_evidence.py
+index 85ef52d..5f5aea0 100644
+--- a/packages/workflow/l1_fix_workflow/feature_evidence.py
++++ b/packages/workflow/l1_fix_workflow/feature_evidence.py
+@@ -15,8 +15,21 @@ def _deny(code, message):
+ def attach_evidence(kernel, *, work_id, source_path, provider, provider_version,
+                     code_rev, evidence_kind, summary, apply=False, expected_sha256=None,
+                     expected_revision=None, actor=None, host_id=None, session_id=None):
++    if provider == 'l1-channel-recovery':
++        import os
++        if os.environ.get('L1_WORKFLOW_MCP_READ_ONLY') == '1':
++            _deny('RECOVERY_LOCAL_ONLY','Local Recovery report intake is not available through MCP read-only mode')
+     if apply:
+         kernel.feature_design()._writer(actor,session_id)  # same authenticated Linux PC boundary
++    if provider == 'l1-channel-recovery':
++        if evidence_kind != 'recovery_analysis':
++            _deny('RECOVERY_KIND_INVALID','Recovery producer only supplies recovery_analysis reports')
++        if not hasattr(kernel,'recovery_report_preview'):
++            _deny('RECOVERY_KERNEL_UNSUPPORTED','Kernel Recovery report intake is unavailable')
++        if apply:
++            return kernel.record_recovery_report(work_id,source_path,provider_version,code_rev,summary,
++                                                 expected_sha256,expected_revision)
++        return kernel.recovery_report_preview(work_id,source_path,provider_version,code_rev,summary)
+     record=kernel.load_record(work_id)
+     source_input=Path(source_path).expanduser()
+     if source_input.is_symlink():
+diff --git a/packages/workflow/pyproject.toml b/packages/workflow/pyproject.toml
+index 32e10ce..7dd0865 100644
+--- a/packages/workflow/pyproject.toml
++++ b/packages/workflow/pyproject.toml
+@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
+ 
+ [project]
+ name = "l1-fix-workflow"
+-version = "1.6.67"
++version = "1.6.75"
+ description = "Work Ledger based multi-turn L1 multi-profile L1 development controller"
+ requires-python = ">=3.10"
+ dependencies = []
+diff --git a/packages/workflow/skillsilent/manifest.json b/packages/workflow/skillsilent/manifest.json
+index 56064b0..253bae1 100644
+--- a/packages/workflow/skillsilent/manifest.json
++++ b/packages/workflow/skillsilent/manifest.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "l1-fix-workflow",
+   "schema_version": 1,
+-  "skill_version": "1.6.74",
+-  "version": "1.6.68"
++  "skill_version": "1.6.75",
++  "version": "1.6.75"
+ }
+diff --git a/packages/workflow/tests/test_recovery_intake_v1675.py b/packages/workflow/tests/test_recovery_intake_v1675.py
+new file mode 100644
+index 0000000..435e8a4
+--- /dev/null
++++ b/packages/workflow/tests/test_recovery_intake_v1675.py
+@@ -0,0 +1,55 @@
++from __future__ import annotations
++import json,os,tempfile,unittest
++from pathlib import Path
++from contextlib import redirect_stdout
++from io import StringIO
++from unittest.mock import patch
++from work_ledger_kernel.kernel import WorkLedgerKernel
++from work_ledger_kernel.errors import KernelError
++from l1_fix_workflow.feature_evidence import attach_evidence
++from l1_fix_workflow.cli import main
++
++
++class RecoveryIntakeTests(unittest.TestCase):
++    def setUp(self):
++        self.t=tempfile.TemporaryDirectory();self.root=Path(self.t.name)
++        self.k=WorkLedgerKernel(self.root/'ledger');self.k.new('SYNTHETIC-RECOVERY','BUG','Synthetic')
++        self.source=self.root/'report.md';self.source.write_text('# Recovery\nNOT_RUN\n')
++        self.args=dict(work_id='SYNTHETIC-RECOVERY',source_path=self.source,provider='l1-channel-recovery',provider_version='unverified',code_rev='synthetic',evidence_kind='recovery_analysis',summary='Synthetic report')
++
++    def tearDown(self):self.t.cleanup()
++
++    def test_existing_preview_apply_path_records_only_supplementary_report(self):
++        p=attach_evidence(self.k,**self.args);self.assertFalse(p['saved'])
++        with patch.dict(os.environ,{'L1_PC_LEDGER_WRITER':'1','L1_WORKFLOW_MCP_READ_ONLY':'0'}):
++            result=attach_evidence(self.k,**self.args,apply=True,expected_sha256=p['source_sha256'],expected_revision=p['evidence_revision'],actor='local-agent',session_id='synthetic-session')
++        self.assertEqual(1,result['created']);self.assertEqual('l1-channel-recovery',result['evidence']['provider'])
++        self.assertEqual('OPEN',self.k.load_record('SYNTHETIC-RECOVERY')['state'])
++
++    def test_write_without_existing_pc_authority_is_denied(self):
++        with patch.dict(os.environ,{'L1_PC_LEDGER_WRITER':'0'}):
++            with self.assertRaises(KernelError):attach_evidence(self.k,**self.args,apply=True)
++        self.assertEqual(0,len(self.k.load_record('SYNTHETIC-RECOVERY')['evidence_index']))
++
++    def test_mcp_mode_rejected_before_report_access_even_with_local_writer_flag(self):
++        args={**self.args,'source_path':self.root/'does-not-exist.md'}
++        with patch.dict(os.environ,{'L1_PC_LEDGER_WRITER':'1','L1_WORKFLOW_MCP_READ_ONLY':'1'}):
++            with self.assertRaises(KernelError) as caught:attach_evidence(self.k,**args)
++        self.assertEqual('RECOVERY_LOCAL_ONLY',caught.exception.code)
++
++    def test_unsupported_kernel_and_kind_are_explicit(self):
++        with self.assertRaises(KernelError) as caught:attach_evidence(object(),**self.args)
++        self.assertEqual('RECOVERY_KERNEL_UNSUPPORTED',caught.exception.code)
++        with self.assertRaises(KernelError) as caught:attach_evidence(self.k,**{**self.args,'evidence_kind':'impact'})
++        self.assertEqual('RECOVERY_KIND_INVALID',caught.exception.code)
++
++    def test_cli_preview_and_apply_reuse_existing_command(self):
++        args=['--ledger-root',str(self.root/'ledger'),'attach-evidence','--work-id','SYNTHETIC-RECOVERY','--file',str(self.source),'--kind','recovery_analysis','--provider','l1-channel-recovery','--provider-version','unverified','--code-rev','synthetic','--summary','Synthetic report']
++        out=StringIO()
++        with redirect_stdout(out):rc=main(args)
++        self.assertEqual(0,rc);p=json.loads(out.getvalue())
++        with patch.dict(os.environ,{'L1_PC_LEDGER_WRITER':'1','L1_WORKFLOW_MCP_READ_ONLY':'0'}):
++            with redirect_stdout(StringIO()):rc=main(args+['--apply','--expected-sha256',p['source_sha256'],'--expected-revision',str(p['evidence_revision']),'--actor','local-agent','--session-id','synthetic-session'])
++        self.assertEqual(0,rc);self.assertEqual(1,self.k.work_recovery_reports('SYNTHETIC-RECOVERY')['count'])
++
++if __name__=='__main__':unittest.main()

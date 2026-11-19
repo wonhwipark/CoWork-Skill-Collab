@@ -1,0 +1,40 @@
+{
+  "artifacts": [
+    {
+      "archive": "work-ledger-kernel_v0_7_46_1120.zip",
+      "bytes": 330715,
+      "channel": "development_not_for_deployment",
+      "cli_version": "0.7.46",
+      "covered": 165,
+      "hash_files": 1,
+      "members": 166,
+      "reproducible": true,
+      "sha256": "dabd412847354c77ca105da3ed686924f676f5f3c67428a2b984e68f2998076e",
+      "status": "PASS",
+      "version": "0.7.46"
+    },
+    {
+      "archive": "l1-fix-workflow_v1_6_75_1120.zip",
+      "bytes": 753864,
+      "channel": "development_not_for_deployment",
+      "cli_version": "1.6.75",
+      "covered": 312,
+      "hash_files": 1,
+      "members": 313,
+      "reproducible": true,
+      "sha256": "d13259cd0c9359dee2cddcb1c622fce5d98b663f9bc6eaea48c8a1c3b46b9ce4",
+      "status": "PASS",
+      "version": "1.6.75"
+    }
+  ],
+  "host_integration": "NOT_RUN",
+  "independent_review": "NOT_RUN",
+  "patch_sha256": "1649d8e7288134a7044f5ccede87ae974f707c7db6888707bde03d3fe724f60a",
+  "schema_fsm_unchanged": true,
+  "source_pins": {
+    "kernel43": "80c955790aaa65f695c061f7ec2664bd1c7c5ba7e0a7534045960eea7fe2d5f6",
+    "kernel45": "1bccbbffeaafcefda27b75ca8f430e502bc8c2b475b63bd76425ca7ee1c5d7f8",
+    "workflow74": "b810ce0cf072609431737c58b0ef2b7a0a8ec0701a0746e6a94283c374224989"
+  },
+  "status": "CANDIDATES_BUILT_NOT_FOR_DEPLOYMENT"
+}
