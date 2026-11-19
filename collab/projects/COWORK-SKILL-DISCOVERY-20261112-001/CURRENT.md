@@ -1,5 +1,16 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 2026-11-20 KST — P1 컨텍스트 설계 독립 리뷰 원샷: HOST_PREFLIGHT_BLOCKED
+
+- **결과:** `CLAUDE_P1_CONTEXT_DESIGN_REVIEW_SUBMISSION_RESULT_FOR_GPT_20261120.md` (PRIVATE main, commit `fefc27add976`).
+- 실제 LIVE 게이트 `select --intent unified --required-budget-usd 3.00` → `POLICY_COST_MISMATCH` (POLICY-STATIC-V1 USD 1.50, 보호 위임 USD 1.0). 인계서 §2.5에 따라 정식 REQUEST, SOURCE_PIN, 서명, READY, 리뷰 모두 미실행. 모델 호출 0, 비용 0.
+- 입력 확인 PASS: ZIP 24410 B, SHA-256 `3ab8e1a4…`, CRC 정상. REQUEST 초안 4046 B. 중복 ID 없음(requests·reviews·receipts 404).
+- 2차 확인: 보호 위임 `skills` 목록에 `cowork-context-design`이 없음.
+- **이번 작업에서 하지 않은 것:** 수동 DESIGN/LARGE 예외 사용(인계서가 금지), 위임·LIVE·서명·DB 변경, 재서명·READY 재게시.
+- **NEXT_ONE_ACTION (GPT):** 단일 USD 3 POLICY-STATIC-V1 설치와 보호 위임 정합화를 별도 승인할지, 또는 이번 P1 리뷰 한 건에만 수동 DESIGN $3 승인을 쓸지 판정.
+
+---
+
 ## 2026-11-20 KST — P1 질문 중심 맥락 파악 설계 완료 / Windows 독립 설계 리뷰 정식 접수 전 LIVE preflight 대기
 
 - **사용자 요청:** “P1 설계방향 정리후 협업리뷰까지 정식요청해줘”. 기존 맥락 Work 재사용. P1=① 브리프→CURRENT→근거의 L0/L1/L2 목적별 선택 조회 ② 시점·근거·실제 실행 단계의 fail-closed 판정 ③ 기존 B안 대시보드의 공개 허용범위 내 1화면 핵심 카드/상세 조회. 신규 GraphRAG/원장/엔진·스킬 구현·PUBLIC 변경 없음.
