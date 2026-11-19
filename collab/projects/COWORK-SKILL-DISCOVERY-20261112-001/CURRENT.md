@@ -1,5 +1,18 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 2026-11-20 KST — 사용자 요청 P1→P2 연속 적용 완료 / 이번 범위 독립 리뷰 SKIP
+
+- **최신 사용자 지시:** “리뷰없이 진행후 적용해줘. 이후 p2 도 동일하게 진행해줘”. 기존 맥락 Work·대시보드 Work를 재사용해 P1(질문별 관련 CURRENT 선택·현재/근거/다음 행동 4카드)과 P2(해당 Work REQUEST→ZIP·SOURCE_PIN/서명·READY·REVIEW/RECEIPT 로컬 관계 조회 + 명시적 Git commit 비교 + 공개 개념 관계·세션 중 변경분)를 구현·적용. **이번 두 기능의 독립 리뷰만 `SKIP_BY_EXPLICIT_USER_REQUEST`**로 판정. 다른 업무·Watcher·Guard/기존 R1 독립 리뷰에 일반화 없음.
+- **실제 PRIVATE 적용:** `collab/dashboard/context_query.py`(SHA256 `41615df073cc1910ac5c909fd1ea694e7647edfdf83ea5e6218a61a2fb88627f`, 8449B), 기존 Dashboard `unittest discover`에 `tests/test_context_query.py` 9개 격리 시나리오 추가. PRIVATE [Action #44580631352](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/44580631352) `success`, 기존 공개 allowlist sync [#44580676608](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/44580676608) `success`.
+- **PUBLIC B안 적용:** `wonhwipark/L1Work/main/docs/cowork-dashboard/index.html` + `context-view.js`, commit `56c042fb3283a8a223a7b3a391e63f27cdebfb61`, `b70686e6859a042471c2da6a0bdcec4963ed4fec` (공개 4카드/접힘 P2 보기). Pages [#44579614254](https://github.com/wonhwipark/L1Work/actions/runs/44579614254) SUCCESS. 기존 5개 허용 공개 범주, 기존 3개 탭, status.json 스키마/exporter, 인계 최근3건·120초 갱신 불변. 신규 스킬 ZIP/PUBLIC 업무 데이터 배포 없음.
+- **검증 및 한계:** P1/P2 합성 UI 렌더/세션 1항목 변경 감지/변조·비허용 필드 fail-closed PASS, V8 JS 문법 PASS, 원격 public/private 소스 byte-SHA256 검사 PASS, PRIVATE Python CI PASS. **실제 사용자 PC/모바일 화면·30문항 정확도/성능·Windows/Linux 실호스트 E2E = NOT_RUN**. 문서/REQUEST 존재를 실행 PASS로 추정 금지.
+- **고정 원래 P1 리뷰 이력 보존:** Windows `CLAUDE_P1_CONTEXT_DESIGN_REVIEW_SUBMISSION_RESULT_FOR_GPT_20261120.md`의 `HOST_PREFLIGHT_BLOCKED`/USD3 정책 불일치/모델 0은 당시 실제 결과로 보존. 새 사용자 명시적 리뷰 생략으로 P1 새 REQUEST/READY/서명·유료 모델을 만들거나 legacy 요청을 재큐잉하지 않았음.
+- **결과·사용법:** [P1/P2 적용 결과](P1_P2_CONTEXT_IMPLEMENTATION_RESULT_r0001_20261120_KST.md) · [PRIVATE/PUBLIC 사용 안내](P1_P2_CONTEXT_APPLICATION_GUIDE_r0001_20261120_KST.md). 공통 브리프에 고정 진입 링크 연결.
+- **NEXT_ONE_ACTION:** 기존 PUBLIC Pages의 P1 네 카드·P2 펼침을 PC/모바일에서 사용자 시인성 검증. 필요 UI 수정은 기존 대시보드 Work에서 처리. P1/P2 정확도·속도 비교 30문항은 정량 실험 계획대로 별도 검증하며 미측정 성능 수치를 보고하지 않음.
+
+---
+
+
 ## 2026-11-20 KST — P1 컨텍스트 설계 독립 리뷰 원샷: HOST_PREFLIGHT_BLOCKED
 
 - **결과:** `CLAUDE_P1_CONTEXT_DESIGN_REVIEW_SUBMISSION_RESULT_FOR_GPT_20261120.md` (PRIVATE main, commit `fefc27add976`).
