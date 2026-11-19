@@ -1,5 +1,17 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-19 KST — Claude 토큰 만료 사용자 보고·업무 GPT 전달 전환 / L1Work PUBLIC 자료 게시 완료
+
+- **최신 사용자 결정:** Claude 토큰 만료를 보고하고, 업무 GPT로 넘길 자료를 L1Work에 업로드하도록 명시 요청. 이번 전달에 한해 과거 BUSINESS_GPT_DELIVERY HOLD를 **해제**, 업무 GPT의 화면 검토·현장 연동으로 전환. 이번 구현물의 Claude 독립 시각/코드 리뷰는 **NOT_RUN** 유지하며 PASS/완료로 소급하지 않음. 토큰 만료는 USER_REPORTED, 호스트/사용량 직접 검증과 구분.
+- **PUBLIC 전달 완료:** `wonhwipark/L1Work` / `main`, content commit `c9e9be9e84629bcdba07c1045384dac6bfd9bc93`. 루트 `l1-workspace-wiki-ui_v0_1_0_1119.zip` + `handoffs/L1_WORKSPACE_WIKI_UI_BUSINESS_GPT_REVIEW_AND_INTEGRATION_HANDOFF_r0001_20261119_KST.md` + `handoffs/L1_Workspace_Wiki_UI_v0_1_0_20261119_KST.html` + handoffs/README 최신 링크. **4개 원격 본문/실제 bytes·Git blob·SHA-256 readback PASS**, ZIP CRC PASS.
+- **고정 bytes/해시:** ZIP 267140B / SHA-256 `411553e74e76bb82237fd2ebef65169769e4dbe4cfd2231afb5afd38559b10a9`; 인계 MD 9465B / `5f96e9d723212e489cbeabe84556acdc01075636a639b274391baa23f66fca5e`; 단일 HTML 65344B / `119be5e0104fbcc22d0daa89b42c418eefd8f00cdb94534a6f3518c79de4ed9d`. 기존 PRIVATE ZIP·소스·버전 불변, 합성·경로·민감 패턴 검사 PASS. 업무 프롬프트에 PRIVATE 인증/서비스 의존성 없음.
+- **범위 판정:** PUBLIC_TRANSFER=USER_AUTHORIZED_DEVELOPMENT_HANDOFF / POSTED_VERIFIED. `development_not_for_deployment` 유지. 사용자 승인된 **개발·검토용 UI 자료 전달**이며 정식 스킬 릴리스·호스트 설치/서비스 재시작·동료 공유·그룹 Knowledge 쓰기 승인이 아님. 기존 자체시험 56/56·정적 19/19 재사용, 실제 Linux API/revision·B1/B2/B3·E3/E4 미검증 유지.
+- **인계 내용:** 화면 구성·가독성·스타일·사용자 시인성 4축을 업무 GPT가 먼저 검토→기존 Linux 별도 Viewer G0→기존 renderer/읽기 계약 재사용·adapter 최소 연결·현장 시험/rollback. 저사양 업무 LLM/Agent에 UI 전면 재개발을 맡기지 않음. 구 r0002/r0003/r0004 책임·Work/Evidence/그룹 정본 보존.
+- **협업 보존:** 기존 리뷰 초안/요청·서명·영수증·UNCERTAIN/완료 이력 변경·재큐잉 없음. 이 작업에서 신규 Claude/유료 호출·호스트/키/위임/DB/Notifier 변경 0. 사용자 전달 요청을 새 유료 재리뷰 지시로 바꾸지 않음.
+- **다음 한 행동:** 업무 GPT에 PUBLIC 인계 MD와 ZIP을 전달해 인계서 7절의 화면 검토 및 현장 최소 연결 지시를 이어감. 실제 대상 저장소/브랜치/호스트 경로/API는 현장 G0에서 확인하고 제한 자료는 업무 환경에 보존.
+
+---
+
 ## 2026-11-19 KST — 업무 GPT 전달 전 UI 시각·사용성 협업 리뷰 요청 / 호스트 사전검증 대기
 
 - **최신 사용자 지시:** 완성된 2안 위키 UI를 업무 GPT에 전달하기 전 화면 구성·가독성·화면 스타일·사용자 관점의 시인성을 독립 협업 리뷰. **BUSINESS_GPT_DELIVERY=HOLD_UNTIL_REVIEW_AND_GPT_DISPOSITION**. 기존 UI 개발·시험·ZIP 완료는 유지.
