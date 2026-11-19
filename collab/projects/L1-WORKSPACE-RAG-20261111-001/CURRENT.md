@@ -267,6 +267,16 @@
 
 ---
 
+## 2026-11-19 KST — Recovery 포인트 분석 상세 설계·구현 인계 PUBLIC 게시
+
+- **사용자 요청·범위:** recovery 포인트 분석 방법을 업무 GPT에 제안할 상세 설계/실구현 인계 MD 작성 및 L1Work handoffs 게시. 기존 같은 Work를 계속 사용. CNF 미수신 timeout·기존 recovery 커버 범위 제외, 저사양 순차 분석, 기존 스킬 재사용·최소 연결 원칙 유지.
+- **설계 인계:** [업무 GPT 상세 설계·구현 인계 r0001](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_RECOVERY_POINT_ANALYSIS_DETAILED_DESIGN_AND_IMPLEMENTATION_HANDOFF_r0001_20261119_KST.md), `wonhwipark/L1Work` / branch `main` / `handoffs/L1_RECOVERY_POINT_ANALYSIS_DETAILED_DESIGN_AND_IMPLEMENTATION_HANDOFF_r0001_20261119_KST.md`. 필수 자료·근거 9항목과 결론 제한, 스킬 책임, G01~G10 실제 기능 대조, S0~S6 입출력, 최초 불일치/검출/소유자 복구 경계, 후보 채택·기각/보류, E0~E5 단계별 최소 구현·회수 및 T01~T20/R01~R08 시험 계획 포함. 분석 흐름 구현과 제품 recovery 코드 변경 구분. 기존 11-17 프롬프트·r0001/r0002 보고서·게시 이력 보존.
+- **PUBLIC 게시·직접 확인:** 파일 commit `a4d0c7590c571fbfc50eb81b0ca1221cdbd4ce69`, Git blob `6e31a82166b7a595e7159729a1ce34e3d0fb1326`, **45494 UTF-8 bytes / 23093자**, SHA-256 `045417350fc942311f1d735a686df7dc7f28acfb9e091d61d0842a006da3fed1`. 실제 원격 본문·바이트 해시 대조 PASS. [handoffs 목록](https://github.com/wonhwipark/L1Work/blob/main/handoffs/README.md) 연결 commit `4fe13992da51416325608616c8ead9b1ba7416f3`, 원격 본문 readback PASS.
+- **검증·한계:** 문서 필수 항목·표 구조·기존 PUBLIC 상대 링크·지정 비밀/PRIVATE 의존성 패턴 확인 PASS(업무 소스/자료 미포함). `PUBLIC_HANDOFF=POSTED_VERIFIED`; 업무 설치본 G0·분석 연결 코드 구현·실제 CL/Jira/소스/로그 분석·T/R 실행·제품 recovery 변경/runtime 효과·저사양 실측·독립 리뷰·설치·Job·신규 유료 호출은 이번 범위에서 `NOT_RUN`. 문서의 시험 20+8개는 계획이며 실행 PASS 아님. 실제 업무 소스 저장소/branch/API는 업무 GPT가 현장에서 확인하도록 명시. 업무 프롬프트에 CoWork 경로·인증 의존성 주입 없음.
+- **NEXT_ONE_ACTION:** 업무 GPT가 새 인계의 E0/G01~G10으로 설치본·실제 소스/Work·유효 실행 범위를 대조하고 대표 비-timeout CL 1건을 기존 기능으로 분석, 입증된 gap만 최소 연결·관련 시험. CL이 없으면 합성 검증으로 진행하고 실제 사례는 NOT_RUN. 다른 MSC/Guard/Knowledge·기존 요청/영수증·배포 차단 상태는 이번 게시로 변경하지 않음.
+
+---
+
 ## 최신 검토 — CNF 미수신 timeout 제외·복구 지점 비교평가 (2026-11-17 KST)
 
 - **최신 범위·피드백 수용:** 사용자가 MSG REQ→CNF 미수신 timeout recovery 구현 완료를 알려 해당 이슈·기존 커버 범위를 제외. 구현 사실은 사용자 제공 정보이며 GPT 직접 소스 검증과 구분. 나머지 오류의 효과·안정성·저사양 모델 부담 기준 비교·제안 요청.
