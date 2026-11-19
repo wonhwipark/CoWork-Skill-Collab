@@ -5,11 +5,11 @@
       "work_id": "COWORK-AUTO-APPROVAL-20261115-001",
       "skill": "cowork-review-watcher",
       "title": "GPT→GitHub REQUEST 자동 서명·READY (제한된 사전 위임)",
-      "phase": "REVIEW",
-      "owner": "Windows Claude Code one-shot: tests/package → one independent review → conditional LIVE, GPT final evidence disposition",
-      "self_test": "PASS_PARTIAL (Windows 1010P/21 pre-existing FAIL/12S; E2E 8P)",
-      "independent_review": "V028_R1_COMPLETE_MAJOR_1_OPEN",
-      "next_action": "2026-11-20 Windows one-shot done up to the release gate. v0.2.28 final ZIP skill-collab-watcher_v0_2_28_1119.zip (309367 B, SHA256 9e6ee6d30170f0a2890237c7d1b9184e5c423213a18146926b848c5269b8c00c, commit 1fa042e1e86d). Windows full suite 1031 passed / 0 failed / 12 skipped (21 old failures fixed without deleting or skipping tests). One independent review REQ-COWORK-V028-AUTO-REVIEW-R1-20261120: completed, cost USD 1.1914, 1 call; BLOCKING 0 / MAJOR 1 / MINOR 2. MAJOR 1: raising max_request_usd without refreshing enabled_at can retroactively admit a request that was rejected only by PER_REQUEST_COST before any claim existed. RELEASE_GATE=BLOCKED, HOST_DEPLOY=BLOCKED_GATE: no LIVE install, no delegation change; LIVE v0.2.25, delegation USD1, DB, keys unchanged. Result CLAUDE_AUTO_REVIEW_COLLAB_ONE_SHOT_RESULT_FOR_GPT_20261119.md (commit b953e86e91dd). NEXT: GPT disposes MAJOR 1: A) accept as operator procedure (set enabled_at to the raise time together with max_request_usd) and install the SAME bytes, or B) fix docs/tests as v0.2.29 and run a second review (needs new USD 3 approval)."
+      "phase": "GPT_REVIEW_CONDITIONAL_ACCEPTANCE_HOST_PROOF_PENDING",
+      "owner": "Windows Claude Code: host proof gates then conditional same-SHA LIVE; GPT evidence disposition complete",
+      "self_test": "WINDOWS_HOST_REPORTED_PASS (1031P/0F/12S, package E2E SHADOW PASS; live host shadow NOT_RUN)",
+      "independent_review": "V028_R1_COMPLETED_MAJOR_1_ACCEPTED_WITH_HOST_MITIGATION_CONDITIONS_RECEIPT_OK",
+      "next_action": "GPT v0.2.28 R1 판정서 GPT_V028_R1_REVIEW_DISPOSITION_AND_HOST_GATE_r0001_20261120_KST.md: ACCEPT_WITH_CONDITIONS, HOLD_UNTIL_HOST_PROOF. 동일 SHA 9e6ee6d30170f0a2890237c7d1b9184e5c423213a18146926b848c5269b8c00c; R1 결과/영수증 ok=true, host audit cost $1.1914247 (receipt has no cost), no repeated review. Windows existing Work one-shot resumes read-only legacy/DB audit + synthetic cap-only retroactive exposure and cap+enabled_at mitigation proof + authorization/backup/rollback check; ONLY if all PASS protected same-SHA LIVE/STATIC $3 update and new epoch, shadow/restart and readback; otherwise BLOCKED/keep v0.2.25, delegation USD1. No review rerun, no READY re-post."
     }
   ]
 }
