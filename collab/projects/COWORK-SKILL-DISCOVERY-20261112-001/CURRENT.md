@@ -1,5 +1,16 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 2026-11-20 KST — P1 질문 중심 맥락 파악 설계 완료 / Windows 독립 설계 리뷰 정식 접수 전 LIVE preflight 대기
+
+- **사용자 요청:** “P1 설계방향 정리후 협업리뷰까지 정식요청해줘”. 기존 맥락 Work 재사용. P1=① 브리프→CURRENT→근거의 L0/L1/L2 목적별 선택 조회 ② 시점·근거·실제 실행 단계의 fail-closed 판정 ③ 기존 B안 대시보드의 공개 허용범위 내 1화면 핵심 카드/상세 조회. 신규 GraphRAG/원장/엔진·스킬 구현·PUBLIC 변경 없음.
+- **설계·검토 입력 게시 PASS:** [P1 상세 설계 r0001](P1_PROGRESSIVE_CONTEXT_EVIDENCE_DASHBOARD_DESIGN_r0001_20261120_KST.md) · [독립 리뷰 질문 Q01~Q10](P1_PROGRESSIVE_CONTEXT_INDEPENDENT_REVIEW_QUESTIONS_r0001_20261120_KST.md) · [Windows 사전검증용 정확한 REQUEST 초안](P1_CONTEXT_DESIGN_REQUEST_UNPOSTED_DRAFT_r0001_20261120_KST.md) · [Windows Claude Code 원샷 정식 접수 인계](P1_CONTEXT_DESIGN_WINDOWS_INDEPENDENT_REVIEW_ONESHOT_r0001_20261120_KST.md).
+- **고정 PRIVATE ZIP:** `collab/packages/cowork_p1_context_retrieval_design_r0001_1120_REVIEW_INPUT.zip`, **24,410 B / SHA-256 `3ab8e1a4e5b59e6eea0fa2bd90dc044bb86289cd569cafdbed6158f19dda3327` / Git blob `79da67d0831cb1dde89f901d946f048fc0ef3af2`**. PRIVATE main commit `4f8183f6592c5d970e01c63c3c2e6ba61dad47e5`; 원격 base64 ZIP 재조회·4개 엔트리 CRC/크기·blob 대조 **PASS**. 설계 source manifest는 고정 commit `b719b7355597e7027a53d7c6a3c0f0f8117b11f3`.
+- **정식 독립 리뷰 미접수 — 이유:** 정책 계약상 모든 신규 REQUEST는 Windows LIVE 실설치 `review_request_gate.py select/check` **사전 PASS 후에만** `collab/requests/` 경로에 게시 가능. 마지막 호스트 보고는 `POLICY-STATIC-V1=$1.50`/보호 위임 $1, 사용자 승인 신규 USD3 통합 정책은 실제 운영 적용 미확인. 이번 GPT 연결에는 Windows LIVE config·보호 서명자 실행 경로 없음. 특정 과거 wiki UI만의 수동 DESIGN/$3 예외는 이 요청에 재사용 금지. **`HOST_PREFLIGHT=NOT_RUN / FORMAL_REQUEST=NOT_POSTED / SOURCE_PIN=NOT_POSTED / APPROVAL_SIG=NOT_POSTED / READY=NOT_POSTED / INDEPENDENT_REVIEW=NOT_RUN / MODEL_CALLS=0`**. 단순 문서/ZIP 게시와 정식 접수 구분.
+- **고유 리뷰 후보:** `REQ-COWORK-P1-CONTEXT-RETRIEVAL-DESIGN-R1-20261120` (R1, STATIC_ONLY, 기존 승인 범위 확인 시만 최대 USD3·1회). 과거 완료 리뷰·Guard UNCERTAIN/READY를 수정·재큐잉하지 않음. 업무 호스트·Windows LIVE·PUBLIC 스킬·그룹 Knowledge 변경 0.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 [P1 원샷](P1_CONTEXT_DESIGN_WINDOWS_INDEPENDENT_REVIEW_ONESHOT_r0001_20261120_KST.md)의 **LIVE unified/$3 preflight+보호 signer 확인**부터 진행해 PASS 시 정확한 요청/승인/READY LAST/Claude 독립 리뷰 1회·영수증을 게시. BLOCKED면 같은 Work에 호스트 원인과 모델 0회만 게시. GPT는 실제 리뷰 결과/영수증 후 P1 수정 수용 판정. 이 단계 이후 구현/배포는 별개.
+
+---
+
 ## 2026-11-19 KST — PEC·ACE 두 최종 스킬 ZIP L1Work/main 게시·원격 SHA 검증 PASS (사용자 리뷰 생략)
 
 - **최신 사용자 지시:** “리뷰스킵하고 스킬 업데이트후패키지 l1work 에 올려줘”. 기존 PEC·ACE 두 스킬의 **독립 코드 리뷰 1회만** `SKIPPED_BY_EXPLICIT_USER_REQUEST`로 한정. 다른 스킬/리뷰/운영 정책에 일반화 없음. Windows 리뷰 `POLICY_COST_MISMATCH`로 미실행한 기록 보존; 신규 REQUEST/READY/유료 모델 0.
