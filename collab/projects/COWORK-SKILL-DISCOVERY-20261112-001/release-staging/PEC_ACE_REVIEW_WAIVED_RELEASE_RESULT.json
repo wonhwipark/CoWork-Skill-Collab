@@ -1,0 +1,103 @@
+{
+  "host_install": "NOT_RUN",
+  "no_export": "ENFORCED_IN_DESIGN_NOT_HOST_VERIFIED",
+  "review": "SKIPPED_BY_USER_REQUEST_2026_11_19",
+  "skills": {
+    "code-analyzer": {
+      "allowed_release_relabels": [
+        ".skill-release.json",
+        "PACKAGE_CONTENTS.sha256",
+        "SKILL.md"
+      ],
+      "archive": "code-analyzer_v0_15_4_1119.zip",
+      "independent_code_review": "SKIPPED_BY_USER_REQUEST",
+      "packaged_synthetic_tests": {
+        "count": 12,
+        "errors": 0,
+        "failures": 0,
+        "status": "PASS"
+      },
+      "public_posted": "NOT_YET",
+      "quality": {
+        "archive": "code-analyzer_v0_15_4_1119.zip",
+        "bytes": 515581,
+        "covered": 216,
+        "hash_files": 1,
+        "members": 217,
+        "sha256": "11e1da15ee12e750c3652190c348a7fc8e31aa1741876e3c06bc0af3413b16af",
+        "status": "PASS",
+        "version": "0.15.4"
+      },
+      "release_channel": "public_release",
+      "security_scanned_files": 217,
+      "sha256": "11e1da15ee12e750c3652190c348a7fc8e31aa1741876e3c06bc0af3413b16af",
+      "size_bytes": 515581,
+      "source_preservation": {
+        "base_members": 216,
+        "changed_files": [
+          ".skill-release.json",
+          "PACKAGE_CONTENTS.sha256",
+          "SKILL.md",
+          "VERSION",
+          "scripts/ca_core/reuse_validator.py",
+          "skillsilent/manifest.json"
+        ],
+        "new_files": [
+          "scripts/ca_core/pec_hop_excerpt_readonly.py"
+        ],
+        "new_members": 217,
+        "status": "PASS",
+        "unchanged_byte_equal": 210
+      }
+    },
+    "l1-fix-workflow": {
+      "allowed_release_relabels": [
+        ".skill-release.json",
+        "MANIFEST_SHA256.json",
+        "SKILL.md"
+      ],
+      "archive": "l1-fix-workflow_v1_6_74_1119.zip",
+      "independent_code_review": "SKIPPED_BY_USER_REQUEST",
+      "packaged_synthetic_tests": {
+        "count": 10,
+        "errors": 0,
+        "failures": 0,
+        "status": "PASS"
+      },
+      "public_posted": "NOT_YET",
+      "quality": {
+        "archive": "l1-fix-workflow_v1_6_74_1119.zip",
+        "bytes": 760324,
+        "covered": 310,
+        "hash_files": 1,
+        "members": 311,
+        "sha256": "b810ce0cf072609431737c58b0ef2b7a0a8ec0701a0746e6a94283c374224989",
+        "status": "PASS",
+        "version": "1.6.74"
+      },
+      "release_channel": "public_release",
+      "security_scanned_files": 311,
+      "sha256": "b810ce0cf072609431737c58b0ef2b7a0a8ec0701a0746e6a94283c374224989",
+      "size_bytes": 760324,
+      "source_preservation": {
+        "base_members": 310,
+        "changed_files": [
+          ".skill-release.json",
+          "MANIFEST_SHA256.json",
+          "SKILL.md",
+          "VERSION",
+          "l1_fix_workflow/scenario_msc.py",
+          "l1_fix_workflow/work_inspection.py",
+          "skillsilent/manifest.json"
+        ],
+        "new_files": [
+          "l1_fix_workflow/ace_resume_readonly.py"
+        ],
+        "new_members": 311,
+        "status": "PASS",
+        "unchanged_byte_equal": 303
+      }
+    }
+  },
+  "waiver_scope": "PEC_CODE_ANALYZER_AND_ACE_WORKFLOW_ONLY"
+}
