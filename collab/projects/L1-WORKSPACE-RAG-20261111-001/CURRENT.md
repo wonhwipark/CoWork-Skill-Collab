@@ -1,5 +1,17 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-20 KST — Recovery 결과 Workspace 연결 스킬 검토: CONDITIONAL_CONNECT
+
+- **결론:** 같은 Work에 분석 원본을 보존하고 등록된 Evidence 출처 기반 Recovery 보기를 연결하는 방향 권장. 생산자 adapter＋기존 writer의 입증된 결손＋읽기 분류 연결을 우선; 새 RECOVERY profile/중복 원장 불필요. 개인 Knowledge 분류는 기존 Updater 책임 유지.
+- **직접 확인:** PUBLIC 고정 tree `72ec441616f6ad0cdbb7f737b26c26e470e5b778`의 Workflow 1.6.74·Kernel 0.7.42·l1-github 0.3.56·code-analyzer 0.15.4·p4-code-owner 0.6.7·issue-analyzer 0.11.50 실제 ZIP/SKILL·관련 구현. 6종 bytes/Git blob/CRC·경로 확인 PASS. PRIVATE 후보 및 공개본을 실제 설치본으로 승격하지 않음.
+- **확인된 제약:** 공개 Kernel의 l1-channel-recovery 제공자 등록 및 Work snapshot/active index의 Recovery 분류 없음. 기존 context 요약은 WORK_DISCUSSION으로 보존되지만 별도 원본 Evidence 저장은 아님. 설치본의 기존 일반 첨부/tag/읽기 계약을 먼저 대조하고 결손일 때 최소 확장. 타 analyzer 제공자 사칭 금지. 최신 공개 Workflow의 knowledge/ 경로 쓰기 방어는 직접 확인; 전체 writer 강제/업무 설치 보장은 별개.
+- **실제 검증:** 기존 Kernel unittest **8 PASS**(layout 3, registry 1, navigation 4). 격리 합성 확인에서 미등록 Recovery 제공자 2종 kind 모두 REGISTRY_MISMATCH·record 불변, context stale revision 거부·요약 export·lifecycle OPEN 확인. pytest 모듈 부재로 해당 runner/pytest 파일 NOT_RUN, 별도 설치 없음. 분석·제품 runtime 시험이 아님.
+- **근거:** [관련 스킬 검토 r0001](L1_RECOVERY_WORKSPACE_SKILL_INTEGRATION_REVIEW_r0001_20261120_KST.md), **22598 UTF-8 bytes**, SHA-256 `35a3f1d0f2b4997f41516af2d2c2358a8b766f67e6702ca1c4b25ed0f369210b`, PRIVATE main commit `b0beca32a882e3a63b6c08a7b7ab99f173fb5eed`; 원격 본문·재인코딩 bytes/hash 대조 PASS.
+- **미확인·경계:** l1-channel-recovery 원문/버전·설치 writer/Viewer API·업무 Work E2E 미접근. 실제 코드/스킬 수정·PUBLIC 전달·설치·Job·유료 독립 리뷰·업무 Work/Knowledge 게시 NOT_RUN. 기존 r0002 전달 완료는 USER_REPORTED, 구현 완료로 변경하지 않음.
+- **NEXT_ONE_ACTION:** 업무 GPT가 실제 생산자 반환 형식과 설치 Kernel의 provider/일반 첨부 계약(G0-1~2)을 확인해 기존 연결 재사용 또는 제공자/보고서 수용의 최소 보완을 확정.
+
+---
+
 ## 2026-11-20 KST — Agent/MCP 확인 기능 요청 HO + Viewer 변경서 PUBLIC 배송 완료
 - **사용자 최신 지시:** 업무 GPT 직접 동작 확인 불가를 전제로 Agent/MCP가 설치·대상 호스트·연동 근거를 답할 최소 읽기 진단 확장 요청서와 Viewer 변경서를 L1Work에 업로드.
 - **PUBLIC 실제 전달:** `wonhwipark/L1Work/main/handoffs/`에 [MCP 요청서](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_MCP_AGENT_READONLY_CAPABILITY_AND_VIEWER_PROBE_HANDOFF_r0001_20261120_KST.md)·[Viewer 변경서 r0002](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_WORKSPACE_VIEWER_UI_CHANGE_AND_MCP_VALIDATION_HANDOFF_r0002_20261120_KST.md)·[개선 HTML](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_Workspace_Wiki_Usability_Preview_20261120_KST.html) 게시. MD 10,473/9,878 B·HTML 69,919 B, 원격 실제 UTF-8 바이트 SHA-256/Git blob 대조 PASS. [전달 영수증·정확한 SHA/commit](MCP_VIEWER_HANDOFF_PUBLIC_DELIVERY_RESULT_r0001_20261120_KST.md).
