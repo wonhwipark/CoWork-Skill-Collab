@@ -89,10 +89,10 @@
       "id": "L1-WORKSPACE-RAG-20261111-001",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md",
-      "status": "문서상 진행",
+      "status": "검증 진행 중",
       "title": "L1-WORKSPACE-RAG-20261111-001 — CURRENT",
-      "tone": "neutral",
-      "topic": "완성 위키 UI 시각 리뷰 제출: BLOCKED_LIVE_POLICY (2026-11-19 KST)"
+      "tone": "warning",
+      "topic": "2026-11-19 KST — 위키 UI/UX R1 리뷰 차단 개선: 기존 DESIGN/$3 수동 1회 부트스트랩 경로 준비"
     },
     {
       "id": "NR-L1TX-CODE-ANALYSIS-20261115-001",
