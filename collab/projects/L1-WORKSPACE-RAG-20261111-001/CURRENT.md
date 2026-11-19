@@ -1,5 +1,15 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-20 KST — Agent/MCP 확인 기능 요청 HO + Viewer 변경서 PUBLIC 배송 완료
+- **사용자 최신 지시:** 업무 GPT 직접 동작 확인 불가를 전제로 Agent/MCP가 설치·대상 호스트·연동 근거를 답할 최소 읽기 진단 확장 요청서와 Viewer 변경서를 L1Work에 업로드.
+- **PUBLIC 실제 전달:** `wonhwipark/L1Work/main/handoffs/`에 [MCP 요청서](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_MCP_AGENT_READONLY_CAPABILITY_AND_VIEWER_PROBE_HANDOFF_r0001_20261120_KST.md)·[Viewer 변경서 r0002](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_WORKSPACE_VIEWER_UI_CHANGE_AND_MCP_VALIDATION_HANDOFF_r0002_20261120_KST.md)·[개선 HTML](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_Workspace_Wiki_Usability_Preview_20261120_KST.html) 게시. MD 10,473/9,878 B·HTML 69,919 B, 원격 실제 UTF-8 바이트 SHA-256/Git blob 대조 PASS. [전달 영수증·정확한 SHA/commit](MCP_VIEWER_HANDOFF_PUBLIC_DELIVERY_RESULT_r0001_20261120_KST.md).
+- **인계 연결:** PUBLIC handoffs/README 최상단 묶음 및 기존 11/19 UI 인계서에 최신 링크·UX 완료 정정 안내 추가, 원격 본문 확인 PASS. 과거 본문/기존 v0.1.0 ZIP·정식 리뷰 입력 불변.
+- **요청 범위:** 기존 whpark-mcp 도구/호스트 routing·권한을 먼저 대조하고 capability/설치 vs 로드/API/문서·MSC/현재성을 read-only로 답변. 모바일 한두 문장+숫자 판정, 실제 MCP→Agent 응답 시험, Viewer I-01~I-07·B1~B3/E3~E4 연계. 임의 shell/경로/URL·분석/Job 재실행·새 외부 전송 서버 제외.
+- **실제 상태:** `HANDOFF_PUBLIC_DELIVERY=POSTED/READBACK_PASS`; `MCP_EXTENSION_IMPLEMENTATION/INSTALL/ACTIVATION/AGENT_E2E=NOT_RUN`; `VIEWER_HOST_CHANGE/E3/E4=NOT_RUN`; `B1/B2/B3=BLOCKING/NOT_VERIFIED`. PUBLIC 문서/합성 HTML 배송과 실호스트 기능 추가/운영 전환을 분리.
+- **다음 한 동작:** 업무 GPT가 새 두 MD로 현장 동일 Work를 재개하고 허용된 Linux Agent에서 실제 소스/브랜치/revision·기존 기능/권한을 확인→최소 read-only 진단 개발·시험·후보 패키징→허용된 MCP/Agent 응답 확인. 현장 원문·코드·상세 MSC·로그의 반출 요구 없음.
+
+---
+
 ## 2026-11-20 KST — UI 실제 사용 스킬 연동 적합성 검토: CONDITIONAL_CONNECT
 - **결론:** 별도 Linux Viewer가 UI·읽기 API/handler를 소유하고, Updater=지식 관리, Workflow/Kernel=Work/Evidence, doc-converter=B형 MSC 생성을 재사용하는 책임 분리는 적합. 실제 설치 Updater·Viewer API/원본 revision은 미접근으로 실사용 PASS 판정 불가.
 - **직접 확인:** 최신 PUBLIC 고정 tree `72ec441616f6ad0cdbb7f737b26c26e470e5b778`의 Workflow 1.6.74·Kernel 0.7.42·doc-converter 0.2.26 실제 ZIP 바이트/CRC/크기/Git blob 및 SKILL·관련 구현 정적 대조. 공개본과 설치본 동일성/스킬 실행/호스트 E2E는 NOT_VERIFIED/NOT_RUN.
