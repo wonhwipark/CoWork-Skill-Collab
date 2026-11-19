@@ -1,5 +1,12 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-20 KST — GPT 사전 모델 시뮬레이션 5회 PASS / 실제 v0.2.29 ZIP 5회 NOT_RUN
+- **GPT 검증:** [GPT_V029_PRE_REVIEW_FIVE_SIMULATIONS_AND_HOST_TEST_GATE_r0001_20261120_KST.md](GPT_V029_PRE_REVIEW_FIVE_SIMULATIONS_AND_HOST_TEST_GATE_r0001_20261120_KST.md): 실제 PRIVATE ZIP 114 entries에서 핵심 소스 구조를 직접 추출 확인. 별도 재구성 SQLite 모델 5회, 25개 항목 PASS. 실제 ZIP Python 실행 환경과 미연결이므로 `V029_ZIP_EXECUTION_5X=NOT_RUN` / `SIMULATION_RESULT=PARTIAL_PASS_MODEL_ONLY`.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 실제 v0.2.29 ZIP SHA `c67bc342fe77547b000fc42e1b886396cbef035c0d265dbcd124947e267ed83f`를 고정해 임시 폴더/DB·가짜 transport/signer/runner로 Python 전체 회귀 + 소급·재시작·정책·경쟁·실패주입 5회 시험. 모두 PASS 전 유료 독립 리뷰/REQUEST/READY/LIVE/USD3 변경 0. 독립 리뷰는 NOT_RUN, 현행 LIVE v0.2.25·보호 위임 USD1 유지.
+
+---
+
+
 ## 2026-11-20 KST — 승인·실행 상태 점검 / MAJOR 보완 dev v0.2.29 / LIVE 설치 HOLD
 
 - **결과:** `CLAUDE_AUTO_REVIEW_FOLLOWUP_RESULT_FOR_GPT_20261120.md` (PRIVATE main, commit `47060c5ba1c2`).
