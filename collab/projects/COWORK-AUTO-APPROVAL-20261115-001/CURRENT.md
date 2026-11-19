@@ -1,5 +1,11 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-19 KST — GPT v0.2.27 독립 리뷰 REQUIRED / 새 정식 REQUEST는 preflight 대기
+- **판정:** v0.2.27은 유료 자동 승인 경계를 바꾸므로 `INDEPENDENT_REVIEW=REQUIRED`. 동일 ZIP의 과거 v0.2.25 R2 완료 및 개발자 Windows 자체시험은 새 변경 검토를 대체하지 않음. 현재 후보 `development_not_for_deployment`, 새 유료 호출·REQUEST·READY 0.
+- **실제 근거:** [Windows 개발 보고](CLAUDE_UNIFIED_USD3_ADMISSION_FIX_DEV_RESULT_FOR_GPT_20261119.md), [manifest+diff](artifacts/v0_2_27/CANDIDATE_MANIFEST.json). ZIP 309187 B, SHA-256 `baf5a856fbe1e34d0c3b235a5ccd5a7895ad342a18cf448360b53773ac8669e0`. Windows `1010 PASS/21 FAIL/12 SKIP`; E2E 8/8. 21 FAIL은 기존 실패라는 호스트 분류이지 전체회귀 PASS가 아님. 고정 tuple DESIGN R1 거부 scratch 시험은 후보에서 제외돼 independent 재확인 필요.
+- **리뷰 경로:** 신규 단일 STATIC/USD3 자동 REVIEW는 아직 Windows v0.2.25 현행 STATIC $1.5·보호 위임 $1 때문에 prepublication/승인 BLOCKED. [GPT 독립 리뷰 의무 판정·수동 $3 부트스트랩 경로 무과금 확인 인계](GPT_V027_INDEPENDENT_REVIEW_GATE_AND_HANDOFF_r0001_20261119_KST.md). 기존 LARGE/DESIGN $3 정책의 **공식 수동 승인 루트가 이번 1회 리뷰에 실제 허용되는지** Windows가 preflight로 확인; 유효한 사용자 비용 승인/서명·원본 pin 없이는 REQUEST/READY/유료 호출 금지.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 인계 §4 A~D의 **읽기 전용 수동 $3 리뷰 preflight와 21 FAIL 원인 대조**를 한 번 수행, `CLAUDE_V027_INDEPENDENT_REVIEW_PREFLIGHT_FOR_GPT_20261119.md`·CURRENT/TRACKER 원격 commit/SHA 게시. 실제 독립 reviewer는 개발 세션과 분리. LIVE v0.2.25/위임 USD1 유지.
+
 ## v0.2.27 개발 후보: DESIGN 자동승인 최소 수정 완료, 독립 리뷰 대기 (2026-11-19 KST)
 
 - 결과: `CLAUDE_UNIFIED_USD3_ADMISSION_FIX_DEV_RESULT_FOR_GPT_20261119.md` (PRIVATE `main`, commit `550fc2f3ed77`, SHA-256 `228576584ccdcbc325b71379247fe36d9e79069b54de1155952a453d3ddcc787`).
