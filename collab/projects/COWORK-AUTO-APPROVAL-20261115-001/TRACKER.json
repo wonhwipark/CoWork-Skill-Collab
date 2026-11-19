@@ -5,11 +5,11 @@
       "work_id": "COWORK-AUTO-APPROVAL-20261115-001",
       "skill": "cowork-review-watcher",
       "title": "GPT→GitHub REQUEST 자동 서명·READY (제한된 사전 위임)",
-      "phase": "INDEPENDENT_REVIEW_PREFLIGHT_PENDING",
-      "owner": "GPT v0.2.27 독립 리뷰 필요 판정; Windows Claude Code 수동 $3 경로 read-only preflight",
+      "phase": "WINDOWS_ONE_SHOT_HANDOFF_POSTED",
+      "owner": "Windows Claude Code one-shot: tests/package → one independent review → conditional LIVE, GPT final evidence disposition",
       "self_test": "PASS_PARTIAL (Windows 1010P/21 pre-existing FAIL/12S; E2E 8P)",
       "independent_review": "REQUIRED_NOT_RUN",
-      "next_action": "2026-11-19: v0.2.27 309187 B SHA baf5a856...8669e0, 보안/자동 승인 gate diff 1줄+테스트/문서. GPT 독립 리뷰 REQUIRED. Windows live v0.2.25의 STATIC=$1.5, protected USD1으로 신규 unified USD3 자동 formal review prepublication BLOCKED. 같은 Work GPT_V027_INDEPENDENT_REVIEW_GATE_AND_HANDOFF_r0001_20261119_KST.md 무과금 A~D: 기존 수동 LARGE/DESIGN USD3 정식 승인 예외의 실제 사전검증과 현재 사용자/서명/비용 승인 확인, 21 fail 기준과 epoch 점검; 부적격하면 새 REQUEST/READY/모델 0. HOST_LIVE_INSTALL=NOT_RUN."
+      "next_action": "2026-11-19 사용자 '한번에 진행하자' 실행 지시. PRIVATE main GPT_V027_AUTO_REVIEW_COLLAB_ONE_SHOT_TO_LIVE_r0001_20261119_KST.md 0~6 한 번 실행: v0.2.27 ZIP 재검증, 기존 21 F 시험 수정(필요 시 v0.2.28 정확한 새 ZIP), LIVE 정책 $3 수동 승인 사전검증→정식 리뷰 1회 최대 USD3(유효 호스트 권한만)→리뷰·영수증/고정 SHA 판정→안전/유효 설치 권한·기존 요청 소급 방지 PASS 때 조건부 LIVE v0.2.25→검증 후보, epoch 새로 고정·STATIC/$3·shadow/rollback→PRIVATE main 통합결과. 막히는 항목만 BLOCKED·무비용 부분은 계속, 임의 READY/DB 조작·새 유료 재리뷰 0. 현재 host/review/paid/live NOT_RUN; Windows host 실행은 chat에서 직접 불가."
     }
   ]
 }
