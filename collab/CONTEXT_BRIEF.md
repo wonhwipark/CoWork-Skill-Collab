@@ -7,6 +7,9 @@
 - **세션 로딩:** Windows Claude Code는 CoWork 저장소에서 시작 시 루트 [`CLAUDE.md`](../CLAUDE.md)를 통해 `AGENTS.md`·이 브리프를 프로젝트 맥락으로 import할 수 있다. GPT는 CoWork 프로젝트 지침에 따른 요청 시 조회다. **Claude의 실제 호스트 로딩·GitHub 최신 정보 자동 조회 및 GPT의 무요청 선조회는 각각 별도 검증/제약**으로 구분한다.
 - **GPT 공통 투두:** [전체 개선 후보·GPT 검토 의견](GPT_TODO.md). 후보 조회·정리·작업 연결은 이 목록에서 관리하고, 실행 진행은 관련 CURRENT에서 확인한다.
 
+- **P1/P2 빠른 맥락 조회:** [단계별 질문 조회·근거/시점·관계/변경분 안내](projects/COWORK-SKILL-DISCOVERY-20261112-001/P1_P2_CONTEXT_APPLICATION_GUIDE_r0001_20261120_KST.md). 대화에서는 관련 CURRENT+증거를 직접 조회하고, PRIVATE 로컬 체크아웃에서는 선택적 읽기 전용 `collab/dashboard/context_query.py`를 사용할 수 있다. PUBLIC 요약은 기존 B안 Pages의 허용목록만 이용하며 호스트 LIVE/실행 사실을 자동 검증하지 않는다.
+
+
 - **L1Work 스킬 현황 바로가기:** [공개 ZIP·관리 스킬 분석 인덱스](projects/COWORK-SKILL-DISCOVERY-20261112-001/L1WORK_PUBLIC_SKILL_RELEASE_ANALYSIS_r0001_20261117_KST.md) · [스킬 관리 CURRENT](projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md). 공개본/개발 후보/검증 경계를 구분해 확인하고, 최신 버전·판정은 실제 PUBLIC HEAD와 관련 Work CURRENT에서 재조회한다.
 - 갱신 기준: [스킬 발견·재사용 절차](ops/CONTRACTS/SKILL_DISCOVERY_AND_REUSE_V1.md). 결과·피드백은 해당 Work에서 관리하고 지도는 구조·역할·경로가 바뀔 때만 수정한다.
 
