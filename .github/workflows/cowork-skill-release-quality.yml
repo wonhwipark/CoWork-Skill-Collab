@@ -58,6 +58,8 @@ jobs:
       - name: Inspect two pinned existing PEC and ACE skill interfaces (read-only)
         run: |
           python collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/dev/inspect_existing_pec_ace_interfaces_r0001.py
+      - name: Inspect existing L1Work public release metadata (read only)
+        run: python collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/dev/inspect_public_release_metadata_r0001.py
       - name: Build pinned PEC Code Analyzer and ACE Workflow two-skill candidates
         run: |
           sha256sum collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates/code-analyzer_v0_15_3_1114.zip
