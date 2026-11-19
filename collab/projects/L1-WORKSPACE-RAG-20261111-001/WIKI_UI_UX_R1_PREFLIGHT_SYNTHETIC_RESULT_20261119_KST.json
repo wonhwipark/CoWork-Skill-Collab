@@ -1,0 +1,24 @@
+{
+  "scope": "SYNTHETIC_ONLY",
+  "host_live_preflight": "NOT_RUN",
+  "protected_signing": "NOT_RUN",
+  "model_calls": 0,
+  "results": [
+    {
+      "fixture": "synthetic-usd3.json",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "result": "PASS",
+      "stdout": "{\"authorization\": \"NOT_CHECKED\", \"expected_max_budget_usd\": \"3.00\", \"model_calls\": 0, \"package_sha256\": \"411553e74e76bb82237fd2ebef65169769e4dbe4cfd2231afb5afd38559b10a9\", \"package_size_bytes\": 267140, \"ready\": \"NOT_CREATED\", \"request_id\": \"REQ-L1-WORKSPACE-WIKI-UI-UX-R1-20261119\", \"request_sha256\": \"460bce9b3724d82dd3d59f0a68abdae970ee3afcd55466ade2f43935e6b00192\", \"run_policy_ref\": \"POLICY-STATIC-V1\", \"status\": \"PASS_PREPUBLICATION_ONLY\"}",
+      "stderr": ""
+    },
+    {
+      "fixture": "last-reported-usd1_50.json",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "result": "PASS",
+      "stdout": "",
+      "stderr": "REQUEST_PREFLIGHT_BLOCKED: POLICY_COST_MISMATCH"
+    }
+  ]
+}

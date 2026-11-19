@@ -1,5 +1,17 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-19 KST — 업무 GPT 전달 전 UI 시각·사용성 협업 리뷰 요청 / 호스트 사전검증 대기
+
+- **최신 사용자 지시:** 완성된 2안 위키 UI를 업무 GPT에 전달하기 전 화면 구성·가독성·화면 스타일·사용자 관점의 시인성을 독립 협업 리뷰. **BUSINESS_GPT_DELIVERY=HOLD_UNTIL_REVIEW_AND_GPT_DISPOSITION**. 기존 UI 개발·시험·ZIP 완료는 유지.
+- **요청 ID/범위:** `REQ-L1-WORKSPACE-WIKI-UI-UX-R1-20261119` rev1, INDEPENDENT_VISUAL_UX. 실제 JPEG 4장 필수 열람·4축 평가·사용자 영향·전달 전 필수 보완·최소 CSS/UI 수정안을 요청. 기존 r0002 설계 리뷰/과거 UX-OWNER 설계 후보와 다른 완성본 입력이며 구 리뷰 재실행 0.
+- **등록 자료:** [REQUEST 후보](WIKI_UI_UX_R1_REQUEST_DRAFT_r0001_20261119_KST.md) · [고정 입력 manifest](WIKI_UI_UX_R1_REVIEW_MANIFEST_r0001_20261119_KST.md) · [Windows 1회 제출 원샷](WIKI_UI_UX_R1_WINDOWS_SUBMIT_ONESHOT_r0001_20261119_KST.md) · [합성 사전검증](WIKI_UI_UX_R1_PREFLIGHT_SYNTHETIC_RESULT_20261119_KST.json). 이 Work 경로의 초안은 정식 `collab/requests/<ID>/REQUEST.md`가 아니며 실행 트리거 없음.
+- **고정 대상/승인:** 기존 UI content commit `17ac2b39ad01dc3e01df467ada698fbac8b5c399`, ZIP 267140B / SHA-256 `411553e74e76bb82237fd2ebef65169769e4dbe4cfd2231afb5afd38559b10a9` 불변 재사용. 후보 REQUEST 8361B / SHA-256 `460bce9b3724d82dd3d59f0a68abdae970ee3afcd55466ade2f43935e6b00192`. 신규 최대 USD3/1회 기존 사용자 승인 재사용, 비용 재승인 불필요.
+- **실제 상태:** REVIEW_SUBMISSION=PREPARED/PREFLIGHT_PENDING; HOST_LIVE_SELECT_CHECK=NOT_RUN; FORMAL_REQUEST/SOURCE_PIN/APPROVAL_SIG/READY=NOT_POSTED; INDEPENDENT_VISUAL_REVIEW=NOT_RUN; MODEL_CALLS=0. 원격 신규 ID/구 UX-OWNER 요청 폴더는 조회 시 NOT_FOUND, Windows DB 중복/UNCERTAIN은 NOT_VERIFIED. 정식 접수·실행/완료로 보고하지 않음.
+- **차단 근거:** [현행 비용 계약](../../ops/CONTRACTS/REVIEW_TIER_TOKEN_BUDGET_V1.md)상 실제 Windows LIVE `--intent unified` STATIC/USD3 select/check는 정식 REQUEST 게시 전 필수. 최신 [자동 승인 CURRENT](../COWORK-AUTO-APPROVAL-20261115-001/CURRENT.md)는 USD3 설정 적용 보류·v0.2.27 개발 후보를 보고하며, GPT 연결에는 Windows 실행/config/보호 signer 접근 도구가 없음. 합성 USD3 후보/ZIP PASS와 마지막 보고 USD1.50 불일치 차단 **2/2 PASS**는 실제 호스트 게이트 PASS가 아님.
+- **다음 한 행동:** Windows Claude Code가 위 제출 원샷을 한 번 실행해 현재 LIVE/중복/권한 확인→유효한 단일 USD3 정책 select/check PASS 때만 정식 REQUEST→문자열 repo_id PIN→공식 보호 서명→READY 마지막→기존 watcher 리뷰 1회→결과/영수증 게시. 정책 미충족이면 정확한 차단 결과만 회수, 이 작업에서 운영 정책·위임·키·DB·v0.2.27 설치 변경·구 요청 재큐잉 0. 이후 GPT 판정 및 필요한 UI 보완 후 업무 GPT 전달.
+
+---
+
 ## 2026-11-19 KST — 2안 모던 팀 위키 UI v0.1.0 구현·시험·ZIP·PRIVATE 원격 검증 완료
 
 - **현재 상태:** FRONTEND_DEMO=COMPLETE / BROWSER_SELF_TEST=PASS 56/56 / STATIC_SELF_TEST=PASS 19/19 / PRIVATE_SOURCE_AND_ZIP=POSTED/READBACK_PASS / development_not_for_deployment. 본문 16px·선명한 제목/상태·PC 3영역·모바일 드로어·전체 파일·합성 13문서·MSC 6/12명 placeholder 구현.
