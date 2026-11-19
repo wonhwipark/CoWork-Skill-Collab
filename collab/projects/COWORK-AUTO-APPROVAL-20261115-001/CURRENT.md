@@ -1,5 +1,13 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-20 KST — 5개 독립 창 연속 요청 격리 시뮬레이션 / 교차 Work 위험 확인
+- **GPT 결과:** [GPT_V029_FIVE_CHAT_WINDOWS_SEQUENTIAL_REQUEST_SIMULATION_r0001_20261120_KST.md](GPT_V029_FIVE_CHAT_WINDOWS_SEQUENTIAL_REQUEST_SIMULATION_r0001_20261120_KST.md): 설계 2건+스킬 수정 3건을 서로 다른 창에서 연속 제출하는 SQLite+mock workflow 모델. 통합 STATIC/USD3·범위/원본 모두 유효한 **가상 설치 조건**에서는 5/5 COMPLETED, 재투입 0. 그러나 기존 DESIGN 정책은 자동 거부, scope 미포함은 차단, 공유 스킬 최신 base SHA 및 공통 CURRENT/TRACKER SHA 충돌은 별도 처리 필요. 5건 승인 예산 합산 USD15 가능(실제 비용 예측 아님).
+- **증빙 경계:** 9개 시나리오 모델 단언 PASS; 실제 v0.2.29 ZIP 기반 Python/Windows 5창 E2E=`NOT_RUN`, LIVE/위임 USD1 불변, 유료 모델/서명/READY 0. 실물 ZIP 사용 Windows 5창 병행 검증은 기존 5회 게이트의 한 회차에 포함해 무과금 진행.
+- **NEXT_ONE_ACTION:** 기존 실제 v0.2.29 ZIP 사전 검증 5회 안에서 설계2+스킬3 교차 창 시나리오를 추가 관찰, 일관된 REQUEST/READY→중복·승인 scope·원본 SHA·GitHub CAS·실패복구 검사. 모두 PASS 전 유료 독립 리뷰 및 LIVE 금지.
+
+---
+
+
 ## 2026-11-20 KST — GPT 사전 모델 시뮬레이션 5회 PASS / 실제 v0.2.29 ZIP 5회 NOT_RUN
 - **GPT 검증:** [GPT_V029_PRE_REVIEW_FIVE_SIMULATIONS_AND_HOST_TEST_GATE_r0001_20261120_KST.md](GPT_V029_PRE_REVIEW_FIVE_SIMULATIONS_AND_HOST_TEST_GATE_r0001_20261120_KST.md): 실제 PRIVATE ZIP 114 entries에서 핵심 소스 구조를 직접 추출 확인. 별도 재구성 SQLite 모델 5회, 25개 항목 PASS. 실제 ZIP Python 실행 환경과 미연결이므로 `V029_ZIP_EXECUTION_5X=NOT_RUN` / `SIMULATION_RESULT=PARTIAL_PASS_MODEL_ONLY`.
 - **NEXT_ONE_ACTION:** Windows Claude Code가 실제 v0.2.29 ZIP SHA `c67bc342fe77547b000fc42e1b886396cbef035c0d265dbcd124947e267ed83f`를 고정해 임시 폴더/DB·가짜 transport/signer/runner로 Python 전체 회귀 + 소급·재시작·정책·경쟁·실패주입 5회 시험. 모두 PASS 전 유료 독립 리뷰/REQUEST/READY/LIVE/USD3 변경 0. 독립 리뷰는 NOT_RUN, 현행 LIVE v0.2.25·보호 위임 USD1 유지.
