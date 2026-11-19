@@ -1,5 +1,15 @@
 # PEC-HOP·ACE 2스킬 독립 코드 리뷰 → L1Work 최종 ZIP 릴리스 원샷 r0001
 
+## 2026-11-19 KST 사용자 최신 명시 리뷰 요청 — Windows 실행 대기
+
+- **신규 지시:** 사용자 “리뷰 요청해줘”. 이 파일 자체를 **Windows Claude Code 독립 코드 리뷰를 위한 명시적 요청 인계**로 갱신. 리뷰 대상은 `code-analyzer_v0_15_4_1119.zip` (PEC-HOP)과 `l1-fix-workflow_v1_6_74_1119.zip` (ACE), **한 번의 결합 R1 신규 코드 리뷰**. ACON·Kernel·Knowledge Updater 제외.
+- **고유 요청 후보 ID(아직 정식 게시 아님):** `REQ-COWORK-PEC-ACE-TWO-SKILLS-CODE-R1-20261119`. 이름만 예약한 **INTENT**, `collab/requests/<ID>/REQUEST.md` 및 `collab/packages`·`SOURCE_PIN.json`·`APPROVAL_SIG`·`READY` **미게시**. 기존 설계 R1 및 다른 요청/영수증 재사용·재큐잉 금지.
+- **Windows Claude Code에 대한 작업 지시:** 이 PRIVATE 저장소 `main` 최신 CURRENT와 이 문서, 정확한 코드 4종 및 2026-11-19 run `44453442652`의 두 실제 ZIP 바이트를 확인. 이후 **설치된 Windows LIVE 설정 및 유효 보호 위임을 직접** 확인해 정책 `--intent unified --required-budget-usd 3.00` preflight → 리뷰 입력 원문·패키지 생성 및 SHA/크기 고정 → user approval scope·서명권한/만료·기존 pending/UNCERTAIN 중복 검사 → 허용된 계약에서만 신규 REQUEST/패키지 commit A → 원격 readback/SOURCE_PIN → 승인/서명 및 READY 마지막 게시 → 유효 요청 1회 독립 리뷰 → 리뷰 결과·비용 영수증 PRIVATE main readback, CURRENT/기존 TRACKER 갱신. **단순 텍스트 게시로 Windows 작업이 자동 실행됐다고 주장하지 않음**.
+- **차단 조건:** 마지막 관측 Windows STATIC $1.50 / 보호 위임 $1.00과 신규 USD3가 불일치. 실제 호스트 preflight `PASS` 확인 전에는 정식 REQUEST/READY/유료 호출 금지. 다른 요청용 수동 USD3/DESIGN 예외·호스트 보호 정책/키/운영 설정 강제 변경·소급 승인 금지. 미충족이면 `REVIEW_REQUEST=HOST_PREFLIGHT_BLOCKED`, `INDEPENDENT_CODE_REVIEW=NOT_RUN`으로 결과를 이 Work에 기록.
+- **최종 회신:** 새 코드 리뷰 결과/영수증 URL, 실제 독립 reviewer 판정, 지적사항의 최소 보완·재시험, L1Work 최종 ZIP 공개 릴리스 게이트/실제 게시 여부를 구분. 업무 Linux 설치/실증은 NO_EXPORT와 무관하게 **업무 환경 내부 전용**, 외부 PASS 추정 금지.
+
+---
+
 - 대상 저장소: `wonhwipark/CoWork-Skill-Collab` PRIVATE, branch `main`
 - 기존 Work: `collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/`
 - 실행 담당: Windows Claude Code **독립 리뷰 세션** (개발/자체시험과 분리); GPT는 판정·최종 PUBLIC 게시.
