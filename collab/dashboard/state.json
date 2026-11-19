@@ -20,7 +20,7 @@
       "status": "검증 진행 중",
       "title": "COWORK-AUTO-APPROVAL-20261115-001 — CURRENT",
       "tone": "warning",
-      "topic": "2026-11-20 KST — 실제 v0.2.29 ZIP 무결성 PASS / 5창 실물 테스트 준비 / Windows 실행 NOT_RUN"
+      "topic": "2026-11-20 KST — v0.2.29 실제 ZIP 5회 검증: 라운드 1 FAIL (su_l1 간헐 1건) / writer·rebase GAP 확인"
     },
     {
       "id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
