@@ -1,0 +1,102 @@
+--- a/docs/AUTO_APPROVAL.md
++++ b/docs/AUTO_APPROVAL.md
+@@ -21,8 +21,10 @@
+ 4. Package: size and sha256 equal the REQUEST, ZIP CRC, the engine's credential scan, `safe_extract`, size limit 5 MiB.
+ 5. Commit A: the REQUEST and the package bytes at the pinned commit equal the bytes on `main` today.
+ 6. No earlier history: no APPROVAL_SIG/READY/dispatch/receipt/result on the remote, no local job, no earlier reservation.
+-7. The pure gate `auto_policy.assess` (GPT prototype, byte-identical): scope allow-lists, `POLICY-STATIC-V1` only, 1 call, attempt 1, per request <= $1,
+-   day <= 2 calls / $3, month <= $10 (limits can only be equal to or stricter than the product ceilings), counting the watcher's own recorded dispatches.
++7. The pure gate `auto_policy.assess`: scope allow-lists, `POLICY-STATIC-V1` only, 1 call, attempt 1, per request <= `max_request_usd`.
++   There are no day or month count/cost admission gates; legacy `max_day_*` / `max_month_*` keys are accepted and ignored.
++   A request refused only by `PER_REQUEST_COST` is recorded as `POLICY_STOPPED` (zero reserved cents) and is never admitted automatically afterwards,
++   even if `max_request_usd` is raised later. Such a request needs an explicit manual approval.
+ 8. The official validator on the READY text that WILL be published (bytes fixed before signing).
+ 9. Atomic reservation (`BEGIN IMMEDIATE`, one row per request and revision, day/month ceilings inside the same transaction).
+ 10. Re-check (delegation still enabled and unexpired, repository id unchanged) -> sign with the existing `tools.approval_signer` -> verify with the
+@@ -47,13 +49,15 @@
+ {"schema": "AUTO_DELEGATION_V1", "enabled": false, "repo_id": "1451933830", "branch": "main",
+  "projects": ["<explicit work ids>"], "skills": ["<explicit skill ids>"], "policy": "POLICY-STATIC-V1",
+  "enabled_at": "2026-11-16T00:00:00+09:00", "expires_at": "2026-12-16T00:00:00+09:00",
+- "max_request_usd": 1.0, "max_day_calls": 2, "max_day_usd": 3.0, "max_month_usd": 10.0}
++ "max_request_usd": 1.0}
+ ```
+ `config-check` prints the state without any path of a secret. `acl_check: "skip"` exists for isolated tests only and is printed as a warning.
+ 
+ ## Enabling procedure (after an explicit user approval; not part of this candidate)
+ install with `enabled: false` -> let one watch cycle pass (every pending REQUEST is recorded as "seen while off") -> set `enabled: true` and
+ `enabled_at` to now. Revoke by setting `enabled: false` (takes effect at the next check, also between signing and publishing).
++Raising `max_request_usd` does not need an `enabled_at` change for requests already refused by the cap (they are excluded for good). Other
++requests seen while enabled stay eligible after a raise; set `enabled_at` to the raise time if they must be excluded too.
+ 
+ ## Rollback
+ Remove the `auto_approval` section (or keep `enabled: false`) and restart; the two new tables stay unused. Restore the previous package folder from
+--- a/docs/BUDGET_POLICY_CONFIGURATION.md
++++ b/docs/BUDGET_POLICY_CONFIGURATION.md
+@@ -1,4 +1,4 @@
+-# Per-review budget policy (v0.2.28 development)
++# Per-review budget policy (v0.2.29 development)
+ 
+ Unified default for every new independent review: USD 3.00, single `run_policy_ref=POLICY-STATIC-V1`.
+ No daily/monthly cost or count ceilings. Do not auto-upgrade a request. The DESIGN/LARGE names below
+@@ -19,6 +19,9 @@
+   "policy": "POLICY-STATIC-V1",
+   "max_request_usd": 3.0
+ 
++A request first seen while the per-request cap is too low is recorded as `POLICY_STOPPED` and stays excluded from automatic signing even after the cap is raised; it can only be approved manually.
++`tools/approve_request.py` is a host-side manual approval script and is not part of this package.
++
+ The request names only run_policy_ref, never the price. `POLICY-STATIC-V1` requires the
+ pre-existing permitted project/skill and valid SOURCE_PIN/signature/READY, same as before.
+ `POLICY-STATIC-V1-LARGE` and `POLICY-STATIC-V1-DESIGN` are REVIEW_POLICY-refused by the
+--- a/docs/CUTOVER_RUNBOOK.md
++++ b/docs/CUTOVER_RUNBOOK.md
+@@ -1,4 +1,4 @@
+-# Cutover runbook: Dropbox to GitHub (v0.2.28, development_not_for_deployment)
++# Cutover runbook: Dropbox to GitHub (v0.2.29, development_not_for_deployment)
+ 
+ Status: a design with isolated test evidence. Nothing here installs, starts or switches anything on the
+ operating host. Each step marked APPROVAL needs an explicit decision by the user.
+--- a/skill_collab_watcher/__init__.py
++++ b/skill_collab_watcher/__init__.py
+@@ -1 +1 @@
+-__version__ = "0.2.28"
++__version__ = "0.2.29"
+--- a/skill_collab_watcher/auto_approval.py
++++ b/skill_collab_watcher/auto_approval.py
+@@ -538,6 +538,8 @@
+                                   atomic_claim_available=True)
+         ok, reason = auto_policy.assess(scoped, cand, ev)
+         if not ok:
++            if reason == "PER_REQUEST_COST":
++                store.auto_exclude(rid, rev, cand.zip_sha256, now, "PER_REQUEST_COST: excluded for good; manual approval only")
+             ev_name = "AUTO_DUPLICATE_BLOCKED" if reason == "DUPLICATE_OR_UNCERTAIN" else "AUTO_NOT_ELIGIBLE"
+             self._once(ev_name, rid, reason)
+             return AutoResult(reason)
+--- a/skill_collab_watcher/state_store.py
++++ b/skill_collab_watcher/state_store.py
+@@ -326,7 +326,7 @@
+         month = KST calendar month. `exclude` removes the candidate's own identity when a stored candidate is re-checked."""
+         day_start, month_start = kst_window_starts(now)
+         window_rows = self.conn.execute(
+-            "SELECT request_id, revision, reserved_cents, created_at FROM auto_claims WHERE created_at >= ?", (month_start,)).fetchall()
++            "SELECT request_id, revision, reserved_cents, created_at FROM auto_claims WHERE created_at >= ? AND reserved_cents > 0", (month_start,)).fetchall()
+         dispatch_rows = self.conn.execute(
+             "SELECT ts, event, processing_key, detail FROM audit_log WHERE event IN ('REVIEW_DISPATCHED', 'REVIEW_COST') AND ts >= ? ORDER BY id",
+             ((datetime.fromtimestamp(month_start, KST) - timedelta(days=1)).astimezone(timezone.utc).isoformat(),)).fetchall()
+@@ -402,6 +402,16 @@
+             self.conn.execute("ROLLBACK")
+             raise
+         return "CLAIMED"
++
++    def auto_exclude(self, request_id: str, revision: str, package_sha256: str, now: int, detail: str) -> None:
++        if self._skip_write("AUTO_EXCLUDE", None, request_id):
++            return
++        day_key = datetime.fromtimestamp(now, KST).strftime("%Y-%m-%d")
++        month_key = datetime.fromtimestamp(now, KST).strftime("%Y-%m")
++        self.conn.execute(
++            "INSERT OR IGNORE INTO auto_claims (request_id, revision, package_sha256, stage, reserved_cents, day_key, month_key, detail, created_at, updated_at) "
++            "VALUES (?, ?, ?, 'POLICY_STOPPED', 0, ?, ?, ?, ?, ?)",
++            (request_id, revision, package_sha256, day_key, month_key, detail, now, now))
+ 
+     def auto_update(self, request_id: str, revision: str, now: int, **fields) -> None:
+         if self._skip_write("AUTO_UPDATE", None, request_id):
