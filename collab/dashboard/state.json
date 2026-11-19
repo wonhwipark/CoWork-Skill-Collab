@@ -92,7 +92,7 @@
       "status": "검증 진행 중",
       "title": "L1-WORKSPACE-RAG-20261111-001 — CURRENT",
       "tone": "warning",
-      "topic": "2026-11-20 KST — 위키 UI 수정방안·사용 편의성 추가 검토"
+      "topic": "2026-11-20 KST — UI 실제 사용 스킬 연동 적합성 검토: CONDITIONAL_CONNECT"
     },
     {
       "id": "NR-L1TX-CODE-ANALYSIS-20261115-001",
