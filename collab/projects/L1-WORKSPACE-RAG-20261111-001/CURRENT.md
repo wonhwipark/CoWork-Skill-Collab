@@ -267,6 +267,17 @@
 
 ---
 
+## 2026-11-19 KST — 수정 CL 기반 미커버 유사 결함 탐색 컨셉 r0002 PUBLIC 인계
+
+- **사용자 최신 지시·피드백 수용:** 수정 CL을 기준으로 현재 커버되지 않은 유사 문제를 찾아 검사·recovery 추가 적합성을 판단하는 컨셉을, **작성 전 이전 recovery 상황 확인** 후 배경·논리를 포함한 업무 GPT MD로 L1Work handoffs 게시. 같은 기존 Work 유지. 이미 수정된 Seed에 추가 recovery를 강요하지 않고 Seed와 현재 후보를 분리하는 방향 수용.
+- **작성 전 실제 확인:** CONTEXT_BRIEF r0012 및 본 CURRENT recovery 이력 조회. 기존 PUBLIC 11-17 분석 프롬프트 Git blob `f7f01c2c8df8a9547f1d6e568f3ac827cb515b24`, 11-19 상세 r0001 `6e31a82166b7a595e7159729a1ce34e3d0fb1326` 원문·현재 위치 확인. 기존 게시 완료와 업무 G0/실제 코드 분석·구현·runtime 시험 NOT_RUN 기록을 구분. 기존 문서·진행·요청/영수증 보존.
+- **최신 설계 인계:** [수정 CL 기반 미커버 유사 결함 탐색·검사·Recovery 판단 r0002](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_RECOVERY_POINT_ANALYSIS_DETAILED_DESIGN_AND_IMPLEMENTATION_HANDOFF_r0002_20261119_KST.md), PUBLIC `wonhwipark/L1Work` / branch `main` / `handoffs/L1_RECOVERY_POINT_ANALYSIS_DETAILED_DESIGN_AND_IMPLEMENTATION_HANDOFF_r0002_20261119_KST.md`. 이전 배경·목적 변화, Seed 원인 패턴/전후 보정, 후보 생성과 위험 판정 구분, 현재 실행·호출자/callee/wrapper/상위 보호·반례·미분석, V0~V6·9개 근거·저사양 순차 탐색·최소 연결·검증 계획 수록. **정적 결함 탐색 / 런타임 검출 / 안전 복귀**를 별도 판단. 직접 Fix 누락·미커버 변형·보호됨·전제 불성립·보류와 원인 수정/검사/관측/recovery/상위 이관 구분. CNF 미수신 timeout 제외 유지.
+- **PUBLIC 게시·검증:** 파일 commit `a77730ea2ee2fb7b316e29e18bb2a84a974993ab`, Git blob `c83278543fd64b6a9394155b595f88c6b352b072`, **41017 UTF-8 bytes / 20273자**, SHA-256 `5a192066690adfe32353eb63938c2c65fdf0ca9668f70a12716f5960c70ec578`; 원격 본문·실제 바이트 해시 대조 PASS. [handoffs 목록](https://github.com/wonhwipark/L1Work/blob/main/handoffs/README.md) 최신 r0002 우선·r0001 보존 연결, commit `8bf385dd87a98d69126f9d6a5829ea17e11ae142`, 원격 본문 일치 PASS. 문서의 필요한 항목·표/코드 fence·기존 PUBLIC 링크·지정 비밀/PRIVATE 의존성 패턴 정적 확인 PASS. 실제 Mermaid 렌더 검증은 NOT_RUN.
+- **경계:** `PUBLIC_HANDOFF=POSTED_VERIFIED` / `CONCEPT_DESIGN=R0002_DELIVERED`. 업무 설치본·Seed/현재 제품 코드·실제 후보 분석·규칙/연결 구현·시험·runtime 효과·저사양 benchmark·독립 리뷰·설치·Job·새 유료 호출·그룹 쓰기는 이번 게시에서 NOT_RUN. CodeQL/Coccinelle은 참고 접근이며 신규 설치/엔진 요구 아님. 기존 테스트 계획을 실행 PASS로 승격하지 않음. 다른 UI/MSC/Guard/Knowledge·운영/배포 판정 불변.
+- **NEXT_ONE_ACTION:** 업무 GPT가 실제 Work·설치본·Seed CL 1건·현재 대상 revision/범위를 확인하고 V1/V2 원인·Fix 효과·안전 반례를 정리한 뒤, 좁힌 현재 경로에서 V3/V4 미커버·동등 보호·보류를 구분. 적합한 후보만 V5 검사·수정/recovery 판단으로 진행. 실제 CL이 없으면 합성 검증만 수행하고 업무 사례는 NOT_RUN.
+
+---
+
 ## 2026-11-19 KST — Recovery 포인트 분석 상세 설계·구현 인계 PUBLIC 게시
 
 - **사용자 요청·범위:** recovery 포인트 분석 방법을 업무 GPT에 제안할 상세 설계/실구현 인계 MD 작성 및 L1Work handoffs 게시. 기존 같은 Work를 계속 사용. CNF 미수신 timeout·기존 recovery 커버 범위 제외, 저사양 순차 분석, 기존 스킬 재사용·최소 연결 원칙 유지.
