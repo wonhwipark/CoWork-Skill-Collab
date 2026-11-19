@@ -1,0 +1,129 @@
+--- a/docs/BUDGET_POLICY_CONFIGURATION.md
++++ b/docs/BUDGET_POLICY_CONFIGURATION.md
+@@ -1,4 +1,4 @@
+-# Per-review budget policy (v0.2.27 development)
++# Per-review budget policy (v0.2.28 development)
+ 
+ Unified default for every new independent review: USD 3.00, single `run_policy_ref=POLICY-STATIC-V1`.
+ No daily/monthly cost or count ceilings. Do not auto-upgrade a request. The DESIGN/LARGE names below
+--- a/docs/CUTOVER_RUNBOOK.md
++++ b/docs/CUTOVER_RUNBOOK.md
+@@ -1,4 +1,4 @@
+-# Cutover runbook: Dropbox to GitHub (v0.2.27, development_not_for_deployment)
++# Cutover runbook: Dropbox to GitHub (v0.2.28, development_not_for_deployment)
+ 
+ Status: a design with isolated test evidence. Nothing here installs, starts or switches anything on the
+ operating host. Each step marked APPROVAL needs an explicit decision by the user.
+--- a/skill_collab_watcher/__init__.py
++++ b/skill_collab_watcher/__init__.py
+@@ -1 +1 @@
+-__version__ = "0.2.27"
++__version__ = "0.2.28"
+--- a/tests/test_auto_approval.py
++++ b/tests/test_auto_approval.py
+@@ -53,18 +53,25 @@
+     path = tmp_path / "d.json"
+     write_delegation(path)
+     d, why = load_delegation(path, time.time(), "skip")
+-    assert d is not None and d.enabled and d.max_request_cents == 150 and d.max_day_calls == 0 and d.max_day_cents == 0 and d.max_month_cents == 0
++    assert d is not None and d.enabled and d.max_request_cents == 100 and d.max_day_calls == 0 and d.max_day_cents == 0 and d.max_month_cents == 0
+ 
+ 
+ @pytest.mark.parametrize("over", [
+     {"schema": "OTHER"}, {"enabled": "true"}, {"enabled": 1}, {"projects": "x"}, {"skills": [""]}, {"policy": "POLICY-STATIC-V1-LARGE"},
+-    {"expires_at": "tomorrow"}, {"expires_at": "2030-01-01T00:00:00"}, {"enabled_at": None}, {"repo_id": None}, {"max_request_usd": -1}, {"max_day_usd": "3"},
++    {"expires_at": "tomorrow"}, {"expires_at": "2030-01-01T00:00:00"}, {"enabled_at": None}, {"repo_id": None}, {"max_request_usd": -1},
+ ])
+ def test_a_malformed_delegation_is_unusable_not_enabled(tmp_path, over):
+     path = tmp_path / "d.json"
+     write_delegation(path, **over)
+     d, why = load_delegation(path, time.time(), "skip")
+     assert d is None
++
++
++def test_a_legacy_day_and_month_keys_are_accepted_and_ignored(tmp_path):
++    path = tmp_path / "d.json"
++    write_delegation(path, max_day_usd="3", max_day_calls=2, max_month_usd=10.0)
++    d, why = load_delegation(path, time.time(), "skip")
++    assert d is not None and d.max_day_calls == 0 and d.max_day_cents == 0 and d.max_month_cents == 0
+ 
+ 
+ @pytest.mark.parametrize("content", ["", "{", "[]", "null"])
+--- a/tests/test_r1_findings.py
++++ b/tests/test_r1_findings.py
+@@ -66,7 +66,7 @@
+         run(github_env, policy=policy)
+     finally:
+         other.close()
+-    assert github_env.runner.calls == 1
++    assert github_env.runner.calls == 2        # no daily count ceiling exists any more: two distinct requests each run exactly once
+ 
+ 
+ # --- findings 2 and 4: scan and watch must not share a database without sharing the lock ----------------------------
+--- a/tests/test_review_request_gate_tool_v026.py
++++ b/tests/test_review_request_gate_tool_v026.py
+@@ -50,8 +50,8 @@
+         self.config.write_text(json.dumps({"review_policy": {"known_run_policy_refs": self.policy_map}}), encoding="utf-8")
+ 
+     def save_request(self):
+-        self.request.write_text("---\n" + "".join(f"{key}: {val}\n" for key, val in self.fields.items()) +
+-                                "knowledge_refs: []\n---\n\n# Review\n", encoding="utf-8")
++        self.request.write_bytes(("---\n" + "".join(f"{key}: {val}\n" for key, val in self.fields.items()) +
++                                  "knowledge_refs: []\n---\n\n# Review\n").encode("utf-8"))
+ 
+     def pass_check(self, intent="design", max_usd="3.00"):
+         return gate.check_request(self.request, self.package, self.config,
+@@ -154,8 +154,8 @@
+             self.pass_check()
+ 
+     def test_duplicate_policy_field_rejected(self):
+-        self.request.write_text(self.request.read_text().replace(
+-            "run_policy_ref: POLICY-STATIC-V1-LARGE\n", "run_policy_ref: POLICY-STATIC-V1-LARGE\nrun_policy_ref: POLICY-STATIC-V1-DESIGN\n"), encoding="utf-8")
++        self.request.write_bytes(self.request.read_bytes().replace(
++            b"run_policy_ref: POLICY-STATIC-V1-LARGE\n", b"run_policy_ref: POLICY-STATIC-V1-LARGE\nrun_policy_ref: POLICY-STATIC-V1-DESIGN\n"))
+         with self.assertRaisesRegex(gate.GateReject, "REQUEST_DUPLICATE_FIELD"):
+             self.pass_check()
+ 
+--- a/tests/test_v022_findings.py
++++ b/tests/test_v022_findings.py
+@@ -49,8 +49,8 @@
+     assert direct(auto, "REQ-A", a) == "READY_POSTED"
+     watcher_dispatch(auto.env.store, "REQ-B|1|bbb|1", 1.0)
+     c = make_request(auto.env.http, "REQ-C")
+-    assert direct(auto, "REQ-C", c) != "READY_POSTED"
+-    assert not (auto.env.http.files().get(rp("requests/REQ-C/READY.md")) is not None)
++    assert direct(auto, "REQ-C", c) == "READY_POSTED"        # no daily count ceiling exists any more; the union is still counted as telemetry
++    assert auto.env.http.files().get(rp("requests/REQ-C/READY.md")) is not None
+ 
+ 
+ def test_B1_a_restart_keeps_the_union(auto):
+@@ -84,8 +84,8 @@
+     watcher_dispatch(auto.env.store, "REQ-B|1|bbb|1", 1.0)
+     auto.now["offset"] = 86400                                                    # the next KST day, same month
+     c = make_request(auto.env.http, "REQ-C")
+-    assert direct(auto, "REQ-C", c) != "READY_POSTED"
+-    assert has(auto.env, "AUTO_LIMIT_BLOCKED", "MONTH_COST_LIMIT") or has(auto.env, "AUTO_NOT_ELIGIBLE", "MONTH_COST_LIMIT")
++    assert direct(auto, "REQ-C", c) == "READY_POSTED"        # monthly cost ceiling no longer exists; the legacy key is ignored
++    assert not (has(auto.env, "AUTO_LIMIT_BLOCKED", "MONTH_COST_LIMIT") or has(auto.env, "AUTO_NOT_ELIGIBLE", "MONTH_COST_LIMIT"))
+ 
+ 
+ def test_B1_an_earlier_kst_day_does_not_count_today(auto):
+@@ -180,13 +180,12 @@
+     assert auto.env.runner.calls == 0
+ 
+ 
+-def test_B2_lowering_the_daily_cost_budget_while_pending_stops_it(auto, monkeypatch):
++def test_B2_lowering_the_legacy_daily_cost_key_while_pending_does_not_stop_it(auto, monkeypatch):
+     other = make_request(auto.env.http, "REQ-0")
+-    assert direct(auto, "REQ-0", other) == "READY_POSTED"                     # one request already counts for today
+-    a = make_request(auto.env.http, "REQ-A")
+-    _narrow_at(monkeypatch, auto, "before_sign", max_day_usd=1.0)
+-    direct(auto, "REQ-A", a)
+-    assert remote(auto.env, "requests/REQ-A/READY.md") is None and auto.env.store.auto_get_claim("REQ-A", "1")["stage"] == "POLICY_STOPPED"
++    assert direct(auto, "REQ-0", other) == "READY_POSTED"
++    a = make_request(auto.env.http, "REQ-A")
++    _narrow_at(monkeypatch, auto, "before_sign", max_day_usd=1.0)             # legacy key: accepted and ignored, the per-request cap still decides
++    assert direct(auto, "REQ-A", a) == "READY_POSTED"
+ 
+ 
+ def test_B2_a_change_that_still_allows_the_exact_candidate_does_not_stop_it(auto, monkeypatch):
