@@ -20,7 +20,7 @@
       "status": "검증 진행 중",
       "title": "COWORK-AUTO-APPROVAL-20261115-001 — CURRENT",
       "tone": "warning",
-      "topic": "2026-11-20 KST — GPT 사전 모델 시뮬레이션 5회 PASS / 실제 v0.2.29 ZIP 5회 NOT_RUN"
+      "topic": "2026-11-20 KST — 5개 독립 창 연속 요청 격리 시뮬레이션 / 교차 Work 위험 확인"
     },
     {
       "id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
@@ -709,10 +709,10 @@
     },
     {
       "evidence": "프로젝트 TRACKER.json 신고 값 · 운영 근거 별도 확인 필요",
-      "independent_review": "PENDING",
-      "next_action": "대시보드의 두 진입·개인/그룹 구분을 확인. 실제 Updater→Workspace 저장 연결은 L1 Work에서 업무 GPT의 설치본 매핑으로 확인.",
+      "independent_review": "NOT_RUN",
+      "next_action": "P1 4카드·P2 관계/변경분 B안 Pages 게시, 합성 UI·Pages 배포 PASS, 독립 리뷰 사용자 생략. 다음: PC/모바일 실제 보기",
       "owner": "GPT",
-      "phase": "REVIEW",
+      "phase": "COMPLETE",
       "record_source": "REGISTERED_METADATA_UNVERIFIED",
       "self_test": "PASS",
       "skill": "cowork-dashboard",
@@ -721,16 +721,16 @@
       "work_id": "COWORK-GITHUB-DASHBOARD-20261111-001"
     },
     {
-      "evidence": "CURRENT 문서 관측. 단계·진행률은 증명되지 않음",
-      "independent_review": "NOT_VERIFIED",
-      "next_action": "CURRENT.md 최신 상태 및 다음 담당 확인",
-      "owner": "미등록",
-      "phase": "UNKNOWN",
-      "record_source": "CURRENT_ONLY_UNSTRUCTURED",
-      "self_test": "NOT_VERIFIED",
-      "skill": "미지정",
+      "evidence": "프로젝트 TRACKER.json 신고 값 · 운영 근거 별도 확인 필요",
+      "independent_review": "NOT_RUN",
+      "next_action": "P1/P2 질문별 조회·근거 관계·변경분 PRIVATE 구현/CI PASS, 사용자 독립 리뷰 생략. 공개 B안 배송 완료. 다음: PC/모바일 시인성 확인",
+      "owner": "GPT",
+      "phase": "COMPLETE",
+      "record_source": "REGISTERED_METADATA_UNVERIFIED",
+      "self_test": "PASS",
+      "skill": "skill-discovery",
       "source": "collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md",
-      "title": "COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT",
+      "title": "skill-discovery",
       "work_id": "COWORK-SKILL-DISCOVERY-20261112-001"
     },
     {
