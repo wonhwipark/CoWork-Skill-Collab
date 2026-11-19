@@ -14,6 +14,7 @@ import json
 import sys
 import tempfile
 import unittest
+import zipfile
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[4]
@@ -116,6 +117,41 @@ def patch_workflow_ace(root: Path):
         encoding="utf-8", newline="\n")
 
 
+
+def verify_preservation(source: Path, built: Path, skill: str) -> dict:
+    """No source deletion and no unintended changes to existing packaged files."""
+    common = {"SKILL.md", "VERSION", "VERSION.md", ".skill-release.json",
+              ".skill-main.json", "skillsilent/manifest.json",
+              "MANIFEST_SHA256.json", "PACKAGE_CONTENTS.sha256"}
+    expected_changed = ({"scripts/ca_core/reuse_validator.py"} if skill == "code-analyzer"
+                        else {"l1_fix_workflow/scenario_msc.py",
+                              "l1_fix_workflow/work_inspection.py"})
+    expected_new = ({"scripts/ca_core/pec_hop_excerpt_readonly.py"} if skill == "code-analyzer"
+                    else {"l1_fix_workflow/ace_resume_readonly.py"})
+    def load(zip_file):
+        with zipfile.ZipFile(zip_file) as z:
+            if z.testzip() is not None:
+                raise RuntimeError("PRESERVATION_ZIP_CRC_FAILED")
+            return {name.split("/", 1)[1]: z.read(name)
+                    for name in z.namelist()
+                    if "/" in name and not name.endswith("/") and
+                    "__pycache__" not in name and not name.endswith(".pyc") and
+                    not name.split("/", 1)[1].startswith("artifacts/")}
+    orig, new = load(source), load(built)
+    removed = set(orig) - set(new)
+    added = set(new) - set(orig)
+    changed = {key for key in orig.keys() & new.keys() if orig[key] != new[key]}
+    unexpected = changed - common - expected_changed
+    if removed or added != expected_new or unexpected or not expected_changed <= changed:
+        raise RuntimeError("SOURCE_PRESERVATION_FAIL:" + json.dumps(
+            {"skill": skill, "removed": sorted(removed), "added": sorted(added),
+             "unexpected": sorted(unexpected),
+             "missing_expected_changes": sorted(expected_changed - changed)}))
+    return {"status": "PASS", "base_members": len(orig),
+            "new_members": len(new), "changed_files": sorted(changed),
+            "new_files": sorted(added), "unchanged_byte_equal": len(orig) - len(changed)}
+
+
 def run(out: Path) -> dict:
     out.mkdir(parents=True, exist_ok=True)
     result = {}
@@ -157,9 +193,11 @@ def run(out: Path) -> dict:
             path = out / dest
             rezip(expanded, path)
             quality = release_validate(path, new)
+            preservation = verify_preservation(archive, path, name)
             result[name] = {"archive": dest, "sha256": digest(path),
                             "size_bytes": path.stat().st_size,
                             "tests": cases, "package_quality": quality,
+                            "source_preservation": preservation,
                             "channel": "development_not_for_deployment",
                             "independent_code_review": "NOT_RUN",
                             "business_host": "NOT_EXTERNALLY_OBSERVABLE",
