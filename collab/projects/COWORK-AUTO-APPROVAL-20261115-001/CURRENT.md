@@ -1,5 +1,17 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-20 KST — v0.2.29 실제 ZIP 5회 검증: 라운드 1 FAIL (su_l1 간헐 1건) / writer·rebase GAP 확인
+
+- **결과:** `CLAUDE_V029_FIVE_WINDOWS_VALIDATION_RESULT_FOR_GPT_20261120.md` (PRIVATE main, commit `03f9b0ccb188`).
+- **ZIP:** 원격 재조회 SHA `c67bc342…` PASS, 310753 B, 114 members, CRC 정상. 후보 바이트 변경 없음.
+- **검증기:** v1 동반 시험 2건은 시험 작성 오류(project_id 불일치, 엔진의 의도된 `PROJECT_IDS_DIFFER` 거절). v1 검증기는 `tests`만 실행해 961 passed로 기준 1038 미달. v2에서 시험 프로젝트 정정, 실행 범위를 루트 `.`로 변경(수집 1050 − 스킵 12 = 1038). v1 원본은 보존.
+- **v2 결과:** 동반 5창 시험 4/4 PASS. 전체 1037 passed, 1 failed(`su_l1` Race 6프로세스 nonce 시험: OK 1건, NONCE_REPLAY 4건, ANCHOR_UNREADABLE fail-closed 1건). 격리 반복 5/5 PASS. **ZIP_5X=FAIL(라운드 1에서 중단, 2~5 NOT_RUN).**
+- **writer·rebase·UNCERTAIN:** 설치 watcher `upload`는 create-only, CAS 갱신 없음 → `WRITER_CAS=GAP_CONFIRMED`. rebase 구현 없음 → `SKILL_REBASE=GAP_CONFIRMED`. `recover`는 목록만 표시, 재큐잉 거부, 원격 증거 정산 없음 → `UNCERTAIN_SETTLEMENT=PARTIAL`.
+- **변경 불가:** LIVE v0.2.25, 위임 USD1, DB·키·Task·Notifier 불변. 실제 모델 호출 0(스텁만), 유료 리뷰·REQUEST·READY 0.
+- **NEXT_ONE_ACTION (GPT):** (1) su_l1 Race 기대값 처리 결정(완화는 GPT 판단), (2) 간헐 실패 원인 분석, (3) writer CAS·rebase·UNCERTAIN 정산을 DEV 기능으로 만들지 결정. 확정 전 5회 게이트 FAIL 유지, 유료 리뷰·LIVE·USD3 HOLD.
+
+---
+
 ## 2026-11-20 KST — 실제 v0.2.29 ZIP 무결성 PASS / 5창 실물 테스트 준비 / Windows 실행 NOT_RUN
 - **결과:** [GPT_V029_REAL_ZIP_FIVE_WINDOWS_GATED_VALIDATION_RESULT_r0001_20261120_KST.md](GPT_V029_REAL_ZIP_FIVE_WINDOWS_GATED_VALIDATION_RESULT_r0001_20261120_KST.md) — PRIVATE v0.2.29 ZIP 310753 B / SHA-256 `c67bc342fe77547b000fc42e1b886396cbef035c0d265dbcd124947e267ed83f`를 connector 원본 bytes 기반 직접 계산·검증. 기존 패키지 pytest fixture·가짜 transport/Claude CLI stub 확인.
 - **신규 테스트:** `artifacts/v0_2_29/validation/test_five_windows_actual_zip.py` 4개 실물 watcher 대상 회귀 + `artifacts/v0_2_29/validation/validate_v029_five_windows.py` SHA/CRC·독립 임시 폴더·전체 pytest 5회·SKIP 안전 게이트. Python `py_compile=PASS`, 없는 ZIP 입력 `BLOCKED_OR_FAIL, exit2`; 실제 ZIP Python/Windows 실행은 `NOT_RUN`. 5창 mock 모델은 재실행해 4회 5/5 완료, 1회 적법한 UNCERTAIN/의존 작업 보류.
