@@ -1,0 +1,26 @@
+{
+  "skill": "skill-collab-watcher",
+  "version": "0.2.29",
+  "status": "development_not_for_deployment; independent review NOT_RUN for this exact SHA",
+  "baseline": {
+    "version": "0.2.28",
+    "sha256": "9e6ee6d30170f0a2890237c7d1b9184e5c423213a18146926b848c5269b8c00c",
+    "size_bytes": 309367
+  },
+  "candidate": {
+    "name": "skill-collab-watcher_v0_2_29_1120.zip",
+    "size_bytes": 310753,
+    "sha256": "c67bc342fe77547b000fc42e1b886396cbef035c0d265dbcd124947e267ed83f",
+    "members": 114,
+    "rebuild_sha256_identical": true
+  },
+  "changed_files": [
+    "docs/AUTO_APPROVAL.md",
+    "docs/BUDGET_POLICY_CONFIGURATION.md",
+    "docs/CUTOVER_RUNBOOK.md",
+    "skill_collab_watcher/__init__.py",
+    "skill_collab_watcher/auto_approval.py",
+    "skill_collab_watcher/state_store.py"
+  ],
+  "inherits_review_pass_from": null
+}
