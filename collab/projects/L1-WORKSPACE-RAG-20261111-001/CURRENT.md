@@ -1,5 +1,14 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-20 KST — 위키 UI 수정방안·사용 편의성 추가 검토
+- **결론:** 기존 UX R1 `ACCEPT_WITH_CHANGE / REVIEW_CYCLE=CLOSED` 유지. MSC 실제 가로 넘침에 따른 방향별 텍스트 안내와 CSS 중복 통합(P1 두 건)은 수용. 전체 스타일은 현행 위키 구조·보라색 강조·16px 본문 유지 권고.
+- **추가 권고:** 코드에서 읽기 위치 초기화·탭 전환 시 기본 문서 초기화·검색어 초기화를 확인. 읽던 위치 복귀/탭별 마지막 문서 기억을 우선 추가 후보로, 현재 문서 탐색 위치·실제 MSC 연결 대상 정합성·검색 문맥·집중 읽기를 후속 후보로 정리. 기존 P2 두 건 보류 유지.
+- **검토 결과:** [WIKI_UI_USABILITY_IMPROVEMENT_REVIEW_r0001_20261120_KST.md](WIKI_UI_USABILITY_IMPROVEMENT_REVIEW_r0001_20261120_KST.md), 11,450 B, SHA-256 `7736f2d3838b4aff93bcf30f3685733558d4d79c8be539276f250ab4e169497d`, PRIVATE main commit `b98a42d78f3b8cad63ffc67a8e9425548fce822c`, 원격 본문/바이트 검증 PASS.
+- **실제 범위:** 현재 소스 4개 정적 검토·기존 화면 이미지 3장 열람. 추가 개선안은 `REVIEW_ONLY`; UI 수정·신규 패키지·신규 브라우저 시험·신규 독립 리뷰 `NOT_RUN`. 기존 PUBLIC 전달·운영 상태·B1/B2/B3 게이트 무변경.
+- **다음 한 동작:** 기존 확정 범위인 P1 두 건의 최소 수정→관련 화면/MSC 회귀→구버전 보존 신규 패치 ZIP. 읽기 위치/탭 기억은 함께 묶을 가치가 높은 채택 권고이며 이번 검토만으로 구현 범위를 자동 확대하지 않음.
+
+---
+
 ## 2026-11-19 KST — GPT 최종 판정: 완성 위키 UI/UX R1 ACCEPT_WITH_CHANGE / 리뷰 종결
 - **원격 직접 확인:** [정식 REQUEST](../../requests/REQ-L1-WORKSPACE-WIKI-UI-UX-R1-20261119/REQUEST.md)·SOURCE_PIN·APPROVAL_SIG·READY·[독립 결과](../../reviews/REQ-L1-WORKSPACE-WIKI-UI-UX-R1-20261119/REVIEW_RESULT_1.md)·[영수증](../../receipts/REQ-L1-WORKSPACE-WIKI-UI-UX-R1-20261119/RECEIPT_1.md). ID/rev/ZIP SHA 일치, COMPLETED, `ok=true`, JPEG4 실제 시각 열람. Windows 실행 보고상 모델 1회·USD0.5441/12turns(영수증 자체는 비용 필드 없어 GPT 독립 비용 검증 NOT_VERIFIED).
 - **판정 정본:** [GPT_WIKI_UI_UX_R1_DISPOSITION_r0001_20261119_KST.md](GPT_WIKI_UI_UX_R1_DISPOSITION_r0001_20261119_KST.md) `ACCEPT_WITH_CHANGE / REVIEW_CYCLE=CLOSED`. P0=0, P1=2(MSC 숨은 lane 스크롤 텍스트 힌트, CSS 미디어쿼리 중복 정리), P2=2 보류. 유료 재리뷰/재호출 0.
