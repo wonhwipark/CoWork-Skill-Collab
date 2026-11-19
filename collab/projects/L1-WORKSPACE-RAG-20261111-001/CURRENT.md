@@ -1,5 +1,15 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-20 KST — Recovery 설치본 확인 시도: HOST_MCP_TOOL_ACCESS=BLOCKED
+
+- **사용자 요청·수행:** 관련 스킬 검토 후 “확인해줘” 지시로 실제 설치본의 결과/Kernel 저장 계약 확인 경로와 기존 회신을 조회. 이번 대화에 노출된 도구에서 업무 Linux MCP/Mango/호스트 Agent 직접 호출 인터페이스를 찾지 못함. 로컬 scratch의 공개 ZIP 추출본은 업무 설치본의 증거로 사용하지 않음.
+- **최신 근거:** [MCP 읽기 진단 인계](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_MCP_AGENT_READONLY_CAPABILITY_AND_VIEWER_PROBE_HANDOFF_r0001_20261120_KST.md), Git blob `8283f11156da78c0c87369080b245b4517cd6c50`, 실제 원문 조회. 문서의 “MCP 확장 미구현, 운영 설치/연결 시험 NOT_RUN” 및 본 CURRENT의 동일 상태를 확인. 이는 진단 확장의 기록이며 기존 MCP 전체가 없거나 모든 조회가 불가하다는 판정이 아님.
+- **기존 근거 재사용:** [G0 일부 호스트 보고](L1_KNOWLEDGE_FEEDBACK_DISPOSITION_r0001_20261114.md), blob `16b522a61be3c8c4257d42491ad0f22679de053b`는 재사용. 다만 l1-channel-recovery 설치/로드 버전·반환 형식·실제 제공자 등록/첨부·Recovery 조회까지 확인한 보고는 아님. PRIVATE 검색 결과 미발견은 설치 부재의 증거로 사용하지 않음.
+- **판정:** `HOST_MCP_TOOL_ACCESS=BLOCKED`; `RECOVERY_INSTALLED_AND_LOADED_VERSION/REPORT_CONTRACT/KERNEL_SAVE_CONTRACT/RECOVERY_VIEW=NOT_VERIFIED`. 공개본에서 확인한 제약을 업무 설치본 전체의 결함으로 확정하지 않음. 새 합성시험·실제 코드분석·Work 저장시험·스킬 패치·Job·설치·유료 호출·PUBLIC 인계 변경 NOT_RUN.
+- **NEXT_ONE_ACTION:** 이미 Linux MCP에 연결된 모바일 Agent/허용된 업무 호스트 Agent에서 대상 호스트 일치를 먼저 확인하고, l1-channel-recovery 설치/로드 버전·보고서 출력·기존 Kernel 제공자/일반 첨부 지원·같은 Work 연결·Recovery 조회를 읽기 전용 대조. 기존 실제 도구로 가능한 항목을 먼저 수행하고 미지원/미접근은 분리; 원문 반출 없이 허용된 비민감 판정/버전만 회수. 진단 도구 이름·API를 임의 생성하거나 새 분석/Job을 대신 실행하지 않음.
+
+---
+
 ## 2026-11-20 KST — Recovery 결과 Workspace 연결 스킬 검토: CONDITIONAL_CONNECT
 
 - **결론:** 같은 Work에 분석 원본을 보존하고 등록된 Evidence 출처 기반 Recovery 보기를 연결하는 방향 권장. 생산자 adapter＋기존 writer의 입증된 결손＋읽기 분류 연결을 우선; 새 RECOVERY profile/중복 원장 불필요. 개인 Knowledge 분류는 기존 Updater 책임 유지.
