@@ -111,7 +111,7 @@ flowchart TB
 | ↳ Q7 | — Cost/gates, reservation vs. ceilings, SHADOW | NOT_ADJUDICATED | - |
 | ↳ Q8 | — Interaction with v0.2.18, locking, seal_interrupted, publish-only retry | NOT_ADJUDICATED | - |
 | [REQ-COWORK-V0220-R1-20261115](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-COWORK-V0220-R1-20261115/REQUEST.md) | COWORK-DROPBOX-TO-GITHUB-MIGRATION | GPT_NOT_OBSERVED | NOT_VERIFIED |
-| [REQ-COWORK-V028-AUTO-REVIEW-R1-20261120](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-COWORK-V028-AUTO-REVIEW-R1-20261120/REQUEST.md) | COWORK-AUTO-APPROVAL-20261115-001 | READY_NOT_OBSERVED | NOT_VERIFIED |
+| [REQ-COWORK-V028-AUTO-REVIEW-R1-20261120](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-COWORK-V028-AUTO-REVIEW-R1-20261120/REQUEST.md) | COWORK-AUTO-APPROVAL-20261115-001 | REVIEW_NOT_OBSERVED | NOT_VERIFIED |
 | [REQ-L1-MSC-DUAL-ENTRY-DESIGN-R1-20261117](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-L1-MSC-DUAL-ENTRY-DESIGN-R1-20261117/REQUEST.md) | L1-WORKSPACE-RAG-20261111-001 | GPT_NOT_OBSERVED | NOT_VERIFIED |
 | ↳ Q9 | (과잉 설계 여부)**: 섹션 2, 5, 7에서 신규 엔진/Kernel 상태기계/Evidence enum/Work profile 확장을 명시적으로 기본안에서 제외했습니다. 재사용  | NOT_ADJUDICATED | - |
 | [REQ-L1-MSC-MD-LINK-STRUCTURE-20261115-001](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-L1-MSC-MD-LINK-STRUCTURE-20261115-001/REQUEST.md) | L1-WORKSPACE-RAG-20261111-001 | READY_NOT_OBSERVED | NOT_VERIFIED |
