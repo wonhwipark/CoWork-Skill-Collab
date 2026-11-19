@@ -58,6 +58,21 @@ jobs:
       - name: Inspect two pinned existing PEC and ACE skill interfaces (read-only)
         run: |
           python collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/dev/inspect_existing_pec_ace_interfaces_r0001.py
+      - name: Build pinned PEC Code Analyzer and ACE Workflow two-skill candidates
+        run: |
+          sha256sum collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates/code-analyzer_v0_15_3_1114.zip
+          python collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/dev/build_pec_ace_two_skills_v1_1119.py --out /tmp/pec-ace-two-skill-development
+          python collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/dev/build_pec_ace_two_skills_v1_1119.py --out /tmp/pec-ace-two-skill-recheck
+          cmp /tmp/pec-ace-two-skill-development/code-analyzer_v0_15_4_1119.zip /tmp/pec-ace-two-skill-recheck/code-analyzer_v0_15_4_1119.zip
+          cmp /tmp/pec-ace-two-skill-development/l1-fix-workflow_v1_6_74_1119.zip /tmp/pec-ace-two-skill-recheck/l1-fix-workflow_v1_6_74_1119.zip
+          echo PEC_ACE_TWO_SKILL_DEVELOPMENT_REPRO_PASS
+      - name: Preserve PEC and ACE two-skill developer packages only
+        uses: actions/upload-artifact@v4
+        with:
+          name: pec-ace-two-skill-development-1119
+          path: /tmp/pec-ace-two-skill-development/*
+          retention-days: 7
+          if-no-files-found: error
       - name: Build ACE PEC ACON packaged Workflow read-only development candidate
         run: |
           python collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/dev/build_ace_pec_acon_workflow_v1673_1119.py --out /tmp/ace-pec-acon-development
