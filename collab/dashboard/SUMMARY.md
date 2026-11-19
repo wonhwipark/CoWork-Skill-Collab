@@ -131,6 +131,6 @@ flowchart TB
 | ↳ T31 | /R10 수용 기준에 구체적 path-canonicalization 알고리즘(realpath + commonpath + TOCTOU 대응) 명문화. | NOT_ADJUDICATED | - |
 | ↳ T12 | /R24 수용 기준에 비밀 스캔 실패 시 fail-closed 원칙과 룰셋 소유자를 명시. | NOT_ADJUDICATED | - |
 | ↳ T29 | /R08 수용 기준에 origin 분리의 구현 방식(서브도메인 vs 쿠키 scope)을 양자택일로 확정하도록 명시. | NOT_ADJUDICATED | - |
-| [REQ-L1-WORKSPACE-WIKI-UI-UX-R1-20261119](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-L1-WORKSPACE-WIKI-UI-UX-R1-20261119/REQUEST.md) | L1-WORKSPACE-RAG-20261111-001 | READY_NOT_OBSERVED | NOT_VERIFIED |
+| [REQ-L1-WORKSPACE-WIKI-UI-UX-R1-20261119](https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/collab/requests/REQ-L1-WORKSPACE-WIKI-UI-UX-R1-20261119/REQUEST.md) | L1-WORKSPACE-RAG-20261111-001 | REVIEW_NOT_OBSERVED | NOT_VERIFIED |
 
 비차단 지적도 GPT 판정 기록 전에는 해결 처리하지 않습니다.
