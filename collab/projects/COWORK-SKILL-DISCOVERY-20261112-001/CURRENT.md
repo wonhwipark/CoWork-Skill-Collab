@@ -1,5 +1,17 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 2026-11-19 KST — PEC Code Analyzer v0.15.4·ACE Workflow v1.6.74 실제 2스킬 개발 ZIP 및 22 PASS
+
+- **사용자 최신 단일 범위:** “상위 두개만 스킬변경후 패키지 배포해줘” → **`code-analyzer` P1 PEC-HOP, `l1-fix-workflow` P2 ACE 두 스킬만 수정**. ACON·Kernel·Knowledge Updater·skill-updater 미수정. NO_EXPORT: 업무 Linux 코드/로그/설치/평가·비민감 요약 외부 회신 요구 0.
+- **실제 코드·패키지:** 재현 빌더 [2스킬 빌더](dev/build_pec_ace_two_skills_v1_1119.py), [PEC 소스](dev/pec_hop_excerpt_readonly.py) + 기존 `ca_core/reuse_validator.validate` 선택적 `pec_claims` 연결, [ACE 소스](dev/ace_resume_readonly.py) + 기존 `work_inspection.inspect_work` `ace_scope/ace_subject` 명시 시 파생 decision 후보 연결. **신규 Agent/원장·기본 실행 경로·Knowledge/Git writer/ACON 개발 추가 0**. 기존 source pin SHA 검증 후 v0.15.3→v0.15.4, Workflow v1.6.70+MSC v1.6.72→v1.6.74.
+- **실제 PRIVATE GitHub CI:** [run 44453442652](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/44453442652) commit `cc28d9e5d46b2ff6035de23fae49a307fad5092b`, **SUCCESS**. Code Analyzer **12 PASS**, Workflow **10 PASS** 실제 추출 패키지 import 합성시험, 기존 Source 패키지 바이트 보존 검사·CRC/manifest/version/컴파일·기존 MSC 계보·2회 빌드 동일성 PASS. 과거 v1.6.73 20 PASS는 ACON 포함 역사적 개발본으로 보존, 새 PEC/ACE 22 PASS와 합산/배포 PASS로 승격하지 않음.
+- **고정 개발 ZIP 두 종:** `code-analyzer_v0_15_4_1119.zip` **515271 B** SHA256 `ca1e4cd2d89afd5bf35ce49cab4d2034e93650ffb50a3e713db28eb65b758d21` (217 멤버/manifest 216; 원본 216 중 210 bytes 보존, 6 의도 변경 + 새 PEC 1). `l1-fix-workflow_v1_6_74_1119.zip` **760040 B** SHA256 `546936c3856ef19e212ecea3076446d7c75d89db6fcb5ff34df77981024edcd6` (311 멤버/manifest 310; 원본 310 중 303 bytes 보존, 7 의도 변경 + 새 ACE 1). **두 ZIP `development_not_for_deployment`; 최종 공개본 아님.** 원본 삭제/범위 밖 변경 0. CI artifact `pec-ace-two-skill-development-1119` ID `14496641478` run `44453442652` (2026-11-26 UTC 만료), 기본 입력/빌더로 언제든 재현.
+- **결과/Windows 독립 리뷰 원샷:** [2스킬 개발·CI·PUBLIC 게이트 실제 판정](GPT_PEC_ACE_TWO_SKILLS_DEV_BUILD_AND_RELEASE_GATE_r0001_20261119_KST.md) commit `d074ce948585a5530362275526dc89dcb7e8372a` / [Windows 독립 코드 리뷰 및 검증된 최종 릴리스 원샷](PEC_ACE_TWO_SKILL_CODE_REVIEW_AND_RELEASE_ONESHOT_r0001_20261119_KST.md) commit `a86651834f6d142a454307ef3f252bfd139c2b3e`. 문서·소스 모두 PRIVATE main 원격 readback PASS.
+- **현재 완료/미완료 판정:** `DEV_BUILD=PASS`, `SELF_TEST=22_PASS`, `SOURCE_PRESERVATION=PASS`, `INDEPENDENT_CODE_REVIEW=NOT_RUN`(구 설계 R1만 CLOSED), `BUSINESS_G0/E2E=NOT_EXTERNALLY_OBSERVABLE`, `PUBLIC_NEW_FINAL_ZIPS=BLOCKED_NOT_POSTED`, `DEPLOYMENT_READY=NO`. 기존 L1Work 공개 Code Analyzer v0.15.2, Workflow v1.6.67 ZIP 변경 0. 현 LIVE 신규 통합 USD3 reviewer 정책/보호 위임 아직 확인·적용 불일치 — 사용자 문서의 USD3 승인만으로 정식 리뷰/승인·READY 실행 금지. 신규 유료 모델·REQUEST/READY·Job·호스트 설치·그룹 Knowledge WRITE 0.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 기존 리뷰 원샷으로 실제 LIVE preflight·독립 코드 리뷰(유효한 권한·비용 내에서) 후 결과/영수증을 이 Work에 연결. GPT는 차단 결함·전체 회귀/보안·공개 릴리스 메타데이터를 PASS로 확인하면 새 고유 **최종** ZIP 2개만 `wonhwipark/L1Work/main` 루트에 게시하고 remote raw ZIP SHA256 검증. 그 전은 기존 릴리스 보호. 업무 Linux 현장 실효성 평가는 업무 환경 내부 전용.
+
+---
+
 ## 2026-11-19 KST — 최신 적용 범위: PEC 우선·ACE 최소·ACON 보류 / 업무 데이터 NO_EXPORT
 
 - **최신 사용자 판정:** 업무 Linux 데이터의 외부 반출을 허용하지 않는 현실 조건에서도 PEC/ACE의 국소 효용이 있으므로 **PEC-HOP P1 우선(근거·source revision·원문 바이트 보존), ACE P2 기존 Workflow/Kernel 재개 기능 최소 연결, ACON DEFER**로 범위를 축소. 기존 v1.6.73 3기능 개발 ZIP을 현재 적용/공개 릴리스 대상으로 자동 채택하지 않음. 사용자 기존 최종 배송 지시는 **필수 릴리스 게이트 통과 시 PEC+ACE 새 최종 ZIP에 한정해 유지**.
