@@ -5,11 +5,11 @@
       "work_id": "COWORK-AUTO-APPROVAL-20261115-001",
       "skill": "cowork-review-watcher",
       "title": "GPT→GitHub REQUEST 자동 서명·READY (제한된 사전 위임)",
-      "phase": "REVIEW",
-      "owner": "Windows Claude Code: host proof gates then conditional same-SHA LIVE; GPT evidence disposition complete",
-      "self_test": "WINDOWS_HOST_REPORTED_PASS (1031P/0F/12S, package E2E SHADOW PASS; live host shadow NOT_RUN)",
-      "independent_review": "V028_R1_COMPLETE_MAJOR_1_FIXED_IN_DEV_V029_REVIEW_NOT_RUN",
-      "next_action": "2026-11-20 follow-up: receipt settled from watcher DB (1 call, USD 1.1914247, COMPLETED). v0.2.28 review MAJOR 1 reproduced and fixed in dev v0.2.29 (cap-refused requests become POLICY_STOPPED and are never auto-signed after a cap raise). v0.2.29 ZIP skill-collab-watcher_v0_2_29_1120.zip 310753 B SHA256 c67bc342fe77547b000fc42e1b886396cbef035c0d265dbcd124947e267ed83f, artifacts/v0_2_29, tests 1034 PASS / 0 FAIL, independent review NOT_RUN, v0.2.28 PASS not inherited. LIVE v0.2.25, delegation USD1, enabled_at 2026-11-16 unchanged. HOLD: LIVE install and USD3 delegation change. Result CLAUDE_AUTO_REVIEW_FOLLOWUP_RESULT_FOR_GPT_20261120.md (commit 47060c5ba1c2). NEXT: GPT decides (1) a new independent review of v0.2.29 with separate USD 3 approval, or (2) option A on v0.2.28 bytes with the enabled_at procedure."
+      "phase": "PRE_REVIEW_V029_5X_FULL_ZIP_SIMULATION_PENDING",
+      "owner": "Windows Claude Code actual exact ZIP five isolated simulation rounds; GPT decision after evidence",
+      "self_test": "Windows dev 1034P/0F/12S; GPT isolated SQLite model 5 runs / 25 checks PASS, actual v0.2.29 ZIP Python execution on GPT NOT_RUN",
+      "independent_review": "V029_NOT_RUN_REQUIRES_FIVE_HOST_ZIP_SIM_RUNS_AND_VALID_APPROVAL",
+      "next_action": "GPT model-only test 5/5 PASS, but full ZIP execution NOT_RUN; exact 5-run gate and evidence: collab/projects/COWORK-AUTO-APPROVAL-20261115-001/GPT_V029_PRE_REVIEW_FIVE_SIMULATIONS_AND_HOST_TEST_GATE_r0001_20261120_KST.md. Execute 5 isolated Windows source-ZIP runs including cap retroactivity, restart, fail-closed policies, races, failure injection; all PASS before any new paid review/REQUEST/READY. Any failure BLOCKED, maintain LIVE v0.2.25/delegation USD1. New paid review needs verified valid approval and independent reviewer, no prior review reuse."
     }
   ]
 }
