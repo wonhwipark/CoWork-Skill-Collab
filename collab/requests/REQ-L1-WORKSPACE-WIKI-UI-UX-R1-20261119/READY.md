@@ -1,0 +1,12 @@
+---
+schema: SKILL_COLLAB_READY_V1
+state: READY
+request_id: REQ-L1-WORKSPACE-WIKI-UI-UX-R1-20261119
+request_revision: 1
+request_path: /SKILL-COLLAB/requests/REQ-L1-WORKSPACE-WIKI-UI-UX-R1-20261119/REQUEST.md
+request_sha256: 112d38d9712c004c84a88002e1ef7e7a77dcd1e5e617036637500f973ce1eb4c
+package_sha256: 411553e74e76bb82237fd2ebef65169769e4dbe4cfd2231afb5afd38559b10a9
+baseline_id: COWORK-LIVE-A-20261114
+---
+
+# ready
