@@ -1,5 +1,15 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 2026-11-19 KST — PEC·ACE 2스킬 신규 독립 코드 리뷰 명시 요청, Windows 사전승인 대기
+
+- **사용자 명시 실행 요청:** “리뷰 요청해줘” — PEC-HOP `code-analyzer v0.15.4` + ACE `l1-fix-workflow v1.6.74`의 **신규 독립 코드 리뷰 1회**, 기존 설계 R1은 CLOSED. 같은 Work의 [Windows 독립 코드 리뷰/배포 원샷](PEC_ACE_TWO_SKILL_CODE_REVIEW_AND_RELEASE_ONESHOT_r0001_20261119_KST.md) 최신 최상단에 리뷰 대상·정확한 고정 SHA/CI 근거·중복 확인·실 LIVE preflight→조건 충족 시 commit A/서명/READY→실 리뷰/영수증·배포 게이트까지 통합 지시. commit `2dff12b540cb768f45fbf80b003c346c6e2dbf7a`, blob `22e37c0f3e57bbef28e55954e987677f242761ce`, remote readback PASS.
+- **요청 ID 후보(비실행 intent):** `REQ-COWORK-PEC-ACE-TWO-SKILLS-CODE-R1-20261119`. PRIVATE `collab/requests/` 및 `collab/reviews/` 최신 목록에 **동일 두 스킬 코드 리뷰의 정식 REQUEST/리뷰 결과는 없음**. 고유 후보 ID를 GitHub 본문에 썼다고 watcher가 실행되는 것은 아님. 정식 `REQUEST.md`, review input ZIP, SOURCE_PIN, 승인 서명, READY **모두 NOT_POSTED**.
+- **보호된 운영 권한 차단:** 현행 정본의 마지막 Windows 호스트 보고는 `POLICY-STATIC-V1` USD1.50, 보호 `auto_delegation` USD1.00이고 신규 코드 리뷰 공통 USD3 승인과 일치하는 **Windows 설치 본문/유효 서명 자격의 실측이 없음**. 이 도구 세션에는 Windows LIVE config/서명자/로컬 실행 연결이 없으므로 **PREPUBLICATION_PREFLIGHT=NOT_RUN**, `REVIEW_REQUEST=HOST_PREFLIGHT_BLOCKED`, `INDEPENDENT_CODE_REVIEW=NOT_RUN`. 다른 UI/UX 요청에만 허용된 수동 DESIGN $3 예외를 재사용하지 않음.
+- **실제 수행/안전:** 기존 PRIVATE 인계서 수정·원격 확인은 `PASS`; Windows 자체 실행/유료 모델·REQUEST/READY·서명/키·운영 설정·리뷰 영수증·PUBLIC ZIP·업무 설치·Knowledge WRITE는 **0**. 두 개발 ZIP 22개 합성 QA/CRC/source preservation/reproducible PASS 보존; 사용자 **“리뷰 요청해줘”를 실제 유료 리뷰 완료로 과장하지 않음**.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 새 인계서 최신 절을 읽어 **실 LIVE select/check+보호 위임 유효성 선검증**을 실행. 유효할 때만 **신규 고정 REQUEST→서명/READY 마지막→독립 코드 리뷰/영수증**을 진행해 같은 Work에 readback 결과 게시. 정책 미호환이면 차단 결과만 기록하고 신규 모델 호출 0. GPT는 리뷰 판정·차단 결함 최소 보완·공개 릴리스 게이트 PASS 이후에만 두 새 최종 ZIP을 `wonhwipark/L1Work/main` 루트에 게시.
+
+---
+
 ## 2026-11-19 KST — PEC Code Analyzer v0.15.4·ACE Workflow v1.6.74 실제 2스킬 개발 ZIP 및 22 PASS
 
 - **사용자 최신 단일 범위:** “상위 두개만 스킬변경후 패키지 배포해줘” → **`code-analyzer` P1 PEC-HOP, `l1-fix-workflow` P2 ACE 두 스킬만 수정**. ACON·Kernel·Knowledge Updater·skill-updater 미수정. NO_EXPORT: 업무 Linux 코드/로그/설치/평가·비민감 요약 외부 회신 요구 0.
