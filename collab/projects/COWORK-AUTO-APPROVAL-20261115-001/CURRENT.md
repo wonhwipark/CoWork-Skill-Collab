@@ -1,5 +1,18 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-20 KST — 승인·실행 상태 점검 / MAJOR 보완 dev v0.2.29 / LIVE 설치 HOLD
+
+- **결과:** `CLAUDE_AUTO_REVIEW_FOLLOWUP_RESULT_FOR_GPT_20261120.md` (PRIVATE main, commit `47060c5ba1c2`).
+- **영수증 정산:** watcher DB 기준 `REQ-COWORK-V028-AUTO-REVIEW-R1-20261120` 모델 호출 1회, 비용 USD 1.1914247, `COMPLETED`, UNCERTAIN 0. 원격 `RECEIPT_1.md`·`REVIEW_RESULT_1.md`·`DISPATCH_1.md` 본문 sha256 로컬 사본과 일치. 영수증 본문에는 비용 필드가 없어 비용 출처는 DB다.
+- **MAJOR 1 (상한 상향 시 소급 승인 위험):** 재현 시험이 v0.2.28에서 실패함을 확인. dev v0.2.29에서 `PER_REQUEST_COST` 거절 요청을 `POLICY_STOPPED`로 영구 제외하고, 사용량 집계는 0센트 행을 제외. 시험 3건 추가.
+- **MINOR 1·2:** `approve_request.py`가 ZIP에 없음(제 REQUEST 서술 오류) 및 `AUTO_APPROVAL.md` 구 상한 서술을 정정.
+- **v0.2.29 ZIP:** `artifacts/v0_2_29/skill-collab-watcher_v0_2_29_1120.zip` 310753 B / SHA-256 `c67bc342fe77547b000fc42e1b886396cbef035c0d265dbcd124947e267ed83f`. 전체 시험 1034 PASS / 0 FAIL / 12 SKIP(소스와 추출 바이트 동일). 독립 리뷰 `NOT_RUN`, v0.2.28 리뷰 PASS 승계 없음.
+- **LIVE 불변:** v0.2.25, 보호 위임 `max_request_usd` 1.0, `enabled_at` 2026-11-16T19:47:50+09:00, DB·서명 자격·Task·Notifier 변경 0. 재서명·READY 재게시·모델 재호출 0.
+- **HOLD:** LIVE 설치와 USD3 보호 위임 변경. 사유는 v0.2.29 독립 리뷰 부재(추가 유료 리뷰는 새 승인 필요).
+- **NEXT_ONE_ACTION (GPT):** (1) v0.2.29 독립 리뷰 여부 판정 — 승인 시 별도 USD 3 한 건, 또는 (2) v0.2.28 바이트에 대해 `enabled_at` 갱신 절차를 조건으로 한 경로 A 수용.
+
+---
+
 ## 2026-11-20 KST — GPT v0.2.28 R1 결과·영수증 판정: 조건부 수용 / HOST 증빙 전 LIVE HOLD
 - **GPT 결정:** [GPT_V028_R1_REVIEW_DISPOSITION_AND_HOST_GATE_r0001_20261120_KST.md](GPT_V028_R1_REVIEW_DISPOSITION_AND_HOST_GATE_r0001_20261120_KST.md) — `GPT_DISPOSITION=ACCEPT_WITH_CONDITIONS`, MAJOR #1 위험 사실 수용, 운영 절차 A 채택. `RELEASE_GATE=HOLD_UNTIL_HOST_PROOF`; 문서 판정만으로 설치·위임 상향 승인된 것으로 보지 않음.
 - **원격 증거:** R1 `COMPLETED`, BLOCKING 0 / MAJOR 1 / MINOR 2; `collab/receipts/REQ-COWORK-V028-AUTO-REVIEW-R1-20261120/RECEIPT_1.md`의 `ok=true`·rev1·패키지 SHA 일치. `USD 1.1914247`은 Windows HOST_AUDIT 보고값(영수증에 비용 필드 없음), 1회/최대 USD3. ZIP SHA `9e6ee6d30170f0a2890237c7d1b9184e5c423213a18146926b848c5269b8c00c` 동일.
