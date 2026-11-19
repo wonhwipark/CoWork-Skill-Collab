@@ -59,8 +59,7 @@ def patch_analyzer(root: Path):
     replace_exact(validator,
         '    return {\n        "schema": "code-analyzer/reuse-result/v1",',
         '    result = {\n        "schema": "code-analyzer/reuse-result/v1",')
-    replace_exact(validator, '        "rn": rn,\n    }\n\ndef main(argv=None):',
-        '        "rn": rn,\n    }\n'
+    replace_exact(validator, '\ndef main(argv=None):',
         '    # Explicit opt-in; existing reuse consumers and output are unchanged.\n'
         '    if pec_claims is not None:\n'
         '        try:\n'
