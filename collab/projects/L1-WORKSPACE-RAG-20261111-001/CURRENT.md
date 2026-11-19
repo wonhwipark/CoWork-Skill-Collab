@@ -1,5 +1,14 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-19 KST — 위키 UI/UX R1 리뷰 차단 개선: 기존 DESIGN/$3 수동 1회 부트스트랩 경로 준비
+- **최신 사용자 지시:** 기존 LIVE `POLICY-STATIC-V1=$1.50`이고 신규 `unified/STATIC=$3`이 미설치인 데 따른 `POLICY_COST_MISMATCH` 차단에 대해 “개선해줘”. **신규 통합 정책을 무리하게 설치하는 순환 의존성 해소**가 목적. 기존 자동 승인 Work `v0.2.27` 개발 후보 및 위임 $1은 무변경.
+- **정확히 1건 예외 판정/문서:** 신규 `REQ-L1-WORKSPACE-WIKI-UI-UX-R1-20261119` rev1을 기존 Windows LIVE에 등록돼 있다고 호스트가 확인한 `POLICY-STATIC-V1-DESIGN=$3`으로 **수동 승인 전송**하는 부트스트랩 경로. 기존 승인한 총 **1회·최대 $3** 비용 상한 유지. `unified` 기본 정책 폐기나 과거 일반/설계 비용 분할 복원 아님. 새 [r0002 비실행 REQUEST 초안](WIKI_UI_UX_R1_REQUEST_MANUAL_BOOTSTRAP_DRAFT_r0002_20261119_KST.md), [Windows 정식 리뷰 재개 원샷](WIKI_UI_UX_R1_WINDOWS_SUBMIT_ONESHOT_r0002_20261119_KST.md), [공통 비용 계약 한정 부트스트랩 예외](../../ops/CONTRACTS/REVIEW_TIER_TOKEN_BUDGET_V1.md) 게시. **기존 r0001 및 차단 결과 수정·삭제 없음**.
+- **실제 실행 순서:** Windows 기존 local reviewer.config.json에서 `review_request_gate.py select/check --intent design --required-budget-usd 3.00` PASS → 실제 `approve_request.py check` 및 유효한 수동 서명/사용자 권한 확인 → PIN/원격 원본 검증을 거친 경우에만 새 REQUEST·APPROVAL_SIG·READY 마지막 게시 → 기존 watcher에서 리뷰 **최대 1회** → 실제 JPEG 4장 시각평가·영수증·GPT 최종 판정. 호스트 권한 미확인 시 REQUEST/READY/유료 호출 **0**.
+- **현재 실제 상태:** `MANUAL_BOOTSTRAP_DRAFT=POSTED/READBACK_VERIFY_PENDING`; `HOST_DESIGN_USD3_SELECT=NOT_RUN`, `APPROVAL_SIG/READY=NOT_POSTED`, `INDEPENDENT_VISUAL_REVIEW=NOT_RUN`, `MODEL_CALLS=0`. 이 PRIVATE 문서 게시 자체는 승인·실행 트리거가 아님.
+- **기존 공개 배송 보존:** 사용자 요청으로 L1Work PUBLIC ZIP·HTML·업무 GPT 인계 MD는 이미 게시 완료(commit `c9e9be9e84629bcdba07c1045384dac6bfd9bc93`). `PUBLIC_DELIVERY=POSTED`와 `POST_DELIVERY_UX_REVIEW=WAITING`을 구분; 이전의 BUSINESS_GPT_DELIVERY=HOLD는 이력상의 검토 보류이며 완료한 공개 게시를 취소하지 않음.
+- **NEXT_ONE_ACTION:** Windows Claude Code에서 r0002 한 파일 1~7을 **한 번** 진행해 `CLAUDE_WIKI_UI_UX_R1_RESUME_RESULT_FOR_GPT_20261119_KST.md`와 REVIEW/RECEIPT(해당 시)를 PRIVATE main에 게시·원격 bytes SHA 검증. GPT가 최종 판정, 동일 비용 승인 반복 요청 없음.
+
+---
 ## 완성 위키 UI 시각 리뷰 제출: BLOCKED_LIVE_POLICY (2026-11-19 KST)
 
 - 결과: `CLAUDE_WIKI_UI_UX_R1_SUBMISSION_RESULT_FOR_GPT_20261119_KST.md` (PRIVATE `main`, commit `29ede587f09f`, SHA-256 `2a503b7f7e7710df25b45b34784637795b06f3f912aae6a3bdd8a38189a951bf`).
