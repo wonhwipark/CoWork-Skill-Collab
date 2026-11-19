@@ -29,7 +29,7 @@ CAND = REPO / "collab/projects/L1-WORKSPACE-RAG-20261111-001/candidates"
 SPEC = (
     ("code-analyzer", "0.15.3", "0.15.4", "code-analyzer_v0_15_3_1114.zip",
      "code-analyzer_v0_15_4_1119.zip",
-     "4d07d4774ecc3fd24b2f0c7a4b50d7a843e6f5831bc2987363e760282ddcaa3e"),
+     "dbbd0f9fd4d5173b8f445aa2fabd9f7417593ecd996ac0e2f0ad10278f3626c2"),
     ("l1-fix-workflow", "1.6.70", "1.6.74", "l1-fix-workflow_v1_6_70_1117.zip",
      "l1-fix-workflow_v1_6_74_1119.zip",
      "1e08302b6a533d2894101427f5a7bb94b43102e00a98f2c6e0b19f534a885ceb"),
