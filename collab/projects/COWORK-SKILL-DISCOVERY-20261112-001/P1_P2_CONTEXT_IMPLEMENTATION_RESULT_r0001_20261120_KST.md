@@ -27,8 +27,8 @@
 - 기존 공개 URL: https://wonhwipark.github.io/L1Work/cowork-dashboard/ (기존 서브화면 3개, PUBLIC 허용목록 불변).
 
 **PRIVATE** `wonhwipark/CoWork-Skill-Collab`, `main`
-- `collab/dashboard/context_query.py`: **8449 B**, SHA-256 `41615df073cc1910ac5c909fd1ea694e7647edfdf83ea5e6218a61a2fb88627f`, Git blob `3855e04026b70eb2e2cc526e4b0a3b9e4f4ebd18`.
-- `collab/dashboard/tests/test_context_query.py`: **5066 B**, SHA-256 `8b3739838873b25d87b904c3c93d71ebc322b0e7270bd17d2aa09bcdb738c69b`, Git blob `7d95dfb1d786ebb61eaf4f26cccb9de939e09f1a`.
+- `collab/dashboard/context_query.py`: **8582 B**, SHA-256 `20af157f2903434b57a7d1603cf1ef08dcf6e086aff4907f6cfd6a6110d34174`, Git blob `a6a1f99849bf524646c1e9264c42acefbf215714`.
+- `collab/dashboard/tests/test_context_query.py`: **5153 B**, SHA-256 `55a9cb9e3eaa1d69ce8e65b4c15819fd1b08a7bf035b0b17d8a099b36b11bbbc`, Git blob `89d433b976383a02653fcabb4085fbd42a313a34`.
 - [적용 사용법](P1_P2_CONTEXT_APPLICATION_GUIDE_r0001_20261120_KST.md) 및 새 브리프 포인터 게시.
 - 기존 [CoWork PRIVATE Dashboard Action #44580631352](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/44580631352) `completed/success`, Python `unittest discover -s collab/dashboard/tests` 포함 기존 계약 시험 성공.
 - 이후 PUBLIC allowlisted sync [#44580676608](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/44580676608) `completed/success`; 이것은 공개 상태 exporter에 Private 링크를 추가했다는 뜻이 아님.
