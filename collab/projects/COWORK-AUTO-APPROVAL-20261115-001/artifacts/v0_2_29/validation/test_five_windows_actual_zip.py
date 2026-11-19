@@ -42,8 +42,13 @@ def test_five_independent_windows_ready_once_in_sequence(auto):
     # Already approved requests are never signed/published a second time.
     assert auto.signer.calls == 5
     for info in cases:
+        before = len([c for c in auto.env.http.calls if c[0] == "PUT"])
         again = process(auto, info)
-        assert again != "READY_POSTED", (info.rid, again)
+        after = len([c for c in auto.env.http.calls if c[0] == "PUT"])
+        # An already READY_POSTED request may *return* READY_POSTED; that is
+        # idempotent and not a new signature or a new remote publication.
+        assert again in ("READY_POSTED", "REMOTE_HISTORY", "DUPLICATE_OR_UNCERTAIN"), (info.rid, again)
+        assert after == before, (info.rid, before, after)
     assert auto.signer.calls == 5
     for idx in range(1, 6):
         rid = f"SIM-5W-{idx}"
