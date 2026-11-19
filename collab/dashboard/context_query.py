@@ -44,7 +44,7 @@ def choose(question: str, topic: str | None = None) -> tuple[str, str]:
     raise AssertionError("topic routing")
 
 
-def safe_file(root: Path, rel: str) -> Path | None:
+def safe_file(root: Path, rel: str, max_bytes: int = MAX_READ) -> Path | None:
     if not rel or rel.startswith("/") or "\\" in rel:
         return None
     parts = Path(rel).parts
@@ -57,7 +57,7 @@ def safe_file(root: Path, rel: str) -> Path | None:
         current = current / part
         if current.is_symlink():
             return None
-    if not target.is_file() or target.stat().st_size > MAX_READ:
+    if not target.is_file() or target.stat().st_size > max_bytes:
         return None
     try:
         if not target.resolve().is_relative_to(root.resolve()):
@@ -121,8 +121,8 @@ def related(root: Path, work_id: str, max_requests: int = 200) -> list[dict]:
             "review": f"collab/reviews/{rid}/REVIEW_RESULT_1.md",
             "receipt": f"collab/receipts/{rid}/RECEIPT_1.md",
         }
-        paths = {key: ("PRESENT_LOCAL_UNVALIDATED" if safe_file(root, rel) else "NOT_FOUND_LOCAL") for key, rel in files.items()}
-        paths["package"] = "PRESENT_LOCAL_UNVALIDATED" if package_rel and safe_file(root, package_rel) else "NOT_FOUND_LOCAL"
+        paths = {key: ("PRESENT_LOCAL_UNVALIDATED" if safe_file(root, rel, max_bytes=100_000_000) else "NOT_FOUND_LOCAL") for key, rel in files.items()}
+        paths["package"] = "PRESENT_LOCAL_UNVALIDATED" if package_rel and safe_file(root, package_rel, max_bytes=100_000_000) else "NOT_FOUND_LOCAL"
         answer.append({
             "request_id": rid,
             "request_revision": fm.get("request_revision", "UNKNOWN"),
