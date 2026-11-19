@@ -1,0 +1,70 @@
+name: PEC ACE two-skill user-reviewed-waiver final ZIP staging
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/pec-ace-review-waived-final-staging.yml"
+      - "collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/dev/prepare_pec_ace_review_waived_release_r0001.py"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build-and-stage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Build and validate exact two independent-review-waived final skill ZIPs
+        run: |
+          python collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/dev/prepare_pec_ace_review_waived_release_r0001.py --out /tmp/pec-ace-final
+          python collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/dev/prepare_pec_ace_review_waived_release_r0001.py --out /tmp/pec-ace-final-recheck
+          cmp /tmp/pec-ace-final/code-analyzer_v0_15_4_1119.zip /tmp/pec-ace-final-recheck/code-analyzer_v0_15_4_1119.zip
+          cmp /tmp/pec-ace-final/l1-fix-workflow_v1_6_74_1119.zip /tmp/pec-ace-final-recheck/l1-fix-workflow_v1_6_74_1119.zip
+          echo TWO_SKILL_PUBLIC_RELEASE_BYTE_REPRODUCIBILITY_PASS
+      - name: Preserve exact staged release payload in PRIVATE Work (not PUBLIC yet)
+        run: |
+          set -euo pipefail
+          stage=collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/release-staging
+          mkdir -p "$stage"
+          cp /tmp/pec-ace-final/code-analyzer_v0_15_4_1119.zip "$stage/"
+          cp /tmp/pec-ace-final/l1-fix-workflow_v1_6_74_1119.zip "$stage/"
+          cp /tmp/pec-ace-final/PEC_ACE_REVIEW_WAIVED_RELEASE_RESULT.json "$stage/"
+          python - <<'PY'
+          import hashlib,json,pathlib
+          base=pathlib.Path("collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/release-staging")
+          result=json.loads((base/"PEC_ACE_REVIEW_WAIVED_RELEASE_RESULT.json").read_text())
+          for skill,data in result["skills"].items():
+              path=base/data["archive"]
+              assert path.stat().st_size==data["size_bytes"]
+              assert hashlib.sha256(path.read_bytes()).hexdigest()==data["sha256"]
+              print("PRIVATE_STAGE_PIN_PASS",skill,path.stat().st_size,data["sha256"])
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$stage"
+          git diff --cached --quiet && { echo "PRIVATE_RELEASE_ALREADY_STAGED"; exit 0; }
+          git commit -m "stage: user waived PEC ACE two-skill final ZIP bytes after non-review gates"
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then
+              echo PRIVATE_STAGE_COMMIT_PUSHED
+              exit 0
+            fi
+            git fetch origin main
+            git rebase origin/main
+          done
+          echo PRIVATE_STAGE_PUSH_BLOCKED >&2
+          exit 1
+      - name: Preserve final release gate evidence as PRIVATE CI artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pec-ace-two-skill-waived-release-staging-1119
+          path: /tmp/pec-ace-final/*
+          retention-days: 7
+          if-no-files-found: warn
