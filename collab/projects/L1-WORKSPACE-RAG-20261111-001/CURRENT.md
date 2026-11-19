@@ -1,6 +1,19 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-20 KST — 사용자 확정: MCP 자료 제공 미지원, 업무 GPT 설계 요청 HO 우선
+
+- **사용자 확정 제약:** 현재 MCP가 이 확인 자료의 조회·제공을 지원하지 않아 사용자가 설치본/manifest/진단 결과를 제공할 수 없음(`USER_CONFIRMED`). 단순히 이 GPT의 도구 미노출 문제로만 해석하지 않음. 업무 호스트에 스킬이 없다는 의미도 아님.
+- **이후 기본 진행:** 설계 GPT가 비민감 기존 계약·검토를 바탕으로 **업무 GPT용 설계 요청 HO MD를 먼저 작성·제공**. 업무 GPT가 접근 가능한 실제 설치 스킬/저장·읽기 계약을 업무 환경에서 대조해 구체 설계와 입증된 최소 보완을 결정. 현장 원문/증거 반출을 전제하지 않음.
+- **반복 방지·충돌 해소:** 사용자에게 모바일 Agent 조회·설치본·manifest·진단 숫자·호스트 회신을 다시 요구하지 않음. MCP 지원 추가나 자료 회수를 HO 작성/설계의 선행 조건으로 두지 않음. 아래 과거 “설치본 확인 시도” 절의 자료 회수 NEXT_ONE_ACTION보다 본 지시가 우선. 미확인은 유지하되 설계 진행은 `NOT_BLOCKED_BY_MCP_EVIDENCE`.
+- **준비된 산출물:** [업무 GPT 설계 요청 HO r0001](L1_RECOVERY_WORKSPACE_DESIGN_REQUEST_HANDOFF_r0001_20261120_KST.md), **12748 UTF-8 bytes**, SHA-256 `98eb23fb9dbe54083b1817493a9a94d1829c26344f6c51001b780f66c6c0c6d5`, PRIVATE main commit `fe5f6cd1dda4e8d5adc1a76d91ac3afc9cc6662c`; 원격 본문·실제 UTF-8 바이트 hash 대조 PASS. 기존 r0002 분석 인계에 추가되는 Workspace 저장·Recovery 분류 연결 요청으로, 배경·스킬 책임·공개본 검토 한계·최소 연결·원본/재시도·수락 기준 포함.
+- **상태·경계:** `PRIVATE_DESIGN_HO=PREPARED/READBACK_PASS`; `BUSINESS_GPT_DELIVERY=NOT_VERIFIED_FOR_THIS_NEW_HO`; `PUBLIC_POST/SKILL_PATCH/HOST_INSTALL/JOB/PAID_CALL/WORK_KNOWLEDGE_WRITE=NOT_RUN`. 이번 요청에 따라 PRIVATE 문서/현재 요약을 갱신했으며 실제 전달·구현 완료로 보고하지 않음. 기존 기술 검토·시험·r0002 전달 USER_REPORTED 이력 보존.
+- **NEXT_ONE_ACTION:** 준비된 HO 본문을 업무 GPT에 전달하는 문서 인계를 진행. 추가 전달 위치 지정 시 기존 허용 인계 경로를 사용하고, 사용자에게 MCP 확인 자료를 다시 요구하지 않음.
+
+---
+
 ## 2026-11-20 KST — Recovery 설치본 확인 시도: HOST_MCP_TOOL_ACCESS=BLOCKED
+
+> **후속 사용자 지시로 재개 방식 변경:** 아래는 당시 확인 시도 이력이에요. 이 절의 모바일 Agent/MCP 자료 회수 NEXT_ONE_ACTION은 상단 최신 설계 요청 HO 경로로 대체됐어요. 사용자에게 같은 자료를 다시 요청하거나 그 제공을 설계의 선행 조건으로 두지 않아요.
 
 - **사용자 요청·수행:** 관련 스킬 검토 후 “확인해줘” 지시로 실제 설치본의 결과/Kernel 저장 계약 확인 경로와 기존 회신을 조회. 이번 대화에 노출된 도구에서 업무 Linux MCP/Mango/호스트 Agent 직접 호출 인터페이스를 찾지 못함. 로컬 scratch의 공개 ZIP 추출본은 업무 설치본의 증거로 사용하지 않음.
 - **최신 근거:** [MCP 읽기 진단 인계](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_MCP_AGENT_READONLY_CAPABILITY_AND_VIEWER_PROBE_HANDOFF_r0001_20261120_KST.md), Git blob `8283f11156da78c0c87369080b245b4517cd6c50`, 실제 원문 조회. 문서의 “MCP 확장 미구현, 운영 설치/연결 시험 NOT_RUN” 및 본 CURRENT의 동일 상태를 확인. 이는 진단 확장의 기록이며 기존 MCP 전체가 없거나 모든 조회가 불가하다는 판정이 아님.
