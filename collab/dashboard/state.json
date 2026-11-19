@@ -44,10 +44,10 @@
       "id": "COWORK-SKILL-DISCOVERY-20261112-001",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md",
-      "status": "문서상 진행",
+      "status": "검증 진행 중",
       "title": "COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT",
-      "tone": "neutral",
-      "topic": "2026-11-20 KST — P1 컨텍스트 설계 독립 리뷰 원샷: HOST_PREFLIGHT_BLOCKED"
+      "tone": "warning",
+      "topic": "2026-11-20 KST — 사용자 요청 P1→P2 연속 적용 완료 / 이번 범위 독립 리뷰 SKIP"
     },
     {
       "id": "ISSUE-ANALYZER-20261114-001",
