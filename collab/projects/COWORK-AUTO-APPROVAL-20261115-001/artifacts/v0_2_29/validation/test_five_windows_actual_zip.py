@@ -82,7 +82,7 @@ def test_old_cost_rejection_persists_across_five_independent_requests(auto):
     assert auto.signer.calls == 5
 
 
-def test_real_cli_watch_five_windows_one_paid_model_stub_call_each(e2e):
+def test_real_cli_watch_five_windows_one_model_stub_call_each(e2e):
     """Real CLI subprocess + synthetic transport and counting Claude stub only.
 
     The package's e2e fixture must ensure the runner is a stub. In this test,
