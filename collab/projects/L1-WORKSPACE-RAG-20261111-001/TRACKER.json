@@ -5,11 +5,11 @@
       "work_id": "L1-WORKSPACE-RAG-20261111-001",
       "skill": "l1-knowledge-updater",
       "title": "l1-knowledge-updater",
-      "phase": "HANDOFF",
+      "phase": "BLOCKED",
       "owner": "GPT / 업무 GPT",
       "self_test": "PASS",
       "independent_review": "NOT_RUN",
-      "next_action": "2026-11-19: 사용자 Claude 토큰 만료 보고로 이번 UI 사전 리뷰 대기를 해제하고 업무 GPT 전달로 전환. L1Work/main 루트 UI ZIP·handoffs 업무 GPT 인계 MD/단일 HTML/README 4파일 PUBLIC 게시·actual bytes/SHA/CRC 확인 PASS. 개발·검토용, 정식 설치 배포 아님. 업무 GPT가 4축 화면 검토 후 기존 Linux Viewer G0·adapter 최소 연결·B1~B3/E3/E4 진행."
+      "next_action": "2026-11-19: REQ-L1-WORKSPACE-WIKI-UI-UX-R1-20261119 제출 시도 - BLOCKED_LIVE_POLICY. gate select --intent unified --required-budget-usd 3.00 -> POLICY_COST_MISMATCH (운영 LIVE POLICY-STATIC-V1은 아직 $1.50, 단일 $3 미적용, v0.2.27은 개발 후보일 뿐 미설치). ZIP(267140B, SHA 411553e7...)·중복 확인 PASS. skill/$1.50 또는 design/LARGE 우회 금지 지시에 따라 REQUEST/SOURCE_PIN/서명/READY 전부 미게시, 모델호출 0. 다음: COWORK-AUTO-APPROVAL Work의 단일 $3 정책이 실제 적용되거나, 이 리뷰 1건에 기존 등급 사용을 명시 승인해야 재개 가능."
     }
   ]
 }
