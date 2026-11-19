@@ -1,5 +1,16 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 2026-11-19 KST — PEC·ACE 두 최종 스킬 ZIP L1Work/main 게시·원격 SHA 검증 PASS (사용자 리뷰 생략)
+
+- **최신 사용자 지시:** “리뷰스킵하고 스킬 업데이트후패키지 l1work 에 올려줘”. 기존 PEC·ACE 두 스킬의 **독립 코드 리뷰 1회만** `SKIPPED_BY_EXPLICIT_USER_REQUEST`로 한정. 다른 스킬/리뷰/운영 정책에 일반화 없음. Windows 리뷰 `POLICY_COST_MISMATCH`로 미실행한 기록 보존; 신규 REQUEST/READY/유료 모델 0.
+- **최종 공개 배송:** `wonhwipark/L1Work` `main` **루트 2개 신규 ZIP 실제 업로드·원격 SHA256 바이트 대조 PASS**. commit **`b27d7ccaf7d3d827e493e0b61db9ff083817daaf`**. `code-analyzer_v0_15_4_1119.zip` **515581 B** SHA256 `11e1da15ee12e750c3652190c348a7fc8e31aa1741876e3c06bc0af3413b16af`, blob `1c43503a2a4695400727fb3fb1cd0cb3c49f826b`; `l1-fix-workflow_v1_6_74_1119.zip` **760324 B** SHA256 `b810ce0cf072609431737c58b0ef2b7a0a8ec0701a0746e6a94283c374224989`, blob `5b05e6e16c8be7902793c62a50fb3c105fd35b6e`. 기존 공개 ZIP 덮어쓰기 0.
+- **비리뷰 필수 검증:** PRIVATE GH Actions [release run 44512854513](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/44512854513) SUCCESS. 최종 channel `public_release`, `independent_code_review=SKIPPED_BY_USER_REQUEST` 진실 표기. Code Analyzer 실제 패키지 합성 **12 PASS**, Workflow **10 PASS**, 기존 코드 보존/CRC/전파일 manifest/버전/컴파일·고신뢰 비밀정보 패턴 및 부적절 중첩 아카이브 검사(217/311파일) PASS. 2회 최종 릴리스 빌드 각 ZIP 바이트 동일 PASS. PRIVATE `release-staging/` 실제 바이너리와 PUBLIC HEAD의 base64 전 바이트 동일 및 각각 **직접 SHA256 재계산 PASS**.
+- **정확한 상세 근거:** [이번 단일 배송의 리뷰 생략 한정 기록](PEC_ACE_USER_REVIEW_WAIVER_PUBLIC_DELIVERY_SCOPE_r0001_20261119_KST.md), [최종 공개 배송 결과·SHA·시험](GPT_PEC_ACE_USER_REVIEW_WAIVED_L1WORK_PUBLIC_RELEASE_RESULT_r0001_20261119_KST.md) commit `3e285e308a6f5c1cf4220a1daf8b08e9dc96c777`, 원격 readback PASS. 이전 v0.15.4/v1.6.74 **개발 ZIP** SHA와 **최종 공개 ZIP** SHA는 다름. ACON·Kernel·Knowledge Updater·skill-updater 변경 0.
+- **실제 적용 구분:** `PUBLIC_RELEASE=POSTED_VERIFIED`; `INDEPENDENT_REVIEW=SKIP_BY_USER`(PASS 아님); `BUSINESS_LINUX_INSTALL=NOT_RUN_BY_GPT`; `BUSINESS_E2E=NOT_EXTERNALLY_OBSERVABLE`; `NO_EXPORT=MAINTAINED`. 공개 ZIP이 스킬 자동 설치/업무 분석 결과 PASS라는 뜻 아님.
+- **NEXT_ONE_ACTION:** 업무 GPT/허용 Linux Agent가 이미 공개된 ZIP을 **업무 환경 내부에서만** 기존 `skill-updater`로 설치/활성 스킬 revision 및 PEC/ACE opt-in 실제 호출/G0를 검사하고 대표 1건 baseline 비교·보호 권한 준수 여부를 내부 기록. 회사 원본·설치 내역·업무 실행 결과의 외부 회신을 요구하지 않음. CoWork의 공개 배포 Work는 배송 완료로 정산.
+
+---
+
 ## 2026-11-19 KST — PEC·ACE 2스킬 코드 리뷰 요청 재확인: HOST_PREFLIGHT_BLOCKED (POLICY_COST_MISMATCH)
 
 - **결과:** `CLAUDE_PEC_ACE_CODE_R1_RESULT_FOR_GPT_20261119_KST.md` (PRIVATE main, commit `d3f7d7e0d6e2`, 3952 B, remote bytes 검증 PASS).
