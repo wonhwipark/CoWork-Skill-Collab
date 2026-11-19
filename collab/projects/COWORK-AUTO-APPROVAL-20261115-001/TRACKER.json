@@ -5,11 +5,11 @@
       "work_id": "COWORK-AUTO-APPROVAL-20261115-001",
       "skill": "cowork-review-watcher",
       "title": "GPT→GitHub REQUEST 자동 서명·READY (제한된 사전 위임)",
-      "phase": "PRE_REVIEW_V029_5X_FULL_ZIP_SIMULATION_PENDING",
+      "phase": "PRE_REVIEW_V029_5X_AND_5_WINDOWS_E2E_PENDING",
       "owner": "Windows Claude Code actual exact ZIP five isolated simulation rounds; GPT decision after evidence",
-      "self_test": "Windows dev 1034P/0F/12S; GPT isolated SQLite model 5 runs / 25 checks PASS, actual v0.2.29 ZIP Python execution on GPT NOT_RUN",
-      "independent_review": "V029_NOT_RUN_REQUIRES_FIVE_HOST_ZIP_SIM_RUNS_AND_VALID_APPROVAL",
-      "next_action": "GPT model-only test 5/5 PASS, but full ZIP execution NOT_RUN; exact 5-run gate and evidence: collab/projects/COWORK-AUTO-APPROVAL-20261115-001/GPT_V029_PRE_REVIEW_FIVE_SIMULATIONS_AND_HOST_TEST_GATE_r0001_20261120_KST.md. Execute 5 isolated Windows source-ZIP runs including cap retroactivity, restart, fail-closed policies, races, failure injection; all PASS before any new paid review/REQUEST/READY. Any failure BLOCKED, maintain LIVE v0.2.25/delegation USD1. New paid review needs verified valid approval and independent reviewer, no prior review reuse."
+      "self_test": "Windows dev 1034P/0F/12S (reported); GPT v0.2.29 cost SQLite model 5/5 PASS; 5-chat-window sequential model nominal 5/5 and nine scenario variants; actual v0.2.29 ZIP/Windows 5-window E2E NOT_RUN",
+      "independent_review": "V029_NOT_RUN_AWAIT_5X_REAL_ZIP_AND_5WINDOWS_CROSS_WORK_PROOF",
+      "next_action": "GPT_V029_FIVE_CHAT_WINDOWS_SEQUENTIAL_REQUEST_SIMULATION_r0001_20261120_KST.md: 5 separate chats (design 2, skill update 3) sequential SQLite mock simulation: post-LIVE hypothetical unified STATIC 5/5 COMPLETED, mock model calls 5/actual paid 0. Risks: old DESIGN policy blocks 2, not-allowlisted work blocks 2, shared stale skill base blocks 2 with CAS, common stale TRACKER SHA conflicts 4/5 (requires reread merge). Add 5-windows E2E to already planned actual v0.2.29 ZIP Windows pre-review 5 rounds, no request/ready/paid before PASS, no LIVE or USD3 change. Exact package SHA c67bc342fe77547b000fc42e1b886396cbef035c0d265dbcd124947e267ed83f."
     }
   ]
 }
