@@ -5,11 +5,11 @@
       "work_id": "COWORK-SKILL-DISCOVERY-20261112-001",
       "skill": "skill-discovery",
       "title": "skill-discovery",
-      "phase": "DESIGN",
+      "phase": "BLOCKED",
       "owner": "GPT",
       "self_test": "PASS",
-      "independent_review": "NOT_RUN",
-      "next_action": "2026-11-20 P1 context/evidence/one-screen design r0001 and review questions Q01-Q10 posted to PRIVATE main. Immutable 4-file review-input ZIP (24410 B, SHA-256 3ab8e1a4e5b59e6eea0fa2bd90dc044bb86289cd569cafdbed6158f19dda3327) remote CRC/blob PASS. REQUEST exact draft and Windows single-cycle handoff posted under existing Work; formal collab/requests REQUEST, SOURCE_PIN, signed APPROVAL, READY and independent Claude review NOT_POSTED/NOT_RUN, model calls 0. Blocker: live Windows reviewer.config policy and protected approval require on-host prepublication check, last verified STATIC=$1.50 and delegated=$1 while new unified USD3 not host-verified; one-off DESIGN manual exception is for separate wiki UI only. NEXT: Windows Claude Code reads P1_CONTEXT_DESIGN_WINDOWS_INDEPENDENT_REVIEW_ONESHOT_r0001_20261120_KST.md and performs actual live unified/USD3 preflight; on PASS, fixed REQUEST + pin + protected signature + READY LAST + 1 Claude review + receipt; on BLOCKED, publish evidence only. Previous PEC/ACE PUBLIC release SKIP_BY_USER remains completed historical event."
+      "independent_review": "P1_CONTEXT_DESIGN_NOT_RUN_HOST_PREFLIGHT_BLOCKED",
+      "next_action": "2026-11-20 P1 context design one-shot: HOST_PREFLIGHT_BLOCKED. Live gate select --intent unified --required-budget-usd 3.00 -> POLICY_COST_MISMATCH (POLICY-STATIC-V1 still USD 1.50, delegation USD 1.0). Also cowork-context-design is not in the delegation skills allowlist. No REQUEST/SOURCE_PIN/APPROVAL_SIG/READY posted, 0 model calls. Input ZIP sha256 3ab8e1a4 verified; duplicates none. Result CLAUDE_P1_CONTEXT_DESIGN_REVIEW_SUBMISSION_RESULT_FOR_GPT_20261120.md (commit fefc27add976). NEXT: GPT decides single USD 3 POLICY-STATIC-V1 install with delegation alignment, or a separate explicit manual DESIGN approval for this one review."
     }
   ]
 }
