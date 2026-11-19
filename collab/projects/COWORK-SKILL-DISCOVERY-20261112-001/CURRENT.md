@@ -1,5 +1,17 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 2026-11-19 KST — 최신 적용 범위: PEC 우선·ACE 최소·ACON 보류 / 업무 데이터 NO_EXPORT
+
+- **최신 사용자 판정:** 업무 Linux 데이터의 외부 반출을 허용하지 않는 현실 조건에서도 PEC/ACE의 국소 효용이 있으므로 **PEC-HOP P1 우선(근거·source revision·원문 바이트 보존), ACE P2 기존 Workflow/Kernel 재개 기능 최소 연결, ACON DEFER**로 범위를 축소. 기존 v1.6.73 3기능 개발 ZIP을 현재 적용/공개 릴리스 대상으로 자동 채택하지 않음. 사용자 기존 최종 배송 지시는 **필수 릴리스 게이트 통과 시 PEC+ACE 새 최종 ZIP에 한정해 유지**.
+- **NO_EXPORT 정책 준수:** 업무 환경 소스·함수/IPC·분석·Evidence·Knowledge·작업 식별·호스트 설치·시험/영수증·검증 요약 등은 **외부 CoWork PRIVATE/PUBLIC로 반출하지 않음**. 기존 인계서 §§9~12의 "비민감 업무 GPT G0 외부 회신" 제안은 반출 승인 미확인 상태에서 **실행 대상으로 사용하지 않음**. 업무 GPT·Linux Agent가 현장 G0/시험/개선효과/호스트 최종 수락을 **업무 환경 내부에서만** 확인하고 기록. 외부 GPT는 `HOST_VERIFIED=NOT_EXTERNALLY_OBSERVABLE`로 유지(내부 테스트 실패라는 뜻 아님).
+- **기존 Work 상세 판정·시험 계약:** [PEC+ACE 최소 범위/내부 전용 파일럿 r0001](ACE_PEC_MINIMAL_INTERNAL_ONLY_PILOT_DECISION_r0001_20261119_KST.md) commit `a01dbe512af261a1a8336c598e1d597a0fd589f0`, blob `7faf9de118b14d12ff745cccb8f604d1cd6ea1fa`, 10,682 B SHA256 `b78b4332c8031f625582dc135c6ba0644edf84726b1df71200062a9958e7a2cc` 원격 readback PASS. 업무 환경 대표 사례 1건의 baseline→PEC/ACE 비교 후 3~5건 선택 확대. `PEC-P1/P2/P3` 원문·stale·1-byte 오염·MSC 필수 근거, `ACE-P1/P2` 유효 최신 결정·중단 Work, `SAFE-P1` 무단 쓰기/외부 전송 0, `VALUE-P1` 근거 오류/수동 검증/시간의 실제 개선 여부. **전부 아직 NOT_RUN**, 결과를 개발 GPT로 회신 요구하지 않음.
+- **업무 GPT 공개 인계:** 기존 [L1Work handoffs §13](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_KNOWLEDGE_UPDATER_ACE_PEC_HOP_ACON_DESIGN_APPLICATION_PROPOSAL_r0001_20261118_KST.md) 최신 보완, commit `683fa0e89882b321a0c4640ea74730c8fee78887`, blob `0e64d839fa1f09ffa6e1a25a1ffb9d387b69302c`, 40,768 B SHA256 `ae00d5a836505b31d6fe30af98f537c24775dc286eddec02dfd6b1e547d612d2`; 인계 [README](https://github.com/wonhwipark/L1Work/blob/main/handoffs/README.md) commit `88f22ebeb883eecafce3b02add5791683a2a1336`, blob `7eb6d89b25b1796825fd3ff6b9c1297bd781837e`, 17,858 B SHA256 `950c8f29efc9d30258e16c5f9158741e664472ec85b98cc106dc7ed673044f27`. 둘 다 기존 내용 보존·원격 readback PASS; **업무용 인계 MD 게시이며 스킬 ZIP 배포 아님**.
+- **기존 자동화 충돌 방지:** 선행 condition_watch `Automation_45c6a9d7f0f48191b60649bcfaf74bb7`를 **PEC·ACE 최소 적용 배포 게이트 추적**으로 수정 성공(원래 주기 유지). ACON 포함 구 개발 ZIP/업무 외부 G0 회신을 강제하지 않음, 신규 유료 모델·REQUEST/READY/Job/운영 설치·권한 정책 변경 자동 시작 0.
+- **이전 증거 보존:** Workflow v1.6.73 760,970 B 개발 ZIP/CI `20_PASS`(ACE7·PEC7·ACON6), MSC 기존 3 contract PASS, 재현성 PASS와 디자인 R1 CLOSED는 **역사적 개발 증거**. 현재 적용범위 독립 리뷰·실호스트 테스트 완료로 승격하지 않음. `NEW_FINAL_ZIP=BLOCKED_NOT_POSTED`; `PUBLIC_ROOT_ZIP_DELIVERY=NOT_DONE`; `HOST_INSTALL=NOT_RUN_BY_GPT`; `NO_NEW_COST/REQUEST/READY/WRITE=YES`.
+- **NEXT_ONE_ACTION:** 업무 GPT가 L1Work 인계 §13의 지시로 **업무 환경 내부에서만** 실제 설치본 read-only G0 및 PEC·ACE 대표 1사례 baseline 비교를 판정/기록. 외부 개발은 공개 가능한 합성 입력·기존 ZIP source pin으로 P1/P2 최소 연결/코드 독립 리뷰·릴리스 보안 게이트를 진행하되, 업무 호스트의 비가시 결과를 외부 PASS 전제조건으로 요구하지 않고 해당 호스트 최종 수락 소유권을 업무 GPT에 둠.
+
+---
+
 ## 2026-11-19 KST — Workflow v1.6.73 실제 개발 ZIP·20 PASS·릴리스 게이트 추적
 
 - **사용자 단일 실행 지시:** “진행해 배포할때까지 스탑하지마” → 기존 Work·기존 빌더·기존 MSC 계보 재사용, **최종 L1Work/main 루트 배송 승인 유지**. 이전 설계 R1 완료 요청은 그대로 CLOSED.
