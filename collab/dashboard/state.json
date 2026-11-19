@@ -92,7 +92,7 @@
       "status": "검증 진행 중",
       "title": "L1-WORKSPACE-RAG-20261111-001 — CURRENT",
       "tone": "warning",
-      "topic": "2026-11-20 KST — Recovery 결과 Workspace 연결 스킬 검토: CONDITIONAL_CONNECT"
+      "topic": "2026-11-20 KST — Recovery 설치본 확인 시도: HOST_MCP_TOOL_ACCESS=BLOCKED"
     },
     {
       "id": "NR-L1TX-CODE-ANALYSIS-20261115-001",
