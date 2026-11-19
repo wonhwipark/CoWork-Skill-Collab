@@ -1,5 +1,14 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-20 KST — GPT v0.2.28 R1 결과·영수증 판정: 조건부 수용 / HOST 증빙 전 LIVE HOLD
+- **GPT 결정:** [GPT_V028_R1_REVIEW_DISPOSITION_AND_HOST_GATE_r0001_20261120_KST.md](GPT_V028_R1_REVIEW_DISPOSITION_AND_HOST_GATE_r0001_20261120_KST.md) — `GPT_DISPOSITION=ACCEPT_WITH_CONDITIONS`, MAJOR #1 위험 사실 수용, 운영 절차 A 채택. `RELEASE_GATE=HOLD_UNTIL_HOST_PROOF`; 문서 판정만으로 설치·위임 상향 승인된 것으로 보지 않음.
+- **원격 증거:** R1 `COMPLETED`, BLOCKING 0 / MAJOR 1 / MINOR 2; `collab/receipts/REQ-COWORK-V028-AUTO-REVIEW-R1-20261120/RECEIPT_1.md`의 `ok=true`·rev1·패키지 SHA 일치. `USD 1.1914247`은 Windows HOST_AUDIT 보고값(영수증에 비용 필드 없음), 1회/최대 USD3. ZIP SHA `9e6ee6d30170f0a2890237c7d1b9184e5c423213a18146926b848c5269b8c00c` 동일.
+- **사실 상태:** Windows 1031 PASS/0 FAIL/12 SKIP은 호스트 자체 보고. 새 LIVE=기존 v0.2.25, 보호 위임 USD1, 신규 유료 E2E NOT_RUN. 모델 재호출·기존 REQUEST 수정·위임 변경 0(GPT 세션).
+- **NEXT_ONE_ACTION:** Windows Claude Code가 위 판정서 §3의 읽기 전용 구 REQUEST 전수 점검·cap상향/epoch동시갱신 무과금 재현·보호된 권한 확인을 거쳐, 모두 PASS한 경우에만 **동일 리뷰 ZIP SHA**로 기존 원샷 §4~6을 조건부 재개. 실패 시 LIVE/위임 변경 없이 BLOCKED 보고. 새 유료 리뷰·READY/서명 재게시 0.
+
+---
+
+
 ## 2026-11-20 KST — v0.2.28 최종 ZIP·독립 리뷰 1회 완료 / 릴리스 게이트 BLOCKED (MAJOR 1)
 
 - **결과:** `CLAUDE_AUTO_REVIEW_COLLAB_ONE_SHOT_RESULT_FOR_GPT_20261119.md` (PRIVATE main, commit `b953e86e91dd`). 원샷 0~6 중 1~2단계 완료, 3단계 게이트 미충족으로 **4단계(LIVE 설치·보호 위임 $3)는 착수하지 않음**.
