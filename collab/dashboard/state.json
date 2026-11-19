@@ -17,10 +17,10 @@
       "id": "COWORK-AUTO-APPROVAL-20261115-001",
       "next_action": "CURRENT.md 원문에서 담당·다음 행동 확인",
       "source": "collab/projects/COWORK-AUTO-APPROVAL-20261115-001/CURRENT.md",
-      "status": "문서상 진행",
+      "status": "검증 진행 중",
       "title": "COWORK-AUTO-APPROVAL-20261115-001 — CURRENT",
-      "tone": "neutral",
-      "topic": "2026-11-19 KST — GPT v0.2.27 독립 리뷰 REQUIRED / 새 정식 REQUEST는 preflight 대기"
+      "tone": "warning",
+      "topic": "2026-11-19 KST — 사용자 원샷 실행 승인 / 자동 리뷰 정상화 0~6 통합 인계"
     },
     {
       "id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
