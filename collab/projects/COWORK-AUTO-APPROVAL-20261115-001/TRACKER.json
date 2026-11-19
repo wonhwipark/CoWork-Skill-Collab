@@ -5,11 +5,11 @@
       "work_id": "COWORK-AUTO-APPROVAL-20261115-001",
       "skill": "cowork-review-watcher",
       "title": "GPT→GitHub REQUEST 자동 서명·READY (제한된 사전 위임)",
-      "phase": "V029_5WINDOW_HOST_PACKAGE_TEST_PREPARED_EXECUTION_NOT_RUN",
+      "phase": "TEST",
       "owner": "GPT offline test harness and private publication complete; Windows Claude Code actual v0.2.29 package 5x + writer recovery gate",
       "self_test": "SOURCE_ZIP_SHA PASS; host test Python py_compile PASS; negative missing ZIP fail-closed PASS; GPT model 5 runs: four 5/5 and one safe UNCERTAIN dependency hold; actual v0.2.29 package pytest 5x NOT_RUN, Windows writer CAS/rebase NOT_RUN",
-      "independent_review": "V029_NOT_RUN_REQUIRE_REAL_ZIP_5X_AND_WRITER_RECOVERY_PASS_BEFORE_NEW_PAID_REVIEW",
-      "next_action": "Read GPT_V029_REAL_ZIP_FIVE_WINDOWS_GATED_VALIDATION_RESULT_r0001_20261120_KST.md (PRIVATE main) and execute Windows one-shot only with exact frozen v0.2.29 SHA c67bc342fe77547b000fc42e1b886396cbef035c0d265dbcd124947e267ed83f: use artifacts/v0_2_29/validation/validate_v029_five_windows.py and test_five_windows_actual_zip.py, 5 new isolated extracts + full pytest >=1038 pass each, then real Work writer same skill rebase, CAS merge and UNCERTAIN reconcile tests; proven gaps only minimal DEV patch/new SHA. Do not treat document as executable Windows instruction/automatic trigger. No paid model, no REQUEST/READY, LIVE v0.2.25/USD1 unchanged."
+      "independent_review": "V029_5X_FAIL_ROUND1_SU_L1_RACE_FLAKY_NOT_RUN",
+      "next_action": "2026-11-20 five-window validation on pinned v0.2.29 ZIP c67bc342: ZIP SHA PASS; harness v1 defects fixed in v2 (companion project ids, pytest scope); companion 4/4 PASS; full suite 1037 passed, 1 failed: su_l1 Race six-process nonce test (intermittent; isolated 5/5 PASS). ZIP_5X=FAIL round 1, rounds 2-5 NOT_RUN. Writer CAS and skill rebase GAP_CONFIRMED (install upload is create-only; no rebase); UNCERTAIN settlement PARTIAL. Result CLAUDE_V029_FIVE_WINDOWS_VALIDATION_RESULT_FOR_GPT_20261120.md (commit 03f9b0ccb188). HOLD: paid review, LIVE, USD3 delegation. NEXT: GPT decides su_l1 expectation handling, flake root cause, and whether writer CAS/rebase becomes a DEV feature."
     }
   ]
 }
