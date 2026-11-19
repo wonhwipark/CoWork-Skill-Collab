@@ -324,6 +324,16 @@
 
 ---
 
+## 2026-11-20 KST — l1-channel-recovery 업무 적용 사용자 보고·Workspace Recovery 분류 제안
+
+- **사용자 제공 최신 상태:** r0002 핸드오프를 업무 GPT에 전달 완료했다고 확인(`USER_REPORTED`). 업무 GPT가 업무 스킬 `l1-channel-recovery`에 컨셉을 적용할 예정. 이번 GPT가 해당 설치본·버전·코드·실행 결과를 직접 확인한 것은 아니며 구현 완료/호출 성공으로 승격하지 않음. 연결된 PRIVATE main 검색에서 해당 스킬 원문 미발견은 업무 호스트 기능 부재 근거가 아님.
+- **사용자 제안·GPT 검토:** 해당 스킬의 분석 결과를 업무용 l1-workspace에 Recovery 카테고리로 보존·탐색하는 방향을 권장. `PROPOSAL_REVIEW_ONLY`: 기존 Work에 분석 원본·Evidence를 한 번 보존하고 Recovery를 목적별 탐색 분류로 연결, Module→Feature→Scenario 기술 축과 원래 ISSUE/CL/Jira/PR 관계 유지. 후보·이미 보호됨·반례·보류·미분석도 보존해 재분석 방지. 별도 복제 원장/새 Kernel profile을 선제 생성하지 않음.
+- **최소 연결·근거:** l1-channel-recovery는 분석 생산자, 실제 저장은 기존 허용 Kernel/Workspace writer 계약 경유. Seed·원인 패턴·대상 revision/범위·후보/보호 근거·검출/소유자/복귀 조건·실제 시험/미실행·분석 스킬 버전/기존 Work 연결 보존 권장. 검증 기술 지식의 Knowledge 반영은 기존 Updater 계약을 별도로 적용. Recovery 분류가 곧 검증/제품 복구 성공은 아님.
+- **미확인·경계:** 최신 정본에서 RECOVERY 정식 분류/설치본 writer 지원은 확인되지 않음. 기존 work_category는 과거 제안 메타데이터이며 현장 지원을 가정하지 않음. 업무 GPT가 실제 설치본에서 기존 category/tag/표시 기능을 먼저 대조한 뒤 입증된 gap만 최소 변경. 이번 작업은 비민감 검토 기록만 갱신; PUBLIC 인계 수정·업무 Workspace 쓰기·스킬 코드/설치·Job·유료 호출·그룹 게시 NOT_RUN.
+- **NEXT_ONE_ACTION:** 업무 GPT가 l1-channel-recovery의 실제 결과 형식과 업무 Workspace 기존 writer/분류/조회 계약을 대조해, 같은 Work 원본 보존＋Recovery 탐색 연결의 최소 적용안을 확정. 새 RECOVERY enum·schema·폴더 구조를 현재 지원으로 단정하지 않음.
+
+---
+
 ## 2026-11-19 KST — 수정 CL 기반 미커버 유사 결함 탐색 컨셉 r0002 PUBLIC 인계
 
 - **사용자 최신 지시·피드백 수용:** 수정 CL을 기준으로 현재 커버되지 않은 유사 문제를 찾아 검사·recovery 추가 적합성을 판단하는 컨셉을, **작성 전 이전 recovery 상황 확인** 후 배경·논리를 포함한 업무 GPT MD로 L1Work handoffs 게시. 같은 기존 Work 유지. 이미 수정된 Seed에 추가 recovery를 강요하지 않고 Seed와 현재 후보를 분리하는 방향 수용.
