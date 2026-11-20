@@ -1,0 +1,123 @@
+{
+  "started": "2026-11-20 20:57:07",
+  "installed": {
+    "files": 118,
+    "equals_zip_plus_preserved": true,
+    "version_line": "__version__ = \"0.2.29\"",
+    "tree_sha256": "b0134258e2a0f7397a3b6a7888fc60df7a401814aa918253c3b197550e36b2c3"
+  },
+  "aligned_load": {
+    "delegation_usable": true,
+    "why": "ok",
+    "max_request_cents": 300,
+    "static_registered_usd": 3.0,
+    "large_design_registered": [
+      3.0,
+      3.0
+    ]
+  },
+  "delegation_now": {
+    "enabled": true,
+    "policy": "POLICY-STATIC-V1",
+    "max_request_usd": 3.0,
+    "enabled_at": "2026-11-20T20:57:07+09:00",
+    "expires_at": "2026-12-16T19:47:50+09:00",
+    "project_families": [
+      "COWORK-",
+      "L1-WORKSPACE-"
+    ],
+    "projects": [],
+    "skills": [
+      "cowork-review-watcher",
+      "cowork-dashboard",
+      "l1-knowledge-updater"
+    ],
+    "repo_id": "1451933830",
+    "branch": "main"
+  },
+  "delegation_scope_expiry_unchanged": true,
+  "config_check": {
+    "rc": 0,
+    "lines": [
+      "version: 0.2.29",
+      "baseline_id: COWORK-LIVE-A-20261114",
+      "remote_root: /SKILL-COLLAB",
+      "local_state_dir: C:\\Users\\ME\\AppData\\Local\\skill-collab-watcher-github",
+      "enabled: True  dry_run: False  dispatch_allowed: True",
+      "enabled_source: review_policy.enabled",
+      "prompt_cache_ttl: 1h  save_transcript: False  default_effort: (user setting)",
+      "  run policy POLICY-STATIC-V1: max_budget_usd=3.0 effort=medium",
+      "  run policy POLICY-STATIC-V1-LARGE: max_budget_usd=3.0 effort=medium",
+      "  run policy POLICY-STATIC-V1-DESIGN: max_budget_usd=3.0 effort=medium",
+      "claude_executable: C:\\Users\\ME\\AppData\\Local\\Microsoft\\WinGet\\Links\\claude.EXE",
+      "auto_approval: configured; acl_check=windows; valid_hours=2",
+      "auto_approval: delegation file readable; enabled=True; projects=0; skills=3; limit: per review 300 c; no daily/monthly aggregate limits",
+      "auto_approval: signer configured",
+      "recorded scopes: (none recorded)"
+    ]
+  },
+  "gate_select_unified_real_config": "{\"status\": \"POLICY_COMPATIBLE_NOT_APPROVED\", \"selected_run_policy_ref\": \"POLICY-STATIC-V1\", \"expected_max_budget_usd\": \"3.00\", \"approval\": \"NOT_CHECKED\"}",
+  "gate_check_unified_real_config": {
+    "rc": 0,
+    "status": "PASS_PREPUBLICATION_ONLY",
+    "run_policy_ref": "POLICY-STATIC-V1",
+    "expected_max_budget_usd": "3.00",
+    "model_calls": 0,
+    "ready": "NOT_CREATED",
+    "authorization": "NOT_CHECKED",
+    "package_sha256": "c67bc342fe77547b000fc42e1b886396cbef035c0d265dbcd124947e267ed83f"
+  },
+  "db": {
+    "integrity": "ok",
+    "jobs_by_state": {
+      "COMPLETED": 9
+    },
+    "auto_claims_by_stage": {
+      "READY_POSTED": 2,
+      "UNCERTAIN": 1
+    },
+    "auto_seen": 11,
+    "lease": [
+      [
+        "1",
+        "github",
+        "1",
+        "2026-11-14T22:57:57.244538+00:00"
+      ]
+    ],
+    "audit_max_id": 17722
+  },
+  "legacy_after": {
+    "requests": 18,
+    "summary": {
+      "TERMINAL_HISTORY": 13,
+      "NO_HISTORY_NON_STATIC_TIER": 1,
+      "SEEN_WHILE_DISABLED": 3,
+      "CLAIM_UNCERTAIN": 1
+    },
+    "created_before_new_enabled_at": 18,
+    "static_no_history": 0,
+    "all_blocked_by_new_enabled_at_or_history": true
+  },
+  "provider_lease": [
+    [
+      "1",
+      "github",
+      "1",
+      "2026-11-14T22:57:57.244538+00:00"
+    ]
+  ],
+  "tasks": {
+    "SKILL-COLLAB-Claude-Review-Watcher": "Disabled",
+    "SKILL-COLLAB-Dashboard-Deploy-Bridge": "Disabled",
+    "SKILL-COLLAB-Dashboard-Updater": "Disabled",
+    "SKILL-COLLAB-GitHub-Watcher": "Ready",
+    "SKILL-COLLAB-Notifier": "Running"
+  },
+  "shadow": {
+    "rc": 0,
+    "summary": "18 passed in 22.96s"
+  },
+  "fail": [],
+  "PRESTART_CHECK": "PASS"
+}
