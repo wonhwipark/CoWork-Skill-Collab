@@ -20,7 +20,7 @@
       "status": "검증 진행 중",
       "title": "COWORK-AUTO-APPROVAL-20261115-001 — CURRENT",
       "tone": "warning",
-      "topic": "2026-11-20 KST — v0.2.29 실제 ZIP 5회 검증: 라운드 1 FAIL (su_l1 간헐 1건) / writer·rebase GAP 확인"
+      "topic": "2026-11-20 KST — GPT 5창 검증 FAIL 판정: su_l1 조건부 비차단·작성자 측 복구 최소화"
     },
     {
       "id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
