@@ -1,5 +1,15 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-21 KST — 사용자 지시: 업무 GPT에 Updater 구체 수정 요구 전달 (Viewer/MCP 연결 전에)
+
+- **최신 요구:** 이 GPT는 업무 Linux의 실제 `l1-knowledge-updater` 설치 원본에 접근 불가하므로, Updater의 분류·저사양 분석·MSC 생성의 구체 수정 요구를 업무 GPT에 전달하고 **현장 G0 + REUSE/CONNECT/증명된 최소 변경 + 자체시험**을 같은 연속 작업으로 수행. 첫 G0 보고만 받고 멈추지 않도록 지시. 기존 `NR L1 Tx → UL Tx Switching` 단일 수락 사례·Work를 그대로 재사용.
+- **PUBLIC 인계:** [R1~R8 수정 요구 MD](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_KNOWLEDGE_UPDATER_NR_UL_TX_SWITCHING_MODIFICATION_REQUIREMENTS_r0001_20261121_KST.md) / `wonhwipark/L1Work` `main` `handoffs/L1_KNOWLEDGE_UPDATER_NR_UL_TX_SWITCHING_MODIFICATION_REQUIREMENTS_r0001_20261121_KST.md`. 원격 본문 readback PASS, blob SHA `f12b9de81344b4703a108d7995c687ccb335e25a`, commit `b276e4ce38264c0b65e66b4ab85cbda15112b8e0`.
+- **변경 요구:** 기존 코드 탐색/인덱스·source pin 활용, Module/Feature/Scenario 근거 분류, low token budget, 기존 `doc-converter` v0.2.26 native IR/B형 MSC 호환, 개인 Workspace 쓰기·readback. 외부 OSS 코드는 차용하지 않고 아이디어만. Viewer 불포함, 그룹 지식 게시·제품 소스 변경·운영 MCP 설치 불포함.
+- **현시점:** `PUBLIC_HANDOFF=PASS_REMOTE_VERIFIED`; `BUSINESS_GPT_RECEIPT=NOT_VERIFIED`; `UPDATER_ACTUAL_MODIFICATION=NOT_RUN`; `NR_SOURCE_E2E/MSC_E2E/WORKSPACE_READBACK=NOT_RUN`; `INDEPENDENT_REVIEW=NOT_RUN`; `FINAL_RELEASE_ZIP=NOT_POSTED`. 문서 게시만으로 실행·리뷰·배포를 승격하지 않음.
+- **NEXT_ONE_ACTION:** 업무 GPT가 위 PUBLIC MD를 기준으로 설치 Updater의 R1~R8을 평가하고 실제 권한 내 최소 변경·대표 사례 시험 및 비민감 결과를 같은 Work로 회신. 이후 별도 정식 Claude 독립 리뷰와 GPT 배포 판정.
+
+---
+
 ## 2026-11-21 KST — Viewer 색상 A안 정식 독립 설계 R1 REQUEST/SOURCE_PIN 게시, 서명·READY 대기
 
 - **사용자 결정:** 1차 Viewer UI 색상·가독성 개선 A안을 먼저 협업 독립 리뷰로 검증한 뒤 구현 재개. 기존 보라색 대비 차분한 블루그레이, SOC 대표 이슈번호 선두·Work ID 보조, 동료 무로그인 Read Only 유지, 기술 원본/2차 편집 범위 불변.
