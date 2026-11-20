@@ -5,11 +5,11 @@
       "work_id": "L1-WORKSPACE-RAG-20261111-001",
       "skill": "l1-knowledge-updater",
       "title": "l1-knowledge-updater",
-      "phase": "VIEWER_AUTH_EDIT_DESIGN_R1_READY_PENDING_REVIEW_RESULT",
+      "phase": "VIEWER_AUTH_EDIT_DESIGN_R1_DISPATCH_RESERVED_RESULT_PENDING",
       "owner": "GPT 설계 r0001 게시·정식 협업 R1 요청, Windows watcher 승인 서명/READY 원격 확인; 기존 UX R1 완료 유지",
       "self_test": "PASS",
       "independent_review": "WIKI_UI_UX_R1_ACCEPT_WITH_CHANGE_CLOSED; VIEWER_AUTH_EDIT_DESIGN_R1_READY_RESULT_PENDING",
-      "next_action": "신규 REQ-L1-WORKSPACE-VIEWER-EDIT-DESIGN-R1-20261120 rev1의 리뷰 결과/영수증/dispatch 확인 후 GPT 지적별 판정. 기존 Viewer r0002/UX R1 재실행 금지, UI 편집 구현·호스트 권한/쓰기·PUBLIC 게시 NOT_RUN."
+      "next_action": "신규 REQ-L1-WORKSPACE-VIEWER-EDIT-DESIGN-R1-20261120 rev1의 dispatch 예약 확인 완료. 리뷰 결과/영수증 확인 후 GPT 지적별 판정. 기존 Viewer r0002/UX R1 재실행 금지, UI 편집 구현·호스트 권한/쓰기·PUBLIC 게시 NOT_RUN."
     }
   ]
 }
