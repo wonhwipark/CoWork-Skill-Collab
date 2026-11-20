@@ -1,0 +1,75 @@
+{
+  "started": "2026-11-20 20:47:56",
+  "zip_files": 114,
+  "live_only_before": [
+    "config/reviewer.config.json",
+    "package/skill-collab-watcher_v0_2_20_1115.zip",
+    "package/skill-collab-watcher_v0_2_23_1115.zip",
+    "package/skill-collab-watcher_v0_2_25_1117.zip"
+  ],
+  "zip_only": [
+    "README.md",
+    "docs/RELEASE_MANIFEST.json",
+    "docs/REQUEST_PIN_REPAIR.md",
+    "tests/test_approval_wait_notify_v026.py",
+    "tests/test_review_request_gate_tool_v026.py",
+    "tests/test_source_pin_preclaim_v026.py",
+    "tests/test_source_pin_tool_v026.py",
+    "tests/test_v029_cost_refused_exclusion.py",
+    "tools/review_request_gate.py",
+    "tools/source_pin.py"
+  ],
+  "acl_before": {
+    "delegation": [
+      "DESKTOP-MNQ8P1M\\ME:(I)(F)",
+      "NT AUTHORITY\\SYSTEM:(I)(F)"
+    ],
+    "config": [
+      "BUILTIN\\Administrators:(I)(F)",
+      "BUILTIN\\Users:(I)(RX)",
+      "NT AUTHORITY\\Authenticated Users:(I)(M)",
+      "NT AUTHORITY\\SYSTEM:(I)(F)"
+    ]
+  },
+  "files_written": 28,
+  "stale_v025_only_files": [],
+  "installed_tree_equals_zip_plus_preserved": true,
+  "version_line": "__version__ = \"0.2.29\"",
+  "preserved": {
+    "config_sha_same": true,
+    "package_dir_files": [
+      "package/skill-collab-watcher_v0_2_20_1115.zip",
+      "package/skill-collab-watcher_v0_2_23_1115.zip",
+      "package/skill-collab-watcher_v0_2_25_1117.zip"
+    ]
+  },
+  "remote_requests_now": 18,
+  "ENABLED_AT_NEW": "2026-11-20T20:47:59+09:00",
+  "config_new_sha": "2ead400735b2dae38f0db6cd1bc1f00736b9eedeef8bf3262624c0b6dbb65a4b",
+  "delegation_new_sha": "ebf6e0c3160003d6631b7d83bc39b2a77f152754ded5361df99e6c75ada748d9",
+  "acl_after": {
+    "delegation": [
+      "DESKTOP-MNQ8P1M\\ME:(I)(F)",
+      "NT AUTHORITY\\SYSTEM:(I)(F)"
+    ],
+    "config": [
+      "BUILTIN\\Administrators:(I)(F)",
+      "BUILTIN\\Users:(I)(RX)",
+      "NT AUTHORITY\\Authenticated Users:(I)(M)",
+      "NT AUTHORITY\\SYSTEM:(I)(F)"
+    ]
+  },
+  "acl_unchanged": true,
+  "delegation_diff": {
+    "enabled_at": [
+      "2026-11-16T19:47:50+09:00",
+      "2026-11-20T20:47:59+09:00"
+    ],
+    "max_request_usd": [
+      1.0,
+      3.0
+    ]
+  },
+  "config_diff": "known_run_policy_refs.POLICY-STATIC-V1.max_budget_usd: 1.5 -> 3.0 (only)",
+  "INSTALL_AND_ALIGNMENT": "PASS_NOT_STARTED"
+}
