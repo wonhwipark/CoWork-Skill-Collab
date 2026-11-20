@@ -1,3 +1,12 @@
+## 2026-11-21 KST — Issue #2 Gmail → ChatGPT Work GPT 자동 판정 1차 후보 설계 게시 / 파일럿 NOT_RUN
+- **사용자 최신 목표:** 기존 Telegram 리뷰 완료 알림을 유지하면서 신규 리뷰 완료 뒤 **모바일 ChatGPT의 Work 전용 대화에서 GPT 판정의 근거·과정·최종 결과·후속 질문**을 확인. 기존 설계 채팅에 직접 자동 삽입은 미지원/미검증으로 구분.
+- **신규 설계:** [Gmail 이벤트 → Work GPT 판정 r0001](GPT_GMAIL_WORK_EVENT_TO_DISPOSITION_DESIGN_r0001_20261121_KST.md) (PRIVATE main, Git blob `e6b7cdfbe902f6d5ff79b83e1228e56b5b5d0f6a`, 원격 동일 본문 8,851자 PASS). 기존 [Issue #2](https://github.com/wonhwipark/CoWork-Skill-Collab/issues/2)를 재사용. Windows watcher·기존 Telegram Notifier·`review_completion.py`·`review_chain.py` 및 기존 `GPT_DISPOSITION.json` 경로를 재사용하고 신규 리뷰 엔진/DB/원장은 만들지 않는 설계.
+- **제품 지원 확인:** OpenAI 공식 Help Center에서 Gmail 새 메일을 트리거로 하는 ChatGPT Work 이벤트 지원, sender/subject 필터, 모바일 Work 대화 결과 확인은 문서상 PASS. 이 대화에서 Gmail Plugin 검색 `installed=false`, Work 이벤트 소스 조회 `404` → **계정의 실제 Gmail 연결·트리거 생성권·GitHub PRIVATE Work 쓰기권한은 NOT_VERIFIED**. Notifier 소스/실제 이벤트 분기 G0 미조회.
+- **보안·비용 경계:** 메일은 ID/revision/SHA/원격 경로만 보내는 비신뢰 힌트. Work가 정본 GitHub REQUEST/READY/RESULT/RECEIPT/processing_key 및 기존 판정을 재조회해 독립 검토. **중복 GitHub GPT 판정 0/Claude 재리뷰 0**을 목표로 하되 Gmail이 Work를 이미 실행한 뒤 잘못된 메일이 판별되면 Work 모델 사용량 0은 보장할 수 없음. 1차 파일럿은 READ_ONLY; 실제 메일·자동 작업 생성·GitHub 판정 자동 게시·Windows 운영 수정·유료 API 호출은 **NOT_RUN**.
+- **NEXT_ONE_ACTION:** 실제 사용자 계정에서 Gmail new-message → Work 이벤트 지원·연결/사용량 제한·GitHub PRIVATE 읽기권한을 **G0 읽기 전용**으로 확인. PASS 시 기존 Windows Notifier의 완료 검증·발송 위치를 읽기 전용으로 확인한 뒤 무해한 합성/메일 파일럿을 별도 승인 범위에서 시행. 미확인 시 Gmail 발송/트리거 등록 중지.
+
+---
+
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
 ## 2026-11-20 KST — 단일 GitHub LIVE 현행 상태 요약 보강 (실측 보고 재인용, 운영 변경 0)
