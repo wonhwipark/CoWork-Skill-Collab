@@ -1,0 +1,100 @@
+{
+  "started": "2026-11-20 20:49:49",
+  "phases": [
+    {
+      "label": "after_start_2_cycles",
+      "view": {
+        "events": {
+          "SCAN_START": 1,
+          "TRUST_ROOT_INDEPENDENCE_WARNING": 1,
+          "TRUST_ROOT_LOADED": 1,
+          "WATCH_START": 1
+        },
+        "jobs": {
+          "COMPLETED": 9
+        },
+        "claims": {
+          "READY_POSTED": 2,
+          "UNCERTAIN": 1
+        },
+        "seen": 11,
+        "lease": [
+          [
+            "1",
+            "github",
+            "1",
+            "2026-11-14T22:57:57.244538+00:"
+          ]
+        ],
+        "max_id": 17660,
+        "notable": [
+          [
+            "TRUST_ROOT_INDEPENDENCE_WARNING",
+            "",
+            "trust root file can be modified by the watcher's own account; trust root folder can be mod"
+          ],
+          [
+            "TRUST_ROOT_LOADED",
+            "",
+            "version=1 keys=1 frozen=False"
+          ],
+          [
+            "WATCH_START",
+            "",
+            "{\"version\": \"0.2.29\", \"enabled\": true, \"enabled_source\": \"review_policy.enabled\", \"dry_run"
+          ]
+        ]
+      },
+      "anomalies": [
+        "lease changed [('1', 'github', '1', '2026-11-14T22:57:57.244538+00:')]"
+      ],
+      "cycles": 0
+    }
+  ],
+  "started_pids": [
+    17200,
+    29992
+  ],
+  "FAILED": [
+    "lease changed [('1', 'github', '1', '2026-11-14T22:57:57.244538+00:')]"
+  ],
+  "rollback": {
+    "bundle": "D:\\User\\whpark\\skill-collab-watcher-dist\\backup_v0_2_25_cutover_20261120_204447",
+    "removed_new_files": [
+      "docs/RELEASE_MANIFEST.json",
+      "docs/REQUEST_PIN_REPAIR.md",
+      "README.md",
+      "tests/test_approval_wait_notify_v026.py",
+      "tests/test_review_request_gate_tool_v026.py",
+      "tests/test_source_pin_preclaim_v026.py",
+      "tests/test_source_pin_tool_v026.py",
+      "tests/test_v029_cost_refused_exclusion.py",
+      "tools/review_request_gate.py",
+      "tools/source_pin.py"
+    ],
+    "tree_sha": "f691bcf808cbf81e9c2c2a9be65335e527c2df99ea4d54a427665e4c90045c9f",
+    "config_sha": "fbce30a97c06f8d04e2e0029c731c41d2ccd87963196afe80279f10cf7509c27",
+    "delegation_sha": "ddead4e497759ac30db9e8d90974cfe4f68114d99ef99cdf85a083e9bf54fd4c",
+    "version_line": "__version__ = \"0.2.25\"",
+    "verified": true
+  },
+  "after_rollback": {
+    "task": "Running",
+    "pids": [
+      21736,
+      17828
+    ]
+  },
+  "TWO_CYCLES_RESTART": "FAIL_ROLLED_BACK",
+  "final_tasks": {
+    "SKILL-COLLAB-Claude-Review-Watcher": "Disabled",
+    "SKILL-COLLAB-Dashboard-Deploy-Bridge": "Disabled",
+    "SKILL-COLLAB-Dashboard-Updater": "Disabled",
+    "SKILL-COLLAB-GitHub-Watcher": "Running",
+    "SKILL-COLLAB-Notifier": "Running"
+  },
+  "final_pids": [
+    21736,
+    17828
+  ]
+}
