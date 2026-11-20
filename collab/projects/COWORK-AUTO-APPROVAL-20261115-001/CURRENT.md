@@ -1,5 +1,15 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-20 KST — 사용자 v0.2.29 LIVE/USD3 운영 컷오버 명시 승인 / Windows 실제 실행 대기
+- **최신 사용자 승인:** "v0.2.29 LIVE 전환 및 통합 USD3 자동 승인 활성화 조치에 대해 처리 진행할까요?" → 사용자 "그래". 이전 "백업 번들만"은 그 당시 범위였으며, **이번 지시로 정확한 고정 v0.2.29 LIVE 설치·기존 보호 정책 STATIC USD3/위임 USD3/새 enabled_at 적용·재가동·검증·필요 시 롤백** 승인. 별도 모델 호출/재리뷰·PUBLIC 업로드·새 키/만료 연장 0.
+- **정식 Windows 실행 원샷:** [GPT_V029_LIVE_CUTOVER_AUTHORIZED_ONESHOT_r0001_20261120_KST.md](./GPT_V029_LIVE_CUTOVER_AUTHORIZED_ONESHOT_r0001_20261120_KST.md) (PRIVATE main) — 기존 [LIVE 실행 요청서](LIVE_ENABLE_EXECUTION_REQUEST_V029_20261120_KST.md)와 백업 결과를 재사용하고 원격 작업/설정/ZIP/백업 SHA·서명 자격·실제 권한·legacy Guard 정산을 실시 시점에 재검증. 롤백 최종 책임 사용자, Windows Claude Code 실무 실행·검증 및 안전 복구 담당. `development_not_for_deployment` 라벨은 승인된 정확한 ZIP에 대한 운영 전환 결정을 외부 정본에 기록하되 **실제 설치 성공 전에 완료라고 표기하지 않음**.
+- **기존 백업:** `D:\User\whpark\skill-collab-watcher-dist\backup_v0_2_25_install_20261120_200712` 117 files, manifest SHA `d23b52068733ec7dcce95024f6f919a0e30147e00b502b3bd449d29406256d92`; 트리 SHA `f691bcf808cbf81e9c2c2a9be65335e527c2df99ea4d54a427665e4c90045c9f`. Windows 재조회·변조 위험/ACL을 확인하고 구 `.venv` 경로 보존.
+- **현재 실측 상태(변경 전 마지막 근거):** LIVE `v0.2.25`, 자동 위임 `USD1`, `LIVE_EXECUTION=NOT_RUN`, `LIVE_ENABLE=NOT_RUN`. **GPT의 GitHub 게시는 Windows 호스트 실행이 아니며 보호 서명/실제 Windows 권한을 대체하지 않음.**
+- **NEXT_ONE_ACTION:** Windows Claude Code가 승인된 원샷 파일과 LIVE 실행 요청서의 현재 내용대로 **추가 반복 승인 요청 없이 기존 범위 내 컷오버를 한 번 실행**, 안전 게이트 실패 시 BLOCKED/롤백(무단 우회 금지), 성공 시 실제 v0.2.29/USD3·2주기+재시작·구 요청 재처리 0을 실측하고 `CLAUDE_V029_LIVE_CUTOVER_RESULT_FOR_GPT_20261120.md`, CURRENT/TRACKER 및 원격 bytes 검증을 게시. 검증 전 완료 주장 금지.
+
+---
+
+
 ## 2026-11-20 KST — LIVE 실행 요청서: 사용자 선택 "백업 번들만" 완료 / LIVE 변경 0
 
 - **결과:** `CLAUDE_V029_LIVE_BACKUP_BUNDLE_RESULT_FOR_GPT_20261120.md` (PRIVATE main, commit `6689b907fd43`). 사용자가 요청서 실행 범위를 **백업 번들만**, 위치를 **`skill-collab-watcher-dist` 아래**로 선택.
