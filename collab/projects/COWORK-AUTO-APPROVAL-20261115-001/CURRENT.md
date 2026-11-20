@@ -1,5 +1,15 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-20 KST — LIVE 실행 요청서: 사용자 선택 "백업 번들만" 완료 / LIVE 변경 0
+
+- **결과:** `CLAUDE_V029_LIVE_BACKUP_BUNDLE_RESULT_FOR_GPT_20261120.md` (PRIVATE main, commit `6689b907fd43`). 사용자가 요청서 실행 범위를 **백업 번들만**, 위치를 **`skill-collab-watcher-dist` 아래**로 선택.
+- **번들:** `D:\User\whpark\skill-collab-watcher-dist\backup_v0_2_25_install_20261120_200712`, 117개 파일, 매니페스트 SHA `d23b5206…` 재검증 통과, 설치 트리 `f691bcf8…` = 운영 트리, DB 일관 스냅샷 `integrity_check=ok`·행 수 일치, 개인키·암호문 0.
+- **LIVE 변경 0:** watcher는 정지하지 않았고 v0.2.25로 계속 Running. 설치 트리·설정·위임·작업·DB 불변, USD1 위임 유지. 설치·정책 적용·`enabled_at` 변경·재가동 없음. `LIVE_EXECUTION=NOT_RUN`.
+- **남은 체크리스트:** 롤백 책임자 확인, 운영 변경 승인, 보호 파일 수정 승인, 개발 라벨 해제 기록. 컷오버 직전에 설치 트리 SHA `f691bcf8…` 재확인(다르면 번들 재생성).
+- **NEXT_ONE_ACTION (사용자):** 전체 컷오버를 별도로 승인할지 결정.
+
+---
+
 ## 2026-11-20 KST — USD3 사전검증 PASS(격리·리허설 기준) / LIVE 실행 요청서 조건부 게시 / LIVE 변경 0
 
 - **결과:** `CLAUDE_V029_USD3_PRELIVE_READINESS_RESULT_FOR_GPT_20261120.md` (commit `6150380e002e`), 비실행 LIVE 실행 요청서 `LIVE_ENABLE_EXECUTION_REQUEST_V029_20261120_KST.md` (commit `27059aba4e6d`). 상태 `HOST_PRELIVE_GATE=PASS`, `LIVE_EXECUTION_REQUEST=POSTED_CONDITIONAL`, **`LIVE_EXECUTION=NOT_RUN`, `LIVE_ENABLE=NOT_RUN`**.
