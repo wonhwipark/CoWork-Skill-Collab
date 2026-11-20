@@ -1,0 +1,63 @@
+{
+  "started": "2026-11-20 19:45:46",
+  "backup": {
+    "install_files": 108,
+    "install_tree_sha256": "f691bcf808cbf81e9c2c2a9be65335e527c2df99ea4d54a427665e4c90045c9f",
+    "bundle_files": 114,
+    "db_snapshot_integrity": "ok",
+    "db_counts_live_before": {
+      "jobs": 9,
+      "auto_claims": 3,
+      "auto_seen": 11,
+      "audit_log": 17531,
+      "pending_requests": 9
+    },
+    "db_counts_snapshot": {
+      "jobs": 9,
+      "auto_claims": 3,
+      "auto_seen": 11,
+      "audit_log": 17531,
+      "pending_requests": 9
+    },
+    "db_counts_live_after": {
+      "jobs": 9,
+      "auto_claims": 3,
+      "auto_seen": 11,
+      "audit_log": 17531,
+      "pending_requests": 9
+    },
+    "snapshot_matches_live_counts": true,
+    "task_xml": {
+      "SKILL-COLLAB-GitHub-Watcher": {
+        "rc": 0,
+        "bytes": 1764
+      },
+      "SKILL-COLLAB-Notifier": {
+        "rc": 0,
+        "bytes": 1596
+      }
+    },
+    "private_key_or_passphrase_copied": false
+  },
+  "rollback": {
+    "restored_tree_equals_live_tree": true,
+    "restored_files": 108,
+    "restored_version_line": "__version__ = \"0.2.25\"",
+    "bundle_manifest_verified": true,
+    "production_interpreter_used": true,
+    "restored_cli_recover": {
+      "rc": 0,
+      "stdout": "no uncertain/in-flight/failed jobs.",
+      "stderr": ""
+    },
+    "restored_db_integrity": "ok"
+  },
+  "live_unchanged_after_rehearsal": {
+    "install_tree_sha256_same": true,
+    "delegation_sha_same": true
+  },
+  "prod_interpreter_dependency": {
+    "old_install_venv_python_exists": true,
+    "path": "D:\\User\\whpark\\skill-collab-watcher\\.venv\\Scripts\\python.exe"
+  }
+}
