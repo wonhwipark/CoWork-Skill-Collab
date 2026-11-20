@@ -20,7 +20,7 @@
       "status": "검증 진행 중",
       "title": "COWORK-AUTO-APPROVAL-20261115-001 — CURRENT",
       "tone": "warning",
-      "topic": "2026-11-20 KST — v0.2.29 독립 리뷰 R1 완료: BLOCKING 0 / MAJOR 0 / MINOR 3 / GPT 판정 대기"
+      "topic": "2026-11-20 KST — GPT v0.2.29 R1 ACCEPT_WITH_CONDITIONS / USD3·LIVE 사전검증 단일 호스트 원샷 대기"
     },
     {
       "id": "COWORK-DROPBOX-TO-GITHUB-MIGRATION",
