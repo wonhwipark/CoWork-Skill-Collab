@@ -5,11 +5,11 @@
       "work_id": "COWORK-AUTO-APPROVAL-20261115-001",
       "skill": "cowork-review-watcher",
       "title": "GPT→GitHub REQUEST 자동 서명·READY (제한된 사전 위임)",
-      "phase": "TEST",
-      "owner": "GPT offline test harness and private publication complete; Windows Claude Code actual v0.2.29 package 5x + writer recovery gate",
-      "self_test": "SOURCE_ZIP_SHA PASS; host test Python py_compile PASS; negative missing ZIP fail-closed PASS; GPT model 5 runs: four 5/5 and one safe UNCERTAIN dependency hold; actual v0.2.29 package pytest 5x NOT_RUN, Windows writer CAS/rebase NOT_RUN",
-      "independent_review": "V029_5X_FAIL_ROUND1_SU_L1_RACE_FLAKY_NOT_RUN",
-      "next_action": "2026-11-20 five-window validation on pinned v0.2.29 ZIP c67bc342: ZIP SHA PASS; harness v1 defects fixed in v2 (companion project ids, pytest scope); companion 4/4 PASS; full suite 1037 passed, 1 failed: su_l1 Race six-process nonce test (intermittent; isolated 5/5 PASS). ZIP_5X=FAIL round 1, rounds 2-5 NOT_RUN. Writer CAS and skill rebase GAP_CONFIRMED (install upload is create-only; no rebase); UNCERTAIN settlement PARTIAL. Result CLAUDE_V029_FIVE_WINDOWS_VALIDATION_RESULT_FOR_GPT_20261120.md (commit 03f9b0ccb188). HOLD: paid review, LIVE, USD3 delegation. NEXT: GPT decides su_l1 expectation handling, flake root cause, and whether writer CAS/rebase becomes a DEV feature."
+      "phase": "TEST_HOLD_SU_L1_CAUSE_AND_5WINDOW_WRITER_RECOVERY",
+      "owner": "Windows Claude Code bounded su_l1 root cause and minimal existing writer/reconciliation work; GPT disposition published",
+      "self_test": "Windows 5window companion 4/4 PASS, full suite round1 1037P 1F(su_l1) 12S; isolated su_l1 5/5 PASS; rounds2-5 NOT_RUN. Root cause unconfirmed. GPT mock proof not full live.",
+      "independent_review": "V029_NOT_RUN_FIVE_ROUND_GATE_FAILED_R1_SU_L1",
+      "next_action": "GPT disposition GPT_V029_SU_L1_RACE_AND_FIVE_WINDOWS_RECOVERY_DISPOSITION_r0001_20261120_KST.md: keep original su_l1 test unchanged until load-race root cause and anchor recovery invariants proved; stress load/no-load max 10 each, then 5 actual mock watcher windows 5 rounds; CAS+skill rebase owned by producer/Git writer, not watcher create-only upload; read-only UNCERTAIN remote evidence match, no re-call. Only proven gap minimal work. LIVE v0.2.25, USD1 unchanged. No paid review/READY until GPT reviews host evidence."
     }
   ]
 }
