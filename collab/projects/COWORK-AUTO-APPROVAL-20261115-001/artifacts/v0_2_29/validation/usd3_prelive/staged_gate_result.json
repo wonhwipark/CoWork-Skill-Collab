@@ -1,0 +1,47 @@
+{
+  "select_real_live_config": [
+    2,
+    "REQUEST_PREFLIGHT_BLOCKED: POLICY_COST_MISMATCH"
+  ],
+  "select_staged_config": [
+    0,
+    "{\"status\": \"POLICY_COMPATIBLE_NOT_APPROVED\", \"selected_run_policy_ref\": \"POLICY-STATIC-V1\", \"expected_max_budget_usd\": \"3.00\", \"approval\": \"NOT_CHECKED\"}"
+  ],
+  "check_staged_positive": [
+    0,
+    "{\"authorization\": \"NOT_CHECKED\", \"expected_max_budget_usd\": \"3.00\", \"model_calls\": 0, \"package_sha256\": \"c67bc342fe77547b000fc42e1b886396cbef035c0d265dbcd124947e267ed83f\", \"package_size_bytes\": 310753, \"ready\": \"NOT_CREATED\", \"request_id\": \"REQ-STAGED-USD3-CHECK-20261120\", \"request_sha256\": \"ad5cbbb"
+  ],
+  "neg_wrong_price_config_2_00": [
+    2,
+    "REQUEST_PREFLIGHT_BLOCKED: POLICY_COST_MISMATCH"
+  ],
+  "neg_request_names_design_tier": [
+    2,
+    "REQUEST_PREFLIGHT_BLOCKED: RUN_POLICY_NOT_LIVE_MATCH: requested=POLICY-STATIC-V1-DESIGN supported=POLICY-STATIC-V1"
+  ],
+  "neg_request_names_large_tier": [
+    2,
+    "REQUEST_PREFLIGHT_BLOCKED: RUN_POLICY_NOT_LIVE_MATCH: requested=POLICY-STATIC-V1-LARGE supported=POLICY-STATIC-V1"
+  ],
+  "neg_package_sha_tampered": [
+    2,
+    "REQUEST_PREFLIGHT_BLOCKED: PACKAGE_SHA256_MISMATCH"
+  ],
+  "neg_package_size_tampered": [
+    2,
+    "REQUEST_PREFLIGHT_BLOCKED: PACKAGE_SIZE_MISMATCH"
+  ],
+  "neg_unified_with_budget_1_50": [
+    2,
+    "REQUEST_PREFLIGHT_BLOCKED: UNIFIED_REVIEW_BUDGET_MISMATCH"
+  ],
+  "pin_string_repo_id": [
+    0,
+    "PASS: SOURCE_PIN_V1 repo_id is a JSON string and matches trust root"
+  ],
+  "pin_numeric_repo_id": [
+    2,
+    "SOURCE_PIN_REJECTED: repo_id MUST be a JSON string, not a number"
+  ],
+  "real_config_unchanged": true
+}
