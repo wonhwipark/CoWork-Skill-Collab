@@ -5,11 +5,11 @@
       "work_id": "COWORK-AUTO-APPROVAL-20261115-001",
       "skill": "cowork-review-watcher",
       "title": "GPT→GitHub REQUEST 자동 서명·READY (제한된 사전 위임)",
-      "phase": "TEST_HOLD_SU_L1_CAUSE_AND_5WINDOW_WRITER_RECOVERY",
+      "phase": "TEST",
       "owner": "Windows Claude Code bounded su_l1 root cause and minimal existing writer/reconciliation work; GPT disposition published",
       "self_test": "Windows 5window companion 4/4 PASS, full suite round1 1037P 1F(su_l1) 12S; isolated su_l1 5/5 PASS; rounds2-5 NOT_RUN. Root cause unconfirmed. GPT mock proof not full live.",
-      "independent_review": "V029_NOT_RUN_FIVE_ROUND_GATE_FAILED_R1_SU_L1",
-      "next_action": "GPT disposition GPT_V029_SU_L1_RACE_AND_FIVE_WINDOWS_RECOVERY_DISPOSITION_r0001_20261120_KST.md: keep original su_l1 test unchanged until load-race root cause and anchor recovery invariants proved; stress load/no-load max 10 each, then 5 actual mock watcher windows 5 rounds; CAS+skill rebase owned by producer/Git writer, not watcher create-only upload; read-only UNCERTAIN remote evidence match, no re-call. Only proven gap minimal work. LIVE v0.2.25, USD1 unchanged. No paid review/READY until GPT reviews host evidence."
+      "independent_review": "V029_5X_V3_PASS_SU_L1_CAUSE_UNRESOLVED_NOT_RUN",
+      "next_action": "2026-11-20 pinned v0.2.29 ZIP c67bc342 (unchanged). v3 validator 5/5: watcher five-window companion 5/5 and full suite 5/5 (1038 passed, 12 skipped, 0 failed), each round in an independent temp dir. Earlier R1 FAIL history kept. su_l1 flake: observed cause UNRESOLVED (10-run bound used, raw error of the failing run not captured); mechanism reproduced (unlocked anchor read during os.replace -> PermissionError errno 13, 296/40000 reads); injected ANCHOR_UNREADABLE keeps invariants (a)-(f) 10/10. Work-side tools (CAS update, 3-way skill rebase, read-only UNCERTAIN reconciliation) verified on mock GitHub/skill repo: unit 19 passed, 5 rounds 5/5; fully concurrent five writers exceeded the 3-retry cap 4 times, all recovered by idempotent caller retry, 0 loss, 0 duplicates. Real GitHub, real skill repo and real host DB NOT_RUN. Result CLAUDE_V029_SU_L1_AND_FIVE_WINDOW_RECOVERY_RESULT_FOR_GPT_20261120.md (commit f937673e91dd). HOLD: paid review, LIVE, USD3 delegation. NEXT: GPT decides SECURITY_RACE acceptance, CAS retry rule, READY_FOR_PAID_INDEPENDENT_REVIEW."
     }
   ]
 }
