@@ -1,5 +1,17 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-20 KST — 다음 창 논의: Viewer MSC·이슈 분석 수정/추가 기능
+
+- **사용자 새 요청:** 기존 Viewer에 MSC 또는 이슈 분석 내용의 수정·추가 기능을 넣고 싶으며 새 창에서 논의. `VIEWER_EDIT_DISCUSSION=OPEN`, `REQUIREMENTS/DESIGN=TO_DISCUSS`, `IMPLEMENTATION/WRITE_API/HOST_CHANGE=NOT_RUN`. 지금 편집 기능 구현·운영 쓰기를 시작하라는 지시로 확대하지 않음.
+- **논의할 사용자 흐름:** 문서/MSC 열람→내용 수정 또는 추가→변경 비교/미리보기→저장→필요한 MSC 재생성·검증→변경 이력/원래 Work 연결. 이는 후보 흐름이며 저장·승인·실행 규칙을 확정한 설계가 아님.
+- **먼저 결정할 사항:** ① 이슈 분석 본문·추가 코멘트·설계·MSC 설명/메시지/participant 중 편집 대상 ② 직접 편집과 Agent 수정 요청의 역할 ③ 개인 초안·기존 Work/Evidence·개인/그룹 Knowledge 중 저장 대상 ④ 버전/원본·근거·변경 비교·충돌·복구·사용자 권한 ⑤ 첫 구현의 최소 범위.
+- **재사용 검토:** Viewer는 편집 UI·Preview 후보; Work/Evidence·원장 변경은 기존 Workflow/Kernel writer, Knowledge 관리는 Updater, MSC 표현/재생성은 doc-converter 기존 계약과 대조. Kernel이 색상/화면 배치를 소유한다고 가정하지 않으며, 기술 사실의 수정과 화면 설명/주석 추가를 구분. 어떤 실제 writer/API를 쓸지는 현장 계약 확인 전 미확정.
+- **기준 자료:** [Viewer 변경서 r0002](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_WORKSPACE_VIEWER_UI_CHANGE_AND_MCP_VALIDATION_HANDOFF_r0002_20261120_KST.md)·[현 UI 연동 검토](WIKI_UI_SKILL_INTEGRATION_COMPATIBILITY_REVIEW_r0001_20261120_KST.md). 현재 읽기 전용 설계의 기능 확장 논의이며 기존 B1~B3/E3~E4 미검증 상태와 리뷰/인계 이력 유지.
+- **최신 맥락 보존:** Agent→Linux MCP의 기존 업무 스킬 접근은 Viewer 호출과 분리한 최신 r0002 정정을 우선. 별도 NR L1 Tx UL Tx Switching 1건 갱신 요청·Recovery 분석 범위를 이번 Viewer 논의로 변경하지 않음.
+- **다음 한 동작(이 Viewer 논의 한정):** 새 창 GPT가 이 CURRENT와 Viewer 변경서를 읽고 구체적인 사용 예시부터 편집 대상·저장 위치·최소 범위를 사용자와 논의. 실제 구현/스킬 변경·게시/호스트 작업은 아직 시작하지 않음.
+
+---
+
 ## 2026-11-20 KST — 사용자 최종 실사용 목표: Agent MCP로 NR L1 Tx UL Tx Switching 지식 1건 갱신
 
 - **요청 범위:** 기존 모바일 Agent → Linux MCP → 설치된 `l1-knowledge-updater`(필요 시 `code-analyzer`)로 NR L1 Tx의 UL Tx Switching 기존 Knowledge와 현재 코드 근거를 검토 → 기존 Work 재개 → 개인 `l1-workspace`에 분석/변경 지식·Evidence 저장 → 실제 revision/readback 대조 → 사용자에게 결과 반환. 기존 검토 분류의 `NT-F09` 결정/상태와 `NT-F11` Tx Path Switching을 우선 대상으로 참조하되 **실제 Knowledge ID와 동일시하지 않음**. 안테나/SRS·ULCA·EN-DC·Dual SIM은 코드 근거 확인 시에만 관련 Scenario로 연결.
