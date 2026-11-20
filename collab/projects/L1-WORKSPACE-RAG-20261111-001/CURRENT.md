@@ -1,5 +1,15 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-20 KST — Viewer 2단계 업무 GPT 원샷 인계 PUBLIC 게시·원격 검증 완료
+
+- **사용자 명시 범위:** 기존 Viewer 패키지를 재사용한 업무 GPT용 원샷 구현 인계서를 L1Work PUBLIC handoffs에 게시까지 완료. 실제 업무 Linux Viewer 구현·설치/재시작·인증 계정 생성·업무 Work/Knowledge 쓰기 권한으로 확대하지 않음.
+- **PUBLIC 배송:** `wonhwipark/L1Work`, branch `main`, [handoffs/L1_WORKSPACE_VIEWER_TWO_PHASE_IMPLEMENTATION_ONESHOT_HANDOFF_r0001_20261120_KST.md](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_WORKSPACE_VIEWER_TWO_PHASE_IMPLEMENTATION_ONESHOT_HANDOFF_r0001_20261120_KST.md) · 최초 게시 commit `fa714adc9caebf08cfdbe35152e0fe0c2d322690`; UTF-8 **18,717 B / SHA-256 `78448fd32215527ee8fc6300205f80b00119f753b89cfaebab166d6d25ab2709`**; remote content readback PASS, Git blob `7627b5bc25925e1b08752260b1ce86a806f190c8`. [handoffs/README.md](https://github.com/wonhwipark/L1Work/blob/main/handoffs/README.md) 최상단 링크 추가 commit `e60960170b892ae73f8e04f1f58d3d6d326bf4ae` · remote readback PASS.
+- **인계 구성:** 기배송 Viewer UI v0.1.0 ZIP(267,140 B / `411553e7…`)과 기존 PUBLIC Viewer r0002·사용성 HTML 시안 참조, 실제 G0 소스/권한/메타/API 확인 → 1차 `SOC-xxx` 대표 이슈번호 선두·제목 통일·무로그인 Read Only 회귀 → 2차 [수정] 전용 인증/ACL·이슈·MSC 수정 요청·Diff/Preview·기존 writer 연결 → B1/B2/B3/E3/E4 시험 → **별도 유효 승인/게이트가 있을 때만** 운영 적용·백업/rollback. 수신 업무 GPT가 PRIVATE r0004를 보지 못해도 이해할 수 있게 비민감 범위에서 자급형 요구 명시.
+- **완료·미검증:** `PUBLIC_HANDOFF=PASS_REMOTE_VERIFIED` / `HANDOFF_INDEX=PASS_REMOTE_VERIFIED` / `BUSINESS_GPT_RECEIPT=NOT_VERIFIED` / `LINUX_VIEWER_G0/IMPLEMENTATION/E3/E4/HOST_DEPLOY=NOT_RUN`. 기존 정적 독립 리뷰 R1 ACCEPT_WITH_CHANGE 유지, 신규 리뷰·REQUEST/READY·유료 모델 0. PRIVATE r0001~r0004와 리뷰·영수증·패키지 원본 변경 0.
+- **NEXT_ONE_ACTION:** 업무 GPT가 PUBLIC handoff를 받아 기존 업무 Viewer Work를 재개하고 허용된 Linux Agent로 실제 소스·Work issue key/title·편집 인증/writer G0부터 확인해 인계서 범위의 개발/시험을 진행. 운영 적용이 권한 밖이면 개발 후보·시험·BLOCKED만 기록. 문서 게시가 자동 수신·실행·설치 사실이 아님.
+
+---
+
 ## 2026-11-20 KST — Viewer Work 목록 이슈번호(SOC-xxx 등) 선두 표시 반영 r0004
 
 - **사용자 최신 요청:** 기존 Viewer `l1-workspace/works/`의 Work 목록에서 관련 이슈번호(예: SOC-1234)가 **검증되어 존재한다면 제목 맨 앞**에 배치. `SOC-1234 — NR L1 Tx — UL Tx Switching 분석`처럼 표시, Work ID는 보조 줄. 번호가 없으면 기존 내용 중심 제목 유지. Work ID·실제 폴더·Evidence/링크/원본 불변.
