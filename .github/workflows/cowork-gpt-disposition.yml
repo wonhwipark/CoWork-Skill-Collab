@@ -1,0 +1,68 @@
+name: CoWork Claude review to GPT disposition (gated)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'collab/reviews/**/REVIEW_RESULT_1.md'
+      - 'collab/receipts/**/RECEIPT_1.md'
+  workflow_dispatch:
+    inputs:
+      request_id:
+        description: Existing completed review ID (no re-review)
+        type: string
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: cowork-gpt-disposition-main
+  cancel-in-progress: false
+
+jobs:
+  gpt-disposition:
+    # No GPT API call until separately authorized, with actual public repo and secret.
+    if: >-
+      github.repository == 'wonhwipark/CoWork-Skill-Collab' &&
+      github.ref == 'refs/heads/main' &&
+      github.event.repository.private == false &&
+      vars.COWORK_GPT_API_ENABLED == 'true' &&
+      vars.COWORK_GPT_COST_POLICY_APPROVED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout trusted main with source-pin history
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Install Ed25519 verification dependency
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m venv .cowork-venv
+          .cowork-venv/bin/python -m pip install --disable-pip-version-check 'cryptography==46.0.4'
+      - name: Verify review chain, claim once, call GPT API and publish create-only
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_REPOSITORY_ID: ${{ github.repository_id }}
+          GITHUB_REF: ${{ github.ref }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          COWORK_GPT_API_ENABLED: ${{ vars.COWORK_GPT_API_ENABLED }}
+          COWORK_GPT_COST_POLICY_APPROVED: ${{ vars.COWORK_GPT_COST_POLICY_APPROVED }}
+          COWORK_GPT_MODEL: ${{ vars.COWORK_GPT_MODEL }}
+          COWORK_APPROVER_PUBLIC_KEY_B64: ${{ vars.COWORK_APPROVER_PUBLIC_KEY_B64 }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          REQUEST_ID: ${{ inputs.request_id }}
+          PUSH_BEFORE: ${{ github.event.before }}
+          PUSH_AFTER: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          if [ -n "$REQUEST_ID" ]; then
+            .cowork-venv/bin/python collab/tools/gpt_disposition_actions.py --request-id "$REQUEST_ID"
+          else
+            .cowork-venv/bin/python collab/tools/gpt_disposition_actions.py --before "$PUSH_BEFORE" --after "$PUSH_AFTER"
+          fi
