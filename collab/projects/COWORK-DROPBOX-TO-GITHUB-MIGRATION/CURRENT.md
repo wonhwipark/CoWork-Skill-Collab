@@ -1,5 +1,16 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 2026-11-20 KST — 단일 GitHub LIVE 현행 상태 요약 보강 (실측 보고 재인용, 운영 변경 0)
+
+- **현재 보고:** ACTIVE_PROVIDER=GITHUB / CUTOVER=LIVE. 2026-11-15 GitHub 단일 LIVE 이관과 Windows 호스트 실측·GPT 수용 유지. 2026-11-20 [v0.2.29 운영 최종 판정](../COWORK-AUTO-APPROVAL-20261115-001/GPT_V029_LIVE_CUTOVER_FINAL_DISPOSITION_r0001_20261120_KST.md)에서는 Watcher v0.2.29 LIVE 및 등록 STATIC USD3/보호 위임 USD3 적용 확인. **Windows Task·프로세스·DB를 이번 문서 변경에서 새로 실측한 것이 아님**.
+- **구분:** 마지막 호스트 검증 2026-11-20 21:08 KST, LIVE_PAID_E2E=NOT_RUN. 첫 신규 유료 STATIC 리뷰의 서명→READY→디스패치→영수증은 아직 미관측. 기존 Guard UNCERTAIN·미정산과 ACL 위험을 종결하지 않음. 이번 변경은 기존 DB/Task, 서명, 모델 호출, 승인·LIVE 정책 0.
+- **공개 상태 정합성:** 기존 flow_view.py / public_sync.py는 이 Work의 CURRENT 최상단 절만 읽는다. 이전 최상단 11-18 Pending·Guard 요약은 provider/cutover 정형 표기가 없어 공개 상태가 '정식 전환 전'으로 남아 있었다. 이번 단락은 이미 다른 PRIVATE Work에서 호스트 보고·GPT 판정된 사실을 최상단에 연결하여 **기존 PUBLIC 허용목록 필드만** 재사용하기 위한 상태 갱신. status.json 공개 검증/게시 자체는 별개.
+- **Actions 장애 조사:** 2026-11-20 13:04 UTC 경 PRIVATE 대시보드 실행이 2초 만에 실패하고 Runner ID=0/step=0, 이어 PUBLIC sync SKIPPED. GitHub Actions 환경·quota 또는 원격 실행 실패의 정확한 원인은 로그 미확보 상태에서 미확인. 문서 게시=CI 복구 아님.
+- **NEXT_ONE_ACTION:** 기존 CI runner 정상화→PRIVATE generate.py 및 공개 allowlisted status.json 안전검증→원격 readback. 자동 검증 실패를 수동 PUBLIC JSON 게시로 우회하지 않음. P1/P2 자동 활용 실측과 LIVE 유료 E2E는 별도 구분.
+
+---
+
+
 ## Pending·Guard 읽기 전용 정산 완료 (2026-11-18 KST)
 
 - 결과: `CLAUDE_PENDING_GUARD_RECONCILIATION_RESULT_FOR_GPT_20261118.md` (PRIVATE `main`, SHA-256 `2d9ca47c2b450bad1dc287834241d76bf314109f39ca17ca9833fe3c109d195c`), 비민감 artifact `artifacts/pending_guard_audit_20261118.json`.
