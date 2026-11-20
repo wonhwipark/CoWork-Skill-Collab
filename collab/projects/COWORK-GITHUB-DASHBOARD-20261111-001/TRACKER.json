@@ -9,7 +9,7 @@
       "owner": "GPT",
       "self_test": "PASS",
       "independent_review": "NOT_RUN",
-      "next_action": "2026-11-20 Actions pre-run failure confirmed: same workflow blob on success/failure, runner_id=0, steps=0, billable 0, annotation count 1 (text unavailable); root cause unverified. PUBLIC P1/P2 stale>30min fail-safe UI posted JS+HTML, synthetic PASS and Pages 44757131366 success; PUBLIC status.json remains stale and upstream allowlist sync BLOCKED. NEXT ONE: read non-sensitive error annotation in PRIVATE run 44756245749; check GitHub Actions account/billing/permission only as indicated, then validate existing CI and PUBLIC sync; no forced reruns, no new paid review or LIVE change."
+      "next_action": "GitHub user-supplied Actions error explicitly confirms account billing/budget gate before runner assignment. Whether payment failed or Actions spending limit was reached remains UNVERIFIED. No code or workflow change. NEXT: owner checks GitHub Billing & plans payment errors and Actions Budgets and alerts hard-stop (no sensitive values shared); after resolved run existing CI once and verify allowlisted PUBLIC status sync + remote readback. No paid call or LIVE change."
     }
   ]
 }

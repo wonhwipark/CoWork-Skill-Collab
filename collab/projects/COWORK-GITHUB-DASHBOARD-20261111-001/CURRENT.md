@@ -1,5 +1,16 @@
 # COWORK-GITHUB-DASHBOARD-20261111-001 — CURRENT
 
+## 2026-11-20 KST — GitHub Actions 계정 청구·예산 게이트 원인 분류 확정
+
+- **사용자 제공 오류:** "The job was not started because recent account payments have failed or your spending limit needs to be increased." → GitHub가 작업 시작 전에 **청구/예산 게이트에서 차단**한 사실 확인. **결제 실패인지 Actions 예산 상한인지**는 아직 미확인. `ACTIONS_BILLING_ADMISSION_BLOCK=CONFIRMED`, `SPECIFIC_BILLING_CAUSE=UNVERIFIED`.
+- **이전 진단과 결속:** 실패 #44756245749의 `runner_id=0`, `steps=0`, billable 0ms, 성공 당시와 동일한 YAML blob. Python 코드·Workflow 버전의 결함으로 판정하지 않음. PRIVATE 대시보드 CI `BLOCKED`, 후속 PUBLIC 상태 sync `SKIP`. PUBLIC HTML/JS 지연 경고는 Pages 배포 PASS이나 원본 상태 JSON 최신화는 아님.
+- **비용·권한:** GitHub 개인 계정 결제·한도 정보/청구 상세 직접 조회 불가. 이번 문서·TRACKER 갱신만 처리, 임의 Actions 금액 상향·카드/미결제 처리·runner 우회·유료 리뷰·Watcher LIVE 설정·기존 REQUEST 변경 0.
+- **근거/복구 순서:** [Billing gate 원인 분류·해결 게이트](GITHUB_ACTIONS_BILLING_GATE_DIAGNOSIS_r0001_20261120_KST.md). 사용자가 개인 `Billing & plans`의 미결제 유무와 Actions `Budgets and alerts` hard-stop 여부 확인 → 필요 승인 범위만 조정 → 기존 CI PASS 1건 → 자동 allowlisted PUBLIC sync → 원격 `status.json`/Pages readback. 결제/정책 원인 해소 전 무의미한 rerun 금지.
+- **NEXT_ONE_ACTION:** GitHub 계정의 미결제 상태와 Actions 예산 도달 여부를 사용자가 확인. 전체 P1/P2 실제 Windows 자동 로딩은 별도 `NOT_RUN` 유지.
+
+---
+
+
 ## 2026-11-20 KST — PRIVATE Actions pre-run 실패 증거 확보 / PUBLIC 지연 표시 배포 완료
 
 - **현재 판정:** PRIVATE dashboard 원본 workflow YAML의 Git blob은 성공 #44720614237/실패 #44756245749 모두 `806576617650fb601acfaaea859a6d12aa8a989d`로 동일. 실패는 `runner_id=0`·실행 steps=0·billable 0ms·check annotation 1건인 **작업 시작 전 단계**, 오류 본문은 현재 GitHub connector로 접근 불가. `ACTIONS_ROOT_CAUSE=NOT_VERIFIED`, 코드 실패 주장 금지. Runner/billing/Actions 계정 경고 확인 전 재실행·YAML 변경 금지.
