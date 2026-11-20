@@ -1,5 +1,15 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-20 KST — GPT 판정: v0.2.29 독립 리뷰 진입 조건부 허용 / 자동 복구 별도 연결
+- **최신 GPT 판정:** [GPT_V029_RACE_ACCEPTANCE_CAS_RETRY_AND_REVIEW_GATE_DECISION_r0001_20261120_KST.md](GPT_V029_RACE_ACCEPTANCE_CAS_RETRY_AND_REVIEW_GATE_DECISION_r0001_20261120_KST.md) — 실제 ZIP 5회 v3 전체 pytest 1038 PASS/12 SKIP/0 FAIL(Windows 개발자 보고), 5창 동반 5/5 PASS. su_l1 31회 중 2회 간헐 FAIL·관측 직접 원인 미확정이지만 무잠금 앵커/Windows PermissionError 메커니즘·안전 불변식 주입 10/10을 근거로 **독립 리뷰 진입만 조건부 수용**. 원본 시험/과거 FAIL은 수정·삭제하지 않음. `SECURITY_RACE=CONDITIONAL_REVIEW_ONLY`.
+- **CAS 결정:** 기존 `cas_update(max_retries=3)`는 1 wave 최대 4 PUT 시도; `CasExhausted` stale SHA에 한해 동일 멱등 병합 caller 재호출 1회 허용(총 2 wave, 최대 8 시도). 최신 SHA·readback 필수, auth/무결성 오류·의미 충돌은 자동 재시도 0.
+- **리뷰 판정:** `TECHNICAL_READY_FOR_INDEPENDENT_REVIEW=YES` (고정 v0.2.29 SHA `c67bc342fe77547b000fc42e1b886396cbef035c0d265dbcd124947e267ed83f`). **실제 통합 STATIC USD3 운영 미적용**(LIVE v0.2.25, STATIC1.50/보호 위임 USD1)으로 `REVIEW_TRANSPORT=HOST_PREFLIGHT_REQUIRED`; 신규 정식 REQUEST/READY/모델 호출은 실제 호스트 유효 승인·policy preflight 전 0.
+- **writer 구현:** 기존 Work 산출물 mock 19 PASS/5라운드 5/5를 개발후보로 유지, 실제 Git API/스킬 재기준화/UNCERTAIN remote 근거 정산은 **같은 Work 별도 DEV 경로**로 통합·실제 안전 시험 진행. `processing_key` 정책 revision `|1` 고정 가정은 실환경 적용 전에 교정. watcher ZIP create-only 및 패키지 bytes 유지.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 실제 설치된 정책/유효한 승인·서명 범위를 읽기 전용 확인해 정확히 한 건 v0.2.29 독립 리뷰 운송 가능 여부를 확정하고, 동시에 기존 writer Git API read-only 연결·2 wave 재시도·동적 policy rev 보완을 DEV 경로에서 처리. 미승인 READY/유료 호출·LIVE/USD3 운영 변경 금지.
+
+---
+
+
 ## 2026-11-20 KST — v0.2.29 실제 ZIP 5회 v3 PASS / su_l1 원인 UNRESOLVED·메커니즘 재현 / 작성자 측 복구 도구 mock 검증
 
 - **결과:** `CLAUDE_V029_SU_L1_AND_FIVE_WINDOW_RECOVERY_RESULT_FOR_GPT_20261120.md` (PRIVATE main, commit `f937673e91dd`). ZIP `c67bc342…`(310753 B) **바이트 불변**.
