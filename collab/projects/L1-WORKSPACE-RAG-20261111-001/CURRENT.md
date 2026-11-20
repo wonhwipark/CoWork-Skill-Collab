@@ -1,5 +1,17 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+
+## 2026-11-21 KST — 저사양 LLM Module→Feature→Scenario·코드 MSC 라이선스/개발 후보 1건
+
+- **검토 결과:** [저사양 LLM/논문·OSS 라이선스/MSC 호환성 및 QA r0001](LOW_RESOURCE_LLM_RESEARCH_LICENSE_MSC_AND_CANDIDATE_QA_r0001_20261121_KST.md). Agentless의 단계적 탐색, LocAgent 좁은 관계 탐색, RepoAgent의 문서 갱신·Aider의 문맥 예산 등 *아이디어만* 독립 차용. 외부 코드 복사 0; CodeQL CLI의 비공개 코드 사용 상용 라이선스 위험으로 설치·호출 제외. 실제 RepoAgent의 C++ 지원을 가정하지 않음.
+- **GPT 직접 개발 후보:** 독립 Python `knowledge_analysis_preflight_v0_1_0_1121.zip` 15,379 bytes / SHA-256 `e307358cb9b6b9bfe0a8c3a1306ceca743ec09549e5ef53de5a879cc4e9ba865` / 10 files CRC·manifest PASS, 12개 합성 unittest PASS, 재빌드 바이트 동일 PASS. source revision·fact anchor/부재·문맥 길이 제한 및 false MSC PASS 방지. **실제 기존 스킬의 수정본 아님**. 외부 package ZIP은 사용자 대화 sandbox에 생성·제공 예정; `ZIP_REMOTE_POSTED=NO`.
+- **G0/배포 게이트:** 업무 설치 `l1-knowledge-updater` 원본/개인 writer, 기존 `code-analyzer` 반환 형식, `doc-converter` native scenario IR와 B형 HTML 호출 조건 미확인. `ACTUAL_UPDATER_SKILL_CHANGE=NOT_RUN`, `INDEPENDENT_REVIEW=NOT_RUN`, `HOST_LOW_SPEC_LLM_E2E=NOT_RUN`, `MSC_E2E=NOT_RUN`, `PUBLIC_SKILL_ZIP=BLOCKED_NOT_POSTED`. 원문 없이 업데이터 전체 교체나 공개 배포 금지.
+- **업무 GPT PUBLIC 후속 인계:** [실제 설치 3스킬 READ_ONLY G0 + 작은 NR L1 Tx Switching 사례 검증](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_KNOWLEDGE_UPDATER_LOW_RESOURCE_LLM_MSC_G0_AND_INTEGRATION_HANDOFF_r0001_20261121_KST.md). 문서 게시·원격 readback PASS, 업무 호스트 실행은 별개.
+- **NEXT_ONE_ACTION:** 업무 GPT/Linux Agent가 동일 Workspace/Knowledge Work에서 실제 설치 Updater/Analyzer/Converter에 READ_ONLY로 G0 계약을 확인해 REUSE/CONNECT/GAP과 MSC 실제 근거 1건을 반환. 유효한 게이트 뒤 실제 스킬 최소 수정·시험·최종 ZIP 배송 판정.
+
+---
+
+
 ## 2026-11-21 KST — Viewer v0.1.1 선행 개발 후보/테스트 25건·원본 anchor 16개 확인
 
 - **사용자 요청 대응:** 이미 전달된 UI v0.1.0에 직접 앞서 개발 가능한 기능을 만드는 것으로 판정. GPT가 실제 `work-labels.js`, 편집 요청 전용 비활성 UI, 고정 SHA/CRC 검증을 갖춘 v0.1.0 오프라인 패치 스크립트, Node/Python 테스트, 독립 합성 HTML을 작성.
