@@ -1,5 +1,16 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-20 KST — v0.2.29 독립 리뷰 R1 완료: BLOCKING 0 / MAJOR 0 / MINOR 3 / GPT 판정 대기
+
+- **결과:** `CLAUDE_V029_ONEOFF_R1_RESULT_FOR_GPT_20261120.md` (PRIVATE main, commit `3103a2fd3f3f`). ZIP `c67bc342…`(310753 B) 바이트 불변.
+- **실행:** `REQ-COWORK-V029-ONEOFF-R1-20261120`를 이 한 건에 한해 등록된 `-DESIGN` USD3 수동 경로로 정확히 1회 실행(게이트 `POLICY_COMPATIBLE_NOT_APPROVED`, 승인 점검 16/16, 서명·READY 마지막). 이전 UI 예외·`unified` 미사용. 호스트 비용 USD 0.5387501, 15턴, 모델 호출 1회. 영수증·디스패치·DB 처리키·SHA 일치, 중복 0.
+- **독립 리뷰:** BLOCKING 0, MAJOR 0. MINOR: 검사 순서 nit, 레지스트리 비용·위임 상한을 함께 올려야 한다는 운영 주의, 이전 MINOR 본문을 받지 못한 이월 확인 `NOT_RUN`. `su_l1`은 watcher가 import하지 않는 시험 한정 가용성 문제로 LIVE 설치 비차단(원시 예외 확보 전 연결 금지). 리뷰는 변경분 중심이며 변경 없는 모듈은 읽지 않음.
+- **저의 추가 확인:** 고정 바이트의 `docs/AUTO_APPROVAL.md` 29·74행에 더 이상 없는 일/월 상한 서술이 남음(문서 오류, 동작 영향 없음). 리뷰어는 지적하지 못함.
+- **변경 불가:** LIVE v0.2.25, 위임 USD1, 정책 가격, DB·키·Task·Notifier 불변. 설치·USD3 위임·통합 정책은 `NOT_AUTHORIZED`.
+- **NEXT_ONE_ACTION (GPT):** R1 판정(수용/조건부), 문서 오류를 ZIP 밖 정오표로 둘지 문서만 고친 v0.2.30 + 새 리뷰(추가 USD3 승인)로 갈지 결정. 이후 호스트 게이트는 별도.
+
+---
+
 ## 2026-11-20 KST — 사용자 지시 1~3단계 통합 원샷 / 설계 게시 / 호스트 실행 대기
 - **원샷 정본:** [GPT_APPROVAL_SIMPLIFICATION_V029_DESIGN3_REVIEW_ONESHOT_r0001_20261120_KST.md](GPT_APPROVAL_SIMPLIFICATION_V029_DESIGN3_REVIEW_ONESHOT_r0001_20261120_KST.md). 간소화 설계 확정(사용자 관점의 한 요청으로 합침) → v0.2.29 정확한 ZIP SHA `c67bc342fe77547b000fc42e1b886396cbef035c0d265dbcd124947e267ed83f` R1 **이번 한 건 한정** 기존 DESIGN USD3 수동 signer 경로의 유효 권한 검증 → 실제 허용될 때만 새 REQUEST/PIN/서명/READY·독립 리뷰 1회·영수증·GPT 판정용 결과 게시로 이어지는 Windows 실행 계약.
 - **이번 사용자 요청:** 앞서 설명한 1단계 간소화 설계·2단계 한정 DESIGN USD3 수동 승인 경로·3단계 독립 리뷰를 **1회 실행 지시로 묶음**. 별도 중간 확인 반복은 지양하지만 **호스트 공식 수동 승인/서명 자격이 불가하면 REQUEST/READY/모델 0**. 운영 policy=STATIC1.50/보호 위임 USD1을 우회·변경하지 않음.
