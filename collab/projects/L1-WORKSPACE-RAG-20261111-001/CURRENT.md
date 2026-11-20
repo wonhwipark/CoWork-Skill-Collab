@@ -1,5 +1,19 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-20 KST — Recovery 나머지 관리 스킬 개발 완료: Kernel 0.7.46 / Workflow 1.6.75
+
+- **최신 사용자 지시 수용:** “나머지 스킬은 작업 가능”을 접근 가능한 관리 코드의 개발·격리 시험 요청으로 적용. MCP 자료 제공 미지원 제약과 업무 GPT 설계 HO 우선 방침은 유지하며 사용자에게 설치본 자료를 다시 요청하지 않음.
+- **실제 구현:** Kernel 부가 Recovery 보고서 슬롯/원본 등록·SHA readback·동일 결과/동시 재시도·revision 충돌 검사, 읽기 CLI와 Work/전체 Recovery projection. Workflow는 기존 attach-evidence preview/apply에 생산자 연결·기존 로컬 writer/MCP read-only 차단을 재사용. 새 Work profile·기존 authority schema/FSM 변경 없음. l1-github/수집·분석기·converter 코드는 변경 불필요로 REUSE.
+- **고정 입력:** 기존 PRIVATE Kernel 0.7.43에서 기존 builder로 0.7.45를 byte-for-byte 재구성해 기존 개발 보호/MSC 변경 보존, Workflow PUBLIC 1.6.74 사용. source·문서·시험·metadata patch와 재생성 builder를 기존 Work dev에 보존.
+- **실제 시험:** 신규 **23 PASS**(Kernel 18·Workflow 5), 관련 합계 **100건=97 PASS/2 FAIL/1 ERROR**. 실패 3건은 원본 Kernel 0.7.45+Workflow 1.6.74에서도 동일 재현; 신규 회귀 0이며 전체 PASS로 승격하지 않음. 두 ZIP CRC/전집합 manifest/CLI 실제 버전/재현 빌드 PASS, 기존 파일 삭제 0·시험 source tree와 최종 ZIP bytes 일치.
+- **PRIVATE 원격 확인:** main commit `d6f7944771c3657a346f2cb96392c86c0a62a46d`에 후보 ZIP 2종·patch/build/test 근거·결과·HO 총 12파일 게시, 실제 원격 본문/base64 bytes·Git blob과 원본 SHA-256 대조 **PASS**.
+- **후보:** [Kernel 0.7.46](candidates/work-ledger-kernel_v0_7_46_1120.zip), 330715 B / SHA-256 `dabd412847354c77ca105da3ed686924f676f5f3c67428a2b984e68f2998076e`; [Workflow 1.6.75](candidates/l1-fix-workflow_v1_6_75_1120.zip), 753864 B / SHA-256 `d13259cd0c9359dee2cddcb1c622fce5d98b663f9bc6eaea48c8a1c3b46b9ce4`. 둘 다 `development_not_for_deployment`, 구버전 보존.
+- **판정·인계:** [개발 결과](GPT_RECOVERY_WORKSPACE_DEVELOPMENT_RESULT_r0001_20261120_KST.md), 9779 B / SHA-256 `871c7c805c3e3e383038e0e7562d9a582a0a55a6d21fd6b2caeabb3f2e5100e3`; [업무 GPT 구현 계약 HO](L1_RECOVERY_WORKSPACE_IMPLEMENTED_CONTRACT_HANDOFF_r0001_20261120_KST.md), 6515 B / SHA-256 `0c18989114531f4f21920e6c25f3c4b5b6c6a0249bbd9aeab0d86d023cb644b2`. 카탈로그는 버전/운영 상태 복제 없이 연결 책임만 보완.
+- **미실행·경계:** 신규 독립 코드 리뷰·업무 스킬 실제 출력 adapter·실제 Viewer/Updater/호스트 E2E·설치·PUBLIC 게시·Job·제품 recovery·그룹 지식 게시·새 유료 호출 **NOT_RUN**. 과거 설계 리뷰나 자체시험을 독립 코드 리뷰로 대체하지 않음.
+- **NEXT_ONE_ACTION:** 고정 후보/patch·기존 실패 비교 근거로 독립 코드 리뷰를 준비하고, 새 구현 계약 HO로 업무 GPT의 실제 생산자/조회·Updater 최소 연결 설계를 이어감. 사용자에게 MCP 자료를 다시 요구하거나 그 지원 추가를 개발/설계의 선행 조건으로 두지 않음.
+
+---
+
 ## 2026-11-20 KST — 사용자 확정: MCP 자료 제공 미지원, 업무 GPT 설계 요청 HO 우선
 
 - **사용자 확정 제약:** 현재 MCP가 이 확인 자료의 조회·제공을 지원하지 않아 사용자가 설치본/manifest/진단 결과를 제공할 수 없음(`USER_CONFIRMED`). 단순히 이 GPT의 도구 미노출 문제로만 해석하지 않음. 업무 호스트에 스킬이 없다는 의미도 아님.
