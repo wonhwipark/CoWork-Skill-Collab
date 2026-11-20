@@ -5,11 +5,11 @@
       "work_id": "L1-WORKSPACE-RAG-20261111-001",
       "skill": "l1-knowledge-updater",
       "title": "l1-knowledge-updater",
-      "phase": "VIEWER_TWO_PHASE_PUBLIC_HANDOFF_POSTED_LINUX_G0_PENDING",
-      "owner": "GPT PUBLIC L1Work 원샷 구현 인계 게시·README 색인·원격 SHA256 readback PASS; 실제 업무 Linux Viewer 개발/배포는 미실행",
+      "phase": "VIEWER_PREBUILD_V011_DEV_CANDIDATE_LINUX_G0_PENDING",
+      "owner": "GPT 선행 구현: Work label/test 18 PASS + patch mock 7 PASS + 원본 anchor 16 PASS, 대화 파일로 개발후보 ZIP·HTML 제공; GitHub PRIVATE 결과 MD 등록",
       "self_test": "PASS",
       "independent_review": "WIKI_UI_UX_R1_ACCEPT_WITH_CHANGE_CLOSED; VIEWER_AUTH_EDIT_DESIGN_R1_ACCEPT_WITH_CHANGE_CLOSED_B1_M2_N4",
-      "next_action": "업무 GPT가 L1Work/main/handoffs/L1_WORKSPACE_VIEWER_TWO_PHASE_IMPLEMENTATION_ONESHOT_HANDOFF_r0001_20261120_KST.md를 확인하고 기존 Viewer G0(이슈번호/title/인증/기존 writer)→허용된 개발/시험 수행. 실제 설치·동료 공유 별도 승인 게이트; PUBLIC 게시만으로 실행 완료 아님."
+      "next_action": "업무 GPT/Linux Agent: 이 대화의 v0.1.1 오프라인 patch ZIP + 기존 PUBLIC v0.1.0 결합·실제 Linux Viewer source/API/G0 대조·격리 개발/시험. 운영 설치·B1~B3/E3/E4·편집 활성화는 별도 게이트."
     }
   ]
 }
