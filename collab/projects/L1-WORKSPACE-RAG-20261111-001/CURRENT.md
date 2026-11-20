@@ -1,5 +1,15 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-20 KST — Viewer 편집 R1 독립 리뷰 완료·GPT 판정·r0002 보완
+
+- **리뷰:** `REQ-L1-WORKSPACE-VIEWER-EDIT-DESIGN-R1-20261120` rev1. 정식 REQUEST/SOURCE_PIN/APPROVAL_SIG/READY 및 dispatch, REVIEW_RESULT·RECEIPT 원격 검증. `execution_status=COMPLETED` / `RECEIPT_OK=true` / `ACCEPT_WITH_CHANGE`, **BLOCKING 1·MAJOR 2·MINOR 4**. 사용자 완료 알림 비용 USD0.29(원격 receipt에 비용 필드 없어 독립 검증 `NOT_VERIFIED`). 기존 다른 UX/Viewer 리뷰 재실행 0.
+- **GPT 판정:** [GPT_VIEWER_AUTH_EDIT_R1_DISPOSITION_r0001_20261120_KST.md](GPT_VIEWER_AUTH_EDIT_R1_DISPOSITION_r0001_20261120_KST.md) · `GPT_DISPOSITION=ACCEPT_WITH_CHANGE` / `REVIEW_CYCLE=CLOSED`. B-1 iframe click-to-select vs B3 격리 모순, M-1 인증/세션 hard stop, M-2 draft/diff/commit별 ACL 재검사 모두 수용. MINOR 4 수용/수정 수용. 실제 코드·Linux 서비스 시험은 미수행.
+- **수정 상세 설계:** [L1_WORKSPACE_VIEWER_AUTH_EDIT_DETAILED_DESIGN_r0002_20261120_KST.md](L1_WORKSPACE_VIEWER_AUTH_EDIT_DETAILED_DESIGN_r0002_20261120_KST.md) · 기존 r0001 불변. 서버 canonical anchor 목록 기반 부모 DOM 메시지/participant 수정 요청(iframe 직접 선택 미지원), 단계별 세션/CSRF/ACL 검증, 원본 revision 보호·충돌/복구·부정시험 T17~T19 보완. **첫 구현의 MSC 메시지·Participant 수정 요청은 유지**하되 구조적 정본 쓰기·Agent 자동 실행은 실제 G0 검증 뒤 활성화.
+- **현재 상태:** `DESIGN_R0002=POSTED`, `INDEPENDENT_R1=COMPLETED`; `R0002_INDEPENDENT_REVIEW=NOT_RUN`, `HOST_G0/AUTH/API/ANCHOR/WRITER=NOT_VERIFIED`, `B1/B2/B3=BLOCKING_NOT_VERIFIED`, `E3/E4=NOT_RUN`, `VIEWER_EDIT_IMPLEMENTATION/DEPLOYMENT/WORK_KNOWLEDGE_WRITE=NOT_RUN`. 추가 R2 유료 요청·PUBLIC 배포·호스트 설치/Job 실행 없음.
+- **NEXT_ONE_ACTION:** 업무 GPT/기존 Linux Agent가 실제 Viewer·Updater의 인증/권한·canonical MSC anchor·개인 초안/Work writer 계약을 **READ_ONLY G0** 대조하고 REUSE/CONNECT/입증된 GAP·보류를 판정. 현장 미접근 자료를 사용자에게 반출 요청하지 않음.
+
+---
+
 ## 2026-11-20 KST — Viewer 인증 기반 편집 상세 설계 r0001 · 독립 설계 R1 정식 요청/READY 확인
 
 - **사용자 최신 확정:** 기존 Viewer READ_ONLY 기본 유지. [수정] → ID/PW 재인증·문서별 edit ACL → 기존 위키 UI 우측 편집 패널. 이슈 본문·코멘트·MSC 설명 직접 편집, 메시지·participant 수정 요청과 필요한 Agent 코드 근거 검증, Diff/Preview 후 초안/개정본 선택. 직접 Knowledge 그룹 게시 불허.
