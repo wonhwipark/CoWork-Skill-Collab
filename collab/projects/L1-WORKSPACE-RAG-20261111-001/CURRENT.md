@@ -1,5 +1,15 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-20 KST — Viewer 무로그인 열람 보존·Work 제목 가독성 통일 설계 r0003
+
+- **사용자 실사용 피드백:** 최초 Viewer에서 ID/PW 입력이 반복 실패하여, 업무망 동료들이 로그인 없이 Read Only 열람하도록 사용자가 인증 제거를 요청한 이력 확인(사용자 보고). 이번 구현은 **Viewer 최초 접근/조회 로그인 복구 금지**, 사용자가 [수정]을 클릭할 때만 **편집 전용 ID/PW** 및 서버 편집 권한 검증. 실제 Linux 인증 코드/과거 실패 원인은 미접근.
+- **신규 UI 요구:** `l1-workspace/works/`의 이슈 분석 Work ID가 네이밍이 제각각으로 보이는 문제. Work ID·물리 폴더·원본 링크·Evidence SHA는 **불변**, Viewer 목록에서 근거 있는 issue title/Work summary를 **기본 표시 제목**, ID는 보조 정보로 노출. 출처 부재 시 원래 Work ID 표시. 검색/상세 화면/경로/권한/긴 제목·동명이름 회귀 확인. 실제 Work title/metadata API 제공 여부 미확인.
+- **보완 설계:** [L1_WORKSPACE_VIEWER_AUTH_EDIT_DETAILED_DESIGN_r0003_20261120_KST.md](L1_WORKSPACE_VIEWER_AUTH_EDIT_DETAILED_DESIGN_r0003_20261120_KST.md), PRIVATE main commit `1072a0324be4e71ed0e9328c0d369b62b4d88143`, 원격 본문 readback PASS. 이전 r0002·정식 독립 R1 판정/결과/영수증 불변. **r0003은 사용자 피드백 반영본이며 추가 독립 리뷰 NOT_RUN.**
+- **실제 실행 상태:** DESIGN_ONLY. 기존 Viewer 설치본/인증/Work 목록 실제 소스·UI 구현·회귀·호스트 E3/E4·B1~B3 확인 NOT_RUN. 신규 유료 리뷰·REQUEST/READY·패키징·업무 Work/Knowledge 수정·PUBLIC 전달 없음.
+- **NEXT_ONE_ACTION:** 업무 GPT/접근 가능한 Linux Agent가 기존 Viewer Work 목록 title/summary/ID 출처와 인증 제거 이력을 **읽기 전용 G0**로 기존 Viewer·writer 계약 대조에 함께 포함하고 REUSE/CONNECT/검증된 최소 gap 판정. 동료 무로그인 조회·기존 Work ID 불변 원칙 유지.
+
+---
+
 ## 2026-11-20 KST — Viewer 편집 R1 독립 리뷰 완료·GPT 판정·r0002 보완
 
 - **리뷰:** `REQ-L1-WORKSPACE-VIEWER-EDIT-DESIGN-R1-20261120` rev1. 정식 REQUEST/SOURCE_PIN/APPROVAL_SIG/READY 및 dispatch, REVIEW_RESULT·RECEIPT 원격 검증. `execution_status=COMPLETED` / `RECEIPT_OK=true` / `ACCEPT_WITH_CHANGE`, **BLOCKING 1·MAJOR 2·MINOR 4**. 사용자 완료 알림 비용 USD0.29(원격 receipt에 비용 필드 없어 독립 검증 `NOT_VERIFIED`). 기존 다른 UX/Viewer 리뷰 재실행 0.
