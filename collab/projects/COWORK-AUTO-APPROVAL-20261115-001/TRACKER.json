@@ -5,11 +5,11 @@
       "work_id": "COWORK-AUTO-APPROVAL-20261115-001",
       "skill": "cowork-review-watcher",
       "title": "GPT→GitHub REQUEST 자동 서명·READY (제한된 사전 위임)",
-      "phase": "DISPOSITION",
-      "owner": "Windows Claude Code executes existing v0.2.29 USD3 prelive one-shot; after all PASS auto-create non-executable LIVE request, no host LIVE operation without valid authority",
+      "phase": "LIVE_CUTOVER_USER_APPROVED_WINDOWS_EXECUTION_PENDING",
+      "owner": "User approved v0.2.29 LIVE and USD3 protected delegation; Windows Claude Code is bounded deployment/verification operator; GPT to verify real host receipt and decide",
       "self_test": "Windows dev actual v0.2.29 5 rounds 1038 passed/12 skipped/0 failed each; 5-window READY and CLI stub 5/5, no duplicate. Prior su_l1 flaky 2/~31, cause unconfirmed, injected fail-closed invariants 10/10. Writer mock 19 passed + 5 rounds 5/5; real repo/DB NOT_RUN.",
       "independent_review": "REQ-COWORK-V029-ONEOFF-R1-20261120 COMPLETED BLOCKING0 MAJOR0 MINOR3, GPT ACCEPT_WITH_CONDITIONS; USD3 prelive gate PASS on staged/rehearsal basis; LIVE_EXECUTION_REQUEST POSTED_CONDITIONAL; LIVE_EXECUTION and LIVE_ENABLE NOT_RUN; no new review, no new model call",
-      "next_action": "2026-11-20 20:07 KST user chose 'backup bundle only' for LIVE_ENABLE_EXECUTION_REQUEST_V029: verified backup bundle of LIVE v0.2.25 created at D:\\User\\whpark\\skill-collab-watcher-dist\\backup_v0_2_25_install_20261120_200712 (117 files, manifest sha256 d23b5206…, install tree f691bcf8… == live, DB snapshot integrity ok, no private key). LIVE unchanged: watcher still Running v0.2.25, config/delegation/tasks/DB identical, USD1 delegation, no install, no restart. Result CLAUDE_V029_LIVE_BACKUP_BUNDLE_RESULT_FOR_GPT_20261120.md (commit 6689b907fd43). Remaining checklist: rollback owner, operating approval, protected-file edit approval, label release record. NEXT: user approves the full cutover separately; re-check install tree SHA f691bcf8 immediately before."
+      "next_action": "User explicitly approved full LIVE v0.2.29 + STATIC USD3 / protected delegation USD3 + new enabled_at (2026-11-20). Execute existing GPT_V029_LIVE_CUTOVER_AUTHORIZED_ONESHOT_r0001_20261120_KST.md at PRIVATE main: ensure local trusted Windows authority, v0.2.29 exact ZIP c67bc342fe77547b000fc42e1b886396cbef035c0d265dbcd124947e267ed83f, verified existing 117-file backup/ACL, unchanged prior v0.2.25 f691bcf8..., Guard/legacy zero replay, Windows old venv preservation, atomic three-field alignment while watcher stopped, post-start 2 cycles+restart, safe rollback if blocked, result CLAUDE_V029_LIVE_CUTOVER_RESULT_FOR_GPT_20261120.md and current/tracker remote readback. Do NOT claim LIVE ENABLE until host measured. No new reviewer/model calls/REQUEST/READY or keys."
     }
   ]
 }
