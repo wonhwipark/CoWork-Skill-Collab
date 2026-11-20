@@ -1,5 +1,17 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-20 KST — v0.2.29 LIVE 컷오버 완료: STATIC USD3 + 위임 USD3 + 신규 enabled_at 적용 / 유료 E2E 미관측
+
+- **결과:** `CLAUDE_V029_LIVE_CUTOVER_RESULT_FOR_GPT_20261120.md` (PRIVATE main, commit `a3b5ed120be0`). 운영 watcher **v0.2.29 가동 중**(21:04 KST 재가동), 등록 `POLICY-STATIC-V1` 3.00, 보호 위임 `max_request_usd` 3.0, **`enabled_at` 2026-11-20T21:03:18+09:00**. 범위·만료(2026-12-16)·repo_id·신뢰 루트·키·작업 불변.
+- **검증:** 설치 바이트 = 고정 ZIP(SHA `c67bc342…`), 정합된 설정·위임 동시 로드(300센트), 통합 USD3 게이트 PASS, 분리 DB SHADOW 18건 PASS, 시작 후 2주기·재시작·재시작 후 2주기 이상 0, 독립 최종 검증 `FINAL_LIVE_STATE_OK=true`.
+- **구 요청:** 18건 분류 불변(STATIC·이력 없음 0), 컷오버 이후 서명·READY·디스패치·claim·비용 이벤트 0, 새 모델 호출 0, jobs 9 COMPLETED·claims 3·lease github 불변.
+- **기록:** 5번째 시도에서 성공. 시도 1~4는 제 검증 코드의 오탐(출력 절단, 튜플/리스트 비교, 기존 만료 승인 쌍, 일시적 네트워크 오류)으로 자동 롤백됐고 모두 바이트로 복원 검증됨. 규칙은 과거 감사 이벤트 26종·네트워크 오류 44건으로 시험해 수정.
+- **미검증:** `LIVE_PAID_E2E=NOT_RUN`(새 외부 요청 없음). 이제 범위 안의 STATIC 요청은 요청당 최대 USD 3까지 자동 실행됨.
+- **롤백 원본:** `D:\User\whpark\skill-collab-watcher-dist\backup_v0_2_25_cutover_20261120_210313`(DB는 유료 job이 없을 때만 복원). `D:\User\whpark\skill-collab-watcher`(.venv) 이동·삭제 금지.
+- **NEXT_ONE_ACTION:** 첫 실제 STATIC 요청이 도착하면 영수증·비용·READY 순서·중복 0을 기록해 `LIVE_PAID_E2E`를 판정.
+
+---
+
 ## 2026-11-20 KST — 사용자 v0.2.29 LIVE/USD3 운영 컷오버 명시 승인 / Windows 실제 실행 대기
 - **최신 사용자 승인:** "v0.2.29 LIVE 전환 및 통합 USD3 자동 승인 활성화 조치에 대해 처리 진행할까요?" → 사용자 "그래". 이전 "백업 번들만"은 그 당시 범위였으며, **이번 지시로 정확한 고정 v0.2.29 LIVE 설치·기존 보호 정책 STATIC USD3/위임 USD3/새 enabled_at 적용·재가동·검증·필요 시 롤백** 승인. 별도 모델 호출/재리뷰·PUBLIC 업로드·새 키/만료 연장 0.
 - **정식 Windows 실행 원샷:** [GPT_V029_LIVE_CUTOVER_AUTHORIZED_ONESHOT_r0001_20261120_KST.md](./GPT_V029_LIVE_CUTOVER_AUTHORIZED_ONESHOT_r0001_20261120_KST.md) (PRIVATE main) — 기존 [LIVE 실행 요청서](LIVE_ENABLE_EXECUTION_REQUEST_V029_20261120_KST.md)와 백업 결과를 재사용하고 원격 작업/설정/ZIP/백업 SHA·서명 자격·실제 권한·legacy Guard 정산을 실시 시점에 재검증. 롤백 최종 책임 사용자, Windows Claude Code 실무 실행·검증 및 안전 복구 담당. `development_not_for_deployment` 라벨은 승인된 정확한 ZIP에 대한 운영 전환 결정을 외부 정본에 기록하되 **실제 설치 성공 전에 완료라고 표기하지 않음**.
