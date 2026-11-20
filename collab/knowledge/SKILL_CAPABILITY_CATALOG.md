@@ -1,6 +1,6 @@
 # CoWork 공통 스킬 기능 목록
 
-- 개정: r0008 / 2026-11-15 KST (책임·입출력·연결 지도와 실행 상태 분리; 패키지 재감사 아님)
+- 개정: r0009 / 2026-11-20 KST (Recovery 부가 보고서의 저장·읽기 연결 책임 추가; 설치 상태·패키지 재감사와 분리)
 - 새 창은 [공통 맥락 브리프](../CONTEXT_BRIEF.md) → 해당 CURRENT를 먼저 읽고 필요한 상세 기능을 이 목록에서 확인.
 - 대상: 사용자 확인한 관리 스킬 18개 + 별도 업무용 연동 스킬 1개. 전체 보유 스킬의 완전성·최신 설치 버전을 뜻하지 않음.
 - [이번 패키지 정적 확인·SHA-256·원본 위치](../projects/COWORK-SKILL-DISCOVERY-20261112-001/SKILL_18_PACKAGE_AUDIT_20261112.md) · [최신 상태](../projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md) · [시작·재사용 절차](../ops/CONTRACTS/SKILL_DISCOVERY_AND_REUSE_V1.md)
@@ -31,6 +31,13 @@
 | 19 | `l1-knowledge-updater` / 지식 Updater | Procedure/Feature 직접 분석 요청 또는 기존 Workflow Work → 개인 Workspace의 분석·초안·근거 보존 + 검증 지식의 그룹 공용 `l1sw-dev-knowledge` 반영 후보 | 기존 analyzer·converter·Workflow/Kernel의 Work 기록·기존 게시 경로 | 두 진입 모두 같은 Work 저장·갱신이 설계 요구. Updater 자체도 Workspace 갱신 주체이며 전체 Workflow 실행 의무 없음. 공통 Kernel/기존 writer·실제 저장/readback은 설치 계약과 L1 CURRENT에서 확인 |
 
 지식 연결 설계: [두 진입·개인 Workspace 보존·그룹 반영 r0002](../projects/L1-WORKSPACE-RAG-20261111-001/L1_WORK_TO_KNOWLEDGE_FLOW_r0002_20261115_KST.md). 그룹 공용 스킬과 그 관리 지식의 실제 저장 위치를 구분하며 동명 GitHub.com 저장소로 추정하지 않음.
+
+## Recovery 분석 결과의 연결 책임
+
+- l1-channel-recovery는 업무 환경의 분석 생산자이며, 이 목록에서 설치 원문을 검증한 관리 스킬로 추가한 것은 아니에요.
+- Kernel은 같은 Work의 부가 보고서 원본·Evidence와 그에 따른 읽기 projection을 소유하고, Workflow는 기존 attach-evidence 연결을 사용해요. 부가 보고서 저장은 lifecycle의 기술 분석/제품 검증 성공을 대신하지 않아요.
+- 개인 Knowledge의 Recovery 분류·재사용 지식 연결은 Updater 책임이며, Git 게시와 Viewer 표현은 기존 허용 경로를 재사용해요.
+- [관리 스킬의 구현 계약·입력 pin·시험·한계](../projects/L1-WORKSPACE-RAG-20261111-001/GPT_RECOVERY_WORKSPACE_DEVELOPMENT_RESULT_r0001_20261120_KST.md)를 확인해요. 개발 후보·설치/호출·독립 리뷰·전달 상태는 [관련 CURRENT](../projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md)에서 구분하며 여기에서 설치 지원을 확정하지 않아요.
 
 ## 실제 운영 경로와 스킬의 역할 매핑 — 사용자 보고, 호스트 영수증 미검증
 
