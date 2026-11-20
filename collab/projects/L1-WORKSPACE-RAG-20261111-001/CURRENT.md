@@ -1,5 +1,18 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-21 KST — 순서 정정: 설계 GPT 구현·협업 독립 리뷰→PUBLIC 패키지→업무 GPT Updater 통합
+
+- **최신 사용자 결정:** 이전 '업무 GPT에 Updater 수정 요구서 선전달'을 **수정 수용/실행 보류(HOLD)**. 설계 GPT가 먼저 독립 `knowledge_analysis_preflight` 기능 구현 및 자체시험 → Windows Claude Code 독립 리뷰 → GPT 최종 판정 → 안전 게이트를 통과한 **최종 ZIP만** PUBLIC `wonhwipark/L1Work/main` 루트에 게시·원격 확인 → 그 정확한 배포 버전/입출력 계약을 포함한 신규 r0002 핸드오프로 업무 GPT에게 `l1-knowledge-updater` 기존 기능 REUSE/CONNECT/최소 EXTEND 구현 요청. Viewer/MCP는 이 선행 흐름에서 제외.
+- **직접 개발:** `knowledge_analysis_preflight_v0_2_0_1121.zip`: Python stdlib, `preflight.py` bounded evidence + anchor/소스 revision 검사, 신규 `hierarchy.py` Module→Feature→Scenario·Procedure fact 연결 검증. 합성 38/38 PASS, 구문 PASS, 재현 ZIP·CRC/manifest/file SHA/PATH PASS; 16138 B / SHA-256 `90a0d55842138d4c813f0dbc3a5c8e4625e84a110afe68035348297ffedad1f3`. **실제 C++ 분석/LLM/MSC/Workspace writer NOT_RUN**. 독립 설치 버전이 아닌 중간 컴포넌트. 외부 코드 복사 0. `development_not_for_deployment` 유지.
+- **PRIVATE R1 후보**: `collab/packages/knowledge_analysis_preflight_v0_2_0_1121_REVIEW_INPUT.zip`, commit `84abde50d7c960ca5ec065b392f8aece84bde85d`, Git blob `bbacdcfd33860060552ef5928be0f37b6b436cdb`, remote base64 byte equality PASS. [구현 QA와 리뷰 결과 기록](KNOWLEDGE_ANALYSIS_PREFLIGHT_V020_IMPLEMENTATION_AND_REVIEW_R1_r0001_20261121_KST.md).
+- **정식 독립 리뷰 R1 제출**: [REQUEST](../../requests/REQ-L1-KNOWLEDGE-PREFLIGHT-V020-R1-20261121/REQUEST.md) / [SOURCE_PIN](../../requests/REQ-L1-KNOWLEDGE-PREFLIGHT-V020-R1-20261121/SOURCE_PIN.json). pin commit `84abde50...`, repo_id 문자열 `1451933830`. REQUEST/PIN commit `1a49b3cf61e4863a209b202f41531b14d8ab8031`. **APPROVAL_SIG/READY/실제 Claude 리뷰/영수증 미관측**, 추가 유료 호출·서명·READY를 GPT가 직접 생성하지 않음.
+- **PUBLIC 수정:** [기존 Updater 선요청 r0001](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_KNOWLEDGE_UPDATER_NR_UL_TX_SWITCHING_MODIFICATION_REQUIREMENTS_r0001_20261121_KST.md) 최상단에 `HOLD` 및 최신 선후관계를 게시·원격 readback PASS. 신규 r0002는 **최종 ZIP이 PUBLIC에서 확인된 후에만 발행**.
+- **상태:** `IMPLEMENTATION_SYNTHETIC_QA=PASS`, `PRIVATE_REVIEW_PACKAGE=PASS_REMOTE_BYTES`, `R1_REQUEST=SUBMITTED_REMOTE`, `INDEPENDENT_REVIEW=PENDING_NOT_CONFIRMED`, `PUBLIC_FINAL_ZIP=BLOCKED_PENDING_REVIEW`, `BUSINESS_GPT_UPDATER_INTEGRATION=HOLD`, `HOST_E2E=NOT_RUN`.
+- **NEXT_ONE_ACTION:** 승인된 Windows signer/watcher가 신규 R1 고정 패키지의 정책·SOURCE_PIN·SHA·비용/승인 범위를 검증, 적격일 때만 READY 마지막 게시·Claude 독립 리뷰 1회; 결과/영수증 수신 후 GPT 배포 판정 및 최종 ZIP 전달→r0002 업무 GPT 인계.
+
+---
+
+
 ## 2026-11-21 KST — 사용자 지시: 업무 GPT에 Updater 구체 수정 요구 전달 (Viewer/MCP 연결 전에)
 
 - **최신 요구:** 이 GPT는 업무 Linux의 실제 `l1-knowledge-updater` 설치 원본에 접근 불가하므로, Updater의 분류·저사양 분석·MSC 생성의 구체 수정 요구를 업무 GPT에 전달하고 **현장 G0 + REUSE/CONNECT/증명된 최소 변경 + 자체시험**을 같은 연속 작업으로 수행. 첫 G0 보고만 받고 멈추지 않도록 지시. 기존 `NR L1 Tx → UL Tx Switching` 단일 수락 사례·Work를 그대로 재사용.
