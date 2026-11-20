@@ -1,5 +1,16 @@
 # COWORK-GITHUB-DASHBOARD-20261111-001 — CURRENT
 
+## 2026-11-20 KST — D안 가로 타임라인 적용 / PUBLIC main readback PASS
+
+- **사용자 확정 범위:** 기존 대시보드의 협업 전체만 D안의 세로 항목별 진행을 **가로 1행/업무**로 전환. 진행 스킬·운영 3건과 설계·대시보드 2건을 한 화면에 표시. 업무 L1 Workspace 전체 대시보드는 이번 범위에서 제외.
+- **PUBLIC 게시:** `L1Work/main/docs/cowork-dashboard/board.js` commit `03eb9ced1b0d7faf77285b8b10f2c9af980d674e` 및 `index.html` commit `e92aec4529e13e0174379d33f8f2173692725480`, 전체 원격 readback PASS. 신규 CSS/JS는 기존 HTML·JS 두 파일만 보완. 전용 exporter/STATUS 데이터 필드/추가 PUBLIC 업무·리뷰 ID 공개 없음.
+- **검증:** JS 구문/공개 allowlist·schema/합성 DOM 5행·2그룹·25단계 셀/기존 탭3/모바일 가로 스크롤 CSS/기본 보드·표 유지/미검증 단계 PASS 오인 방지 등 9개 불변식 PASS. 실제 브라우저/Pages 새 배포 run·served HTTP 확인 `NOT_RUN/NOT_VERIFIED`; 새 독립 리뷰 `NOT_RUN`.
+- **근거:** [변경 결과·SHA-256·시험](D_HORIZONTAL_TIMELINE_PUBLIC_UI_DEPLOY_RESULT_r0001_20261120_KST.md). 현 상태는 `PUBLIC_SOURCE_POSTED_READBACK=PASS`, `PAGES_BUILD_AND_RENDER=NOT_VERIFIED`. 상태 JSON 내 옛 운영 표현은 이번 UI 작업으로 교정하지 않음.
+- **NEXT_ONE_ACTION:** 새 커밋의 GitHub Pages Actions 성공 및 PC/모바일 실제 표시를 확인. 사용자 추가 지시 없이는 별도 업무 대시보드·새 Work·공개 데이터 확대·신규 유료 리뷰·운영 실행 없음.
+
+---
+
+
 ## 2026-11-20 KST — P1/P2 공개 B안 빠른 상황 요약·관계·변경분 적용 (사용자 독립 리뷰 생략)
 
 - **요청 범위:** 현재 구조 빠른 파악 P1과 관계/변경분 P2를 기존 B안에 최소 연결. 사용자는 이번 두 기능의 독립 리뷰 생략을 명시. 기존 다른 코드 리뷰/Watcher 승인에 적용하지 않음.
