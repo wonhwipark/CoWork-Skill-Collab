@@ -1,0 +1,20 @@
+{"case": "aligned_new_request", "status": "READY_POSTED", "reserved_cents": 300, "signer_calls": 1}
+{"case": "registry_before_cap", "first": "PER_REQUEST_COST", "second_after_cap_raise": "POLICY_STOPPED", "signer_calls": 0}
+{"case": "cutover_with_new_enabled_at", "statuses": {"OLD-A-STATIC-NO-HISTORY": "RETROACTIVE_OR_FUTURE_REQUEST", "OLD-B-DESIGN-NO-HISTORY": "RETROACTIVE_OR_FUTURE_REQUEST", "OLD-C-SEEN-DISABLED": "PRE_EXISTING_REQUEST", "OLD-D-COMPLETED": "READY_POSTED", "OLD-E-UNCERTAIN": "UNCERTAIN"}, "signer_calls_delta_old": 0, "put_delta_old": 0, "runner_calls": 0, "new_request_after_cutover": "READY_POSTED"}
+{"case": "cutover_without_new_enabled_at", "statuses": {"OLD-A-STATIC-NO-HISTORY": "READY_POSTED", "OLD-B-DESIGN-NO-HISTORY": "REVIEW_POLICY", "OLD-C-SEEN-DISABLED": "PRE_EXISTING_REQUEST", "OLD-D-COMPLETED": "READY_POSTED", "OLD-E-UNCERTAIN": "UNCERTAIN"}}
+{"case": "fail_closed", "name": "expired_delegation", "status": "DELEGATION_EXPIRED", "signer_calls": 0}
+{"case": "fail_closed", "name": "delegation_for_another_repo", "status": "PIN_MISMATCH", "signer_calls": 0}
+{"case": "fail_closed", "name": "skill_not_allowed", "status": "SCOPE", "signer_calls": 0}
+{"case": "fail_closed", "name": "project_not_allowed", "status": "PROJECT_NOT_IN_SCOPE", "signer_calls": 0}
+{"case": "fail_closed", "name": "delegation_disabled", "status": "DISABLED", "signer_calls": 0}
+{"case": "fail_closed", "name": "legacy_design_tier", "status": "REVIEW_POLICY", "signer_calls": 0}
+{"case": "fail_closed", "name": "legacy_large_tier", "status": "REVIEW_POLICY", "signer_calls": 0}
+{"case": "fail_closed", "name": "numeric_repo_id_in_pin", "status": "PIN_MISMATCH", "signer_calls": 0}
+{"case": "fail_closed", "name": "package_sha_mismatch", "status": "PACKAGE_INVALID", "signer_calls": 0}
+{"case": "fail_closed", "name": "package_size_mismatch", "status": "PACKAGE_INVALID", "signer_calls": 0}
+{"case": "fail_closed", "name": "pin_missing", "status": "PIN_MISSING", "signer_calls": 0}
+{"case": "missing_signer", "status": "INPUT_OR_TRUST"}
+{"case": "five_windows_staged_usd3", "first": ["READY_POSTED", "READY_POSTED", "READY_POSTED", "READY_POSTED", "READY_POSTED"], "repeat": ["READY_POSTED", "READY_POSTED", "READY_POSTED", "READY_POSTED", "READY_POSTED"], "signer_calls": 5, "extra_puts_on_repeat": 0, "legacy_design_status": "REVIEW_POLICY"}
+{"case": "cli_after_cutover_two_cycles", "model_calls": 0, "old_ready": 0, "approvals": 0}
+{"case": "cli_new_request_then_restart", "model_calls": 1, "approvals": 1, "readys": 1}
+{"case": "cli_second_request_and_legacy_design", "model_calls": 2, "approvals": 2, "readys": 2, "old_a_ready": false, "old_b_ready": false, "legacy_design_ready": false}
