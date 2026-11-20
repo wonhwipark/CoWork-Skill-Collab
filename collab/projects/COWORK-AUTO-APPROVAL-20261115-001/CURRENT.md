@@ -1,5 +1,16 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-20 KST — USD3 사전검증 PASS(격리·리허설 기준) / LIVE 실행 요청서 조건부 게시 / LIVE 변경 0
+
+- **결과:** `CLAUDE_V029_USD3_PRELIVE_READINESS_RESULT_FOR_GPT_20261120.md` (commit `6150380e002e`), 비실행 LIVE 실행 요청서 `LIVE_ENABLE_EXECUTION_REQUEST_V029_20261120_KST.md` (commit `27059aba4e6d`). 상태 `HOST_PRELIVE_GATE=PASS`, `LIVE_EXECUTION_REQUEST=POSTED_CONDITIONAL`, **`LIVE_EXECUTION=NOT_RUN`, `LIVE_ENABLE=NOT_RUN`**.
+- **실측(읽기 전용):** 설치 트리는 v0.2.25 패키지와 104개 파일 모두 동일, 단일 provider(github), DB 일관 스냅샷 `integrity_check=ok`, 실제 요청 18건 분류에서 "STATIC·이력 없음·활성 중 관측" 0건.
+- **격리 시험:** 등록 3.0 + 위임 3.0 정합 시 신규 요청 READY, 등록만 먼저 올리면 영구 제외, 신규 `enabled_at`을 적용하면 구 요청 5종 모두 차단. **`enabled_at`을 갱신하지 않고 상한만 올리면 이력 없는 STATIC 구 요청이 자동 승인됨 → 갱신은 필수.** 백업·롤백 리허설(운영과 분리) PASS, 실제 CLI 2주기+재시작 리허설 PASS.
+- **운영 변경 0:** 설치 트리·설정·위임·작업·DB가 측정 전후 동일. 신규 리뷰·REQUEST/READY·서명·실제 모델 호출 0.
+- **주의:** 컷오버 도구는 없고 운영자 승인 수동 절차. 운영 작업이 옛 `skill-collab-watcher\.venv`를 사용하므로 그 폴더를 이동·삭제하면 안 됨. 설정 파일과 설치 폴더에 `Authenticated Users:(M)` 상속 권한이 있음(비차단 관찰).
+- **NEXT_ONE_ACTION (사용자):** 실제 LIVE 운영 변경(재가동 포함) 승인 여부 결정. 승인 시 실행 요청서 §5 체크리스트(백업 위치 지정, 롤백 책임자, 보호 파일 수정 승인, 라벨 해제 기록)를 실행 시점에 다시 확인.
+
+---
+
 ## 2026-11-20 KST — 사전검증 PASS 시 LIVE 실행 요청서까지 동일 원샷에서 자동 게시
 - **최신 사용자 지시 반영:** [GPT_V029_REVIEW_ACCEPT_AND_USD3_PRELIVE_STAGING_ONESHOT_r0001_20261120_KST.md](./GPT_V029_REVIEW_ACCEPT_AND_USD3_PRELIVE_STAGING_ONESHOT_r0001_20261120_KST.md) §5에 **모든 `HOST_PRELIVE_GATE` + USD3 staging/소급 제외·SHADOW·보호 ACL·백업·롤백이 PASS이면** Windows Claude Code가 같은 Work에 비실행 `LIVE_ENABLE_EXECUTION_REQUEST_V029_20261120_KST.md`를 **CREATE-ONLY 자동 게시**, CURRENT/TRACKER readback·하나의 통합 보고까지 처리하도록 추가. 사용자 중간 실행 지시 반복 없음.
 - **중단선:** FAIL/BLOCKED/PARTIAL/NOT_RUN가 있으면 `LIVE_EXECUTION_REQUEST=NOT_POSTED`, 이유 1건으로 정리. `collab/requests/` 승인/READY 실행 트리거 게시 금지, 유료 재리뷰 0. 요청서 게시 자체는 **LIVE 운영 설치·정지·정책/보호 위임 변경 승인 아님**; 실제 LIVE 권한은 기존 유효 운영 승인 확인 또는 별도 승인 후 다음 실행.
