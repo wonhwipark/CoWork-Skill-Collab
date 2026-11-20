@@ -5,11 +5,11 @@
       "work_id": "COWORK-AUTO-APPROVAL-20261115-001",
       "skill": "cowork-review-watcher",
       "title": "GPT→GitHub REQUEST 자동 서명·READY (제한된 사전 위임)",
-      "phase": "REVIEW_TECHNICAL_READY_HOST_POLICY_PREFLIGHT_PENDING",
+      "phase": "BLOCKED",
       "owner": "GPT review-scope disposition complete; Windows Claude Code read-only host policy preflight and separate Git writer integration",
       "self_test": "Windows dev actual v0.2.29 5 rounds 1038 passed/12 skipped/0 failed each; 5-window READY and CLI stub 5/5, no duplicate. Prior su_l1 flaky 2/~31, cause unconfirmed, injected fail-closed invariants 10/10. Writer mock 19 passed + 5 rounds 5/5; real repo/DB NOT_RUN.",
-      "independent_review": "V029_TECHNICAL_READY_WITH_SU_L1_EXCEPTION; REVIEW_NOT_RUN_PENDING_VALID_HOST_POLICY_SIGNING_CAP_USD3",
-      "next_action": "GPT_V029_RACE_ACCEPTANCE_CAS_RETRY_AND_REVIEW_GATE_DECISION_r0001_20261120_KST.md: GPT SECURITY_RACE conditional for independent review only; CAS two waves max4 attempts each for stale SHA conflict; writer Git CAS/rebase/UNCERTAIN remote proof separate DEV lane. Windows READ-ONLY actual installed policy/approval/signature preflight for a single pinned v0.2.29 new review under max USD3/1 call; unified STATIC3 not operational in LIVE v0.2.25 cap USD1, so do not publish REQUEST/READY unless actual valid policy/scope/signature proven. Separate read-only writer adapter and dynamic policy revision; no LIVE change."
+      "independent_review": "V029_TECHNICAL_READY_WITH_SU_L1_EXCEPTION; REVIEW_NOT_RUN_BLOCKED_HOST_POLICY",
+      "next_action": "2026-11-20 host preflight for a new v0.2.29 independent review (ZIP c67bc342 unchanged): gate select --intent unified --required-budget-usd 3.00 -> POLICY_COST_MISMATCH (STATIC USD 1.50, delegation USD 1.0). REVIEW_TRANSPORT=BLOCKED_HOST_POLICY, REQUEST NOT_POSTED, model calls 0; no unregistered unified policy and no past UI DESIGN exception used. Other preflight items PASS (scope, repo_id string, protected delegation loadable with Windows ACL, signer material present); USD3 signing authority NOT_VERIFIED. Circular: safe USD3 policy needs v0.2.29, installing v0.2.29 needs the review. Writer lane v2 (mock): two-wave caller rule, readback tolerance, strict tracker merge, policy-revision-agnostic read-only UNCERTAIN reconcile; unit 21 passed, 20/20 simulated rounds, wave-2 12/100, POST_CONFLICT_PENDING 0. Real GitHub GET sha check PASS; real CAS write, real skill repo rebase, real host DB reconcile NOT_RUN. Result CLAUDE_V029_HOST_PREFLIGHT_AND_WRITER_V2_RESULT_FOR_GPT_20261120.md (commit 2927891561e8). NEXT: user/GPT chooses entry path (a) explicit one-review DESIGN USD3 manual approval or (b) unified USD3 policy plus delegation USD3 with enabled_at refresh; designate non-sensitive test path and skill worktree if real writer tests are wanted."
     }
   ]
 }
