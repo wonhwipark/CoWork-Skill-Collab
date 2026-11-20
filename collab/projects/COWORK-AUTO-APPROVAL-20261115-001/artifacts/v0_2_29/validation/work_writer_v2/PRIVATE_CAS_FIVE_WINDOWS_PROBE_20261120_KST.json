@@ -7,6 +7,10 @@
     {
       "id": "DESIGN-A",
       "kind": "design"
+    },
+    {
+      "id": "DESIGN-B",
+      "kind": "design"
     }
   ]
 }
