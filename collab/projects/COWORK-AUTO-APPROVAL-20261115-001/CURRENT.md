@@ -1,5 +1,13 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-20 KST — GPT 5창 검증 FAIL 판정: su_l1 조건부 비차단·작성자 측 복구 최소화
+- **GPT 정본 판정:** [GPT_V029_SU_L1_RACE_AND_FIVE_WINDOWS_RECOVERY_DISPOSITION_r0001_20261120_KST.md](GPT_V029_SU_L1_RACE_AND_FIVE_WINDOWS_RECOVERY_DISPOSITION_r0001_20261120_KST.md) — ① su_l1 원래 기대값 무조건 완화 **불승인**, Windows 경합 원인·앵커 무결성·nonce 재사용 거절·다음 새 nonce 정상 처리 6개 불변식을 증명한 경우에만 별도 보강 시험에서 조건부 비차단 수용. ② 부하 유/무 각 최대 10회, 기존 Work 내 무과금 원인 분석. ③ writer GitHub CAS·동일 스킬 순차 rebase는 생산자/기존 Git writer, UNCERTAIN은 기존 로컬 읽기 전용 audit + 원격 receipt/result/dispatch 대조로 **정산만** 보완; watcher 승인/READY의 create-only 변경 금지.
+- **확인 상태:** Windows `ZIP_5X=FAIL`(라운드 1 전체 1037 PASS/1 su_l1 FAIL/12 SKIP; 2~5 NOT_RUN), 가짜 watcher 5창 동반 4/4 PASS. WATCHER 원본 ZIP SHA `c67bc342fe77547b000fc42e1b886396cbef035c0d265dbcd124947e267ed83f` 그대로, 독립 리뷰 NOT_RUN, LIVE v0.2.25/보호 위임 USD1 불변.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 판정서 §5를 **단일 무과금 원샷**으로 실행. 필요한 writer 연결·읽기 전용 원격 정산만 최소 보완, 실제 5개 창/5회 재검증 후 독립 리뷰 진입 여부 GPT 재판정. 확정 전 유료 REQUEST/READY·모델 호출·LIVE/USD3 변경 0.
+
+---
+
+
 ## 2026-11-20 KST — v0.2.29 실제 ZIP 5회 검증: 라운드 1 FAIL (su_l1 간헐 1건) / writer·rebase GAP 확인
 
 - **결과:** `CLAUDE_V029_FIVE_WINDOWS_VALIDATION_RESULT_FOR_GPT_20261120.md` (PRIVATE main, commit `03f9b0ccb188`).
