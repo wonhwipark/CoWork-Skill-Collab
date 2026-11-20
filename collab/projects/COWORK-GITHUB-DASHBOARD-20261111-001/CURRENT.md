@@ -1,5 +1,16 @@
 # COWORK-GITHUB-DASHBOARD-20261111-001 — CURRENT
 
+## 2026-11-20 KST — 사용자 명시 지시: 대시보드/동기화/스킬 Actions 자동 실행 3개 중지
+
+- **사용자 최신 결정:** “위세가지 모두필요없어. 상태변경은 실제로 업로드하면됨”. **CoWork PRIVATE**의 3개 Actions workflow `cowork-dashboard.yml`, `cowork-public-status-sync.yml`, `cowork-skill-release-quality.yml`을 active `.github/workflows`에서 제거. 자동 생성·정기/자동 공개 동기화·스킬 자동 품질 게이트 **비활성**. History/기존 Python 시험·승인 계약 보존.
+- **앞으로:** 실제 Work/리뷰/스킬 상태가 바뀔 때 해당 CURRENT/근거를 직접 PRIVATE 게시 및 원격 검증. 공개로 승인된 상태만 기존 고정 allowlist 검증한 뒤 L1Work PUBLIC `status.json` 직접 게시, 불필요한 주기/부수 Actions 없이 갱신.
+- **경계:** LIVE Windows Watcher/보호 서명·READY·요청 처리·기존 다른 joblist 일회성 workflow·L1Work Pages 구조 변경 없음. 신규 유료 호출/Actions 사용 한도·결제 변경 0. 기존 PUBLIC 상태의 오랜 기록은 별도 직접 업로드 전까지 최신으로 간주하지 않음.
+- **결과·운영법:** [수동 상태 게시와 3개 workflow 중지](DASHBOARD_ACTIONS_TO_DIRECT_PUBLISH_HANDOFF_r0001_20261120_KST.md).
+- **NEXT_ONE_ACTION:** 실제로 변경된 운영 상태를 승인된 PUBLIC allowlist 값으로 직접 게시하고 원격 readback 검증. AUTO_STATUS_SYNC=OFF 의도된 상태이므로 과거 실패 자동 재실행 금지.
+
+---
+
+
 ## 2026-11-20 KST — GitHub Actions 계정 청구·예산 게이트 원인 분류 확정
 
 - **사용자 제공 오류:** "The job was not started because recent account payments have failed or your spending limit needs to be increased." → GitHub가 작업 시작 전에 **청구/예산 게이트에서 차단**한 사실 확인. **결제 실패인지 Actions 예산 상한인지**는 아직 미확인. `ACTIONS_BILLING_ADMISSION_BLOCK=CONFIRMED`, `SPECIFIC_BILLING_CAUSE=UNVERIFIED`.

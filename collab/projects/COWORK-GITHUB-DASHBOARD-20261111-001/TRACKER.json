@@ -5,11 +5,11 @@
       "work_id": "COWORK-GITHUB-DASHBOARD-20261111-001",
       "skill": "cowork-dashboard",
       "title": "발표용 대시보드 정보·상태 정합성 개선 설계",
-      "phase": "BLOCKED",
+      "phase": "COMPLETE",
       "owner": "GPT",
       "self_test": "PASS",
       "independent_review": "NOT_RUN",
-      "next_action": "GitHub user-supplied Actions error explicitly confirms account billing/budget gate before runner assignment. Whether payment failed or Actions spending limit was reached remains UNVERIFIED. No code or workflow change. NEXT: owner checks GitHub Billing & plans payment errors and Actions Budgets and alerts hard-stop (no sensitive values shared); after resolved run existing CI once and verify allowlisted PUBLIC status sync + remote readback. No paid call or LIVE change."
+      "next_action": "2026-11-20 user opted out of all three automatic Actions classes: documentation/dashboard full job, automatic PUBLIC sync, skill release quality gate. Three workflow YAMLs removed from active GitHub Actions while prior history/tests remain. Manual direct PRIVATE CURRENT evidence upload and allowlisted PUBLIC status upload only on actual state change, with SHA/readback. Current PUBLIC status needs approved manual update and 30-minute stale guard must be revisited for event-driven publishing; no LIVE/billing/Watcher changes."
     }
   ]
 }

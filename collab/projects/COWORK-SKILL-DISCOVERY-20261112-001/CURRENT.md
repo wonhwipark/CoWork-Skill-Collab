@@ -1,5 +1,15 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 2026-11-20 KST — 스킬 자동 Actions 검증 중지 / 직접 게시 원칙
+
+- **최신 사용자 지시:** 문서·스킬 자동 시험·대시보드 상태 동기화 Actions 모두 불필요. 3개 workflow 중 `cowork-skill-release-quality.yml` 자동 트리거도 제거. PRIVATE `main`의 스킬/Work 정본 자체를 없애거나 개발 회귀시험·독립 리뷰·ZIP 검증 계약을 생략한다는 뜻은 아님.
+- **작동 방식:** 개발/시험을 실제 수행하고 필요 시 ZIP 바이트·SHA/CRC와 검증 영수증을 확인한 뒤 기존 APPROVAL/PRIVATE→PUBLIC 범위대로 직접 게시. 검증 미실행은 NOT_RUN. 다른 일회성 Job·Windows Watcher 운영은 유지.
+- **근거:** [기존 Dashboard Work의 사용자 결정 및 수동 게시 전환](../COWORK-GITHUB-DASHBOARD-20261111-001/DASHBOARD_ACTIONS_TO_DIRECT_PUBLISH_HANDOFF_r0001_20261120_KST.md).
+- **NEXT_ONE_ACTION:** 향후 해당 Work에서 실제 상태 변화가 발생할 때 필요한 근거만 직접 갱신·게시. Actions 자동 갱신/릴리스 시험 복구 요청 불필요.
+
+---
+
+
 ## 2026-11-20 KST — P1/P2 실제 5질문 GPT 조회 완료·Windows 자동 로딩 검증 대기
 
 - **이번 사용자 승인:** PRIVATE 대시보드 실패 원인 조사 → PUBLIC 상태 정합성 개선 → GPT/Windows P1/P2 자동 조회 검증. 사용자 지시대로 읽기 전용/기존 기능 최소 보완, 독립 리뷰/유료 실행/Watcher LIVE 변경 없음.
