@@ -1,5 +1,14 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-20 KST — 사용자 지시 1~3단계 통합 원샷 / 설계 게시 / 호스트 실행 대기
+- **원샷 정본:** [GPT_APPROVAL_SIMPLIFICATION_V029_DESIGN3_REVIEW_ONESHOT_r0001_20261120_KST.md](GPT_APPROVAL_SIMPLIFICATION_V029_DESIGN3_REVIEW_ONESHOT_r0001_20261120_KST.md). 간소화 설계 확정(사용자 관점의 한 요청으로 합침) → v0.2.29 정확한 ZIP SHA `c67bc342fe77547b000fc42e1b886396cbef035c0d265dbcd124947e267ed83f` R1 **이번 한 건 한정** 기존 DESIGN USD3 수동 signer 경로의 유효 권한 검증 → 실제 허용될 때만 새 REQUEST/PIN/서명/READY·독립 리뷰 1회·영수증·GPT 판정용 결과 게시로 이어지는 Windows 실행 계약.
+- **이번 사용자 요청:** 앞서 설명한 1단계 간소화 설계·2단계 한정 DESIGN USD3 수동 승인 경로·3단계 독립 리뷰를 **1회 실행 지시로 묶음**. 별도 중간 확인 반복은 지양하지만 **호스트 공식 수동 승인/서명 자격이 불가하면 REQUEST/READY/모델 0**. 운영 policy=STATIC1.50/보호 위임 USD1을 우회·변경하지 않음.
+- **현재 실측 상태 불변:** 직전 Windows `BLOCKED_HOST_POLICY`는 unified STATIC USD3 경로 미설치 때문. 한정 DESIGN3은 정책 존재까지만 확인됐고, 이번 새 REVIEW ID의 **공식 수동 signer·승인 범위는 NOT_VERIFIED**. `DESIGN3_REVIEW_TRANSPORT=PENDING_HOST_AUTHORITY`, `NEW_REVIEW_REQUEST=NOT_POSTED`, `INDEPENDENT_REVIEW=NOT_RUN`, `MODEL_CALLS=0`, `LIVE=v0.2.25`, `DELEGATION=USD1`.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 위 단일 원샷 문서를 읽고 **실제 호스트 수동 DESIGN3 승인 가능성부터** 검증한 뒤, 정상 조건에서만 정확히 새 R1 한 번 수행·결과/영수증을 기존 Work에 게시. 불가 시 정확한 권한/정책 차단 한 건만 보고. LIVE/위임 상향 및 레거시 요청 실행 금지.
+
+---
+
+
 ## 2026-11-20 KST — v0.2.29 독립 리뷰 호스트 사전진단: BLOCKED_HOST_POLICY / writer v2 mock 검증
 
 - **결과:** `CLAUDE_V029_HOST_PREFLIGHT_AND_WRITER_V2_RESULT_FOR_GPT_20261120.md` (PRIVATE main, commit `2927891561e8`). ZIP `c67bc342…`(310753 B) 바이트 불변.
