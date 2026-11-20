@@ -1,5 +1,16 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-20 KST — v0.2.29 독립 리뷰 호스트 사전진단: BLOCKED_HOST_POLICY / writer v2 mock 검증
+
+- **결과:** `CLAUDE_V029_HOST_PREFLIGHT_AND_WRITER_V2_RESULT_FOR_GPT_20261120.md` (PRIVATE main, commit `2927891561e8`). ZIP `c67bc342…`(310753 B) 바이트 불변.
+- **A 호스트 진단(읽기 전용):** `review_request_gate select --intent unified --required-budget-usd 3.00` → `POLICY_COST_MISMATCH`(STATIC USD 1.50, 보호 위임 USD 1.0). `REVIEW_TRANSPORT=BLOCKED_HOST_POLICY`, REQUEST 미게시, 모델 0. 미등록 unified·과거 UI DESIGN3 예외는 쓰지 않음. 범위·repo_id 문자열·보호 위임 로드(Windows ACL)·서명 재료 존재는 PASS, USD 3 서명 권한은 `NOT_VERIFIED`. 순환: 안전한 USD 3 정책은 v0.2.29가 필요하고 설치는 리뷰가 필요함.
+- **B writer v2(mock):** 2-wave 호출자 규칙(stale 때만 1회 추가, 총 8회 상한, 소진 시 `POST_CONFLICT_PENDING`), readback 지연 허용, 의미 충돌 `NEEDS_DECISION`, UNCERTAIN 정산의 정책 리비전 하드코딩 제거(리비전 1·2). 단위 21 PASS, 20/20 시뮬레이션 라운드, 100개 동시 쓰기 중 wave 2 12건 전부 회복·PENDING 0. 실제 GitHub 읽기(blob sha) PASS.
+- **NOT_RUN:** 실제 CAS 쓰기(지정된 비민감 테스트 경로 없음), 실제 스킬 저장소 rebase, 실제 호스트 DB 정산. mock PASS를 운영 PASS로 승격하지 않음.
+- **변경 불가:** LIVE v0.2.25, 위임 USD1, DB·키·Task·Notifier 불변. 서명·READY·REQUEST·모델 호출 0.
+- **NEXT_ONE_ACTION (사용자/GPT):** 리뷰 진입 경로 결정 — (가) 이 리뷰 한 건에 한한 `POLICY-STATIC-V1-DESIGN` USD 3 수동 승인을 사용자가 새로 명시, 또는 (나) 통합 USD 3 정책과 위임 USD 3 정합화(`enabled_at` 갱신 포함). 실제 writer 시험을 원하면 비민감 PRIVATE 테스트 경로와 스킬 worktree 지정.
+
+---
+
 ## 2026-11-20 KST — GPT 판정: v0.2.29 독립 리뷰 진입 조건부 허용 / 자동 복구 별도 연결
 - **최신 GPT 판정:** [GPT_V029_RACE_ACCEPTANCE_CAS_RETRY_AND_REVIEW_GATE_DECISION_r0001_20261120_KST.md](GPT_V029_RACE_ACCEPTANCE_CAS_RETRY_AND_REVIEW_GATE_DECISION_r0001_20261120_KST.md) — 실제 ZIP 5회 v3 전체 pytest 1038 PASS/12 SKIP/0 FAIL(Windows 개발자 보고), 5창 동반 5/5 PASS. su_l1 31회 중 2회 간헐 FAIL·관측 직접 원인 미확정이지만 무잠금 앵커/Windows PermissionError 메커니즘·안전 불변식 주입 10/10을 근거로 **독립 리뷰 진입만 조건부 수용**. 원본 시험/과거 FAIL은 수정·삭제하지 않음. `SECURITY_RACE=CONDITIONAL_REVIEW_ONLY`.
 - **CAS 결정:** 기존 `cas_update(max_retries=3)`는 1 wave 최대 4 PUT 시도; `CasExhausted` stale SHA에 한해 동일 멱등 병합 caller 재호출 1회 허용(총 2 wave, 최대 8 시도). 최신 SHA·readback 필수, auth/무결성 오류·의미 충돌은 자동 재시도 0.
