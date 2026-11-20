@@ -1,0 +1,170 @@
+{
+  "verified_at": "2026-11-20 21:08:40",
+  "installed": {
+    "version_line": "__version__ = \"0.2.29\"",
+    "tree_sha256": "b0134258e2a0f7397a3b6a7888fc60df7a401814aa918253c3b197550e36b2c3",
+    "equals_step4_tree": true,
+    "zip_files_all_identical": true,
+    "preserved_package_files": [
+      "package/skill-collab-watcher_v0_2_20_1115.zip",
+      "package/skill-collab-watcher_v0_2_23_1115.zip",
+      "package/skill-collab-watcher_v0_2_25_1117.zip"
+    ],
+    "config_sha256": "2ead400735b2dae38f0db6cd1bc1f00736b9eedeef8bf3262624c0b6dbb65a4b",
+    "delegation_sha256": "6d826672391097a06803cb736c130a27ef78dc5a73a4bd55362f820a3df9bd24",
+    "config_equals_step3": true,
+    "delegation_equals_step3": true
+  },
+  "policy_now": {
+    "static_registered_usd": 3.0,
+    "large_design_registered": [
+      3.0,
+      3.0
+    ],
+    "delegation": {
+      "enabled": true,
+      "policy": "POLICY-STATIC-V1",
+      "max_request_usd": 3.0,
+      "enabled_at": "2026-11-20T21:03:18+09:00",
+      "expires_at": "2026-12-16T19:47:50+09:00",
+      "project_families": [
+        "COWORK-",
+        "L1-WORKSPACE-"
+      ],
+      "projects": [],
+      "skills": [
+        "cowork-review-watcher",
+        "cowork-dashboard",
+        "l1-knowledge-updater"
+      ],
+      "repo_id": "1451933830",
+      "branch": "main"
+    },
+    "daily_budget_usd": null,
+    "max_dispatches_per_day": null
+  },
+  "tasks": {
+    "SKILL-COLLAB-Claude-Review-Watcher": "Disabled",
+    "SKILL-COLLAB-Dashboard-Deploy-Bridge": "Disabled",
+    "SKILL-COLLAB-Dashboard-Updater": "Disabled",
+    "SKILL-COLLAB-GitHub-Watcher": "Running",
+    "SKILL-COLLAB-Notifier": "Running"
+  },
+  "watcher_pids": [
+    30904,
+    31848
+  ],
+  "watcher_processes": [
+    "30904|D:\\User\\whpark\\skill-collab-watcher\\.venv\\Scripts\\pythonw.exe|1884",
+    "31848|C:\\Users\\ME\\AppData\\Local\\Programs\\Python\\Python311\\pythonw.exe|30904"
+  ],
+  "db": {
+    "integrity": "ok",
+    "jobs_by_state": {
+      "COMPLETED": 9
+    },
+    "auto_claims_by_stage": {
+      "READY_POSTED": 2,
+      "UNCERTAIN": 1
+    },
+    "auto_seen": 11,
+    "lease": [
+      [
+        "1",
+        "github",
+        "1",
+        "2026-11-14T22:57:57.244538+00:00"
+      ]
+    ],
+    "audit_max_id": 17829
+  },
+  "running_versions_from_watch_start": [
+    [
+      "2026-11-20T12:06:15",
+      "0.2.29"
+    ],
+    [
+      "2026-11-20T12:04:42",
+      "0.2.29"
+    ],
+    [
+      "2026-11-20T12:00:34",
+      "0.2.25"
+    ],
+    [
+      "2026-11-20T12:00:01",
+      "0.2.29"
+    ],
+    [
+      "2026-11-20T11:58:29",
+      "0.2.29"
+    ],
+    [
+      "2026-11-20T11:53:56",
+      "0.2.25"
+    ],
+    [
+      "2026-11-20T11:53:35",
+      "0.2.29"
+    ],
+    [
+      "2026-11-20T11:50:01",
+      "0.2.25"
+    ]
+  ],
+  "events_since_final_baseline": {
+    "APPROVAL_REJECTED": 8,
+    "AUTO_NOT_ELIGIBLE": 2,
+    "AUTO_PRE_EXISTING_REQUEST": 6,
+    "SCAN_END": 5,
+    "SCAN_START": 5,
+    "TRUST_ROOT_INDEPENDENCE_WARNING": 2,
+    "TRUST_ROOT_LOADED": 2,
+    "VALIDATED": 8,
+    "WAIT_INPUT": 10,
+    "WATCH_START": 2
+  },
+  "signing_or_dispatch_events_since_baseline": [],
+  "model_calls_new": 0,
+  "jobs_total": 9,
+  "claims_total": 3,
+  "remote": {
+    "request_folders": 18,
+    "same_request_set_and_history_as_before": true,
+    "summary_before": {
+      "TERMINAL_HISTORY": 13,
+      "NO_HISTORY_NON_STATIC_TIER": 1,
+      "SEEN_WHILE_DISABLED": 3,
+      "CLAIM_UNCERTAIN": 1
+    },
+    "summary_after": {
+      "TERMINAL_HISTORY": 13,
+      "NO_HISTORY_NON_STATIC_TIER": 1,
+      "SEEN_WHILE_DISABLED": 3,
+      "CLAIM_UNCERTAIN": 1
+    },
+    "static_no_history": 0
+  },
+  "config_check": [
+    "version: 0.2.29",
+    "  run policy POLICY-STATIC-V1: max_budget_usd=3.0 effort=medium",
+    "  run policy POLICY-STATIC-V1-LARGE: max_budget_usd=3.0 effort=medium",
+    "  run policy POLICY-STATIC-V1-DESIGN: max_budget_usd=3.0 effort=medium",
+    "auto_approval: delegation file readable; enabled=True; projects=0; skills=3; limit: per review 300 c; no daily/monthly aggregate limits"
+  ],
+  "gate_select_unified": {
+    "status": "POLICY_COMPATIBLE_NOT_APPROVED",
+    "selected_run_policy_ref": "POLICY-STATIC-V1",
+    "expected_max_budget_usd": "3.00",
+    "approval": "NOT_CHECKED"
+  },
+  "old_interpreter_folder_intact": true,
+  "notifier": "Running",
+  "bundles": {
+    "verified_original": "D:\\User\\whpark\\skill-collab-watcher-dist\\backup_v0_2_25_install_20261120_200712",
+    "cutover_bundle": "D:\\User\\whpark\\skill-collab-watcher-dist\\backup_v0_2_25_cutover_20261120_210313",
+    "cutover_bundle_manifest_sha256": "a4bcb68585d8ecdd5a399b195496fe3da1120fa5e88bcff539ee0062cacef5bb",
+    "cutover_bundle_db_snapshot_sha256": "7ad9e02d6401d7a5425a28143faab2127deff3c391aebc22b3ae2812fe00793c"
+  },
+  "FINAL_LIVE_STATE_OK": true
+}
