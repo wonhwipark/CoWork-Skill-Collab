@@ -1,3 +1,5 @@
+# COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
+
 ## 2026-11-21 KST — Issue #2 Gmail → ChatGPT Work GPT 자동 판정 1차 후보 설계 게시 / 파일럿 NOT_RUN
 - **사용자 최신 목표:** 기존 Telegram 리뷰 완료 알림을 유지하면서 신규 리뷰 완료 뒤 **모바일 ChatGPT의 Work 전용 대화에서 GPT 판정의 근거·과정·최종 결과·후속 질문**을 확인. 기존 설계 채팅에 직접 자동 삽입은 미지원/미검증으로 구분.
 - **신규 설계:** [Gmail 이벤트 → Work GPT 판정 r0001](GPT_GMAIL_WORK_EVENT_TO_DISPOSITION_DESIGN_r0001_20261121_KST.md) (PRIVATE main, Git blob `e6b7cdfbe902f6d5ff79b83e1228e56b5b5d0f6a`, 원격 동일 본문 8,851자 PASS). 기존 [Issue #2](https://github.com/wonhwipark/CoWork-Skill-Collab/issues/2)를 재사용. Windows watcher·기존 Telegram Notifier·`review_completion.py`·`review_chain.py` 및 기존 `GPT_DISPOSITION.json` 경로를 재사용하고 신규 리뷰 엔진/DB/원장은 만들지 않는 설계.
@@ -6,8 +8,6 @@
 - **NEXT_ONE_ACTION:** 실제 사용자 계정에서 Gmail new-message → Work 이벤트 지원·연결/사용량 제한·GitHub PRIVATE 읽기권한을 **G0 읽기 전용**으로 확인. PASS 시 기존 Windows Notifier의 완료 검증·발송 위치를 읽기 전용으로 확인한 뒤 무해한 합성/메일 파일럿을 별도 승인 범위에서 시행. 미확인 시 Gmail 발송/트리거 등록 중지.
 
 ---
-
-# COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
 ## 2026-11-20 KST — 단일 GitHub LIVE 현행 상태 요약 보강 (실측 보고 재인용, 운영 변경 0)
 
