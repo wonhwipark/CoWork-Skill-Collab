@@ -11,6 +11,10 @@
     {
       "id": "DESIGN-B",
       "kind": "design"
+    },
+    {
+      "id": "SKILL-A",
+      "kind": "skill"
     }
   ]
 }
