@@ -5,11 +5,11 @@
       "work_id": "L1-WORKSPACE-RAG-20261111-001",
       "skill": "l1-knowledge-updater",
       "title": "l1-knowledge-updater",
-      "phase": "VIEWER_PREBUILD_V011_DEV_CANDIDATE_LINUX_G0_PENDING",
-      "owner": "GPT 선행 구현: Work label/test 18 PASS + patch mock 7 PASS + 원본 anchor 16 PASS, 대화 파일로 개발후보 ZIP·HTML 제공; GitHub PRIVATE 결과 MD 등록",
+      "phase": "VIEWER_STYLE_DESIGN_R1_SUBMITTED_WAITING_SIGNED_READY",
+      "owner": "GPT 정식 독립 스타일 R1 REQUEST/PIN remote verified 2026-11-21; signature/READY/review/receipt 미관측, 기존 구현/운영 불변",
       "self_test": "PASS",
-      "independent_review": "WIKI_UI_UX_R1_ACCEPT_WITH_CHANGE_CLOSED; VIEWER_AUTH_EDIT_DESIGN_R1_ACCEPT_WITH_CHANGE_CLOSED_B1_M2_N4",
-      "next_action": "업무 GPT/Linux Agent: 이 대화의 v0.1.1 오프라인 patch ZIP + 기존 PUBLIC v0.1.0 결합·실제 Linux Viewer source/API/G0 대조·격리 개발/시험. 운영 설치·B1~B3/E3/E4·편집 활성화는 별도 게이트."
+      "independent_review": "WIKI_UI_UX_R1_ACCEPT_WITH_CHANGE_CLOSED; VIEWER_AUTH_EDIT_DESIGN_R1_ACCEPT_WITH_CHANGE_CLOSED_B1_M2_N4; VIEWER_STYLE_DESIGN_R1_PENDING_SIGNATURE_READY",
+      "next_action": "Windows 보호 signer/watcher가 REQ-L1-WORKSPACE-VIEWER-STYLE-DESIGN-R1-20261121 승인 scope/가격/SHA/source pin 검사→적격이면 서명·READY 마지막·독립 R1 1회. 결과/영수증 확인 후 GPT 판정 전 구현 중지."
     }
   ]
 }
