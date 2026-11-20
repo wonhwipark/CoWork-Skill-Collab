@@ -1,5 +1,14 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-20 KST — Linux MCP 기존 업무 스킬 접근 인계 (Viewer 진단과 분리)
+
+- **사용자 범위 정정:** 모바일 Agent→Linux MCP가 Viewer를 업무 경로로 호출하는 것이 아니라, 기존 `l1-fix-workflow`/Kernel/`code-analyzer`/`l1-knowledge-updater`/Knowledge 조회/`job-list` 등 실제 노출·권한이 확인된 업무 기능에 연결하는 것이 목적. Viewer 웹 화면/MSC 렌더는 별도 UI 작업으로 유지. 이전 Viewer 중심 MCP r0001은 이력으로 보존.
+- **PUBLIC HO 실제 게시:** [기존 업무 스킬 접근·기능 매핑 r0002](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_MCP_AGENT_SKILL_ACCESS_AND_CAPABILITY_HANDOFF_r0002_20261120_KST.md), `wonhwipark/L1Work/main/handoffs/L1_MCP_AGENT_SKILL_ACCESS_AND_CAPABILITY_HANDOFF_r0002_20261120_KST.md`. GitHub commit `51608248d15c9b423c5ce53b31f9f843a34342f2`, blob `a3f8b3cb6215b22bc3f540fa5e7bbca36a61d647`; 원격 원문 14,178 UTF-8 bytes, SHA-256 `bda818f5ef9d1d0e20e6854001e5a69c415f0c3d73a1cbde1e07c05436e571ee` readback 확인. PUBLIC [handoffs/README](https://github.com/wonhwipark/L1Work/blob/main/handoffs/README.md) 최상단 인덱스 갱신 commit `cf5f6f2ab19fb03e07f0ed5aa2d1c963b0506f58`, 원격 링크 readback PASS.
+- **실행·승인 경계:** 이 작업은 MD 및 PUBLIC 인덱스 게시만 수행. 실제 MCP 스킬 연결·설치/재시작·Agent E2E·분석/Job·Knowledge write/게시·유료 호출 `NOT_RUN`; 업무 GPT 수신 `NOT_VERIFIED`. 사용자에게 MCP 자료/스킬 원문 반출을 다시 요구하지 않음. 별도 진행 `l1-channel-recovery` 분석의 최신 범위(Workspace 연동 제외)는 그대로 유지.
+- **NEXT_ONE_ACTION:** 업무 GPT가 r0002를 읽어 기존 MCP tool/권한·실제 설치/로드 스킬/호스트 identity를 G0 읽기 검증하고 Work/Knowledge/capability P0 조회의 기존 인터페이스 REUSE/CONNECT/필요한 최소 EXTEND를 분류. 실제 운영 변경·P1/P2 실행은 유효 승인 범위를 대조해 후속 처리.
+
+---
+
 ## 2026-11-20 KST — 최신 범위 확정: l1-channel-recovery 분석 개선 우선, Workspace 연동 제외
 
 - **최신 사용자 결정:** 분량을 줄이기 위해 이번에는 `l1-channel-recovery`의 분석 개선만 우선 진행. Recovery 결과의 `l1-workspace` 저장·조회·카테고리 연동은 이번 범위에서 제외하며 후속으로 보류. 아래 과거 통합 HO의 저장/읽기 연결 NEXT_ONE_ACTION보다 본 결정이 우선함. 별도 Workspace/Viewer 작업 전체의 중지 지시는 아님.
