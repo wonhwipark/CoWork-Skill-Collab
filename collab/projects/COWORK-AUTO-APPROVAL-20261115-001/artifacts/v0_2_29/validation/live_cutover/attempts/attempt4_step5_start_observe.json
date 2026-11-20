@@ -1,0 +1,446 @@
+{
+  "started": "2026-11-20 20:58:28",
+  "phases": [
+    {
+      "label": "after_start_2_cycles",
+      "view": {
+        "pairs": [
+          [
+            "VALIDATED",
+            "REQ-COWORK-V0214-R1-20261114|1|3a221dcdb22ba75208a60ca555b0ee75866313a591148b1f482b7cbb6aa0b367|1",
+            "ok"
+          ],
+          [
+            "APPROVAL_REJECTED",
+            "REQ-COWORK-V0214-R1-20261114|1|3a221dcdb22ba75208a60ca555b0ee75866313a591148b1f482b7cbb6aa0b367|1",
+            "APPROVAL_EXPIRED"
+          ],
+          [
+            "VALIDATED",
+            "REQ-COWORK-V0217-R2-20261114|1|824f26c4e28fcc804ed1dd3942a34408c54b9091be34ecb1693cc4cb9d46df03|1",
+            "ok"
+          ],
+          [
+            "APPROVAL_REJECTED",
+            "REQ-COWORK-V0217-R2-20261114|1|824f26c4e28fcc804ed1dd3942a34408c54b9091be34ecb1693cc4cb9d46df03|1",
+            "APPROVAL_EXPIRED"
+          ],
+          [
+            "VALIDATED",
+            "REQ-COWORK-V0219-R2-20261114|1|6e7fee3340cc6d0282d1c18fe3db42a90360259dd73fa6d7c0a7698af7afe5c0|1",
+            "ok"
+          ],
+          [
+            "APPROVAL_REJECTED",
+            "REQ-COWORK-V0219-R2-20261114|1|6e7fee3340cc6d0282d1c18fe3db42a90360259dd73fa6d7c0a7698af7afe5c0|1",
+            "APPROVAL_EXPIRED"
+          ],
+          [
+            "VALIDATED",
+            "REQ-COWORK-V0220-R1-20261115|1|6a8626375e5e711535abdd261ff48781114802bb345cabe2ed5940b75968f386|1",
+            "ok"
+          ],
+          [
+            "APPROVAL_REJECTED",
+            "REQ-COWORK-V0220-R1-20261115|1|6a8626375e5e711535abdd261ff48781114802bb345cabe2ed5940b75968f386|1",
+            "APPROVAL_EXPIRED"
+          ]
+        ],
+        "events": {
+          "APPROVAL_REJECTED": 4,
+          "AUTO_NOT_ELIGIBLE": 1,
+          "AUTO_PRE_EXISTING_REQUEST": 3,
+          "SCAN_END": 2,
+          "SCAN_START": 2,
+          "TRUST_ROOT_INDEPENDENCE_WARNING": 1,
+          "TRUST_ROOT_LOADED": 1,
+          "VALIDATED": 4,
+          "WAIT_INPUT": 5,
+          "WATCH_START": 1
+        },
+        "jobs": {
+          "COMPLETED": 9
+        },
+        "claims": {
+          "READY_POSTED": 2,
+          "UNCERTAIN": 1
+        },
+        "seen": 11,
+        "lease": [
+          [
+            "1",
+            "github",
+            "1",
+            "2026-11-14T22:57:57.244538+00:"
+          ]
+        ],
+        "max_id": 17746,
+        "notable": [
+          [
+            "TRUST_ROOT_INDEPENDENCE_WARNING",
+            "",
+            "trust root file can be modified by the watcher's own account; trust root folder can be mod"
+          ],
+          [
+            "TRUST_ROOT_LOADED",
+            "",
+            "version=1 keys=1 frozen=False"
+          ],
+          [
+            "WATCH_START",
+            "",
+            "{\"version\": \"0.2.29\", \"enabled\": true, \"enabled_source\": \"review_policy.enabled\", \"dry_run"
+          ],
+          [
+            "AUTO_NOT_ELIGIBLE",
+            "REQ-COWORK-BUDGET-V025-DESIGN-R1-2026111",
+            "RETROACTIVE_OR_FUTURE_REQUEST"
+          ],
+          [
+            "WAIT_INPUT",
+            "REQ-COWORK-BUDGET-V025-DESIGN-R1-2026111",
+            "{\"approval_stage\": \"RETROACTIVE_OR_FUTURE_REQUEST\", \"reason_code\": \"RETROACTIVE_OR_FUTURE_"
+          ],
+          [
+            "AUTO_PRE_EXISTING_REQUEST",
+            "REQ-COWORK-DASHBOARD-PRESENTATION-202611",
+            "seen while automatic approval was off: never started automatically"
+          ],
+          [
+            "WAIT_INPUT",
+            "REQ-COWORK-DASHBOARD-PRESENTATION-202611",
+            "{\"approval_stage\": \"PRE_EXISTING_REQUEST\", \"reason_code\": \"PRE_EXISTING_REQUEST\", \"request"
+          ],
+          [
+            "VALIDATED",
+            "REQ-COWORK-V0214-R1-20261114|1|3a221dcdb",
+            "ok"
+          ],
+          [
+            "APPROVAL_REJECTED",
+            "REQ-COWORK-V0214-R1-20261114|1|3a221dcdb",
+            "APPROVAL_EXPIRED"
+          ],
+          [
+            "VALIDATED",
+            "REQ-COWORK-V0217-R2-20261114|1|824f26c4e",
+            "ok"
+          ],
+          [
+            "APPROVAL_REJECTED",
+            "REQ-COWORK-V0217-R2-20261114|1|824f26c4e",
+            "APPROVAL_EXPIRED"
+          ],
+          [
+            "VALIDATED",
+            "REQ-COWORK-V0219-R2-20261114|1|6e7fee334",
+            "ok"
+          ],
+          [
+            "APPROVAL_REJECTED",
+            "REQ-COWORK-V0219-R2-20261114|1|6e7fee334",
+            "APPROVAL_EXPIRED"
+          ],
+          [
+            "VALIDATED",
+            "REQ-COWORK-V0220-R1-20261115|1|6a8626375",
+            "ok"
+          ],
+          [
+            "APPROVAL_REJECTED",
+            "REQ-COWORK-V0220-R1-20261115|1|6a8626375",
+            "APPROVAL_EXPIRED"
+          ],
+          [
+            "AUTO_PRE_EXISTING_REQUEST",
+            "REQ-L1-MSC-MD-LINK-STRUCTURE-20261115-00",
+            "seen while automatic approval was off: never started automatically"
+          ],
+          [
+            "WAIT_INPUT",
+            "REQ-L1-MSC-MD-LINK-STRUCTURE-20261115-00",
+            "{\"approval_stage\": \"PRE_EXISTING_REQUEST\", \"reason_code\": \"PRE_EXISTING_REQUEST\", \"request"
+          ],
+          [
+            "AUTO_PRE_EXISTING_REQUEST",
+            "REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-00",
+            "seen while automatic approval was off: never started automatically"
+          ],
+          [
+            "WAIT_INPUT",
+            "REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-00",
+            "{\"approval_stage\": \"PRE_EXISTING_REQUEST\", \"reason_code\": \"PRE_EXISTING_REQUEST\", \"request"
+          ],
+          [
+            "WAIT_INPUT",
+            "REQ-L1-WORK-KNOWLEDGE-GUARD-CODE-R1-2026",
+            "{\"approval_stage\": \"UNCERTAIN\", \"reason_code\": \"UNCERTAIN\", \"request_id\": \"REQ-L1-WORK-KNO"
+          ]
+        ]
+      },
+      "anomalies": [],
+      "cycles": 2,
+      "seconds": 86
+    },
+    {
+      "label": "after_restart_2_cycles",
+      "view": {
+        "pairs": [
+          [
+            "VALIDATED",
+            "REQ-COWORK-V0214-R1-20261114|1|3a221dcdb22ba75208a60ca555b0ee75866313a591148b1f482b7cbb6aa0b367|1",
+            "ok"
+          ],
+          [
+            "APPROVAL_REJECTED",
+            "REQ-COWORK-V0214-R1-20261114|1|3a221dcdb22ba75208a60ca555b0ee75866313a591148b1f482b7cbb6aa0b367|1",
+            "APPROVAL_EXPIRED"
+          ],
+          [
+            "VALIDATED",
+            "REQ-COWORK-V0217-R2-20261114|1|824f26c4e28fcc804ed1dd3942a34408c54b9091be34ecb1693cc4cb9d46df03|1",
+            "ok"
+          ],
+          [
+            "APPROVAL_REJECTED",
+            "REQ-COWORK-V0217-R2-20261114|1|824f26c4e28fcc804ed1dd3942a34408c54b9091be34ecb1693cc4cb9d46df03|1",
+            "APPROVAL_EXPIRED"
+          ],
+          [
+            "VALIDATED",
+            "REQ-COWORK-V0219-R2-20261114|1|6e7fee3340cc6d0282d1c18fe3db42a90360259dd73fa6d7c0a7698af7afe5c0|1",
+            "ok"
+          ],
+          [
+            "APPROVAL_REJECTED",
+            "REQ-COWORK-V0219-R2-20261114|1|6e7fee3340cc6d0282d1c18fe3db42a90360259dd73fa6d7c0a7698af7afe5c0|1",
+            "APPROVAL_EXPIRED"
+          ],
+          [
+            "VALIDATED",
+            "REQ-COWORK-V0220-R1-20261115|1|6a8626375e5e711535abdd261ff48781114802bb345cabe2ed5940b75968f386|1",
+            "ok"
+          ],
+          [
+            "APPROVAL_REJECTED",
+            "REQ-COWORK-V0220-R1-20261115|1|6a8626375e5e711535abdd261ff48781114802bb345cabe2ed5940b75968f386|1",
+            "APPROVAL_EXPIRED"
+          ]
+        ],
+        "events": {
+          "APPROVAL_REJECTED": 4,
+          "AUTO_NOT_ELIGIBLE": 1,
+          "AUTO_PRE_EXISTING_REQUEST": 3,
+          "SCAN_END": 2,
+          "SCAN_START": 3,
+          "TRANSPORT_ERROR": 1,
+          "TRUST_ROOT_INDEPENDENCE_WARNING": 2,
+          "TRUST_ROOT_LOADED": 2,
+          "VALIDATED": 4,
+          "WAIT_INPUT": 5,
+          "WATCH_START": 2
+        },
+        "jobs": {
+          "COMPLETED": 9
+        },
+        "claims": {
+          "READY_POSTED": 2,
+          "UNCERTAIN": 1
+        },
+        "seen": 11,
+        "lease": [
+          [
+            "1",
+            "github",
+            "1",
+            "2026-11-14T22:57:57.244538+00:"
+          ]
+        ],
+        "max_id": 17751,
+        "notable": [
+          [
+            "TRUST_ROOT_INDEPENDENCE_WARNING",
+            "",
+            "trust root file can be modified by the watcher's own account; trust root folder can be mod"
+          ],
+          [
+            "TRUST_ROOT_LOADED",
+            "",
+            "version=1 keys=1 frozen=False"
+          ],
+          [
+            "WATCH_START",
+            "",
+            "{\"version\": \"0.2.29\", \"enabled\": true, \"enabled_source\": \"review_policy.enabled\", \"dry_run"
+          ],
+          [
+            "AUTO_NOT_ELIGIBLE",
+            "REQ-COWORK-BUDGET-V025-DESIGN-R1-2026111",
+            "RETROACTIVE_OR_FUTURE_REQUEST"
+          ],
+          [
+            "WAIT_INPUT",
+            "REQ-COWORK-BUDGET-V025-DESIGN-R1-2026111",
+            "{\"approval_stage\": \"RETROACTIVE_OR_FUTURE_REQUEST\", \"reason_code\": \"RETROACTIVE_OR_FUTURE_"
+          ],
+          [
+            "AUTO_PRE_EXISTING_REQUEST",
+            "REQ-COWORK-DASHBOARD-PRESENTATION-202611",
+            "seen while automatic approval was off: never started automatically"
+          ],
+          [
+            "WAIT_INPUT",
+            "REQ-COWORK-DASHBOARD-PRESENTATION-202611",
+            "{\"approval_stage\": \"PRE_EXISTING_REQUEST\", \"reason_code\": \"PRE_EXISTING_REQUEST\", \"request"
+          ],
+          [
+            "VALIDATED",
+            "REQ-COWORK-V0214-R1-20261114|1|3a221dcdb",
+            "ok"
+          ],
+          [
+            "APPROVAL_REJECTED",
+            "REQ-COWORK-V0214-R1-20261114|1|3a221dcdb",
+            "APPROVAL_EXPIRED"
+          ],
+          [
+            "VALIDATED",
+            "REQ-COWORK-V0217-R2-20261114|1|824f26c4e",
+            "ok"
+          ],
+          [
+            "APPROVAL_REJECTED",
+            "REQ-COWORK-V0217-R2-20261114|1|824f26c4e",
+            "APPROVAL_EXPIRED"
+          ],
+          [
+            "VALIDATED",
+            "REQ-COWORK-V0219-R2-20261114|1|6e7fee334",
+            "ok"
+          ],
+          [
+            "APPROVAL_REJECTED",
+            "REQ-COWORK-V0219-R2-20261114|1|6e7fee334",
+            "APPROVAL_EXPIRED"
+          ],
+          [
+            "VALIDATED",
+            "REQ-COWORK-V0220-R1-20261115|1|6a8626375",
+            "ok"
+          ],
+          [
+            "APPROVAL_REJECTED",
+            "REQ-COWORK-V0220-R1-20261115|1|6a8626375",
+            "APPROVAL_EXPIRED"
+          ],
+          [
+            "AUTO_PRE_EXISTING_REQUEST",
+            "REQ-L1-MSC-MD-LINK-STRUCTURE-20261115-00",
+            "seen while automatic approval was off: never started automatically"
+          ],
+          [
+            "WAIT_INPUT",
+            "REQ-L1-MSC-MD-LINK-STRUCTURE-20261115-00",
+            "{\"approval_stage\": \"PRE_EXISTING_REQUEST\", \"reason_code\": \"PRE_EXISTING_REQUEST\", \"request"
+          ],
+          [
+            "AUTO_PRE_EXISTING_REQUEST",
+            "REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-00",
+            "seen while automatic approval was off: never started automatically"
+          ],
+          [
+            "WAIT_INPUT",
+            "REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-00",
+            "{\"approval_stage\": \"PRE_EXISTING_REQUEST\", \"reason_code\": \"PRE_EXISTING_REQUEST\", \"request"
+          ],
+          [
+            "WAIT_INPUT",
+            "REQ-L1-WORK-KNOWLEDGE-GUARD-CODE-R1-2026",
+            "{\"approval_stage\": \"UNCERTAIN\", \"reason_code\": \"UNCERTAIN\", \"request_id\": \"REQ-L1-WORK-KNO"
+          ],
+          [
+            "TRUST_ROOT_INDEPENDENCE_WARNING",
+            "",
+            "trust root file can be modified by the watcher's own account; trust root folder can be mod"
+          ],
+          [
+            "TRUST_ROOT_LOADED",
+            "",
+            "version=1 keys=1 frozen=False"
+          ],
+          [
+            "WATCH_START",
+            "",
+            "{\"version\": \"0.2.29\", \"enabled\": true, \"enabled_source\": \"review_policy.enabled\", \"dry_run"
+          ],
+          [
+            "TRANSPORT_ERROR",
+            "",
+            "REQ-COWORK-BUDGET-V025-DESIGN-R1-20261117: TransportError: network error: URLError"
+          ]
+        ]
+      },
+      "anomalies": [
+        "event TRANSPORT_ERROR x1"
+      ],
+      "cycles": 2,
+      "restart_mark_audit_id": 17746
+    }
+  ],
+  "known_expired_keys_before_cutover": [
+    "REQ-COWORK-V0214-R1-20261114|1|3a221dcdb",
+    "REQ-COWORK-V0217-R2-20261114|1|824f26c4e",
+    "REQ-COWORK-V0219-R2-20261114|1|6e7fee334",
+    "REQ-COWORK-V0220-R1-20261115|1|6a8626375"
+  ],
+  "started_pids": [
+    28080,
+    28104
+  ],
+  "stopped_for_restart": {
+    "pids": [],
+    "task": "Ready"
+  },
+  "FAILED": [
+    "event TRANSPORT_ERROR x1"
+  ],
+  "rollback": {
+    "bundle": "D:\\User\\whpark\\skill-collab-watcher-dist\\backup_v0_2_25_cutover_20261120_205702",
+    "removed_new_files": [
+      "docs/RELEASE_MANIFEST.json",
+      "docs/REQUEST_PIN_REPAIR.md",
+      "README.md",
+      "tests/test_approval_wait_notify_v026.py",
+      "tests/test_review_request_gate_tool_v026.py",
+      "tests/test_source_pin_preclaim_v026.py",
+      "tests/test_source_pin_tool_v026.py",
+      "tests/test_v029_cost_refused_exclusion.py",
+      "tools/review_request_gate.py",
+      "tools/source_pin.py"
+    ],
+    "tree_sha": "f691bcf808cbf81e9c2c2a9be65335e527c2df99ea4d54a427665e4c90045c9f",
+    "config_sha": "fbce30a97c06f8d04e2e0029c731c41d2ccd87963196afe80279f10cf7509c27",
+    "delegation_sha": "ddead4e497759ac30db9e8d90974cfe4f68114d99ef99cdf85a083e9bf54fd4c",
+    "version_line": "__version__ = \"0.2.25\"",
+    "verified": true
+  },
+  "after_rollback": {
+    "task": "Running",
+    "pids": [
+      29604,
+      26620
+    ]
+  },
+  "TWO_CYCLES_RESTART": "FAIL_ROLLED_BACK",
+  "final_tasks": {
+    "SKILL-COLLAB-Claude-Review-Watcher": "Disabled",
+    "SKILL-COLLAB-Dashboard-Deploy-Bridge": "Disabled",
+    "SKILL-COLLAB-Dashboard-Updater": "Disabled",
+    "SKILL-COLLAB-GitHub-Watcher": "Running",
+    "SKILL-COLLAB-Notifier": "Running"
+  },
+  "final_pids": [
+    29604,
+    26620
+  ]
+}
