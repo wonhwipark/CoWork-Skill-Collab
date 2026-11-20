@@ -1,10 +1,10 @@
 """Publish ONLY public-safe, explicitly allowlisted CoWork status to L1Work Pages.
 
-Private workflow computes this from PRIVATE dashboard state; only fixed public aliases,
+Direct, explicit publication computes this from PRIVATE dashboard state; only fixed public aliases,
 controlled enum statuses and aggregate counts are emitted. No private strings, IDs,
 links, next actions, reviewer receipts or secrets are copied into the output.
 
-A separately configured, PUBLIC-L1Work-only fine-grained token is required to publish.
+Manual publishing uses an authorized PUBLIC-L1Work-only write path after exact allowlist validation.
 Run no external API for "prepare". Publish fails closed on malformed/stale data or HTTP error.
 """
 from __future__ import annotations
@@ -45,7 +45,7 @@ PUBLIC_WORKS = {
     ),
     "COWORK-GITHUB-DASHBOARD-20261111-001": (
         "CoWork 대시보드", "dashboard", "GPT",
-        "HTML 화면 및 자동 갱신 상태 검증",
+        "6시간 화면 갱신 기준·수동 상태 게시 확인",
     ),
     "COWORK-SKILL-DISCOVERY-20261112-001": (
         "스킬 발견·재사용", "skill-discovery", "GPT",
@@ -307,7 +307,7 @@ def build_payload(state: dict, date: str, *,
         "schema": PUBLIC_SCHEMA,
         "snapshot_date": date,
         "source": "APPROVED_AGGREGATE_ONLY",
-        "sync_mode": "AUTOMATED_ALLOWLIST",
+        "sync_mode": "MANUAL_ALLOWLIST",
         "cutover": public_cutover,
         "counts": {
             "projects": len(projects),

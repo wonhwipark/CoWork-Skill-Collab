@@ -1,5 +1,16 @@
 # COWORK-GITHUB-DASHBOARD-20261111-001 — CURRENT
 
+## 2026-11-21 KST — 상태 변경 시 직접 게시·공개 화면 6시간 기준 적용
+
+- **사용자 최신 지시:** 실제 상태가 바뀔 때 공개 안전 정보만 GitHub에 직접 업로드. 화면의 공개 상태 재조회·지연 판단 기준은 6시간. 기존 3개 불필요한 CoWork Actions 삭제 상태를 유지하며 새 예약/자동 게시 생성 없음.
+- **원본 정합성:** migration CURRENT 최신 절에 검증된 2026-11-20 Windows v0.2.29/GitHub LIVE 보고를 연결했으며 이것을 11/21 새 실측으로 승격하지 않음. L1Work PUBLIC의 `COWORK_PUBLIC_STATUS_V1`는 기존 allowlist로 직접 게시하고 `sync_mode=MANUAL_ALLOWLIST`로 구분. 신규 유료 리뷰 E2E=NOT_RUN.
+- **UI:** PUBLIC `context-view.js` 30분 지연 기준 → 6시간, `board.js`/context의 실행 중 공개 자료 확인 주기 120초 → 6시간, 페이지 로드/재포커스는 즉시 확인. HTML 안내도 ‘실제 상태 변경 시 직접 업로드’로 정렬. 없음/오류/시간 만료를 실제 운영 실패로 간주하지 않음.
+- **원문 계약:** [이벤트 중심 6시간 적용 안내](DASHBOARD_ACTIONS_TO_DIRECT_PUBLISH_HANDOFF_r0001_20261120_KST.md). 실제 공개 코드/JSON의 최종 게시 commit/SHA와 Pages 결과는 별도 결과/이 Work에 확정 (미검증 상태면 PASS 아님).
+- **NEXT_ONE_ACTION:** 기존 안전 공개 데이터 검증한 후 PUBLIC HTML/JS/status.json 단일 commit 직접 게시 및 원격 해시/Pages 결과 확인. 대시보드 6시간 조회 기준은 유료 Actions 또는 6시간마다 GitHub 상태 파일 업로드를 의미하지 않음.
+
+---
+
+
 ## 2026-11-20 KST — 사용자 명시 지시: 대시보드/동기화/스킬 Actions 자동 실행 3개 중지
 
 - **사용자 최신 결정:** “위세가지 모두필요없어. 상태변경은 실제로 업로드하면됨”. **CoWork PRIVATE**의 3개 Actions workflow `cowork-dashboard.yml`, `cowork-public-status-sync.yml`, `cowork-skill-release-quality.yml`을 active `.github/workflows`에서 제거. 자동 생성·정기/자동 공개 동기화·스킬 자동 품질 게이트 **비활성**. History/기존 Python 시험·승인 계약 보존.

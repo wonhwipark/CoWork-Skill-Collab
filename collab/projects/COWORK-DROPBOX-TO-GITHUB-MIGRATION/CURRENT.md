@@ -1,6 +1,8 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
 ## 2026-11-21 KST — Issue #2 Gmail → ChatGPT Work GPT 자동 판정 1차 후보 설계 게시 / 파일럿 NOT_RUN
+- **현재 운영 제공자(11/20 Windows 호스트 실측 보고 근거, 11/21 신규 호스트 조회 아님):** ACTIVE_PROVIDER=GITHUB / CUTOVER=LIVE. v0.2.29 LIVE·STATIC 및 보호 위임 USD3 적용 보고는 [자동 승인 Work 최종 판정](../COWORK-AUTO-APPROVAL-20261115-001/GPT_V029_LIVE_CUTOVER_FINAL_DISPOSITION_r0001_20261120_KST.md) 참조. 첫 신규 유료 요청 E2E=NOT_RUN. Gmail Work 새 설계는 별도이며 현재 LIVE 전환/설치가 아님.
+
 - **사용자 최신 목표:** 기존 Telegram 리뷰 완료 알림을 유지하면서 신규 리뷰 완료 뒤 **모바일 ChatGPT의 Work 전용 대화에서 GPT 판정의 근거·과정·최종 결과·후속 질문**을 확인. 기존 설계 채팅에 직접 자동 삽입은 미지원/미검증으로 구분.
 - **신규 설계:** [Gmail 이벤트 → Work GPT 판정 r0001](GPT_GMAIL_WORK_EVENT_TO_DISPOSITION_DESIGN_r0001_20261121_KST.md) (PRIVATE main, commit `77720bc879b356e2b1efde4928d291ee375d9e61`, 14,487 UTF-8 B, SHA-256 `70f17ff9a2ebe483272b8b4c75f3b2164bd63de56e28894b0a66251fd6f4f478`, Git blob `e6b7cdfbe902f6d5ff79b83e1228e56b5b5d0f6a`, remote bytes readback PASS). 기존 [Issue #2](https://github.com/wonhwipark/CoWork-Skill-Collab/issues/2)를 재사용. Windows watcher·기존 Telegram Notifier·`review_completion.py`·`review_chain.py` 및 기존 `GPT_DISPOSITION.json` 경로를 재사용하고 신규 리뷰 엔진/DB/원장은 만들지 않는 설계.
 - **제품 지원 확인:** OpenAI 공식 Help Center에서 Gmail 새 메일을 트리거로 하는 ChatGPT Work 이벤트 지원, sender/subject 필터, 모바일 Work 대화 결과 확인은 문서상 PASS. 이 대화에서 Gmail Plugin 검색 `installed=false`, Work 이벤트 소스 조회 `404` → **계정의 실제 Gmail 연결·트리거 생성권·GitHub PRIVATE Work 쓰기권한은 NOT_VERIFIED**. Notifier 소스/실제 이벤트 분기 G0 미조회.
