@@ -18,6 +18,13 @@
 - 본 파일의 GitHub readback 및 상대경로 정적 확인은 **호스트 자동 로딩 E2E PASS가 아니다**. Windows 로컬 실행 경로·클론 최신화·Claude Code 버전·설정·`/context all` 결과는 호스트에서 별도 확인한다.
 
 
+## P1/P2 단계별 맥락 조회 — 질문이 들어온 경우에만
+
+- CoWork 전체/스킬/운영/Knowledge 현황 질문이 들어오면, 먼저 `collab/CONTEXT_BRIEF.md`로 기존 Work를 찾고 해당 `CURRENT.md` **최신 요약과 필요한 하위 작업 흐름**을 확인한다. 질문이 최신 최상단 단락과 다른 흐름을 묻는 경우, 이 Work의 기존 하위 제목/최신 결과를 **추가 조회**해 문맥 누락을 막는다. 여러 Work가 관련된 질문이면 해당 목적 CURRENT만 추가한다.
+- PRIVATE 최신 `main` 로컬 checkout을 검증했고 Python 실행이 허용된 경우에 한해 기존 읽기 전용 조회기 `python collab/dashboard/context_query.py --root . --question "사용자 질문"`을 **보조 힌트**로 사용할 수 있다. 매번 CLI를 호출할 의무는 없으며, 조회 실패나 오래된 로컬 checkout이면 직접 GitHub main을 읽어 확인한다. 조회기 결과 `LOCAL_CURRENT_READ_ONLY`는 원격 최신성·호스트 LIVE·완료 판정이 아니다.
+- 연결된 요청·패키지·리뷰·영수증의 파일 존재만으로 독립 리뷰/승인/비용 지급/READY·호스트 실행이 확인됐다고 말하지 않는다. 비교 기준 commit이 고정되지 않았다면 변경분 추정 금지. PUBLIC에는 기존 allowlist만 사용.
+- 구체적인 목적별 경로·예시는 [P1/P2 적용 가이드](collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/P1_P2_CONTEXT_APPLICATION_GUIDE_r0001_20261120_KST.md), [실사용 검증 체크](collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/P1_P2_AUTO_USE_READONLY_E2E_CHECK_r0001_20261120_KST.md)에 기록. **이 문서 게시는 로컬 세션 로딩/실행을 증명하지 않음**. 사용자가 명시적으로 요구하지 않은 유료 리뷰·LIVE 변경·이전 REQUEST 재실행 금지.
+
 ## 신규 REQUEST의 정책 사전 호환성
 
 GPT가 신규 리뷰 요청을 준비할 때 Windows Claude Code는 LIVE 운영 설정을 **읽기 전용** 조회하고, `collab/ops/review_request_gate.py select/check`를 기존 승인 범위 내에서 실행해 정책명·건당 예산·고정 ZIP SHA/CRC가 호환되는지만 보고한다. 로컬 설정 파일의 내용·토큰·개인키는 GitHub/대화/로그에 복사하지 않는다. `POLICY_COMPATIBLE_NOT_APPROVED` 및 `PASS_PREPUBLICATION_ONLY`는 승인/서명/READY/모델 실행의 증거가 아니다. 실제 승인·서명 전에는 별도 `approve_request.py check`의 보호 범위·만료·권한 검사를 수행한다. 설계 후보에만 있는 미등록 정책으로 기존 LIVE 리뷰를 요청하지 않는다. 조회·시험 실패 시 BLOCKED, 직접 정책 설정/위임을 우회 변경하지 않는다.
