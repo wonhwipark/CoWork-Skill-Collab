@@ -1,0 +1,171 @@
+{
+  "schema": "COWORK_V029_5_WINDOWS_REAL_ZIP_TEST_V3",
+  "real_live": false,
+  "real_model_calls": 0,
+  "actual_paid_reviews": 0,
+  "actual_remote_ready_posts": 0,
+  "rounds": [
+    {
+      "round": 1,
+      "isolated_temp_dir": true,
+      "elapsed_seconds": 162.5,
+      "watcher_5window": "PASS",
+      "full_suite": "PASS",
+      "full_suite_classification": "PASS",
+      "steps": [
+        {
+          "step": "five_window_companion",
+          "status": "PASS",
+          "passed": 4,
+          "minimum_pass_required": 4,
+          "returncode": 0,
+          "failed_tests": [],
+          "summary": "4 passed in 21.30s",
+          "stdout_tail": ""
+        },
+        {
+          "step": "full_suite",
+          "status": "PASS",
+          "passed": 1038,
+          "minimum_pass_required": 1038,
+          "returncode": 0,
+          "failed_tests": [],
+          "summary": "1038 passed, 12 skipped, 15 subtests passed in 140.02s (0:02:20)",
+          "stdout_tail": ""
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "isolated_temp_dir": true,
+      "elapsed_seconds": 161.5,
+      "watcher_5window": "PASS",
+      "full_suite": "PASS",
+      "full_suite_classification": "PASS",
+      "steps": [
+        {
+          "step": "five_window_companion",
+          "status": "PASS",
+          "passed": 4,
+          "minimum_pass_required": 4,
+          "returncode": 0,
+          "failed_tests": [],
+          "summary": "4 passed in 19.22s",
+          "stdout_tail": ""
+        },
+        {
+          "step": "full_suite",
+          "status": "PASS",
+          "passed": 1038,
+          "minimum_pass_required": 1038,
+          "returncode": 0,
+          "failed_tests": [],
+          "summary": "1038 passed, 12 skipped, 15 subtests passed in 141.07s (0:02:21)",
+          "stdout_tail": ""
+        }
+      ]
+    },
+    {
+      "round": 3,
+      "isolated_temp_dir": true,
+      "elapsed_seconds": 163.5,
+      "watcher_5window": "PASS",
+      "full_suite": "PASS",
+      "full_suite_classification": "PASS",
+      "steps": [
+        {
+          "step": "five_window_companion",
+          "status": "PASS",
+          "passed": 4,
+          "minimum_pass_required": 4,
+          "returncode": 0,
+          "failed_tests": [],
+          "summary": "4 passed in 20.88s",
+          "stdout_tail": ""
+        },
+        {
+          "step": "full_suite",
+          "status": "PASS",
+          "passed": 1038,
+          "minimum_pass_required": 1038,
+          "returncode": 0,
+          "failed_tests": [],
+          "summary": "1038 passed, 12 skipped, 15 subtests passed in 141.44s (0:02:21)",
+          "stdout_tail": ""
+        }
+      ]
+    },
+    {
+      "round": 4,
+      "isolated_temp_dir": true,
+      "elapsed_seconds": 163.9,
+      "watcher_5window": "PASS",
+      "full_suite": "PASS",
+      "full_suite_classification": "PASS",
+      "steps": [
+        {
+          "step": "five_window_companion",
+          "status": "PASS",
+          "passed": 4,
+          "minimum_pass_required": 4,
+          "returncode": 0,
+          "failed_tests": [],
+          "summary": "4 passed in 21.11s",
+          "stdout_tail": ""
+        },
+        {
+          "step": "full_suite",
+          "status": "PASS",
+          "passed": 1038,
+          "minimum_pass_required": 1038,
+          "returncode": 0,
+          "failed_tests": [],
+          "summary": "1038 passed, 12 skipped, 15 subtests passed in 141.55s (0:02:21)",
+          "stdout_tail": ""
+        }
+      ]
+    },
+    {
+      "round": 5,
+      "isolated_temp_dir": true,
+      "elapsed_seconds": 163.3,
+      "watcher_5window": "PASS",
+      "full_suite": "PASS",
+      "full_suite_classification": "PASS",
+      "steps": [
+        {
+          "step": "five_window_companion",
+          "status": "PASS",
+          "passed": 4,
+          "minimum_pass_required": 4,
+          "returncode": 0,
+          "failed_tests": [],
+          "summary": "4 passed in 21.22s",
+          "stdout_tail": ""
+        },
+        {
+          "step": "full_suite",
+          "status": "PASS",
+          "passed": 1038,
+          "minimum_pass_required": 1038,
+          "returncode": 0,
+          "failed_tests": [],
+          "summary": "1038 passed, 12 skipped, 15 subtests passed in 140.90s (0:02:20)",
+          "stdout_tail": ""
+        }
+      ]
+    }
+  ],
+  "independent_review": "NOT_RUN",
+  "zip": {
+    "zip_sha256": "c67bc342fe77547b000fc42e1b886396cbef035c0d265dbcd124947e267ed83f",
+    "size": 310753,
+    "members": 114,
+    "crc": "PASS"
+  },
+  "watcher_5window_rounds_pass": "5/5",
+  "full_suite_rounds_pass": "5/5",
+  "full_suite_failed_tests_seen": [],
+  "watcher_5window_overall": "PASS",
+  "full_suite_overall": "PASS"
+}
