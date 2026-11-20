@@ -1,0 +1,336 @@
+{
+  "schema": "COWORK_V029_WORK_WRITER_5_ROUNDS_V1",
+  "package_root": "D:\\User\\whpark\\cowork-phase1\\v029_disp\\pkg",
+  "real_live": false,
+  "real_model_calls": 0,
+  "rounds": [
+    {
+      "round": 1,
+      "cas_stale": {
+        "conflicts": 4,
+        "max_attempts": 2,
+        "entries_present": true,
+        "seed_kept": true
+      },
+      "cas_threaded": {
+        "conflicts": 6,
+        "max_attempts": 4,
+        "exhausted_with_cap_3": [
+          "D2"
+        ],
+        "recovered_by_caller_retry": [
+          "D2"
+        ],
+        "all_five_works_present": true,
+        "no_duplicates": true,
+        "puts": 11,
+        "stale_conflicts_total": 14
+      },
+      "skill_rebase": {
+        "statuses": {
+          "S1": "APPLIED",
+          "S2": "REBASED",
+          "S3": "REBASED"
+        },
+        "head_rev": 4,
+        "head_tree_sha": "fbbbe2f9eb89e73bb738f1eae9754ccb914a58428dd59ce0cf7479e748c7096f",
+        "candidate_shas": {
+          "S1": "f54837b8d56b83b4",
+          "S2": "6a82f3fa4535181c",
+          "S3": "fbbbe2f9eb89e73b"
+        },
+        "earlier_changes_kept": true,
+        "pinned_unchanged_after_later_changes": true,
+        "all_three_merged": true
+      },
+      "uncertain": {
+        "window": "S1",
+        "remote_evidence_present": true,
+        "verdict": "SETTLED_BY_EVIDENCE",
+        "expected": "SETTLED_BY_EVIDENCE",
+        "others_not_uncertain": true,
+        "db_unchanged_by_reconcile": true,
+        "model_calls_started_by_reconcile": 0,
+        "dispatch_events_per_window": {
+          "D1": 1,
+          "D2": 1,
+          "S1": 1,
+          "S2": 1,
+          "S3": 1
+        },
+        "plan": {
+          "D1": "PROCEED",
+          "D2": "PROCEED",
+          "S1": "PROCEED",
+          "S2": "PROCEED",
+          "S3": "PROCEED"
+        },
+        "remote_result_sha256": "a61d372a2631e00a9d4f7b9987b4c818ae7b799c457ef5e1bc5f08410ec95705",
+        "plan_as_expected": true
+      },
+      "pass": true
+    },
+    {
+      "round": 2,
+      "cas_stale": {
+        "conflicts": 4,
+        "max_attempts": 2,
+        "entries_present": true,
+        "seed_kept": true
+      },
+      "cas_threaded": {
+        "conflicts": 9,
+        "max_attempts": 4,
+        "exhausted_with_cap_3": [],
+        "recovered_by_caller_retry": [],
+        "all_five_works_present": true,
+        "no_duplicates": true,
+        "puts": 11,
+        "stale_conflicts_total": 13
+      },
+      "skill_rebase": {
+        "statuses": {
+          "S1": "APPLIED",
+          "S2": "REBASED",
+          "S3": "REBASED"
+        },
+        "head_rev": 4,
+        "head_tree_sha": "fbbbe2f9eb89e73bb738f1eae9754ccb914a58428dd59ce0cf7479e748c7096f",
+        "candidate_shas": {
+          "S1": "f54837b8d56b83b4",
+          "S2": "6a82f3fa4535181c",
+          "S3": "fbbbe2f9eb89e73b"
+        },
+        "earlier_changes_kept": true,
+        "pinned_unchanged_after_later_changes": true,
+        "all_three_merged": true
+      },
+      "uncertain": {
+        "window": "S1",
+        "remote_evidence_present": false,
+        "verdict": "UNCERTAIN_HOLD",
+        "expected": "UNCERTAIN_HOLD",
+        "others_not_uncertain": true,
+        "db_unchanged_by_reconcile": true,
+        "model_calls_started_by_reconcile": 0,
+        "dispatch_events_per_window": {
+          "D1": 1,
+          "D2": 1,
+          "S1": 1,
+          "S2": 1,
+          "S3": 1
+        },
+        "plan": {
+          "D1": "PROCEED",
+          "D2": "PROCEED",
+          "S1": "UNCERTAIN_HOLD",
+          "S2": "WAIT_DEPENDENCY",
+          "S3": "WAIT_DEPENDENCY"
+        },
+        "remote_result_sha256": null,
+        "plan_as_expected": true
+      },
+      "pass": true
+    },
+    {
+      "round": 3,
+      "cas_stale": {
+        "conflicts": 4,
+        "max_attempts": 2,
+        "entries_present": true,
+        "seed_kept": true
+      },
+      "cas_threaded": {
+        "conflicts": 6,
+        "max_attempts": 4,
+        "exhausted_with_cap_3": [
+          "S2"
+        ],
+        "recovered_by_caller_retry": [
+          "S2"
+        ],
+        "all_five_works_present": true,
+        "no_duplicates": true,
+        "puts": 11,
+        "stale_conflicts_total": 14
+      },
+      "skill_rebase": {
+        "statuses": {
+          "S1": "APPLIED",
+          "S2": "REBASED",
+          "S3": "REBASED"
+        },
+        "head_rev": 4,
+        "head_tree_sha": "fbbbe2f9eb89e73bb738f1eae9754ccb914a58428dd59ce0cf7479e748c7096f",
+        "candidate_shas": {
+          "S1": "f54837b8d56b83b4",
+          "S2": "6a82f3fa4535181c",
+          "S3": "fbbbe2f9eb89e73b"
+        },
+        "earlier_changes_kept": true,
+        "pinned_unchanged_after_later_changes": true,
+        "all_three_merged": true
+      },
+      "uncertain": {
+        "window": "D1",
+        "remote_evidence_present": true,
+        "verdict": "SETTLED_BY_EVIDENCE",
+        "expected": "SETTLED_BY_EVIDENCE",
+        "others_not_uncertain": true,
+        "db_unchanged_by_reconcile": true,
+        "model_calls_started_by_reconcile": 0,
+        "dispatch_events_per_window": {
+          "D1": 1,
+          "D2": 1,
+          "S1": 1,
+          "S2": 1,
+          "S3": 1
+        },
+        "plan": {
+          "D1": "PROCEED",
+          "D2": "PROCEED",
+          "S1": "PROCEED",
+          "S2": "PROCEED",
+          "S3": "PROCEED"
+        },
+        "remote_result_sha256": "7cf40fbbac8c535307fc1407a62f8062bcb939c2ab53fdf3f435d9c62b20995b",
+        "plan_as_expected": true
+      },
+      "pass": true
+    },
+    {
+      "round": 4,
+      "cas_stale": {
+        "conflicts": 4,
+        "max_attempts": 2,
+        "entries_present": true,
+        "seed_kept": true
+      },
+      "cas_threaded": {
+        "conflicts": 6,
+        "max_attempts": 4,
+        "exhausted_with_cap_3": [
+          "D1"
+        ],
+        "recovered_by_caller_retry": [
+          "D1"
+        ],
+        "all_five_works_present": true,
+        "no_duplicates": true,
+        "puts": 11,
+        "stale_conflicts_total": 14
+      },
+      "skill_rebase": {
+        "statuses": {
+          "S1": "APPLIED",
+          "S2": "REBASED",
+          "S3": "NEEDS_DECISION"
+        },
+        "head_rev": 3,
+        "head_tree_sha": "6a82f3fa4535181cad3dbd917f21a50048a308c7b09614b4729b9bef0de31a9f",
+        "candidate_shas": {
+          "S1": "f54837b8d56b83b4",
+          "S2": "6a82f3fa4535181c"
+        },
+        "earlier_changes_kept": true,
+        "pinned_unchanged_after_later_changes": true,
+        "semantic_conflict_blocked_without_write": true
+      },
+      "uncertain": {
+        "window": "D2",
+        "remote_evidence_present": false,
+        "verdict": "UNCERTAIN_HOLD",
+        "expected": "UNCERTAIN_HOLD",
+        "others_not_uncertain": true,
+        "db_unchanged_by_reconcile": true,
+        "model_calls_started_by_reconcile": 0,
+        "dispatch_events_per_window": {
+          "D1": 1,
+          "D2": 1,
+          "S1": 1,
+          "S2": 1,
+          "S3": 1
+        },
+        "plan": {
+          "D1": "PROCEED",
+          "D2": "UNCERTAIN_HOLD",
+          "S1": "PROCEED",
+          "S2": "PROCEED",
+          "S3": "PROCEED"
+        },
+        "remote_result_sha256": null,
+        "plan_as_expected": true
+      },
+      "pass": true
+    },
+    {
+      "round": 5,
+      "cas_stale": {
+        "conflicts": 4,
+        "max_attempts": 2,
+        "entries_present": true,
+        "seed_kept": true
+      },
+      "cas_threaded": {
+        "conflicts": 4,
+        "max_attempts": 3,
+        "exhausted_with_cap_3": [
+          "S1"
+        ],
+        "recovered_by_caller_retry": [
+          "S1"
+        ],
+        "all_five_works_present": true,
+        "no_duplicates": true,
+        "puts": 11,
+        "stale_conflicts_total": 12
+      },
+      "skill_rebase": {
+        "statuses": {
+          "S1": "APPLIED",
+          "S2": "REBASED",
+          "S3": "REBASED"
+        },
+        "head_rev": 4,
+        "head_tree_sha": "fbbbe2f9eb89e73bb738f1eae9754ccb914a58428dd59ce0cf7479e748c7096f",
+        "candidate_shas": {
+          "S1": "f54837b8d56b83b4",
+          "S2": "6a82f3fa4535181c",
+          "S3": "fbbbe2f9eb89e73b"
+        },
+        "earlier_changes_kept": true,
+        "pinned_unchanged_after_later_changes": true,
+        "all_three_merged": true
+      },
+      "uncertain": {
+        "window": null,
+        "remote_evidence_present": false,
+        "verdict": null,
+        "expected": null,
+        "others_not_uncertain": true,
+        "db_unchanged_by_reconcile": true,
+        "model_calls_started_by_reconcile": 0,
+        "dispatch_events_per_window": {
+          "D1": 1,
+          "D2": 1,
+          "S1": 1,
+          "S2": 1,
+          "S3": 1
+        },
+        "plan": {
+          "D1": "PROCEED",
+          "D2": "PROCEED",
+          "S1": "PROCEED",
+          "S2": "PROCEED",
+          "S3": "PROCEED"
+        },
+        "remote_result_sha256": null,
+        "plan_as_expected": true
+      },
+      "pass": true
+    }
+  ],
+  "rounds_pass": "5/5",
+  "threaded_cap3_exhaustions": 4,
+  "overall": "PASS"
+}
