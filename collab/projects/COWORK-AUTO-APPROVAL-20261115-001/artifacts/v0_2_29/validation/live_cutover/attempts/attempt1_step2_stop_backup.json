@@ -1,0 +1,43 @@
+{
+  "started": "2026-11-20 20:44:36",
+  "pids_before": [
+    12044,
+    18972
+  ],
+  "task_before": "Running",
+  "pids_after_stop": [],
+  "task_after_stop": "Ready",
+  "notifier_state": "Running",
+  "db_stopped": {
+    "integrity": "ok",
+    "jobs_by_state": {
+      "COMPLETED": 9
+    },
+    "auto_claims_by_stage": {
+      "READY_POSTED": 2,
+      "UNCERTAIN": 1
+    },
+    "auto_seen": 11,
+    "lease": [
+      [
+        "1",
+        "github",
+        "1",
+        "2026-11-14T22:57:57.244538+00:00"
+      ]
+    ],
+    "audit_max_id": 17656
+  },
+  "cutover_bundle": {
+    "target": "D:\\User\\whpark\\skill-collab-watcher-dist\\backup_v0_2_25_cutover_20261120_204447",
+    "files": 117,
+    "manifest_verified": true,
+    "install_tree_equals_live": true,
+    "manifest_sha256": "ba814bed65832fe5ee791f179a3bfb3c42252a56f5f79995a6ab48600c4da83d",
+    "db_snapshot_sha256": "118bc12a3409e5ce47137d3eba346bd250be4d62327c7befe2ca2d6aaf9eeaf2",
+    "db_integrity": "ok",
+    "install_tree_sha256": "f691bcf808cbf81e9c2c2a9be65335e527c2df99ea4d54a427665e4c90045c9f",
+    "private_key_in_bundle": false
+  },
+  "STOP_AND_BACKUP": "PASS"
+}
