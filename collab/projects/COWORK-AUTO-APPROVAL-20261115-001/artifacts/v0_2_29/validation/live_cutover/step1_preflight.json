@@ -1,0 +1,96 @@
+{
+  "started": "2026-11-20 21:02:05",
+  "existing_cutover_files": [],
+  "current_top": "## 2026-11-20 KST — 사용자 v0.2.29 LIVE/USD3 운영 컷오버 명시 승인 / Windows 실제 실행 대기",
+  "zip": {
+    "bytes": 310753,
+    "sha256": "c67bc342fe77547b000fc42e1b886396cbef035c0d265dbcd124947e267ed83f",
+    "members": 114,
+    "crc_bad": null,
+    "unsafe_paths": []
+  },
+  "live": {
+    "tree_sha256": "f691bcf808cbf81e9c2c2a9be65335e527c2df99ea4d54a427665e4c90045c9f",
+    "config_sha": "fbce30a97c06f8d04e2e0029c731c41d2ccd87963196afe80279f10cf7509c27",
+    "delegation_sha": "ddead4e497759ac30db9e8d90974cfe4f68114d99ef99cdf85a083e9bf54fd4c",
+    "version_line": "__version__ = \"0.2.25\""
+  },
+  "bundle": {
+    "files_in_manifest": 116,
+    "bad_files": [],
+    "manifest_sha": "d23b52068733ec7dcce95024f6f919a0e30147e00b502b3bd449d29406256d92",
+    "db_snapshot_sha": "111c85ab30de926759d1caebec78b65a228dd4ab7bfa126c3587ce13dd465fa5",
+    "install_tree_sha": "f691bcf808cbf81e9c2c2a9be65335e527c2df99ea4d54a427665e4c90045c9f",
+    "github_record_has_manifest_sha": true,
+    "github_record_has_db_sha": true,
+    "github_record_has_tree_sha": true,
+    "private_key_files": []
+  },
+  "tasks": {
+    "SKILL-COLLAB-Claude-Review-Watcher": "Disabled",
+    "SKILL-COLLAB-Dashboard-Deploy-Bridge": "Disabled",
+    "SKILL-COLLAB-Dashboard-Updater": "Disabled",
+    "SKILL-COLLAB-GitHub-Watcher": "Running",
+    "SKILL-COLLAB-Notifier": "Running"
+  },
+  "watcher_pids": [
+    29604,
+    26620
+  ],
+  "db": {
+    "integrity": "ok",
+    "jobs_by_state": {
+      "COMPLETED": 9
+    },
+    "auto_claims_by_stage": {
+      "READY_POSTED": 2,
+      "UNCERTAIN": 1
+    },
+    "auto_seen": 11,
+    "lease": [
+      [
+        "1",
+        "github",
+        "1",
+        "2026-11-14T22:57:57.244538+00:00"
+      ]
+    ],
+    "audit_max_id": 17777
+  },
+  "authority": {
+    "elevated_high_integrity": false,
+    "delegation_open_rw": true,
+    "config_open_rw": true,
+    "install_dir_acl_has_modify_for_users": true
+  },
+  "delegation": {
+    "enabled": true,
+    "max_request_usd": 1.0,
+    "enabled_at": "2026-11-16T19:47:50+09:00",
+    "expires_at": "2026-12-16T19:47:50+09:00",
+    "project_families": [
+      "COWORK-",
+      "L1-WORKSPACE-"
+    ],
+    "skills": [
+      "cowork-review-watcher",
+      "cowork-dashboard",
+      "l1-knowledge-updater"
+    ],
+    "repo_id": "1451933830"
+  },
+  "gate_before": "REQUEST_PREFLIGHT_BLOCKED: POLICY_COST_MISMATCH",
+  "legacy": {
+    "requests": 18,
+    "summary": {
+      "TERMINAL_HISTORY": 13,
+      "NO_HISTORY_NON_STATIC_TIER": 1,
+      "SEEN_WHILE_DISABLED": 3,
+      "CLAIM_UNCERTAIN": 1
+    },
+    "static_no_history": 0,
+    "latest_created_utc": "2026-11-20T09:19:32Z"
+  },
+  "stop_reasons": [],
+  "PRECHECK": "PASS"
+}
