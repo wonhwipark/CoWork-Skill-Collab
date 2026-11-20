@@ -5,11 +5,11 @@
       "work_id": "L1-WORKSPACE-RAG-20261111-001",
       "skill": "l1-knowledge-updater",
       "title": "l1-knowledge-updater",
-      "phase": "VIEWER_AUTH_EDIT_DESIGN_R1_COMPLETED_R0002_G0_PENDING",
-      "owner": "GPT 설계 r0002 보완 및 독립 R1 지적 판정 완료. Windows 리뷰 결과/영수증 원격 확인, Linux 현장 G0 미검증",
+      "phase": "VIEWER_AUTH_EDIT_DESIGN_R0003_G0_PENDING",
+      "owner": "GPT r0003 사용자 피드백 반영: 무로그인 Read Only 유지·편집 전용 인증·Work 표시 제목 통일. 기존 R1 ACCEPT_WITH_CHANGE 완료",
       "self_test": "PASS",
       "independent_review": "WIKI_UI_UX_R1_ACCEPT_WITH_CHANGE_CLOSED; VIEWER_AUTH_EDIT_DESIGN_R1_ACCEPT_WITH_CHANGE_CLOSED_B1_M2_N4",
-      "next_action": "G0 READ_ONLY: 실제 Linux Viewer 인증·MSC canonical anchor·Updater/Kernel writer 계약 확인 후 UI/쓰기 활성화 게이트 결정. 추가 유료 리뷰/재실행 없음. 기존 B1-B3/E3-E4 미검증, 구현·배포 NOT_RUN."
+      "next_action": "업무 GPT/Linux Agent READ_ONLY G0: 기존 Viewer Work ID/title/summary 표시 소스·과거 인증 제거 상태·편집자 인증 후보·Work writer 연동 확인. 원본 Work ID/폴더 불변. 실편집 구현·호스트 배포·신규 유료 리뷰 NOT_RUN."
     }
   ]
 }
