@@ -1,5 +1,14 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-20 KST — Viewer Work 목록 이슈번호(SOC-xxx 등) 선두 표시 반영 r0004
+
+- **사용자 최신 요청:** 기존 Viewer `l1-workspace/works/`의 Work 목록에서 관련 이슈번호(예: SOC-1234)가 **검증되어 존재한다면 제목 맨 앞**에 배치. `SOC-1234 — NR L1 Tx — UL Tx Switching 분석`처럼 표시, Work ID는 보조 줄. 번호가 없으면 기존 내용 중심 제목 유지. Work ID·실제 폴더·Evidence/링크/원본 불변.
+- **설계:** [L1_WORKSPACE_VIEWER_AUTH_EDIT_DETAILED_DESIGN_r0004_20261120_KST.md](L1_WORKSPACE_VIEWER_AUTH_EDIT_DETAILED_DESIGN_r0004_20261120_KST.md) · PRIVATE main commit `6c57b71365e77528c770ebfd0b3700fe988f1a1c`, remote readback PASS. 표시 제목은 Work 트리·검색·breadcrumb·본문 헤더에 일관되게 적용. 원본 제목에 같은 번호가 있으면 중복 출력 금지; 관련 번호 복수·대표 미확인 시 임의 선택/추정 금지. 읽기 권한/B2 원본 보호 유지. 기존 로그인 없는 Read Only 및 [수정] 전용 인증 정책도 유지.
+- **진행 판정:** r0004는 요구 반영 문서 변경 완료. 기존 R1 리뷰/영수증 및 r0001~r0003 불변; r0004 독립 리뷰·Viewer 구현/호스트 시험·패키지 배포 NOT_RUN. 실제 이슈번호 metadata 제공 여부 G0 미확인.
+- **NEXT_ONE_ACTION:** 업무 GPT/Linux Agent의 기존 READ_ONLY G0에 이슈번호/Work title 원본·권한 및 Viewer 목록 매핑까지 포함해 REUSE/CONNECT/검증된 GAP 확인. 신규 유료 REQUEST/READY 생성 0.
+
+---
+
 ## 2026-11-20 KST — Viewer 무로그인 열람 보존·Work 제목 가독성 통일 설계 r0003
 
 - **사용자 실사용 피드백:** 최초 Viewer에서 ID/PW 입력이 반복 실패하여, 업무망 동료들이 로그인 없이 Read Only 열람하도록 사용자가 인증 제거를 요청한 이력 확인(사용자 보고). 이번 구현은 **Viewer 최초 접근/조회 로그인 복구 금지**, 사용자가 [수정]을 클릭할 때만 **편집 전용 ID/PW** 및 서버 편집 권한 검증. 실제 Linux 인증 코드/과거 실패 원인은 미접근.
