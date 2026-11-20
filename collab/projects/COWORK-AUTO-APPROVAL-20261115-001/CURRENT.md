@@ -1,5 +1,16 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-20 KST — GPT v0.2.29 LIVE 컷오버 최종 판정: 수용 / 첫 유료 E2E 미관측
+
+- **GPT_DISPOSITION=`ACCEPT_LIVE_CUTOVER_HOST_REPORTED_E2E_PENDING`**. [최종 판정](./GPT_V029_LIVE_CUTOVER_FINAL_DISPOSITION_r0001_20261120_KST.md). Windows Claude Code의 최종 호스트 결과와 PRIVATE 원격 정본을 대조한 판정. GPT가 운영 PC에 직접 접속한 검증은 아님.
+- **운영:** v0.2.29 LIVE, `POLICY-STATIC-V1` USD3.00, `max_request_usd=3.0`, 신규 `enabled_at=2026-11-20T21:03:18+09:00`. 2주기+재시작+2주기 PASS, 구 요청 재서명·READY·모델 호출 0. 기존 정책의 기타 범위와 만료일 2026-12-16 유지.
+- **리허설/롤백 이력:** 5차 컷오버 성공. 앞선 4차례 검증기 오탐에 따른 자동 롤백 성공·이력 보존; 약 24분의 중단과 검증기 양/음성 분류 결함은 삭제하지 않음.
+- **미검증:** `LIVE_PAID_E2E=NOT_RUN`(새 유료 요청 미도착); `su_l1=OFF/UNRESOLVED`; 설치·설정 ACL의 `Authenticated Users:(M)` 잔여 위험. 실제 유료 E2E 완료로 승격 금지.
+- **NEXT_ONE_ACTION:** 첫 실제 범위 내 STATIC 요청 도착 시 승인/READY/디스패치/영수증/비용/중복 0을 기록해 E2E 판정. 이를 위한 시험용 유료 요청·구 요청 재처리·추가 운영 컷오버 없음.
+
+---
+
+
 ## 2026-11-20 KST — v0.2.29 LIVE 컷오버 완료: STATIC USD3 + 위임 USD3 + 신규 enabled_at 적용 / 유료 E2E 미관측
 
 - **결과:** `CLAUDE_V029_LIVE_CUTOVER_RESULT_FOR_GPT_20261120.md` (PRIVATE main, commit `a3b5ed120be0`). 운영 watcher **v0.2.29 가동 중**(21:04 KST 재가동), 등록 `POLICY-STATIC-V1` 3.00, 보호 위임 `max_request_usd` 3.0, **`enabled_at` 2026-11-20T21:03:18+09:00**. 범위·만료(2026-12-16)·repo_id·신뢰 루트·키·작업 불변.
