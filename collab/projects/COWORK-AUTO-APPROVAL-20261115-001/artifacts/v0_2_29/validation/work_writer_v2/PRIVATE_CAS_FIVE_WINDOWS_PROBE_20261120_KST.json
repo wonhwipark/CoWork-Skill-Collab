@@ -3,5 +3,10 @@
   "purpose": "synthetic test only; non-executable no-request no-model",
   "work_id": "COWORK-AUTO-APPROVAL-20261115-001",
   "session": "five-window-20261120",
-  "windows": []
+  "windows": [
+    {
+      "id": "DESIGN-A",
+      "kind": "design"
+    }
+  ]
 }
