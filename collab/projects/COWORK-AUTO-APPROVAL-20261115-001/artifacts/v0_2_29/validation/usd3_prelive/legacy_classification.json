@@ -1,0 +1,354 @@
+{
+ "requests": 18,
+ "summary": {
+  "TERMINAL_HISTORY": 13,
+  "NO_HISTORY_NON_STATIC_TIER": 1,
+  "SEEN_WHILE_DISABLED": 3,
+  "CLAIM_UNCERTAIN": 1
+ },
+ "rows": [
+  {
+   "id": "REQ-COWORK-ACE-PEC-HOP-ACON-DESIGN-R1-20261118",
+   "policy": "POLICY-STATIC-V1-DESIGN",
+   "class": "TERMINAL_HISTORY",
+   "jobs": [
+    "COMPLETED"
+   ],
+   "claim": null,
+   "seen": [
+    1794957048,
+    1
+   ],
+   "in_pending_table": false,
+   "remote": [
+    "APPROVAL_SIG.json",
+    "READY.md",
+    "dispatch",
+    "receipts",
+    "reviews"
+   ],
+   "created_utc": "2026-11-17T23:10:18Z",
+   "created_before_now": true
+  },
+  {
+   "id": "REQ-COWORK-AUTO-APPROVAL-V023-R2-20261115",
+   "policy": "POLICY-STATIC-V1-LARGE",
+   "class": "TERMINAL_HISTORY",
+   "jobs": [
+    "COMPLETED"
+   ],
+   "claim": null,
+   "seen": null,
+   "in_pending_table": false,
+   "remote": [
+    "APPROVAL_SIG.json",
+    "READY.md",
+    "dispatch",
+    "receipts",
+    "reviews"
+   ],
+   "created_utc": "2026-11-15T10:25:17Z",
+   "created_before_now": true
+  },
+  {
+   "id": "REQ-COWORK-BUDGET-V025-DESIGN-R1-20261117",
+   "policy": "POLICY-STATIC-V1-DESIGN",
+   "class": "NO_HISTORY_NON_STATIC_TIER",
+   "jobs": null,
+   "claim": null,
+   "seen": [
+    1794887426,
+    1
+   ],
+   "in_pending_table": false,
+   "remote": [],
+   "created_utc": "2026-11-17T03:49:47Z",
+   "created_before_now": true
+  },
+  {
+   "id": "REQ-COWORK-BUDGET-V025-LARGE-R2-20261117",
+   "policy": "POLICY-STATIC-V1-LARGE",
+   "class": "TERMINAL_HISTORY",
+   "jobs": [
+    "COMPLETED"
+   ],
+   "claim": null,
+   "seen": [
+    1794922787,
+    1
+   ],
+   "in_pending_table": false,
+   "remote": [
+    "APPROVAL_SIG.json",
+    "READY.md",
+    "dispatch",
+    "receipts",
+    "reviews"
+   ],
+   "created_utc": "2026-11-17T13:38:59Z",
+   "created_before_now": true
+  },
+  {
+   "id": "REQ-COWORK-DASHBOARD-PRESENTATION-20261115-001",
+   "policy": "POLICY-STATIC-V1",
+   "class": "SEEN_WHILE_DISABLED",
+   "jobs": null,
+   "claim": null,
+   "seen": [
+    1794825817,
+    0
+   ],
+   "in_pending_table": false,
+   "remote": [],
+   "created_utc": "2026-11-15T01:26:30Z",
+   "created_before_now": true
+  },
+  {
+   "id": "REQ-COWORK-V0214-R1-20261114",
+   "policy": "POLICY-STATIC-V1",
+   "class": "TERMINAL_HISTORY",
+   "jobs": null,
+   "claim": null,
+   "seen": null,
+   "in_pending_table": false,
+   "remote": [
+    "APPROVAL_SIG.json",
+    "READY.md",
+    "receipts",
+    "reviews"
+   ],
+   "created_utc": "2026-11-14T07:03:32Z",
+   "created_before_now": true
+  },
+  {
+   "id": "REQ-COWORK-V0217-R2-20261114",
+   "policy": "POLICY-STATIC-V1-LARGE",
+   "class": "TERMINAL_HISTORY",
+   "jobs": null,
+   "claim": null,
+   "seen": null,
+   "in_pending_table": false,
+   "remote": [
+    "APPROVAL_SIG.json",
+    "READY.md",
+    "receipts",
+    "reviews"
+   ],
+   "created_utc": "2026-11-14T12:54:27Z",
+   "created_before_now": true
+  },
+  {
+   "id": "REQ-COWORK-V0219-R2-20261114",
+   "policy": "POLICY-STATIC-V1-LARGE",
+   "class": "TERMINAL_HISTORY",
+   "jobs": null,
+   "claim": null,
+   "seen": null,
+   "in_pending_table": false,
+   "remote": [
+    "APPROVAL_SIG.json",
+    "READY.md",
+    "dispatch",
+    "receipts",
+    "reviews"
+   ],
+   "created_utc": "2026-11-14T15:43:48Z",
+   "created_before_now": true
+  },
+  {
+   "id": "REQ-COWORK-V0220-R1-20261115",
+   "policy": "POLICY-STATIC-V1",
+   "class": "TERMINAL_HISTORY",
+   "jobs": null,
+   "claim": null,
+   "seen": null,
+   "in_pending_table": false,
+   "remote": [
+    "APPROVAL_SIG.json",
+    "READY.md",
+    "dispatch",
+    "receipts",
+    "reviews"
+   ],
+   "created_utc": "2026-11-14T16:17:59Z",
+   "created_before_now": true
+  },
+  {
+   "id": "REQ-COWORK-V028-AUTO-REVIEW-R1-20261120",
+   "policy": "POLICY-STATIC-V1-DESIGN",
+   "class": "TERMINAL_HISTORY",
+   "jobs": [
+    "COMPLETED"
+   ],
+   "claim": null,
+   "seen": [
+    1795106813,
+    1
+   ],
+   "in_pending_table": false,
+   "remote": [
+    "APPROVAL_SIG.json",
+    "READY.md",
+    "dispatch",
+    "receipts",
+    "reviews"
+   ],
+   "created_utc": "2026-11-19T16:46:26Z",
+   "created_before_now": true
+  },
+  {
+   "id": "REQ-COWORK-V029-ONEOFF-R1-20261120",
+   "policy": "POLICY-STATIC-V1-DESIGN",
+   "class": "TERMINAL_HISTORY",
+   "jobs": [
+    "COMPLETED"
+   ],
+   "claim": null,
+   "seen": null,
+   "in_pending_table": false,
+   "remote": [
+    "APPROVAL_SIG.json",
+    "READY.md",
+    "dispatch",
+    "receipts",
+    "reviews"
+   ],
+   "created_utc": "2026-11-20T09:19:32Z",
+   "created_before_now": true
+  },
+  {
+   "id": "REQ-L1-MSC-DUAL-ENTRY-DESIGN-R1-20261117",
+   "policy": "POLICY-STATIC-V1",
+   "class": "TERMINAL_HISTORY",
+   "jobs": [
+    "COMPLETED"
+   ],
+   "claim": "READY_POSTED",
+   "seen": [
+    1794870590,
+    1
+   ],
+   "in_pending_table": false,
+   "remote": [
+    "APPROVAL_SIG.json",
+    "READY.md",
+    "dispatch",
+    "receipts",
+    "reviews"
+   ],
+   "created_utc": "2026-11-16T23:09:07Z",
+   "created_before_now": true
+  },
+  {
+   "id": "REQ-L1-MSC-MD-LINK-STRUCTURE-20261115-001",
+   "policy": "POLICY-STATIC-V1",
+   "class": "SEEN_WHILE_DISABLED",
+   "jobs": null,
+   "claim": null,
+   "seen": [
+    1794825834,
+    0
+   ],
+   "in_pending_table": false,
+   "remote": [],
+   "created_utc": "2026-11-15T14:27:08Z",
+   "created_before_now": true
+  },
+  {
+   "id": "REQ-L1-WORK-KNOWLEDGE-DESIGN-20261115-001",
+   "policy": "POLICY-STATIC-V1",
+   "class": "SEEN_WHILE_DISABLED",
+   "jobs": null,
+   "claim": null,
+   "seen": [
+    1794825836,
+    0
+   ],
+   "in_pending_table": false,
+   "remote": [],
+   "created_utc": "2026-11-14T23:55:59Z",
+   "created_before_now": true
+  },
+  {
+   "id": "REQ-L1-WORK-KNOWLEDGE-FIXED-R1-20261116",
+   "policy": "POLICY-STATIC-V1",
+   "class": "TERMINAL_HISTORY",
+   "jobs": [
+    "COMPLETED"
+   ],
+   "claim": "READY_POSTED",
+   "seen": [
+    1794841562,
+    1
+   ],
+   "in_pending_table": false,
+   "remote": [
+    "APPROVAL_SIG.json",
+    "READY.md",
+    "dispatch",
+    "receipts",
+    "reviews"
+   ],
+   "created_utc": "2026-11-16T15:04:49Z",
+   "created_before_now": true
+  },
+  {
+   "id": "REQ-L1-WORK-KNOWLEDGE-GUARD-CODE-R1-20261117",
+   "policy": "POLICY-STATIC-V1",
+   "class": "CLAIM_UNCERTAIN",
+   "jobs": null,
+   "claim": "UNCERTAIN",
+   "seen": [
+    1794867890,
+    1
+   ],
+   "in_pending_table": false,
+   "remote": [],
+   "created_utc": "2026-11-16T22:23:59Z",
+   "created_before_now": true
+  },
+  {
+   "id": "REQ-L1-WORKSPACE-LOCAL-VIEWER-DESIGN-R1-20261118",
+   "policy": "POLICY-STATIC-V1",
+   "class": "TERMINAL_HISTORY",
+   "jobs": [
+    "COMPLETED"
+   ],
+   "claim": null,
+   "seen": null,
+   "in_pending_table": false,
+   "remote": [
+    "APPROVAL_SIG.json",
+    "READY.md",
+    "dispatch",
+    "receipts",
+    "reviews"
+   ],
+   "created_utc": "2026-11-18T15:10:56Z",
+   "created_before_now": true
+  },
+  {
+   "id": "REQ-L1-WORKSPACE-WIKI-UI-UX-R1-20261119",
+   "policy": "POLICY-STATIC-V1-DESIGN",
+   "class": "TERMINAL_HISTORY",
+   "jobs": [
+    "COMPLETED"
+   ],
+   "claim": null,
+   "seen": [
+    1795059228,
+    1
+   ],
+   "in_pending_table": false,
+   "remote": [
+    "APPROVAL_SIG.json",
+    "READY.md",
+    "dispatch",
+    "receipts",
+    "reviews"
+   ],
+   "created_utc": "2026-11-19T03:32:56Z",
+   "created_before_now": true
+  }
+ ]
+}
