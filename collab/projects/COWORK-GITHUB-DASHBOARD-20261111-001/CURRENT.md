@@ -1,5 +1,16 @@
 # COWORK-GITHUB-DASHBOARD-20261111-001 — CURRENT
 
+## 2026-11-20 KST — PRIVATE Actions pre-run 실패 증거 확보 / PUBLIC 지연 표시 배포 완료
+
+- **현재 판정:** PRIVATE dashboard 원본 workflow YAML의 Git blob은 성공 #44720614237/실패 #44756245749 모두 `806576617650fb601acfaaea859a6d12aa8a989d`로 동일. 실패는 `runner_id=0`·실행 steps=0·billable 0ms·check annotation 1건인 **작업 시작 전 단계**, 오류 본문은 현재 GitHub connector로 접근 불가. `ACTIONS_ROOT_CAUSE=NOT_VERIFIED`, 코드 실패 주장 금지. Runner/billing/Actions 계정 경고 확인 전 재실행·YAML 변경 금지.
+- **PUBLIC 최소 안전보완:** 오래된 `status.json`은 30분 경과 시 '최신 상태 미확인'·마지막 공개 기록으로만 표시, P2 변경분 보류. 새 유효 JSON이면 정상 복귀. PUBLIC JS commit `fe0f47ba4e3a88e7177dee8f3faa66eb322a4bf5`, HTML 캐시 갱신 commit `f0b45aa69bafafced6bc9680166dbd9707517634`, Pages [#44757131366](https://github.com/wonhwipark/L1Work/actions/runs/44757131366) SUCCESS. 합성 4시나리오 PASS, 모바일/실서비스 HTTP 브라우저 시험 `NOT_RUN`.
+- **PUBLIC 최신 상태 동기화는 여전히 BLOCKED:** PRIVATE `flow_view` 원본은 이미 수용된 GitHub v0.2.29 LIVE 정형 값으로 보강했지만 실제 `status.json`은 이전 09:23Z 생성 기록. CI runner 실패→PUBLIC sync SKIP, 수동 JSON 수정으로 우회하지 않음.
+- **결과·SHA·사용자 확인 1단계:** [이번 진단 및 적용 결과](GITHUB_ACTIONS_PRERUN_BLOCK_AND_STALE_PUBLIC_GUARD_RESULT_r0001_20261120_KST.md). 과거 D안/P1P2 게시·사용자 리뷰 생략·Windows 호스트 로딩 미검증 보존. 운영 watcher/위임/키/DB/서명/READY/모델·미정산 Guard 변경 0.
+- **NEXT_ONE_ACTION:** [PRIVATE Actions 실패 #44756245749](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/44756245749)의 오류 주석/배너 텍스트 비민감 한 줄을 확인해 Runner/Actions 제한 원인을 확정. 권한·예산 변경은 별도 범위 판단; 해결되면 기존 CI→PUBLIC allowlist sync→remote JSON readback, 이어 Windows Claude 실제 P1/P2 사용 시험.
+
+---
+
+
 ## 2026-11-20 KST — D안·P1/P2 PUBLIC 소스 유지 / 자동 상태 갱신 BLOCKED
 
 - **현재 UI 소스:** L1Work PUBLIC `main/docs/cowork-dashboard/index.html`에서 D안 가로 타임라인, P1 빠른 4카드 및 P2 접힘 관계·변경분 요소 동시 존재; `context-view.js`도 원격 재확인. 기존 3개 탭/고정 공개 범주 유지. 실제 브라우저 렌더·PC/모바일 사용성은 별도 `NOT_RUN`.

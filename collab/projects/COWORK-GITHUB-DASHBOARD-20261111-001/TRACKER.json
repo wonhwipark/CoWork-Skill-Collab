@@ -9,7 +9,7 @@
       "owner": "GPT",
       "self_test": "PASS",
       "independent_review": "NOT_RUN",
-      "next_action": "2026-11-20 UI sources D+P1/P2 posted, PRIVATE generated public sync BLOCKED. Runner_id=0, steps=0, run 44743762139 failed; subsequent PUBLIC sync skipped. Migration CURRENT updated latest LIVE source but PUBLIC status.json still stale. NEXT: check GitHub Actions runner allocation/account billing/permissions and safe existing CI→allowlisted PUBLIC sync; no retry/model/live changes. Windows context autoload NOT_RUN; GPT 5 scoped probes PARTIAL."
+      "next_action": "2026-11-20 Actions pre-run failure confirmed: same workflow blob on success/failure, runner_id=0, steps=0, billable 0, annotation count 1 (text unavailable); root cause unverified. PUBLIC P1/P2 stale>30min fail-safe UI posted JS+HTML, synthetic PASS and Pages 44757131366 success; PUBLIC status.json remains stale and upstream allowlist sync BLOCKED. NEXT ONE: read non-sensitive error annotation in PRIVATE run 44756245749; check GitHub Actions account/billing/permission only as indicated, then validate existing CI and PUBLIC sync; no forced reruns, no new paid review or LIVE change."
     }
   ]
 }
