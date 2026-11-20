@@ -1,5 +1,15 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-21 KST — Viewer v0.1.1 선행 개발 후보/테스트 25건·원본 anchor 16개 확인
+
+- **사용자 요청 대응:** 이미 전달된 UI v0.1.0에 직접 앞서 개발 가능한 기능을 만드는 것으로 판정. GPT가 실제 `work-labels.js`, 편집 요청 전용 비활성 UI, 고정 SHA/CRC 검증을 갖춘 v0.1.0 오프라인 패치 스크립트, Node/Python 테스트, 독립 합성 HTML을 작성.
+- **PRIVATE 결과 기록:** [VIEWER_UI_V011_PREBUILD_DEV_RESULT_r0001_20261121_KST.md](VIEWER_UI_V011_PREBUILD_DEV_RESULT_r0001_20261121_KST.md) · commit `1128a1c876e6bc82841dd03169ff040d044fb59e` · 원격 본문 readback PASS.
+- **시험:** Work label 18/18 PASS, patch 모의 7/7 PASS, 실제 PRIVATE v0.1.0 source anchor 16/16 PASS, JS/Python 구문 PASS, ZIP 8파일 CRC PASS. 사용자 다운로드 아티팩트 ZIP `l1-workspace-viewer-prebuild_v0_1_1_1121.zip` 12,573 B / SHA-256 `20e635802b3480c5b3c9888e3599316e158ee0aa0c50deeac6b53098459ce9f8`; 독립 합성 미리보기 HTML SHA256 `f1d8d3a3ea077e505eed7cf096ac6a330e9855dd5bbf64ae14ccda3edf19602e`.
+- **엄격한 범위:** 첨부 코드는 이 대화의 다운로드 파일이며 GitHub PRIVATE/PUBLIC에 코드 ZIP으로 게시/자동배송된 것은 아님. 기존 PUBLIC v0.1.0 전체 ZIP 패치+56/19 회귀, Chromium 렌더, 실제 Linux Viewer/API/G0·B1~B3/E3/E4·편집 인증/writer, 독립 코드 리뷰·배포 모두 NOT_RUN. 원본 Work/Knowledge 및 PRIVATE r0001~r0004/리뷰 이력 변경 0. **development_not_for_deployment**.
+- **NEXT_ONE_ACTION:** 업무 GPT/Linux Agent가 현재 PUBLIC UI v0.1.0과 대화 첨부 patch 후보를 현장 승인된 개발 환경에서 결합·통합 시험하고, 기존 Viewer Work title/대표 issueKey 및 인증·writer G0 확인 후 가능한 코드 이식. 운영 범위 밖은 BLOCKED. 별도 유료 리뷰/Job·자동 실행 0.
+
+---
+
 ## 2026-11-20 KST — Viewer 2단계 업무 GPT 원샷 인계 PUBLIC 게시·원격 검증 완료
 
 - **사용자 명시 범위:** 기존 Viewer 패키지를 재사용한 업무 GPT용 원샷 구현 인계서를 L1Work PUBLIC handoffs에 게시까지 완료. 실제 업무 Linux Viewer 구현·설치/재시작·인증 계정 생성·업무 Work/Knowledge 쓰기 권한으로 확대하지 않음.
