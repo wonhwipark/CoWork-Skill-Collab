@@ -5,11 +5,11 @@
       "work_id": "COWORK-AUTO-APPROVAL-20261115-001",
       "skill": "cowork-review-watcher",
       "title": "GPT→GitHub REQUEST 자동 서명·READY (제한된 사전 위임)",
-      "phase": "GPT_ACCEPT_WITH_CONDITIONS_USD3_PRELIVE_SHADOW_PENDING",
-      "owner": "GPT reviewed R1 and accepted conditions; Windows Claude Code owns one-shot isolated USD3 stage/config + legacy exclusion + backup/rollback shadow, LIVE separate",
+      "phase": "USD3_PRELIVE_ONESHOT_PENDING_CONDITIONAL_LIVE_REQUEST",
+      "owner": "Windows Claude Code executes existing v0.2.29 USD3 prelive one-shot; after all PASS auto-create non-executable LIVE request, no host LIVE operation without valid authority",
       "self_test": "Windows dev actual v0.2.29 5 rounds 1038 passed/12 skipped/0 failed each; 5-window READY and CLI stub 5/5, no duplicate. Prior su_l1 flaky 2/~31, cause unconfirmed, injected fail-closed invariants 10/10. Writer mock 19 passed + 5 rounds 5/5; real repo/DB NOT_RUN.",
       "independent_review": "REQ-COWORK-V029-ONEOFF-R1-20261120 COMPLETED BLOCKING0 MAJOR0 MINOR3 (third=carryover NOT_RUN), GPT ACCEPT_WITH_CONDITIONS; model calls 1 host reported cost USD0.5387501, prior job closed no retry",
-      "next_action": "GPT_V029_REVIEW_ACCEPT_AND_USD3_PRELIVE_STAGING_ONESHOT_r0001_20261120_KST.md: existing v0.2.29 ZIP c67bc342fe77547b000fc42e1b886396cbef035c0d265dbcd124947e267ed83f fixed. Run Windows one-shot read-only+isolated staged STATIC USD3/delegation USD3 with new enabled_at planned only at real cutover, regression/shadow old pending/Guard/uncertain zero replay, signer scope and provider, backup/rollback readiness, user approval boundary. Do not alter LIVE v0.2.25, protection USD1 or run paid model now. Post single result CLAUDE_V029_USD3_PRELIVE_READINESS_RESULT_FOR_GPT_20261120.md and current/tracker. LIVE ENABLE remains independent approval after full host proof."
+      "next_action": "Execute existing GPT_V029_REVIEW_ACCEPT_AND_USD3_PRELIVE_STAGING_ONESHOT_r0001_20261120_KST.md sections 2-5 (new §5): if ALL host prelive tests, legacy exclusion, USD3 isolated staging, signer/ACL, backup/rollback, SINGLE_PROVIDER, 5window SHADOW PASS, auto CREATE-ONLY LIVE_ENABLE_EXECUTION_REQUEST_V029_20261120_KST.md in same Work, update result/current/tracker and remote-readback. If any FAIL/BLOCKED/PARTIAL/NOT_RUN, do not post LIVE request; report exact blocker. Actual LIVE/auto delegation config change not authorized by request document; need separate valid operating approval. Live v0.2.25 USD1 remains until approved. No paid reviews or watcher REQUEST/READY."
     }
   ]
 }
