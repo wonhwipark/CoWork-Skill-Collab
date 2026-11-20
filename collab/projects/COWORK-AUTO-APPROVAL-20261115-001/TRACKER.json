@@ -5,11 +5,11 @@
       "work_id": "COWORK-AUTO-APPROVAL-20261115-001",
       "skill": "cowork-review-watcher",
       "title": "GPT→GitHub REQUEST 자동 서명·READY (제한된 사전 위임)",
-      "phase": "ONESHOT_1_TO_3_DESIGN_DONE_HOST_MANUAL_AUTH_PENDING",
+      "phase": "DISPOSITION",
       "owner": "GPT one-shot design and documentation complete; Windows Claude Code manual DESIGN USD3 signer authority check + one independent R1",
       "self_test": "Windows dev actual v0.2.29 5 rounds 1038 passed/12 skipped/0 failed each; 5-window READY and CLI stub 5/5, no duplicate. Prior su_l1 flaky 2/~31, cause unconfirmed, injected fail-closed invariants 10/10. Writer mock 19 passed + 5 rounds 5/5; real repo/DB NOT_RUN.",
-      "independent_review": "V029_R1_NOT_RUN_PENDING_VALID_ONE_OFF_DESIGN3_MANUAL_SIGNER_AUTHORITY",
-      "next_action": "User requests previously 3 stages in one action. Execute GPT_APPROVAL_SIMPLIFICATION_V029_DESIGN3_REVIEW_ONESHOT_r0001_20261120_KST.md on Windows once: use live registered POLICY-STATIC-V1-DESIGN USD3 for ONLY new v0.2.29 ZIP c67bc342... fixed R1/rev1, verify installed manual signer/scope/preflight, request/pin/approval/READY last, independent model 1 call max USD3, evidence and GPT judgement input. If authority insufficient leave REQUEST/READY/model 0 and report BLOCKED_AUTHORITY. No unified policy cap/auto_delegation/LIVE change, older reviews untouched."
+      "independent_review": "V029_R1_COMPLETE_BLOCKING0_MAJOR0_MINOR3_GPT_DISPOSITION_PENDING",
+      "next_action": "2026-11-20 REQ-COWORK-V029-ONEOFF-R1-20261120 ran exactly once (manual DESIGN USD3 transport for this one ID only; no unified, no earlier UI exception): host cost USD 0.5387501, 15 turns, model calls 1, receipt/dispatch/DB consistent, package SHA c67bc342 bound everywhere. Independent review: BLOCKING 0, MAJOR 0, MINOR 3; su_l1 classified test-only availability (watcher runtime does not import it), not a LIVE blocker, must stay unwired until the raw exception is captured. Reviewer limits: change-scope review only, unchanged modules not read; v0.2.28 MINOR carry-over NOT_RUN by reviewer. Own check of the pinned bytes: docs/AUTO_APPROVAL.md lines 29 and 74 still state day/month limits that no longer exist (doc-only, bytes frozen). Result CLAUDE_V029_ONEOFF_R1_RESULT_FOR_GPT_20261120.md (commit 3103a2fd3f3f). LIVE v0.2.25, delegation USD1, policy prices, DB/keys/Task/Notifier unchanged; install and USD3 delegation NOT_AUTHORIZED. NEXT: GPT dispositions R1 (accept/conditions) and chooses erratum-outside-ZIP versus a doc-only v0.2.30 with a new paid review; later host gates are separate."
     }
   ]
 }
