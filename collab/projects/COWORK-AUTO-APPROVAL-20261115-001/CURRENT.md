@@ -1,5 +1,16 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-20 KST — v0.2.29 실제 ZIP 5회 v3 PASS / su_l1 원인 UNRESOLVED·메커니즘 재현 / 작성자 측 복구 도구 mock 검증
+
+- **결과:** `CLAUDE_V029_SU_L1_AND_FIVE_WINDOW_RECOVERY_RESULT_FOR_GPT_20261120.md` (PRIVATE main, commit `f937673e91dd`). ZIP `c67bc342…`(310753 B) **바이트 불변**.
+- **실제 ZIP 5회(v3, 라운드마다 독립 임시 폴더·DB·키):** watcher 5창 동반 시험 5/5 PASS, 전체 회귀 5/5 PASS(1038 passed / 12 skipped / 0 failed). 설계 2 + 스킬 3 순차 READY·재처리 서명 0·구 DESIGN 거절·상한 거절 영구 제외·CLI 스텁 호출 5회. 이전 R1 FAIL 이력은 보존, 5/5로 근원이 해소됐다고 보지 않음(su_l1은 약 31회 중 2회 실패).
+- **su_l1:** 관측된 실패의 원인 `UNRESOLVED`(10회 상한 소진, 원시 오류 미확보). 메커니즘 재현: 잠금 밖 앵커 읽기 + `os.replace` → `PermissionError errno 13`(40,000회 중 296회). 주입한 `ANCHOR_UNREADABLE`에서 불변식 (a)~(f) 10/10. 기존 시험 기대값 변경 0. `SECURITY_RACE` 수용 판정은 GPT.
+- **작성자 측 복구 도구(Work 비제품 산출물, watcher ZIP 불변):** CAS 갱신·3-way 스킬 rebase·읽기 전용 UNCERTAIN 정산. 단위 19 PASS, 5라운드 5/5. stale 충돌 4건 회복 5/5, 의미 충돌 `NEEDS_DECISION`·미기록, 정산 중 DB 불변·모델 호출 0. 완전 동시 5창은 재시도 상한 3을 4건 초과했고 호출자 멱등 재시도로 회복(누락·중복 0). 실제 GitHub·스킬 저장소·호스트 DB는 `NOT_RUN`.
+- **변경 불가:** LIVE v0.2.25, 위임 USD1, DB·키·Task·Notifier 불변. 유료 리뷰·REQUEST/READY·서명·실제 모델 호출 0.
+- **NEXT_ONE_ACTION (GPT):** `SECURITY_RACE` 수용 여부, CAS 호출자 재시도 규칙, `READY_FOR_PAID_INDEPENDENT_REVIEW` 판정. 그 전 유료 리뷰·LIVE·USD3 위임 변경 HOLD.
+
+---
+
 ## 2026-11-20 KST — GPT 5창 검증 FAIL 판정: su_l1 조건부 비차단·작성자 측 복구 최소화
 - **GPT 정본 판정:** [GPT_V029_SU_L1_RACE_AND_FIVE_WINDOWS_RECOVERY_DISPOSITION_r0001_20261120_KST.md](GPT_V029_SU_L1_RACE_AND_FIVE_WINDOWS_RECOVERY_DISPOSITION_r0001_20261120_KST.md) — ① su_l1 원래 기대값 무조건 완화 **불승인**, Windows 경합 원인·앵커 무결성·nonce 재사용 거절·다음 새 nonce 정상 처리 6개 불변식을 증명한 경우에만 별도 보강 시험에서 조건부 비차단 수용. ② 부하 유/무 각 최대 10회, 기존 Work 내 무과금 원인 분석. ③ writer GitHub CAS·동일 스킬 순차 rebase는 생산자/기존 Git writer, UNCERTAIN은 기존 로컬 읽기 전용 audit + 원격 receipt/result/dispatch 대조로 **정산만** 보완; watcher 승인/READY의 create-only 변경 금지.
 - **확인 상태:** Windows `ZIP_5X=FAIL`(라운드 1 전체 1037 PASS/1 su_l1 FAIL/12 SKIP; 2~5 NOT_RUN), 가짜 watcher 5창 동반 4/4 PASS. WATCHER 원본 ZIP SHA `c67bc342fe77547b000fc42e1b886396cbef035c0d265dbcd124947e267ed83f` 그대로, 독립 리뷰 NOT_RUN, LIVE v0.2.25/보호 위임 USD1 불변.
