@@ -5,11 +5,11 @@
       "work_id": "COWORK-AUTO-APPROVAL-20261115-001",
       "skill": "cowork-review-watcher",
       "title": "GPT→GitHub REQUEST 자동 서명·READY (제한된 사전 위임)",
-      "phase": "BLOCKED",
-      "owner": "GPT review-scope disposition complete; Windows Claude Code read-only host policy preflight and separate Git writer integration",
+      "phase": "ONESHOT_1_TO_3_DESIGN_DONE_HOST_MANUAL_AUTH_PENDING",
+      "owner": "GPT one-shot design and documentation complete; Windows Claude Code manual DESIGN USD3 signer authority check + one independent R1",
       "self_test": "Windows dev actual v0.2.29 5 rounds 1038 passed/12 skipped/0 failed each; 5-window READY and CLI stub 5/5, no duplicate. Prior su_l1 flaky 2/~31, cause unconfirmed, injected fail-closed invariants 10/10. Writer mock 19 passed + 5 rounds 5/5; real repo/DB NOT_RUN.",
-      "independent_review": "V029_TECHNICAL_READY_WITH_SU_L1_EXCEPTION; REVIEW_NOT_RUN_BLOCKED_HOST_POLICY",
-      "next_action": "2026-11-20 host preflight for a new v0.2.29 independent review (ZIP c67bc342 unchanged): gate select --intent unified --required-budget-usd 3.00 -> POLICY_COST_MISMATCH (STATIC USD 1.50, delegation USD 1.0). REVIEW_TRANSPORT=BLOCKED_HOST_POLICY, REQUEST NOT_POSTED, model calls 0; no unregistered unified policy and no past UI DESIGN exception used. Other preflight items PASS (scope, repo_id string, protected delegation loadable with Windows ACL, signer material present); USD3 signing authority NOT_VERIFIED. Circular: safe USD3 policy needs v0.2.29, installing v0.2.29 needs the review. Writer lane v2 (mock): two-wave caller rule, readback tolerance, strict tracker merge, policy-revision-agnostic read-only UNCERTAIN reconcile; unit 21 passed, 20/20 simulated rounds, wave-2 12/100, POST_CONFLICT_PENDING 0. Real GitHub GET sha check PASS; real CAS write, real skill repo rebase, real host DB reconcile NOT_RUN. Result CLAUDE_V029_HOST_PREFLIGHT_AND_WRITER_V2_RESULT_FOR_GPT_20261120.md (commit 2927891561e8). NEXT: user/GPT chooses entry path (a) explicit one-review DESIGN USD3 manual approval or (b) unified USD3 policy plus delegation USD3 with enabled_at refresh; designate non-sensitive test path and skill worktree if real writer tests are wanted."
+      "independent_review": "V029_R1_NOT_RUN_PENDING_VALID_ONE_OFF_DESIGN3_MANUAL_SIGNER_AUTHORITY",
+      "next_action": "User requests previously 3 stages in one action. Execute GPT_APPROVAL_SIMPLIFICATION_V029_DESIGN3_REVIEW_ONESHOT_r0001_20261120_KST.md on Windows once: use live registered POLICY-STATIC-V1-DESIGN USD3 for ONLY new v0.2.29 ZIP c67bc342... fixed R1/rev1, verify installed manual signer/scope/preflight, request/pin/approval/READY last, independent model 1 call max USD3, evidence and GPT judgement input. If authority insufficient leave REQUEST/READY/model 0 and report BLOCKED_AUTHORITY. No unified policy cap/auto_delegation/LIVE change, older reviews untouched."
     }
   ]
 }
