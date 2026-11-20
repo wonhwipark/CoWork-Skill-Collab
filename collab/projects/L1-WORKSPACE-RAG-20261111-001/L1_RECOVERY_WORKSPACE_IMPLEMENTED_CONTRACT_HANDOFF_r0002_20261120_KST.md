@@ -5,11 +5,11 @@
 - 이 문서 상대 경로: handoffs/L1_RECOVERY_WORKSPACE_IMPLEMENTED_CONTRACT_HANDOFF_r0002_20261120_KST.md
 - 대상: 업무 GPT, 허용된 로컬 Agent/LLM, 기존 l1-channel-recovery와 업무용 l1-workspace
 - 문서 목적: 이미 전달한 분석 방향에 필요한 설계 보완을 덧붙이고, 관리 스킬에서 개발한 저장·조회 계약과 연결
-- 이번 업무 요청: **스터디·설계와 실제 설치 계약의 매핑**. 별도 요청 전까지 분석 확장을 위한 스킬 수정·제품 코드 변경·패키지 배포·운영 설정·Job을 시작하지 않음
+- 이번 업무 요청: **스터디·설계와 실제 설치 계약의 매핑**. 별도 요청 전까지 분석 확장을 위한 스킬 수정·제품 코드 변경·업무 저장소 변경·패키지 배포·운영 설정·Job을 시작하지 않음
 
 ## 1. 이전 인계와의 관계
 
-기존 기준은 [수정 CL 기반 미커버 유사 결함 탐색·검사·Recovery 판단 r0002](L1_RECOVERY_POINT_ANALYSIS_DETAILED_DESIGN_AND_IMPLEMENTATION_HANDOFF_r0002_20261119_KST.md)예요. 그 문서의 Seed 전후·현재 대상 구분, V0~V6, 기존 보호 대조, 조치 선택과 근거 보존을 유지해요.
+기존 기준은 [수정 CL 기반 미커버 유사 결함 탐색·검사·Recovery 판단 r0002](L1_RECOVERY_POINT_ANALYSIS_DETAILED_DESIGN_AND_IMPLEMENTATION_HANDOFF_r0002_20261119_KST.md)예요. 그 문서의 Seed 전후·현재 대상 구분, V0~V6, 기존 보호 대조, 조치 선택과 근거 보존을 유지해요. 기존 인계의 최소 구현 단계를 이번 설계 요청만으로 다시 실행하지 않아요.
 
 사용자가 전달한 “CL/PR 기반 L1 Recovery 분석 확장 설계” 요청에서 아래 네 가지를 보완 입력으로 채택해요. 이미 있는 분석 기능이나 이번 저장 개발을 다시 구현하라는 뜻은 아니에요.
 
@@ -138,7 +138,7 @@ Work/본문 hash/생산자 버전/source revision이 같으면 기존 Evidence�
 
 Kernel work_recovery_reports(work_id) 또는 recovery-list --work-id <ID>는 원본 경로·SHA와 저장 메타정보를 읽어요. 기존 docs export가 다음 파생 보기를 만들어요.
 
-- works/<work_id>/RECOVERY.md, state/recovery_reports.json.
+- works/<work_id>/RECOVERY.md, works/<work_id>/state/recovery_reports.json.
 - 루트 RECOVERY.md, index/recovery.json.
 - 실제 artifact publish mapping/SHA를 이용한 원본 보고서 링크.
 
