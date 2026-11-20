@@ -1,5 +1,17 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-20 KST — Viewer 인증 기반 편집 상세 설계 r0001 · 독립 설계 R1 정식 요청/READY 확인
+
+- **사용자 최신 확정:** 기존 Viewer READ_ONLY 기본 유지. [수정] → ID/PW 재인증·문서별 edit ACL → 기존 위키 UI 우측 편집 패널. 이슈 본문·코멘트·MSC 설명 직접 편집, 메시지·participant 수정 요청과 필요한 Agent 코드 근거 검증, Diff/Preview 후 초안/개정본 선택. 직접 Knowledge 그룹 게시 불허.
+- **설계 게시:** [L1_WORKSPACE_VIEWER_AUTH_EDIT_DETAILED_DESIGN_r0001_20261120_KST.md](L1_WORKSPACE_VIEWER_AUTH_EDIT_DETAILED_DESIGN_r0001_20261120_KST.md) 18,476 UTF-8 bytes / SHA-256 `48b2cd1adf8ed4736b3c2502213eca5dcaced7c8a8d925328400caaf57fb2a8d`. 기존 실제 Linux Viewer·Updater 인증/API 미확인 사실과 B1~B3/E3~E4 게이트 유지. 재사용 우선·새 DB/schema/writer 기본 추가 금지.
+- **정식 요청:** `REQ-L1-WORKSPACE-VIEWER-EDIT-DESIGN-R1-20261120` rev1, PRIVATE `main` `collab/requests/REQ-L1-WORKSPACE-VIEWER-EDIT-DESIGN-R1-20261120/REQUEST.md`, 원격 실제 REQUEST 3,731 B / SHA-256 `ec11e0ec27b66b3f400e31db012f60e54a84acfe4512751f9554965d15fb05b3`.
+- **고정 입력 ZIP:** `collab/packages/l1-workspace-viewer-edit-design_r0001_1120_REVIEW_INPUT.zip` 19,482 B / SHA-256 `764477880d6b6b6b4bb468f4bb9ccaf6802e5561944ec89569030d69c7080975` / Git blob `850017c5f9059f49667cc118bcfffdcf0dee8c12`; 멤버 2개 CRC PASS, remote bytes/SHA PASS. Commit A `0b741ce6ed9455d7606850321830cc359d83e227`. SOURCE_PIN.repo_id 문자열 `1451933830`, pinned commit 일치.
+- **자동 리뷰 접수 관찰:** `APPROVAL_SIG.json` 및 `READY.md` 실제 원격 존재; READY의 request_id/revision/request_sha256/package_sha256 일치. GPT가 서명/READY를 직접 만들거나 Windows LIVE를 변경하지 않음. 실제 signer의 신뢰 루트/DB 검증은 Windows watcher 책임. 기존 정식 UX R1/Viewer r0002 리뷰는 완료 이력 보존·미재실행.
+- **현재 리뷰 판정(게시 시 조회):** `FORMAL_REQUEST=POSTED` / `SOURCE_PIN=POSTED` / `APPROVAL_SIG=REMOTE_PRESENT` / `READY=REMOTE_PRESENT`; `REVIEW_RESULT/RECEIPT/DISPATCH=NOT_RECEIVED_AT_CHECK`, `REVIEW_COMPLETED=NOT_VERIFIED`. 신규 유료 실비·모델 호출 확인은 실제 결과/영수증 수신 후 판정. 구현/호스트 설치·업무 Work/Knowledge 쓰기·PUBLIC 게시 `NOT_RUN`.
+- **NEXT_ONE_ACTION:** 동일 요청 `collab/reviews/REQ-L1-WORKSPACE-VIEWER-EDIT-DESIGN-R1-20261120/REVIEW_RESULT_1.md` 및 `collab/receipts/REQ-L1-WORKSPACE-VIEWER-EDIT-DESIGN-R1-20261120/RECEIPT_1.md`·dispatch를 원격 확인하고 고정 SHA·1회 호출·비용·독립 설계 지적을 GPT 판정. 없으면 재큐잉/새 R2 없이 `PENDING/UNCERTAIN` 구분.
+
+---
+
 ## 2026-11-20 KST — 다음 창 논의: Viewer MSC·이슈 분석 수정/추가 기능
 
 - **사용자 새 요청:** 기존 Viewer에 MSC 또는 이슈 분석 내용의 수정·추가 기능을 넣고 싶으며 새 창에서 논의. `VIEWER_EDIT_DISCUSSION=OPEN`, `REQUIREMENTS/DESIGN=TO_DISCUSS`, `IMPLEMENTATION/WRITE_API/HOST_CHANGE=NOT_RUN`. 지금 편집 기능 구현·운영 쓰기를 시작하라는 지시로 확대하지 않음.
