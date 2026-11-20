@@ -53,3 +53,32 @@ PRIVATE `wonhwipark/CoWork-Skill-Collab` branch `main`에서 `collab/projects/CO
 - `development_not_for_deployment` 개발 라벨은 **별도 LIVE 운영 승인 때만** 외부 결정서로 해제 여부 판정. 이 문서로 LIVE 승인·보호 키 변경/비용 증액을 자동 행사하지 않음.
 
 **다음 단 하나의 작업:** Windows Claude Code가 사용자 승인된 단계 1~3 통합의 남은 호스트 사전 준비를 위 §2~4대로 수행·게시. GPT는 그 결과를 확인해 최종 **4단계 LIVE ENABLE**의 기술 준비 PASS 여부를 판정하며 운영 승인과 실행은 별도.
+
+## 5. 조건부 LIVE 실행 요청 자동 발행 — 2026-11-20 사용자 추가 지시
+
+**사용자 최신 요청:** 위 §2~4의 Windows 사전 작업이 정상적으로 완료되면 **사용자에게 다시 진행 여부를 묻지 않고, 동일 원샷 내에서 LIVE 실행 요청을 작성·PRIVATE main에 게시**한다. 이 추가 지시는 **LIVE 실행 요청을 발행할 권한**이지, 운영 watcher 설치·정지·설정/위임/키 변경·실제 LIVE ENABLE을 이 문서로 무조건 승인하는 것이 아니다. 기존 Work를 재사용하며 신규 watcher `REQUEST/READY`·유료 리뷰는 생성하지 않는다.
+
+### 5.1 발행 판정 (all-of)
+
+아래 조건을 **모두** 호스트의 실측 근거로 확인할 때만 `LIVE_EXECUTION_REQUEST=POSTED_CONDITIONAL`:
+1. 리뷰 `REQ-COWORK-V029-ONEOFF-R1-20261120`이 정확한 v0.2.29 SHA `c67bc342fe77547b000fc42e1b886396cbef035c0d265dbcd124947e267ed83f`에 대해 완료·GPT `ACCEPT_WITH_CONDITIONS`·이미 지출된 비용/영수증/처리키 일치, 재리뷰/재호출 0.
+2. `STAGED_STATIC3_SELECT_CHECK=PASS`, `PROTECTED_POLICY_CAP_ALIGNMENT=PASS_STAGED`: 격리 설정상 `POLICY-STATIC-V1` USD3 + 보호 위임 USD3을 함께 적용해 검증, 승인된 보호 설치/서명 변경 절차의 지원·권한을 실제 호스트에서 확인. 실제 운영 값은 이번 원샷에서 여전히 USD1/STATIC1.50 그대로.
+3. `LEGACY_EXCLUSION=PASS`: 구 요청/완료/대기/Guard UNCERTAIN의 정책 상향·새 `enabled_at`에 따른 소급 승인·서명·READY·모델 호출 **0**을 SHADOW로 입증. 어떤 UNKNOWN/UNCERTAIN 원시 건이 신규 처리로 유입할 수 있다면 FAIL.
+4. `SHADOW_5WINDOW=PASS`, `SU_L1_OFF=PASS`, `SINGLE_PROVIDER=PASS`, `SOURCE_ZIP_SHA=PASS`, `SIGNER_ACL_AND_SCOPE=PASS`. 합성 테스트와 운영 실측의 경계를 결과에 표시하고, 실제 운영 DB 변경/유료 실행 0.
+5. `BACKUP_READY=PASS`(운영 main/WAL/SHM 및 설치/위임/스케줄러/Notifier의 일관 백업 방식·권한·저장 위치 확인), `ROLLBACK_READY=PASS`(v0.2.25/USD1 원복 절차·격리 검증 및 책임자 확인). 실제 백업 생성·서비스 중단은 별도 유효 승인 범위에서만.
+6. `HOST_PRELIVE_GATE=PASS` 및 정본 `CURRENT.md`/개별 결과의 최신성 일치. `PARTIAL`, `FAIL`, `BLOCKED`, `NOT_RUN` 또는 추정 PASS는 불허. `development_not_for_deployment` 라벨은 차후 운영 승인 기록이 필요하며 이번 문서만으로 해제하지 않음.
+
+### 5.2 모두 PASS일 때 Windows Claude Code가 즉시 할 동작
+
+1. 같은 Work에 **한 개**의 비실행 LIVE 실행 요청서 `collab/projects/COWORK-AUTO-APPROVAL-20261115-001/LIVE_ENABLE_EXECUTION_REQUEST_V029_20261120_KST.md`를 **CREATE-ONLY** 게시. 먼저 동명 기존 파일/완료·진행 중 설치 기록을 조회하여 중복 생성 금지. GitHub watcher가 실행 트리거로 소비하는 `collab/requests/`, `APPROVAL_SIG.json`, `READY.md` 아래에는 절대 게시하지 않는다.
+2. 실행 요청서에는 정확한 `wonhwipark/CoWork-Skill-Collab`/`main`/기존 Work, 고정 ZIP 경로·size·SHA, 이전 LIVE v0.2.25 SHA/실측 시점, 대상 v0.2.29, `POLICY-STATIC-V1` USD3와 위임 USD3의 **동시 적용**, cutover **실시 시점에 새 `enabled_at` 설정(이전 값보다 낮추지 않음)**, source/review/evidence 링크, 구 요청 제외·단일 provider·WATCHER 중지→일관 백업→보호 설정/설치→검증→재가동→2주기+재시작→영수증/실동작 확인, 예외 발생 시 즉시 안전 롤백 순서를 명시.
+3. 실제 설치·운영 권한을 **실행 시점에 다시 확인해야 하는 항목**(사용자의 별도 LIVE 운영 승인 또는 유효한 기존 사전 위임의 정확한 범위/한도/만료, 보호된 signer/config 권한, 백업 일관성, 롤백)을 체크리스트로 남긴다. 승인 정보가 부재하면 `LIVE_EXECUTION=AWAITING_OPERATING_APPROVAL` 및 `LIVE_ENABLE=NOT_RUN`. 이미 유효한 실제 운영 승인 확인 시에만 정식 승인 절차의 후속 실행 대상이 될 수 있으며, **이 원샷에서는 설치를 시작하지 않음**.
+4. 기존 Work의 `CLAUDE_V029_USD3_PRELIVE_READINESS_RESULT_FOR_GPT_20261120.md`에 `LIVE_REQUEST_GATE=PASS`, `LIVE_EXECUTION_REQUEST=POSTED_CONDITIONAL`, `LIVE_EXECUTION=NOT_RUN`, 원격 commit·본문 byte SHA를 기록. CURRENT 상단은 요청서 링크·실제 상태·사용자 조치/권한 확인 한 가지로 간단히, TRACKER 현행 필드만 정합성 갱신. **PRIVATE main 원격 readback 완료**까지 동일 원샷에서 끝낸다.
+5. 마지막 통합 보고는 **현재 상태 → 변경 → 실제 시험 → 미검증/필요 승인 → LIVE 실행 요청 URL/SHA → 다음 한 동작** 순서로 간략 작성한다. 유료 재리뷰나 새 REQUEST/READY는 0.
+
+### 5.3 하나라도 PASS가 아니면
+
+- `LIVE_EXECUTION_REQUEST=NOT_POSTED`, `LIVE_ENABLE=NOT_RUN` 유지. PASS인 독립 항목만 완료로 보고하고 실패·미검증 근거 및 **정확한 단일 차단 조치**를 기존 결과 문서/CURRENT/TRACKER에 남긴다.
+- 다른 정책·skill·워크 ID·비용 등급을 우회 사용하거나 과거 불확실/완료 요청 재서명·재큐잉 금지. 이 원샷의 후속 조건 판단만으로 운영 변경·PUBLIC 게시·실 모델 호출 금지.
+
+**최종 사용자 동작 축소:** 사전 검증이 PASS면 LIVE 실행 요청서까지 **한 번에 자동 게시**. 사용자가 다음에 별도로 요구할 것은 기술 준비 재확인이 아니라, 기존 유효 위임이 없을 경우에 한해 **실제 LIVE 운영 변경 승인**뿐이다.
