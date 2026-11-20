@@ -1,5 +1,17 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-21 KST — Viewer 색상 A안 정식 독립 설계 R1 REQUEST/SOURCE_PIN 게시, 서명·READY 대기
+
+- **사용자 결정:** 1차 Viewer UI 색상·가독성 개선 A안을 먼저 협업 독립 리뷰로 검증한 뒤 구현 재개. 기존 보라색 대비 차분한 블루그레이, SOC 대표 이슈번호 선두·Work ID 보조, 동료 무로그인 Read Only 유지, 기술 원본/2차 편집 범위 불변.
+- **PRIVATE 설계:** [L1_WORKSPACE_VIEWER_VISUAL_REFRESH_DESIGN_r0001_20261121_KST.md](L1_WORKSPACE_VIEWER_VISUAL_REFRESH_DESIGN_r0001_20261121_KST.md), [A/B 비교 합성 HTML](ui/VIEWER_STYLE_A_B_COMPARISON_r0001_20261121_KST.html), [리뷰 README](ui/VIEWER_STYLE_REVIEW_README_r0001_20261121_KST.md). 원격 본문 readback PASS.
+- **리뷰 고정 ZIP:** `collab/packages/l1-workspace-viewer-style-design_v0_1_0_1121_REVIEW_INPUT.zip`, 15,497 B, SHA-256 `4cefbc4d97372365b6046beb4591afc04d97136723c76d91aa10bc1345926576`, 3파일, 원격 base64 바이트 일치 PASS. 고정 입력 commit `fbd577ca29fd3aea6e76ea6353f842a543859397`.
+- **정식 제출:** [REQUEST](../../requests/REQ-L1-WORKSPACE-VIEWER-STYLE-DESIGN-R1-20261121/REQUEST.md) + [SOURCE_PIN](../../requests/REQ-L1-WORKSPACE-VIEWER-STYLE-DESIGN-R1-20261121/SOURCE_PIN.json) 동일 commit `010d1ee7d637a10eaead549d421c2786986736af`, 원격 readback PASS. `repo_id` JSON 문자열 `1451933830`; REQUEST 5,438 B/SHA-256 `47942682490024381a28ce612dfcda3255837a30ba953f84dffbe4388eb9db3b`; policy `POLICY-STATIC-V1`, 1회 USD 3 이내.
+- **상태/권한:** Windows LIVE v0.2.29 + STATIC·보호 위임 USD3.0는 2026-11-20 운영 호스트 보고 기준. 첫 신규 유료 E2E는 기존 CURRENT상 NOT_RUN이었음. **이번 조회에서 APPROVAL_SIG·READY·DISPATCH·REVIEW_RESULT·RECEIPT가 모두 없음**; 따라서 `REQUEST=SUBMITTED_REMOTE`, `SOURCE_PIN=VERIFIED`, `SIGNED=NOT_OBSERVED`, `READY=NOT_OBSERVED`, `INDEPENDENT_REVIEW=PENDING_NOT_STARTED` / `GPT_FINAL_DISPOSITION=NOT_RUN`. 실제 Windows 최신 승인 scope·호스트 상태를 GPT가 직접 검사한 것은 아님. GPT는 보호 서명/READY를 위조하거나 직접 게시하지 않음.
+- **실행 경계:** 사용자 지시대로 **리뷰 완료·결과/영수증 확인 및 GPT 판정 전 CSS·v0.1.1 통합 구현·Linux Viewer 적용/배포 시작 금지**. 현행 v0.1.0·개발 후보·과거 UX/편집 R1·Work/Evidence 원본 모두 보존. 신규 리뷰 자동 재시도/유료 2회·REQUEST/READY 중복 생성 0.
+- **NEXT_ONE_ACTION:** 승인된 Windows signer/watcher가 본 신규 REQUEST/PIN 및 실제 보호 위임·비용/중복·SOURCE_PIN을 검증 → 적격일 때만 APPROVAL_SIG 및 READY 마지막 게시·R1 1회 실행; 불가 시 차단 사유로 HOLD. 결과·영수증 도착 시 GPT가 같은 Work에서 수용/보완 판정 후에만 1차 UI 작업 재개.
+
+---
+
 
 ## 2026-11-21 KST — 저사양 LLM Module→Feature→Scenario·코드 MSC 라이선스/개발 후보 1건
 
