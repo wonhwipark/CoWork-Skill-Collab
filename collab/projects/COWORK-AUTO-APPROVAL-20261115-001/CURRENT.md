@@ -1,5 +1,14 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-20 KST — 사전검증 PASS 시 LIVE 실행 요청서까지 동일 원샷에서 자동 게시
+- **최신 사용자 지시 반영:** [GPT_V029_REVIEW_ACCEPT_AND_USD3_PRELIVE_STAGING_ONESHOT_r0001_20261120_KST.md](./GPT_V029_REVIEW_ACCEPT_AND_USD3_PRELIVE_STAGING_ONESHOT_r0001_20261120_KST.md) §5에 **모든 `HOST_PRELIVE_GATE` + USD3 staging/소급 제외·SHADOW·보호 ACL·백업·롤백이 PASS이면** Windows Claude Code가 같은 Work에 비실행 `LIVE_ENABLE_EXECUTION_REQUEST_V029_20261120_KST.md`를 **CREATE-ONLY 자동 게시**, CURRENT/TRACKER readback·하나의 통합 보고까지 처리하도록 추가. 사용자 중간 실행 지시 반복 없음.
+- **중단선:** FAIL/BLOCKED/PARTIAL/NOT_RUN가 있으면 `LIVE_EXECUTION_REQUEST=NOT_POSTED`, 이유 1건으로 정리. `collab/requests/` 승인/READY 실행 트리거 게시 금지, 유료 재리뷰 0. 요청서 게시 자체는 **LIVE 운영 설치·정지·정책/보호 위임 변경 승인 아님**; 실제 LIVE 권한은 기존 유효 운영 승인 확인 또는 별도 승인 후 다음 실행.
+- **현재 실측 불변:** 새 Windows 사전검증 결과 미게시, `HOST_PRELIVE_GATE=NOT_RUN`, `LIVE_EXECUTION_REQUEST=NOT_POSTED`, `LIVE_ENABLE=NOT_RUN`, 마지막 확인 LIVE v0.2.25/위임 USD1. 개발 후보 v0.2.29 SHA `c67bc342fe77547b000fc42e1b886396cbef035c0d265dbcd124947e267ed83f` 고정.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 업데이트된 **동일 원샷 §2~5**를 한 번 실행 → PASS면 LIVE 실행 요청서 자동 게시, 아니면 차단 근거만 보고. 기존 리뷰 결과·영수증 재실행 금지.
+
+---
+
+
 ## 2026-11-20 KST — GPT v0.2.29 R1 ACCEPT_WITH_CONDITIONS / USD3·LIVE 사전검증 단일 호스트 원샷 대기
 - **GPT 최종 판정·호스트 실행서:** [GPT_V029_REVIEW_ACCEPT_AND_USD3_PRELIVE_STAGING_ONESHOT_r0001_20261120_KST.md](GPT_V029_REVIEW_ACCEPT_AND_USD3_PRELIVE_STAGING_ONESHOT_r0001_20261120_KST.md). 최신 독립 리뷰 `REQ-COWORK-V029-ONEOFF-R1-20261120` **COMPLETE**, BLOCKING0/MAJOR0/MINOR3(세 번째 이월 검증 NOT_RUN). GPT가 REQUEST/READY/SOURCE_PIN/결과/영수증/디스패치의 ID·rev·package SHA·processing key·`ok=true` 원격 일치 직접 확인. Windows 호스트는 비용 **USD0.5387501**, 모델 1회·15턴·DB 중복 0 보고(운영 DB GPT 직접 열람 NOT_RUN).
 - **판정:** `GPT_DISPOSITION=ACCEPT_WITH_CONDITIONS`. 이전 MAJOR 소급 승인 결함 정적 리뷰 수정 확인. `su_l1`은 watcher 미연결 시험 한정 가용성 이슈/원인 미확정으로 **OFF 유지**. `AUTO_APPROVAL.md` 29·74행의 폐기된 일·월 상한 서술은 **ZIP 밖 정오표**로 기록; v0.2.29 ZIP 310753 B/SHA `c67bc342fe77547b000fc42e1b886396cbef035c0d265dbcd124947e267ed83f` 고정, v0.2.30 새 유료 리뷰 불필요. 개발 라벨 `development_not_for_deployment`은 향후 명시적 LIVE 운영 승인/추적 영수증 없이는 해제하지 않음.
