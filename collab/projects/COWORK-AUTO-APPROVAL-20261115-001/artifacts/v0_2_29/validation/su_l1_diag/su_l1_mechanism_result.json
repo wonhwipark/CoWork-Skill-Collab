@@ -1,0 +1,331 @@
+{
+  "package": "D:\\User\\whpark\\cowork-phase1\\v029_disp\\pkg",
+  "A_mechanism": [
+    {
+      "writer": "DONE",
+      "reads": 4000,
+      "ok": 3968,
+      "failed": 32,
+      "causes": {
+        "open|PermissionError|errno=13|winerror=None": 32
+      }
+    },
+    {
+      "writer": "DONE",
+      "reads": 4000,
+      "ok": 3964,
+      "failed": 36,
+      "causes": {
+        "open|PermissionError|errno=13|winerror=None": 36
+      }
+    },
+    {
+      "writer": "DONE",
+      "reads": 4000,
+      "ok": 3976,
+      "failed": 24,
+      "causes": {
+        "open|PermissionError|errno=13|winerror=None": 24
+      }
+    },
+    {
+      "writer": "DONE",
+      "reads": 4000,
+      "ok": 3979,
+      "failed": 21,
+      "causes": {
+        "open|PermissionError|errno=13|winerror=None": 21
+      }
+    },
+    {
+      "writer": "DONE",
+      "reads": 4000,
+      "ok": 3963,
+      "failed": 37,
+      "causes": {
+        "open|PermissionError|errno=13|winerror=None": 37
+      }
+    },
+    {
+      "writer": "DONE",
+      "reads": 4000,
+      "ok": 3960,
+      "failed": 40,
+      "causes": {
+        "open|PermissionError|errno=13|winerror=None": 40
+      }
+    },
+    {
+      "writer": "DONE",
+      "reads": 4000,
+      "ok": 3967,
+      "failed": 33,
+      "causes": {
+        "open|PermissionError|errno=13|winerror=None": 33
+      }
+    },
+    {
+      "writer": "DONE",
+      "reads": 4000,
+      "ok": 3976,
+      "failed": 24,
+      "causes": {
+        "open|PermissionError|errno=13|winerror=None": 24
+      }
+    },
+    {
+      "writer": "DONE",
+      "reads": 4000,
+      "ok": 3969,
+      "failed": 31,
+      "causes": {
+        "open|PermissionError|errno=13|winerror=None": 31
+      }
+    },
+    {
+      "writer": "DONE",
+      "reads": 4000,
+      "ok": 3982,
+      "failed": 18,
+      "causes": {
+        "open|PermissionError|errno=13|winerror=None": 18
+      }
+    }
+  ],
+  "B_injection": [
+    {
+      "lines": [
+        "ERR ANCHOR_UNREADABLE_FAIL_CLOSED",
+        "OK",
+        "ERR NONCE_REPLAY",
+        "ERR NONCE_REPLAY",
+        "ERR NONCE_REPLAY",
+        "ERR NONCE_REPLAY"
+      ],
+      "ok": 1,
+      "unreadable": 1,
+      "replay": 4,
+      "counts": [
+        1,
+        1
+      ],
+      "a_b_ok": true,
+      "d_ok": true,
+      "retry_result": "ERR NONCE_REPLAY",
+      "e_ok": true,
+      "f_ok": true
+    },
+    {
+      "lines": [
+        "ERR ANCHOR_UNREADABLE_FAIL_CLOSED",
+        "ERR NONCE_REPLAY",
+        "OK",
+        "ERR NONCE_REPLAY",
+        "ERR NONCE_REPLAY",
+        "ERR NONCE_REPLAY"
+      ],
+      "ok": 1,
+      "unreadable": 1,
+      "replay": 4,
+      "counts": [
+        1,
+        1
+      ],
+      "a_b_ok": true,
+      "d_ok": true,
+      "retry_result": "ERR NONCE_REPLAY",
+      "e_ok": true,
+      "f_ok": true
+    },
+    {
+      "lines": [
+        "ERR ANCHOR_UNREADABLE_FAIL_CLOSED",
+        "OK",
+        "ERR NONCE_REPLAY",
+        "ERR NONCE_REPLAY",
+        "ERR NONCE_REPLAY",
+        "ERR NONCE_REPLAY"
+      ],
+      "ok": 1,
+      "unreadable": 1,
+      "replay": 4,
+      "counts": [
+        1,
+        1
+      ],
+      "a_b_ok": true,
+      "d_ok": true,
+      "retry_result": "ERR NONCE_REPLAY",
+      "e_ok": true,
+      "f_ok": true
+    },
+    {
+      "lines": [
+        "ERR ANCHOR_UNREADABLE_FAIL_CLOSED",
+        "OK",
+        "ERR NONCE_REPLAY",
+        "ERR NONCE_REPLAY",
+        "ERR NONCE_REPLAY",
+        "ERR NONCE_REPLAY"
+      ],
+      "ok": 1,
+      "unreadable": 1,
+      "replay": 4,
+      "counts": [
+        1,
+        1
+      ],
+      "a_b_ok": true,
+      "d_ok": true,
+      "retry_result": "ERR NONCE_REPLAY",
+      "e_ok": true,
+      "f_ok": true
+    },
+    {
+      "lines": [
+        "ERR ANCHOR_UNREADABLE_FAIL_CLOSED",
+        "OK",
+        "ERR NONCE_REPLAY",
+        "ERR NONCE_REPLAY",
+        "ERR NONCE_REPLAY",
+        "ERR NONCE_REPLAY"
+      ],
+      "ok": 1,
+      "unreadable": 1,
+      "replay": 4,
+      "counts": [
+        1,
+        1
+      ],
+      "a_b_ok": true,
+      "d_ok": true,
+      "retry_result": "ERR NONCE_REPLAY",
+      "e_ok": true,
+      "f_ok": true
+    },
+    {
+      "lines": [
+        "ERR ANCHOR_UNREADABLE_FAIL_CLOSED",
+        "ERR NONCE_REPLAY",
+        "OK",
+        "ERR NONCE_REPLAY",
+        "ERR NONCE_REPLAY",
+        "ERR NONCE_REPLAY"
+      ],
+      "ok": 1,
+      "unreadable": 1,
+      "replay": 4,
+      "counts": [
+        1,
+        1
+      ],
+      "a_b_ok": true,
+      "d_ok": true,
+      "retry_result": "ERR NONCE_REPLAY",
+      "e_ok": true,
+      "f_ok": true
+    },
+    {
+      "lines": [
+        "ERR ANCHOR_UNREADABLE_FAIL_CLOSED",
+        "OK",
+        "ERR NONCE_REPLAY",
+        "ERR NONCE_REPLAY",
+        "ERR NONCE_REPLAY",
+        "ERR NONCE_REPLAY"
+      ],
+      "ok": 1,
+      "unreadable": 1,
+      "replay": 4,
+      "counts": [
+        1,
+        1
+      ],
+      "a_b_ok": true,
+      "d_ok": true,
+      "retry_result": "ERR NONCE_REPLAY",
+      "e_ok": true,
+      "f_ok": true
+    },
+    {
+      "lines": [
+        "ERR ANCHOR_UNREADABLE_FAIL_CLOSED",
+        "ERR NONCE_REPLAY",
+        "OK",
+        "ERR NONCE_REPLAY",
+        "ERR NONCE_REPLAY",
+        "ERR NONCE_REPLAY"
+      ],
+      "ok": 1,
+      "unreadable": 1,
+      "replay": 4,
+      "counts": [
+        1,
+        1
+      ],
+      "a_b_ok": true,
+      "d_ok": true,
+      "retry_result": "ERR NONCE_REPLAY",
+      "e_ok": true,
+      "f_ok": true
+    },
+    {
+      "lines": [
+        "ERR ANCHOR_UNREADABLE_FAIL_CLOSED",
+        "ERR NONCE_REPLAY",
+        "OK",
+        "ERR NONCE_REPLAY",
+        "ERR NONCE_REPLAY",
+        "ERR NONCE_REPLAY"
+      ],
+      "ok": 1,
+      "unreadable": 1,
+      "replay": 4,
+      "counts": [
+        1,
+        1
+      ],
+      "a_b_ok": true,
+      "d_ok": true,
+      "retry_result": "ERR NONCE_REPLAY",
+      "e_ok": true,
+      "f_ok": true
+    },
+    {
+      "lines": [
+        "ERR ANCHOR_UNREADABLE_FAIL_CLOSED",
+        "OK",
+        "ERR NONCE_REPLAY",
+        "ERR NONCE_REPLAY",
+        "ERR NONCE_REPLAY",
+        "ERR NONCE_REPLAY"
+      ],
+      "ok": 1,
+      "unreadable": 1,
+      "replay": 4,
+      "counts": [
+        1,
+        1
+      ],
+      "a_b_ok": true,
+      "d_ok": true,
+      "retry_result": "ERR NONCE_REPLAY",
+      "e_ok": true,
+      "f_ok": true
+    }
+  ],
+  "summary": {
+    "A_trials": 10,
+    "A_total_reads": 40000,
+    "A_failed_reads": 296,
+    "A_causes": {
+      "open|PermissionError|errno=13|winerror=None": 296
+    },
+    "B_trials": 10,
+    "B_a_b_ok": 10,
+    "B_d_ok": 10,
+    "B_e_ok": 10,
+    "B_f_ok": 10,
+    "B_retry_replay": 10
+  }
+}
