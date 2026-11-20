@@ -1,5 +1,14 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-20 KST — GPT v0.2.29 R1 ACCEPT_WITH_CONDITIONS / USD3·LIVE 사전검증 단일 호스트 원샷 대기
+- **GPT 최종 판정·호스트 실행서:** [GPT_V029_REVIEW_ACCEPT_AND_USD3_PRELIVE_STAGING_ONESHOT_r0001_20261120_KST.md](GPT_V029_REVIEW_ACCEPT_AND_USD3_PRELIVE_STAGING_ONESHOT_r0001_20261120_KST.md). 최신 독립 리뷰 `REQ-COWORK-V029-ONEOFF-R1-20261120` **COMPLETE**, BLOCKING0/MAJOR0/MINOR3(세 번째 이월 검증 NOT_RUN). GPT가 REQUEST/READY/SOURCE_PIN/결과/영수증/디스패치의 ID·rev·package SHA·processing key·`ok=true` 원격 일치 직접 확인. Windows 호스트는 비용 **USD0.5387501**, 모델 1회·15턴·DB 중복 0 보고(운영 DB GPT 직접 열람 NOT_RUN).
+- **판정:** `GPT_DISPOSITION=ACCEPT_WITH_CONDITIONS`. 이전 MAJOR 소급 승인 결함 정적 리뷰 수정 확인. `su_l1`은 watcher 미연결 시험 한정 가용성 이슈/원인 미확정으로 **OFF 유지**. `AUTO_APPROVAL.md` 29·74행의 폐기된 일·월 상한 서술은 **ZIP 밖 정오표**로 기록; v0.2.29 ZIP 310753 B/SHA `c67bc342fe77547b000fc42e1b886396cbef035c0d265dbcd124947e267ed83f` 고정, v0.2.30 새 유료 리뷰 불필요. 개발 라벨 `development_not_for_deployment`은 향후 명시적 LIVE 운영 승인/추적 영수증 없이는 해제하지 않음.
+- **사용자 통합 1~3단계:** 1단계 **리뷰·GPT 판정 완료**. 2~3단계는 `POLICY-STATIC-V1=USD3` + 보호 위임 USD3 + 새 `enabled_at`을 **Windows 격리 환경에서만 함께 staging/SHADOW**하고, 과거 pending/Guard/종결·중복·ACL·단일 provider·backup/rollback 가능성 검증 후 한 결과로 게시. **현재 host 실제 staged policy/SHADOW=`NOT_RUN`**, LIVE 설치·정책/위임 변경=0(마지막 확인 LIVE v0.2.25/USD1). 유료 리뷰·REQUEST·READY 재실행 0.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 단일 인계서 §2~4를 기존 Work 내 한 번 수행, `CLAUDE_V029_USD3_PRELIVE_READINESS_RESULT_FOR_GPT_20261120.md`와 CURRENT/TRACKER 갱신·PRIVATE 원격 readback. **최종 4단계 LIVE ENABLE은 별도 유효 운영 승인 및 호스트 안전 게이트 PASS 뒤** 진행.
+
+---
+
+
 ## 2026-11-20 KST — v0.2.29 독립 리뷰 R1 완료: BLOCKING 0 / MAJOR 0 / MINOR 3 / GPT 판정 대기
 
 - **결과:** `CLAUDE_V029_ONEOFF_R1_RESULT_FOR_GPT_20261120.md` (PRIVATE main, commit `3103a2fd3f3f`). ZIP `c67bc342…`(310753 B) 바이트 불변.
