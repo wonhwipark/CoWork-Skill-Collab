@@ -1,0 +1,37 @@
+{
+  "target": "D:\\User\\whpark\\skill-collab-watcher-dist\\backup_v0_2_25_install_20261120_200712",
+  "files": 117,
+  "manifest_verified": true,
+  "install_tree_equals_live": true,
+  "info": {
+    "taken_at": "2026-11-20 20:07:13",
+    "install_tree_sha256": "f691bcf808cbf81e9c2c2a9be65335e527c2df99ea4d54a427665e4c90045c9f",
+    "install_files": 108,
+    "version_line": "__version__ = \"0.2.25\"",
+    "db_integrity": "ok",
+    "db_counts_live": {
+      "jobs": 9,
+      "auto_claims": 3,
+      "auto_seen": 11,
+      "pending_requests": 9
+    },
+    "db_counts_snapshot": {
+      "jobs": 9,
+      "auto_claims": 3,
+      "auto_seen": 11,
+      "pending_requests": 9
+    },
+    "jobs_by_state": {
+      "COMPLETED": 9
+    },
+    "task_export_rc": {
+      "SKILL-COLLAB-GitHub-Watcher": 0,
+      "SKILL-COLLAB-Notifier": 0
+    },
+    "config_sha256": "fbce30a97c06f8d04e2e0029c731c41d2ccd87963196afe80279f10cf7509c27",
+    "delegation_sha256": "ddead4e497759ac30db9e8d90974cfe4f68114d99ef99cdf85a083e9bf54fd4c"
+  },
+  "private_key_or_passphrase_in_bundle": false,
+  "manifest_sha256": "d23b52068733ec7dcce95024f6f919a0e30147e00b502b3bd449d29406256d92",
+  "db_snapshot_sha256": "111c85ab30de926759d1caebec78b65a228dd4ab7bfa126c3587ce13dd465fa5"
+}
