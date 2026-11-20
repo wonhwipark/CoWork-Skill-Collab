@@ -420,24 +420,70 @@
     },
     {
       "disposition": "NOT_VERIFIED",
-      "findings": [],
+      "findings": [
+        {
+          "decision": "NOT_ADJUDICATED",
+          "id": "Q1",
+          "summary": "— Exclusion correctness"
+        },
+        {
+          "decision": "NOT_ADJUDICATED",
+          "id": "Q2",
+          "summary": "— Side effects of permanent exclusion (registry cost vs. cap ordering)"
+        },
+        {
+          "decision": "NOT_ADJUDICATED",
+          "id": "Q3",
+          "summary": "— Concurrency and atomicity of `auto_exclude`"
+        },
+        {
+          "decision": "NOT_ADJUDICATED",
+          "id": "Q4",
+          "summary": "— Retroactive admission, residual paths"
+        },
+        {
+          "decision": "NOT_ADJUDICATED",
+          "id": "Q5",
+          "summary": "— Telemetry integrity"
+        },
+        {
+          "decision": "NOT_ADJUDICATED",
+          "id": "Q6",
+          "summary": "— Five windows and restart, double-signing"
+        },
+        {
+          "decision": "NOT_ADJUDICATED",
+          "id": "Q7",
+          "summary": "— `su_l1` classification"
+        },
+        {
+          "decision": "NOT_ADJUDICATED",
+          "id": "Q8",
+          "summary": "— Carry-over from v0.2.28 review"
+        },
+        {
+          "decision": "NOT_ADJUDICATED",
+          "id": "Q9",
+          "summary": "— Release label / traceability"
+        }
+      ],
       "flags": {
         "gpt": false,
         "ready": true,
-        "receipt": false,
+        "receipt": true,
         "request": true,
-        "review": false
+        "review": true
       },
       "id": "REQ-COWORK-V029-ONEOFF-R1-20261120",
       "paths": {
         "gpt": "",
         "ready": "collab/requests/REQ-COWORK-V029-ONEOFF-R1-20261120/READY.md",
-        "receipt": "",
+        "receipt": "collab/receipts/REQ-COWORK-V029-ONEOFF-R1-20261120/RECEIPT_1.md",
         "request": "collab/requests/REQ-COWORK-V029-ONEOFF-R1-20261120/REQUEST.md",
-        "review": ""
+        "review": "collab/reviews/REQ-COWORK-V029-ONEOFF-R1-20261120/REVIEW_RESULT_1.md"
       },
       "revision": "1",
-      "stage": "REVIEW_NOT_OBSERVED",
+      "stage": "GPT_NOT_OBSERVED",
       "tone": "warning",
       "trust": "DOCUMENT_FIELDS_MATCH_ONLY_SIGNATURE_NOT_VERIFIED",
       "work_id": "COWORK-AUTO-APPROVAL-20261115-001"
@@ -688,7 +734,7 @@
   "source": "GITHUB_TRACKED_FILES_ONLY",
   "transport": {
     "receipts": {
-      "files_observed": 12,
+      "files_observed": 13,
       "note": "GitHub 파일 관측 수 · 실제 리뷰 실행/서명/영수증 검증 아님",
       "verified": false
     },
@@ -698,7 +744,7 @@
       "verified": false
     },
     "reviews": {
-      "files_observed": 12,
+      "files_observed": 13,
       "note": "GitHub 파일 관측 수 · 실제 리뷰 실행/서명/영수증 검증 아님",
       "verified": false
     }
