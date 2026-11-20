@@ -1,5 +1,17 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 2026-11-20 KST — P1/P2 실제 5질문 GPT 조회 완료·Windows 자동 로딩 검증 대기
+
+- **이번 사용자 승인:** PRIVATE 대시보드 실패 원인 조사 → PUBLIC 상태 정합성 개선 → GPT/Windows P1/P2 자동 조회 검증. 사용자 지시대로 읽기 전용/기존 기능 최소 보완, 독립 리뷰/유료 실행/Watcher LIVE 변경 없음.
+- **GPT 실제 5질문 source-routing 시험:** Q1 GitHub LIVE, Q2 STATIC/위임 USD3, Q3 P1/P2 설치 현황은 관련 CURRENT 최상단에서 직접 확인. Q4 대시보드 D안+P1/P2, Q5 전체 L1 Knowledge E2E는 **다중 작업 Work**이므로 최신 단락만 읽어서는 불충분, 관련 하위 Work 흐름과 결과로 확장 필요. 자료 원본·시점 분리 PASS / 전체 자동 활용 E2E는 PARTIAL.
+- **Windows Claude Code:** 시작 `CLAUDE.md`에 P1/P2 단계별 보조 조회 및 최상단 불일치 시 선택적 확장 원칙 연결(원격 commit `5ef2e14a7266de007ed51438d43d384fe2bd806b`). 실제 Windows `/context all` 로딩·local HEAD 동일성·Python 조회기 실행/동일 Q1~Q5 **NOT_RUN**. 세션 자동 작동을 게시 사실로 승격하지 않음.
+- **운영 연동:** migration CURRENT 최신 요약에 기존 Windows v0.2.29/GitHub LIVE 상태 연결 commit `75c4a99178a5de3ea2f57c0a8d47b6b8760c8f22`; PRIVATE CI runner 미배정/후속 PUBLIC sync SKIP, 공개 JSON '정식 전환 전' 잔존. 플랫폼 실행 실패 원인 미확인, 자동 검증 우회 수동 PUBLIC JSON 게시 안 함.
+- **정본:** [GPT 5질문 실측·Windows 동일 질문 검증 지침](P1_P2_AUTO_USE_READONLY_E2E_CHECK_r0001_20261120_KST.md). 기존 P1/P2 구현·사용자 리뷰 생략 범위, 구 P1 R1 HOST_PREFLIGHT_BLOCKED 기록 유지.
+- **NEXT_ONE_ACTION:** GitHub Actions Runner 배정/계정 Actions 제한·실행 경고의 실제 원인 확인 후 기존 CI→PUBLIC JSON allowlist readback 정상화; Windows Claude Code는 기존 허용된 read-only 호스트 세션에서 Q1~Q5 결과 확인 후 같은 Work에 게시. 미실행을 PASS로 보고 금지.
+
+---
+
+
 ## 2026-11-20 KST — 사용자 요청 P1→P2 연속 적용 완료 / 이번 범위 독립 리뷰 SKIP
 
 - **최신 사용자 지시:** “리뷰없이 진행후 적용해줘. 이후 p2 도 동일하게 진행해줘”. 기존 맥락 Work·대시보드 Work를 재사용해 P1(질문별 관련 CURRENT 선택·현재/근거/다음 행동 4카드)과 P2(해당 Work REQUEST→ZIP·SOURCE_PIN/서명·READY·REVIEW/RECEIPT 로컬 관계 조회 + 명시적 Git commit 비교 + 공개 개념 관계·세션 중 변경분)를 구현·적용. **이번 두 기능의 독립 리뷰만 `SKIP_BY_EXPLICIT_USER_REQUEST`**로 판정. 다른 업무·Watcher·Guard/기존 R1 독립 리뷰에 일반화 없음.

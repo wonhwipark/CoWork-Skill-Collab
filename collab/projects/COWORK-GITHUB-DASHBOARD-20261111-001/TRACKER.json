@@ -5,11 +5,11 @@
       "work_id": "COWORK-GITHUB-DASHBOARD-20261111-001",
       "skill": "cowork-dashboard",
       "title": "발표용 대시보드 정보·상태 정합성 개선 설계",
-      "phase": "COMPLETE",
+      "phase": "BLOCKED",
       "owner": "GPT",
       "self_test": "PASS",
       "independent_review": "NOT_RUN",
-      "next_action": "P1 4카드·P2 관계/변경분 B안 Pages 게시, 합성 UI·Pages 배포 PASS, 독립 리뷰 사용자 생략. 다음: PC/모바일 실제 보기"
+      "next_action": "2026-11-20 UI sources D+P1/P2 posted, PRIVATE generated public sync BLOCKED. Runner_id=0, steps=0, run 44743762139 failed; subsequent PUBLIC sync skipped. Migration CURRENT updated latest LIVE source but PUBLIC status.json still stale. NEXT: check GitHub Actions runner allocation/account billing/permissions and safe existing CI→allowlisted PUBLIC sync; no retry/model/live changes. Windows context autoload NOT_RUN; GPT 5 scoped probes PARTIAL."
     }
   ]
 }

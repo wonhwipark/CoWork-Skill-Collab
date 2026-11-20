@@ -1,5 +1,17 @@
 # COWORK-GITHUB-DASHBOARD-20261111-001 — CURRENT
 
+## 2026-11-20 KST — D안·P1/P2 PUBLIC 소스 유지 / 자동 상태 갱신 BLOCKED
+
+- **현재 UI 소스:** L1Work PUBLIC `main/docs/cowork-dashboard/index.html`에서 D안 가로 타임라인, P1 빠른 4카드 및 P2 접힘 관계·변경분 요소 동시 존재; `context-view.js`도 원격 재확인. 기존 3개 탭/고정 공개 범주 유지. 실제 브라우저 렌더·PC/모바일 사용성은 별도 `NOT_RUN`.
+- **PRIVATE 상태 근거 수정:** GitHub 단일 LIVE / Windows v0.2.29 운영 최종 호스트 보고를 이관 Work CURRENT 최상단에 반영(`75c4a99178a5de3ea2f57c0a8d47b6b8760c8f22`); Watcher config/DB/운영 설치 변경 없음.
+- **AUTOSYNC=BLOCKED:** `cowork-dashboard.yml` run [#44743762139](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/44743762139) `failure`, GitHub API job `runner_id=0`/steps=[]·실행 1초; PUBLIC status sync [#44743774215](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/44743774215) `skipped`. 로그 다운로드 BlobNotFound, 실제 Actions 실행 제한/인프라/쿼터 원인 **NOT_VERIFIED**, Python 오류 단정 금지.
+- **PUBLIC JSON 미정합:** 기존 `L1Work/main/docs/cowork-dashboard/status.json` 관측 `generated_at=2026-11-20T09:23:06Z`, `cutover=정식 전환 전`, `active_provider=기록 미확인`. 최신 Windows 호스트 판정과 다른 **오래된 PUBLIC 요약**이며 최신 LIVE 자체를 전환 전으로 역판정하지 않음. 미검증 공개 JSON 직접 덮어쓰기/허용목록 확대 0.
+- **추적:** [P1/P2 5질문·Windows 조회 검증 및 Actions 차단](../COWORK-SKILL-DISCOVERY-20261112-001/P1_P2_AUTO_USE_READONLY_E2E_CHECK_r0001_20261120_KST.md).
+- **NEXT_ONE_ACTION:** GitHub Actions run/job UI의 실패 사유·계정 Runner/quota/권한 확인 → 기존 검증된 PRIVATE generate·allowlist PUBLIC sync가 정상 실행된 뒤 실제 PUBLIC `status.json` 원격 바이트/readback. 원인 증거 없이 반복 재실행·임의 CI 우회·LIVE 변경 금지.
+
+---
+
+
 ## 2026-11-20 KST — D안 가로 타임라인 적용 / PUBLIC main readback PASS
 
 - **사용자 확정 범위:** 기존 대시보드의 협업 전체만 D안의 세로 항목별 진행을 **가로 1행/업무**로 전환. 진행 스킬·운영 3건과 설계·대시보드 2건을 한 화면에 표시. 업무 L1 Workspace 전체 대시보드는 이번 범위에서 제외.
