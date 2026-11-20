@@ -1,5 +1,16 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-20 KST — 사용자 최종 실사용 목표: Agent MCP로 NR L1 Tx UL Tx Switching 지식 1건 갱신
+
+- **요청 범위:** 기존 모바일 Agent → Linux MCP → 설치된 `l1-knowledge-updater`(필요 시 `code-analyzer`)로 NR L1 Tx의 UL Tx Switching 기존 Knowledge와 현재 코드 근거를 검토 → 기존 Work 재개 → 개인 `l1-workspace`에 분석/변경 지식·Evidence 저장 → 실제 revision/readback 대조 → 사용자에게 결과 반환. 기존 검토 분류의 `NT-F09` 결정/상태와 `NT-F11` Tx Path Switching을 우선 대상으로 참조하되 **실제 Knowledge ID와 동일시하지 않음**. 안테나/SRS·ULCA·EN-DC·Dual SIM은 코드 근거 확인 시에만 관련 Scenario로 연결.
+- **업무 GPT 1건 PUBLIC 인계:** [NR L1 Tx UL Tx Switching Agent MCP one-shot](https://github.com/wonhwipark/L1Work/blob/main/handoffs/NR_L1TX_UL_TX_SWITCHING_KNOWLEDGE_AGENT_MCP_ONE_SHOT_HANDOFF_r0001_20261120_KST.md); GitHub PUBLIC `wonhwipark/L1Work` / `main` / `handoffs/NR_L1TX_UL_TX_SWITCHING_KNOWLEDGE_AGENT_MCP_ONE_SHOT_HANDOFF_r0001_20261120_KST.md`. 원격 문서 readback 확인, blob SHA `0c48b6759f0df8ff94d062b46c30b209dda9c458`.
+- **실행 한계:** 이 GPT 세션에는 업무 Linux MCP/Agent의 직접 호출 도구가 없음. `MCP_ACTUAL_CALL=NOT_RUN`, `UPDATER_EXECUTION=NOT_RUN`, `CODE_FACTS=NOT_VERIFIED`, `L1_WORKSPACE_WRITE=NOT_RUN`, `WORKSPACE_READBACK=NOT_RUN`, `BUSINESS_GPT_EXECUTION=NOT_VERIFIED`. PUBLIC 전달/인덱스 게시를 수행으로 간주하지 않음. 실제 업무용 Workspace 위치는 현장에서 확인하며 동명 GitHub.com 저장소로 추정하지 않음.
+- **보호 범위:** 개인 Workspace 1건 갱신만 요청; 그룹 `l1sw-dev-knowledge` 게시·제품 소스 수정·임의 Job 재실행·신규 유료 호출·운영 설치/재시작 승인 아님. 회사 제한 소스·로그·상세 MSC는 PUBLIC/CoWork PRIVATE로 전송하지 않음.
+- **NEXT_ONE_ACTION:** 업무 GPT/접근 가능한 Agent가 위 PUBLIC 인계의 실제 기존 MCP/Updater 호출을 재개하고, 동일 Work의 저장된 revision과 readback 근거 및 안전한 결과 요약을 반환. 불가하면 첫 차단 단계와 reason을 보고.
+
+---
+
+
 ## 2026-11-20 KST — Linux MCP 기존 업무 스킬 접근 인계 (Viewer 진단과 분리)
 
 - **사용자 범위 정정:** 모바일 Agent→Linux MCP가 Viewer를 업무 경로로 호출하는 것이 아니라, 기존 `l1-fix-workflow`/Kernel/`code-analyzer`/`l1-knowledge-updater`/Knowledge 조회/`job-list` 등 실제 노출·권한이 확인된 업무 기능에 연결하는 것이 목적. Viewer 웹 화면/MSC 렌더는 별도 UI 작업으로 유지. 이전 Viewer 중심 MCP r0001은 이력으로 보존.
