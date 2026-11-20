@@ -1,5 +1,18 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-20 KST — 마지막 제공 문서 차용 판단·최종 HO PUBLIC 전달
+
+- **사용자 의도 확정:** “동일 문서인가”를 확인하는 것에서 그치지 않고 마지막에 붙여준 분석 확장 설계 요청에서 기존 HO에 차용할 부분을 선별한 뒤 업무 GPT 전달용 HO를 마무리하는 요청으로 처리. 기존 스킬·제품 코드/패키지 변경을 새로 시작하지 않음.
+- **차용 판정=수정 수용:** (1) 객체·상태·순서·조건·위반/보호/예외의 원인 규칙 (2) caller/callee·수명·비동기/빌드 경계와 확대/중단 조건 (3) 후보 4분류·미해결 확정 최소 근거 (4) 보정/평가 분리·오탐/누락/보류·시간/모델량 비교를 보고서·분석 설계에 보완. 기존 r0002/저사양 순차 설계의 같은 내용은 재사용. 새 엔진·schema·CodeQL 도입·외부 성능 상속·병렬 Agent 강제는 채택하지 않음.
+- **범위 정리:** 기준 분석 r0002 → 분석 설계 보완 → 기존 Work 원본/Recovery 저장·조회 연결의 관계를 명시. Kernel/Workflow 후보의 기존 시험은 저장/연결 시험이며 탐색 정확도·제품 recovery 효과의 검증이 아님. 이번 업무 GPT 요청은 스터디·설계/실제 계약 매핑. CNF 미수신 timeout과 이미 구현된 해당 recovery 제외, MCP 자료 재요청 금지 유지.
+- **참고 재확인:** CodeQL 공식 본문, Trail of Bits SKILL 원문(Git blob `8f58f54b1883110f1a38a51c9360d4b9d1b195a8`) 확인. TyPatch는 arXiv 초록 검색 결과로 아이디어 확인; 전체 실험 조건/심사 상태 확인으로 확대하지 않음. 연구 수치나 L1 효과를 이번 HO의 검증 결과로 사용하지 않음.
+- **PRIVATE/PUBLIC 최종 HO:** [L1_RECOVERY_WORKSPACE_IMPLEMENTED_CONTRACT_HANDOFF_r0002_20261120_KST.md](L1_RECOVERY_WORKSPACE_IMPLEMENTED_CONTRACT_HANDOFF_r0002_20261120_KST.md) / [업무 GPT 전달용 PUBLIC MD](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_RECOVERY_WORKSPACE_IMPLEMENTED_CONTRACT_HANDOFF_r0002_20261120_KST.md). **19206 UTF-8 bytes**, SHA-256 `a28733d165492c6af2c4bd12a7e435fc56626e03a6662d6c00b43373a083447c`, Git blob `0fde7f6df285b8e7106f712a153f935e78fd4f7a`. PRIVATE 갱신 commit `9d4ef9bee69c225b0c3f3331920394213dae3464`; PUBLIC 문서 commit `625f191b8a03d5f4984793803c2821dba0d187d4`. 양쪽 실제 원문·UTF-8 bytes/Git blob 대조 PASS.
+- **진입점:** PUBLIC handoffs/README 최상단 최종 HO 연결, 기존 11/19 분석 r0002는 “기준 분석”으로 표시하고 원문/이력 보존. index commit `3915db37135e1c262293787f19d1558da7b7306b`. 새 문서는 설치/정식 릴리스 지시가 아니라 MD 인계임.
+- **실제 상태:** `PUBLIC_MD_DELIVERY=POSTED/READBACK_PASS`; `BUSINESS_GPT_RECEIPT=NOT_VERIFIED`; 이번 문서 작업의 신규 스킬/제품 코드 변경·후보 ZIP 공개·설치·분석/Job·그룹 게시·유료 리뷰 `NOT_RUN`. 기존 Kernel 0.7.46/Workflow 1.6.75 개발 후보/시험·미검증/독립 리뷰 상태 무변경.
+- **NEXT_ONE_ACTION:** 업무 GPT가 PUBLIC 최종 HO로 기존 업무를 재개하고 실제 접근 가능한 원문에서 원인 규칙·후보 검증/평가 계획·생산자→Work 저장/읽기 연결을 설계. 사용자에게 MCP 자료 제공을 다시 요구하지 않음.
+
+---
+
 ## 2026-11-20 KST — Recovery 나머지 관리 스킬 개발 완료: Kernel 0.7.46 / Workflow 1.6.75
 
 - **최신 사용자 지시 수용:** “나머지 스킬은 작업 가능”을 접근 가능한 관리 코드의 개발·격리 시험 요청으로 적용. MCP 자료 제공 미지원 제약과 업무 GPT 설계 HO 우선 방침은 유지하며 사용자에게 설치본 자료를 다시 요청하지 않음.
