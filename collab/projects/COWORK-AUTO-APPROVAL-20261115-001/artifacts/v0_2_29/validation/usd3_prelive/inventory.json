@@ -1,0 +1,145 @@
+{
+  "live_tree": {
+    "files": 108,
+    "tree_sha256": "f691bcf808cbf81e9c2c2a9be65335e527c2df99ea4d54a427665e4c90045c9f",
+    "version_line": "__version__ = \"0.2.25\""
+  },
+  "v025_package": {
+    "bytes": 283930,
+    "sha256": "26d63c8a03290499b13b2ceb8ff0b70c06eb1b1bcc1a25fe3d8f65fcc213d228"
+  },
+  "live_vs_v025_package": {
+    "package_files": 104,
+    "identical": 104,
+    "different": [],
+    "missing_in_live": [],
+    "only_in_live": [
+      "config/reviewer.config.json",
+      "package/skill-collab-watcher_v0_2_20_1115.zip",
+      "package/skill-collab-watcher_v0_2_23_1115.zip",
+      "package/skill-collab-watcher_v0_2_25_1117.zip"
+    ]
+  },
+  "config": {
+    "tiers": {
+      "POLICY-STATIC-V1": 1.5,
+      "POLICY-STATIC-V1-LARGE": 3.0,
+      "POLICY-STATIC-V1-DESIGN": 3.0
+    },
+    "daily_budget_usd": null,
+    "max_dispatches_per_day": null,
+    "acl_check": "windows",
+    "valid_hours": 2,
+    "sha256": "fbce30a97c06f8d04e2e0029c731c41d2ccd87963196afe80279f10cf7509c27"
+  },
+  "delegation": {
+    "enabled": true,
+    "policy": "POLICY-STATIC-V1",
+    "max_request_usd": 1.0,
+    "enabled_at": "2026-11-16T19:47:50+09:00",
+    "expires_at": "2026-12-16T19:47:50+09:00",
+    "project_families": [
+      "COWORK-",
+      "L1-WORKSPACE-"
+    ],
+    "projects": [],
+    "skills": [
+      "cowork-review-watcher",
+      "cowork-dashboard",
+      "l1-knowledge-updater"
+    ],
+    "repo_id": "1451933830",
+    "branch": "main",
+    "sha256": "ddead4e497759ac30db9e8d90974cfe4f68114d99ef99cdf85a083e9bf54fd4c"
+  },
+  "acl": {
+    "delegation": [
+      [
+        "SYSTEM",
+        "(I)(F)"
+      ],
+      [
+        "ME",
+        "(I)(F)"
+      ]
+    ],
+    "approver_key": [
+      [
+        "ME",
+        "(F)"
+      ]
+    ],
+    "live_config": [
+      [
+        "Administrators",
+        "(I)(F)"
+      ],
+      [
+        "SYSTEM",
+        "(I)(F)"
+      ],
+      [
+        "Users",
+        "(I)(M)"
+      ],
+      [
+        "Users",
+        "(I)(RX)"
+      ]
+    ]
+  },
+  "tasks": [
+    "SKILL-COLLAB-Claude-Review-Watcher|Disabled|2026-11-12 오후 10:34:23|267014",
+    "SKILL-COLLAB-Dashboard-Deploy-Bridge|Disabled|2026-11-13 오전 12:39:32|0",
+    "SKILL-COLLAB-Dashboard-Updater|Disabled|2026-11-12 오후 10:39:14|267014",
+    "SKILL-COLLAB-GitHub-Watcher|Running|2026-11-18 오전 1:31:27|267009",
+    "SKILL-COLLAB-Notifier|Running|2026-11-16 오후 7:46:24|267009"
+  ],
+  "processes": [
+    "31756|\"D:\\User\\whpark\\skill-collab-watcher\\.venv\\Scripts\\pythonw.exe\" -I \"D:\\User\\whpark\\skill-collab-watcher-dist\\notifier\\notify_reviews.py\" --watch",
+    "5332|\"C:\\Users\\ME\\AppData\\Local\\Programs\\Python\\Python311\\pythonw.exe\" -I \"D:\\User\\whpark\\skill-collab-watcher-dist\\notifier\\notify_reviews.py\" --watch",
+    "12044|\"D:\\User\\whpark\\skill-collab-watcher\\.venv\\Scripts\\pythonw.exe\" -m skill_collab_watcher.cli --config \"D:\\User\\whpark\\skill-collab-watcher-github\\confi",
+    "18972|\"C:\\Users\\ME\\AppData\\Local\\Programs\\Python\\Python311\\pythonw.exe\" -m skill_collab_watcher.cli --config \"D:\\User\\whpark\\skill-collab-watcher-github\\con",
+    "25604|powershell -NoProfile -Command \"Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -match 'skill_collab_watcher|skill-collab' } | ForEach-O"
+  ],
+  "db": {
+    "integrity_check": "ok",
+    "tables": {
+      "jobs": 9,
+      "cursors": 1,
+      "audit_log": 17522,
+      "counters": 11,
+      "pending_requests": 9,
+      "provider_lease": 1,
+      "provider_history": 1,
+      "job_claims": 9,
+      "auto_seen": 11,
+      "auto_claims": 3
+    },
+    "provider_lease": [
+      [
+        "1",
+        "github",
+        "1",
+        "2026-11-14T22:57:57.244538+00:00"
+      ]
+    ],
+    "jobs_by_state": {
+      "COMPLETED": 9
+    },
+    "auto_claims_by_stage": {
+      "READY_POSTED": 2,
+      "UNCERTAIN": 1
+    },
+    "auto_seen": 11,
+    "snapshot_sha256": "9d43a91d7b38aae21719e6b63784b4f204721d66b7bb62aa03ebdc9a5bfa215a"
+  },
+  "state_dir_files": [
+    "state.sqlite3",
+    "state.sqlite3-shm",
+    "state.sqlite3-wal",
+    "watch.lock"
+  ],
+  "su_l1_references_in_live_runtime": [],
+  "su_l1_in_live_config": false
+}
