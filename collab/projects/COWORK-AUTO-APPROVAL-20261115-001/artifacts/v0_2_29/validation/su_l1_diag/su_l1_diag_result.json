@@ -1,0 +1,402 @@
+{
+  "package": "D:\\User\\whpark\\cowork-phase1\\v029_disp\\pkg",
+  "runs_per_condition": 10,
+  "conditions": {
+    "idle": {
+      "race_runs": 10,
+      "anchor_unreadable_runs": 0,
+      "a_ok": 10,
+      "b_ok": 10,
+      "c_ok": 10,
+      "d_ok": 10,
+      "e_ok": 10,
+      "f_ok": 10,
+      "double_accept_runs": 0,
+      "zero_accept_runs": 0,
+      "other_results": [],
+      "unreadable_causes": {},
+      "original_test_pass": 9,
+      "original_test_fail": 1,
+      "per_run": [
+        {
+          "ok": 1,
+          "replay": 5,
+          "anchor_unreadable": 0,
+          "other": [],
+          "nonzero_exit": [],
+          "stderr": [],
+          "counts": {
+            "nonces": 1,
+            "log": 1
+          },
+          "c_ok": true,
+          "d_ok": true,
+          "e_ok": true,
+          "f_ok": true,
+          "a_ok": true,
+          "b_ok": true
+        },
+        {
+          "ok": 1,
+          "replay": 5,
+          "anchor_unreadable": 0,
+          "other": [],
+          "nonzero_exit": [],
+          "stderr": [],
+          "counts": {
+            "nonces": 1,
+            "log": 1
+          },
+          "c_ok": true,
+          "d_ok": true,
+          "e_ok": true,
+          "f_ok": true,
+          "a_ok": true,
+          "b_ok": true
+        },
+        {
+          "ok": 1,
+          "replay": 5,
+          "anchor_unreadable": 0,
+          "other": [],
+          "nonzero_exit": [],
+          "stderr": [],
+          "counts": {
+            "nonces": 1,
+            "log": 1
+          },
+          "c_ok": true,
+          "d_ok": true,
+          "e_ok": true,
+          "f_ok": true,
+          "a_ok": true,
+          "b_ok": true
+        },
+        {
+          "ok": 1,
+          "replay": 5,
+          "anchor_unreadable": 0,
+          "other": [],
+          "nonzero_exit": [],
+          "stderr": [],
+          "counts": {
+            "nonces": 1,
+            "log": 1
+          },
+          "c_ok": true,
+          "d_ok": true,
+          "e_ok": true,
+          "f_ok": true,
+          "a_ok": true,
+          "b_ok": true
+        },
+        {
+          "ok": 1,
+          "replay": 5,
+          "anchor_unreadable": 0,
+          "other": [],
+          "nonzero_exit": [],
+          "stderr": [],
+          "counts": {
+            "nonces": 1,
+            "log": 1
+          },
+          "c_ok": true,
+          "d_ok": true,
+          "e_ok": true,
+          "f_ok": true,
+          "a_ok": true,
+          "b_ok": true
+        },
+        {
+          "ok": 1,
+          "replay": 5,
+          "anchor_unreadable": 0,
+          "other": [],
+          "nonzero_exit": [],
+          "stderr": [],
+          "counts": {
+            "nonces": 1,
+            "log": 1
+          },
+          "c_ok": true,
+          "d_ok": true,
+          "e_ok": true,
+          "f_ok": true,
+          "a_ok": true,
+          "b_ok": true
+        },
+        {
+          "ok": 1,
+          "replay": 5,
+          "anchor_unreadable": 0,
+          "other": [],
+          "nonzero_exit": [],
+          "stderr": [],
+          "counts": {
+            "nonces": 1,
+            "log": 1
+          },
+          "c_ok": true,
+          "d_ok": true,
+          "e_ok": true,
+          "f_ok": true,
+          "a_ok": true,
+          "b_ok": true
+        },
+        {
+          "ok": 1,
+          "replay": 5,
+          "anchor_unreadable": 0,
+          "other": [],
+          "nonzero_exit": [],
+          "stderr": [],
+          "counts": {
+            "nonces": 1,
+            "log": 1
+          },
+          "c_ok": true,
+          "d_ok": true,
+          "e_ok": true,
+          "f_ok": true,
+          "a_ok": true,
+          "b_ok": true
+        },
+        {
+          "ok": 1,
+          "replay": 5,
+          "anchor_unreadable": 0,
+          "other": [],
+          "nonzero_exit": [],
+          "stderr": [],
+          "counts": {
+            "nonces": 1,
+            "log": 1
+          },
+          "c_ok": true,
+          "d_ok": true,
+          "e_ok": true,
+          "f_ok": true,
+          "a_ok": true,
+          "b_ok": true
+        },
+        {
+          "ok": 1,
+          "replay": 5,
+          "anchor_unreadable": 0,
+          "other": [],
+          "nonzero_exit": [],
+          "stderr": [],
+          "counts": {
+            "nonces": 1,
+            "log": 1
+          },
+          "c_ok": true,
+          "d_ok": true,
+          "e_ok": true,
+          "f_ok": true,
+          "a_ok": true,
+          "b_ok": true
+        }
+      ]
+    },
+    "loaded": {
+      "race_runs": 10,
+      "anchor_unreadable_runs": 0,
+      "a_ok": 10,
+      "b_ok": 10,
+      "c_ok": 10,
+      "d_ok": 10,
+      "e_ok": 10,
+      "f_ok": 10,
+      "double_accept_runs": 0,
+      "zero_accept_runs": 0,
+      "other_results": [],
+      "unreadable_causes": {},
+      "original_test_pass": 10,
+      "original_test_fail": 0,
+      "per_run": [
+        {
+          "ok": 1,
+          "replay": 5,
+          "anchor_unreadable": 0,
+          "other": [],
+          "nonzero_exit": [],
+          "stderr": [],
+          "counts": {
+            "nonces": 1,
+            "log": 1
+          },
+          "c_ok": true,
+          "d_ok": true,
+          "e_ok": true,
+          "f_ok": true,
+          "a_ok": true,
+          "b_ok": true
+        },
+        {
+          "ok": 1,
+          "replay": 5,
+          "anchor_unreadable": 0,
+          "other": [],
+          "nonzero_exit": [],
+          "stderr": [],
+          "counts": {
+            "nonces": 1,
+            "log": 1
+          },
+          "c_ok": true,
+          "d_ok": true,
+          "e_ok": true,
+          "f_ok": true,
+          "a_ok": true,
+          "b_ok": true
+        },
+        {
+          "ok": 1,
+          "replay": 5,
+          "anchor_unreadable": 0,
+          "other": [],
+          "nonzero_exit": [],
+          "stderr": [],
+          "counts": {
+            "nonces": 1,
+            "log": 1
+          },
+          "c_ok": true,
+          "d_ok": true,
+          "e_ok": true,
+          "f_ok": true,
+          "a_ok": true,
+          "b_ok": true
+        },
+        {
+          "ok": 1,
+          "replay": 5,
+          "anchor_unreadable": 0,
+          "other": [],
+          "nonzero_exit": [],
+          "stderr": [],
+          "counts": {
+            "nonces": 1,
+            "log": 1
+          },
+          "c_ok": true,
+          "d_ok": true,
+          "e_ok": true,
+          "f_ok": true,
+          "a_ok": true,
+          "b_ok": true
+        },
+        {
+          "ok": 1,
+          "replay": 5,
+          "anchor_unreadable": 0,
+          "other": [],
+          "nonzero_exit": [],
+          "stderr": [],
+          "counts": {
+            "nonces": 1,
+            "log": 1
+          },
+          "c_ok": true,
+          "d_ok": true,
+          "e_ok": true,
+          "f_ok": true,
+          "a_ok": true,
+          "b_ok": true
+        },
+        {
+          "ok": 1,
+          "replay": 5,
+          "anchor_unreadable": 0,
+          "other": [],
+          "nonzero_exit": [],
+          "stderr": [],
+          "counts": {
+            "nonces": 1,
+            "log": 1
+          },
+          "c_ok": true,
+          "d_ok": true,
+          "e_ok": true,
+          "f_ok": true,
+          "a_ok": true,
+          "b_ok": true
+        },
+        {
+          "ok": 1,
+          "replay": 5,
+          "anchor_unreadable": 0,
+          "other": [],
+          "nonzero_exit": [],
+          "stderr": [],
+          "counts": {
+            "nonces": 1,
+            "log": 1
+          },
+          "c_ok": true,
+          "d_ok": true,
+          "e_ok": true,
+          "f_ok": true,
+          "a_ok": true,
+          "b_ok": true
+        },
+        {
+          "ok": 1,
+          "replay": 5,
+          "anchor_unreadable": 0,
+          "other": [],
+          "nonzero_exit": [],
+          "stderr": [],
+          "counts": {
+            "nonces": 1,
+            "log": 1
+          },
+          "c_ok": true,
+          "d_ok": true,
+          "e_ok": true,
+          "f_ok": true,
+          "a_ok": true,
+          "b_ok": true
+        },
+        {
+          "ok": 1,
+          "replay": 5,
+          "anchor_unreadable": 0,
+          "other": [],
+          "nonzero_exit": [],
+          "stderr": [],
+          "counts": {
+            "nonces": 1,
+            "log": 1
+          },
+          "c_ok": true,
+          "d_ok": true,
+          "e_ok": true,
+          "f_ok": true,
+          "a_ok": true,
+          "b_ok": true
+        },
+        {
+          "ok": 1,
+          "replay": 5,
+          "anchor_unreadable": 0,
+          "other": [],
+          "nonzero_exit": [],
+          "stderr": [],
+          "counts": {
+            "nonces": 1,
+            "log": 1
+          },
+          "c_ok": true,
+          "d_ok": true,
+          "e_ok": true,
+          "f_ok": true,
+          "a_ok": true,
+          "b_ok": true
+        }
+      ]
+    }
+  }
+}
