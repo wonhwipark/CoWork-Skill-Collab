@@ -1,5 +1,16 @@
 # COWORK-GITHUB-DASHBOARD-20261111-001 — CURRENT
 
+## 2026-11-21 KST — 공개 상태 직접 게시 + 화면 6시간 기준 완료
+
+- 사용자 최신 지시 적용: 실제 변경 시에만 직접 PRIVATE/PUBLIC 게시. 공개 브라우저 최초/포커스 시 즉시 재조회, 열린 동안 6시간 간격 확인. 게시 6시간 경과는 마지막 공개 기록으로 표시하되 실제 호스트 실패로 추정하지 않음. 자동 CoWork Actions 복구·6시간 예약 작업 0.
+- PUBLIC main commit fbffd80d93df1b44b1777506198638e538a8b411: UI JS·HTML·status.json 4개 원격 byte SHA-256/blob 대조 PASS. 새 status는 MANUAL_ALLOWLIST/GitHub LIVE (호스트 보고 수용), Work10/REQUEST19/REVIEW14/RECEIPT14. PRIVATE 최신 이관 CURRENT에 기존 Windows v0.2.29 근거 연결 (11/21 호스트 직접 재측정 아님).
+- 시험: 5h59/6h01 합성 경계 PASS, 구문 PASS, GitHub Pages #44834337900 SUCCESS. 실제 모바일/PC 사용자 화면과 PRIVATE Python 전체 회귀시험 NOT_RUN. 기존 실사용 LIVE 유료 리뷰 E2E NOT_RUN.
+- 결과·정확한 SHA: [6시간 기준 수동 공개 게시 정본](DASHBOARD_6H_MANUAL_PUBLICATION_RESULT_r0001_20261121_KST.md).
+- NEXT_ONE_ACTION: 사용자 모바일에서 공개 대시보드 상태 및 6시간 표시 확인. 실제 상태가 바뀌지 않으면 추가 게시 불필요.
+
+---
+
+
 ## 2026-11-21 KST — 상태 변경 시 직접 게시·공개 화면 6시간 기준 적용
 
 - **사용자 최신 지시:** 실제 상태가 바뀔 때 공개 안전 정보만 GitHub에 직접 업로드. 화면의 공개 상태 재조회·지연 판단 기준은 6시간. 기존 3개 불필요한 CoWork Actions 삭제 상태를 유지하며 새 예약/자동 게시 생성 없음.
