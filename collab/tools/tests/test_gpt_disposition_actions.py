@@ -156,5 +156,107 @@ class BridgeTests(unittest.TestCase):
                                       d / 'APPROVAL_SIG.json', '1451933830', public_key_b64=None)
 
 
+    def _one_cycle_fixture(self, root, rid, work_id):
+        request = root / 'collab' / 'requests' / rid
+        request.mkdir(parents=True, exist_ok=True)
+        (request / 'REQUEST.md').write_text(
+            f'---\\nrequest_id: {rid}\\nwork_id: {work_id}\\n---\\n', encoding='utf-8')
+        anchor = root / 'collab' / 'projects' / work_id
+        anchor.mkdir(parents=True, exist_ok=True)
+        (anchor / 'CURRENT.md').write_text('Current', encoding='utf-8')
+
+    def test_one_cycle_first_request_accepted_read_only(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            self._one_cycle_fixture(root, 'REQ-TEST-R1', 'WORK-001')
+            self.assertEqual(bridge.one_cycle_work_id(root, 'REQ-TEST-R1'), 'WORK-001')
+
+    def test_one_cycle_second_request_same_work_blocked(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            self._one_cycle_fixture(root, 'REQ-TEST-R1', 'WORK-001')
+            self._one_cycle_fixture(root, 'REQ-TEST-R2', 'WORK-001')
+            with self.assertRaisesRegex(bridge.Hold, 'WORK_SINGLE_CYCLE_ALREADY_REQUESTED'):
+                bridge.one_cycle_work_id(root, 'REQ-TEST-R2')
+
+    def test_one_cycle_different_work_unaffected(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            self._one_cycle_fixture(root, 'REQ-TEST-R1', 'WORK-001')
+            self._one_cycle_fixture(root, 'REQ-TEST-R2', 'WORK-002')
+            self.assertEqual(bridge.one_cycle_work_id(root, 'REQ-TEST-R2'), 'WORK-002')
+
+    def test_one_cycle_requires_real_work_and_identity(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            self._one_cycle_fixture(root, 'REQ-TEST-R1', 'WORK-001')
+            p = root / 'collab' / 'requests' / 'REQ-TEST-R1' / 'REQUEST.md'
+            p.write_text('---\\nrequest_id: REQ-TEST-R1\\n---\\n', encoding='utf-8')
+            with self.assertRaisesRegex(bridge.Hold, 'WORK_ID_INVALID'):
+                bridge.one_cycle_work_id(root, 'REQ-TEST-R1')
+            p.write_text('---\\nrequest_id: REQ-TEST-R1\\nwork_id: WORK-001\\n---\\n', encoding='utf-8')
+            (root / 'collab' / 'projects' / 'WORK-001' / 'CURRENT.md').unlink()
+            with self.assertRaisesRegex(bridge.Hold, 'WORK_ANCHOR_MISSING'):
+                bridge.one_cycle_work_id(root, 'REQ-TEST-R1')
+
+    def _one_cycle_live_mocks(self):
+        return {
+            'GITHUB_REPOSITORY': 'wonhwipark/CoWork-Skill-Collab',
+            'GITHUB_REPOSITORY_ID': '1451933830',
+            'GITHUB_REF': 'refs/heads/main', 'GITHUB_TOKEN': 'fake-token',
+            'COWORK_GPT_API_ENABLED': 'true',
+            'COWORK_GPT_COST_POLICY_APPROVED': 'true',
+            'COWORK_GPT_PROJECT_SPEND_CAP_CONFIRMED': 'true',
+            'COWORK_GPT_MODEL': 'gpt-test',
+            'OPENAI_API_KEY': 'fake-api-key',
+        }
+
+    def test_work_claim_is_first_write_before_one_model_call(self):
+        def github_get(method, repo, path, token, payload=None):
+            return (200, {'private': False}) if path == '' else (404, {})
+        evidence = {
+            'input': 'test', 'work_id': 'WORK-001',
+            'request_revision': '1', 'package_sha256': 'f' * 64,
+            'input_sha256': 'e' * 64, 'processing_key': 'TEST',
+        }
+        writes = []
+        def record_write(repo, rel, token, obj, message):
+            writes.append(rel)
+        with patch.dict(os.environ, self._one_cycle_live_mocks()):
+            with patch.object(sys, 'argv', ['bridge', '--request-id', 'REQ-TEST-R1']):
+                with patch.object(bridge, 'github_json', side_effect=github_get), \\
+                     patch.object(bridge, 'preflight', return_value=evidence), \\
+                     patch.object(bridge, 'budget_preflight', return_value='0.01'), \\
+                     patch.object(bridge, 'create_only', side_effect=record_write), \\
+                     patch.object(bridge, 'call_once', return_value=(
+                         {'verdict': 'ACCEPT', 'summary': 'ok', 'findings': [],
+                          'limitations': [], 'next_action': 'stop'},
+                         {'response_id': 'resp_x', 'usage': {}, 'model': 'gpt-test'})) as model:
+                    self.assertEqual(bridge.main(), 0)
+                    model.assert_called_once()
+        self.assertEqual(writes, [
+            'collab/projects/WORK-001/ONE_CYCLE_CLAIM.json',
+            'collab/reviews/REQ-TEST-R1/GPT_API_EXECUTION_CLAIM.json',
+            'collab/reviews/REQ-TEST-R1/GPT_DISPOSITION.json',
+        ])
+
+    def test_work_claim_failure_blocks_model_call(self):
+        def github_get(method, repo, path, token, payload=None):
+            return (200, {'private': False}) if path == '' else (404, {})
+        evidence = {
+            'input': 'test', 'work_id': 'WORK-001',
+            'request_revision': '1', 'package_sha256': 'f' * 64,
+            'input_sha256': 'e' * 64, 'processing_key': 'TEST',
+        }
+        with patch.dict(os.environ, self._one_cycle_live_mocks()):
+            with patch.object(sys, 'argv', ['bridge', '--request-id', 'REQ-TEST-R1']):
+                with patch.object(bridge, 'github_json', side_effect=github_get), \\
+                     patch.object(bridge, 'preflight', return_value=evidence), \\
+                     patch.object(bridge, 'budget_preflight', return_value='0.01'), \\
+                     patch.object(bridge, 'create_only', side_effect=bridge.Hold('OUTPUT_ALREADY_PRESENT_OR_UNREADABLE')), \\
+                     patch.object(bridge, 'call_once', side_effect=AssertionError('must not call model')):
+                    self.assertEqual(bridge.main(), 2)
+
+
 if __name__ == '__main__':
     unittest.main()
