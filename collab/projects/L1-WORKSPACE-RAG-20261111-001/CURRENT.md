@@ -1,5 +1,17 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-21 KST — Viewer 2안 Wiki 통합 UI v0.4.0 + Write + 환경설정 L1Work 게시 완료 / 실제 Linux G0 대기
+
+- **사용자 요청·범위:** GitHub Viewer 설계/릴리스 정합성 복구 → 사용자 확정 2안 팀 위키형 + Blue Gray v0.1.2 + Write v0.2.0 + Preferences v0.3.0의 **단일 통합 개발 ZIP**과 단독 HTML 제공, L1Work 게시·업무 GPT HO 갱신.
+- **신규 PUBLIC ZIP:** [`l1-workspace-viewer-wiki-integrated_v0_4_0_1121.zip`](https://github.com/wonhwipark/L1Work/blob/main/l1-workspace-viewer-wiki-integrated_v0_4_0_1121.zip) **236,326 B**, SHA-256 `474db38255de06540b888241c0ee96f94feb09e48d9ee767768f50469d5ee7b3`, 20 entries / Git blob `f20fcc97d14afad2274d35fba620727cd78b2aa9`. [HTML preview](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_Workspace_Viewer_Wiki_Integrated_Preview_v0_4_0_20261121.html) **114,175 B**. Git commit `0cd3b2d36a79d939babfe73b3e7be716d47e1069`; 원격 ZIP/HTML 바이트 readback PASS. 원본 세 ZIP 불변.
+- **핵심 UI 변경:** Wiki 3영역/Blue Gray 유지, Write 버튼·환경설정 UI 공존, 설정을 `#doc-actions`에서 상단 `.topbar`로 이동해 탐색 중 소실 위험 제거, Work/Knowledge 기본 표시·전체 파일 기본 감춤, index/transfers 및 사용자 지정 폴더 숨김, 탭별 마지막 문서/읽던 위치·검색어 유지, MSC 합성 링크 hardcoding 제거. **숨김 ≠ 서버 접근권한**.
+- **업무 GPT 최종 인계:** [L1Work HO r0001](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_WORKSPACE_VIEWER_WIKI_INTEGRATED_V040_G0_AND_E2E_HANDOFF_r0001_20261121_KST.md), commit `9d5f17f9b8e4eae828a6de36bd2410f4d9dd820f`/remote readback PASS. `handoffs/README.md` 최신 색인 commit `689fb53b8e70adbb356d4b7b41edb803aa24775a`/readback PASS.
+- **실제 시험:** 원본 3 ZIP SHA·CRC, 새 ZIP 20 엔트리 SHA manifest·CRC 및 GitHub readback **PASS**; **신규 통합 브라우저 실행/Node 회귀/Linux 실제 G0·B1~B3/E3/E4/실 Write writer·독립 코드 리뷰/운영 설치=NOT_RUN**. development_not_for_deployment. 기존 Read Only 유지·기존 API/writer 미검증시 Write disabled.
+- **근거:** [v0.4.0 통합 결과](VIEWER_WIKI_INTEGRATED_V040_BUILD_AND_L1WORK_DELIVERY_RESULT_r0001_20261121_KST.md).
+- **NEXT_ONE_ACTION:** 업무 GPT가 L1Work v0.4.0 단일 ZIP·HO r0001을 받아 현재 Linux Viewer G0 및 기존 read/writer 계약과 대조 → 브라우저/보안·Write 통합 E2E를 승인 범위 내 수행. 운영 배포/Write ON은 미검증 게이트·백업/롤백 통과 전 HOLD.
+
+---
+
 ## 2026-11-21 KST — Viewer Write Workflow·Kernel 두 전체 스킬 ZIP 새 버전 L1Work 원격 전달 완료 / 운영 설치 별도 검증
 
 - **사용자 요청·수행:** "두 스킬 정식 수정·패키징·L1Work 배포" 승인. 기존 공개 baseline ZIP의 전체 바이트/CRC/manifest 검증 후 Workflow `viewer_write_route.py`·Kernel `viewer_write_guard.py`, 해당 단위시험·SKILL/README/안전 연결 계약·VERSION/pyproject/release meta/manifest를 병합하여 **패치가 아닌 2개 전체 개발 ZIP**을 생성, 공개 `wonhwipark/L1Work/main` 루트 신규 게시.
