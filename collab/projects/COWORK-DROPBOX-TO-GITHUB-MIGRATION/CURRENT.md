@@ -1,5 +1,16 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 2026-11-21 KST — 기존 Windows Telegram Bot 재사용 결정 및 연결 경계
+
+- **사용자 결정:** 기존 Windows Claude Code 독립 리뷰 완료 알림에 사용하는 Telegram Bot **1개를 그대로 재사용**. 새 Bot 생성·Bot Token 재발급·기존 Windows notifier 교체는 하지 않음. Windows Claude 리뷰 완료 메시지와 GitHub Runner의 GPT 판정 완료 메시지는 **발송 주체·이벤트·문구를 구분**하며 같은 수신 Chat ID를 사용하려면 Windows의 실제 수신 대상부터 안전하게 확인.
+- **이미 구현된 연결:** [GPT 판정 후 알림 흐름](GPT_ACTIONS_TELEGRAM_NOTIFY_FLOW_r0001_20261121_KST.md)의 `collab/tools/gpt_disposition_telegram.py`, `collab/tools/telegram_smoke.py`, `.github/workflows/cowork-gpt-disposition.yml`은 기존 Bot Token과 Chat ID를 GitHub Actions **Repository Secrets** 두 항목(`COWORK_TELEGRAM_BOT_TOKEN`, `COWORK_TELEGRAM_CHAT_ID`)으로 받아 사용하도록 설계·게시됨. **별도 봇 코드는 불필요**. GitHub Actions Secrets 등록은 Windows 자격정보를 안전하게 재사용하기 위한 별도의 설정이며, Windows 경로를 직접 재사용하는 설정이라고 오인하지 않음.
+- **이번 사용자 확인:** GitHub Actions의 위 Bot Token·Chat ID **양쪽 모두 아직 미등록**. 기존 Windows Bot 자격정보의 저장 위치·유효성·알림을 받는 Chat ID와 GitHub Runner 실제 수신은 **NOT_VERIFIED**. 연결된 GitHub 도구는 Secrets 쓰기/목록 조회 및 workflow_dispatch 미지원. 토큰·Chat ID 값을 채팅·GitHub 문서·로그에 게시 금지.
+- **보안·중복 정책:** Windows 운영 설정·토큰/키·watcher/DB/Task·GitHub Actions workflow·유료 GPT API 플래그는 이번 결정으로 변경하지 않음. Windows 알림은 Claude 리뷰 결과용으로 유지하고, GPT 알림은 **GPT_DISPOSITION.json 원격 readback 성공 이후에만** 기존 claim/receipt 1회 게이트로 별도 발송. Telegram 실패로 리뷰/GPT 판정을 재실행하거나 불확실 발송을 자동 재시도하지 않음.
+- **상태:** `BOT_REUSE_DESIGN=ACCEPTED`, `GITHUB_ACTIONS_SECRETS=USER_CONFIRMED_NOT_REGISTERED`, `WINDOWS_BOT_CREDENTIALS_CHECK=NOT_RUN`, `RUNNER_TELEGRAM_SMOKE=NOT_RUN`, `MOBILE_RECEIVE=NOT_VERIFIED`, `GPT_API=OFF`, `TELEGRAM_NOTIFY=OFF`. 문서 갱신은 Windows 설정이나 GitHub Secrets 적용이 아님.
+- **NEXT_ONE_ACTION:** Windows의 기존 notifier 운영 주체가 비밀값을 **노출하지 않고** 봇·대상 Chat ID 동일성/접근 가능성을 확인 → 사용자가 GitHub [Actions Secrets](https://github.com/wonhwipark/CoWork-Skill-Collab/settings/secrets/actions)에 기존 값 두 개를 직접 등록 → 기존 [수동 연결 시험 절차](GPT_ACTIONS_TELEGRAM_NOTIFY_FLOW_r0001_20261121_KST.md#연결-시험-실행-순서-비밀값-비노출)대로 smoke 변수 한시 ON, `telegram_smoke=true` 1회, 수신/Run ID/영수증 확인 후 변수 OFF. GPT API 및 GPT 판정 알림 운영 활성화는 별도 유효 승인과 게이트 확인 전까지 OFF.
+
+---
+
 ## 2026-11-21 KST — Telegram Secrets 등록 상태 점검: 도구 권한 차단, 수동 발송 NOT_RUN
 
 - **확인:** 연결된 GitHub 사용자 `wonhwipark`, 저장소 `wonhwipark/CoWork-Skill-Collab` visibility `public`, 기본 branch `main`, 관리자 권한 `admin=true`, repository ID `1451933830`. 정본 workflow에는 모델 0회 `telegram_smoke` 수동 job·29개 offline-selftest 정의가 존재함.
