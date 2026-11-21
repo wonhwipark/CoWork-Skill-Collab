@@ -1,5 +1,15 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 2026-11-21 KST — Windows P1/P2 검증 인계 r0002로 보완 / 호스트 실행은 미전달·미검증
+
+- **피드백 및 수정 수용:** 기존 r0001은 Work/검증 범위·비리뷰 구분은 적합하지만 GitHub 인계를 Windows 실행 접수처럼 오인할 위험이 있고, `모델 유료 실행 금지`와 Claude Code 자연어 5문항 검증이 충돌하며, 읽기 전용 시험과 결과 파일의 후속 게시 허용 범위가 혼재. r0001 원문·P1/P2 설계/시험 이력은 보존.
+- **새 유효 인계:** [Windows P1/P2 E2E 실행 인계 r0002](WINDOWS_P1_P2_READONLY_E2E_EXECUTION_REQUEST_r0002_20261121_KST.md) — 실행 주체/명시적 호스트 호출·비용·검증 분리, 로컬 Python 무과금 시험 우선, 기존 사용권한 확인된 Claude Code 세션에서만 Q1~Q5, 보존해야 할 결과/CURRENT만 쓰기 예외, 수신 ACK·실행 결과 사실 확인 계약. 정식 협업 리뷰 `REQUEST/READY` 경로가 **아님**.
+- **연결 상태:** `HANDOFF_POSTED=PASS` (GitHub `main`), `HOST_DELIVERY=NOT_VERIFIED`, `WINDOWS_CLAUDE_E2E=NOT_RUN`, `MODEL_AUTH=NOT_VERIFIED`. GitHub md 게시 → Windows 자동 감시/세션 시작 경로 없음. 실행 없는 문서 게시를 `HOST_RECEIVED`나 `PASS`로 승격하지 않음.
+- **변경/금지:** 기존 P1/P2 코드·대시보드·Watcher LIVE·정책·위임·서명·DB·Actions·L1Work·유료 리뷰 불변. 기존 P1/P2 사용자 독립 리뷰 SKIP 판정도 불변. 별도 자동화나 실행 트리거를 만들지 않음.
+- **NEXT_ONE_ACTION:** 실제 사용자/운영자가 Windows Claude Code의 **이미 승인된 세션**에서 r0002 §0의 단일 지시문을 명시적으로 실행 → §1 무과금 시험 → 자격 확인 시 §2 자연어 E2E → 실제 결과를 기존 Work에 게시/원격 확인. 기존 결과 `CLAUDE_P1_P2_READONLY_AUTO_USE_E2E_RESULT_FOR_GPT_20261120.md`가 먼저 게시되었는지 재확인해 중복 호출 방지.
+
+---
+
 ## 2026-11-21 KST — P1/P2 Windows 실호스트 읽기 전용 E2E 실행 인계 게시 / 실제 HOST 실행 NOT_RUN
 
 - **사용자 최신 지시:** 기존 P1/P2 Windows Claude Code 실제 동작 검증 진행 승인. 새 Work·리뷰·유료 호출·운영 변경 없이 기존 실사용 점검 계약을 재사용.
