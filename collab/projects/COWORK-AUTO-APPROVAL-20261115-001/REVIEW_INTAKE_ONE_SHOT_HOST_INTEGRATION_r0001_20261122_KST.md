@@ -16,7 +16,7 @@
 
 - [새 보조 진입 코드](../../ops/review_staged_submission.py): 실제 Windows checkout의 **클린 main·원격 HEAD 일치**를 기존 `submit_review_request.require_clean_main`으로 확인 → 기존 Work 하위 **커밋된 REQUEST 초안·Base64 ZIP**만 Git object에서 읽음 → 일반 파일 모드·크기·path 탈출·YAML Work·ZIP 경로/크기/SHA-256 확인 → 격리 임시 폴더로 바이트 복원 → 기존 `submit_review_request.submit` 재사용.
 - `--publish`가 없으면 **기본 dry-run**. `--publish`가 있어도 기존 LIVE `review_request_gate.check_request`와 제출기 게이트가 성공할 때만 Commit A(REQUEST+ZIP), Commit B(SOURCE_PIN), 원격 readback을 수행. **서명/READY/모델 호출·알림·호스트 설정 변경 없음.**
-- [시험 원문](../../ops/tests/test_review_staged_submission.py): 임시 실제 Git repository를 사용한 10건 격리 단위시험 PASS. `submit`과 보호 signer/네트워크는 mock. 테스트한 로컬 코드 파일과 GitHub main 원격 **Git blob SHA 완전 일치**.
+- [시험 원문](../../ops/tests/test_review_staged_submission.py): 임시 실제 Git repository를 사용한 11건 격리 단위시험 PASS. `submit`과 보호 signer/네트워크는 mock. 테스트한 로컬 코드 파일과 GitHub main 원격 **Git blob SHA 완전 일치**.
 - 코드 SHA-256: `review_staged_submission.py` = `5d4dfffe0f1fd92d543a7a352d60d3d5aed5196d6e7f2e5b2183d9605276b518`, Git blob = `d33b3b5a4669cfb1e25a9c78d0b92209b0ffdbe7`.
 - 테스트 SHA-256: `test_review_staged_submission.py` = `3fb6a9dd0937a3b14ccc08b537b4784179bfff944a1ca7c5c234ba16b1c2c1e2`, Git blob = `ebe467de726048f223c94a92336ae4f4d7ed1c60`.
 - **제약:** 이 코드는 기존 제출기로 연결하는 로컬 진입점이며 Windows에 자동 설치·호출된 watcher hook이 아니다. 호스트 환경에서 실제 CLI 및 다른 기존 회귀 전체 실행은 `NOT_RUN`. P1/P2 94,843B ZIP의 Windows 새 독립 재검증도 `NOT_RUN`.
@@ -46,7 +46,7 @@ python collab/ops/review_staged_submission.py --repo-root . --work-id COWORK-SKI
 - 입력 발견은 **사용자가 리뷰 요청한 동일 Work의 고정 후보**에 한정. SOURCE_PIN 없는 초안/ZIP 및 일반 `CURRENT.md` 변화 자체는 watcher **리뷰 실행 트리거가 아니다**. 별도 사용자 리뷰 요청의 출처·단일 Work·commit pin을 확인한 후 사전검사만 연결한다.
 - 이미 있는 REQUEST/PIN, APPROVAL_SIG/READY, REVIEW/RECEIPT, 감사 DB/UNCERTAIN이 발견되면 **중복 제출·재서명·재큐잉 없이 기존 건 정산**. 멀티창 HEAD 충돌/미확인/승인 범위 밖은 fail-closed, 오류 후 무조건 재시도 없음.
 - Windows 기존 설치 파일·Task·DB/WAL/SHM·보호 signer/키/위임·Notifier 및 유료 운영 설정 수정은 **현재 이번 코드 게시에서 하지 않았음**. 호스트 hook 설치·재시작·롤백은 해당 유효 운영 승인/백업/실측이 확인될 때만 진행.
-- **남은 직접 검증:** Windows에서 `--publish` 없는 정확한 P1/P2 사전검사와 10건 회귀 소스를 실제 실행 → 보호 수동 signer 권한 여부·비용·중복 확인 → 기존 run_cycle에 안전한 후크 위치와 비승인 우회 여부 독립 검토 → 허용 범위의 설치·SHADOW→실제로 새 user-intent 1건 E2E. 그 전에는 `AUTO_FORMAL_REVIEW_INTAKE=NOT_APPLIED`.
+- **남은 직접 검증:** Windows에서 `--publish` 없는 정확한 P1/P2 사전검사와 11건 회귀 소스를 실제 실행 → 보호 수동 signer 권한 여부·비용·중복 확인 → 기존 run_cycle에 안전한 후크 위치와 비승인 우회 여부 독립 검토 → 허용 범위의 설치·SHADOW→실제로 새 user-intent 1건 E2E. 그 전에는 `AUTO_FORMAL_REVIEW_INTAKE=NOT_APPLIED`.
 
 ## 5. 상태 및 다음 한 행동
 
