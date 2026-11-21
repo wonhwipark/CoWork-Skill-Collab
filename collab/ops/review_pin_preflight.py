@@ -146,7 +146,12 @@ def inspect(
     data = yaml_header(current_req)
     if data["request_id"] != request_id:
         raise PreflightBlocked("REQUEST_ID_MISMATCH")
-    if PurePosixPath(data["package_path"]).name != PurePosixPath(package_repo_path).name:
+    # Match the complete canonical repo path, not just a possibly reused ZIP basename.
+    requested_path = data["package_path"]
+    canonical_prefix = "/SKILL-COLLAB/packages/"
+    if (not requested_path.startswith(canonical_prefix)
+            or package_repo_path != "collab/packages/" + requested_path[len(canonical_prefix):]
+            or "/" in requested_path[len(canonical_prefix):]):
         raise PreflightBlocked("PACKAGE_PATH_NAME_MISMATCH")
     package = git_blob_at(root, pinned_commit, package_repo_path, PACKAGE_LIMIT, missing_code="COMMIT_UNREADABLE_PACKAGE_ABSENT")
     if len(package) != int(data["package_size_bytes"]):
