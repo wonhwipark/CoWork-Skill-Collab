@@ -5,11 +5,11 @@
       "work_id": "L1-WORKSPACE-RAG-20261111-001",
       "skill": "l1-knowledge-updater",
       "title": "l1-knowledge-updater",
-      "phase": "VIEWER_WRITE_WORKFLOW_V1675_KERNEL_V0743_FULL_DEV_ZIPS_PUBLIC_DELIVERED_HOST_E2E_PENDING",
-      "owner": "GPT: Workflow v1.6.75 / Kernel v0.7.43 완전한 개발 ZIP 원격 게시(832039B/379642B, SHA PASS), 신규 30/30 test PASS, 전체 기존 suite/Linux host E2E NOT_RUN; HO r0003 L1Work 게시",
+      "phase": "VIEWER_WIKI_V040_INTEGRATED_PUBLIC_DEV_DELIVERED_HOST_G0_BROWSER_WRITE_E2E_PENDING",
+      "owner": "GPT: Wiki v0.4.0 full UI package 236326B and preview+HO PUBLIC L1Work remote verified; integrated browser/Linux/Writer E2E NOT_RUN; Workflow v1.6.75 Kernel v0.7.43 prior delivery preserved",
       "self_test": "PASS_DEV_30_NODE_8_PYTHON_ZIP_CRC; LIVE_BROWSER_AND_HOST_NOT_RUN",
       "independent_review": "WIKI_UI_UX_R1_ACCEPT_WITH_CHANGE_CLOSED; VIEWER_AUTH_EDIT_DESIGN_R1_ACCEPT_WITH_CHANGE_CLOSED_B1_M2_N4; VIEWER_STYLE_DESIGN_R1_USER_WAIVED_HOST_STOP_UNVERIFIED; VIEWER_WRITE_V020_CODE_REVIEW_NOT_RUN",
-      "next_action": "업무 GPT/Linux Agent: L1Work main/handoffs/L1_WORKSPACE_VIEWER_WRITE_WORKFLOW_KERNEL_FULL_SKILLS_HANDOFF_r0003_20261121_KST.md 최신 기준 원본 설치 G0, 신규 두 전체 스킬+Viewer 3 패키지 격리 회귀, Work/CAS/ACL/readback E2E; 운영 설치는 별도 승인 게이트"
+      "next_action": "업무 GPT/Linux Agent: L1Work main/handoffs/L1_WORKSPACE_VIEWER_WIKI_INTEGRATED_V040_G0_AND_E2E_HANDOFF_r0001_20261121_KST.md + l1-workspace-viewer-wiki-integrated_v0_4_0_1121.zip exact SHA G0→actual browser/user prefs/Write security E2E, operations gate separate."
     }
   ]
 }
