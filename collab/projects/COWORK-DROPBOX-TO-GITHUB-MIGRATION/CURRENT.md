@@ -1,5 +1,16 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 2026-11-21 KST — R1/R2 협업 차단 근본 원인 보완: scope prepublication gate 게시
+
+- **원인:** R1은 PIN이 REQUEST 부재 commit을 참조한 순서 결함, R2는 정상 pin·ZIP에도 보호 위임 3개 스킬 밖 `knowledge_analysis_preflight`로 `AUTO_NOT_ELIGIBLE: SCOPE`. 두 문제는 watcher 고장이 아니고 **REQUEST 생성/auto 승인 사전검증 경계**에서 처리해야 함. R2 고정 커밋 `50a8b5d9...`의 REQUEST(blob `1067a502...`)와 ZIP(blob `bbacdcfd...`)을 connector로 직접 조회.
+- **이번 코드 변경:** [review_request_gate.py](../../ops/review_request_gate.py)에서 검증된 `skill_id` 반환, [submit_review_request.py](../../ops/submit_review_request.py)에서 `--approval-route auto|manual` 및 `--delegated-skill` 검사 추가. AUTO allowlist 부재/스킬 미포함은 **Commit A 이전 BLOCK**, PIN 후 검사는 `review_pin_preflight.inspect`에 동일 모드 전달. 기본 manual은 보호 승인 필요 표시만 하고 서명/READY/모델호출 0. 자동 scope 입력은 **실제 signer의 로드 목록 확인에 대한 대체증빙 아님**.
+- **회귀 소스:** [test_submit_review_request.py](../../ops/tests/test_submit_review_request.py) 신규 4건 추가(미허용 AUTO, 미제공 AUTO, AUTO 일치·비서명, MANUAL 무승인). GitHub `main` 원격 본문/새 Git blob readback PASS, **신규 전체 실제 Python 실행/Windows/GitHub Actions 시험=NOT_RUN**; 이전 합성 8/8 PASS와 구분.
+- **기존 R2:** 이미 요청/PIN 존재, 새 게시·재큐잉/서명·READY/유료 모델 호출 0. 기존 [R2 사용자 한정 승인 원샷](../L1-WORKSPACE-RAG-20261111-001/GPT_R2_MANUAL_REVIEW_APPROVAL_AND_PREFLIGHT_ONESHOT_r0001_20261121_KST.md)에 scope gate·Windows 무과금 시험 추가. 실제 보호 signer 자격·중복·정확한 원본 확인 후에만 R2 한 건 수동 리뷰 허용.
+- **경계:** SOURCE_FIX=CODE_PUBLISHED_REMOTE_VERIFIED, POLICY_SCOPE_PREFLIGHT=CODE_PUBLISHED_REMOTE_VERIFIED, TEST_SOURCE=POSTED_NOT_RUN, LIVE_HOOK=NOT_APPLIED, SIGNER_APPROVAL/READY/REVIEW=NOT_RUN_THIS_CHANGE, WATCHER_CONFIG/DELEGATION/KEY/DB=UNCHANGED. 직접 GitHub API 우회 제출을 호스트에서 금지하는 강제 경로는 **아직 적용/검증되지 않음**.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 최신 원격 코드와 실제 보호 위임/설정에 대해 무과금 회귀시험 및 read-only preflight를 수행 → R2의 기존 한정 사용자 승인을 공식 수동 signer가 인정하는지 확인하고 유효하면 **1회** 서명/READY/독립 리뷰·영수증, 아니면 BLOCKED 보고. host LIVE 변경·scope 확장은 별도 범위 검토.
+
+---
+
 ## 2026-11-21 KST — 자연어 정식 리뷰 요청의 재발 방지: 단일 게시기·새 창 진입 경로 반영
 
 - **피드백 수용:** 사용자가 새 창에서 "정식 리뷰 요청해 줘"라고 말할 때마다 R1처럼 SOURCE_PIN이 REQUEST가 없는 Commit을 참조하는 오류가 재발하지 않도록, 주의사항이 아닌 **요청 게시 자체의 공통 진입 경로**를 구현/연결. 신규 Work 생성 없이 협업 운송 Work에서 관리.
