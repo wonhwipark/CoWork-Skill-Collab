@@ -160,7 +160,7 @@ class BridgeTests(unittest.TestCase):
         request = root / 'collab' / 'requests' / rid
         request.mkdir(parents=True, exist_ok=True)
         (request / 'REQUEST.md').write_text(
-            f'---\\nrequest_id: {rid}\\nwork_id: {work_id}\\n---\\n', encoding='utf-8')
+            f'---\nrequest_id: {rid}\nwork_id: {work_id}\n---\n', encoding='utf-8')
         anchor = root / 'collab' / 'projects' / work_id
         anchor.mkdir(parents=True, exist_ok=True)
         (anchor / 'CURRENT.md').write_text('Current', encoding='utf-8')
@@ -191,10 +191,10 @@ class BridgeTests(unittest.TestCase):
             root = Path(td)
             self._one_cycle_fixture(root, 'REQ-TEST-R1', 'WORK-001')
             p = root / 'collab' / 'requests' / 'REQ-TEST-R1' / 'REQUEST.md'
-            p.write_text('---\\nrequest_id: REQ-TEST-R1\\n---\\n', encoding='utf-8')
+            p.write_text('---\nrequest_id: REQ-TEST-R1\n---\n', encoding='utf-8')
             with self.assertRaisesRegex(bridge.Hold, 'WORK_ID_INVALID'):
                 bridge.one_cycle_work_id(root, 'REQ-TEST-R1')
-            p.write_text('---\\nrequest_id: REQ-TEST-R1\\nwork_id: WORK-001\\n---\\n', encoding='utf-8')
+            p.write_text('---\nrequest_id: REQ-TEST-R1\nwork_id: WORK-001\n---\n', encoding='utf-8')
             (root / 'collab' / 'projects' / 'WORK-001' / 'CURRENT.md').unlink()
             with self.assertRaisesRegex(bridge.Hold, 'WORK_ANCHOR_MISSING'):
                 bridge.one_cycle_work_id(root, 'REQ-TEST-R1')
@@ -224,10 +224,10 @@ class BridgeTests(unittest.TestCase):
             writes.append(rel)
         with patch.dict(os.environ, self._one_cycle_live_mocks()):
             with patch.object(sys, 'argv', ['bridge', '--request-id', 'REQ-TEST-R1']):
-                with patch.object(bridge, 'github_json', side_effect=github_get), \\
-                     patch.object(bridge, 'preflight', return_value=evidence), \\
-                     patch.object(bridge, 'budget_preflight', return_value='0.01'), \\
-                     patch.object(bridge, 'create_only', side_effect=record_write), \\
+                with patch.object(bridge, 'github_json', side_effect=github_get), \
+                     patch.object(bridge, 'preflight', return_value=evidence), \
+                     patch.object(bridge, 'budget_preflight', return_value='0.01'), \
+                     patch.object(bridge, 'create_only', side_effect=record_write), \
                      patch.object(bridge, 'call_once', return_value=(
                          {'verdict': 'ACCEPT', 'summary': 'ok', 'findings': [],
                           'limitations': [], 'next_action': 'stop'},
@@ -250,10 +250,10 @@ class BridgeTests(unittest.TestCase):
         }
         with patch.dict(os.environ, self._one_cycle_live_mocks()):
             with patch.object(sys, 'argv', ['bridge', '--request-id', 'REQ-TEST-R1']):
-                with patch.object(bridge, 'github_json', side_effect=github_get), \\
-                     patch.object(bridge, 'preflight', return_value=evidence), \\
-                     patch.object(bridge, 'budget_preflight', return_value='0.01'), \\
-                     patch.object(bridge, 'create_only', side_effect=bridge.Hold('OUTPUT_ALREADY_PRESENT_OR_UNREADABLE')), \\
+                with patch.object(bridge, 'github_json', side_effect=github_get), \
+                     patch.object(bridge, 'preflight', return_value=evidence), \
+                     patch.object(bridge, 'budget_preflight', return_value='0.01'), \
+                     patch.object(bridge, 'create_only', side_effect=bridge.Hold('OUTPUT_ALREADY_PRESENT_OR_UNREADABLE')), \
                      patch.object(bridge, 'call_once', side_effect=AssertionError('must not call model')):
                     self.assertEqual(bridge.main(), 2)
 
