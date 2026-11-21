@@ -5,11 +5,11 @@
       "work_id": "L1-WORKSPACE-RAG-20261111-001",
       "skill": "l1-knowledge-updater",
       "title": "l1-knowledge-updater",
-      "phase": "VIEWER_WRITE_V020_DEV_PASS_LINUX_AUTH_WRITER_G0_PENDING",
-      "owner": "GPT v0.2.0 Write client/UI 개발 30 Node + 8 Python 자체시험 PASS, 10-file ZIP 대화 다운로드, L1Work G0 handoff 게시 PASS. 실제 Linux G0/Writer/B1-B3/E3-E4/배포 NOT_RUN",
+      "phase": "VIEWER_WRITE_V020_PUBLIC_TRANSFER_BLOCKED_BINARY_UPLOAD",
+      "owner": "GPT ZIP 로컬 검사·자체시험 PASS, L1Work 원격 바이너리 게시 NOT_POSTED; 기존 WRITE v0.2.0 인계 게시 PASS; 실제 Linux 배포 NOT_RUN",
       "self_test": "PASS_DEV_30_NODE_8_PYTHON_ZIP_CRC; LIVE_BROWSER_AND_HOST_NOT_RUN",
       "independent_review": "WIKI_UI_UX_R1_ACCEPT_WITH_CHANGE_CLOSED; VIEWER_AUTH_EDIT_DESIGN_R1_ACCEPT_WITH_CHANGE_CLOSED_B1_M2_N4; VIEWER_STYLE_DESIGN_R1_USER_WAIVED_HOST_STOP_UNVERIFIED; VIEWER_WRITE_V020_CODE_REVIEW_NOT_RUN",
-      "next_action": "업무 GPT/Linux Agent: L1Work/main/handoffs/L1_WORKSPACE_VIEWER_WRITE_V020_G0_AND_INTEGRATION_HANDOFF_r0001_20261121_KST.md 기준 실제 Viewer G0 인증·Writer·anchor 조회 후, 개발 ZIP 전달 확인 시 재현 패치·보안/회귀시험. HOST_DEPLOY=B1~B3/E3/E4 PASS·유효 승인 전 금지."
+      "next_action": "지원되는 GitHub 바이너리 업로드 경로로 대화 첨부 ZIP 21171 B SHA 9f2df443…를 L1Work/main 루트에 게시, 원격 바이트 재검증. Linux host G0/Write auth/writer 별도."
     }
   ]
 }
