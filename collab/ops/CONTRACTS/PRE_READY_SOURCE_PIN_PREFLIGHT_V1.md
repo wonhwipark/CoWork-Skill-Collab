@@ -5,6 +5,22 @@
 - 추가 원인: `skill_id=knowledge_analysis_preflight`가 실제 자동 위임 허용 집합에 없음. 자동 signer가 허용되지 않는 요청을 수동 승인 없이 실행할 수 없음.
 - 효력: **신규 리뷰 요청을 게시·서명·READY 처리하는 GPT/Windows Claude Code의 절차 계약**. 이 MD와 Python helper의 게시만으로 Windows 운영 watcher의 실제 preflight 로더/호출 경로가 변경되는 것은 아님. 운영 자동 연동 여부는 별도 G0 검증.
 
+## 자연어 정식 리뷰의 표준 제출 명령 (r0002 / 2026-11-21)
+
+**신규 요청 기본 경로:** 실제 Windows LIVE 정책을 검증할 수 있는 환경에서 `collab/ops/submit_review_request.py`를 사용한다. 이 제출기는 기존 `review_request_gate.check_request`, `source_pin.dumps_source_pin`, `review_pin_preflight.inspect`를 **연속 호출**하고, 요청 생성에 필요한 Commit A/B를 안전하게 `git push`한다. `--publish`가 없으면 원격/로컬에 쓰지 않는 드라이런이다. 안전성 위해 클린 `main`·신뢰 `origin`·원격 최신 SHA·새 REQUEST ID를 강제한다. 인증 토큰·보호 서명·READY는 절대 생성하지 않는다.
+
+예시(Windows, 실제 설치 LIVE 설정 경로는 호스트 확인 후 지정):
+
+```powershell
+python collab/ops/submit_review_request.py --repo-root . --request-draft <OUTSIDE_REPO>\\REQUEST.md --package <OUTSIDE_REPO>\\skill.zip --live-config <WINDOWS_LIVE_CONFIG_PATH>
+# 모든 게이트 검증 성공한 경우에만, 동일 인자로 --publish 추가
+python collab/ops/submit_review_request.py --repo-root . --request-draft <OUTSIDE_REPO>\\REQUEST.md --package <OUTSIDE_REPO>\\skill.zip --live-config <WINDOWS_LIVE_CONFIG_PATH> --publish
+```
+
+**성공 판정 경계:** `PREPUBLICATION_PASS_NOT_SUBMITTED` = 미게시, `SUBMITTED_AWAITING_PROTECTED_SIGNER` = REQUEST+ZIP·PIN 원격 게시/검증까지, 정식 실행/서명 아님. 프로그램이 `FORMAL_REVIEW_SUBMISSION_BLOCKED`를 출력하면 명시적으로 실패, **자동 재시도 금지**, 원격 Commit·보호 signer·DB·중복/UNCERTAIN 판정 후 새 revision을 선택. 자동 위임 허용 여부는 게시기의 `approval_mode=manual` 형식 무결성 검사로 입증되는 것이 아니며 **Windows 공식 보호 signer가 별도 확인**한다.
+
+**중요 제한:** 신규 보조 코드는 GitHub 저장소에 게시됐지만 Windows PC에서 실행/설치 확인 전이다. 단일 명령을 우회한 GitHub API 직접 게시·다른 GPT/Agent에 대해 저장소 수준 강제 브랜치 보호를 활성화한 것은 아니다. 실제 운영 signer 연결/강제 status check는 운영 변경 승인과 실측 후에만 PASS로 판정한다. 기존 R1/R2의 서명·READY·실행 상태는 그대로 보존한다.
+
 ## 예방 조치와 담당
 
 | 항목 | 필수 행위 | PASS 기준 | FAIL/불확실 |
