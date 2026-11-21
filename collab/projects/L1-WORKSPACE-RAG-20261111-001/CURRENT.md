@@ -1,5 +1,16 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-21 KST — Viewer 환경설정 UI v0.3.0 개발·시험 및 L1Work PUBLIC 전달 완료 / Linux 운영 별도 G0
+
+- **사용자 요청:** 기존 `L1-WORKSPACE-RAG-20261111-001`의 Viewer 재사용, Write UI v0.2.0과 독립적인 사용자별 표시·숨김, 문서 유형 필터, 화면 설정, 로컬 저장·초기화 구현·시험·L1Work 배포. 호스트 Linux 운영 적용은 별도 검증.
+- **실제 산출물 PUBLIC 배송:** [L1Work/main 루트 `l1-workspace-viewer-preferences_v0_3_0_1121.zip`](https://github.com/wonhwipark/L1Work/blob/main/l1-workspace-viewer-preferences_v0_3_0_1121.zip), **20,661 B / SHA-256 `228c60bada8a92591f7ae855dfabe206e018d9e59970cf2d1b773d4d00072812`**, Git blob `6798f08a2780c9313f10af12669d5cec2016f14a`; 최초 게시 commit `08c4c216d82ad89bc9958daccd44247b74cf2d02`. 원격 재조회 Base64 전체 bytes 비교 **PASS**, `handoffs/README.md` 및 [Linux G0 인계](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_WORKSPACE_VIEWER_PREFERENCES_V030_G0_INTEGRATION_HANDOFF_r0001_20261121_KST.md) 게시/readback **PASS**. 기존 Viewer v0.1.2·Write source v0.2.0 ZIP 불변.
+- **기능/분리:** 기존 `#doc-actions`에 [환경설정] 추가, 유효하게 지정된 `data-l1-section` 9종과 `data-l1doc-type` 6종만 숨김·필터, 테마/밀도/글자 크기, 프로필별 `localStorage` 및 익명 브라우저별 저장, 저장·취소·초기화, 타 탭·프로필 전환 이벤트. Write 편집 로그인/CSRF/ACL/Writer·MSC iframe은 변경하지 않음. **실 Linux DOM 매핑·사용자 식별 계약은 G0 미확인**. 미지원 요소는 숨기지 않음.
+- **시험·게이트:** Node **16/16 PASS**, Python unittest **14/14 PASS**, JS syntax/Python compile·ZIP CRC/path/manifest/원격 바이트 PASS. Chromium 자동 브라우저 접근은 실행 환경 정책 차단으로 `BROWSER_E2E=BLOCKED/NOT_RUN`. `ASSEMBLED_V012_PLUS_WRITE_V020_PLUS_PREFS_V030=NOT_RUN` (기존 두 원본 ZIP의 동일 컨테이너 결합을 수행하지 않음); `LINUX_G0/DOM_CSP/USER_PROFILE/REAL_WRITE_REGRESSION/B1_B2_B3_E3_E4/HOST_DEPLOY=NOT_RUN`. `INDEPENDENT_CODE_REVIEW=NOT_RUN`, `development_not_for_deployment` 유지.
+- **판정·근거:** `PUBLIC_DEV_ZIP_DELIVERY=PASS_REMOTE_VERIFIED`, `HOST_INSTALL=NOT_RUN`. [구현·검증·배송 결과](VIEWER_PREFERENCES_V030_IMPLEMENTATION_AND_L1WORK_DELIVERY_RESULT_r0001_20261121_KST.md). 이전 Write v0.2.0 L1Work 배송 완료를 별도 보존하며 그 운영 Write 활성화도 미검증.
+- **NEXT_ONE_ACTION:** 업무 GPT/Linux Agent가 L1Work `main/handoffs/L1_WORKSPACE_VIEWER_PREFERENCES_V030_G0_INTEGRATION_HANDOFF_r0001_20261121_KST.md`를 읽고 설치 Viewer source/DOM/CSP/프로필·이전 Write v0.2.0 G0를 확인 → 정확한 3 ZIP 결합 격리시험/브라우저·접근성·회귀/백업·rollback 결과 제출 → 유효한 운영 승인·안전 게이트 이후에만 호스트 설치. 관련 Work 유지, 신규 유료 리뷰/Job·호스트 서비스 변경 0.
+
+---
+
 ## 2026-11-21 KST — 지식 Updater r0002 업무 GPT 원샷 실행 인계 보강·doc-converter 최신 공개본 확인
 
 - **사용자 지시:** L1Work에 배포한 `knowledge_analysis_preflight v0.2.0`을 실제 Linux 설치 `l1-knowledge-updater`와 연결·검증하는 후속 업무를 진행. 업무 GPT/업무 Linux Agent에 직접 연결된 실행 도구는 이 GPT 세션에 없음. 기존 PUBLIC `r0002` 인계서에 **G0에서 종료하지 않는 원샷 구현·회귀/MSC·개인 Workspace readback** 실행 지시/반환 상태 계약을 보강했으나 **게시 자체는 수신·실행 트리거가 아님**.
