@@ -66,10 +66,11 @@ run_policy_ref: POLICY-STATIC-V1
             'review_policy': {'known_run_policy_refs': {
                 'POLICY-STATIC-V1': {'max_budget_usd': 3.0}}}}))
 
-    def submit(self, publish=False):
+    def submit(self, publish=False, approval_route='manual', delegated_skills=()):
         return mod.submit(root=self.local, request_draft=self.req, package=self.pkg,
                           live_config=self.config, publish=publish,
-                          expected_origin=str(self.origin))
+                          expected_origin=str(self.origin),
+                          approval_route=approval_route, delegated_skills=delegated_skills)
 
     def test_preview_has_no_side_effects(self):
         original = git(self.local, 'rev-parse', 'HEAD')
@@ -132,6 +133,34 @@ run_policy_ref: POLICY-STATIC-V1
         with self.assertRaisesRegex(mod.SubmissionBlocked, 'UNTRUSTED_ORIGIN'):
             mod.submit(root=self.local, request_draft=self.req, package=self.pkg,
                        live_config=self.config, publish=True)
+
+
+    def test_auto_out_of_scope_is_blocked_before_git_write(self):
+        before = git(self.local, 'rev-parse', 'HEAD')
+        with self.assertRaisesRegex(mod.SubmissionBlocked, 'AUTO_NOT_ELIGIBLE_SCOPE'):
+            self.submit(publish=True, approval_route='auto',
+                        delegated_skills=('l1-knowledge-updater', 'cowork-dashboard'))
+        self.assertEqual(git(self.local, 'rev-parse', 'HEAD'), before)
+        self.assertFalse((self.local / f'collab/requests/{RID}').exists())
+
+    def test_auto_without_loaded_scope_is_blocked_before_git_write(self):
+        with self.assertRaisesRegex(mod.SubmissionBlocked, 'AUTO_DELEGATION_SCOPE_NOT_SUPPLIED'):
+            self.submit(publish=True, approval_route='auto')
+        self.assertFalse((self.local / f'collab/requests/{RID}').exists())
+
+    def test_auto_scope_match_is_only_preflight_not_signature(self):
+        output = self.submit(publish=True, approval_route='auto',
+                             delegated_skills=('synthetic-review',))
+        self.assertEqual(output['approval_route'], 'auto')
+        self.assertEqual(output['signer_authority'], 'NOT_VERIFIED')
+        self.assertEqual(output['ready'], 'NOT_CREATED')
+
+    def test_manual_route_preserves_explicit_approval_requirement(self):
+        output = self.submit(publish=False, approval_route='manual')
+        self.assertEqual(output['delegation_scope_preflight'],
+                         'MANUAL_PROTECTED_APPROVAL_REQUIRED')
+        self.assertEqual(output['signer_authority'], 'NOT_VERIFIED')
+        self.assertEqual(output['ready'], 'NOT_CREATED')
 
 
 if __name__ == '__main__':
