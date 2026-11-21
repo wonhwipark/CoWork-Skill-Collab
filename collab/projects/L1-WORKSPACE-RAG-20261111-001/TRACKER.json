@@ -5,11 +5,11 @@
       "work_id": "L1-WORKSPACE-RAG-20261111-001",
       "skill": "l1-knowledge-updater",
       "title": "l1-knowledge-updater",
-      "phase": "VIEWER_WRITE_V020_WORKFLOW_KERNEL_R0002_HANDOFF_POSTED_E2E_PENDING",
-      "owner": "GPT: Write UI v0.2.0/Prefs v0.3.0 L1Work ZIP 공개 전달 상태 유지, Workflow/Kernel E2E 업무 GPT HO r0002 및 색인 readback PASS; 실제 Linux E2E/Write 활성화 NOT_RUN",
+      "phase": "VIEWER_WRITE_WORKFLOW_KERNEL_OVERLAY_DEV_PASS_FULL_SKILL_MERGE_LINUX_G0_PENDING",
+      "owner": "GPT: Workflow/Kernel Viewer Write bridge overlay 2 modules developed, 30/30 synthetic/unit PASS; non-sensitive CoWork result posted/readback; full skill ZIP/host G0+E2E/installation NOT_RUN",
       "self_test": "PASS_DEV_30_NODE_8_PYTHON_ZIP_CRC; LIVE_BROWSER_AND_HOST_NOT_RUN",
       "independent_review": "WIKI_UI_UX_R1_ACCEPT_WITH_CHANGE_CLOSED; VIEWER_AUTH_EDIT_DESIGN_R1_ACCEPT_WITH_CHANGE_CLOSED_B1_M2_N4; VIEWER_STYLE_DESIGN_R1_USER_WAIVED_HOST_STOP_UNVERIFIED; VIEWER_WRITE_V020_CODE_REVIEW_NOT_RUN",
-      "next_action": "업무 GPT/Linux Agent: L1Work/main/handoffs/L1_WORKSPACE_VIEWER_WRITE_V020_WORKFLOW_KERNEL_E2E_ONESHOT_HANDOFF_r0002_20261121_KST.md 우선 읽고 실제 설치 Workflow/Kernel/Writer G0→REUSE/CONNECT/GAP→범위 내 수정/격리 Write E2E. 운영 활성화는 별도 게이트."
+      "next_action": "업무 GPT/Linux Agent: L1Work main/handoffs/L1_WORKSPACE_VIEWER_WRITE_V020_WORKFLOW_KERNEL_E2E_ONESHOT_HANDOFF_r0002_20261121_KST.md와 현재 대화 Overlay ZIP 바이트를 수신한 후, 실제 설치된 Workflow/Kernel writer/CAS G0 연결→full suite/native package/safe Linux E2E; 실행 승인 별도."
     }
   ]
 }
