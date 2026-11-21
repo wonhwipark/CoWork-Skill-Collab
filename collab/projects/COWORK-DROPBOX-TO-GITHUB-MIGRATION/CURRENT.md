@@ -1,5 +1,14 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 2026-11-21 KST — Runner GPT 판정 후 Telegram 알림 1회 후보 게시 (LIVE OFF)
+
+- **사용자 최신 지시:** Claude 독립 리뷰 1회 → GitHub Runner GPT 판정 1회·원격 게시 → Telegram Bot 알림 1회 → 모바일 ChatGPT 어느 창에서든 최신 GitHub 판정 조회. Gmail은 대안 보류. 기존 Windows Claude 리뷰 완료 Telegram은 별개 유지.
+- **코드·workflow 게시:** [통합 알림 플로우·게이트 문서](GPT_ACTIONS_TELEGRAM_NOTIFY_FLOW_r0001_20261121_KST.md). `collab/tools/gpt_disposition_telegram.py`, 7건 회귀시험, GPT 실행기 `posted_request_id` output, `.github/workflows/cowork-gpt-disposition.yml` 동일 job 후속 step. GPT 판정 게시 readback + 동일 Run claim 검증 이후에만 CREATE_ONLY 발송 선점. 실패/중복/불확실 시 자동 재발송·재리뷰 0.
+- **검증 경계:** 로컬 별도 후보 7/7 PASS; 원격 4개 코드/워크플로 파일 readback 확인. GitHub Actions Runner 전체 22건·실제 Telegram 수신·Windows Claude 시작 전 1사이클 보호 **NOT_VERIFIED/NOT_APPLIED**. 봇 secret·대상 chat_id·notify flag 실설정 미확인. `COWORK_GPT_TELEGRAM_NOTIFY_ENABLED` 기본 OFF, 별도 GPT API 자동 판정도 기존 OFF 유지. 새 모델 호출·Windows 운영 변경·실제 알림 발송 0.
+- **NEXT_ONE_ACTION:** Actions offline-selftest 실제 22건 결과와 Windows reviewer push 인증 주체를 G0 확인 → 봇 자격정보를 GitHub Secrets에 설치·무과금 발송 검증할 수 있는 범위 확인 → 기존과 별도 GPT API 승인/한도 후 새 완료 리뷰 한 건에서 판정·Telegram 수신 E2E. 실제 실행 증거 전 LIVE 완료로 승격 금지.
+
+---
+
 ## 2026-11-21 KST — R2 재개 원격 검증 완료 / Windows 호스트 수동 리뷰·회귀 실행은 미검증
 
 - [R2 재개 근거·충돌 정산](GPT_R2_REVIEW_GATE_RESUME_REMOTE_CHECK_r0001_20261121_KST.md): SOURCE_PIN commit `50a8b5d9...`에서 REQUEST blob `1067a502...`·ZIP blob `bbacdcfd...` 읽기 PASS, 실제 ZIP 16138 B와 SHA-256 `90a0d55842138d4c813f0dbc3a5c8e4625e84a110afe68035348297ffedad1f3` 직접 재계산 일치. 원격 소스·회귀 코드 10개 정적 assert PASS, **실제 Python unittest NOT_RUN**.
