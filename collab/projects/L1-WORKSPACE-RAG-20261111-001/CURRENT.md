@@ -1,5 +1,15 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-21 KST — 사용자 L1Work ZIP 배포 지시 완료 (리뷰·별도 판정 생략, 개발용 전달 예외)
+
+- **사용자 최신 정정:** Windows 호스트 적용이 아니라 `wonhwipark/L1Work/main` 루트에 정확한 **Knowledge 분석 보조 ZIP** 배포를 요청. R2 리뷰는 실제 결과·영수증 조회 404로 `NOT_OBSERVED`; 사용자의 명시적 지시에 따라 배포를 위해 독립 리뷰·GPT 판정을 별도로 기다리거나 재요청하지 않음. 기존 R1/R2 요청·보호 승인·워처/DB/비용 0 변경.
+- **L1Work 전달 완료:** `knowledge_analysis_preflight_v0_2_0_1121.zip`, **16,138 B**, SHA-256 `90a0d55842138d4c813f0dbc3a5c8e4625e84a110afe68035348297ffedad1f3`, Git blob `bbacdcfd33860060552ef5928be0f37b6b436cdb` 원본·L1Work 원격 일치. PUBLIC commit `93ac2d512961fd4641243c4b31472896eb980394`; `handoffs/L1_KNOWLEDGE_UPDATER_NR_UL_TX_SWITCHING_MODIFICATION_REQUIREMENTS_r0002_20261121_KST.md` 및 `handoffs/README.md` 함께 게시·remote readback PASS. [결과·제한](KNOWLEDGE_PREFLIGHT_V020_USER_WAIVED_REVIEW_L1WORK_DELIVERY_RESULT_r0001_20261121_KST.md).
+- **경계:** `PUBLIC_ZIP_DELIVERY=PASS`, `RELEASE_REVIEW_DISPOSITION=USER_WAIVED`, `INDEPENDENT_REVIEW_R2=NOT_OBSERVED`, `DEVELOPMENT_ONLY_PUBLIC_DELIVERY_EXCEPTION`. 패키지 내부 `development_not_for_deployment` 유지; 업무 Updater 통합·Linux 설치·실제 C++/MSC/Workspace writer E2E `NOT_RUN`. 배포는 설치/운영 PASS가 아니며 지식 그룹 게시 승인 아님.
+- **NEXT_ONE_ACTION:** 업무 GPT가 **PUBLIC r0002 인계 + 위 SHA ZIP**을 입력으로 실제 Linux 설치 `l1-knowledge-updater`/Analyzer/Converter 계약 G0 → 최소 연결·시험 → NR L1 Tx UL Tx Switching 대표 시나리오의 개인 Work 저장·readback을 진행하고 결과 보고. 기존 r0001/HOLD 이력 보존.
+
+---
+
+
 ## 2026-11-21 KST — R2 원인 재검증 및 CoWork 범위 게이트 수정 게시 / 수동 리뷰 호스트 실행 대기
 
 - **R2 READBACK:** SOURCE_PIN `50a8b5d9e832b1fbf9095c729c813e83134b1fd8`에서 R2 REQUEST blob `1067a502...` 및 고정 ZIP blob `bbacdcfd...` 모두 존재, 기존 SHA-256 `90a0d558...edad1f3`/16,138 B 계약과 기존 기록 정합. 사용자 제공 Windows 감시기 결과 `AUTO_NOT_ELIGIBLE: SCOPE` (서명·READY·리뷰·영수증 없음)는 자동 위임 밖 스킬 때문.
