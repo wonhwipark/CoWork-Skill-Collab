@@ -41,7 +41,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python3 -m py_compile collab/tools/gpt_disposition_actions.py
+          python3 -m py_compile collab/tools/gpt_disposition_actions.py collab/tools/gpt_disposition_telegram.py
+          # Both suites are automatically discovered: 15 disposition + 7 Telegram tests.
           python3 -m unittest discover -s collab/tools/tests -v
 
   gpt-disposition:
