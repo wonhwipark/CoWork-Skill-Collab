@@ -1,7 +1,7 @@
 # CoWork 공통 맥락 브리프
 
-- 개정: r0012 / Claude Code 프로젝트 시작 로딩 경로 추가 2026-11-17 KST (기존 스킬 분석 링크·상태 정본 유지).
-- 저장소: GitHub PRIVATE `wonhwipark/CoWork-Skill-Collab`, branch `main`.
+- 개정: r0013 / 2026-11-21 KST CoWork PUBLIC 전환에 따른 저장소 역할 갱신. 이전 동작·리뷰·스킬 현황은 각 CURRENT에서 재확인.
+- 저장소: **GitHub PUBLIC** `wonhwipark/CoWork-Skill-Collab`, branch `main` (2026-11-21 실제 visibility 조회). 기존 PRIVATE 경로·문구는 당시 이력. 회사 제한 자료·키/토큰의 신규 게시 허용이 아님.
 - 역할: 협업·L1 지식·관리 스킬의 **고정 지도**. 진행 상태·최신 버전·리뷰 결과·승인 대기·source blob을 복사하지 않는다.
 - 읽기: **이 지도 → 요청 목적에 맞는 CURRENT → 필요한 근거·계약·스킬 원문**. 현재 상태는 실행할 때 해당 정본을 조회한다.
 - **세션 로딩:** Windows Claude Code는 CoWork 저장소에서 시작 시 루트 [`CLAUDE.md`](../CLAUDE.md)를 통해 `AGENTS.md`·이 브리프를 프로젝트 맥락으로 import할 수 있다. GPT는 CoWork 프로젝트 지침에 따른 요청 시 조회다. **Claude의 실제 호스트 로딩·GitHub 최신 정보 자동 조회 및 GPT의 무요청 선조회는 각각 별도 검증/제약**으로 구분한다.
@@ -51,7 +51,7 @@ CoWork Work/리뷰 요청과 업무 Kernel Work는 별개다. 팀 지식 정본�
 | 실행 LLM·Agent | 허용된 도구·스킬로 실제 작업, Evidence 보고, 해당 결과·CURRENT 게시와 원격 확인 |
 | Windows Claude Code | 기본 독립 리뷰어. 로컬 구현 세션의 자체시험과 별도 독립 리뷰를 구분 |
 | Python watcher | 승인된 REQUEST/READY·정책·서명·비용·중복 검증 뒤 리뷰 운송·실행·영수증 관리 |
-| CoWork PRIVATE | 비민감 협업 설계·결정·결과·리뷰·영수증. 현재 상태는 프로젝트 CURRENT |
+| CoWork PUBLIC | 공개 가능한 협업 설계·결정·결과·리뷰·영수증. 현재 상태는 프로젝트 CURRENT. 비밀·업무 제한 자료는 게시 금지 |
 | L1Work PUBLIC | 별도 승인된 최종 ZIP(main 루트), 인계(handoffs), 허용목록 상태 화면 |
 | 업무용 l1-workspace | Work ID·진행·분석/결정·수정/시험/리뷰·Evidence 원본. 동명 GitHub.com 저장소로 추정 금지 |
 | 그룹 공용 l1sw-dev-knowledge | 팀 공용 스킬과 관리하는 검증 기술 지식. 실제 저장 위치는 설치 계약으로 확인; 게시 결과와 Work 역링크는 각각 확인 |
