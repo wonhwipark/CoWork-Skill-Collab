@@ -1,5 +1,13 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-21 KST — CoWork 공통 병렬 작업 통합 게이트 V1 적용 연결 / Viewer v0.4.0 소급 검증 불가
+
+- UI·Write·환경설정 세 개발창 정합성 누락 재발 방지를 위해 [CoWork 통합 게이트 계약](../../ops/CONTRACTS/PARALLEL_CHANGE_INTEGRATION_GATE_V1.md)과 [검사 코드](../../ops/integration_gate.py)를 도입. 본 Viewer Work의 실제 산출물 3개는 아직 등록/교차 브라우저·Linux 시험 미완료.
+- **Viewer v0.4.0 단일 ZIP 게시 이력은 유지**하며 운영 배포 승인으로 승격하지 않음. 기존 Linux G0 및 writer E2E 미실행, Read Only 유지.
+- **NEXT_ONE_ACTION:** 실제 세 소스 ZIP/필수 엔트리를 고정 등록하여 단일 후보 ZIP 통합 검사 및 브라우저/호스트 E2E를 수행, PASS 근거를 기존 Work에 보고.
+
+---
+
 ## 2026-11-21 KST — Viewer 2안 Wiki 통합 UI v0.4.0 + Write + 환경설정 L1Work 게시 완료 / 실제 Linux G0 대기
 
 - **사용자 요청·범위:** GitHub Viewer 설계/릴리스 정합성 복구 → 사용자 확정 2안 팀 위키형 + Blue Gray v0.1.2 + Write v0.2.0 + Preferences v0.3.0의 **단일 통합 개발 ZIP**과 단독 HTML 제공, L1Work 게시·업무 GPT HO 갱신.

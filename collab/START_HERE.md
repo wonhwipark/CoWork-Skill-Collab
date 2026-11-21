@@ -42,6 +42,8 @@
 
 ## 신규 Work/스킬별 병렬 작업 등록 (기본)
 
+**예외 없이 확인할 공통 정합성:** 같은 Viewer/스킬/패키지의 UI·Write 등 여러 개발창은 신규 Work를 분리하지 않고 동일 Work의 stream으로 추적. [병렬 개발 통합 게이트 V1](ops/CONTRACTS/PARALLEL_CHANGE_INTEGRATION_GATE_V1.md)에서 작업별 소스 고정, 변경 중복, 합본 ZIP 및 교차시험을 게시 전에 검증한다. 검사 스크립트가 모든 게시 경로에 자동 연결된 것은 아니며, 사용자가 중지한 자동 Actions는 복구하지 않음.
+
 - 작업 시작 시 해당 작업의 고유 `Work ID`와 `CURRENT.md`를 확인하고, `collab/projects/<WORK_ID>/TRACKER.json`을 함께 등록·갱신한다. 서로 다른 스킬·이슈가 병렬 진행되면 개별 Work ID로 분리한다. 실제 미등록 작업을 진행 중으로 추정하지 않는다.
 - **계약과 예시:** [Work Tracker V1](dashboard/WORK_TRACKER_GUIDE.md), **CoWork 저장소의 자동 상태:** [HTML](dashboard/index.html) / [VIEW](dashboard/VIEW.md). `TRACKER.json`과 `CURRENT.md` 변경 시 기존 상태 갱신 작업과 별도의 GPT 자동 판정 작업을 구분.
 - **사용자 기본 대시보드:** [Executive HTML Pages](https://wonhwipark.github.io/L1Work/cowork-dashboard/) (클릭 즉시 열기). **PUBLIC 자동 게시 E2E PASS**: PRIVATE 성공 Action → 허용목록 상태 JSON → L1Work Pages 배포. 프로젝트 내 피드백·인계 문서 변경까지 실행 감지; 화면은 2분 주기 및 탭 복귀 시 최신 공개 상태 확인. 승인되지 않은 새 Work 이름은 자동 공개하지 않음. [실측 검증](projects/COWORK-GITHUB-DASHBOARD-20261111-001/AUTO_PUBLIC_HTML_REFRESH_E2E_20261113.md).
