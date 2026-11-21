@@ -1,5 +1,13 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 2026-11-21 KST — Telegram 메시지 머릿말 표준화 (Claude / GPT / 연결 시험)
+
+- **결과:** [TELEGRAM_HEADER_STANDARDIZATION_RESULT_r0001_20261121_KST.md](TELEGRAM_HEADER_STANDARDIZATION_RESULT_r0001_20261121_KST.md) (commit `d1c3be7966a1`). 사용자 확인 이후 모바일 수신 기록 유지.
+- **머릿말:** Claude 리뷰 완료 `🔵 [Claude 리뷰 완료]`, Claude 리뷰 실패 `🔴 [Claude 리뷰 실패]`(상태 불확실·결과 게시 실패 하위 문구), GPT 최종 판정 `🟢 [GPT 최종 판정 완료]`, 연결 시험 `🔔 [CoWork 연결 시험]`.
+- **운영 적용:** Windows Notifier 1개 파일만 교체(백업 `backup_notifier_20261121`), 작업 `SKILL-COLLAB-Notifier`만 재시작. 발송 조건·Bot·Chat ID·중복 방지·상태 마크 불변. `--dry-run --replay` 확인, 전송 기록 중복 없음.
+- **GitHub:** 발송기 4개 파일 main 반영(발송 조건·자격정보·승인 정책 불변). 푸시 시 무과금 `offline-selftest`만 실행, GPT 판정 Job은 API 변수 OFF로 SKIP. 유료 호출·신규 리뷰·Telegram 신규 발송 0.
+- **NEXT_ONE_ACTION:** GPT 판정 알림은 GPT API 승인과 판정 발생 후에만 실제 확인 가능.
+
 ## 2026-11-21 KST — 기존 Telegram Bot 재사용 · GitHub Secrets 등록 · 무료 Smoke PASS / 모바일 수신 사용자 확인 대기
 
 - **결과:** [TELEGRAM_BOT_REUSE_AND_SMOKE_RESULT_r0001_20261121_KST.md](TELEGRAM_BOT_REUSE_AND_SMOKE_RESULT_r0001_20261121_KST.md) (commit `5c4c77e98b2e`). 새 Bot·토큰 재발급 0, 비밀값은 어디에도 게시하지 않음(Windows 보호 파일 → 메모리 → `gh` 표준입력).
