@@ -194,6 +194,7 @@ def check_request(request: Path, package: Path, live_config: Path,
         raise GateReject("INVALID_PACKAGE_SIZE") from e
     _check_package(package, sha=sha, size=count)
     return {"status": "PASS_PREPUBLICATION_ONLY", "request_id": request_id,
+            "skill_id": fields["skill_id"],
             "request_sha256": hashlib.sha256(request_bytes).hexdigest(),
             "run_policy_ref": policy, "expected_max_budget_usd": str(required_budget),
             "package_sha256": sha, "package_size_bytes": count,
