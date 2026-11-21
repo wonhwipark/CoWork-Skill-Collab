@@ -17,6 +17,13 @@ python collab/ops/submit_review_request.py --repo-root . --request-draft <OUTSID
 python collab/ops/submit_review_request.py --repo-root . --request-draft <OUTSIDE_REPO>\\REQUEST.md --package <OUTSIDE_REPO>\\skill.zip --live-config <WINDOWS_LIVE_CONFIG_PATH> --publish
 ```
 
+### 요청 대상과 보호 위임 범위의 분리 (2026-11-21 보완)
+
+- 제출기의 기본값은 `--approval-route manual`: 이는 **보호 서명자 수동 승인 필요**를 표시할 뿐, 승인·서명·READY가 아님. 대상 스킬이 자동 위임 밖에 있어도 이 경로로 REQUEST/PIN *후보* 게시 가능하며, 유효한 일회성 수동 승인 전 리뷰는 실행하지 않는다.
+- 자동 처리를 기대할 때는 **실제 Windows 보호 signer의 현재 로드 위임에서 읽은** 허용 스킬 각각을 `--delegated-skill <skill-id>`로 전달하고 `--approval-route auto`를 지정. 누락은 `AUTO_DELEGATION_SCOPE_NOT_SUPPLIED`, 미허용은 `AUTO_NOT_ELIGIBLE_SCOPE`로 **Commit A 이전 차단**. 프로그램에 허용 목록을 임의 입력했다고 해서 signer 권한이 증명되는 것은 아니다. 실행 시 signer가 원본 위임/만료/repo_id/비용/승인 범위를 다시 검증해야 한다.
+- 예시: `knowledge_analysis_preflight`는 2026-11-21 호스트 보고 허용 목록에 없어 R2 자동 처리가 불가능. `skill_id`를 `l1-knowledge-updater`로 위장하거나 scope를 임의 추가하지 않는다. **R2는 이미 게시된 신규 요청이므로 제출기를 재호출하거나 PIN/READY를 다시 만들지 않는다.** R2 유효한 보호 수동 1회 승인은 사용자/기존 위임 계약으로 별도 확인할 때만 진행한다.
+- 신규 CLI 게이트는 게시자 측 예방책이며 Windows signer 또는 watcher 설치 변경이 아님. 임의 GitHub API 직접 게시를 막는 호스트·저장소 수준 강제는 별도 설치 검증 필요. 기존의 자동 위임 allowlist는 유지.
+
 **성공 판정 경계:** `PREPUBLICATION_PASS_NOT_SUBMITTED` = 미게시, `SUBMITTED_AWAITING_PROTECTED_SIGNER` = REQUEST+ZIP·PIN 원격 게시/검증까지, 정식 실행/서명 아님. 프로그램이 `FORMAL_REVIEW_SUBMISSION_BLOCKED`를 출력하면 명시적으로 실패, **자동 재시도 금지**, 원격 Commit·보호 signer·DB·중복/UNCERTAIN 판정 후 새 revision을 선택. 자동 위임 허용 여부는 게시기의 `approval_mode=manual` 형식 무결성 검사로 입증되는 것이 아니며 **Windows 공식 보호 signer가 별도 확인**한다.
 
 **중요 제한:** 신규 보조 코드는 GitHub 저장소에 게시됐지만 Windows PC에서 실행/설치 확인 전이다. 단일 명령을 우회한 GitHub API 직접 게시·다른 GPT/Agent에 대해 저장소 수준 강제 브랜치 보호를 활성화한 것은 아니다. 실제 운영 signer 연결/강제 status check는 운영 변경 승인과 실측 후에만 PASS로 판정한다. 기존 R1/R2의 서명·READY·실행 상태는 그대로 보존한다.
