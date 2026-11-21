@@ -1,5 +1,14 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-21 KST — 진행 중 설계 창의 단축 “리뷰요청해줘” 정식 접수 진입 계약 보완
+
+- **사용자 확정:** 설계·구현을 진행하던 같은 대화창에서 **“리뷰요청해줘” 또는 “리뷰 요청해줘”만 입력**하면 현재 대화의 마지막으로 확정된 동일 Work·범위·리비전·산출물을 근거로 Windows Claude Code **정식 독립 리뷰 요청 절차**로 진입. 별도 긴 프롬프트·Work ID/스킬명/파일명을 반복 입력시키지 않음. “설계하고 정식 리뷰까지 진행해줘”의 일괄 진입도 유지. 인용·규칙 논의·단순 “검토해줘”는 자동 유료 리뷰 트리거가 아님.
+- **실제 변경:** [공통 진입](../../../AGENTS.md), [Claude 진입](../../../CLAUDE.md), [브리프](../../CONTEXT_BRIEF.md), [REQUEST/PIN 계약](../../ops/CONTRACTS/PRE_READY_SOURCE_PIN_PREFLIGHT_V1.md)에 우선순위·중복/범위·승인 게이트·결과 상태를 명시. 기존 `submit_review_request.py`, 원격 Commit A/B, 보호 signer·READY·비용·중복 정책·1사이클 유지. 봇·Windows LIVE 수정 및 신규 코드/파서/알림 트리거 추가 없음.
+- **검증:** GitHub `main` 변경 문서 원격 readback/blob 일치 PASS. 자연어를 사용자 발화로 해석하는 실제 새 설계 대화부터 REQUEST 제출·승인/READY·Windows Claude 리뷰까지의 `E2E=NOT_RUN`. 문서 적용을 모든 ChatGPT 창/Windows 호스트 자동 로딩 성공으로 승격하지 않음. 신규 리뷰·READY·모델/GPT API·Telegram 발송 0.
+- **다음 한 행동:** 실제 별도 설계 창에서 확정된 설계 후 사용자가 “리뷰요청해줘”만 입력하여 같은 Work 자동 선택 → 표준 사전검사·A/B 정식 제출 → 유효 승인/READY로 진행하는지 첫 실사용 검증. 대상/승인/정책/ZIP이 확인되지 않으면 정확한 차단만 보고하며 이전 요청 자동 재큐잉 금지.
+
+---
+
 ## 2026-11-20 KST — GPT v0.2.29 LIVE 컷오버 최종 판정: 수용 / 첫 유료 E2E 미관측
 
 - **GPT_DISPOSITION=`ACCEPT_LIVE_CUTOVER_HOST_REPORTED_E2E_PENDING`**. [최종 판정](./GPT_V029_LIVE_CUTOVER_FINAL_DISPOSITION_r0001_20261120_KST.md). Windows Claude Code의 최종 호스트 결과와 PRIVATE 원격 정본을 대조한 판정. GPT가 운영 PC에 직접 접속한 검증은 아님.
