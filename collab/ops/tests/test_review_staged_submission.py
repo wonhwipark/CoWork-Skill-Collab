@@ -114,6 +114,17 @@ class IntakeTests(unittest.TestCase):
             with self.assertRaisesRegex(SubmissionBlocked,'UNSAFE_STAGED_SOURCE_PATH'):
                 mod.valid_staged_path(name,WORK,'.md')
 
+    def test_nested_package_path_blocks_before_submit(self):
+        changed = self.draft.replace(b'/SKILL-COLLAB/packages/cowork_review_v0_1_0_1122.zip',
+                                     b'/SKILL-COLLAB/packages/nested/cowork_review_v0_1_0_1122.zip')
+        self.write(DRAFT, changed)
+        self.commit()
+        with patch.object(mod, 'submit') as s:
+            with self.assertRaisesRegex(SubmissionBlocked, 'STAGED_PACKAGE_PATH_MISMATCH'):
+                mod.run(root=self.root, work_id=WORK, draft_path=DRAFT,
+                        candidate_path=CAND, live_config=Path('fake'))
+            s.assert_not_called()
+
     def test_tampered_base64_blocks(self):
         self.write(CAND,base64.b64encode(self.zipdata)[:-4]+b'!!!!')
         self.commit()
