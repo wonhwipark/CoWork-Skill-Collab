@@ -3,7 +3,7 @@
 ## 2026-11-21 KST — 병렬 대화창 변경 통합 게이트 V1 코드·계약 CoWork main 적용 / 실호스트 연동 대기
 
 - **원인/변경:** Viewer의 UI·Write 등 각 창의 개발/시험 PASS와 단일 패키지 통합 검증의 공백을 보완. [통합 게이트 계약](../../ops/CONTRACTS/PARALLEL_CHANGE_INTEGRATION_GATE_V1.md), [Python 검사기](../../ops/integration_gate.py), [합성 테스트](../../ops/tests/test_integration_gate.py), [결과·범위](PARALLEL_SESSION_INTEGRATION_GATE_RESULT_r0001_20261121_KST.md)를 동일 Work와 공통 진입에 연결.
-- **로컬 자체시험:** UI/Write 가상 ZIP·임시 Git origin에서 18/18 PASS. 스트림 누락·덮어쓰기·충돌 미해결·SHA/증거/원격 drift 시 fail-closed. 합성시험이지 Viewer 실제 Linux/브라우저 E2E는 아님.
+- **로컬 자체시험:** UI/Write 가상 ZIP·임시 Git origin에서 19/19 PASS. 스트림 누락·덮어쓰기·충돌 미해결·SHA/증거/원격 drift 시 fail-closed. 합성시험이지 Viewer 실제 Linux/브라우저 E2E는 아님.
 - **실제 적용 범위:** CoWork GitHub의 코드·계약·진입 링크. **기존 모든 게시 주체에서 검사기를 자동 실행하거나 GitHub main 기술적으로 강제 차단한 것은 아님**. 자동 Actions 재가동 없음.
 - **미실행:** 2개 실제 채팅창 교차 게시 E2E, Windows 독립 리뷰, Viewer 실소스 3개 등록/통합 브라우저+Linux E2E, 모든 릴리스 경로 자동 차단. 호스트 설치/모델 호출 0.
 - **NEXT_ONE_ACTION:** Viewer Work의 UI/Write/Prefs 실소스 stream 등록 → v0.4.0 교차 시험 후 게이트 검사 → 별도 새 창 통합 충돌/게시 CAS 검증. 운영 배포 HOLD.

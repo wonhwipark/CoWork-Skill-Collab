@@ -7,7 +7,7 @@
 - 변경 코드: `collab/ops/integration_gate.py`, `collab/ops/tests/test_integration_gate.py`
 - 계약: `collab/ops/CONTRACTS/PARALLEL_CHANGE_INTEGRATION_GATE_V1.md`
 - 연결: `collab/CONTEXT_BRIEF.md`, `collab/START_HERE.md`, 이 Work의 CURRENT, Viewer Work의 CURRENT
-- 테스트: Python 3 stdlib unittest, 임시 bare Git remote + UI/Write 가상 ZIP, **18/18 PASS** (정상 포함, stream 누락·덮어쓰기·겹침 충돌/해결, SHA 변경, local/remote 기준 변경, 필수 cross-stream 누락, 개발/배포 구분, dirty tree, 중복·경로 이탈 ZIP, 시험 근거 누락 등).
+- 테스트: Python 3 stdlib unittest, 임시 bare Git remote + UI/Write 가상 ZIP, **19/19 PASS** (정상 포함, stream 누락·덮어쓰기·겹침 충돌/해결, SHA 변경, local/remote 기준 변경, 필수 cross-stream 누락, 개발/배포 구분, dirty tree, 중복·경로 이탈 ZIP, 시험 근거 누락 등).
 - **독립 리뷰:** NOT_RUN. **두 개 실제 ChatGPT 창 간 작업 동기화/동시 게시:** NOT_RUN.
 - **기존 Viewer v0.4.0 실제 입력으로 검사:** NOT_RUN (실제 소스 ZIP과 브라우저/Linux E2E 게이트 증거를 추가해야 함).
 - **자동 배포 차단:** 기존 모든 게이트/게시 주체를 스크립트 호출로 연결한 사실은 미검증. 사용자 요청에 따라 자동 GitHub Actions 재가동 없음.

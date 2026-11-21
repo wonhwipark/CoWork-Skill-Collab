@@ -133,6 +133,17 @@ class IntegrationGateTests(unittest.TestCase):
         run('git', '-C', str(self.repo), 'commit', '-qm', 'advance')
         self.must_block('LOCAL_HEAD_MOVED')
 
+    def test_remote_only_advance_blocks(self):
+        other = self.root / 'other'
+        run('git', 'clone', '-q', '--branch', 'main', str(self.remote), str(other))
+        run('git', '-C', str(other), 'config', 'user.email', 'test@example.invalid')
+        run('git', '-C', str(other), 'config', 'user.name', 'Other Session')
+        (other / 'README').write_text('concurrent session change\n')
+        run('git', '-C', str(other), 'add', 'README')
+        run('git', '-C', str(other), 'commit', '-qm', 'other chat')
+        run('git', '-C', str(other), 'push', '-q', 'origin', 'main')
+        self.must_block('REMOTE_HEAD_MOVED')
+
     def test_missing_cross_stream_test_blocks(self):
         self.manifest['checks'] = self.manifest['checks'][:1]
         self.must_block('MISSING_CROSS_STREAM_REGRESSION')
