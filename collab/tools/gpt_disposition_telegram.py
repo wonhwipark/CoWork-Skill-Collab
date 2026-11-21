@@ -162,7 +162,7 @@ def run(rid: str, env: dict[str, str]) -> str:
     # No model-generated summary, customer data, bot token or chat ID in the message.
     label = {'ACCEPT': '수용', 'ACCEPT_WITH_CHANGE': '수정 수용',
              'REJECT': '거절', 'DEFER': '보류', 'NEED_INFO': '추가 확인 필요'}[disp['verdict']]
-    msg = f'✅ CoWork GPT 판정 완료\nWork: {disp["work_id"]}\nRequest: {rid}\n판정: {label}\n결과: {link}\n\n모바일 ChatGPT 어느 창에서든 “CoWork 최신 판정 확인해줘”라고 질문하세요.'
+    msg = f'🟢 [GPT 최종 판정 완료]\nWork: {disp["work_id"]}\nRequest: {rid}\n판정: {label}\n결과: {link}\n\n모바일 ChatGPT 어느 창에서든 “CoWork 최신 판정 확인해줘”라고 질문하세요.'
     message_id = telegram_send(bot, chat, msg)
     claim_only(receipt_rel, token, {
         'schema': 'COWORK_GPT_TELEGRAM_RECEIPT_V1', 'request_id': rid,
