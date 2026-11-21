@@ -66,3 +66,23 @@ Actions `offline-selftest`의 실제 22건 결과·Windows 리뷰 게시 `push` 
 - **운영 미변경:** GPT API OFF, Telegram Runner 전송 기본 OFF, 새로운 유료 호출·Telegram 실제 `sendMessage`·Windows watcher/Notifier·기존 리뷰/READY 재실행 = 0.
 - **NEXT_ONE_ACTION:** GitHub Actions [해당 workflow 실행 기록](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/workflows/cowork-gpt-disposition.yml)에서 최신 `offline-selftest`의 실행 ID 및 성공/실패를 확인하고, 기존 Bot 자격정보를 안전한 Windows 실행 환경에서 조회하여 GitHub Actions secret의 **존재만** 검증. 미설정이면 관리자 권한과 범위 확인 후 secret을 별도 등록하고 발송은 계속 OFF. 이후 실제 Telegram 시험은 승인된 단일 비유료 발송으로 분리하여 수행.
 
+
+---
+
+## 2026-11-21 KST 추가: 모델 0회, 수동 1회 Telegram 연결 Smoke 게이트
+
+- **목적**: GPT API가 계속 OFF여도 기존 Telegram Bot → 모바일 푸시 수신을 **리뷰/판정과 분리**해 수동으로 시험할 수 있도록 준비. 자동 리뷰·GPT 호출·가짜 REVIEW_RESULT/READY/지출 없음.
+- 새 코드: `collab/tools/telegram_smoke.py` (blob `bd7988790d784e59958f7e8b5512f1d5c11085a3`), `collab/tools/tests/test_telegram_smoke.py` (blob `35b9ebecb49b0f0f3ac812c571bffc735bae22ab`), workflow `cowork-gpt-disposition.yml` (blob `ab463774e4e1e89f77f501d6019166760923936b`).
+- **분리 보호**: 수동 `workflow_dispatch`에서 `telegram_smoke=true`, `COWORK_TELEGRAM_SMOKE_ENABLED=true`, 실행자 `wonhwipark`, `main`, 최초 `run_attempt=1`일 때만 수행. GPT job은 `telegram_smoke=true`에서 **명시적으로 제외**. 신뢰 검증·모델 호출·리뷰 경로에 접근하지 않음.
+- 발송 전 `collab/projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/telegram-smoke/RUN-<id>-CLAIM.json` CREATE_ONLY·원격 readback, 고정 문자열 메시지 1회, ACK 후 `RUN-<id>-RECEIPT.json` 기록. 실패·응답 불확실 시 자동 재발송/재실행 금지.
+- **실제 로컬 시험:** GitHub 원격 4개 Python 파일과 로컬 바이트의 Git blob hash가 일치하는 것을 확인하고, Python 문법 검사 및 Telegram 판정 알림 7건 + 수동 연결 7건 = **14/14 PASS** (모두 모의 API, 유료 호출/실제 Telegram 발송 0). 기존 GPT 단위시험 15건은 본 세션에서 실행 못 함. 전체 소스 기준 unittest 함수 15+7+7 = **29개**. Actions Runner 실제 29건/모바일 실제 수신 = **NOT_VERIFIED**.
+- 로컬 파일 SHA-256: `gpt_disposition_telegram.py` `404b4c54f69a3dcfd579e38af6a2d617c54941ec2727f0d02ede95e666323f16`; `test_gpt_disposition_telegram.py` `615046440714680a867020f471cffd036ea9cf06f158a42a8ce7ffc0f1eced21`; `telegram_smoke.py` `d9c18e70787a1fb261d85e0dc829aa1a93bb9493803d3e2dc5071d72b8dcaba9`; `test_telegram_smoke.py` `615c834f9b647292741c67b781f05d827730253f0f904a0e7af0e8034ca25e61`.
+- **운영 미실시:** 사용자 계정의 Actions Secrets/Variables 설치 여부를 현재 도구가 조회 불가. 기존 Bot token/Chat ID를 반환·복사하지 않았으며, 새 발송 경로와 GPT API 모두 OFF 유지. 수동 workflow_dispatch 버튼 실행은 실제 수행하지 않음.
+
+### 연결 시험 실행 순서 (비밀값 비노출)
+1. `Settings → Secrets and variables → Actions`에서 **Repository secrets** `COWORK_TELEGRAM_BOT_TOKEN`, `COWORK_TELEGRAM_CHAT_ID`의 **존재 여부** 확인. 없으면 권한 있는 관리자가 기존 Bot 설정에서 안전하게 추출해 직접 등록(값을 채팅/저장소에 게시 금지). 봇 대화에서 `/start` 확인, 모바일 Telegram 알림 허용.
+2. **Repository variables** `COWORK_TELEGRAM_SMOKE_ENABLED=true`를 **수동 시험에 한해** 활성화. 이것은 GPT API `COWORK_GPT_API_ENABLED`와 무관.
+3. [Actions workflow](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/workflows/cowork-gpt-disposition.yml) → Run workflow → branch `main` → `telegram_smoke=true`, `request_id` 비움 → 1회 실행. `offline-selftest`와 `telegram-smoke`가 별도 job으로 실행되며 `gpt-disposition` job은 SKIP이어야 함.
+4. 사용자 모바일 Telegram에 `CoWork Telegram 연결 시험` 고정 메시지가 1회 도착하는지 확인. GitHub Actions run log + `telegram-smoke/RUN-<id>-CLAIM.json`·RECEIPT readback으로 판정. 실패/불확실 실행은 같은 Run 재실행 금지.
+5. 연결 확인 후 `COWORK_TELEGRAM_SMOKE_ENABLED=false` 복귀. 실제 GPT 판정 후 자동 Telegram은 **별도** `COWORK_GPT_TELEGRAM_NOTIFY_ENABLED` 운영 게이트와 GPT API 비용 승인 후에만 활성화.
+
