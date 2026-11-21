@@ -5,7 +5,7 @@
 
 ## 자연어 정식 리뷰 요청 접수 시 필수 경로
 
-새 세션에서 “정식 리뷰 요청/협업 리뷰/재리뷰”라고 하면 `@AGENTS.md`의 자연어 리뷰 요청 규칙을 먼저 적용한다. 기존 Work/REQUEST/READY/영수증/현재 LIVE 정책을 재조회하고, 신규 요청은 `collab/ops/submit_review_request.py`의 읽기 전용 사전검사 → 유효 시 명시적 `--publish` 경로를 사용한다. 기존 요청을 자동으로 재발행하지 않는다. `SUBMITTED_AWAITING_PROTECTED_SIGNER`는 정식 제출·PIN 확인까지만 의미하며 서명·READY·모델/영수증과 다르다. 승인·비용·위임·중복은 현재 보호 signer에서 별도로 검증한다.
+진행 중인 설계·개발 세션에서 “리뷰요청해줘” 또는 “리뷰 요청해줘”, “리뷰해줘”만 지시하더라도 **지금까지 확정한 동일 Work의 최신 설계·구현물**을 대상으로 삼는다. 별도 긴 프롬프트·Work ID·파일 경로를 다시 요구하지 않는다. 새 세션에서 “정식 리뷰 요청/협업 리뷰/재리뷰”라고 하면 `@AGENTS.md`의 자연어 리뷰 요청 규칙을 먼저 적용한다. 기존 Work/REQUEST/READY/영수증/현재 LIVE 정책을 재조회하고, 신규 요청은 `collab/ops/submit_review_request.py`의 읽기 전용 사전검사 → 유효 시 명시적 `--publish` 경로를 사용한다. 기존 요청을 자동으로 재발행하지 않는다. `SUBMITTED_AWAITING_PROTECTED_SIGNER`는 정식 제출·PIN 확인까지만 의미하며 서명·READY·모델/영수증과 다르다. 승인·비용·위임·중복은 현재 보호 signer에서 별도로 검증한다.
 
 **주요 검증:** Commit A에 `REQUEST.md`와 ZIP이 모두 있는지, Commit B PIN이 정확히 A를 가리키는지, ZIP SHA/크기 및 `repo_id` 문자열이 맞는지. 오류는 게시/후속 단계 `BLOCKED`로 중단한다. 저장소에 문서를 올린 것만으로 Windows PC가 이 절차를 실행한다고 간주하지 않는다.
 
