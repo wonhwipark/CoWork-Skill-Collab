@@ -15,6 +15,11 @@
 - `collab/tools/tests/test_gpt_disposition_actions.py`: 최초 Work 허용·동일 Work 두 번째 요청 차단·서로 다른 Work 허용·Work 식별자/정본 누락 차단·Work claim 우선 생성·claim 실패 시 모델 호출 0의 시험 6건 추가. 종전 9건 유지.
 - 기존 `.github/workflows/cowork-gpt-disposition.yml`의 OFF 게이트/단일 동시성 그룹/무과금 오프라인 self-test는 유지. 추가 Telegram 알림 없음.
 
+## 원격 코드 확인 값
+- GPT 실행기: `collab/tools/gpt_disposition_actions.py`; Git blob `c6b82b29c519d8f206be43eed43081ebbf3fe949`; SHA-256 `b4f6c90c7bde4e9a708da749787bd0315fa4377820fe431cfed1beba09254e7e`.
+- 회귀시험: `collab/tools/tests/test_gpt_disposition_actions.py`; Git blob `f738bef21404e932dc5d8e9eaabe51bb8bde1bc7`; SHA-256 `c6d55a19d8a7cfbd68a54f51608c38384284842f2bab465affad685cf02b7ffb`.
+- GitHub 파일 blob 및 내용 재조회 완료. 위 해시는 LIVE 설치본·Actions Runner 실행 증거와 구별.
+
 ## 실행 안전 경계와 미적용 부분
 1. **Windows watcher v0.2.29 LIVE 미변경**. GPT 실행기 신규 코드가 Windows watcher의 REQUEST→승인/READY 이전 단계에 연결된 것은 아님. 따라서 **Claude 리뷰를 시작하기 전에 Work별 1사이클 제한이 실제 차단되는지 = NOT_APPLIED/NOT_VERIFIED**. 이 구간에 새 유료 요청을 만들어 테스트하지 않음.
 2. GitHub Actions GPT API Job은 기존처럼 OFF. 별도 OpenAI 비용/키/모델 지출 승인·설정 0, 실제 호출 0. GitHub Runner의 새 시험 결과·실행 트리거, 실 Ed25519 검증 E2E는 접근 제약으로 NOT_VERIFIED.
