@@ -1,5 +1,5 @@
 # CoWork — GitHub 협업 진입점
-개정 기준: 2026-11-15 KST | 고정 운영 규칙·계약 진입점.
+개정 기준: 2026-11-21 KST | 고정 운영 규칙·계약 진입점. CoWork 저장소 공개 상태 PUBLIC (GitHub 실조회).
 프로젝트별 상태·버전·승인 대기·다음 행동은 해당 `CURRENT.md`와 결과/영수증에서 조회한다.
 
 - 협업 provider·LIVE·운영 판정: [이관 CURRENT](projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md).
@@ -28,7 +28,7 @@
 
 ## GitHub 링크 기반 독립 리뷰 자료 전달 — 사용자 승인 (2026-11-14)
 
-- 사용자 승인: **CoWork 감시기 자체 소스·후보 ZIP**은 회사 L1 코드·고객자료·토큰을 제외하고 **CoWork PRIVATE**에 리뷰용 게시 가능. **L1Work PUBLIC에 이미 게시된 스킬 ZIP과 `handoffs/` MD**는 실제 GitHub 파일 링크를 Claude 독립 리뷰에 제공 가능. 사용자 지시한 링크 기반 전달 절차는 [상세 계약](projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/GPT_GITHUB_LINK_REVIEW_TRANSPORT_APPROVAL_AND_ONE_SHOT_r0001_20261114.md)을 기준으로 한다.
+- 사용자 최신 지시로 저장소가 PUBLIC 전환됨. **CoWork 감시기 자체 소스·후보 ZIP**은 회사 L1 코드·고객자료·토큰을 제외한 허용 자료만 공개 저장소에 게시. 앞선 CoWork PRIVATE 게시 범위는 당시 이력. **L1Work PUBLIC에 이미 게시된 스킬 ZIP과 `handoffs/` MD**는 실제 GitHub 파일 링크를 Claude 독립 리뷰에 제공 가능. 사용자 지시한 링크 기반 전달 절차는 [상세 계약](projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/GPT_GITHUB_LINK_REVIEW_TRANSPORT_APPROVAL_AND_ONE_SHOT_r0001_20261114.md)을 기준으로 한다.
 - 별도 서명자 PC·로컬 LLM 확보는 일반 단일 사용자 CoWork 리뷰의 선행 의무가 아님. **실제 유료 리뷰 요청/READY·PUBLIC 신규 ZIP 게시·운영 watcher/LIVE 변경은 이 자료 전달 승인과 별개**. GitHub file URL이 곧 리뷰 실행 트리거가 아님.
 - 기존 공개 릴리스 ZIP은 `L1Work/main` **루트**에 유지. 배포되지 않은 후보 ZIP은 **PRIVATE 리뷰용으로만** 게시. 업무 PC용 Handoff MD 최종본은 `L1Work/main/handoffs/`. PRIVATE/PUBLIC 게시 시 실제 원격 commit·bytes/sha·파일 링크 검증, 업무 호스트 설치/Job 실행은 별도 영수증 필요.
 - 위 자료 전달 승인은 2026-11-14 당시 기록이다. 당시 provider 값은 Git 이력에 보존하며 현재 상태는 이관 CURRENT에서 확인한다. 자료 전달 승인 자체는 Windows 실행·모델 리뷰 호출·LIVE 전환이 아니다.
@@ -43,7 +43,7 @@
 ## 신규 Work/스킬별 병렬 작업 등록 (기본)
 
 - 작업 시작 시 해당 작업의 고유 `Work ID`와 `CURRENT.md`를 확인하고, `collab/projects/<WORK_ID>/TRACKER.json`을 함께 등록·갱신한다. 서로 다른 스킬·이슈가 병렬 진행되면 개별 Work ID로 분리한다. 실제 미등록 작업을 진행 중으로 추정하지 않는다.
-- **계약과 예시:** [Work Tracker V1](dashboard/WORK_TRACKER_GUIDE.md), **PRIVATE 자동 상태:** [HTML](dashboard/index.html) / [VIEW](dashboard/VIEW.md). `TRACKER.json`과 `CURRENT.md` 변경 시 GitHub PRIVATE Action만 갱신.
+- **계약과 예시:** [Work Tracker V1](dashboard/WORK_TRACKER_GUIDE.md), **CoWork 저장소의 자동 상태:** [HTML](dashboard/index.html) / [VIEW](dashboard/VIEW.md). `TRACKER.json`과 `CURRENT.md` 변경 시 기존 상태 갱신 작업과 별도의 GPT 자동 판정 작업을 구분.
 - **사용자 기본 대시보드:** [Executive HTML Pages](https://wonhwipark.github.io/L1Work/cowork-dashboard/) (클릭 즉시 열기). **PUBLIC 자동 게시 E2E PASS**: PRIVATE 성공 Action → 허용목록 상태 JSON → L1Work Pages 배포. 프로젝트 내 피드백·인계 문서 변경까지 실행 감지; 화면은 2분 주기 및 탭 복귀 시 최신 공개 상태 확인. 승인되지 않은 새 Work 이름은 자동 공개하지 않음. [실측 검증](projects/COWORK-GITHUB-DASHBOARD-20261111-001/AUTO_PUBLIC_HTML_REFRESH_E2E_20261113.md).
 - 단계, 테스트, 리뷰, 패키징, PUBLIC 게시, Windows 호스트 적용, LIVE 전환은 서로 다른 상태. 등록된 `PASS` 문자열만으로 독립 리뷰 또는 실제 운영 완료를 인정하지 않는다.
 
@@ -51,7 +51,7 @@
 - GPT: 개발·요구정의·보안/호환성 검토·실측/자체시험·리뷰 판정·최종 정본 관리. Windows 전용 원본은 접근 허용되는 경우에만 작업 가능.
 - Windows Claude Code: 독립 리뷰어가 기본이지만 필요한 로컬 개발 실행도 할 수 있음. **개발 세션 자기 시험 ≠ 독립 리뷰**. 토큰/연결 장애 시 GPT는 가능한 개발/시험/문서화를 계속하고 `INDEPENDENT_REVIEW=NOT_RUN/PENDING` 기록.
 - Python watcher: 유효한 승인 서명·파일·repo ID·정책·비용·중복 확인 후 **정식 REQUEST/READY**가 있을 때만 리뷰 호출. 파일 게시 자체는 실행 신호 아님.
-- PRIVATE: `wonhwipark/CoWork-Skill-Collab` — 새 협업 문서/판정/인계/영수증의 기준 저장소. 민감/반출금지 자료는 PRIVATE에도 게시 불가.
+- PUBLIC: `wonhwipark/CoWork-Skill-Collab` — 협업 설계·요청·리뷰·판정·영수증의 기준 저장소. **신규 비밀·업무 제한 자료 업로드 금지**. 공개 상태 전환은 LIVE 설정·유료 GPT API 호출 승인 아님.
 - **스킬 ZIP 전달 SSOT:** [Job-list/Skill-Updater PUBLIC 배송 계약](ops/CONTRACTS/JOBLIST_PUBLIC_DELIVERY_V1.md). 작업 PC의 Skill-Updater가 받는 최종 ZIP은 **PUBLIC `wonhwipark/L1Work` `main` 루트**. PRIVATE 후보/문서 게시로 배송·실행 호스트 동작을 완료했다고 보고하지 않는다. 일반 정식 배포는 사전 게이트를 유지하되 **2026-11-15 사용자 승인된 NR Tx Job-list v0.4.38 읽기 전용 디버깅 ZIP은 계약 8절에 따라 배포 전 보안·회귀시험, 배포 후 Claude 독립 리뷰·Linux 호스트 G0/종단 검증**으로 운영한다. 사후 결함은 새 버전으로만 재발행하며 같은 ZIP/기존 소비 Job을 재사용하지 않는다.
 - **Issue Analyzer 1차 PUBLIC 배포 지정:** [작업 CURRENT](projects/ISSUE-ANALYZER-20261114-001/CURRENT.md)와 [전달 계약](ops/CONTRACTS/JOBLIST_PUBLIC_DELIVERY_V1.md) 7절 기준, 첫 ZIP도 PUBLIC `wonhwipark/L1Work/main` 루트에 전달. PRIVATE 후보를 배송 완료로 대체하지 않는다. 버전·시험·독립 리뷰·게시·호스트 상태는 해당 CURRENT에서 각각 확인한다.
 - PUBLIC: `wonhwipark/L1Work` — 승인된 최종 ZIP 다운로드 및 **별도 사용자 승인된 공개 허용 목록 기반 HTML Pages 상태 요약**. 개발 후보/REQUEST/영수증/PRIVATE 원문은 공개 금지. Pages 기본 URL: `https://wonhwipark.github.io/L1Work/cowork-dashboard/`. 공개 범위는 `collab/dashboard/PUBLIC_PAGES_DEFAULT_POLICY.md` 참조.
@@ -98,7 +98,7 @@
 - 사용자에게 제공하는 실행 프롬프트는 항상 **정확한 저장소·브랜치·인계 파일 상대 경로**를 포함해야 한다.
 - 외부 게시·운영 DB 수정·신뢰키/PAT 발급·유료 reviewer·LIVE/SHADOW 호스트 설치·PUBLIC 배포는 각각 별도 명시적 승인.
 - REQUEST/READY 없거나 위조·만료·중복·비용 초과 시 reviewer 모델 호출 **0**. 재리뷰는 새로운 유효 요청으로만.
-- GitHub PRIVATE의 결과 게시/보고서는 **Windows Claude Code 자동 실행도, GPT 백그라운드 실행도 발생시키지 않는다**.
+- GitHub 결과/보고서 일반 게시 자체는 **Windows Claude Code 자동 실행 또는 GPT API 호출 승인이 아니다**. 다만 별도 승인·활성화된 Actions workflow가 검증된 리뷰 완료 파일 push를 감지하는 흐름은 Issue #2의 독립 트리거로 구분한다.
 
 ## LIVE 전환 안전 게이트
 운영 trust root/서명 실제 검증, Dropbox 기존 미정산 요청 개별 정산 또는 승인된 무손실 보존, 과거 완료 재호출 0, 제공자별 cursor/lease/단일 LIVE, notifier watermark/중복 0, 운영 DB WAL 무쓰기 백업과 마이그레이션/복원, 호스트 SHADOW, 정식 독립 리뷰/영수증, 운영 rollback 계획, 사용자 최종 명시 승인. **합성시험 및 개발 후보 PASS만으로 전환을 선언하지 않는다.**
