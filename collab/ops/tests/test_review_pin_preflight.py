@@ -164,4 +164,12 @@ run_policy_ref: POLICY-STATIC-V1
             mod.inspect(root=self.root,request_id=RID,package_repo_path='collab/packages/not.zip',expected_repo_id=REPO,main_commit=git(self.root,'rev-parse','HEAD'),approval_mode='manual')
 
 
+    def test_same_zip_basename_in_another_directory_is_blocked(self):
+        with self.assertRaisesRegex(mod.PreflightBlocked, 'PACKAGE_PATH_NAME_MISMATCH'):
+            mod.inspect(root=self.root, request_id=RID,
+                        package_repo_path='other/' + Path(PZIP).name,
+                        expected_repo_id=REPO, main_commit=git(self.root, 'rev-parse', 'HEAD'),
+                        approval_mode='manual')
+
+
 if __name__=='__main__':unittest.main()
