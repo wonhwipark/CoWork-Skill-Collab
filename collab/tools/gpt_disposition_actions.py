@@ -429,6 +429,11 @@ def main() -> int:
                 'trust': 'APPROVAL_SIGNATURE_VERIFIED_AND_DOCUMENT_FIELDS_MATCHED',
             }
             create_only(repo, gptpath, token, disposition, message=f'review: record GPT disposition for {rid} [skip ci]')
+            # The GitHub output is set only after CREATE_ONLY publication/readback passed.
+            output_path = os.environ.get('GITHUB_OUTPUT', '')
+            if output_path:
+                with open(output_path, 'a', encoding='utf-8') as output:
+                    output.write(f'posted_request_id={rid}\n')
             print(f'POSTED: {gptpath}; API response {usage["response_id"]}')
         return 0
     except Hold as e:
