@@ -11,12 +11,19 @@ on:
       - 'collab/tools/tests/test_gpt_disposition_actions.py'
       - 'collab/tools/gpt_disposition_telegram.py'
       - 'collab/tools/tests/test_gpt_disposition_telegram.py'
+      - 'collab/tools/telegram_smoke.py'
+      - 'collab/tools/tests/test_telegram_smoke.py'
   workflow_dispatch:
     inputs:
       request_id:
         description: Existing completed review ID (no re-review)
         type: string
-        required: true
+        required: false
+      telegram_smoke:
+        description: Manually test Telegram connection only; no review or GPT API
+        type: boolean
+        default: false
+        required: false
 
 permissions:
   contents: write
@@ -41,7 +48,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python3 -m py_compile collab/tools/gpt_disposition_actions.py collab/tools/gpt_disposition_telegram.py
+          python3 -m py_compile collab/tools/gpt_disposition_actions.py collab/tools/gpt_disposition_telegram.py collab/tools/telegram_smoke.py
           # Both suites are automatically discovered: 15 disposition + 7 Telegram tests.
           python3 -m unittest discover -s collab/tools/tests -v
 
@@ -53,7 +60,8 @@ jobs:
       github.event.repository.private == false &&
       vars.COWORK_GPT_API_ENABLED == 'true' &&
       vars.COWORK_GPT_COST_POLICY_APPROVED == 'true' &&
-      vars.COWORK_GPT_PROJECT_SPEND_CAP_CONFIRMED == 'true'
+      vars.COWORK_GPT_PROJECT_SPEND_CAP_CONFIRMED == 'true' &&
+      (github.event_name == 'push' || (inputs.telegram_smoke != true && inputs.request_id != ''))
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -115,3 +123,40 @@ jobs:
         run: |
           set -euo pipefail
           python3 collab/tools/gpt_disposition_telegram.py --request-id "$POSTED_REQUEST_ID"
+
+  telegram-smoke:
+    # No model, no review, no timer: owner must explicitly dispatch a single test.
+    if: >-
+      github.repository == 'wonhwipark/CoWork-Skill-Collab' &&
+      github.ref == 'refs/heads/main' &&
+      github.event.repository.private == false &&
+      github.event_name == 'workflow_dispatch' &&
+      github.actor == 'wonhwipark' &&
+      inputs.telegram_smoke == true &&
+      vars.COWORK_TELEGRAM_SMOKE_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout isolated smoke test (no persistent GitHub token)
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: One-shot fixed-text Telegram test; no review and no GPT API
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_REPOSITORY_ID: ${{ github.repository_id }}
+          GITHUB_REF: ${{ github.ref }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          GITHUB_RUN_ATTEMPT: ${{ github.run_attempt }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          GITHUB_ACTOR: ${{ github.actor }}
+          COWORK_TELEGRAM_SMOKE_ENABLED: ${{ vars.COWORK_TELEGRAM_SMOKE_ENABLED }}
+          COWORK_TELEGRAM_BOT_TOKEN: ${{ secrets.COWORK_TELEGRAM_BOT_TOKEN }}
+          COWORK_TELEGRAM_CHAT_ID: ${{ secrets.COWORK_TELEGRAM_CHAT_ID }}
+        run: |
+          set -euo pipefail
+          python3 collab/tools/telegram_smoke.py
