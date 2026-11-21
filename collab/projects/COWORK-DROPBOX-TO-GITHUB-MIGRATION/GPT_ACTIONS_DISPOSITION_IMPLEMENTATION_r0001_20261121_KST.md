@@ -3,7 +3,7 @@
 - 기록 시점: 2026-11-21 KST
 - 정본: `wonhwipark/CoWork-Skill-Collab`, `main` / 기존 [Issue #2](https://github.com/wonhwipark/CoWork-Skill-Collab/issues/2)
 - 사용자 최신 지시: CoWork PUBLIC으로 전환하고 기존 Claude 리뷰 뒤 Actions 기반 자동 판정을 구현. **신규 Telegram GPT 판정 알림은 만들지 않음**. 기존 Claude 리뷰 완료 Telegram은 유지.
-- 상태: **REPO_PUBLIC=CONFIRMED / EXECUTOR_CODE=POSTED / LOCAL_OFFLINE_TEST=PASS(8) / GITHUB_RUN=NOT_VERIFIED / API_SECRET=NOT_VERIFIED / PAID_API_CALL=NOT_RUN / GPT_AUTO_DISPOSITION=NOT_RUN / API_AUTO_ENABLE=OFF**.
+- 상태: **REPO_PUBLIC=CONFIRMED / EXECUTOR_CODE=POSTED / LOCAL_OFFLINE_TEST=PASS(9) / GITHUB_RUN=NOT_VERIFIED / API_SECRET=NOT_VERIFIED / PAID_API_CALL=NOT_RUN / GPT_AUTO_DISPOSITION=NOT_RUN / API_AUTO_ENABLE=OFF**.
 - 기존 Windows watcher v0.2.29와 Claude 리뷰 호출/서명/READY/LIVE 설정은 변경하지 않았음.
 
 ## 게시 산출물
@@ -11,10 +11,10 @@
 | 역할 | 경로 | 실제 Git blob SHA |
 |---|---|---|
 | 이벤트 구독·Runner·안전 게이트 | [Actions workflow](../../../.github/workflows/cowork-gpt-disposition.yml) | `b3c70fe66938dc217b64a8f0d3e262a38b691b48` |
-| GPT API 판정 실행기 | [executor](../../tools/gpt_disposition_actions.py) | `86a53b41ba521c1eb6f300e756ddfa0a46714239` |
-| 독립 오프라인 회귀 | [tests](../../tools/tests/test_gpt_disposition_actions.py) | `8cb1fce94ea6b2e1d91ac105538958361801c3d9` |
+| GPT API 판정 실행기 | [executor](../../tools/gpt_disposition_actions.py) | `7e83fdf4cca6424f9d68e3961fc94851bde8040f` |
+| 독립 오프라인 회귀 | [tests](../../tools/tests/test_gpt_disposition_actions.py) | `77fbf351b39b36cdfdf7e4c6c1207efb628333f7` |
 
-원격 파일을 재조회하여 위 Git blob SHA 일치 확인. 각 파일의 개발 원본 SHA-256: workflow `7181246e966bf3115183e87c7d1efc83c1a02a93ef7b0f09dc2f027595dba344`, executor `9ec9250d199846acd05c926a6fa32f23fa5f5f2bbe61f0d5be0fb741a1539e17`, tests `357c9617fa2d3eaefc0f2a889a425fe7e64d854bd9861ba1e61c523b051216a6`.
+원격 파일을 재조회하여 위 Git blob SHA 일치 확인. 각 파일의 개발 원본 SHA-256: workflow `7181246e966bf3115183e87c7d1efc83c1a02a93ef7b0f09dc2f027595dba344`, executor `610979f9f5a3eb8e01bbd7473d01814f51641c3338f07f8a4e74430aefd265c9`, tests `5b62d55d1350bfb6ec96ecf4dc8a519c00cc616dd50e73c51a2321dce4739ee0`.
 
 ## 플로우와 안전 게이트
 
@@ -28,8 +28,8 @@
 ## 현 상태의 비과금 안전장치
 
 - `gpt-disposition` Job은 `vars.COWORK_GPT_API_ENABLED == 'true'` 및 `vars.COWORK_GPT_COST_POLICY_APPROVED == 'true'`, `vars.COWORK_GPT_PROJECT_SPEND_CAP_CONFIRMED == 'true'`, 저장소 PUBLIC/main을 동시에 충족해야 Runner에 배정됨. 기본 미설정이므로 자동 GPT 호출 불가.
-- `offline-selftest` Job은 API 키를 전달받지 않고 Python 구문 검사·8개 오프라인 시험만 실행하도록 구성. GitHub Runner의 **실제 실행 성공 여부는 아직 NOT_VERIFIED**.
-- 단위시험: **8 PASS / 0 FAIL** (로컬 Python). 배포 환경·실제 GitHub workflow job·실제 승인자 서명 검증 E2E·OpenAI 모델 응답 E2E는 각각 NOT_RUN/NOT_VERIFIED.
+- `offline-selftest` Job은 API 키를 전달받지 않고 Python 구문 검사·9개 오프라인 시험만 실행하도록 구성. GitHub Runner의 **실제 실행 성공 여부는 아직 NOT_VERIFIED**.
+- 단위시험: **9 PASS / 0 FAIL** (로컬 Python). 배포 환경·실제 GitHub workflow job·실제 승인자 서명 검증 E2E·OpenAI 모델 응답 E2E는 각각 NOT_RUN/NOT_VERIFIED.
 - 사전 비용 계산은 UTF-8 바이트 기반 **보수적 추정**이며 OpenAI 청구액 보증이 아님. 외부 OpenAI 프로젝트의 실제 비용 예산 제한과 사용자 승인 확인이 필수. 기존 Claude `POLICY-STATIC-V1` USD3 정책이 GPT API 호출 승인이 되지는 않음.
 - 리스크: `GPT_API_EXECUTION_CLAIM.json`이 생겼는데 결과 기록 실패 시 유료 호출 여부가 불확실할 수 있음. 기존 영수증/실행 이력과 이 claim을 보존하고 임의 재큐잉·재호출 금지. 원격 commit/Actions 로그 대조 후 수동 결정.
 
@@ -50,3 +50,6 @@ G0: GitHub 실제 Actions 실행 결과·Windows 리뷰 게시 트리거의 인�
 CoWork PUBLIC 설정은 **실제 GitHub 메타데이터로 확인**. 이로 인해 기존 문서의 `CoWork PRIVATE` 표현은 작성 당시 이력. 향후 L1 업무 제한 원본·토큰을 PUBLIC에 게시하지 않는 원칙은 유지.
 
 **NEXT_ONE_ACTION:** 현재 Actions 페이지에서 `offline-selftest`의 실제 실행 상태와 Windows 리뷰 게시 토큰에 따른 `push` 이벤트 발생을 확인. 이 단계에서는 새 API 비용을 승인하거나 키를 설정할 필요 없음.
+
+## 구현 보완 (같은 범위)
+- 추가 발견: ZIP CRC 검사 전에 모든 멤버를 해제하면 압축 폭탄에 노출될 수 있어 **멤버 개수·각 해제 크기·전체 해제 크기를 CRC 검사보다 먼저 제한**. 신규 회귀 1개를 추가해 로컬 9 PASS; 실제 GitHub Runner 시험은 별도 미확인.
