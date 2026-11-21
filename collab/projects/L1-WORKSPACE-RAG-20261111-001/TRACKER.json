@@ -5,11 +5,11 @@
       "work_id": "L1-WORKSPACE-RAG-20261111-001",
       "skill": "l1-knowledge-updater",
       "title": "l1-knowledge-updater",
-      "phase": "VIEWER_WRITE_V020_PUBLIC_ZIP_DELIVERED_LINUX_G0_AUTH_WRITER_PENDING",
-      "owner": "GPT 사용자 승인으로 v0.2.0 developer candidate L1Work/main 루트 21171B SHA9f2df443... PASS_REMOTE_VERIFIED; 업무 GPT 인계/README 갱신. 실제 Linux Viewer G0/Write 활성화 NOT_RUN",
+      "phase": "VIEWER_WRITE_V020_WORKFLOW_KERNEL_R0002_HANDOFF_POSTED_E2E_PENDING",
+      "owner": "GPT: Write UI v0.2.0/Prefs v0.3.0 L1Work ZIP 공개 전달 상태 유지, Workflow/Kernel E2E 업무 GPT HO r0002 및 색인 readback PASS; 실제 Linux E2E/Write 활성화 NOT_RUN",
       "self_test": "PASS_DEV_30_NODE_8_PYTHON_ZIP_CRC; LIVE_BROWSER_AND_HOST_NOT_RUN",
       "independent_review": "WIKI_UI_UX_R1_ACCEPT_WITH_CHANGE_CLOSED; VIEWER_AUTH_EDIT_DESIGN_R1_ACCEPT_WITH_CHANGE_CLOSED_B1_M2_N4; VIEWER_STYLE_DESIGN_R1_USER_WAIVED_HOST_STOP_UNVERIFIED; VIEWER_WRITE_V020_CODE_REVIEW_NOT_RUN",
-      "next_action": "업무 GPT/Linux Agent: L1Work/main/l1-workspace-viewer-write-ui_v0_2_0_1121.zip(21171B/SHA9f2df...) 및 handoffs/L1_WORKSPACE_VIEWER_WRITE_V020_G0_AND_INTEGRATION_HANDOFF_r0001_20261121_KST.md 기준 실제 Viewer G0 인증/Writer/MSC anchor 확인 후 허용된 연결·B1~B3/E3/E4 시험; 운영 인증/쓰기 활성화 별도 게이트"
+      "next_action": "업무 GPT/Linux Agent: L1Work/main/handoffs/L1_WORKSPACE_VIEWER_WRITE_V020_WORKFLOW_KERNEL_E2E_ONESHOT_HANDOFF_r0002_20261121_KST.md 우선 읽고 실제 설치 Workflow/Kernel/Writer G0→REUSE/CONNECT/GAP→범위 내 수정/격리 Write E2E. 운영 활성화는 별도 게이트."
     }
   ]
 }
