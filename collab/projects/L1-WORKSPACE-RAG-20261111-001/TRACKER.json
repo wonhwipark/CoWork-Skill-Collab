@@ -5,11 +5,11 @@
       "work_id": "L1-WORKSPACE-RAG-20261111-001",
       "skill": "l1-knowledge-updater",
       "title": "l1-knowledge-updater",
-      "phase": "VIEWER_STYLE_DESIGN_R1_SUBMITTED_WAITING_SIGNED_READY",
-      "owner": "GPT 정식 독립 스타일 R1 REQUEST/PIN remote verified 2026-11-21; signature/READY/review/receipt 미관측, 기존 구현/운영 불변",
-      "self_test": "PASS",
-      "independent_review": "WIKI_UI_UX_R1_ACCEPT_WITH_CHANGE_CLOSED; VIEWER_AUTH_EDIT_DESIGN_R1_ACCEPT_WITH_CHANGE_CLOSED_B1_M2_N4; VIEWER_STYLE_DESIGN_R1_PENDING_SIGNATURE_READY",
-      "next_action": "Windows 보호 signer/watcher가 REQ-L1-WORKSPACE-VIEWER-STYLE-DESIGN-R1-20261121 승인 scope/가격/SHA/source pin 검사→적격이면 서명·READY 마지막·독립 R1 1회. 결과/영수증 확인 후 GPT 판정 전 구현 중지."
+      "phase": "VIEWER_V012_PUBLIC_DELIVERY_PASS_LINUX_HOST_G0_PENDING",
+      "owner": "GPT v0.1.2 PUBLIC ZIP 74940B SHA9be14c4c.../handoff/README readback verified; STYLE R1 USER_WAIVED, Windows cancellation unverified, host install NOT_RUN",
+      "self_test": "PASS_STATIC (JS label18/patch12/ZIP CRC11); Chromium/host E3E4 NOT_RUN",
+      "independent_review": "WIKI_UI_UX_R1_ACCEPT_WITH_CHANGE_CLOSED; VIEWER_AUTH_EDIT_DESIGN_R1_ACCEPT_WITH_CHANGE_CLOSED_B1_M2_N4; VIEWER_STYLE_DESIGN_R1_USER_WAIVED_HOST_STOP_UNVERIFIED",
+      "next_action": "업무 GPT/Linux Agent: L1Work/main/l1-workspace-viewer-ui_v0_1_2_1121.zip+handoffs/L1_WORKSPACE_VIEWER_FIRST_PHASE_V012_G0_DEPLOY_HANDOFF_r0001_20261121_KST.md로 실제 G0/보안/이식/조건부 배포. Windows protected signer waiver 확인(새 유료 R1 0)."
     }
   ]
 }
