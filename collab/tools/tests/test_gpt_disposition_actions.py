@@ -121,6 +121,21 @@ class BridgeTests(unittest.TestCase):
             with self.assertRaises(bridge.Hold):
                 bridge.package_inputs(root, req)
 
+    def test_zip_decompression_limit_before_crc(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            folder = root / 'collab/packages'
+            folder.mkdir(parents=True)
+            zf = folder / 'test.zip'
+            with zipfile.ZipFile(zf, 'w', compression=zipfile.ZIP_DEFLATED) as z:
+                z.writestr('giant.bin', b'Z' * 2_000_001)
+                z.writestr('design.md', '# tiny')
+            raw = zf.read_bytes()
+            req = {'package_path': '/SKILL-COLLAB/packages/test.zip',
+                   'package_size_bytes': len(raw), 'package_sha256': hashlib.sha256(raw).hexdigest()}
+            with self.assertRaisesRegex(bridge.Hold, 'PACKAGE_MEMBER_TOO_LARGE'):
+                bridge.package_inputs(root, req)
+
     def test_no_public_key_blocks_approval(self):
         with tempfile.TemporaryDirectory() as td:
             d = Path(td)
