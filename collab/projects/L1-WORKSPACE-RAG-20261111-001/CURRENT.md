@@ -1,5 +1,16 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-21 KST — Viewer Write Workflow·Kernel 최소 소스 보완 개발 PASS / 전체 ZIP·Linux E2E 차단
+
+- **사용자 최신 요청:** "위에서 이야기한 두 스킬 수정 필요한 부분 수정해줘". 기존 `l1-fix-workflow`/Kernel 기존 discussion-draft/capture/Work/Evidence·SHA 기능을 재사용하고, 실제 설치 API 미확인을 보존한 **non-mutating route + server callback guard/CAS readback** 개발 Overlay 작성.
+- **실제 작성:** `overlay/l1-fix-workflow/l1_fix_workflow/viewer_write_route.py` 및 `overlay/work-ledger-kernel/work_ledger_kernel/viewer_write_guard.py`, 각 테스트/교차 시험 및 `tools/apply_to_verified_originals.py` 격리 staging helper. 실제 소스·시험 ZIP **`viewer-write-workflow-kernel-code-overlay_v0_1_0_1121.zip`**, **14,379 bytes**, SHA-256 `61c47515e7ddea8b35e2f1934ee51c8845c69ff42069046cb2fda30ab9b45669`, 9 entries CRC PASS, **현재 GPT 대화에서 다운로드 가능 / GitHub 바이너리 미게시**. 공식 전체 스킬 v1.6.75/v0.7.43 아님.
+- **시험:** Workflow 8/8, Kernel 13/13, 교차 synthetic 4/4, patch staging safety 5/5 = **30/30 PASS** + Python compileall/ZIP CRC PASS. 회사 제한 자료·코드 사용/게시 0, 기본 Read Only/기존 Writer·Work 원본/ZIP 수정 0.
+- **원본 근거:** L1Work 공개 `l1-fix-workflow_v1_6_74_1119.zip`/Kernel `work-ledger-kernel_v0_7_42_1116.zip` GitHub connector ZIP entry+관련 소스 정적 조회. **업무 Linux 설치본·원본 ZIP 컨테이너 병합·전체 스킬 suite/CAS 실 writer/E3/E4·B1~B3/운영 적용=NOT_RUN**. Overlay를 skill-updater에 바로 설치하는 것은 금지.
+- **비민감 근거:** [개발·시험·미검증 결과](VIEWER_WRITE_WORKFLOW_KERNEL_SOURCE_OVERLAY_RESULT_r0001_20261121_KST.md), GitHub commit `9f7a2d3886ac8c41b440ffde92f352a0027e4396` / readback PASS. 앞서 L1Work [업무 GPT E2E HO r0002](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_WORKSPACE_VIEWER_WRITE_V020_WORKFLOW_KERNEL_E2E_ONESHOT_HANDOFF_r0002_20261121_KST.md) 불변.
+- **NEXT_ONE_ACTION:** 업무 GPT/Linux Agent가 exact-pin 원본을 업무 Linux에서 확인 → 기존 Writer 인증/CAS/readback 계약과 overlay의 narrow adapter 연결 → 공식 전체 스킬 후보 패키징·기존 회귀·B1~B3/E3/E4. 실제 설치·실쓰기 활성화는 유효 승인 후.
+
+---
+
 ## 2026-11-21 KST — 업무 GPT Write v0.2.0 × Workflow/Kernel E2E HO r0002 PUBLIC 게시
 
 - **사용자 요청:** "l1-fix-workflow, work-ledger-kernel 함께 수정 필요한 것 아닌가? 이 부분 포함 Write 업무 GPT가 작업하도록 HO 업로드." 두 스킬을 **필수 연동/검증 대상**으로 포함; 코드 변경은 설치본·실제 writer의 입증된 결손에서만 REUSE→CONNECT→최소 EXTEND. 새 전체 Workflow/Kernel 패키지 무조건 재생성 0.
