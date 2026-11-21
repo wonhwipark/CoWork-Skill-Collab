@@ -1,5 +1,16 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-22 KST — “리뷰요청해줘” 정식 접수 Windows 보조 코드 구현·원격 검증 / 운영 hook 미연결
+
+- **사용자 요청:** 다른 설계 창의 P1/P2 리뷰 요청이 94,843B 후보·초안 게시에서 멈춘 실제 문제를 CoWork 시스템으로 보완. 이전 Work `COWORK-SKILL-DISCOVERY-20261112-001`의 기존 `REQ-COWORK-P1P2-CONTEXT-CODE-R1-20261122`를 보존하고 새 요청·재큐잉 금지.
+- **원인·범위:** GPT는 공개 저장소에 후보를 게시하지만 Windows 보호 설정과 공식 signer에 직접 접근하지 못하며, v0.2.29 watcher의 기존 READY 처리 루프에 후보 → Windows 정책 검사 → REQUEST+PIN 제출 단계가 자동 연결됐다는 근거 없음. 기존 `submit_review_request.py`는 실제 Windows config가 있어야 정상 실행.
+- **변경:** [review_staged_submission.py](../../ops/review_staged_submission.py) 신규. 같은 Work의 Git 커밋 입력 REQUEST 초안·Base64 ZIP을 타입/크기/Work/패키지 SHA로 검증하고 임시 복원하여 기존 `submit_review_request.py`를 호출. `--publish` 없는 기본 사전검사, 유효한 때만 Commit A/B. 기존 SIGNER/READY/유료 호출/운영 LIVE 변경 **0**.
+- **시험:** [10개 격리 단위시험](../../ops/tests/test_review_staged_submission.py) **10/10 PASS**(실제 임시 Git 사용, submitter/서명/네트워크 mock); Python compile PASS. GitHub main 게시 파일 Git blob SHA가 로컬에서 시험한 실제 파일의 Git blob과 완전 동일. CODE SHA-256 `16311f140e2e348fad598a19d4ec4c7787fc6718dceb7287805e498305f7456a`, TEST SHA-256 `a34f0df6567b7ee788aa9d6fff81003ae30f8c4eda4272f321b2f099cc7b7d21`.
+- **진입/호스트 경계:** [설계·호스트 G0 인계](REVIEW_INTAKE_ONE_SHOT_HOST_INTEGRATION_r0001_20261122_KST.md)와 `AGENTS.md`, 공통 BRIEF, `PRE_READY_SOURCE_PIN_PREFLIGHT_V1` 연결. **Windows watcher 기존 run_cycle에 신규 보조 호출이 설치되거나 실제 승인·READY를 처리한 것은 아님**. 새 Windows watcher/Task 설치·키/DB/위임/Notifier 변경 없음. `AUTO_INTAKE_LIVE=NOT_APPLIED`, `WINDOWS_PREFLIGHT=NOT_RUN`, `REAL_SUBMITTER_E2E=NOT_RUN`, `REVIEW=NOT_RUN`, `MODEL_CALLS=0`.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 기존 승인된 호스트 세션에서 실설치 v0.2.29 hook·공식 signer/범위·메타데이터 채널을 G0 조회하고 새 보조의 기본 dry-run 및 10개 시험을 **1회 무과금 검증** → 가능한 기존 run_cycle 연결 방안을 실제 패키지/SHADOW·롤백으로 입증. 유효한 운영 설치 승인이 없으면 별도 필요 항목만 `BLOCKED`로 기록. 과거 P1/P2 요청 ID 재생성·서명/READY 우회·시험용 유료 리뷰 0.
+
+---
+
 ## 2026-11-21 KST — 진행 중 설계 창의 단축 “리뷰요청해줘” 정식 접수 진입 계약 보완
 
 - **사용자 확정:** 설계·구현을 진행하던 같은 대화창에서 **“리뷰요청해줘” 또는 “리뷰 요청해줘”만 입력**하면 현재 대화의 마지막으로 확정된 동일 Work·범위·리비전·산출물을 근거로 Windows Claude Code **정식 독립 리뷰 요청 절차**로 진입. 별도 긴 프롬프트·Work ID/스킬명/파일명을 반복 입력시키지 않음. “설계하고 정식 리뷰까지 진행해줘”의 일괄 진입도 유지. 인용·규칙 논의·단순 “검토해줘”는 자동 유료 리뷰 트리거가 아님.
