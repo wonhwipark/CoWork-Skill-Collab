@@ -44,6 +44,14 @@
 - 새 절차 [PRE_READY_SOURCE_PIN_PREFLIGHT_V1](../../ops/CONTRACTS/PRE_READY_SOURCE_PIN_PREFLIGHT_V1.md) 채택. 그러나 **운영 Windows signer의 자동 필수 연결은 아직 적용/검증되지 않음**. 이 Windows 실행 시 수동으로 게이트를 호출하고, 추후 별도 유효한 운영 승인/시험을 거쳐서만 자동 연동.
 - 테스트는 입력 무결성에 한정. 모델 리뷰 정확도/업무 C++ 접근/실제 MSC·Knowledge write 통과를 뜻하지 않음.
 
+## 2026-11-21 추가 — 요청 게시기에 자동 scope 차단 연결 (원본 R2 불변)
+
+- CoWork `main`의 `collab/ops/submit_review_request.py`는 **새 요청을 게시하기 전** 검증된 `skill_id`와 전달된 현재 Windows 보호 위임 allowlist를 비교. `--approval-route auto`에서 allowlist 누락 또는 스킬 미허용 시 각각 `AUTO_DELEGATION_SCOPE_NOT_SUPPLIED`/`AUTO_NOT_ELIGIBLE_SCOPE`로 Git 커밋 생성 전 종료. `--approval-route manual`은 수동 서명 권한을 발급하지 않으며 정상적인 수동 심사 경로로만 분리. 기존 `review_pin_preflight.inspect`는 선택 경로대로 호출.
+- **기존 R2에 제출기를 다시 적용하거나 `--publish`를 실행하지 않는다.** R2 SOURCE_PIN 커밋 및 리뷰 패키지는 고정/원격 확인 완료. R2는 위 원샷의 읽기 전용 `review_pin_preflight.py --approval-mode manual`부터 계속하고, 실제 사용자 1회 수동 승인 의사 및 공식 signer 권한을 분리 검증한다.
+- Windows 호스트에서 신규 합성 파일/임시 bare Git 저장소로 `python -m unittest discover -s collab/ops/tests -p test_submit_review_request.py` 및 `test_review_pin_preflight.py`를 실행하고 실제 원격 HEAD·LIVE 설정을 대상으로 **미게시 dry-run**을 확인. 실제 `--publish`, 신규 R3, READY/서명 시험, 유료 LLM 호출은 기존 R2 승인 범위 밖. 실패 시 `TEST_FAIL`만 보고하고 운영 code/DB/키/LIVE를 변경하지 않는다.
+- `--delegated-skill` CLI 인자는 **실제 Windows 보호 signer에서 현재 로드한** 값이어야 하며, 단순한 사용자 입력·파일 문서·이전 로그만으로 승인권한이 확인되는 것은 아님. 운영 signer 전 필수 강제 hook은 여전히 `NOT_APPLIED`. 독립적인 호스트 후속 변경 승인이 있을 때만 적용/검증.
+- 본 계약 보완은 수동 R2에 대한 기존 **고정 1회 USD3 한도**를 새로 확대하거나 다른 REQUEST에 전용하지 않는다.
+
 ## 반드시 반환할 결과
 
 | 필드 | 필수 보고 |
