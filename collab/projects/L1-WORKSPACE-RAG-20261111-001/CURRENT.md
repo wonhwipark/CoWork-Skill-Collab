@@ -1,5 +1,15 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-21 KST — Viewer Write UI v0.2.0 PUBLIC 바이너리 전달 성공 / Linux Write 연결 대기
+
+- **사용자 최신 지시:** "그래 업로드해줘" → 이전 `BLOCKED_BINARY_UPLOAD` 해결. **L1Work/main 루트 [`l1-workspace-viewer-write-ui_v0_2_0_1121.zip`](https://github.com/wonhwipark/L1Work/blob/main/l1-workspace-viewer-write-ui_v0_2_0_1121.zip) 신규 게시 PASS_REMOTE_VERIFIED**. commit `cf04dbf8d658ba4198c3cb9c691c07638711d97e`; **21,171 B / SHA-256 `9f2df44348478eb44615bddef8f211645fa1c07ed71d43580b4fb324e376b6f9`**; Git blob `aed05a83e70efbe32f28bf494b6bf7b984f3f09b`, 원격 Base64 bytes 원본과 일치 PASS. 기존 v0.1.2 ZIP 불변.
+- **배송 후 연결 정합성:** L1Work [업무 GPT Write G0 인계](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_WORKSPACE_VIEWER_WRITE_V020_G0_AND_INTEGRATION_HANDOFF_r0001_20261121_KST.md) ZIP 링크·미게시 문구 정정 commit `7c29cef6e1fe2e706a9e67e84364737c24f04c81`; [handoffs/README.md](https://github.com/wonhwipark/L1Work/blob/main/handoffs/README.md) 최신 루트 ZIP 목록 commit `c6e27fc6a42f1f3f818cfe12cf85f5bed8056878`. 두 파일 remote readback PASS.
+- **CoWork 결과:** [VIEWER_WRITE_V020_L1WORK_PUBLIC_DELIVERY_RESULT_r0001_20261121_KST.md](VIEWER_WRITE_V020_L1WORK_PUBLIC_DELIVERY_RESULT_r0001_20261121_KST.md), commit `3ebcac608e8320de9b2654d650c89b69c78dbeb0`, readback PASS. 전송용 임시 Library 텍스트 파일은 업로드 후 삭제 요청 성공. 기존 미게시/차단 기록은 이력 보존; 최신 사실은 본 절.
+- **정확한 판정:** `PUBLIC_ZIP_DELIVERY=PASS` (사용자 명시 승인 **development_only_public_delivery_exception**), `NODE_SELF_TEST=30_PASS`, `PYTHON_TEST=8_PASS`, `ZIP_CRC=PASS`; `LINUX_VIEWER_G0/AUTH_WRITER_B1_B2_B3_E3_E4/WRITE_ENABLED/HOST_DEPLOY=NOT_RUN`. 편집 인증/기존 writer에 연결되지 않은 프런트엔드 후보이며 **운영 설치용 최종 릴리스가 아님**. 신규 유료 리뷰/Job/호스트 설치 0.
+- **NEXT_ONE_ACTION:** 업무 GPT가 L1Work/main 루트 v0.2.0 ZIP과 기존 인계서를 입력으로 실제 Linux Viewer G0(편집인증·ACL·CSRF·writer/MSC anchors) 확인 후 허용된 연결/시험. B1~B3/EAuth/E3/E4·유효한 운영 승인/롤백 이전 실쓰기 활성화 금지.
+
+---
+
 ## 2026-11-21 KST — 사용자 Viewer Write UI 2.0 L1Work 공개 배송 요청 / ZIP 바이트 배송 차단
 
 - **최신 요청:** "ui 2.0 l1work 에 배포해줘". 정확한 대상은 선행 구현한 `l1-workspace-viewer-write-ui_v0_2_0_1121.zip`의 **L1Work PUBLIC 전달**이며 Linux 운영 설치·편집 인증 활성화를 뜻하지 않음.
