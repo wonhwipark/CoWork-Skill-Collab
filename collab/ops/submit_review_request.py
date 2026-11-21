@@ -34,6 +34,27 @@ class SubmissionBlocked(ValueError):
     pass
 
 
+def check_approval_route(skill_id: str, approval_route: str,
+                         delegated_skills: tuple[str, ...]) -> dict:
+    """Fail closed before any Git writes; does NOT grant signer authority.
+
+    Auto skill IDs must come from the Windows protected signer's currently
+    loaded delegation, not a README, prior run, or caller's assumption.
+    The protected signer independently revalidates authorization and limits.
+    """
+    if approval_route not in ('manual', 'auto'):
+        raise SubmissionBlocked('INVALID_APPROVAL_ROUTE')
+    if approval_route == 'auto':
+        if not delegated_skills:
+            raise SubmissionBlocked('AUTO_DELEGATION_SCOPE_NOT_SUPPLIED')
+        if skill_id not in delegated_skills:
+            raise SubmissionBlocked('AUTO_NOT_ELIGIBLE_SCOPE: ' + skill_id)
+        return {'approval_route': 'auto',
+                'delegation_scope_preflight': 'MATCHES_SUPPLIED_SCOPE_NOT_SIGNER_VERIFIED'}
+    return {'approval_route': 'manual',
+            'delegation_scope_preflight': 'MANUAL_PROTECTED_APPROVAL_REQUIRED'}
+
+
 def git(root: Path, *args: str) -> str:
     proc = subprocess.run(['git', '-C', str(root), *args], capture_output=True,
                           text=True, encoding='utf-8', timeout=45, check=False)
@@ -66,12 +87,15 @@ def verify_remote_head(root: Path, expected: str) -> None:
 
 
 def submit(*, root: Path, request_draft: Path, package: Path,
-           live_config: Path, publish: bool, expected_origin: str | None = None) -> dict:
+           live_config: Path, publish: bool, expected_origin: str | None = None,
+           approval_route: str = 'manual',
+           delegated_skills: tuple[str, ...] = ()) -> dict:
     root = root.resolve()
     original = require_clean_main(root, expected_origin=expected_origin)
     result = check_request(request_draft, package, live_config,
                            intent='unified', required_budget=Decimal('3.00'))
     rid = result['request_id']
+    route = check_approval_route(result['skill_id'], approval_route, delegated_skills)
     if not RID_RE.fullmatch(rid):
         raise SubmissionBlocked('INVALID_REQUEST_ID')
     request_rel = f'collab/requests/{rid}/REQUEST.md'
@@ -91,7 +115,7 @@ def submit(*, root: Path, request_draft: Path, package: Path,
             raise SubmissionBlocked('EXISTING_PACKAGE_BYTES_DIFFER')
     if not publish:
         return {'status': 'PREPUBLICATION_PASS_NOT_SUBMITTED', 'request_id': rid,
-                'source_head': original, 'package_sha256': result['package_sha256'],
+                **route, 'source_head': original, 'package_sha256': result['package_sha256'],
                 'signer_authority': 'NOT_VERIFIED', 'ready': 'NOT_CREATED'}
     request_target = root / request_rel
     request_target.parent.mkdir(parents=True, exist_ok=False)
@@ -116,13 +140,13 @@ def submit(*, root: Path, request_draft: Path, package: Path,
     pin_commit = git(root, 'rev-parse', 'HEAD')
     checked = inspect(root=root, request_id=rid, package_repo_path=package_rel,
                       expected_repo_id=REPO_ID, main_commit=pin_commit,
-                      approval_mode='manual')
+                      approval_mode=approval_route, delegated_skills=delegated_skills)
     if checked['status'] != 'PASS_PINNED_INPUTS_ONLY' or checked['pinned_commit'] != source_commit:
         raise SubmissionBlocked('PINNED_TREE_PREFLIGHT_FAILED')
     git(root, 'push', 'origin', f'HEAD:refs/heads/{BRANCH}')
     verify_remote_head(root, pin_commit)
     return {'status': 'SUBMITTED_AWAITING_PROTECTED_SIGNER', 'request_id': rid,
-            'source_commit': source_commit, 'pin_commit': pin_commit,
+            **route, 'source_commit': source_commit, 'pin_commit': pin_commit,
             'package_sha256': result['package_sha256'],
             'signer_authority': 'NOT_VERIFIED', 'ready': 'NOT_CREATED',
             'model_calls': 0}
@@ -135,12 +159,18 @@ def main() -> int:
     ap.add_argument('--package', required=True, type=Path)
     ap.add_argument('--live-config', required=True, type=Path,
                     help='actual Windows LIVE reviewer.config.json; never upload')
+    ap.add_argument('--approval-route', choices=('manual', 'auto'), default='manual',
+                    help='manual is the safe default; never an approval or signature')
+    ap.add_argument('--delegated-skill', action='append', default=[],
+                    help='auto only: skill IDs from currently loaded protected delegation; not signer proof')
     ap.add_argument('--publish', action='store_true',
                     help='explicitly push Commit A then Commit B to CoWork main')
     args = ap.parse_args()
     try:
         out = submit(root=args.repo_root, request_draft=args.request_draft,
-                     package=args.package, live_config=args.live_config, publish=args.publish)
+                     package=args.package, live_config=args.live_config, publish=args.publish,
+                     approval_route=args.approval_route,
+                     delegated_skills=tuple(args.delegated_skill))
         print(json.dumps(out, ensure_ascii=False, indent=2))
         return 0
     except (SubmissionBlocked, GateReject, PreflightBlocked, OSError, ValueError,
