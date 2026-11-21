@@ -5,6 +5,15 @@
 - 추가 원인: `skill_id=knowledge_analysis_preflight`가 실제 자동 위임 허용 집합에 없음. 자동 signer가 허용되지 않는 요청을 수동 승인 없이 실행할 수 없음.
 - 효력: **신규 리뷰 요청을 게시·서명·READY 처리하는 GPT/Windows Claude Code의 절차 계약**. 이 MD와 Python helper의 게시만으로 Windows 운영 watcher의 실제 preflight 로더/호출 경로가 변경되는 것은 아님. 운영 자동 연동 여부는 별도 G0 검증.
 
+## 진행 중인 설계 창의 단축 명령 (r0003 / 2026-11-21 KST)
+
+- 사용자가 **현재 설계·개발을 이어 온 동일 대화창**에서 단독으로 **“리뷰요청해줘”**, “리뷰 요청해줘”, “리뷰해줘”라고 실행 지시하면 **바로 앞까지 확정·갱신한 해당 작업의 정식 Windows Claude Code 독립 리뷰 요청**으로 해석한다. “정식”, Work ID, 스킬명, 파일명, 긴 프롬프트를 재입력하도록 요구하지 않는다. “○○ 설계하고 정식 리뷰까지 진행해줘”는 설계+리뷰 일괄 요청으로 동일 계약을 적용한다. 이 문구들을 *예시·인용·규칙 논의*로 언급한 경우에는 실행 지시로 간주하지 않는다.
+- **대상 결정 우선순위:** (1) 현재 창에서 사용자가 마지막으로 승인·수정·확정한 설계/구현 범위와 바로 연결된 Work 및 artifact/revision, (2) 같은 Work의 최신 CURRENT·열린 메모·후보/시험 증거, (3) GitHub main 실제 원격 HEAD·REQUEST·RESULT·RECEIPT·승인/중복 기록 순으로 대조한다. 대화 내 이미 확정한 범위를 사용자에게 반복 질문하지 않는다. 관련 Work가 여러 개면 현재 대화의 **가장 최근 작업 대상**을 선택하고 무관한 다른 Work는 포함하지 않는다. 유일한 대상 또는 고정 원본이 실증 불가능할 때만 해당 차단 사유를 명시하고 임의 제출하지 않는다.
+- **리뷰 입력 준비:** 현재 창의 최신 설계·변경 내역을 실제 GitHub 정본/고정 source revision과 일치시키고 리뷰 범위·완료 기준·증거를 준비한다. 설계 리뷰라면 검토할 설계 문서를, 스킬 코드 리뷰라면 실제 코드를 포함한 유효 패키지 ZIP을 고정한다. 기존 해당 Work의 승인된 후보·설계·시험/패키지를 재사용하고, 제출 규칙의 필수 입력 REQUEST+ZIP·정책 게이트를 충족할 때만 정식 제출한다. 무관한 확대 구현이나 근거 없는 ZIP·자료를 자동 생성하지 않는다.
+- **실행 단계:** 신규 요청·기존 요청·완료/불확실 이력을 먼저 대조해 중복을 차단한다 → 현재 Windows 보호 위임의 skill_id·예산·만료에 따라 AUTO/MANUAL을 분류한다 → 단일 `submit_review_request.py`의 사전검사 PASS 후 허용된 범위에서 Commit A(REQUEST+ZIP), Commit B(SOURCE_PIN) 원격 readback까지 수행한다 → 공식 signer의 승인/서명·READY 마지막 게시 여부를 별도 확인한다 → 실제 watcher·Claude 결과·영수증은 확인된 경우에만 완료 판정한다. 기존 유효 승인 내 처리는 반복 동의 요구 없이 진행하되 새 유료 호출·운영 변경·보호 위임 확장 등은 승인 게이트를 그대로 유지한다.
+- **결과 표현:** `PREPUBLICATION_PASS_NOT_SUBMITTED`, `SUBMITTED_AWAITING_PROTECTED_SIGNER`, `BLOCKED`, `READY`, `REVIEW_RESULT/RECEIPT_VERIFIED`를 실증대로 구분한다. 현재 창의 단축 지시는 **새 자동 실행 권한이나 무조건 승인**을 생성하지 않는다. Telegram 리뷰 알림은 기존 Windows notifier가 실제 이벤트에 따라 발송하며, GitHub 문서 게시만으로 알림·자동 GPT 판정을 약속하지 않는다.
+- **효력 경계:** GPT와 Windows Claude Code가 이 계약을 읽고 적용할 때의 **자연어 의도 해석/워크플로 진입 규칙**이다. 모든 새 ChatGPT 창의 무조건적 자동 문서 로딩, Windows watcher 자동 수정, 새로운 trigger/parser 설치, 호스트 E2E 성공을 뜻하지 않는다.
+
 ## 자연어 정식 리뷰의 표준 제출 명령 (r0002 / 2026-11-21)
 
 **신규 요청 기본 경로:** 실제 Windows LIVE 정책을 검증할 수 있는 환경에서 `collab/ops/submit_review_request.py`를 사용한다. 이 제출기는 기존 `review_request_gate.check_request`, `source_pin.dumps_source_pin`, `review_pin_preflight.inspect`를 **연속 호출**하고, 요청 생성에 필요한 Commit A/B를 안전하게 `git push`한다. `--publish`가 없으면 원격/로컬에 쓰지 않는 드라이런이다. 안전성 위해 클린 `main`·신뢰 `origin`·원격 최신 SHA·새 REQUEST ID를 강제한다. 인증 토큰·보호 서명·READY는 절대 생성하지 않는다.
