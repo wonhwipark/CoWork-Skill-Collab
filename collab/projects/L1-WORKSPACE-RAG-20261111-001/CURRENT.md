@@ -1,5 +1,17 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-21 KST — Viewer Write Workflow·Kernel 두 전체 스킬 ZIP 새 버전 L1Work 원격 전달 완료 / 운영 설치 별도 검증
+
+- **사용자 요청·수행:** "두 스킬 정식 수정·패키징·L1Work 배포" 승인. 기존 공개 baseline ZIP의 전체 바이트/CRC/manifest 검증 후 Workflow `viewer_write_route.py`·Kernel `viewer_write_guard.py`, 해당 단위시험·SKILL/README/안전 연결 계약·VERSION/pyproject/release meta/manifest를 병합하여 **패치가 아닌 2개 전체 개발 ZIP**을 생성, 공개 `wonhwipark/L1Work/main` 루트 신규 게시.
+- **Workflow:** [`l1-fix-workflow_v1_6_75_1121.zip`](https://github.com/wonhwipark/L1Work/blob/main/l1-fix-workflow_v1_6_75_1121.zip) **832,039 B / SHA256 `fd337ee31e09c9f694146c9d159799ca7182af052c93121e73888a9ee367a0a1`** / Git blob `2a75b0ad3108a02e0374706b739b1b7973f17568`. 기반 v1.6.74 보존.
+- **Kernel:** [`work-ledger-kernel_v0_7_43_1121.zip`](https://github.com/wonhwipark/L1Work/blob/main/work-ledger-kernel_v0_7_43_1121.zip) **379,642 B / SHA256 `9866ff7164884b0fb346bd31d37dbdf2013b5e5910e5857f8e35075624cf92f1`** / Git blob `a8554d559b46d7292a4add98552c6821d55ac8af`. 기반 v0.7.42 보존. 동일 업로드 commit `fe869519e588a56e2282fbbd854cfed83bf8ad64`; 원격 Base64 전 바이트 해시/길이 **PASS**.
+- **시험:** 신규 Python Workflow 8/8, Kernel 13/13, 교차합성 4/4, staging 5/5 = **30/30 PASS**; ZIP 빌더 synthetic Python zipfile CRC PASS; 신규 전체 ZIP Workflow 315 entries / manifest 314개, Kernel 166 entries / manifest 165개 SHA+CRC PASS. **기존 전체 스킬 suite, 업무 Linux 설치 G0, 실제 writer/Evidence readback E2E, B1~B3/EAuth/E3/E4, 독립 코드 리뷰, 운영 설치·WRITE_ON=NOT_RUN**. 새 ZIP `development_not_for_deployment` 명시. 기본 무로그인 Read Only 불변.
+- **업무 GPT 최신 인계:** [L1Work `handoffs/L1_WORKSPACE_VIEWER_WRITE_WORKFLOW_KERNEL_FULL_SKILLS_HANDOFF_r0003_20261121_KST.md`](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_WORKSPACE_VIEWER_WRITE_WORKFLOW_KERNEL_FULL_SKILLS_HANDOFF_r0003_20261121_KST.md), commit `81ee19cef51ec744d22efa181203dbd80940d047`, remote readback PASS. `handoffs/README.md` 최상단 색인 commit `d4bd1db10cab373c67de1e97b758c06496fb5ac5`/readback PASS. 이전 r0001/r0002 인계·기존 ZIP/결과 보존.
+- **근거 원문:** [개발·게시·미검증 상세 결과](VIEWER_WRITE_WORKFLOW_KERNEL_FULL_SKILL_BUILD_AND_L1WORK_DELIVERY_RESULT_r0001_20261121_KST.md), commit `1b090d2b8ae2ca0fefb461526b87ba824d139bcd` / remote readback PASS.
+- **NEXT_ONE_ACTION:** 업무 GPT/Linux Agent가 L1Work r0003+두 exact-pin 전체 ZIP을 읽고 실제 설치본/인증/CAS·writer·Work revision/앵커 G0→원본 및 신규 스킬 전체 회귀→Viewer Read+Write+Preferences 공존·보안/리커버리 E2E를 허용 범위에서 수행. 운영 설치/실쓰기 활성화는 실제 권한·보안·rollback 승인 이후만. 유료 리뷰/Job·호스트 변경 0.
+
+---
+
 ## 2026-11-21 KST — Viewer Write Workflow·Kernel 최소 소스 보완 개발 PASS / 전체 ZIP·Linux E2E 차단
 
 - **사용자 최신 요청:** "위에서 이야기한 두 스킬 수정 필요한 부분 수정해줘". 기존 `l1-fix-workflow`/Kernel 기존 discussion-draft/capture/Work/Evidence·SHA 기능을 재사용하고, 실제 설치 API 미확인을 보존한 **non-mutating route + server callback guard/CAS readback** 개발 Overlay 작성.
