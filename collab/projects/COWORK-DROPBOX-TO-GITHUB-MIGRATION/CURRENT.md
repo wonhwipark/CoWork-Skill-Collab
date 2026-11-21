@@ -1,5 +1,15 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 2026-11-21 KST — R2 재개 원격 검증 완료 / Windows 호스트 수동 리뷰·회귀 실행은 미검증
+
+- [R2 재개 근거·충돌 정산](GPT_R2_REVIEW_GATE_RESUME_REMOTE_CHECK_r0001_20261121_KST.md): SOURCE_PIN commit `50a8b5d9...`에서 REQUEST blob `1067a502...`·ZIP blob `bbacdcfd...` 읽기 PASS, 실제 ZIP 16138 B와 SHA-256 `90a0d55842138d4c813f0dbc3a5c8e4625e84a110afe68035348297ffedad1f3` 직접 재계산 일치. 원격 소스·회귀 코드 10개 정적 assert PASS, **실제 Python unittest NOT_RUN**.
+- R2 `APPROVAL_SIG/READY/RESULT/RECEIPT` 원격 404, Windows DB/중복/보호 signer 권한 직접 조회 불가. **호스트 모델 호출·비용 0으로 확정하지 않음**. 현재 세션 보호 서명/유료 실행 0.
+- 동일 ZIP은 사용자 리뷰 생략 예외로 **이미 L1Work PUBLIC 개발용 배포**·업무 GPT r0002 전달 완료. 기존 R2 REQUEST는 폐기/성공으로 간주하지 않음. 새 R3·ZIP 재배송/운영 위임 확대 0.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 [기존 R2 원샷](../L1-WORKSPACE-RAG-20261111-001/GPT_R2_MANUAL_REVIEW_APPROVAL_AND_PREFLIGHT_ONESHOT_r0001_20261121_KST.md)으로 실제 시험·DB·수동 signer authority 검증. 동일 ID/rev/고정 SHA·한도 USD3·모델 최대1회·중복0이 모두 유효할 때만 승인된 1회 리뷰/영수증, 아니면 BLOCKED. GitHub 문서 게시를 Windows 실행/서명으로 취급하지 않음.
+
+---
+
+
 ## 2026-11-21 KST — R1/R2 협업 차단 근본 원인 보완: scope prepublication gate 게시
 
 - **원인:** R1은 PIN이 REQUEST 부재 commit을 참조한 순서 결함, R2는 정상 pin·ZIP에도 보호 위임 3개 스킬 밖 `knowledge_analysis_preflight`로 `AUTO_NOT_ELIGIBLE: SCOPE`. 두 문제는 watcher 고장이 아니고 **REQUEST 생성/auto 승인 사전검증 경계**에서 처리해야 함. R2 고정 커밋 `50a8b5d9...`의 REQUEST(blob `1067a502...`)와 ZIP(blob `bbacdcfd...`)을 connector로 직접 조회.
