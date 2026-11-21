@@ -1,5 +1,15 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-21 KST — 지식 Updater r0002 업무 GPT 원샷 실행 인계 보강·doc-converter 최신 공개본 확인
+
+- **사용자 지시:** L1Work에 배포한 `knowledge_analysis_preflight v0.2.0`을 실제 Linux 설치 `l1-knowledge-updater`와 연결·검증하는 후속 업무를 진행. 업무 GPT/업무 Linux Agent에 직접 연결된 실행 도구는 이 GPT 세션에 없음. 기존 PUBLIC `r0002` 인계서에 **G0에서 종료하지 않는 원샷 구현·회귀/MSC·개인 Workspace readback** 실행 지시/반환 상태 계약을 보강했으나 **게시 자체는 수신·실행 트리거가 아님**.
+- **PUBLIC 수정·원격 근거:** `wonhwipark/L1Work/main/handoffs/L1_KNOWLEDGE_UPDATER_NR_UL_TX_SWITCHING_MODIFICATION_REQUIREMENTS_r0002_20261121_KST.md` commit `0b32525db4fba08cf5969c8b39db38a3d19143aa`, Git blob `3277d6034f58aba768594ff89fe8db8e8ec22943`. 기존 보조 ZIP 원본 `knowledge_analysis_preflight_v0_2_0_1121.zip` SHA-256 `90a0d55842138d4c813f0dbc3a5c8e4625e84a110afe68035348297ffedad1f3` **불변**. 원격 readback 별도 확인.
+- **Converter 최신 확인:** L1Work `main` Git tree 전체 235개 항목/응답 `truncated=false` 조회: PUBLIC doc-converter v0.2.21/0.2.25/**0.2.26 최신**, `doc-converter_v0_2_26_1117.zip` 169,204 B, blob `dcdb89205ec16ab07f04866bfc514954a02f8bc4`. **업무 Linux 설치 버전/native Scenario IR/API는 G0 전까지 UNKNOWN**. 기존 Converter 변경 요청 없음.
+- **상태:** `PUBLIC_HANDOFF_R0002_UPDATED=PASS`; `PUBLIC_HELPER_ZIP=PASS_UNCHANGED`; `BUSINESS_GPT_RECEIPT=NOT_VERIFIED`; `LINUX_G0/UPDATER_INTEGRATION/NR_CODE_SCENARIO/MSC/WORKSPACE_WRITE_READBACK/LOW_SPEC_LLM_E2E=NOT_RUN`. 신규 Job/모델 비용/보호 승인/서명/READY/운영 설치/그룹 Knowledge 게시 0.
+- **NEXT_ONE_ACTION:** 업무 GPT 세션에서 L1Work 정확한 r0002 문서와 고정 ZIP을 읽고 허용된 Linux Agent로 기존 스킬 연결→NR L1 Tx UL Tx Switching 대표 사례 1건→개인 Workspace 저장/readback을 한 연속 실행으로 진행. 실제 수신과 호스트 증거를 별도 회신.
+
+---
+
 ## 2026-11-21 KST — Viewer Write UI v0.2.0 PUBLIC 바이너리 전달 성공 / Linux Write 연결 대기
 
 - **사용자 최신 지시:** "그래 업로드해줘" → 이전 `BLOCKED_BINARY_UPLOAD` 해결. **L1Work/main 루트 [`l1-workspace-viewer-write-ui_v0_2_0_1121.zip`](https://github.com/wonhwipark/L1Work/blob/main/l1-workspace-viewer-write-ui_v0_2_0_1121.zip) 신규 게시 PASS_REMOTE_VERIFIED**. commit `cf04dbf8d658ba4198c3cb9c691c07638711d97e`; **21,171 B / SHA-256 `9f2df44348478eb44615bddef8f211645fa1c07ed71d43580b4fb324e376b6f9`**; Git blob `aed05a83e70efbe32f28bf494b6bf7b984f3f09b`, 원격 Base64 bytes 원본과 일치 PASS. 기존 v0.1.2 ZIP 불변.
