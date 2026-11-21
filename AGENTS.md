@@ -9,6 +9,12 @@
 5. 작업 결과·피드백 원문은 해당 결과/결정/notes에 보존하고, 현재 상태·근거 링크·미해결·승인 범위·다음 한 행동은 해당 CURRENT에 갱신한다. 보완은 같은 목적의 Work와 작업 흐름을 이어간다. 기존 TRACKER는 필요한 현행 필드만 맞추고 별도 상태 정본으로 삼지 않는다.
 6. 공통 브리프는 역할·정본 위치·요청별 경로가 바뀔 때, 카탈로그는 스킬 책임·입출력·연결 계약이 바뀔 때만 갱신한다. 일반 진행·버전·리뷰 상태를 브리프에 복사하지 않는다. 작업한 GPT/Agent가 CoWork main 게시와 원격 재조회까지 확인하며 사용자 최신 지시와 최신 실제 근거를 우선한다.
 
+## 동일 스킬·Viewer 병렬 개발 통합 게이트 — 새 창의 필수 진입 (2026-11-21)
+
+- **공통 정본:** [병렬 변경 통합 게이트 V1](collab/ops/CONTRACTS/PARALLEL_CHANGE_INTEGRATION_GATE_V1.md), 코드 `collab/ops/integration_gate.py`, 기존 Work CURRENT. 새 창에서 UI·Write·환경설정 등 **같은 Work/단일 ZIP을 수정**하면 시작 전에 기존 `integration/streams/<stream_id>.json` 등록 여부와 각 작업의 기준 revision·필수 파일·원본 ZIP SHA를 확인하고, 같은 Work를 재개한다. 다른 창의 진행을 대화 메모리만으로 추측하지 않는다.
+- **최종 통합본 제출 전 필수:** Work에 등록된 모든 stream을 최종 ZIP 한 개에 합치고, 명시된 소스 ZIP 및 필수 엔트리 SHA·동일파일 충돌 해결·`regression`과 `cross_stream` 실제 시험 근거를 확인한다. `python collab/ops/integration_gate.py --work-dir <STAGED_WORK_DIR> --repo-root . --branch main --expected-head <FROZEN_REMOTE_MAIN_HEAD>`의 **exit 0 `INTEGRATION_PRECHECK_PASS`**가 없거나 HEAD가 갱신되면 **최종 릴리스 완료/운영 배포로 판정 금지**. 같은 줄 충돌·변경 누락은 새 후보/rebase 후 전체 재시험.
+- **승인·자동화 경계:** PASS는 소스/로그·핀 사전 일치 검증이며 독립 리뷰/운영 호스트 설치·실제 브라우저 E2E PASS가 아님. 이 지침은 CoWork를 읽은 개발/게시 주체의 **수동 게시 전 절차**이며 모든 GitHub API 직접 쓰기를 기술적으로 차단하지 않는다. 자동 Actions 시험은 사용자 지시에 따라 재활성화하지 않음.
+
 확인되지 않은 원본·API·설치 기능을 구현 대상으로 확정하지 않는다. 문서 기록·패키지 검토·호스트 설치 사실·실제 호출·독립 리뷰는 서로 구분한다. 기존 제공자 재사용을 먼저 확인하고 새 엔진/schema는 입증된 gap의 최소 범위로 제한한다.
 
 이 지침은 스킬 원문·상위 사용자 지시·프로젝트 CURRENT를 대체하지 않는다. 문서 게시만으로 Claude/Job/자동 감시를 실행하지 않으며, 운영 변경·PUBLIC 게시·LIVE 전환에는 해당 승인과 게이트가 필요하다. 제한 자료는 PRIVATE에도 게시하지 않는다.

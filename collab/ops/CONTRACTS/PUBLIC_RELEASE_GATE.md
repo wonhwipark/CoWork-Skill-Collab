@@ -1,5 +1,11 @@
 # PRIVATE → PUBLIC 최종 ZIP 배포 게이트 — DRAFT / NOT_ACTIVE
 
+## 2026-11-21 — 다중 창 통합 ZIP 게시 전 필수 프리플라이트 (게시자 실행, 자동 강제 아님)
+
+- 같은 스킬/Viewer ZIP을 2개 이상 대화창·Agent가 수정했으면 [기존 CoWork 병렬 통합 게이트](PARALLEL_CHANGE_INTEGRATION_GATE_V1.md)와 `collab/ops/integration_gate.py`의 **실제 최신 CoWork main HEAD·모든 등록 stream·최종 ZIP·교차 시험 근거**를 검증한 뒤에만 **최종 릴리스로 판정**. 게시/검사 사이 원격 HEAD가 바뀌면 재조회·통합 재판정.
+- **`INTEGRATION_BLOCKED` 또는 `INTEGRATION_PRECHECK_PASS` 미입증이면 `PUBLIC_RELEASE=BLOCKED / FINAL_INTEGRATION=NOT_VERIFIED`**. 개발 후보 보존·기존 결과/리뷰/영수증 무손실. ZIP SHA/CRC·원본·보안/독립 리뷰/승인·PUBLIC 원격 readback·실호스트 적용 검사는 모두 별도.
+- 여기까지 **절차/코드 검증 적용**. 임의 GitHub API 직행을 막는 branch ruleset·필수 status check·Windows/업무 Linux 설치 hook을 구성하지 않았으므로 전역 자동 차단으로 보고하지 않음. 기존 GitHub Actions 스킬 검사 자동 재가동 0.
+
 ## Job-list / Skill-Updater 전달 정본 (2026-11-12 보완)
 
 - 운영 세부 계약: [`JOBLIST_PUBLIC_DELIVERY_V1.md`](JOBLIST_PUBLIC_DELIVERY_V1.md). 사내 Skill-Updater가 내려받는 전달 ZIP의 목적지는 **`wonhwipark/L1Work/main` 루트**. PRIVATE 개발 후보 ZIP은 설치·실행 전달 경로가 **아님**.

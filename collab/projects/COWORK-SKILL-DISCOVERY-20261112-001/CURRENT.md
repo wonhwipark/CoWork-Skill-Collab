@@ -1,5 +1,14 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 2026-11-21 KST — 병렬 통합 게이트 기존 코드/계약 재조회·게시 전 진입 추가 연결
+
+- **게시 시점 충돌 실측:** GPT가 작업하는 사이 CoWork `main`에 다른 세션의 통합 게이트 본체/계약 commit `244e80ce886b9d0e23153f9f3dc14235497c9539`, 후속 재시험 commit `5d63599865331485abaacbe2b3720c8a1f34f0de`가 먼저 도착. 새 HEAD 조회 후 **중복 구현/코드 덮어쓰기 중단**, 기존 `collab/ops/integration_gate.py`·19건 합성 시험·계약을 **REUSE**.
+- **추가 CONNECT:** 기존 `START_HERE.md`·`CONTEXT_BRIEF.md`에 이미 연결된 게이트를 **루트 `AGENTS.md` 새 창 절차**와 기존 **`PUBLIC_RELEASE_GATE.md` 게시자 필수 판정 규칙**에 명시. 두 창의 변경을 모르고 최종 ZIP을 게시하는 사례 예방을 위한 절차 적용. `CLAUDE.md`의 `@AGENTS.md` import 재사용.
+- **실측 분리:** 기존 코드의 보고서상 synthetic 19/19 PASS 및 CoWork 코드/계약 게시 PASS. **Windows/Linux 실제 새 창 로딩·고객 UI·출판자 모든 경로 자동 강제·실 호스트 E2E=NOT_RUN**. 별도 준비했던 패치를 중복 게시하지 않았으며 Actions/Watcher LIVE·승인/READY/유료 호출·L1Work 변경 0.
+- **NEXT_ONE_ACTION:** 첫 실제 병렬 작업에서 `streams/*.json` 및 실 ZIP·회귀/교차 시험 근거를 만든 후 새 창과 게시자 양쪽에서 gate + remote HEAD/CAS·readback을 실측 검증.
+
+---
+
 ## 2026-11-21 KST — 병렬 대화창 변경 통합 게이트 V1 코드·계약 CoWork main 적용 / 실호스트 연동 대기
 
 - **원인/변경:** Viewer의 UI·Write 등 각 창의 개발/시험 PASS와 단일 패키지 통합 검증의 공백을 보완. [통합 게이트 계약](../../ops/CONTRACTS/PARALLEL_CHANGE_INTEGRATION_GATE_V1.md), [Python 검사기](../../ops/integration_gate.py), [합성 테스트](../../ops/tests/test_integration_gate.py), [결과·범위](PARALLEL_SESSION_INTEGRATION_GATE_RESULT_r0001_20261121_KST.md)를 동일 Work와 공통 진입에 연결.
