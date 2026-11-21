@@ -48,8 +48,10 @@ def run(env: dict[str, str]) -> str:
         "created_at": datetime.now(timezone.utc).isoformat(),
     })
     # Fixed, non-review text: never leak secrets, source, customer data or review content.
-    message = ("🔔 CoWork Telegram 연결 시험\n"
+    run_url = f"https://github.com/{bot.REPO}/actions/runs/{run_id}"
+    message = ("🔔 [CoWork 연결 시험]\n"
                f"GitHub Actions Run: {run_id}\n"
+               f"결과 링크: {run_url}\n"
                "유료 모델 호출: 0회\n"
                "리뷰/판정 실행: 없음\n"
                "수동 연결 시험 메시지입니다.")
