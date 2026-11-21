@@ -1,5 +1,18 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-21 KST — 사용자 R2 수동 독립 리뷰 USD3 1회 승인 의사 + SOURCE_PIN 재발 방지 코드·시험 게시
+
+- **사용자 의사:** GPT가 `REQ-L1-KNOWLEDGE-PREFLIGHT-V020-R2-20261121`의 한정 `POLICY-STATIC-V1`/USD3 수동 독립 리뷰 1회 진행을 질문했고 사용자가 "그래, 그리고 이문제 발생에대한 재발방지대책" 승인·요청. 한 ID/revision 1/기존 고정 ZIP SHA `90a0d55842138d4c813f0dbc3a5c8e4625e84a110afe68035348297ffedad1f3`·모델 최대1회·3달러 이내 범위만 해당. **사용자 발화/GitHub 문서만으로 공식 Windows signer 보호 서명 권한을 대체하지 않음.**
+- **Windows 일회 실행서:** [R2 수동 리뷰·호스트 preflight 원샷](GPT_R2_MANUAL_REVIEW_APPROVAL_AND_PREFLIGHT_ONESHOT_r0001_20261121_KST.md). 실제 Windows Claude Code가 최신 Git·R1/R2/DB/비용·중복 확인 → 새 preflight 통과 → 호스트 공식 수동 signer 자격 검증 → 유효할 때만 APPROVAL_SIG/READY 마지막 게시·정식 Claude 독립 리뷰 1회·결과/영수증 원격 대조. 미허가 `BLOCKED_MANUAL_AUTHORITY`/모델 0, LIVE watcher·키·위임·정책 변경 금지.
+- **재발 방지 코드 게시 및 원격 바이트 동일:** [`collab/ops/review_pin_preflight.py`](../../ops/review_pin_preflight.py) Git blob `ea494ac05c1a936a1590f6ea093a148416d819b8` / local tested file과 일치, SHA256 `f28b50ce55fc896d1c633ec51de5c2dcc8213c93a04068b8e8c770653cf7b2ac`; [`tests/test_review_pin_preflight.py`](../../ops/tests/test_review_pin_preflight.py) Git blob `e788f8053198a04b200d7bb72eb80aec3c457702` / local tested file과 일치, SHA256 `d86d68d1c66eff15cd245d76273ca42dc215ccb7f838539fdfea493c5e4de083`.
+- **직접 시험:** 실제 합성 Git repo 테스트 15/15 PASS, Python syntax PASS. R1처럼 **요청이 없는 ZIP 전용 커밋을 PIN으로 가리키는 결함**에 `COMMIT_UNREADABLE_REQUEST_ABSENT` BLOCK; REQUEST/ZIP drift·SHA·숫자 repo_id·자동 미허용 skill·기존 READY 재큐잉 차단. 입력 정합성 검사만, 서명·모델·host 권한 판단 아님.
+- **절차 계약:** [`PRE_READY_SOURCE_PIN_PREFLIGHT_V1`](../../ops/CONTRACTS/PRE_READY_SOURCE_PIN_PREFLIGHT_V1.md) 신규 제정. ZIP+REQUEST Commit A를 읽어 검증→SOURCE_PIN Commit B→독립 preflight→실제 signer 승인/서명→READY 마지막. **이 helper는 원격 게시되어 사용 가능하나 Windows LIVE signer에 자동 강제 연결한 것은 아니며 `LIVE_HOOK=NOT_APPLIED/NOT_VERIFIED`**. 운영 설치·정책·DB/WAL/SHM·키·Task 변화 0.
+- **R2 최신 원격 조회:** REQUEST/PIN PASS, `APPROVAL_SIG=NOT_OBSERVED`, `READY=NOT_OBSERVED`, `INDEPENDENT_REVIEW=NOT_RUN`, `RECEIPT=NOT_OBSERVED`, `FINAL_PUBLIC_ZIP=HOLD`, `BUSINESS_GPT_IMPLEMENTATION_HANDOFF=HOLD`. 신규 모델 실행/실제 비용 없음(호스트 직접 DB 확인은 NOT_RUN).
+- **NEXT_ONE_ACTION:** Windows Claude Code가 사용자 승인 1건에 대해 원샷 문서의 **실제 승인 자격·중복·핀 preflight**를 검증하여 조건 충족 시 공식 서명/READY/리뷰 1회·결과/영수증 게시, 아니면 첫 BLOCKED reason 보고. 이후 GPT 판정→최종 L1Work ZIP→업무 GPT Updater 통합 요구 r0002 순서 유지.
+
+---
+
+
 ## 2026-11-21 KST — R1 감시기 SOURCE_PIN 결함 분석 수용, R2 신규 요청/핀 재게시
 
 - **사용자 제공 Windows 실측:** 기존 `REQ-L1-KNOWLEDGE-PREFLIGHT-V020-R1-20261121`은 감시기가 `AUTO_NOT_ELIGIBLE / WAIT_INPUT` 및 `COMMIT_UNREADABLE` 기록. `84abde50...`에는 ZIP만 존재하고 REQUEST는 `1a49b3cf...`에서 게시됨. 또한 `skill_id=knowledge_analysis_preflight`는 자동 위임 허용 대상이 아님. R1 서명·READY·리뷰/영수증/Job 미관측; 재실행·재큐잉하지 않고 보존.
