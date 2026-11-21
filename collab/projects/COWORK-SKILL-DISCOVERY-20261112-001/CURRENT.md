@@ -1,5 +1,15 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 2026-11-21 KST — P1/P2 Windows 실호스트 읽기 전용 E2E 실행 인계 게시 / 실제 HOST 실행 NOT_RUN
+
+- **사용자 최신 지시:** 기존 P1/P2 Windows Claude Code 실제 동작 검증 진행 승인. 새 Work·리뷰·유료 호출·운영 변경 없이 기존 실사용 점검 계약을 재사용.
+- **게시한 실행 인계:** [Windows Claude Code P1/P2 읽기 전용 E2E 실행 요청](WINDOWS_P1_P2_READONLY_E2E_EXECUTION_REQUEST_r0001_20261121_KST.md). 새 세션 `/context all`의 3개 Memory files 로드, GitHub main/LOCAL HEAD 비교, `context_query.py` 단위회귀, 자연어 Q1~Q5 정확한 Work·하위절 탐색, P2 미검증·NO_BASELINE 안전 분기, 결과 게시/원격 검증 절차 명시.
+- **실측 경계:** GPT가 GitHub 정본 소스·기존 r0001 점검 절차를 확인했고 **이전에 지정한 Windows 결과 파일은 조회 시 404**. 이 GPT 세션에서 Windows Claude Code 실행 도구/호스트 접근이 없어 `WINDOWS_CLAUDE_E2E=NOT_RUN`, `CONTEXT_AUTOLOAD=NOT_RUN`, `PYTHON_HOST_REGRESSION=NOT_RUN`. 실행 인계 문서 게시는 Windows 실행 트리거가 아님.
+- **변경 범위:** CoWork 문서 및 CURRENT만. 기존 P1/P2 구현·Pages/L1Work·실제 Windows LIVE 설정·승인·DB·REQUEST/READY·서명·유료 리뷰·Action 실행 변경 없음. 사용자 요청에 따른 과거 P1/P2 독립 리뷰 SKIP 판정 유지.
+- **NEXT_ONE_ACTION:** 실제 승인된 Windows Claude Code 세션에서 위 인계를 읽고 Windows E2E를 **한 번** 실행해, 기존 계약의 `CLAUDE_P1_P2_READONLY_AUTO_USE_E2E_RESULT_FOR_GPT_20261120.md`에 비민감 실측과 근거를 게시하고 같은 Work CURRENT를 최신화. 실패는 FAIL/NOT_RUN/BLOCKED로 기록하며 호스트 미실행을 PASS로 보고하지 않음.
+
+---
+
 ## 2026-11-20 KST — 스킬 자동 Actions 검증 중지 / 직접 게시 원칙
 
 - **최신 사용자 지시:** 문서·스킬 자동 시험·대시보드 상태 동기화 Actions 모두 불필요. 3개 workflow 중 `cowork-skill-release-quality.yml` 자동 트리거도 제거. PRIVATE `main`의 스킬/Work 정본 자체를 없애거나 개발 회귀시험·독립 리뷰·ZIP 검증 계약을 생략한다는 뜻은 아님.
