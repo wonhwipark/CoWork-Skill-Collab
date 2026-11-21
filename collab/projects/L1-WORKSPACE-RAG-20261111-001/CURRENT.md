@@ -1,5 +1,14 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-21 KST — R2 원인 재검증 및 CoWork 범위 게이트 수정 게시 / 수동 리뷰 호스트 실행 대기
+
+- **R2 READBACK:** SOURCE_PIN `50a8b5d9e832b1fbf9095c729c813e83134b1fd8`에서 R2 REQUEST blob `1067a502...` 및 고정 ZIP blob `bbacdcfd...` 모두 존재, 기존 SHA-256 `90a0d558...edad1f3`/16,138 B 계약과 기존 기록 정합. 사용자 제공 Windows 감시기 결과 `AUTO_NOT_ELIGIBLE: SCOPE` (서명·READY·리뷰·영수증 없음)는 자동 위임 밖 스킬 때문.
+- **SYSTEMIC FIX:** CoWork `collab/ops/review_request_gate.py` → `submit_review_request.py` 신규 `auto/manual` 스코프 사전 분기, AUTO 미허용은 Commit A 이전 fail-closed. `test_submit_review_request.py` 회귀 4건 추가, 계약/기존 [R2 원샷](GPT_R2_MANUAL_REVIEW_APPROVAL_AND_PREFLIGHT_ONESHOT_r0001_20261121_KST.md) 함께 갱신. 원격 본문 readback PASS. 실제 Python/Windows 시험 `NOT_RUN`, 호스트 signer 강제 hook `NOT_APPLIED`.
+- **승인·실행:** 위 CURRENT 기존 1건 수동 리뷰 USD3 이내 사용자 동의는 **변경·철회하지 않음**. 보호 signer가 독립적으로 authority·비용·중복과 1회 제한을 확인하기 전 모델/READY 0. 기존 R1/R2 직접 수정/재큐잉/새 R3 0, 자동 위임 3개 범위·LIVE 운영 변경 0.
+- **NEXT_ONE_ACTION:** Windows Claude Code/공식 수동 signer가 기존 원샷에서 최신 R2 Git-tree preflight·호스트 권한 및 기존 승인 범위/중복을 검증, PASS 시 정식 1회 진행 → 결과/영수증 후 GPT 판정·L1Work 최종 ZIP 배송; 아니면 BLOCKED와 사유 게시.
+
+---
+
 ## 2026-11-21 KST — 사용자 R2 수동 독립 리뷰 USD3 1회 승인 의사 + SOURCE_PIN 재발 방지 코드·시험 게시
 
 - **사용자 의사:** GPT가 `REQ-L1-KNOWLEDGE-PREFLIGHT-V020-R2-20261121`의 한정 `POLICY-STATIC-V1`/USD3 수동 독립 리뷰 1회 진행을 질문했고 사용자가 "그래, 그리고 이문제 발생에대한 재발방지대책" 승인·요청. 한 ID/revision 1/기존 고정 ZIP SHA `90a0d55842138d4c813f0dbc3a5c8e4625e84a110afe68035348297ffedad1f3`·모델 최대1회·3달러 이내 범위만 해당. **사용자 발화/GitHub 문서만으로 공식 Windows signer 보호 서명 권한을 대체하지 않음.**
