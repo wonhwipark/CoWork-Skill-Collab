@@ -116,18 +116,27 @@ def package_inputs(root: Path, request: dict) -> str:
     texts, total = [], 0
     try:
         with zipfile.ZipFile(path) as z:
-            require(z.testzip() is None, 'PACKAGE_CRC_INVALID')
-            seen = set()
-            for member in z.infolist():
+            members = z.infolist()
+            require(0 < len(members) <= 300, 'PACKAGE_MEMBER_COUNT_INVALID')
+            seen, uncompressed = set(), 0
+            # Bound decompression *before* CRC validation; never testzip() an unbounded archive.
+            for member in members:
                 n = member.filename
-                require(n not in seen and not n.startswith('/') and '\\' not in n and
-                        '..' not in Path(n).parts and not (member.external_attr >> 16) & 0o170000 == 0o120000,
+                require(n and n not in seen and not n.startswith('/') and '\\' not in n and
+                        '..' not in Path(n).parts and
+                        (member.external_attr >> 16) & 0o170000 != 0o120000,
                         'UNSAFE_ZIP_PATH_OR_SYMLINK')
                 seen.add(n)
+                require(0 <= member.file_size <= 2_000_000, 'PACKAGE_MEMBER_TOO_LARGE')
+                uncompressed += member.file_size
+                require(uncompressed <= 8_000_000, 'ZIP_DECOMPRESSION_LIMIT')
+            require(z.testzip() is None, 'PACKAGE_CRC_INVALID')
+            for member in members:
                 if member.is_dir():
                     continue
-                require(member.file_size <= MAX_SOURCE, 'PACKAGE_MEMBER_TOO_LARGE')
+                n = member.filename
                 if n.lower().endswith(('.md', '.txt', '.py', '.json', '.yml', '.yaml')):
+                    require(member.file_size <= MAX_SOURCE, 'TEXT_MEMBER_TOO_LARGE')
                     raw = z.read(member)
                     total += len(raw)
                     require(total <= MAX_SOURCE, 'PACKAGE_INPUT_TOO_LARGE')
