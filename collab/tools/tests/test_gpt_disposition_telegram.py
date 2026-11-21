@@ -40,6 +40,8 @@ class TestTelegram(unittest.TestCase):
         def fake_send(bot,chat,msg):
             events.append('send')
             self.assertIn('수정 수용',msg)
+            self.assertTrue(msg.startswith('🟢 [GPT 최종 판정 완료]\n'))
+            self.assertNotIn('[Claude',msg)
             self.assertNotIn(bot,msg)
             self.assertNotIn(chat,msg)
             return 123
