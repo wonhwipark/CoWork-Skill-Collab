@@ -1,5 +1,14 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 2026-11-21 KST — Telegram Secrets 등록 상태 점검: 도구 권한 차단, 수동 발송 NOT_RUN
+
+- **확인:** 연결된 GitHub 사용자 `wonhwipark`, 저장소 `wonhwipark/CoWork-Skill-Collab` visibility `public`, 기본 branch `main`, 관리자 권한 `admin=true`, repository ID `1451933830`. 정본 workflow에는 모델 0회 `telegram_smoke` 수동 job·29개 offline-selftest 정의가 존재함.
+- **차단:** 현재 연결된 GitHub 도구에는 Actions Secrets/Variables 목록 및 workflow_dispatch 실행 기능이 없음. 공개 조회용 `fetch`가 `/actions/secrets`, `/actions/variables`, `/actions/workflows/.../runs`를 `INVALID_ARGUMENT`로 거부했고, GitHub Actions 웹 조회도 실패. 별도 런타임에는 `gh` 명령·인증 환경변수 없음. **Secrets 존재·설정 상태=NOT_VERIFIED, Runner 최신 실측=NOT_VERIFIED, Telegram 실제 발송=NOT_RUN**. 이를 미등록이나 실행 실패로 단정하지 않음.
+- **변경/비용:** 사용자 비밀값 읽기·공개·신규 키 발급·설치/설정, workflow 강제 dispatch, 리뷰·GPT API·Windows LIVE 수정·Telegram 실제 발송 모두 **0**. 기존 1사이클/재시도 금지 보호 유지.
+- **NEXT_ONE_ACTION:** 저장소 관리자가 [Actions Secrets](https://github.com/wonhwipark/CoWork-Skill-Collab/settings/secrets/actions)에서 `COWORK_TELEGRAM_BOT_TOKEN`, `COWORK_TELEGRAM_CHAT_ID` **이름의 등록 여부만** 확인. 양쪽 등록/봇 수신 준비가 확인되면 [Actions Variables](https://github.com/wonhwipark/CoWork-Skill-Collab/settings/variables/actions)에 `COWORK_TELEGRAM_SMOKE_ENABLED=true`를 시험 동안만 설정 → [workflow 화면](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/workflows/cowork-gpt-disposition.yml)에서 `telegram_smoke=true`, `request_id` 빈 값으로 **수동 1회** 실행. 수신·Run ID 확인 후 변수를 OFF, 실패 또는 불확실 시 동일 Run 재실행 금지. GPT API 자동판정과 Telegram 운영 알림은 별도 OFF 유지.
+
+---
+
 ## 2026-11-21 KST — Telegram 모델 0회 수동 연결시험 경로 준비 / 로컬 14 PASS
 
 - **변경:** [Runner 판정→Telegram 전체 흐름 및 연결 시험 가이드](GPT_ACTIONS_TELEGRAM_NOTIFY_FLOW_r0001_20261121_KST.md). 기존 `.github/workflows/cowork-gpt-disposition.yml`에 명시적 `workflow_dispatch.telegram_smoke` 수동 경로 추가. 별도 `telegram-smoke` job은 repo/main/owner/최초 attempt/운영변수 OFF 게이트를 통과할 때만 고정 메시지를 한 번 발송; `gpt-disposition` job은 smoke 경로에서 SKIP. API/리뷰 호출을 통하지 않음.
