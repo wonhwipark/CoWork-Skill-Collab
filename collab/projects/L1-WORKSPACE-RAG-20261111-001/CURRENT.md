@@ -13,7 +13,7 @@
 ## 2026-11-21 KST — R2 원인 재검증 및 CoWork 범위 게이트 수정 게시 / 수동 리뷰 호스트 실행 대기
 
 - **R2 READBACK:** SOURCE_PIN `50a8b5d9e832b1fbf9095c729c813e83134b1fd8`에서 R2 REQUEST blob `1067a502...` 및 고정 ZIP blob `bbacdcfd...` 모두 존재, 기존 SHA-256 `90a0d558...edad1f3`/16,138 B 계약과 기존 기록 정합. 사용자 제공 Windows 감시기 결과 `AUTO_NOT_ELIGIBLE: SCOPE` (서명·READY·리뷰·영수증 없음)는 자동 위임 밖 스킬 때문.
-- **SYSTEMIC FIX:** CoWork `collab/ops/review_request_gate.py` → `submit_review_request.py` 신규 `auto/manual` 스코프 사전 분기, AUTO 미허용은 Commit A 이전 fail-closed. `test_submit_review_request.py` 회귀 4건 추가, 계약/기존 [R2 원샷](GPT_R2_MANUAL_REVIEW_APPROVAL_AND_PREFLIGHT_ONESHOT_r0001_20261121_KST.md) 함께 갱신. 원격 본문 readback PASS. 실제 Python/Windows 시험 `NOT_RUN`, 호스트 signer 강제 hook `NOT_APPLIED`.
+- **SYSTEMIC FIX:** pin 검증의 패키지 경로는 basename뿐 아니라 정확한 전체 경로를 검사하도록 보완하고, 새로운 합성 회귀시험 1건을 추가. 실제 시험 NOT_RUN. CoWork `collab/ops/review_request_gate.py` → `submit_review_request.py` 신규 `auto/manual` 스코프 사전 분기, AUTO 미허용은 Commit A 이전 fail-closed. `test_submit_review_request.py` 회귀 4건 추가, 계약/기존 [R2 원샷](GPT_R2_MANUAL_REVIEW_APPROVAL_AND_PREFLIGHT_ONESHOT_r0001_20261121_KST.md) 함께 갱신. 원격 본문 readback PASS. 실제 Python/Windows 시험 `NOT_RUN`, 호스트 signer 강제 hook `NOT_APPLIED`.
 - **승인·실행:** 위 CURRENT 기존 1건 수동 리뷰 USD3 이내 사용자 동의는 **변경·철회하지 않음**. 보호 signer가 독립적으로 authority·비용·중복과 1회 제한을 확인하기 전 모델/READY 0. 기존 R1/R2 직접 수정/재큐잉/새 R3 0, 자동 위임 3개 범위·LIVE 운영 변경 0.
 - **NEXT_ONE_ACTION:** Windows Claude Code/공식 수동 signer가 기존 원샷에서 최신 R2 Git-tree preflight·호스트 권한 및 기존 승인 범위/중복을 검증, PASS 시 정식 1회 진행 → 결과/영수증 후 GPT 판정·L1Work 최종 ZIP 배송; 아니면 BLOCKED와 사유 게시.
 
