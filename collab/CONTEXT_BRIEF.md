@@ -1,6 +1,6 @@
 # CoWork 공통 맥락 브리프
 
-- 개정: r0013 / 2026-11-21 KST CoWork PUBLIC 전환에 따른 저장소 역할 갱신. 이전 동작·리뷰·스킬 현황은 각 CURRENT에서 재확인.
+- 개정: r0014 / 2026-11-21 KST 동일 설계창의 단축 리뷰 요청 진입 추가. CoWork PUBLIC 전환에 따른 저장소 역할을 유지하고, 실행 상태는 각 CURRENT에서 재확인.
 - 저장소: **GitHub PUBLIC** `wonhwipark/CoWork-Skill-Collab`, branch `main` (2026-11-21 실제 visibility 조회). 기존 PRIVATE 경로·문구는 당시 이력. 회사 제한 자료·키/토큰의 신규 게시 허용이 아님.
 - 역할: 협업·L1 지식·관리 스킬의 **고정 지도**. 진행 상태·최신 버전·리뷰 결과·승인 대기·source blob을 복사하지 않는다.
 - 읽기: **이 지도 → 요청 목적에 맞는 CURRENT → 필요한 근거·계약·스킬 원문**. 현재 상태는 실행할 때 해당 정본을 조회한다.
