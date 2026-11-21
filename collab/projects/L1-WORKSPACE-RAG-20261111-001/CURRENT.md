@@ -1,5 +1,16 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-21 KST — Viewer 1차 v0.1.2 PUBLIC ZIP 배송 PASS / 실제 Linux HOST 미적용 / STYLE R1 사용자 생략
+
+- **최신 사용자 결정:** "리뷰없이 배포까지 진행해줘" → 스타일 R1 유료 독립 리뷰는 **USER_WAIVED**, 1차 UI 코드 공개 배송/업무 GPT 인계 우선. 기존 R1 REQUEST/SOURCE_PIN은 불변 보존, [user waiver marker](../../requests/REQ-L1-WORKSPACE-VIEWER-STYLE-DESIGN-R1-20261121/USER_REVIEW_WAIVER_20261121.md) 게시/readback PASS. **보호된 Windows signer/watch 실제 취소는 NOT_VERIFIED**; 신규 READY/모델 호출 금지 취지 기록.
+- **L1Work `main` 1차 ZIP 배송:** [`l1-workspace-viewer-ui_v0_1_2_1121.zip`](https://github.com/wonhwipark/L1Work/blob/main/l1-workspace-viewer-ui_v0_1_2_1121.zip) **74,940 B, SHA256 `9be14c4c34c2a7d923d8b11c01fb0249d41e820861721f275001f0f7d499d9e3`**, 11 files CRC PASS, Git blob `6b9b3cb718044565e0b99aea8ba38a2ed3fa29de`, commit `4abf877a75d36388f1f4409edaaca1822f019cec`, remote bytes PASS. 기존 v0.1.0 ZIP 불변. 검증된 SOC 이슈번호 앞표시·Work ID 보조·검색·블루그레이 테마·MSC 가로 안내; 2차 ID/PW/[수정] 코드 제외.
+- **업무 GPT 실행 연결:** [1차 Linux Viewer G0·이식·조건부 배포 인계](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_WORKSPACE_VIEWER_FIRST_PHASE_V012_G0_DEPLOY_HANDOFF_r0001_20261121_KST.md), commit `01855470ac50aa2ab90e7f44fc7a0581e31ae7f5` 원격 readback PASS. L1Work handoffs/README 색인 commit `66bf08fc2f6d3af10300043eca9e5dd5168fd6b6` readback PASS.
+- **자체 시험·차단:** 1차 label JS 18 PASS + 오프라인 patch 모의 12 PASS/JS·Python syntax PASS; 기존 v0.1.0 실제 GitHub 소스 정확한 anchor 변경 고정. PUBLIC ZIP CRC 11/11 PASS. **실제 ZIP 브라우저 회귀·업무 Linux Viewer G0/API/B1~B3/E3/E4/호스트 서비스 설치=NOT_RUN**, 호스트 접근 불가; 합성 fixture를 실제 서비스로 연결 금지. 상담/문서 ZIP 배송과 실제 Linux 배포를 구분.
+- **CoWork 결과:** [VIEWER_V012_FIRST_PHASE_USER_WAIVED_REVIEW_PUBLIC_DELIVERY_RESULT_r0001_20261121_KST.md](VIEWER_V012_FIRST_PHASE_USER_WAIVED_REVIEW_PUBLIC_DELIVERY_RESULT_r0001_20261121_KST.md) · commit `1dff84107be0cc922cf7b7e8497ef02e97781c64`, 원격 readback PASS. 별도 대화용 소스 patch ZIP SHA256 `9f76166dd3a8e84755468e4e218c3ad429b84c3ec75d311c16228f94fe0c329a`, GitHub에 바이너리 게시 안 됨.
+- **NEXT_ONE_ACTION:** 업무 GPT/Linux Agent가 PUBLIC v0.1.2+인계서로 현장 G0/읽기 API·이슈번호 출처 확인→허용된 기존 Viewer UI 이식·B1~B3/E3/E4→운영 승인/백업·롤백·실화면 확인. 보호된 Windows signer는 latest waiver로 STYLE R1 새 서명/READY가 발생하지 않도록 호스트에서 확인.
+
+---
+
 ## 2026-11-21 KST — 사용자 L1Work ZIP 배포 지시 완료 (리뷰·별도 판정 생략, 개발용 전달 예외)
 
 - **사용자 최신 정정:** Windows 호스트 적용이 아니라 `wonhwipark/L1Work/main` 루트에 정확한 **Knowledge 분석 보조 ZIP** 배포를 요청. R2 리뷰는 실제 결과·영수증 조회 404로 `NOT_OBSERVED`; 사용자의 명시적 지시에 따라 배포를 위해 독립 리뷰·GPT 판정을 별도로 기다리거나 재요청하지 않음. 기존 R1/R2 요청·보호 승인·워처/DB/비용 0 변경.
