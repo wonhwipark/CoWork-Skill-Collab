@@ -54,3 +54,15 @@ Actions `offline-selftest`의 실제 22건 결과·Windows 리뷰 게시 `push` 
 - [1사이클 게이트 구현](GPT_ONE_CYCLE_GUARD_IMPLEMENTATION_r0001_20261121_KST.md)
 - [Actions GPT 판정 실행기 구현](GPT_ACTIONS_DISPOSITION_IMPLEMENTATION_r0001_20261121_KST.md)
 - [Issue #2](https://github.com/wonhwipark/CoWork-Skill-Collab/issues/2)
+
+---
+
+## 2026-11-21 KST 후속 G0 — Runner 오프라인 시험·봇 연결 진단
+
+- **무과금 Actions 시험 보완 게시:** `.github/workflows/cowork-gpt-disposition.yml` 의 `offline-selftest`에 GPT 실행기와 Telegram 발송기 두 Python 파일의 `py_compile`을 추가. 기존 `unittest discover -s collab/tools/tests -v`는 GPT 15건 + Telegram 7건, 총 22건을 발견하도록 연결. source blob `0635ac8fdd53c2ee2401ec9f6196d62536b64438`, commit `72ae8c50d94acd66460ac04673d7038d6bbdd741`.
+- **직접 확인:** main 소스 파일 5개 원격 재조회 성공, 단위시험 정의 15+7=22 확인, 실행 순서 및 OFF/claim/run_id/결과 게시 후 발송 등 소스 정적 게이트 11/11 확인. 이 **정적 검사**를 Python 시험 22 PASS나 GitHub Actions Runner PASS로 바꿔 보고하지 않음.
+- **Actions 실행 기록:** 연결된 GitHub 상태 조회는 `statuses=[]`, commit workflow 조회는 PR-triggered run으로 제한되어 `workflow_runs=[]`; 이 응답들은 `push` Runner 성공/실패의 증거가 아님. 해당 workflow runs 조회가 현재 지원되지 않아 `ACTIONS_RUN=NOT_VERIFIED`, `22_TESTS_RUN=NOT_VERIFIED`로 보존.
+- **Telegram 연결:** 이 세션에서 GitHub Actions Secrets/Variables 존재 여부 및 실제 Windows Bot 자격정보 조회 권한이 제공되지 않음. `COWORK_TELEGRAM_BOT_TOKEN`, `COWORK_TELEGRAM_CHAT_ID`의 존재, 봇의 해당 Chat 접근, 수신자 모바일 알림 설정은 **NOT_VERIFIED**. 토큰/Chat ID를 문서·응답에 붙이지 않으며 임의 새 봇을 만들지 않음.
+- **운영 미변경:** GPT API OFF, Telegram Runner 전송 기본 OFF, 새로운 유료 호출·Telegram 실제 `sendMessage`·Windows watcher/Notifier·기존 리뷰/READY 재실행 = 0.
+- **NEXT_ONE_ACTION:** GitHub Actions [해당 workflow 실행 기록](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/workflows/cowork-gpt-disposition.yml)에서 최신 `offline-selftest`의 실행 ID 및 성공/실패를 확인하고, 기존 Bot 자격정보를 안전한 Windows 실행 환경에서 조회하여 GitHub Actions secret의 **존재만** 검증. 미설정이면 관리자 권한과 범위 확인 후 secret을 별도 등록하고 발송은 계속 OFF. 이후 실제 Telegram 시험은 승인된 단일 비유료 발송으로 분리하여 수행.
+
