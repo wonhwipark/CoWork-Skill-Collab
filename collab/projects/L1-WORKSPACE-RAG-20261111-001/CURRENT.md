@@ -1,5 +1,15 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-21 KST — 업무 GPT Write v0.2.0 × Workflow/Kernel E2E HO r0002 PUBLIC 게시
+
+- **사용자 요청:** "l1-fix-workflow, work-ledger-kernel 함께 수정 필요한 것 아닌가? 이 부분 포함 Write 업무 GPT가 작업하도록 HO 업로드." 두 스킬을 **필수 연동/검증 대상**으로 포함; 코드 변경은 설치본·실제 writer의 입증된 결손에서만 REUSE→CONNECT→최소 EXTEND. 새 전체 Workflow/Kernel 패키지 무조건 재생성 0.
+- **L1Work 공개 인계 새 정본:** [WRITE × Workflow/Kernel E2E HO r0002](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_WORKSPACE_VIEWER_WRITE_V020_WORKFLOW_KERNEL_E2E_ONESHOT_HANDOFF_r0002_20261121_KST.md), 정확한 상대 경로 `handoffs/L1_WORKSPACE_VIEWER_WRITE_V020_WORKFLOW_KERNEL_E2E_ONESHOT_HANDOFF_r0002_20261121_KST.md`, commit `da091c6e829fa01d6bc182455bad85cb67ba46ca` / blob `af66d268d2a2b9739e508f3e1fbea54c4da5214f` / 원격 **문서 전체 일치 PASS**. [L1Work handoffs/README.md](https://github.com/wonhwipark/L1Work/blob/main/handoffs/README.md) 최상단 색인 commit `b85c0c669cf7a86db2b8feef2eb93f4fecb34a50` / 원격 readback PASS. 기존 Write HO r0001·v0.1.2/v0.2.0/v0.3.0 ZIP·원본/리뷰/영수증 변경 0.
+- **포함 업무 범위:** 업무 Linux Viewer 설치본·Workflow/Kernel/Updater/실 writer/readback G0 대조, Viewer 수정→같은 Work 재개→이슈 Work/Knowledge owner 분기→세션/CSRF/ACL 재검사→초안·Diff·CAS/개정 확정→Evidence/revision readback→Viewer 반영까지 G0 후 허용 범위 연속 구현·시험. Work ID/원본 SHA/이력 불변, 환경설정 v0.3.0 공존·무로그인 Read Only, MSC 구조 확정은 canonical anchor/writer 입증 전 HOLD. 테스트 W01~W12/실패 분기/숫자 반환 포함.
+- **실제 확인:** PUBLIC L1Work Git tree `72c30a9a6dda2811bef402198a7e1c5cef136f9c`(`truncated=false`), 공개 Workflow v1.6.74/Kernel v0.7.42/v0.2.0 Write/v0.3.0 설정 ZIP 존재 확인. **업무 Linux 설치본/수정·실행/Write 기능 실제 E2E/B1~B3/E3~E4=NOT_RUN**. 인계 문서·색인 게시가 업무 GPT 자동 수신 또는 호스트 작업 승인 아님. 신규 리뷰/Job/유료 호출 0.
+- **NEXT_ONE_ACTION:** 업무 GPT가 위 L1Work `main/handoffs/...r0002_20261121_KST.md`를 수신하여 기존 업무 Work에서 설치된 `l1-fix-workflow`와 `work-ledger-kernel` 실제 writer/Work 개정 계약을 G0 매핑하고 가능한 CONNECT·최소 수정·격리 E2E를 수행, 회사 제한 근거는 업무 Workspace에만 보존. 운영 설치/Write 활성화는 별도 유효 승인·보안/롤백 게이트 필요.
+
+---
+
 ## 2026-11-21 KST — Viewer 환경설정 UI v0.3.0 개발·시험 및 L1Work PUBLIC 전달 완료 / Linux 운영 별도 G0
 
 - **사용자 요청:** 기존 `L1-WORKSPACE-RAG-20261111-001`의 Viewer 재사용, Write UI v0.2.0과 독립적인 사용자별 표시·숨김, 문서 유형 필터, 화면 설정, 로컬 저장·초기화 구현·시험·L1Work 배포. 호스트 Linux 운영 적용은 별도 검증.
