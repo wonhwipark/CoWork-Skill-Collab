@@ -16,6 +16,16 @@
 **표현 규칙:** [용어·저장소·실행 환경 표기 원칙](collab/ops/CONTRACTS/TERMINOLOGY_AND_ACCESS_SCOPE_V1.md)을 따른다. 장소/망 접두어 없이 **GitHub PRIVATE/PUBLIC**, 업무용 Git 역할, 작업 PC, Linux 실행 호스트 등 실제 대상을 지칭한다. 파일명·기존 경로·과거 감사·보안 권한은 바꾸지 않는다. 신규 문서와 응답부터 적용한다.
 
 
+## 자연어 정식 리뷰 요청 — 표준 생성 경로 (2026-11-21)
+
+사용자가 새 창에서 **“정식 리뷰 요청”, “Claude 협업 리뷰 요청”, “리뷰 올려줘”, “재리뷰 요청”** 등 자연어로 지시하면 기존 Work와 현재 요청·결과·영수증을 먼저 조회하고 이 절을 **필수 진입점**으로 사용한다. 문서만 생성하거나 ZIP만 게시하고 “정식 리뷰 제출 완료”라고 말하지 않는다.
+
+- 정본: [두 커밋 생성 및 검증 절차](collab/ops/CONTRACTS/PRE_READY_SOURCE_PIN_PREFLIGHT_V1.md), 단일 게시기 `collab/ops/submit_review_request.py`, 정책 검사 `review_request_gate.py`, PIN 검사 `review_pin_preflight.py`.
+- **정식 요청 생성은 단일 게시기 우선**: Windows LIVE 정책과 입력 ZIP으로 게시 전 검증 → 동일 Commit A에 REQUEST+ZIP → 원격 SHA/bytes 확인 → Commit A를 가리키는 PIN을 별도 Commit B에 게시 → 로컬 PIN 검사·원격 확인. 실패하면 `BLOCKED`, 새 ID 남발·이전 요청 재큐잉·수동 우회 금지. GitHub 파일 작성 도구로 직접 쓰는 경우에도 **동일 절차·각 게이트 실측** 없이는 정식 제출 판정 금지.
+- 게시기의 `SUBMITTED_AWAITING_PROTECTED_SIGNER`는 **서명/READY/Claude 리뷰 완료가 아님**. Windows 보호 signer의 실제 승인·위임/비용/만료/중복 검사와 READY 마지막 게이트는 별도. 자동 대상 외라면 유효한 수동 승인만 사용; 스킬 ID 변경으로 우회 금지.
+- GPT가 실제 Windows `reviewer.config.json` 및 보호 자격을 읽을 수 없으면 **해당 검증·게시 단계는 Windows Claude Code의 표준 게시기 실행으로 위임**하고, 이 대화/문서만으로 실행됐다고 주장하지 않는다. 현재 발화의 승인 범위보다 유료 호출·운영 변경을 확대하지 않는다.
+- **새 창 적용 경계:** 이 저장소의 AGENTS/CLAUDE 및 ChatGPT 프로젝트가 읽는 CONTEXT_BRIEF로 진입을 안내하지만, 모든 GPT 세션의 자동 조회·Windows 설치·호스트 강제 hook은 별도 실측 전 `NOT_VERIFIED`. 기존 스크립트를 거치지 않는 GitHub API 쓰기까지 기술적으로 막힌 것은 아니다.
+
 ## CoWork 리뷰 REQUEST 사전 검증 (신규 요청만)
 
 GPT가 새 REQUEST를 작성·게시하기 **전에** `collab/ops/CONTRACTS/REVIEW_TIER_TOKEN_BUDGET_V1.md`의 신규 'REQUEST 게시 전 정책 호환성 필수 게이트'를 따라야 한다. `collab/ops/review_request_gate.py`의 `select` / `check`에 Windows 실제 LIVE `reviewer.config.json` 및 신규 ZIP 바이트를 사용하고 `PASS_PREPUBLICATION_ONLY`를 확인한다. LIVE 설정 직접 조회가 불가능하면 Windows Claude Code에 읽기 전용 검증을 요청하고, 검증 전에는 REQUEST를 게시하지 않는다. GPT가 개발 예정 정책명을 선택해 기존 LIVE를 막는 자기 참조를 금지. SOURCE_PIN/서명/READY는 기존 계약대로 별도 검증하며 이 절차로 유료 모델을 호출하거나 운영 설정을 변경하지 않는다.
