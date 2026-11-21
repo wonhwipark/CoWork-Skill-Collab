@@ -26,22 +26,22 @@ function Check([bool] $Condition, [string] $Reason) {
 }
 try {
     Check (Test-Path -LiteralPath $LiveConfig -PathType Leaf) "LIVE_CONFIG_NOT_FOUND"
-    $rootActual = Git @('rev-parse', '--show-toplevel')
+    $rootActual = Git -GitArgs @('rev-parse', '--show-toplevel')
     Check ([System.IO.Path]::GetFullPath($rootActual).TrimEnd('\') -ieq
            [System.IO.Path]::GetFullPath($RepoRoot).TrimEnd('\')) "REPO_ROOT_MISMATCH"
-    Check ((Git @('branch', '--show-current')) -ceq 'main') "NOT_ON_MAIN"
-    Check ((Git @('status', '--porcelain', '--untracked-files=normal')) -eq '') "DIRTY_WORKTREE"
-    Check ($allowedOrigins.Contains((Git @('remote', 'get-url', 'origin')))) "UNTRUSTED_ORIGIN"
-    $remoteLine = Git @('ls-remote', 'origin', 'refs/heads/main')
+    Check ((Git -GitArgs @('branch', '--show-current')) -ceq 'main') "NOT_ON_MAIN"
+    Check ((Git -GitArgs @('status', '--porcelain', '--untracked-files=normal')) -eq '') "DIRTY_WORKTREE"
+    Check ($allowedOrigins.Contains((Git -GitArgs @('remote', 'get-url', 'origin')))) "UNTRUSTED_ORIGIN"
+    $remoteLine = Git -GitArgs @('ls-remote', 'origin', 'refs/heads/main')
     $remoteHead = ($remoteLine -split '\s+')[0]
     Check ($remoteHead -match '^[0-9a-f]{40}$') "REMOTE_HEAD_NOT_VERIFIED"
 
     if ($Apply) {
-        [void](Git @('fetch', '--no-tags', 'origin', 'main'))
-        [void](Git @('merge', '--ff-only', 'origin/main'))
-        Check ((Git @('rev-parse', 'HEAD')) -ceq $remoteHead) "POST_UPDATE_MAIN_MISMATCH"
+        [void](Git -GitArgs @('fetch', '--no-tags', 'origin', 'main'))
+        [void](Git -GitArgs @('merge', '--ff-only', 'origin/main'))
+        Check ((Git -GitArgs @('rev-parse', 'HEAD')) -ceq $remoteHead) "POST_UPDATE_MAIN_MISMATCH"
     } else {
-        Check ((Git @('rev-parse', 'HEAD')) -ceq $remoteHead) "STALE_CHECKOUT_PASS_APPLY"
+        Check ((Git -GitArgs @('rev-parse', 'HEAD')) -ceq $remoteHead) "STALE_CHECKOUT_PASS_APPLY"
     }
     foreach ($relative in @(
         'collab/ops/submit_review_request.py',
@@ -67,7 +67,7 @@ try {
     [pscustomobject]@{
         status = 'WINDOWS_REPO_ROLLOUT_CHECK_PASS'
         apply_requested = [bool]$Apply
-        repo_head = (Git @('rev-parse', 'HEAD'))
+        repo_head = (Git -GitArgs @('rev-parse', 'HEAD'))
         source = 'wonhwipark/CoWork-Skill-Collab/main'
         source_preflight = 'REGRESSION_PASS'
         reviewer_config = 'POLICY_COMPATIBLE_NOT_APPROVED'
@@ -77,6 +77,6 @@ try {
     } | ConvertTo-Json -Depth 4
     exit 0
 } catch {
-    Write-Error ("WINDOWS_REVIEW_SUBMITTER_ROLLOUT_BLOCKED: " + $_.Exception.Message)
+    [Console]::Error.WriteLine(("WINDOWS_REVIEW_SUBMITTER_ROLLOUT_BLOCKED: " + $_.Exception.Message))
     exit 2
 }
