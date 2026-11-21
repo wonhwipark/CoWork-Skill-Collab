@@ -14,6 +14,12 @@
 - **결과 표현:** `PREPUBLICATION_PASS_NOT_SUBMITTED`, `SUBMITTED_AWAITING_PROTECTED_SIGNER`, `BLOCKED`, `READY`, `REVIEW_RESULT/RECEIPT_VERIFIED`를 실증대로 구분한다. 현재 창의 단축 지시는 **새 자동 실행 권한이나 무조건 승인**을 생성하지 않는다. Telegram 리뷰 알림은 기존 Windows notifier가 실제 이벤트에 따라 발송하며, GitHub 문서 게시만으로 알림·자동 GPT 판정을 약속하지 않는다.
 - **효력 경계:** GPT와 Windows Claude Code가 이 계약을 읽고 적용할 때의 **자연어 의도 해석/워크플로 진입 규칙**이다. 모든 새 ChatGPT 창의 무조건적 자동 문서 로딩, Windows watcher 자동 수정, 새로운 trigger/parser 설치, 호스트 E2E 성공을 뜻하지 않는다.
 
+## GitHub 보관 후보의 Windows 접수 보조 (r0004 / 2026-11-22)
+
+- GitHub `collab/projects/<WORK_ID>/` 하위에 **REQUEST 비실행 초안과 `.zip.base64` 후보**가 이미 있고 Windows 보호 환경에서 실제 제출기를 실행해야 하는 경우, [보조 CLI](../../ops/review_staged_submission.py)를 사용해 커밋된 원본을 동일 바이트로 복원한 뒤 **기존** `submit_review_request.py`를 재사용한다. 별도 신규 watcher·READY/서명 엔진을 만들지 않는다.
+- **기본 동작은 dry-run**: `--work-id`, `--draft-path`, `--candidate-path`, `--live-config`를 제공하고 `--publish` 없이 먼저 실행. 클린 원격 main·Git blob 타입·Work·ZIP SHA/크기와 Windows LIVE 정책을 검사한다. 이후 원격 중복·보호 signer/승인 범위를 실증했을 때에만 같은 명령에 `--publish`를 추가해 Commit A/B를 제출한다. 정상 제출은 `SUBMITTED_AWAITING_PROTECTED_SIGNER`이며 승인/READY가 아니다.
+- Windows watcher가 이 보조 CLI를 **자동 실행하도록 하는 기존 호스트 hook은 NOT_APPLIED/NOT_VERIFIED**. 실제 설치본에서 승인된 기존 watcher run_cycle로 연결할 수 있는지 G0 검사 후, 별도 유효 운영 승인·백업·SHADOW·중복 차단을 거쳐 적용한다. 이 절의 문서/코드 게시만으로 새 창의 리뷰 1회 E2E가 자동 완료되지는 않는다. [실행 경계·해당 Work](../../projects/COWORK-AUTO-APPROVAL-20261115-001/REVIEW_INTAKE_ONE_SHOT_HOST_INTEGRATION_r0001_20261122_KST.md).
+
 ## 자연어 정식 리뷰의 표준 제출 명령 (r0002 / 2026-11-21)
 
 **신규 요청 기본 경로:** 실제 Windows LIVE 정책을 검증할 수 있는 환경에서 `collab/ops/submit_review_request.py`를 사용한다. 이 제출기는 기존 `review_request_gate.check_request`, `source_pin.dumps_source_pin`, `review_pin_preflight.inspect`를 **연속 호출**하고, 요청 생성에 필요한 Commit A/B를 안전하게 `git push`한다. `--publish`가 없으면 원격/로컬에 쓰지 않는 드라이런이다. 안전성 위해 클린 `main`·신뢰 `origin`·원격 최신 SHA·새 REQUEST ID를 강제한다. 인증 토큰·보호 서명·READY는 절대 생성하지 않는다.
