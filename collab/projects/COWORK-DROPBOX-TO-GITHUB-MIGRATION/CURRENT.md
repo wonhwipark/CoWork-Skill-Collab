@@ -1,5 +1,14 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 2026-11-21 KST — Runner/TG 연결 후속 G0: 22개 시험 연결 확인, 실제 실행·수신 미검증
+
+- [검증 상세](GPT_ACTIONS_TELEGRAM_NOTIFY_FLOW_r0001_20261121_KST.md#2026-11-21-kst-후속-g0--runner-오프라인-시험봇-연결-진단): `offline-selftest` Python 구문 검사에 GPT 실행기+Telegram 발송기를 모두 포함하도록 `.github/workflows/cowork-gpt-disposition.yml` 변경(커밋 `72ae8c50`, blob `0635ac8f`). Github main 원격 5개 소스 readback, 발견 가능한 unittest 15+7=22, 정적 실행·알림 조건 11개 확인.
+- **실제 Runner 22건 PASS는 확인 못 함**: 접근 가능한 커넥터는 `push` workflow runs 목록을 반환하지 않음. Actions URL 실측·Telegram GitHub Actions secrets/chat 연결·수신 확인 `NOT_VERIFIED`. `statuses=[]` 및 PR 전용 workflow 결과 공백을 실행 실패/성공으로 오판하지 않음.
+- **비용·운영 경계:** GPT 자동 API 및 신규 Telegram 발송 OFF, secret 설치·조회/실제 발송/Windows 운영 변경·유료 호출 0. 이전 Claude 알림 유지. 일회용 claim이 자동 재전송을 차단.
+- **NEXT_ONE_ACTION:** [Actions workflow 실행 기록](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/workflows/cowork-gpt-disposition.yml) 실제 로그 확인과 Windows에 보관된 기존 Telegram Bot 자격의 안전한 환경 내 확인 → 권한 있는 운영 주체가 GitHub Actions secrets 존재 여부를 확인하고 필요 시 등록. 비과금 단일 Telegram 수신 테스트는 봇 준비·별도 발송 승인 이후, GPT API와 독립적으로 수행.
+
+---
+
 ## 2026-11-21 KST — Runner GPT 판정 후 Telegram 알림 1회 후보 게시 (LIVE OFF)
 
 - **사용자 최신 지시:** Claude 독립 리뷰 1회 → GitHub Runner GPT 판정 1회·원격 게시 → Telegram Bot 알림 1회 → 모바일 ChatGPT 어느 창에서든 최신 GitHub 판정 조회. Gmail은 대안 보류. 기존 Windows Claude 리뷰 완료 Telegram은 별개 유지.
