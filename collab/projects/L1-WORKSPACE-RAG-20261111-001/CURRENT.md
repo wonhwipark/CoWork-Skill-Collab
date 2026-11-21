@@ -1,5 +1,16 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-21 KST — 사용자 Viewer Write UI 2.0 L1Work 공개 배송 요청 / ZIP 바이트 배송 차단
+
+- **최신 요청:** "ui 2.0 l1work 에 배포해줘". 정확한 대상은 선행 구현한 `l1-workspace-viewer-write-ui_v0_2_0_1121.zip`의 **L1Work PUBLIC 전달**이며 Linux 운영 설치·편집 인증 활성화를 뜻하지 않음.
+- **사용자 첨부 패키지 직접 재검증:** 현 GPT 작업 컨테이너 `/mnt/data/l1-workspace-viewer-write-ui_v0_2_0_1121.zip`, **21,171 B**, SHA256 `9f2df44348478eb44615bddef8f211645fa1c07ed71d43580b4fb324e376b6f9`, 10 파일, ZIP CRC/manifest/path traversal/symlink 검사 PASS. Node `node --test` **30/30 PASS**, Python unittest **8/8 PASS**, JS syntax/Python compile PASS. 개발 후보, `development_not_for_deployment`.
+- **전달 결과:** `L1Work/main/l1-workspace-viewer-write-ui_v0_2_0_1121.zip` **NOT_POSTED/BLOCKED_BINARY_UPLOAD**. 현재 GitHub 커넥터의 Git blob API는 콘텐츠 문자열/base64만 수신하며 해당 로컬 대화 ZIP을 직접 읽는 파일 핸들을 받지 않음. 모델 출력으로 ZIP 전체 바이트를 다시 전달하려는 시도는 무결성 보장이 되지 않아 중단. **원격 blob/SHA readback이나 PUBLIC 전달 완료로 보고하지 않음**. L1Work 기존 UI v0.1.2·과거 ZIP·핸드오프 불변.
+- **기존 공개 인계는 유효:** `wonhwipark/L1Work/main/handoffs/L1_WORKSPACE_VIEWER_WRITE_V020_G0_AND_INTEGRATION_HANDOFF_r0001_20261121_KST.md`. 인계 원문의 "개발 ZIP은 아직 GitHub 바이너리 미게시" 상태와 일치.
+- **호스트 게이트:** 실제 Linux G0 인증·세션/CSRF/문서별 ACL·Writer/CAS·MSC canonical anchor·B1~B3/E3/E4 및 실제 설치 모두 NOT_RUN. 보안/코드 독립 리뷰 NOT_RUN; 무로그인 Read Only는 유지, edit server 연결 전 [수정] disabled.
+- **NEXT_ONE_ACTION:** GitHub에 정확한 로컬 ZIP 원본 21,171 B를 지원되는 **바이너리 업로드 경로**로 L1Work/main 신규 루트 파일에 전달한 뒤 다시 GET하여 크기·SHA256 `9f2df44348478eb44615bddef8f211645fa1c07ed71d43580b4fb324e376b6f9`/CRC 확인. 그 뒤 인계/README 상태 갱신. 운영 UI 설치는 별도 실제 Linux 조건부 단계.
+
+---
+
 ## 2026-11-21 KST — Viewer 2차 Write 프런트엔드 v0.2.0 개발·시험 PASS / Linux writer 미연결
 
 - **사용자 실행 요청:** 1차 v0.1.2 UI ZIP 공개 배송 후 2차 Write 기능 "진행" → 기존 무로그인 Read Only를 유지하면서 [수정] 전용 ID/PW 인증·이슈/MSC 수정 요청·Diff/Preview·초안/확정 저장의 프런트엔드 코드를 직접 개발. 미확인 호스트 편집 API/자격증명/Writer를 만들었다고 주장하지 않고 `L1ViewerWriteHostAdapter` 미연결 시 [수정] 비활성 및 실제 쓰기 0.
