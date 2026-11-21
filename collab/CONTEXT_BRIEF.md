@@ -13,6 +13,10 @@
 - **L1Work 스킬 현황 바로가기:** [공개 ZIP·관리 스킬 분석 인덱스](projects/COWORK-SKILL-DISCOVERY-20261112-001/L1WORK_PUBLIC_SKILL_RELEASE_ANALYSIS_r0001_20261117_KST.md) · [스킬 관리 CURRENT](projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md). 공개본/개발 후보/검증 경계를 구분해 확인하고, 최신 버전·판정은 실제 PUBLIC HEAD와 관련 Work CURRENT에서 재조회한다.
 - 갱신 기준: [스킬 발견·재사용 절차](ops/CONTRACTS/SKILL_DISCOVERY_AND_REUSE_V1.md). 결과·피드백은 해당 Work에서 관리하고 지도는 구조·역할·경로가 바뀔 때만 수정한다.
 
+## 자연어 “정식 리뷰 요청” — 새 창 기본 진입
+
+리뷰 요청은 단순 문서 게시가 아니다. 새 창의 GPT/Windows Claude Code는 사용자 자연어 **“정식 리뷰 요청해 줘”**를 받으면 기존 Work·기존 요청/영수증/승인을 확인한 다음 [표준 REQUEST/PIN 게시·차단 계약](ops/CONTRACTS/PRE_READY_SOURCE_PIN_PREFLIGHT_V1.md)으로 이동한다. 구현: `collab/ops/submit_review_request.py`(게시 전 정책+ZIP 검사, Commit A REQUEST+ZIP, Commit B PIN, 원격 검증), `collab/ops/review_pin_preflight.py`(읽기 전용 PIN 검사). 전용 명령 미사용·호스트 정책 미확인이면 정식 리뷰 접수/실행 완료로 보고하지 않는다. **서명·READY·Claude 결과/영수증은 별도 확인**. 문서 연결만으로 모든 새 창에서 자동 실행되거나 Windows 운영 hook이 설치된 것은 아니다.
+
 ## 0. 협업 → 업무·지식 → 피드백 전체 흐름
 
 [통합 탑뷰·정본 책임·인계 계약](projects/COWORK-SKILL-DISCOVERY-20261112-001/COWORK_L1_INTEGRATED_TOPVIEW_r0001_20261115_KST.md)에서 단계·입력·승인·검증 경계를 확인한다. 아래 화살표는 **책임/전달 관계**이며 실제 자동 호출·설치·호스트 접속이 검증됐다는 뜻이 아니다.
