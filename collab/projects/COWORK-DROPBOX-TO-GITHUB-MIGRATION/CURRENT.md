@@ -1,5 +1,14 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 2026-11-21 KST — Telegram 모델 0회 수동 연결시험 경로 준비 / 로컬 14 PASS
+
+- **변경:** [Runner 판정→Telegram 전체 흐름 및 연결 시험 가이드](GPT_ACTIONS_TELEGRAM_NOTIFY_FLOW_r0001_20261121_KST.md). 기존 `.github/workflows/cowork-gpt-disposition.yml`에 명시적 `workflow_dispatch.telegram_smoke` 수동 경로 추가. 별도 `telegram-smoke` job은 repo/main/owner/최초 attempt/운영변수 OFF 게이트를 통과할 때만 고정 메시지를 한 번 발송; `gpt-disposition` job은 smoke 경로에서 SKIP. API/리뷰 호출을 통하지 않음.
+- **직접 검증:** GitHub 원격 실제 Python 4파일과 로컬 Git blob 완전 일치; 두 Telegram 경로 자체 시험 합계 **14/14 PASS** 및 py_compile PASS. 전체 unittest 소스 29건(기존 GPT 판정 15 + 기존 Telegram 7 + smoke 7). **GitHub Runner 전체 29건 PASS는 NOT_VERIFIED**, 실제 Telegram Bot/모바일 수신 **NOT_VERIFIED**. 최신 GitHub workflow/blob 원격 readback.
+- **실행/비용:** 새로운 REQUEST/READY/Claude 리뷰/GPT API/Telegram 실전송/Windows LIVE 변경 0. `COWORK_GPT_API_ENABLED`, `COWORK_GPT_TELEGRAM_NOTIFY_ENABLED`, `COWORK_TELEGRAM_SMOKE_ENABLED` 기본 OFF. GitHub Secrets 토큰·Chat ID 설치 상태는 현재 커넥터에서 조회 불가.
+- **NEXT_ONE_ACTION:** GitHub Actions 실제 실행 및 해당 workflow의 `offline-selftest` 29건 결과 확인. 기존 Telegram Bot 자격정보의 저장소 Secrets 등록 상태를 권한 있는 운영 주체가 확인하고, 수동 smoke 변수를 제한적으로 켠 후 UI의 `telegram_smoke=true` 1회만 실행해 모바일 수신 검증. 불확실 실행 재실행 금지. GPT API 유료 활성화는 여전히 별도 승인.
+
+---
+
 ## 2026-11-21 KST — Runner/TG 연결 후속 G0: 22개 시험 연결 확인, 실제 실행·수신 미검증
 
 - [검증 상세](GPT_ACTIONS_TELEGRAM_NOTIFY_FLOW_r0001_20261121_KST.md#2026-11-21-kst-후속-g0--runner-오프라인-시험봇-연결-진단): `offline-selftest` Python 구문 검사에 GPT 실행기+Telegram 발송기를 모두 포함하도록 `.github/workflows/cowork-gpt-disposition.yml` 변경(커밋 `72ae8c50`, blob `0635ac8f`). Github main 원격 5개 소스 readback, 발견 가능한 unittest 15+7=22, 정적 실행·알림 조건 11개 확인.
