@@ -9,6 +9,8 @@ on:
       - '.github/workflows/cowork-gpt-disposition.yml'
       - 'collab/tools/gpt_disposition_actions.py'
       - 'collab/tools/tests/test_gpt_disposition_actions.py'
+      - 'collab/tools/gpt_disposition_telegram.py'
+      - 'collab/tools/tests/test_gpt_disposition_telegram.py'
   workflow_dispatch:
     inputs:
       request_id:
@@ -66,6 +68,7 @@ jobs:
           python3 -m venv .cowork-venv
           .cowork-venv/bin/python -m pip install --disable-pip-version-check 'cryptography>=45,<47'
       - name: Verify immutable review chain, claim once, call GPT API, publish create-only
+        id: disposition
         shell: bash
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -92,3 +95,22 @@ jobs:
           else
             .cowork-venv/bin/python collab/tools/gpt_disposition_actions.py --before "$PUSH_BEFORE" --after "$PUSH_AFTER"
           fi
+
+      - name: Send one Telegram message only after verified GPT disposition (optional)
+        if: >-
+          steps.disposition.outputs.posted_request_id != '' &&
+          vars.COWORK_GPT_TELEGRAM_NOTIFY_ENABLED == 'true'
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_REPOSITORY_ID: ${{ github.repository_id }}
+          GITHUB_REF: ${{ github.ref }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          COWORK_GPT_TELEGRAM_NOTIFY_ENABLED: ${{ vars.COWORK_GPT_TELEGRAM_NOTIFY_ENABLED }}
+          COWORK_TELEGRAM_BOT_TOKEN: ${{ secrets.COWORK_TELEGRAM_BOT_TOKEN }}
+          COWORK_TELEGRAM_CHAT_ID: ${{ secrets.COWORK_TELEGRAM_CHAT_ID }}
+          POSTED_REQUEST_ID: ${{ steps.disposition.outputs.posted_request_id }}
+        run: |
+          set -euo pipefail
+          python3 collab/tools/gpt_disposition_telegram.py --request-id "$POSTED_REQUEST_ID"
