@@ -1,5 +1,17 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-21 KST — Viewer 2차 Write 프런트엔드 v0.2.0 개발·시험 PASS / Linux writer 미연결
+
+- **사용자 실행 요청:** 1차 v0.1.2 UI ZIP 공개 배송 후 2차 Write 기능 "진행" → 기존 무로그인 Read Only를 유지하면서 [수정] 전용 ID/PW 인증·이슈/MSC 수정 요청·Diff/Preview·초안/확정 저장의 프런트엔드 코드를 직접 개발. 미확인 호스트 편집 API/자격증명/Writer를 만들었다고 주장하지 않고 `L1ViewerWriteHostAdapter` 미연결 시 [수정] 비활성 및 실제 쓰기 0.
+- **개발 후보 ZIP (현재 GPT 대화에서 사용자 다운로드 가능):** `l1-workspace-viewer-write-ui_v0_2_0_1121.zip`, **21,171 B**, SHA256 `9f2df44348478eb44615bddef8f211645fa1c07ed71d43580b4fb324e376b6f9`, 10 files CRC/manifest PASS. `write-client.js` 상태기계·신뢰 원본/source revision·stale/WRITE_UNCERTAIN, `write-ui.js` 인증/편집/MSC parent anchor UI, `write-ui.css`, 고정 SHA 기반 v0.1.2 patch script, mock tests, `HOST_INTEGRATION.md`, 가상 preview. **이 ZIP은 CoWork/L1Work에 실제 바이너리 게시되지 않음**; 개발 후보 `development_not_for_deployment` 유지.
+- **자체시험:** Node.js state-machine 합성 30/30 PASS, Python 패치/경로 부정 8/8 PASS, JS syntax·Python compile PASS. GitHub PUBLIC 기존 v0.1.2 원격 ZIP `index.html`에서 script/style/version 패치 anchor 각 1회 존재 확인 PASS. 실제 v0.1.2 전체 ZIP 로컬 결합/브라우저 회귀/E3/E4/호스트 보안·Writer 연결 NOT_RUN.
+- **기존 편집 독립 R1 재사용:** `REQ-L1-WORKSPACE-VIEWER-EDIT-DESIGN-R1-20261120` ACCEPT_WITH_CHANGE 설계 r0004 보완 인용. 새 **코드** 독립 리뷰=NOT_RUN, 실제 Linux G0(authentication,CSRF,session rotation,ACL,rate limiting,Work/Updater CAS,MSC anchor), B1~B3, 원본 writer/Knowledge/E3/E4, 운영 Write 활성화 모두 NOT_RUN. 앞선 STYLE R1 사용자 생략은 이 쓰기 운영 게이트 면제가 아님.
+- **CoWork 결과:** [VIEWER_WRITE_V020_PREBUILD_IMPLEMENTATION_RESULT_r0001_20261121_KST.md](VIEWER_WRITE_V020_PREBUILD_IMPLEMENTATION_RESULT_r0001_20261121_KST.md), commit `aa8ff949b8d2124a7a8412f8548a53ddc77a3086`, remote readback PASS.
+- **업무 GPT 인계:** [L1Work/main/handoffs/L1_WORKSPACE_VIEWER_WRITE_V020_G0_AND_INTEGRATION_HANDOFF_r0001_20261121_KST.md](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_WORKSPACE_VIEWER_WRITE_V020_G0_AND_INTEGRATION_HANDOFF_r0001_20261121_KST.md), commit `9e011f8c01f5cc3e090297d5fb13164597013131`, 원격 본문 readback PASS. `handoffs/README.md` 색인 commit `976fc49d9afe97f707e323a5c2b61295c6ccb64f` remote readback PASS.
+- **NEXT_ONE_ACTION:** 업무 GPT/Linux Agent가 기존 설치 Viewer의 실제 G0와 현장 writer/auth 계약을 안전하게 확인 → *개발 ZIP의 사용자 승인된 실제 파일 전달*이 확인되면 고정 SHA v0.1.2 기준 패치·시험 → 서버 auth/CSRF/ACL/canonical anchor/CAS/readback 연결 → B1~B3/E3/E4 및 운영 승인/롤백 PASS일 때만 Write 활성화. 반영 불가능하면 해당 항목만 BLOCKED, 기존 Read Only 유지.
+
+---
+
 ## 2026-11-21 KST — Viewer 1차 v0.1.2 PUBLIC ZIP 배송 PASS / 실제 Linux HOST 미적용 / STYLE R1 사용자 생략
 
 - **최신 사용자 결정:** "리뷰없이 배포까지 진행해줘" → 스타일 R1 유료 독립 리뷰는 **USER_WAIVED**, 1차 UI 코드 공개 배송/업무 GPT 인계 우선. 기존 R1 REQUEST/SOURCE_PIN은 불변 보존, [user waiver marker](../../requests/REQ-L1-WORKSPACE-VIEWER-STYLE-DESIGN-R1-20261121/USER_REVIEW_WAIVER_20261121.md) 게시/readback PASS. **보호된 Windows signer/watch 실제 취소는 NOT_VERIFIED**; 신규 READY/모델 호출 금지 취지 기록.
