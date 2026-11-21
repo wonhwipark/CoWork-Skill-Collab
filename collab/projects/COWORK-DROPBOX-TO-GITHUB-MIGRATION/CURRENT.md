@@ -1,12 +1,14 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
 ## 2026-11-21 KST — CoWork PUBLIC 실조회 확인·Issue #2 Actions→GPT API 판정 실행기 게시 / GPT 자동 판정 OFF
+
+- **2026-11-21 사용자 확정 1사이클 한도:** `GPT 요청 → Claude 독립 리뷰 1회 → GPT 판정 1회 → 종료`. 수정보완 결과가 있어도 자동 재리뷰 0. 동일 Work의 다른 REQUEST도 자동 GPT 판정 전에 차단. [1사이클 게이트 구현 기록](GPT_ONE_CYCLE_GUARD_IMPLEMENTATION_r0001_20261121_KST.md). `gpt_disposition_actions.py`에 Work ID+CURRENT 정합성·다른 REQUEST 검사·Work 단위 `ONE_CYCLE_CLAIM.json` CREATE_ONLY(모델 호출 전) 및 테스트 6건 추가. **WINDOWS_PRE_CLAUDE_GATE=NOT_APPLIED**, WATCHER_LIVE v0.2.29 운영 변경 0; GPT_API=OFF, 유료 호출 0, GitHub Actions 실제 15건 시험 NOT_VERIFIED. 개발 소스·시험 문서 게시와 운영 자동 1사이클 E2E PASS는 별개.
 - **현행 GitHub 메타데이터:** `wonhwipark/CoWork-Skill-Collab` visibility=`public` / default_branch=`main`. 사용자가 GitHub UI에서 전환했으며 GPT가 저장소 visibility를 변경한 것은 아님. 기존 PRIVATE 표현은 이전 시점의 기록. 공개 여부 변경이 watcher 설치·Claude 리뷰 정책·OpenAI API 결제 승인을 뜻하지 않음.
 - **새 우선 구조:** Windows Claude Code 기존 리뷰 완료 및 GitHub 결과·영수증 게시 → GitHub Actions Runner → OpenAI GPT API 독립 판정 1회 → `collab/reviews/<request_id>/GPT_DISPOSITION.json` CREATE_ONLY → 모바일 ChatGPT에서 사용자 조회. **추가 Telegram GPT 판정 알림 없음**, 기존 Claude 리뷰 완료 알림 유지. 기존 Gmail→Work 1차 설계는 이력으로 보존하되 우선순위 변경.
 - **구현·정본:** [Actions GPT 판정 구현 기록](GPT_ACTIONS_DISPOSITION_IMPLEMENTATION_r0001_20261121_KST.md). [workflow](../../../.github/workflows/cowork-gpt-disposition.yml), [executor](../../tools/gpt_disposition_actions.py), [test](../../tools/tests/test_gpt_disposition_actions.py) PUBLIC main 게시·원격 Git blob 대조 PASS. 마지막 workflow commit `b8d28d141b446fad102ff79d01da12d16c5b84ff`; 새 코드 자체 문서 게시 commit `91aa71516cc5af1758fad80e82c097d0ed41bb1e`.
 - **실제 시험:** 로컬 Python 구문 및 9건 오프라인 단위시험 PASS; 원격 source/test/workflow blob SHA 비교 PASS. GitHub Actions의 `offline-selftest` Job 실제 Runner 기동·로그는 연결 도구 접근 제한으로 `NOT_VERIFIED`. Windows watcher push 인증 주체와 실제 push 이벤트 트리거도 `NOT_VERIFIED`. 신규 유료 API 호출·GPT_DISPOSITION 자동 생성·모바일 자동 삽입은 `NOT_RUN`.
 - **비용·승인:** `COWORK_GPT_API_ENABLED`, `COWORK_GPT_COST_POLICY_APPROVED`, `COWORK_GPT_PROJECT_SPEND_CAP_CONFIRMED`가 명시 true이기 전 GPT 유료 Job 자체가 skip. 실제 API 키·신뢰 공개키·모델 가격·건당 상한·프로젝트 외부 월 지출 제한은 **NOT_CONFIGURED/NOT_VERIFIED**, 새 유료 승인 필요. Claude 기존 STATIC USD3과 구별. USER_SCOPE=PUBLIC 전환 및 코드 배포 승인; `HOST_CHANGE=NOT_RUN`, `BILLABLE_GPT_API=NOT_RUN`.
-- **NEXT_ONE_ACTION:** Actions 웹 UI에서 `offline-selftest` 실제 결과 및 Windows LIVE reviewer 게시 이벤트가 새로운 workflow를 트리거하는지 읽기 전용 확인. 실패 시 승인된 범위에서 이벤트 신호만 수정하고 API OFF 유지. 그 후에만 별도 GPT API 비용·자격증명·활성화 승인 범위를 확인.
+- **NEXT_ONE_ACTION:** Actions `offline-selftest` 15건 실행 결과·Windows watcher 리뷰 게시 트리거를 읽기 전용 확인하고, 한 Work 1사이클 차단의 **Windows 승인/READY 이전 게이트**는 별도 호스트 후보·격리 시험으로 검증. 기존 LIVE 변경·GPT API 비용/키/활성화는 별도 유효 승인 전까지 하지 않음.
 
 ---
 
