@@ -5,11 +5,11 @@
       "work_id": "COWORK-SKILL-DISCOVERY-20261112-001",
       "skill": "skill-discovery",
       "title": "skill-discovery",
-      "phase": "INTEGRATION_GATE_V1_CODE_CONTRACT_AND_NEW_CHAT_RELEASE_PROCESS_CONNECTED_HOST_E2E_PENDING",
-      "owner": "GPT: CoWork integration gate pre-existing parallel commit reused; AGENTS.md/Public-release author preflight linked; synthetic 19/19 prior reported, actual host/branch enforced gate NOT_RUN",
+      "phase": "INTEGRATION_GATE_V1_PENDING_HOST_E2E_AND_P1P2_FORMAL_REVIEW_PREFLIGHT_PENDING",
+      "owner": "GPT: P1/P2 current implementation + Windows E2E verification r0002 review input staged (NOT formally submitted); earlier integration-gate changes/host E2E pending unchanged",
       "self_test": "PASS",
       "independent_review": "NOT_RUN",
-      "next_action": "첫 실제 병렬 Work에서 stream 2개 이상 등록, 단일 ZIP+실제 regression/cross_stream receipt로 gate 실행, 배포 직전 HEAD CAS/remote bytes 대조. Github 자동 강제는 별도."
+      "next_action": "P1/P2: Windows approved Claude Code session validates exact ZIP 94843 B/SHA 35de5493..., LIVE policy/signer and no duplicate then standard submitter Commit A/B, actual approval/READY and 1 review or BLOCKED; parallel integration-gate host E2E remains separate pending"
     }
   ]
 }
