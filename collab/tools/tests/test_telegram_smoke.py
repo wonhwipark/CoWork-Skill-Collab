@@ -51,6 +51,10 @@ class TestSmoke(unittest.TestCase):
         def send(token,chat,text):
             events.append(("send",text))
             self.assertIn("유료 모델 호출: 0회",text)
+            self.assertTrue(text.startswith("🔔 [CoWork 연결 시험]\n"))
+            self.assertIn("https://github.com/"+bot.REPO+"/actions/runs/"+ENV["GITHUB_RUN_ID"],text)
+            self.assertNotIn("[리뷰",text)
+            self.assertNotIn("[GPT",text)
             self.assertNotIn(token,text)
             return 42
         with patch.object(bot,"github",return_value=(404,{})),\
