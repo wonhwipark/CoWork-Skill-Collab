@@ -22,13 +22,14 @@ concurrency:
 
 jobs:
   gpt-disposition:
-    # No GPT API call until separately authorized, with actual public repo and secret.
+    # No GPT API call until explicitly and separately authorized and configured.
     if: >-
       github.repository == 'wonhwipark/CoWork-Skill-Collab' &&
       github.ref == 'refs/heads/main' &&
       github.event.repository.private == false &&
       vars.COWORK_GPT_API_ENABLED == 'true' &&
-      vars.COWORK_GPT_COST_POLICY_APPROVED == 'true'
+      vars.COWORK_GPT_COST_POLICY_APPROVED == 'true' &&
+      vars.COWORK_GPT_PROJECT_SPEND_CAP_CONFIRMED == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -42,8 +43,8 @@ jobs:
         run: |
           set -euo pipefail
           python3 -m venv .cowork-venv
-          .cowork-venv/bin/python -m pip install --disable-pip-version-check 'cryptography==46.0.4'
-      - name: Verify review chain, claim once, call GPT API and publish create-only
+          .cowork-venv/bin/python -m pip install --disable-pip-version-check 'cryptography>=45,<47'
+      - name: Verify immutable review chain, claim once, call GPT API, publish create-only
         shell: bash
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -54,6 +55,10 @@ jobs:
           COWORK_GPT_API_ENABLED: ${{ vars.COWORK_GPT_API_ENABLED }}
           COWORK_GPT_COST_POLICY_APPROVED: ${{ vars.COWORK_GPT_COST_POLICY_APPROVED }}
           COWORK_GPT_MODEL: ${{ vars.COWORK_GPT_MODEL }}
+          COWORK_GPT_MAX_CALL_USD: ${{ vars.COWORK_GPT_MAX_CALL_USD }}
+          COWORK_GPT_INPUT_RATE_USD_PER_1M: ${{ vars.COWORK_GPT_INPUT_RATE_USD_PER_1M }}
+          COWORK_GPT_OUTPUT_RATE_USD_PER_1M: ${{ vars.COWORK_GPT_OUTPUT_RATE_USD_PER_1M }}
+          COWORK_GPT_PROJECT_SPEND_CAP_CONFIRMED: ${{ vars.COWORK_GPT_PROJECT_SPEND_CAP_CONFIRMED }}
           COWORK_APPROVER_PUBLIC_KEY_B64: ${{ vars.COWORK_APPROVER_PUBLIC_KEY_B64 }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           REQUEST_ID: ${{ inputs.request_id }}
