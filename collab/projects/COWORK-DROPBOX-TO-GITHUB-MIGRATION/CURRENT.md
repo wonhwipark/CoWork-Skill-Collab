@@ -1,5 +1,16 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 2026-11-21 KST — 기존 Telegram Bot 재사용 · GitHub Secrets 등록 · 무료 Smoke PASS / 모바일 수신 사용자 확인 대기
+
+- **결과:** [TELEGRAM_BOT_REUSE_AND_SMOKE_RESULT_r0001_20261121_KST.md](TELEGRAM_BOT_REUSE_AND_SMOKE_RESULT_r0001_20261121_KST.md) (commit `5c4c77e98b2e`). 새 Bot·토큰 재발급 0, 비밀값은 어디에도 게시하지 않음(Windows 보호 파일 → 메모리 → `gh` 표준입력).
+- **Secrets:** `COWORK_TELEGRAM_BOT_TOKEN`, `COWORK_TELEGRAM_CHAT_ID` 등록(`PASS`, 값 비노출, 충돌·덮어쓰기 0). 기존 Windows 알림 Task Running, 설정 불변.
+- **Smoke:** [Run 44910683694](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/44910683694) attempt 1, `offline-selftest` success(29건), `telegram-smoke` success, `gpt-disposition` skipped, `SEND_ACKNOWLEDGED`(message id 59), CLAIM·RECEIPT readback 확인, `COWORK_TELEGRAM_SMOKE_ENABLED=false` 복귀. **`MOBILE_RECEIVE=PENDING_USER_CONFIRMATION`**.
+- **미실시:** GPT API·판정 후 Telegram E2E·`COWORK_GPT_TELEGRAM_NOTIFY_ENABLED`는 OFF/NOT_RUN, 유료 호출 0.
+- **보안 주의:** 저장소가 PUBLIC이라 이전에 올린 운영 산출물(호스트 이름·경로 포함, 비밀 없음)이 인증 없이 읽힘. 사용자 판단 필요.
+- **NEXT_ONE_ACTION:** 사용자가 폰의 "CoWork Telegram 연결 시험" 메시지 도착 여부 확인. 이후 GPT API 승인 시 판정 후 알림 E2E 1회.
+
+---
+
 ## 2026-11-21 KST — 기존 Windows Telegram Bot 재사용 결정 및 연결 경계
 
 - **사용자 결정:** 기존 Windows Claude Code 독립 리뷰 완료 알림에 사용하는 Telegram Bot **1개를 그대로 재사용**. 새 Bot 생성·Bot Token 재발급·기존 Windows notifier 교체는 하지 않음. Windows Claude 리뷰 완료 메시지와 GitHub Runner의 GPT 판정 완료 메시지는 **발송 주체·이벤트·문구를 구분**하며 같은 수신 Chat ID를 사용하려면 Windows의 실제 수신 대상부터 안전하게 확인.
