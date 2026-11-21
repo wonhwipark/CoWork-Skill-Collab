@@ -1,0 +1,7 @@
+{
+  "created_at": "2026-11-21T13:48:28.336539+00:00",
+  "github_run_id": "44910683694",
+  "schema": "COWORK_TELEGRAM_SMOKE_RECEIPT_V1",
+  "state": "SEND_ACKNOWLEDGED",
+  "telegram_message_id": 59
+}
