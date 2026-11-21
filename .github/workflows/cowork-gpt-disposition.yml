@@ -6,6 +6,9 @@ on:
     paths:
       - 'collab/reviews/**/REVIEW_RESULT_1.md'
       - 'collab/receipts/**/RECEIPT_1.md'
+      - '.github/workflows/cowork-gpt-disposition.yml'
+      - 'collab/tools/gpt_disposition_actions.py'
+      - 'collab/tools/tests/test_gpt_disposition_actions.py'
   workflow_dispatch:
     inputs:
       request_id:
@@ -21,6 +24,24 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  offline-selftest:
+    if: github.repository == 'wonhwipark/CoWork-Skill-Collab' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout for no-model offline regression tests
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Check parser and no-call budget safety offline
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m py_compile collab/tools/gpt_disposition_actions.py
+          python3 -m unittest discover -s collab/tools/tests -v
+
   gpt-disposition:
     # No GPT API call until explicitly and separately authorized and configured.
     if: >-
