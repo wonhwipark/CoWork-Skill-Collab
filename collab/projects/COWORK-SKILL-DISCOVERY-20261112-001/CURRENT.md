@@ -1,5 +1,16 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 2026-11-22 KST — P1/P2 새 독립 리뷰 요청 입력 고정·정식 제출 Windows 사전검증 대기
+
+- **최신 사용자 실행 지시:** “협업 다시확인후 정식 리뷰요청해줘”. 현재 대화의 P1/P2 구현·Windows E2E 인계 r0002를 **새 리뷰 대상**으로 선택. 과거 P1 설계 R1 `HOST_PREFLIGHT_BLOCKED` 및 11/20 적용 시 사용자 리뷰 SKIP 이력은 변경·재처리하지 않음.
+- **신규 1건 ID 후보(중복 조회 시 GitHub REQUEST/REVIEW/RECEIPT 404):** `REQ-COWORK-P1P2-CONTEXT-CODE-R1-20261122`, `skill_id=cowork-context-design`(기존 설계 범위 유지, 다른 스킬로 위장해 자동 위임 우회 금지), revision 1, `POLICY-STATIC-V1`/USD3/모델 최대1회, `STATIC_ONLY`. 실제 Windows 보호 위임 allowlist·수동 signer 권한은 **NOT_VERIFIED**.
+- **실제 고정 입력 후보:** [Base64 ZIP 원본](P1_P2_REVIEW_CANDIDATE_r0001_1122.zip.base64) (10 members, ZIP 94843 B, SHA-256 `35de54934944807518e0141daaedde1888a42c08c1d264584e9b341f65dcd5f3`, 원격 base64 readback·decoded CRC PASS); CoWork Python 코드/시험/설계/검증계획 6개 + L1Work HTML/JS 2개, 내부 MANIFEST 각 원격 Git blob. **비트리거 후보**이며 정식 `collab/packages` ZIP/REQUEST로 올라간 것은 아님.
+- **Windows 제출용 정본:** [REQUEST 비실행 초안](P1_P2_FORMAL_REVIEW_REQUEST_UNPOSTED_DRAFT_r0001_20261122_KST.md) 및 [정식 제출·서명·READY 원샷](P1_P2_FORMAL_REVIEW_WINDOWS_ONE_SHOT_r0001_20261122_KST.md). 기존 `submit_review_request.py`로 Windows LIVE `select/check` + 서명/중복 검증 통과 전에는 Commit A/B·READY 작성 금지; 정책 미일치·사용자 승인 밖 비용·보호 수동 signer 불가면 `BLOCKED`.
+- **실행 상태 경계:** `CANDIDATE_BYTES=PASS`, `HANDOFF_POSTED=PASS`, `WINDOWS_LIVE_PREFLIGHT=NOT_RUN`, `FORMAL_REQUEST=NOT_POSTED`, `SOURCE_PIN=NOT_POSTED`, `APPROVAL_SIG=NOT_POSTED`, `READY=NOT_POSTED`, `CLAUDE_INDEPENDENT_REVIEW=NOT_RUN`, `MODEL_CALLS_BY_GPT=0`. GitHub 후보/초안은 Windows 자동 시작·접수/서명/알림 트리거가 아님. 기존 WATCHER LIVE·DB/키/위임/Task·L1Work 게시 변경 0.
+- **NEXT_ONE_ACTION:** 실제 Windows Claude Code 기존 허용 세션에서 위 원샷을 **한 번만** 실행해 로컬 config·ZIP bytes·scope/공식 signer·중복을 확인 → PASS 시에만 동일 draft/package로 새 정식 REQUEST/PIN과 유효 서명/READY 및 리뷰 1회·영수증 원격 확인. 실패 시 실행/유료 호출 없이 차단 사유만 기존 Work에 남길 것. 이 GPT 연결에는 Windows 호스트 직접 명령 전달이 없음.
+
+---
+
 ## 2026-11-21 KST — 병렬 통합 게이트 기존 코드/계약 재조회·게시 전 진입 추가 연결
 
 - **게시 시점 충돌 실측:** GPT가 작업하는 사이 CoWork `main`에 다른 세션의 통합 게이트 본체/계약 commit `244e80ce886b9d0e23153f9f3dc14235497c9539`, 후속 재시험 commit `5d63599865331485abaacbe2b3720c8a1f34f0de`가 먼저 도착. 새 HEAD 조회 후 **중복 구현/코드 덮어쓰기 중단**, 기존 `collab/ops/integration_gate.py`·19건 합성 시험·계약을 **REUSE**.
