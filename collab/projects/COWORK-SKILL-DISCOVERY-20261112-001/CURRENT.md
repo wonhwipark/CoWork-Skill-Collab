@@ -3,7 +3,7 @@
 ## 2026-11-22 KST — P1/P2 정식 리뷰 후보의 Windows 접수 보조 경로 연결 / 실제 접수는 대기
 
 - 기존 2026-11-22 후보 `REQ-COWORK-P1P2-CONTEXT-CODE-R1-20261122` 및 입력 ZIP 94,843B/SHA-256 `35de54934944807518e0141daaedde1888a42c08c1d264584e9b341f65dcd5f3` 불변. 기존 제출 초안/Windows 인계/과거 P1 설계 R1 및 리뷰 SKIP 이력 보존. 새 요청·재검토·비용 발생 0.
-- **새 공통 접수 보조:** [review_staged_submission.py](../../ops/review_staged_submission.py)와 [기존 자동 승인 Work 호스트 연결 가이드](../COWORK-AUTO-APPROVAL-20261115-001/REVIEW_INTAKE_ONE_SHOT_HOST_INTEGRATION_r0001_20261122_KST.md). 같은 Work Git HEAD에 고정된 기존 REQUEST 초안·Base64 ZIP을 안전하게 Windows 임시 파일로 복원하고 실제 LIVE policy로 기존 `submit_review_request.py`를 호출. 기본 dry-run. 테스트 10/10 PASS(격리 Git+mocked submitter), 원격 code bytes 확인.
+- **새 공통 접수 보조:** [review_staged_submission.py](../../ops/review_staged_submission.py)와 [기존 자동 승인 Work 호스트 연결 가이드](../COWORK-AUTO-APPROVAL-20261115-001/REVIEW_INTAKE_ONE_SHOT_HOST_INTEGRATION_r0001_20261122_KST.md). 같은 Work Git HEAD에 고정된 기존 REQUEST 초안·Base64 ZIP을 안전하게 Windows 임시 파일로 복원하고 실제 LIVE policy로 기존 `submit_review_request.py`를 호출. 기본 dry-run. 테스트 11/11 PASS(격리 Git+mocked submitter), 원격 code bytes 확인.
 - **실제 상태:** `FORMAL_REQUEST=NOT_POSTED`, `SOURCE_PIN=NOT_POSTED`, `WINDOWS_PREFLIGHT=NOT_RUN`, `WATCHER_AUTO_INTAKE=NOT_APPLIED`, `PROTECTED_SIGNER=NOT_VERIFIED`, `INDEPENDENT_REVIEW=NOT_RUN`. 새 코드 GitHub 게시가 Windows의 자동 실행/READY 또는 기존 보호 위임 허가가 되는 것은 아님.
 - **NEXT_ONE_ACTION:** Windows Claude Code 승인 세션의 실제 LIVE config·공식 signer·재처리 기록과 기존 watcher run_cycle 연결 가능성을 읽기 전용 확인한 뒤, 이미 게시된 동일 P1/P2 후보로 새 `review_staged_submission.py` **`--publish` 없는 1회 검증**. 유효한 수동 승인/운영 범위가 충족된 경우에만 REQUEST Commit A/B→보호 승인·READY·독립 리뷰 1회를 단계별 기록; 그렇지 않으면 BLOCKED. user-intent 자동 호스트 hook 설치는 별도 G0/SHADOW가 필요.
 
