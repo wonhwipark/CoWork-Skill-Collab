@@ -1,5 +1,17 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 2026-11-21 KST — 자연어 정식 리뷰 요청의 재발 방지: 단일 게시기·새 창 진입 경로 반영
+
+- **피드백 수용:** 사용자가 새 창에서 "정식 리뷰 요청해 줘"라고 말할 때마다 R1처럼 SOURCE_PIN이 REQUEST가 없는 Commit을 참조하는 오류가 재발하지 않도록, 주의사항이 아닌 **요청 게시 자체의 공통 진입 경로**를 구현/연결. 신규 Work 생성 없이 협업 운송 Work에서 관리.
+- **구현:** [`collab/ops/submit_review_request.py`](../../ops/submit_review_request.py) 신규 GitHub PUBLIC `main` 게시(파일 blob `7958724dc662a2bdc76987f80a66feba557d85f6`). 로컬 LIVE 정책/ZIP 사전 게이트 `review_request_gate.check_request` 재사용 → 원격 main clean/latest·정식 repo 확인 → ZIP/REQUEST **Commit A** 동시 고정·원격 readback → `SOURCE_PIN` **Commit B** 별도 게시(반드시 A 참조)·`review_pin_preflight.inspect` PASS 확인 → 원격 PIN 커밋 검증. 보호 승인·서명·READY·모델 실행은 포함하지 않음. `--publish` 없는 기본 호출은 미게시.
+- **합성시험:** 임시 bare Git origin을 이용한 8/8 **로컬 PASS**(정상 두 커밋, 드라이런 무쓰기, 동일 ID 재제출 차단, stale HEAD·dirty tree·패키지 해시·정책·신뢰하지 않는 origin 차단). 이 8건은 기존 정책/PIN 검증 의존성을 **모의한 개발자 제출 흐름 시험**이며, GitHub에 게시한 [실제 모듈 기반 회귀 소스](../../ops/tests/test_submit_review_request.py)는 원격 바이트 확인만 PASS, 원본 의존성과 Windows LIVE 실환경 재실행 **NOT_RUN**. 기존 `review_pin_preflight` 자체 합성 15/15 PASS 이력과 혼동 금지.
+- **새 창 기본 진입:** [루트 `AGENTS.md`](../../../AGENTS.md), [`CLAUDE.md`](../../../CLAUDE.md), [`CONTEXT_BRIEF.md`](../../CONTEXT_BRIEF.md), [`PRE_READY_SOURCE_PIN_PREFLIGHT_V1`](../../ops/CONTRACTS/PRE_READY_SOURCE_PIN_PREFLIGHT_V1.md)에 자연어 "정식 리뷰/협업 리뷰/재리뷰" 표준 처리·중복/승인 확인·차단/실행 구분 추가. 6개 파일 모두 원격 본문·blob 재조회 PASS. 새 ChatGPT 창이 해당 프로젝트 지침을 읽고 GitHub를 조회할 때 이 계약으로 진입하지만 **모든 세션/PC 자동 로딩 E2E 및 실제 Windows CLI 사용=NOT_VERIFIED**.
+- **안전 경계:** 실제 Windows reviewer.config/signature/READY 경로, LIVE watcher/DB/키/Task/위임/비용은 변경 0. 직접 GitHub API 우회 제출을 강제로 차단하는 저장소 ruleset/status check는 설치/검증하지 않음. 기존 R1/R2 서명·실행·영수증·중복 기록 보존; 새 요청/모델 호출 0.
+- **현재 판정:** `SOURCE_CODE_PUBLISHED=PASS`, `ROOT_ENTRYPOINT_LINKED=PASS`, `SYNTHETIC_SUBMIT_FLOW=8_PASS_WITH_STUBBED_GATES`, `REAL_EXISTING_GATE_TEST=NOT_RUN`, `WINDOWS_G0=NOT_RUN`, `HOST_HARD_ENFORCEMENT=NOT_APPLIED`, `REVIEW_R2_STATUS=UNCHANGED`.
+- **NEXT_ONE_ACTION:** 승인된 Windows Claude Code가 실제 최신 `main`에서 `python -m unittest collab.ops.tests.test_submit_review_request`(또는 discovery) 및 실제 `reviewer.config.json` 사용 **`--publish` 없는 드라이런**을 수행하고, 신규 합성/무과금 경로에서 Commit A/B 검증을 확인. 이 단계는 R2를 재큐잉하거나 실제 새 유료 리뷰를 만들지 않음. 운영 signer 강제 hook/브랜치 규칙이 추가로 필요하면 현재 승인 범위와 별도 호스트 안전 게이트 검토.
+
+---
+
 ## 2026-11-21 KST — CoWork PUBLIC 실조회 확인·Issue #2 Actions→GPT API 판정 실행기 게시 / GPT 자동 판정 OFF
 
 - **2026-11-21 사용자 확정 1사이클 한도:** `GPT 요청 → Claude 독립 리뷰 1회 → GPT 판정 1회 → 종료`. 수정보완 결과가 있어도 자동 재리뷰 0. 동일 Work의 다른 REQUEST도 자동 GPT 판정 전에 차단. [1사이클 게이트 구현 기록](GPT_ONE_CYCLE_GUARD_IMPLEMENTATION_r0001_20261121_KST.md). `gpt_disposition_actions.py`에 Work ID+CURRENT 정합성·다른 REQUEST 검사·Work 단위 `ONE_CYCLE_CLAIM.json` CREATE_ONLY(모델 호출 전) 및 테스트 6건 추가. **WINDOWS_PRE_CLAUDE_GATE=NOT_APPLIED**, WATCHER_LIVE v0.2.29 운영 변경 0; GPT_API=OFF, 유료 호출 0, GitHub Actions 실제 15건 시험 NOT_VERIFIED. 개발 소스·시험 문서 게시와 운영 자동 1사이클 E2E PASS는 별개.
