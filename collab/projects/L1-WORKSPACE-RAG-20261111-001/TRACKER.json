@@ -5,11 +5,11 @@
       "work_id": "L1-WORKSPACE-RAG-20261111-001",
       "skill": "l1-knowledge-updater",
       "title": "l1-knowledge-updater",
-      "phase": "VIEWER_V012_PUBLIC_DELIVERY_PASS_LINUX_HOST_G0_PENDING",
-      "owner": "GPT v0.1.2 PUBLIC ZIP 74940B SHA9be14c4c.../handoff/README readback verified; STYLE R1 USER_WAIVED, Windows cancellation unverified, host install NOT_RUN",
-      "self_test": "PASS_STATIC (JS label18/patch12/ZIP CRC11); Chromium/host E3E4 NOT_RUN",
-      "independent_review": "WIKI_UI_UX_R1_ACCEPT_WITH_CHANGE_CLOSED; VIEWER_AUTH_EDIT_DESIGN_R1_ACCEPT_WITH_CHANGE_CLOSED_B1_M2_N4; VIEWER_STYLE_DESIGN_R1_USER_WAIVED_HOST_STOP_UNVERIFIED",
-      "next_action": "업무 GPT/Linux Agent: L1Work/main/l1-workspace-viewer-ui_v0_1_2_1121.zip+handoffs/L1_WORKSPACE_VIEWER_FIRST_PHASE_V012_G0_DEPLOY_HANDOFF_r0001_20261121_KST.md로 실제 G0/보안/이식/조건부 배포. Windows protected signer waiver 확인(새 유료 R1 0)."
+      "phase": "VIEWER_WRITE_V020_DEV_PASS_LINUX_AUTH_WRITER_G0_PENDING",
+      "owner": "GPT v0.2.0 Write client/UI 개발 30 Node + 8 Python 자체시험 PASS, 10-file ZIP 대화 다운로드, L1Work G0 handoff 게시 PASS. 실제 Linux G0/Writer/B1-B3/E3-E4/배포 NOT_RUN",
+      "self_test": "PASS_DEV_30_NODE_8_PYTHON_ZIP_CRC; LIVE_BROWSER_AND_HOST_NOT_RUN",
+      "independent_review": "WIKI_UI_UX_R1_ACCEPT_WITH_CHANGE_CLOSED; VIEWER_AUTH_EDIT_DESIGN_R1_ACCEPT_WITH_CHANGE_CLOSED_B1_M2_N4; VIEWER_STYLE_DESIGN_R1_USER_WAIVED_HOST_STOP_UNVERIFIED; VIEWER_WRITE_V020_CODE_REVIEW_NOT_RUN",
+      "next_action": "업무 GPT/Linux Agent: L1Work/main/handoffs/L1_WORKSPACE_VIEWER_WRITE_V020_G0_AND_INTEGRATION_HANDOFF_r0001_20261121_KST.md 기준 실제 Viewer G0 인증·Writer·anchor 조회 후, 개발 ZIP 전달 확인 시 재현 패치·보안/회귀시험. HOST_DEPLOY=B1~B3/E3/E4 PASS·유효 승인 전 금지."
     }
   ]
 }
