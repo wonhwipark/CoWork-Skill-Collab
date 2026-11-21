@@ -13,7 +13,7 @@ import unittest
 from unittest.mock import patch
 import zipfile
 
-SCRIPT = Path(__file__).resolve().parents[1] / 'collab/tools/gpt_disposition_actions.py'
+SCRIPT = Path(__file__).resolve().parents[3] / 'collab/tools/gpt_disposition_actions.py'
 
 # The live script imports existing repo modules; use narrow stubs in isolated fixture.
 def metadata(raw):
