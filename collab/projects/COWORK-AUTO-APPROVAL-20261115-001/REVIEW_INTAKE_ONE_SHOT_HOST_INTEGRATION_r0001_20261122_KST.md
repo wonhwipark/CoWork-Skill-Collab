@@ -17,8 +17,8 @@
 - [새 보조 진입 코드](../../ops/review_staged_submission.py): 실제 Windows checkout의 **클린 main·원격 HEAD 일치**를 기존 `submit_review_request.require_clean_main`으로 확인 → 기존 Work 하위 **커밋된 REQUEST 초안·Base64 ZIP**만 Git object에서 읽음 → 일반 파일 모드·크기·path 탈출·YAML Work·ZIP 경로/크기/SHA-256 확인 → 격리 임시 폴더로 바이트 복원 → 기존 `submit_review_request.submit` 재사용.
 - `--publish`가 없으면 **기본 dry-run**. `--publish`가 있어도 기존 LIVE `review_request_gate.check_request`와 제출기 게이트가 성공할 때만 Commit A(REQUEST+ZIP), Commit B(SOURCE_PIN), 원격 readback을 수행. **서명/READY/모델 호출·알림·호스트 설정 변경 없음.**
 - [시험 원문](../../ops/tests/test_review_staged_submission.py): 임시 실제 Git repository를 사용한 10건 격리 단위시험 PASS. `submit`과 보호 signer/네트워크는 mock. 테스트한 로컬 코드 파일과 GitHub main 원격 **Git blob SHA 완전 일치**.
-- 코드 SHA-256: `review_staged_submission.py` = `16311f140e2e348fad598a19d4ec4c7787fc6718dceb7287805e498305f7456a`, Git blob = `c1d78a5dd30c63f03eec106a50c12142fd1ad018`.
-- 테스트 SHA-256: `test_review_staged_submission.py` = `a34f0df6567b7ee788aa9d6fff81003ae30f8c4eda4272f321b2f099cc7b7d21`, Git blob = `a1a4ecb42712736be9583f3558998eb2791a6ee1`.
+- 코드 SHA-256: `review_staged_submission.py` = `5d4dfffe0f1fd92d543a7a352d60d3d5aed5196d6e7f2e5b2183d9605276b518`, Git blob = `d33b3b5a4669cfb1e25a9c78d0b92209b0ffdbe7`.
+- 테스트 SHA-256: `test_review_staged_submission.py` = `3fb6a9dd0937a3b14ccc08b537b4784179bfff944a1ca7c5c234ba16b1c2c1e2`, Git blob = `ebe467de726048f223c94a92336ae4f4d7ed1c60`.
 - **제약:** 이 코드는 기존 제출기로 연결하는 로컬 진입점이며 Windows에 자동 설치·호출된 watcher hook이 아니다. 호스트 환경에서 실제 CLI 및 다른 기존 회귀 전체 실행은 `NOT_RUN`. P1/P2 94,843B ZIP의 Windows 새 독립 재검증도 `NOT_RUN`.
 
 ## 3. 기존 P1/P2의 정확한 입력과 검증 경로
@@ -53,4 +53,4 @@ python collab/ops/review_staged_submission.py --repo-root . --work-id COWORK-SKI
 - `CODE_PUBLISHED=PASS`, `GIT_BLOB_REMOTE_READBACK=PASS`, `ISOLATED_LOCAL_TEST=10_PASS`
 - `REAL_SUBMITTER_INTEGRATION_TEST=NOT_RUN`, `WINDOWS_HOST_PREFLIGHT=NOT_RUN`, `WATCHER_INTAKE_HOOK=NOT_APPLIED`
 - `P1P2_REQUEST=NOT_POSTED`, `APPROVAL_SIG/READY=NOT_POSTED`, `INDEPENDENT_REVIEW=NOT_RUN`, `PAID_MODEL_CALLS=0`.
-- **NEXT_ONE_ACTION:** Windows Claude Code가 기존 호스트의 실제 권한·설정·watcher hook 가능성을 무과금 G0 점검하고 위 코드 `--publish` 없는 dry-run과 10개 회귀 시험을 1회 수행. 통합 설치가 승인 범위 밖이면 필요한 운영 변경 승인만 요청하고 기존 Work에 BLOCKED/NOT_RUN 게시. 기존 P1/P2 유료 리뷰는 보호 승인 확인 전 절대 실행하지 않음.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 기존 호스트의 실제 권한·설정·watcher hook 가능성을 무과금 G0 점검하고 위 코드 `--publish` 없는 dry-run과 11개 회귀 시험을 1회 수행. 통합 설치가 승인 범위 밖이면 필요한 운영 변경 승인만 요청하고 기존 Work에 BLOCKED/NOT_RUN 게시. 기존 P1/P2 유료 리뷰는 보호 승인 확인 전 절대 실행하지 않음.
