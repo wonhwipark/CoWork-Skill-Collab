@@ -74,11 +74,10 @@ def prepare_staged_inputs(root: Path, work_id: str, draft_path: str,
     if fields.get("project_id") != work_id or fields.get("work_id") != work_id:
         raise SubmissionBlocked("STAGED_WORK_MISMATCH")
     pkgpath = fields.get("package_path", "")
-    if not pkgpath.startswith("/SKILL-COLLAB/packages/"):
-        raise SubmissionBlocked("STAGED_PACKAGE_PATH_MISMATCH")
     name = PurePosixPath(pkgpath).name
-    if (not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]{4,180}\.zip", name)
-            or name != pkgpath.rsplit("/", 1)[-1]):
+    if pkgpath != f"/SKILL-COLLAB/packages/{name}":
+        raise SubmissionBlocked("STAGED_PACKAGE_PATH_MISMATCH")
+    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]{4,180}\.zip", name):
         raise SubmissionBlocked("STAGED_PACKAGE_NAME_INVALID")
     try:
         size = int(fields.get("package_size_bytes", ""))
