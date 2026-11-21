@@ -1,5 +1,16 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-21 KST — R1 감시기 SOURCE_PIN 결함 분석 수용, R2 신규 요청/핀 재게시
+
+- **사용자 제공 Windows 실측:** 기존 `REQ-L1-KNOWLEDGE-PREFLIGHT-V020-R1-20261121`은 감시기가 `AUTO_NOT_ELIGIBLE / WAIT_INPUT` 및 `COMMIT_UNREADABLE` 기록. `84abde50...`에는 ZIP만 존재하고 REQUEST는 `1a49b3cf...`에서 게시됨. 또한 `skill_id=knowledge_analysis_preflight`는 자동 위임 허용 대상이 아님. R1 서명·READY·리뷰/영수증/Job 미관측; 재실행·재큐잉하지 않고 보존.
+- **정정 결과:** [PIN 결함/R2 정정 원격 QA 보고](KNOWLEDGE_PREFLIGHT_R1_PIN_FAILURE_R2_TRANSPORT_CORRECTION_r0001_20261121_KST.md). 새 [R2 REQUEST](../../requests/REQ-L1-KNOWLEDGE-PREFLIGHT-V020-R2-20261121/REQUEST.md) 커밋 `50a8b5d9e832b1fbf9095c729c813e83134b1fd8`에서 REQUEST 실존(blob `1067a502abdacf7ed314efd986b1b2f4aff6864f`) 및 고정 ZIP 실존(blob `bbacdcfd33860060552ef5928be0f37b6b436cdb`) 원격 확인. 새 [R2 SOURCE_PIN](../../requests/REQ-L1-KNOWLEDGE-PREFLIGHT-V020-R2-20261121/SOURCE_PIN.json) 커밋 `5493470341c5a6ffd1dad31f34c33269317c81f9`가 앞의 REQUEST+ZIP 동시존재 commit을 참조·문자열 repo_id 일치, 원격 readback PASS.
+- **동일 후보:** `knowledge_analysis_preflight_v0_2_0_1121_REVIEW_INPUT.zip` SHA-256 `90a0d55842138d4c813f0dbc3a5c8e4625e84a110afe68035348297ffedad1f3` / 16138 bytes. 제품 소스·MSC·호스트 운영 설치 불변, 개발자 합성시험 38/38 PASS 이력 유지.
+- **승인·실행 경계:** `R2_REQUEST_AND_SOURCE_PIN=PASS_REMOTE_VERIFIED`, `PIN_COMMIT_READABILITY=PASS`, `AUTO_SIGNING=NOT_ELIGIBLE`, `MANUAL_SIGNING=NOT_RUN`, `READY=NOT_OBSERVED`, `INDEPENDENT_REVIEW=NOT_RUN`, `PUBLIC_FINAL_ZIP=HOLD`, `BUSINESS_GPT_IMPLEMENTATION_HANDOFF=HOLD`. 대상 `skill_id`를 다른 자동승인 스킬로 바꾸거나 위임을 무단 변경하지 않음. 보호 signer 공식 수동 1회 승인·비용/중복 검증 전 READY/모델 호출 금지.
+- **NEXT_ONE_ACTION:** 승인된 Windows signer/Claude Code가 R2에 대한 **유효 수동 1회 승인** 자격·정책·R1/R2 중복 0을 검증 후 적격 시에만 보호 서명·READY 마지막 게시. 미허가면 HOLD 보고. 결과/영수증 수신 → GPT 판정 → PUBLIC 최종 ZIP → 업무 GPT Updater 통합 r0002 인계 순서 유지.
+
+---
+
+
 ## 2026-11-21 KST — 순서 정정: 설계 GPT 구현·협업 독립 리뷰→PUBLIC 패키지→업무 GPT Updater 통합
 
 - **최신 사용자 결정:** 이전 '업무 GPT에 Updater 수정 요구서 선전달'을 **수정 수용/실행 보류(HOLD)**. 설계 GPT가 먼저 독립 `knowledge_analysis_preflight` 기능 구현 및 자체시험 → Windows Claude Code 독립 리뷰 → GPT 최종 판정 → 안전 게이트를 통과한 **최종 ZIP만** PUBLIC `wonhwipark/L1Work/main` 루트에 게시·원격 확인 → 그 정확한 배포 버전/입출력 계약을 포함한 신규 r0002 핸드오프로 업무 GPT에게 `l1-knowledge-updater` 기존 기능 REUSE/CONNECT/최소 EXTEND 구현 요청. Viewer/MCP는 이 선행 흐름에서 제외.
