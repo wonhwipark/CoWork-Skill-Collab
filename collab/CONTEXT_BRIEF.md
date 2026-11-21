@@ -15,7 +15,7 @@
 
 ## 자연어 “정식 리뷰 요청” — 새 창 기본 진입
 
-리뷰 요청은 단순 문서 게시가 아니다. **현재 설계를 진행하던 동일 창에서 사용자가 “리뷰요청해줘” 한마디만 해도**, 해당 창에서 마지막으로 확정한 Work·설계/구현 범위·source revision을 자동 선택하여 정식 리뷰 제출 절차로 진입한다. 이미 제공된 Work ID·파일·설명은 반복 질문하지 않는다. 사용자 표현을 예시로 논의하는 문맥은 실행 요청이 아니다. 새 창의 GPT/Windows Claude Code는 사용자 자연어 **“정식 리뷰 요청해 줘”**를 받으면 기존 Work·기존 요청/영수증/승인을 확인한 다음 [표준 REQUEST/PIN 게시·차단 계약](ops/CONTRACTS/PRE_READY_SOURCE_PIN_PREFLIGHT_V1.md)으로 이동한다. 구현: `collab/ops/submit_review_request.py`(게시 전 정책+ZIP 검사, Commit A REQUEST+ZIP, Commit B PIN, 원격 검증), `collab/ops/review_pin_preflight.py`(읽기 전용 PIN 검사). 전용 명령 미사용·호스트 정책 미확인이면 정식 리뷰 접수/실행 완료로 보고하지 않는다. **서명·READY·Claude 결과/영수증은 별도 확인**. 문서 연결만으로 모든 새 창에서 자동 실행되거나 Windows 운영 hook이 설치된 것은 아니다.
+리뷰 요청은 단순 문서 게시가 아니다. **현재 설계를 진행하던 동일 창에서 사용자가 “리뷰요청해줘” 한마디만 해도**, 해당 창에서 마지막으로 확정한 Work·설계/구현 범위·source revision을 자동 선택하여 정식 리뷰 제출 절차로 진입한다. 이미 제공된 Work ID·파일·설명은 반복 질문하지 않는다. 사용자 표현을 예시로 논의하는 문맥은 실행 요청이 아니다. 새 창의 GPT/Windows Claude Code는 사용자 자연어 **“정식 리뷰 요청해 줘”**를 받으면 기존 Work·기존 요청/영수증/승인을 확인한 다음 [표준 REQUEST/PIN 게시·차단 계약](ops/CONTRACTS/PRE_READY_SOURCE_PIN_PREFLIGHT_V1.md)으로 이동한다. 구현: `collab/ops/review_staged_submission.py`(GitHub 보관 후보의 Windows 실제 정책검사·기존 제출기 연결; **운영 자동 hook 미적용**), `collab/ops/submit_review_request.py`(게시 전 정책+ZIP 검사, Commit A REQUEST+ZIP, Commit B PIN, 원격 검증), `collab/ops/review_pin_preflight.py`(읽기 전용 PIN 검사). 전용 명령 미사용·호스트 정책 미확인이면 정식 리뷰 접수/실행 완료로 보고하지 않는다. **서명·READY·Claude 결과/영수증은 별도 확인**. 문서 연결만으로 모든 새 창에서 자동 실행되거나 Windows 운영 hook이 설치된 것은 아니다.
 
 ## 0. 협업 → 업무·지식 → 피드백 전체 흐름
 
