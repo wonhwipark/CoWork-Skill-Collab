@@ -7,7 +7,7 @@
       "title": "skill-discovery",
       "phase": "P1P2_ARCHITECTURE_REVIEWED__F3_DIAGNOSTICS_AND_P2_PACKAGE_PATH_POSTED__FULL_REGRESSION_NOT_RUN",
       "owner": "GPT: P1/P2 architecture review and conservative read-only code hardening posted to main; earlier F1 28 PASS pertains prior source; 7 additional tests posted but not executed.",
-      "self_test": "PREVIOUS_SOURCE_28_PASS__ISOLATED_PATCH_LOGIC_10_PASS__NEW_FULL_35_NOT_RUN",
+      "self_test": "PREVIOUS_SOURCE_28_PASS__ISOLATED_PATCH_LOGIC_10_PASS__30_QUESTION_DIAGNOSTIC_PROBE_ONLY__NEW_FULL_35_NOT_RUN",
       "independent_review": "R1_COMPLETED_STATIC_ON_OLD_INPUT__LATEST_PATCH_NOT_REVIEWED",
       "next_action": "Run py_compile + 35 targeted unittest cases against new bytes; then A4 question/evidence benchmark and separately existing Windows r0002 E2E."
     }
