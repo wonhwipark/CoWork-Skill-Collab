@@ -1,0 +1,1 @@
+{"processing_key": "REQ-COWORK-REVIEW-ARCH-DESIGN-R1-20261122|1|c67bc342fe77547b000fc42e1b886396cbef035c0d265dbcd124947e267ed83f|1", "request_id": "REQ-COWORK-REVIEW-ARCH-DESIGN-R1-20261122", "request_revision": "1", "package_sha256": "c67bc342fe77547b000fc42e1b886396cbef035c0d265dbcd124947e267ed83f", "ok": true, "watcher_version": "0.2.29"}
