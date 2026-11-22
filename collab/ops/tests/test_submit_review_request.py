@@ -9,6 +9,7 @@ import sys
 import tempfile
 import unittest
 import zipfile
+from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import submit_review_request as mod
@@ -114,6 +115,28 @@ run_policy_ref: POLICY-STATIC-V1
         (self.local / 'untracked.txt').write_text('dirty')
         with self.assertRaisesRegex(mod.SubmissionBlocked, 'DIRTY_WORKTREE'):
             self.submit(publish=True)
+
+    def test_input_package_changed_after_preflight_is_blocked(self):
+        original = mod.check_request_for_publication
+        def altered(*args, **kwargs):
+            result = original(*args, **kwargs)
+            self.pkg.write_bytes(b'changed-after-validation')
+            return result
+        with patch.object(mod, 'check_request_for_publication', side_effect=altered):
+            with self.assertRaisesRegex(mod.SubmissionBlocked, 'PACKAGE_CHANGED_AFTER_PREFLIGHT'):
+                self.submit(publish=True)
+        self.assertFalse((self.local / f'collab/requests/{RID}').exists())
+
+    def test_input_request_changed_after_preflight_is_blocked(self):
+        original = mod.check_request_for_publication
+        def altered(*args, **kwargs):
+            result = original(*args, **kwargs)
+            self.req.write_bytes(self.req.read_bytes() + b'\npost-check-change\n')
+            return result
+        with patch.object(mod, 'check_request_for_publication', side_effect=altered):
+            with self.assertRaisesRegex(mod.SubmissionBlocked, 'REQUEST_CHANGED_AFTER_PREFLIGHT'):
+                self.submit(publish=True)
+        self.assertFalse((self.local / f'collab/requests/{RID}').exists())
 
     def test_package_hash_mismatch_blocks(self):
         self.pkg.write_bytes(b'invalid zip')

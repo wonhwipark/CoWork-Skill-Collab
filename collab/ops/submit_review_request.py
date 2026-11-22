@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 from decimal import Decimal
+import hashlib
 import json
 from pathlib import Path
 import re
@@ -120,6 +121,13 @@ def submit(*, root: Path, request_draft: Path, package: Path,
         raise SubmissionBlocked('SYMLINK_INPUT')
     source_request = request_draft.read_bytes()
     source_package = package.read_bytes()
+    # The same bytes verified above must be the bytes committed. Prevent a
+    # concurrent edit between preflight and the immutable Git source commit.
+    if hashlib.sha256(source_request).hexdigest() != result['request_sha256']:
+        raise SubmissionBlocked('REQUEST_CHANGED_AFTER_PREFLIGHT')
+    if (len(source_package) != result['package_size_bytes']
+            or hashlib.sha256(source_package).hexdigest() != result['package_sha256']):
+        raise SubmissionBlocked('PACKAGE_CHANGED_AFTER_PREFLIGHT')
     target_package = root / package_rel
     if target_package.exists():
         if target_package.is_symlink() or target_package.read_bytes() != source_package:

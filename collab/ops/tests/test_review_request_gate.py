@@ -257,6 +257,12 @@ class GateTests(unittest.TestCase):
         with self.assertRaisesRegex(gate.GateReject, "PROJECT_WORK_SCOPE_MISMATCH"):
             self.pass_check()
 
+    def test_nested_request_package_path_rejected(self):
+        self.fields["package_path"] = "/SKILL-COLLAB/packages/nested/candidate.zip"
+        self.save_request()
+        with self.assertRaisesRegex(gate.GateReject, "INVALID_PACKAGE_PATH"):
+            self.pass_check()
+
     def test_invalid_request_path_rejected(self):
         self.fields["package_path"] = "/SKILL-COLLAB/packages/../candidate.zip"
         self.save_request()

@@ -183,7 +183,7 @@ def _check_request_inputs(request: Path, package: Path,
     if intent == "unified" and required_budget != Decimal(DEFAULT_BUDGETS["unified"]):
         raise GateReject("UNIFIED_REVIEW_BUDGET_MISMATCH")
     rawpath = fields.get("package_path", "")
-    if not rawpath.startswith("/SKILL-COLLAB/packages/") or ".." in PurePosixPath(rawpath).parts:
+    if rawpath != f"/SKILL-COLLAB/packages/{package.name}" or ".." in PurePosixPath(rawpath).parts:
         raise GateReject("INVALID_PACKAGE_PATH")
     if Path(rawpath).name != package.name or not package.name.endswith(".zip"):
         raise GateReject("PACKAGE_BASENAME_MISMATCH")
