@@ -1,0 +1,12 @@
+---
+schema: SKILL_COLLAB_READY_V1
+state: READY
+request_id: REQ-COWORK-P1P2-CONTEXT-CODE-R1-20261122
+request_revision: 1
+request_path: /SKILL-COLLAB/requests/REQ-COWORK-P1P2-CONTEXT-CODE-R1-20261122/REQUEST.md
+request_sha256: d7ea49b6d5cad731f2e67c37f862f9a2c57c708df7bc8211fe117ac267724a08
+package_sha256: 35de54934944807518e0141daaedde1888a42c08c1d264584e9b341f65dcd5f3
+baseline_id: COWORK-LIVE-A-20261114
+---
+
+# ready
