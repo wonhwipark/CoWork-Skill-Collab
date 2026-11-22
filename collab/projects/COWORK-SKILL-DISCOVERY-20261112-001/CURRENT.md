@@ -1,5 +1,15 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 2026-11-22 KST — P1/P2 전체 설계 평가·F3 진단/P2 패키지 관계 안전 보완
+
+- **설계 종합판정:** `RETAIN_WITH_TARGETED_IMPROVEMENT`. 기존 브리프 → 현재 Work CURRENT → 필요한 근거/영수증, P2 200건 예산·부분 결과·오류 격리 유지. 핵심 미해결은 하드코딩된 6경로/키워드 오분류, 같은 Work의 질문별 하위 근거 확장, 원격/호스트 최신성, A4/Windows 실제 실측.
+- **GitHub main 코드 변경:** 기존 `choose()`/CLI 선택 계약을 그대로 두고 `route_diagnostics()`의 명시 선택·불일치 폴백·복수 주제·`그룹웨어` 부분일치 위험을 `routing`으로 출력; `summary_truncated` 표시; P2 패키지 경로의 동일 basename 오연결 방지. 기존 요청/서명/READY/독립 리뷰 영수증과 WATCHER/LIVE/DB/Actions/L1Work UI는 변경하지 않음.
+- **원격 게시/대조:** 소스 commit `5c73e0179a313695ed4b1281f5653e7d2853db9c`, 시험 commit `f45ec56b42e778704dcdfe4aa32758eee9d2376e`; 전체 본문 readback 일치. source Git blob `8e9351b96c9af491e344d890d4b63d35372de1e3`, SHA-256 `6f9f94e98a53133b1466ffc6bcc2dcad28bd84d460ea306b0e7d6a5def2caaab`; 시험 Git blob `5e3fdcff55d3f95063ec2a136abaf2c4765db1f9`, SHA-256 `ad8f3aae4a12ff68b47182f7fff6d24486306f827d68f5503b1d9d9553c1c7be`.
+- **시험 구분:** 변경 전 소스 28/28 PASS는 당시 결과. 이번 변경의 독립 축소 Python 함수 재현 10/10 PASS; 기존 28+신규 7 = 실제 최신 소스 전체 35건 회귀·`py_compile` **NOT_RUN**. Windows Claude 컨텍스트 로딩/Q1~Q5·A4 30문항 실제 정확도/조회량 A/B·추가 독립 리뷰 **NOT_RUN**. 기존 R1은 종결·재실행 금지.
+- **근거:** [P1/P2 설계 종합평가 및 최소 개선](P1_P2_ARCHITECTURE_EVALUATION_AND_SAFETY_HARDENING_r0001_20261122_KST.md) · [운용 가이드 §8](P1_P2_CONTEXT_APPLICATION_GUIDE_r0001_20261120_KST.md#8-2026-11-22-전체-설계-평가f3-진단p2-패키지-관계-안전-개선). 기존 결과/영수증과 F1 보완 이력 보존.
+- **NEXT_ONE_ACTION:** 실제 Python 환경에서 갱신된 두 파일의 `py_compile` 및 35건 회귀를 수행·판정. 통과 후 질문별 최신 하위 근거 확장/A4 골든셋 기반 라우터 정책 최소 보완을 같은 Work에서 진행; Windows 실제 세션 검증은 기존 r0002 인계를 재사용.
+
+---
 
 ## 2026-11-22 KST — F1 부분 결과 유지·개별 오류 격리 적용 / F2 유지
 
