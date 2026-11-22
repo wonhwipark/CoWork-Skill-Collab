@@ -5,6 +5,25 @@
 - 추가 원인: `skill_id=knowledge_analysis_preflight`가 실제 자동 위임 허용 집합에 없음. 자동 signer가 허용되지 않는 요청을 수동 승인 없이 실행할 수 없음.
 - 효력: **신규 리뷰 요청을 게시·서명·READY 처리하는 GPT/Windows Claude Code의 절차 계약**. 이 MD와 Python helper의 게시만으로 Windows 운영 watcher의 실제 preflight 로더/호출 경로가 변경되는 것은 아님. 운영 자동 연동 여부는 별도 G0 검증.
 
+## GPT 책임 ② 대상 확정 → ③ 정식 제출, 완료 게이트 (r0005 / 2026-11-22 KST)
+
+**실제 사용 명령:** 진행 중인 GPT 설계 대화창에서 **“리뷰요청해줘”**, **“리뷰체계 최신버전 확인후 다시 리뷰요청해줘”** = 그 창의 마지막 확정 설계/구현물을 **Windows Claude Code 정식 독립 리뷰로 접수하라는 실행 지시**. 설명·미리보기·입력 후보만 요구한 게 아니다. 이 문구를 인용·정책 논의 중 언급한 경우는 트리거가 아니다. `AGENTS.md`와 본 계약을 해당 창에서 최신 readback 후 바로 적용하며 사용자가 Work ID·파일명·긴 프롬프트를 반복 입력하지 않게 한다.
+
+**② 대상 확정 — GPT 직접 검증 필수**
+
+1. 현재 창에서 최근 사용자 수정/결정·확정 범위·최신 설계/구현물을 채택하고, 관련 기존 Work의 CURRENT 최상단·기존 설계·구현·시험·열린 메모를 대조한다. 다른 창의 Work를 추측·혼합하지 않는다. 이전에 사용자가 생략한 리뷰와 새로운 명시 요청은 구분한다.
+2. 동일 Work의 현재 원본 repo/branch/commit/path·ZIP 정확한 바이트/size/SHA-256·리뷰 목적·포함/제외·근거/시험을 **실물 조회**해 고정한다. 과거 정적 인계/후보가 최신과 다르면 최신 확정본 기준으로만 요청한다. README·MD 이름이나 ZIP 후보의 주장만으로 고정 PASS를 만들지 않는다.
+3. 기존 `collab/requests/<RID>`, `collab/reviews/<RID>`, `collab/receipts/<RID>`, 승인/서명/READY/불확실 이력과 remote HEAD를 먼저 조회한다. 기존 유효한 REQUEST/READY/영수증이 있으면 신규 요청을 만들지 않고 진행 상태를 회수하며, 확인되지 않은 재시도/재서명을 금지한다. 이전에 비트리거 초안만 게시된 경우 해당 실제 원본을 재검증해 재사용하되 새 Work·ZIP·RID를 불필요하게 생성하지 않는다.
+
+**③ 정식 제출 — GPT의 완료 판단 필수**
+
+4. 요청 형식·실제 ZIP 구조/CRC/경로 및 SHA·크기·Git 원본·정책 상한·실제 Windows LIVE 정책 확인을 선행한다. 사용할 실제 제출 API/CLI·권한을 검증한다. 현행 `review_request_gate.py`, `submit_review_request.py`, `review_pin_preflight.py`를 **REUSE**한다. Base64 ZIP·REQUEST 초안이 이미 게시된 경우 `review_staged_submission.py` 경로를 재사용하되 이를 요청 접수로 오인하지 않는다.
+5. **조건을 충족하고 실제 게시 권한이 있는 경우** GitHub `main`에 Commit A: 정확한 `REQUEST.md` 및 패키지 ZIP **같은 트리** → 원격 바이트·size/SHA/요청 필드 검증 → Commit B: `SOURCE_PIN.json`이 A를 정확히 지시하고 `repo_id`가 **문자열** → 검증기로 PIN 검사 및 원격 readback을 수행한다. 해당 단계에 필요한 정책/보호 권한 미검증이면 **실행하지 않고 정확한 경계에서 fail-closed**한다. GitHub API 직접 게시도 같은 게이트를 만족해야 하며, GPT가 읽을 수 없다는 이유로 Windows 보호 정책을 정적 GitHub 문서로 대신할 수 없다.
+6. 결과 **`SUBMITTED_AWAITING_PROTECTED_SIGNER`를 말할 수 있는 유일한 근거**는 실제 `collab/requests/<RID>/REQUEST.md` + `SOURCE_PIN.json` 원격 존재, A 고정 ZIP 포함·정합성/바이트 SHA·두 커밋 검증 PASS이다. `REQUEST DRAFT` front matter의 `state: SUBMITTED`, `collab/projects/` 초안·Base64 ZIP·CURRENT/TRACKER 게시, Windows 원샷 지시서만으로는 절대로 `REQUEST_POSTED`/정식 리뷰 접수 PASS로 판정하지 않는다.
+7. 도구·실제 LIVE config·Git commit A/B 검증·호스트 권한이 **불가능한 경우**, GPT는 `FORMAL_REQUEST=NOT_POSTED` 또는 실제 부분 상태(예: `POST_CONFLICT`/`UNCERTAIN`)와 막힌 **정확한 단계**만 보고한다. ②③ 가능한 검증은 마친 후 차단을 짧게 보고하며, 새로운 리레이/daemon/스킬/워크플로 발명이나 반복적인 인계서 게시를 후속 기본 작업으로 확장하지 않는다. 이미 승인된 범위의 실행은 중간마다 재승인 질문 없이 진행하되 유료 리뷰·서명·READY·운영 변경은 기존 실제 보호 정책과 승인 범위를 유지한다.
+
+**GPT의 사용자 보고:** `Work ID / 리뷰 대상·원본 revision / 검증된 요청 ID / FORMAL_REQUEST=SUBMITTED|NOT_POSTED|BLOCKED / GitHub 정식 REQUEST·PIN 실제 링크·커밋(있을 때만) / 실제 차단 한 가지` 순서. ②③의 검증/실제 GitHub 게시 여부와 ④ Windows 보호 signer/READY 및 Claude 리뷰 완료는 서로 별개로 기록한다. 동일 창에서 정식 리뷰 지시를 받고 **단순 일반 검토로 되돌리지 않는다**. 기존 이력·불확실 재실행 금지를 그대로 유지한다.
+
 ## 진행 중인 설계 창의 단축 명령 (r0003 / 2026-11-21 KST)
 
 - 사용자가 **현재 설계·개발을 이어 온 동일 대화창**에서 단독으로 **“리뷰요청해줘”** 또는 “리뷰 요청해줘”라고 실행 지시하면 **바로 앞까지 확정·갱신한 해당 작업의 정식 Windows Claude Code 독립 리뷰 요청**으로 해석한다. “정식”, Work ID, 스킬명, 파일명, 긴 프롬프트를 재입력하도록 요구하지 않는다. “○○ 설계하고 정식 리뷰까지 진행해줘”는 설계+리뷰 일괄 요청으로 동일 계약을 적용한다. 이 문구들을 *예시·인용·규칙 논의*로 언급한 경우에는 실행 지시로 간주하지 않는다. 단순한 “리뷰해줘”·“검토해줘”는 기존 설계의 일반 검토 요청일 수 있으므로 자동으로 유료 정식 리뷰 접수라고 확대 해석하지 않는다.
