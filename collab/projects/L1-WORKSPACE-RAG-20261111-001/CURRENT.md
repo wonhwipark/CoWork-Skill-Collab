@@ -1,5 +1,19 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-23 KST — Viewer v0.5.1 업무 도우미 기본 숨김, 완결 ZIP·인계서 L1Work 전달
+
+- **사용자 최종 지시:** v0.5.0 ZIP은 불변 보존, 버전 업한 신규 ZIP 개발, 새 버전 기준 업무 GPT 인계서를 발행. 업무 GPT에는 v0.5.0 ZIP·인계서를 전달하지 않으므로 **기존 v0.5.0 인계 내용 전량을 신규 인계서에 포함**.
+- **신규 ZIP:** [`l1-workspace-viewer-wiki-integrated_v0_5_1_1123.zip`](https://github.com/wonhwipark/L1Work/blob/main/l1-workspace-viewer-wiki-integrated_v0_5_1_1123.zip), **349,332 bytes / 34 entries / SHA-256 `0bc0240261e29c863c541e9650e9f99271b2b924ffd52be753598889f66cf290`**, Git blob `90616a432879f9f253a31b54ad51ed0a79283626`. L1Work main 게시 commit `4dd8cfe691f9d18f658c8f23f0da5ed5d8d6d129`, ZIP 원격 바이트 SHA 일치 확인. 이전 v0.5.0 ZIP 불변.
+- **완결 업무 GPT 인계서:** [`handoffs/L1_WORKSPACE_VIEWER_V051_TODAY_ASSISTANT_HANDOFF_r0001_20261123_KST.md`](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_WORKSPACE_VIEWER_V051_TODAY_ASSISTANT_HANDOFF_r0001_20261123_KST.md) (9,626 chars). v0.5.0 인계서 7,322 chars의 전체 절·계약·A01~A10을 신판 입력 경로로 계승하고, H01~H05 추가. 원격 본문 일치 확인. 별도 이전 자료 요구 없음.
+- **UI 변경:** 문서/오늘의 업무 모두 도우미 대화 기본 숨김. 상단 `업무 도우미` 버튼, 오늘 카드 `이 업무로 대화`, `크게 보기`에서만 열기. 닫으면 문서 목차·오늘 목록 폭 복구, Work별 메모리 대화·초안 유지. 합성 Demo/실제 LLM 미연결 상태 불변.
+- **기타 공개 자료:** [미리보기](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_Workspace_Viewer_v0_5_1_20261123_KST.html), [개발 결과](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_WORKSPACE_VIEWER_V051_DEVELOPMENT_RESULT_20261123_KST.md), [체크섬](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_WORKSPACE_VIEWER_V051_SHA256SUMS_20261123_KST.txt), `handoffs/README.md` 색인도 함께 커밋.
+- **자체 정적 확인:** v0.5.0 ZIP SHA/34 엔트리 원본 복원, Write v0.2.0 3파일 SHA 보존, 변경 앵커, v0.5.1 ZIP 34개 파일별 해시 왕복, standalone CSP 재계산, 원격 ZIP/인계 본문 readback **PASS**. v0.5.0 기존 Node **25 PASS는 이전 버전 근거**이며 v0.5.1 Node/브라우저 E2E/업무 Linux G0/LLM·Agent/운영 설치 **NOT_RUN**.
+- **독립 리뷰·운영:** 사용자의 리뷰 생략 방침에 따라 v0.5.1 신규 독립 리뷰 요청 0; 기존 R1 및 생략 이력 불변. `development_not_for_deployment`, 실제 업무 Linux 설치/LLM 연결/Write 활성화 승인 아님.
+- **NEXT_ONE_ACTION:** 업무 GPT에 **위 v0.5.1 인계서와 v0.5.1 ZIP 두 파일만** 전달하여 현장 Viewer G0, H01~H05/A01~A10 시험 후 기존 승인 범위에서 최소 이식. 운영 게이트 별도 판정.
+
+---
+
+
 ## 2026-11-23 KST — L1 Knowledge Updater 야간 분석 인계 MD 공개 전달 / 호스트 미실행
 
 - **업무 GPT 전달:** [야간 Module·Procedure·MSC 분석 인계 r0001](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_KNOWLEDGE_UPDATER_NIGHTLY_MODULE_PROCEDURE_MSC_HANDOFF_r0001_20261123_KST.md)를 `wonhwipark/L1Work/main/handoffs/`에 신규 게시, Git blob `7d6b83fb261986251e696878dddeb64f313b4fdd`, commit `0252f45427cc85e09a887be317c67c7a28f25df3`. README 색인 commit `314e55b7e0b96d5e8c6a02038d1fb622574440f8` 및 원격 본문 재조회 확인.
