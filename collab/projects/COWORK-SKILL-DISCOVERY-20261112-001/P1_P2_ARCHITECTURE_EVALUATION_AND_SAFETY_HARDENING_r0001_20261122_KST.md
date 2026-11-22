@@ -60,6 +60,8 @@
 
 소스 게시/로컬 축소 시험을 새로운 전체 회귀 PASS 또는 실사용 성공으로 바꾸지 않는다. 이 단계에는 신규 모델 호출·자동 승인·READY·Windows LIVE·Actions 실행·L1Work UI 게시 없음.
 
+- 30개 기존 라우터 예문에 대한 **축소 독립 Python 로직 재현**: 24개 기존 선택 결과 24/24 동일, 새 진단의 `SINGLE_TOPIC_MATCH` 23건 / `MULTI_TOPIC_REVIEW` 3건 / `FALLBACK_UNVERIFIED` 3건 / `SUBSTRING_MATCH_REVIEW` 1건. 7건은 확인 필요로 표시. 이는 실제 저장소 모듈 실행, 사용자 골든 정답률, A4 자연어 답변 A/B가 아니다.
+
 ## 4. 후속 설계: 우선순위 및 완료 기준
 
 **P0 — 새 소스 회귀·정적 안전성 확인(최우선)**
