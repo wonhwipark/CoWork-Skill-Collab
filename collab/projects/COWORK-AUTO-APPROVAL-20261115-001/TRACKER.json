@@ -5,11 +5,11 @@
       "work_id": "COWORK-AUTO-APPROVAL-20261115-001",
       "skill": "cowork-review-watcher",
       "title": "GPT→GitHub REQUEST 자동 서명·READY (제한된 사전 위임)",
-      "phase": "LIVE_V029_COMPLETE__STAGED_INTAKE_CODE_PASS__WINDOWS_HOOK_PENDING",
+      "phase": "LIVE_V029_COMPLETE__ARCH_REVIEW_REQUEST_PIN_POSTED__HOST_APPROVAL_PENDING",
       "owner": "User approved v0.2.29 LIVE / USD3; Windows Claude Code performed cutover with host verification; GPT accepted host-reported LIVE cutover with first real paid E2E still pending",
       "self_test": "Windows dev actual v0.2.29 5 rounds 1038 passed/12 skipped/0 failed each; 5-window READY and CLI stub 5/5, no duplicate. Prior su_l1 flaky 2/~31, cause unconfirmed, injected fail-closed invariants 10/10. Writer mock 19 passed + 5 rounds 5/5; real repo/DB NOT_RUN.",
-      "independent_review": "REQ-COWORK-V029-ONEOFF-R1-20261120 COMPLETED BLOCKING0 MAJOR0 MINOR3; GPT ACCEPT_WITH_CONDITIONS. GPT final LIVE cutover disposition: ACCEPT_LIVE_CUTOVER_HOST_REPORTED_E2E_PENDING (2026-11-20). HOST LIVE v0.2.29 / STATIC USD3 / delegation USD3 / new enabled_at PASS; LIVE_PAID_E2E NOT_RUN; no new paid review/model call.",
-      "next_action": "Windows Claude Code G0: verify actual v0.2.29 installed watcher hook/signing authority and existing Work P1/P2 pinned inputs; run read-only new collab/ops/review_staged_submission.py plus isolated 11 tests; if authorized, integrate only into existing watcher scan after SHADOW/rollback and check first formal REQUEST/PIN/READY E2E. Current AUTO_INTAKE_LIVE=NOT_APPLIED, CURRENT reviewer LIVE unchanged, model calls 0; old requests/review receipts preserved. See REVIEW_INTAKE_ONE_SHOT_HOST_INTEGRATION_r0001_20261122_KST.md."
+      "independent_review": "REQ-COWORK-REVIEW-ARCH-DESIGN-R1-20261122 NEW formal GitHub REQUEST+SOURCE_PIN posted (A=1c9ff4448813c4c974d366ef82d25235781a3376, B=cc84fa7c522ebfc8ffe3a938dbffe07ca8efdcd7); Windows LIVE prepublication policy NOT_RUN, protected signer/READY NOT_POSTED and Claude independent review NOT_RUN at last check. Previous v0.2.29 independent review completed and evidence preserved in CURRENT.",
+      "next_action": "Existing Windows v0.2.29 watcher/official protected signer checks REQ-COWORK-REVIEW-ARCH-DESIGN-R1-20261122 policy/scope/expiry/cost and publishes signed READY only if authorized, then Claude reviewer 1 call and result/receipt. If scope/policy blocks, report one reason; do not rerun or relabel existing P1/P2. Do not treat GitHub A/B as signing or verified Windows execution."
     }
   ]
 }
