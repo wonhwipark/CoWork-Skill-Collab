@@ -5,11 +5,11 @@
       "work_id": "COWORK-AUTO-APPROVAL-20261115-001",
       "skill": "cowork-review-watcher",
       "title": "GPT→GitHub REQUEST 자동 서명·READY (제한된 사전 위임)",
-      "phase": "LIVE_V029_COMPLETE__ARCH_REVIEW_REQUEST_PIN_POSTED__HOST_APPROVAL_PENDING",
+      "phase": "LIVE_V029__ARCH_REVIEW_SIGNED_READY_POSTED__REVIEW_RESULT_PENDING",
       "owner": "User approved v0.2.29 LIVE / USD3; Windows Claude Code performed cutover with host verification; GPT accepted host-reported LIVE cutover with first real paid E2E still pending",
       "self_test": "Windows dev actual v0.2.29 5 rounds 1038 passed/12 skipped/0 failed each; 5-window READY and CLI stub 5/5, no duplicate. Prior su_l1 flaky 2/~31, cause unconfirmed, injected fail-closed invariants 10/10. Writer mock 19 passed + 5 rounds 5/5; real repo/DB NOT_RUN.",
-      "independent_review": "REQ-COWORK-REVIEW-ARCH-DESIGN-R1-20261122 NEW formal GitHub REQUEST+SOURCE_PIN posted (A=1c9ff4448813c4c974d366ef82d25235781a3376, B=cc84fa7c522ebfc8ffe3a938dbffe07ca8efdcd7); Windows LIVE prepublication policy NOT_RUN, protected signer/READY NOT_POSTED and Claude independent review NOT_RUN at last check. Previous v0.2.29 independent review completed and evidence preserved in CURRENT.",
-      "next_action": "Existing Windows v0.2.29 watcher/official protected signer checks REQ-COWORK-REVIEW-ARCH-DESIGN-R1-20261122 policy/scope/expiry/cost and publishes signed READY only if authorized, then Claude reviewer 1 call and result/receipt. If scope/policy blocks, report one reason; do not rerun or relabel existing P1/P2. Do not treat GitHub A/B as signing or verified Windows execution."
+      "independent_review": "Architecture request REQ-COWORK-REVIEW-ARCH-DESIGN-R1-20261122 formal REQUEST + SOURCE_PIN passed remote readback (A 1c9ff4448813c4c974d366ef82d25235781a3376 / B cc84fa7c522ebfc8ffe3a938dbffe07ca8efdcd7). Approval signature and READY are now posted and both reference hashes match actual remote REQUEST/READY. Ed25519 independent cryptographic validation and Windows execution NOT_VERIFIED; REVIEW_RESULT/RECEIPT NOT_POSTED at last check. Previous v0.2.29 separate review completed, evidence preserved in CURRENT.",
+      "next_action": "Read-only verify independent Claude review result and receipt under collab/reviews/REQ-COWORK-REVIEW-ARCH-DESIGN-R1-20261122/ and collab/receipts/REQ-COWORK-REVIEW-ARCH-DESIGN-R1-20261122/ when present; check costs, actual source, duplicates; then GPT disposition. No automatic model reruns, new READY or follow-up review."
     }
   ]
 }
