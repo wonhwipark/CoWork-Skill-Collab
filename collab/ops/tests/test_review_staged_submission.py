@@ -88,6 +88,13 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(r['host_signer'],'NOT_INVOKED')
         self.assertEqual(r['ready'],'NOT_CREATED')
 
+    def test_staged_intake_without_live_config_passes_none_to_submitter(self):
+        with patch.object(mod, 'submit', return_value={'status': 'PREPUBLICATION_PASS_NOT_SUBMITTED'}) as s:
+            r = mod.run(root=self.root, work_id=WORK, draft_path=DRAFT,
+                        candidate_path=CAND)
+        self.assertIsNone(s.call_args.kwargs['live_config'])
+        self.assertEqual(r['status'], 'PREPUBLICATION_PASS_NOT_SUBMITTED')
+
     def test_publish_propagates_only_to_existing_submitter(self):
         with patch.object(mod,'submit',return_value={'status':'SUBMITTED_AWAITING_PROTECTED_SIGNER'}) as s:
             r=mod.run(root=self.root,work_id=WORK,draft_path=DRAFT,candidate_path=CAND,live_config=Path('fake'),publish=True)

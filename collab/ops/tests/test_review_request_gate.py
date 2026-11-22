@@ -68,6 +68,23 @@ class GateTests(unittest.TestCase):
         self.assertTrue(request_bytes.startswith(b"---\n"))
         self.assertNotIn(b"\r\n", request_bytes)
 
+    def test_publication_gate_without_live_config_checks_schema_zip_and_ref(self):
+        self.config.unlink()
+        self.fields["run_policy_ref"] = "POLICY-STATIC-V1"
+        self.save_request()
+        out = gate.check_request_for_publication(
+            self.request, self.package, intent="unified", required_budget=gate._target_money("3.00"))
+        self.assertEqual(out["status"], "PASS_REQUEST_INPUT_ONLY")
+        self.assertEqual(out["authorization"], "NOT_CHECKED")
+        self.assertEqual(out["package_sha256"], self.fields["package_sha256"])
+        self.assertEqual(out["model_calls"], 0)
+
+    def test_publication_gate_rejects_legacy_ref_even_without_host(self):
+        self.config.unlink()
+        with self.assertRaisesRegex(gate.GateReject, "RUN_POLICY_NOT_PUBLISHABLE_FOR_INTENT"):
+            gate.check_request_for_publication(
+                self.request, self.package, intent="unified", required_budget=gate._target_money("3.00"))
+
     def test_unified_three_dollar_policy_passes_both_review_subjects(self):
         """Same USD 3 limit and run_policy_ref for all new independent reviews."""
         self.policy_map["POLICY-STATIC-V1"] = {"max_budget_usd": 3.0}

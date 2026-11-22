@@ -121,11 +121,30 @@ run_policy_ref: POLICY-STATIC-V1
             self.submit(publish=True)
         self.assertFalse((self.local / f'collab/requests/{RID}').exists())
 
-    def test_live_budget_mismatch_blocks(self):
+    def test_live_budget_mismatch_is_advisory_not_submission_blocker(self):
         self.config.write_text(json.dumps({
             'review_policy': {'known_run_policy_refs': {
                 'POLICY-STATIC-V1': {'max_budget_usd': 1.50}}}}))
-        with self.assertRaises(Exception):
+        result = self.submit(publish=True)
+        self.assertEqual(result['status'], 'SUBMITTED_AWAITING_PROTECTED_SIGNER')
+        self.assertEqual(result['host_policy_advisory'], 'INCOMPATIBLE_OR_UNAVAILABLE_HOST_DECIDES')
+        self.assertEqual(result['signer_authority'], 'NOT_VERIFIED')
+        self.assertFalse((self.local / f'collab/requests/{RID}/READY.md').exists())
+
+    def test_publish_without_windows_config_is_allowed(self):
+        self.config.unlink()
+        result = mod.submit(root=self.local, request_draft=self.req, package=self.pkg,
+                            expected_origin=str(self.origin), publish=True)
+        self.assertEqual(result['status'], 'SUBMITTED_AWAITING_PROTECTED_SIGNER')
+        self.assertEqual(result['host_policy_advisory'], 'NOT_CHECKED_HOST_DECIDES')
+        self.assertFalse((self.local / f'collab/requests/{RID}/APPROVAL_SIG.json').exists())
+        self.assertFalse((self.local / f'collab/requests/{RID}/READY.md').exists())
+
+    def test_wrong_policy_ref_still_blocks_before_git_publication(self):
+        self.req.write_bytes(self.req.read_bytes().replace(
+            b'run_policy_ref: POLICY-STATIC-V1\n',
+            b'run_policy_ref: POLICY-STATIC-V1-LARGE\n'))
+        with self.assertRaisesRegex(Exception, 'RUN_POLICY_NOT_PUBLISHABLE_FOR_INTENT'):
             self.submit(publish=True)
         self.assertFalse((self.local / f'collab/requests/{RID}').exists())
 

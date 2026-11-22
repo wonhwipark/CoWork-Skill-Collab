@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """One-shot Windows entry for a Git-pinned CoWork staged review candidate.
 
-Reuses submit_review_request.py for policy validation and two-commit submission.
+Reuses submit_review_request.py for host-independent input checks and two-commit submission.
 Does NOT sign, authorize, publish READY, dispatch a review, or install a watcher.
 Default is dry run. Never retries a partially published request.
 """
@@ -98,7 +98,7 @@ def prepare_staged_inputs(root: Path, work_id: str, draft_path: str,
 
 
 def run(*, root: Path, work_id: str, draft_path: str, candidate_path: str,
-        live_config: Path, publish: bool = False, approval_route: str = "manual",
+        live_config: Path | None = None, publish: bool = False, approval_route: str = "manual",
         delegated_skills: tuple[str, ...] = ()) -> dict:
     root = root.resolve()
     # Verifies clean main and exact remote HEAD before any local files or Git writes.
@@ -130,7 +130,7 @@ def main() -> int:
     ap.add_argument("--work-id", required=True)
     ap.add_argument("--draft-path", required=True)
     ap.add_argument("--candidate-path", required=True)
-    ap.add_argument("--live-config", type=Path, required=True)
+    ap.add_argument("--live-config", type=Path, help="optional advisory only; host signer decides")
     ap.add_argument("--approval-route", choices=("manual", "auto"), default="manual")
     ap.add_argument("--delegated-skill", action="append", default=[])
     ap.add_argument("--publish", action="store_true", help="only submit REQUEST/ZIP and SOURCE_PIN; never READY")

@@ -15,7 +15,7 @@ import re
 import subprocess
 import sys
 
-from review_request_gate import GateReject, check_request
+from review_request_gate import GateReject, check_request, check_request_for_publication
 from review_pin_preflight import PreflightBlocked, inspect
 from source_pin import dumps_source_pin
 
@@ -87,13 +87,24 @@ def verify_remote_head(root: Path, expected: str) -> None:
 
 
 def submit(*, root: Path, request_draft: Path, package: Path,
-           live_config: Path, publish: bool, expected_origin: str | None = None,
+           live_config: Path | None = None, publish: bool = False, expected_origin: str | None = None,
            approval_route: str = 'manual',
            delegated_skills: tuple[str, ...] = ()) -> dict:
     root = root.resolve()
     original = require_clean_main(root, expected_origin=expected_origin)
-    result = check_request(request_draft, package, live_config,
-                           intent='unified', required_budget=Decimal('3.00'))
+    # Publication is not authorization. The Windows protected signer applies
+    # the actual loaded policy, scope, budget, signature and READY gates.
+    result = check_request_for_publication(request_draft, package,
+                                           intent='unified', required_budget=Decimal('3.00'))
+    policy_advisory = 'NOT_CHECKED_HOST_DECIDES'
+    if live_config is not None:
+        try:
+            check_request(request_draft, package, live_config,
+                          intent='unified', required_budget=Decimal('3.00'))
+        except (GateReject, OSError, UnicodeError):
+            policy_advisory = 'INCOMPATIBLE_OR_UNAVAILABLE_HOST_DECIDES'
+        else:
+            policy_advisory = 'COMPATIBLE_NOT_AUTHORIZED'
     rid = result['request_id']
     route = check_approval_route(result['skill_id'], approval_route, delegated_skills)
     if not RID_RE.fullmatch(rid):
@@ -116,6 +127,7 @@ def submit(*, root: Path, request_draft: Path, package: Path,
     if not publish:
         return {'status': 'PREPUBLICATION_PASS_NOT_SUBMITTED', 'request_id': rid,
                 **route, 'source_head': original, 'package_sha256': result['package_sha256'],
+                'host_policy_advisory': policy_advisory,
                 'signer_authority': 'NOT_VERIFIED', 'ready': 'NOT_CREATED'}
     request_target = root / request_rel
     request_target.parent.mkdir(parents=True, exist_ok=False)
@@ -148,6 +160,7 @@ def submit(*, root: Path, request_draft: Path, package: Path,
     return {'status': 'SUBMITTED_AWAITING_PROTECTED_SIGNER', 'request_id': rid,
             **route, 'source_commit': source_commit, 'pin_commit': pin_commit,
             'package_sha256': result['package_sha256'],
+            'host_policy_advisory': policy_advisory,
             'signer_authority': 'NOT_VERIFIED', 'ready': 'NOT_CREATED',
             'model_calls': 0}
 
@@ -157,8 +170,8 @@ def main() -> int:
     ap.add_argument('--repo-root', required=True, type=Path)
     ap.add_argument('--request-draft', required=True, type=Path)
     ap.add_argument('--package', required=True, type=Path)
-    ap.add_argument('--live-config', required=True, type=Path,
-                    help='actual Windows LIVE reviewer.config.json; never upload')
+    ap.add_argument('--live-config', type=Path,
+                    help='optional advisory-only Windows config; never required to publish or upload')
     ap.add_argument('--approval-route', choices=('manual', 'auto'), default='manual',
                     help='manual is the safe default; never an approval or signature')
     ap.add_argument('--delegated-skill', action='append', default=[],

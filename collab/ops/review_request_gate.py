@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Fail-closed, offline CoWork REQUEST prepublication policy compatibility gate.
+"""CoWork REQUEST input verifier plus optional Windows policy-compatibility gate.
 
-Reads the actual local Windows reviewer configuration. No GitHub writes, approval,
-READY, signing, watcher calls, model calls or local config modification.
-This is NOT an authorization check; the host approve_request check is separate.
+Publication validation is host-independent and cannot authorize signing, READY,
+or a model call. The existing Windows policy-compatibility check remains available
+for diagnostics; the installed protected signer/watcher enforces the real policy.
+No GitHub writes or local configuration modifications occur in this module.
 """
 from __future__ import annotations
 
@@ -155,8 +156,8 @@ def _check_package(package: Path, *, sha: str, size: int) -> None:
         raise GateReject("INVALID_PACKAGE_ZIP") from e
 
 
-def check_request(request: Path, package: Path, live_config: Path,
-                  *, intent: str, required_budget: Decimal) -> dict:
+def _check_request_inputs(request: Path, package: Path,
+                          *, intent: str, required_budget: Decimal) -> dict:
     request_bytes = _read_file(request, limit=MAX_REQUEST)
     fields = _front_matter(request_bytes.decode("utf-8"))
     if (fields.get("schema") != "SKILL_COLLAB_REVIEW_REQUEST_V1"
@@ -177,9 +178,10 @@ def check_request(request: Path, package: Path, live_config: Path,
     policy = fields.get("run_policy_ref", "")
     if not REF.fullmatch(policy):
         raise GateReject("INVALID_RUN_POLICY_REF")
-    target = select_policy(_json(live_config), intent, required_budget)
-    if policy != target:
-        raise GateReject(f"RUN_POLICY_NOT_LIVE_MATCH: requested={policy} supported={target}")
+    if intent not in INTENTS:
+        raise GateReject("UNKNOWN_REVIEW_INTENT")
+    if intent == "unified" and required_budget != Decimal(DEFAULT_BUDGETS["unified"]):
+        raise GateReject("UNIFIED_REVIEW_BUDGET_MISMATCH")
     rawpath = fields.get("package_path", "")
     if not rawpath.startswith("/SKILL-COLLAB/packages/") or ".." in PurePosixPath(rawpath).parts:
         raise GateReject("INVALID_PACKAGE_PATH")
@@ -193,12 +195,35 @@ def check_request(request: Path, package: Path, live_config: Path,
     except ValueError as e:
         raise GateReject("INVALID_PACKAGE_SIZE") from e
     _check_package(package, sha=sha, size=count)
-    return {"status": "PASS_PREPUBLICATION_ONLY", "request_id": request_id,
+    return {"status": "PASS_REQUEST_INPUT_ONLY", "request_id": request_id,
             "skill_id": fields["skill_id"],
             "request_sha256": hashlib.sha256(request_bytes).hexdigest(),
             "run_policy_ref": policy, "expected_max_budget_usd": str(required_budget),
             "package_sha256": sha, "package_size_bytes": count,
             "authorization": "NOT_CHECKED", "ready": "NOT_CREATED", "model_calls": 0}
+
+
+def check_request_for_publication(request: Path, package: Path,
+                                  *, intent: str, required_budget: Decimal) -> dict:
+    """Strict schema/ZIP/source-input check; no Windows config and no authority."""
+    result = _check_request_inputs(request, package, intent=intent,
+                                   required_budget=required_budget)
+    if result["run_policy_ref"] not in INTENTS[intent]:
+        raise GateReject("RUN_POLICY_NOT_PUBLISHABLE_FOR_INTENT")
+    return result
+
+
+def check_request(request: Path, package: Path, live_config: Path,
+                  *, intent: str, required_budget: Decimal) -> dict:
+    """Existing host-specific policy compatibility check (NOT authorization)."""
+    result = _check_request_inputs(request, package, intent=intent,
+                                   required_budget=required_budget)
+    target = select_policy(_json(live_config), intent, required_budget)
+    if result["run_policy_ref"] != target:
+        raise GateReject(f"RUN_POLICY_NOT_LIVE_MATCH: requested={result['run_policy_ref']} supported={target}")
+    result["status"] = "PASS_PREPUBLICATION_ONLY"
+    return result
+
 
 
 def check_source_pin(pin_path: Path, expected_repo_id: str, expected_commit: str) -> None:
