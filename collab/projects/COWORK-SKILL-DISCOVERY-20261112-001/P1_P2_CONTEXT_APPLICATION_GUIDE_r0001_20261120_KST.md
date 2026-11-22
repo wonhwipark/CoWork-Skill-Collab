@@ -61,3 +61,17 @@ python collab/dashboard/context_query.py --root . --question "현재 스킬 변�
 - **F2 (경로 안전)**: `safe_file()`은 Windows 드라이브 경로(`C:/...`, `C:foo`)와 UNC·POSIX 절대경로를 파일 접근 **전에** 거부하도록 보완. Windows 자체 시험은 별도.
 - **F3 (질문 분류)**: `choose()`는 문자 부분 일치로 점수를 매긴다. **키워드 미매칭은 무조건 `skill`**로 라우팅하며 '분류 불가'를 의미하지 않는다. `그룹웨어`는 `그룹` 부분문자열 때문에 `knowledge`로 오분류될 수 있고, 복수 주제는 점수·우선순위로 한 Work만 선택한다. 이 결과를 의미 정답이나 최신 실행 상태로 승격하지 않는다. 담당자가 명확한 질문에는 `--topic` 명시를 우선하며, 정보가 불충분하면 관련 Work의 최신 하위 증거를 추가 조회한다.
 - **시험 구분**: 격리 Linux/Python 단위 13/13 PASS 및 모델 없는 30질문 분류 출력 기록. 이는 실제 Windows·모바일·PC 및 A4 정량 정확도/토큰/E2E 검증을 대체하지 않는다. 추가 유료 독립 리뷰·운영 LIVE 변경·L1Work 공개 UI 변경 없음.
+
+
+## 7. 2026-11-22 후속 적용 — F1 부분 결과 유지·오류 격리 / F2 유지
+
+이 절은 §6의 F1 상한 초과 처리와 Windows 전체 E2E 우선 계획을 보완하는 현행 기준이다. §6과 이전 시험·리뷰 기록은 당시 이력으로 보존한다.
+
+- **조회 순서:** 선택 Work의 CURRENT에 나타난 REQUEST ID와 같은 Work 안의 직접 연결된 Markdown 최대 4개에서 발견한 ID를 우선 검사한다. 링크는 탐색 힌트이며, 실제 REQUEST의 `work_id`가 일치해야 관계로 포함한다. 중복 ID는 한 번만 검사한다. 재귀 탐색·네트워크 조회·새 인덱스는 없다.
+- **상한과 부분 결과:** 우선 조회와 디렉터리 후속 조회는 REQUEST 검사 예산 200건을 공유한다. 디렉터리 이름 후보는 최대 201개만 수집한다. 상한을 넘겨도 이미 확인한 관계를 유지하며 `relations_state=RELATIONS_SCAN_LIMIT_EXCEEDED`, `relations_scan.complete=false`를 반환한다. 전체 디렉터리를 정렬하거나 전수 조회한 결과가 아니며, 읽지 못한 나머지 관계의 부재를 증명하지 않는다.
+- **개별 오류 격리:** REQUEST의 UTF-8 오류·읽기 권한·읽기 중 파일 소실·메타데이터 미확인은 해당 ID의 `relations_scan.issues`에 기록하고 다음 항목을 계속 확인한다. 상한이 아닌 오류는 `RELATIONS_SCAN_INCOMPLETE`다. 이미 읽은 REQUEST의 증거 파일 접근 오류는 해당 필드를 `NOT_VERIFIED_LOCAL`로 남기고 관계 행을 유지한다.
+- **빈 결과 해석:** `complete=false`일 때 빈 `relations`는 ‘관련 요청 없음’이 아니다. REQUEST 디렉터리가 없거나 접근이 불가능한 경우도 미완료다. `complete=true`는 로컬 탐색 범위의 완료일 뿐, 승인·서명·SHA·독립 리뷰·운영 실행을 검증한 결과가 아니다.
+- **호환:** 기존 CLI 옵션·관계 행·`execution_verdict=NOT_INFERRED_FROM_FILES`·호스트 미검증 표시는 유지한다. 진단용 `relations_scan`만 추가한다. 목록만 반환하는 `related()`는 상한 초과 시 기존 `RequestScanLimitExceeded(ValueError)`, 그 외 미완료 시 `RequestScanIncomplete(ValueError)`를 발생시키며 불완전 목록을 정상 목록으로 숨기지 않는다. 부분 결과는 `snapshot()`/CLI에서 확인한다.
+- **F2/F3:** `safe_file()`의 Windows 드라이브·UNC·절대경로·경로 이탈·symlink 보호와 `choose()` 분류 정책은 변경하지 않는다. 새 문서 힌트도 F2 가드를 통과한 같은 Work 상대경로만 읽는다.
+- **검증 경계:** Linux Python 3.12.14 회귀시험 28/28 PASS, 합성 CLI PASS, F2/F3 함수 AST 불변 확인. 수정 후 독립 리뷰·실제 Windows·Claude 세션 로딩·A3 UI·A4 30문항 A/B는 NOT_RUN. Windows 조회기 사용 시 경로 호환·세션 활용은 각각 별도 검증하며 Watcher 전체 E2E를 이번 코드 적용의 필수조건으로 묶지 않는다.
+- **상세 근거:** [F1 부분 조회·오류 격리 적용 결과](P1_PARTIAL_RELATIONS_ERROR_ISOLATION_RESULT_r0001_20261122_KST.md). 기존 R1 재실행·새 REQUEST/READY·Watcher/LIVE·서명·DB·L1Work UI 변경은 없다.

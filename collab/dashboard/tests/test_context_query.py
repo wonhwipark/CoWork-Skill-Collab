@@ -22,6 +22,12 @@ class ContextQueryTests(unittest.TestCase):
         path.parent.mkdir(parents=True)
         path.write_text("# CURRENT\n\n## 2026-11-20 current\n- **STATE:** NOT_VERIFIED\n- **NEXT:** Check source\n\n---\n\n## 2026-11-17 old\n- **STATE:** PASS_OLD\n", encoding="utf-8")
 
+    def request(self, rid, work=None):
+        path = self.root / "collab" / "requests" / rid / "REQUEST.md"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(f"---\nwork_id: {work or self.work}\nrequest_revision: 1\n---\n", encoding="utf-8")
+        return path
+
     def test_router_and_fallback(self):
         self.assertEqual(context_query.choose("대시보드 화면 가독성")[0], "dashboard")
         self.assertEqual(context_query.choose("그룹 knowledge 반영")[0], "knowledge")
@@ -82,11 +88,13 @@ class ContextQueryTests(unittest.TestCase):
         self.assertEqual(context_query.diff_summary(self.root, self.rel, current, "0"*40)["state"], "BASELINE_NOT_VERIFIED")
 
     def test_snapshot_explicitly_does_not_verify_host(self):
+        (self.root / "collab" / "requests").mkdir()
         got = context_query.snapshot(self.root, "what changed?", topic="skill")
         self.assertEqual(got["state"], "LOCAL_CURRENT_READ_ONLY")
         self.assertEqual(got["host_execution"], "NOT_VERIFIED_BY_LOCAL_FILES")
         self.assertEqual(got["relations"], [])
         self.assertEqual(got["relations_state"], "LOCAL_FILE_PRESENCE_UNVALIDATED")
+        self.assertTrue(got["relations_scan"]["complete"])
         self.assertEqual(got["delta"]["state"], "NO_BASELINE")
 
 
@@ -108,7 +116,7 @@ class ContextQueryTests(unittest.TestCase):
         p = self.root / "collab" / "requests"
         p.mkdir(parents=True)
         for j in range(199):
-            (p / f"REQ-OTHER-{j:05}").mkdir()
+            self.request(f"REQ-OTHER-{j:05}", "OTHER-WORK-123")
         rid = "REQ-THIS-WORK-00001"
         request = p / rid / "REQUEST.md"
         request.parent.mkdir()
@@ -117,6 +125,170 @@ class ContextQueryTests(unittest.TestCase):
         self.assertEqual(got["relations_state"], "LOCAL_FILE_PRESENCE_UNVALIDATED")
         self.assertEqual(len(got["relations"]), 1)
         self.assertEqual(got["relations"][0]["execution_verdict"], "NOT_INFERRED_FROM_FILES")
+
+    def test_limit_keeps_valid_relationship_in_scanned_prefix(self):
+        good = self.request("REQ-A-VALID-00001")
+        others = [self.request(f"REQ-OTHER-{j:05}", "OTHER-WORK-123").parent for j in range(200)]
+        with mock.patch.object(Path, "glob", return_value=iter([good.parent] + others)):
+            got = context_query.snapshot(self.root, "스킬 조회", topic="skill")
+        self.assertEqual([row["request_id"] for row in got["relations"]], [good.parent.name])
+        self.assertEqual(got["relations_state"], "RELATIONS_SCAN_LIMIT_EXCEEDED")
+        self.assertFalse(got["relations_scan"]["complete"])
+        self.assertEqual(got["relations_scan"]["checked_requests"], 200)
+
+    def test_current_hint_is_checked_before_unrelated_request_budget(self):
+        good = self.request("REQ-Z-LINKED-0001")
+        (self.root / self.rel).write_text(f"## Current\n[Request](../../requests/{good.parent.name}/REQUEST.md)\n", encoding="utf-8")
+        others = [self.request(f"REQ-OTHER-{j:05}", "OTHER-WORK-123").parent for j in range(201)]
+        with mock.patch.object(Path, "glob", return_value=iter(others)):
+            got = context_query.snapshot(self.root, "스킬 조회", topic="skill")
+        self.assertEqual([row["request_id"] for row in got["relations"]], [good.parent.name])
+        self.assertEqual(got["relations_scan"]["priority_requests"], 1)
+        self.assertEqual(got["relations_scan"]["checked_requests"], 200)
+        self.assertFalse(got["relations_scan"]["complete"])
+
+    def test_linked_result_supplies_priority_hint(self):
+        good = self.request("REQ-Z-RESULT-0001")
+        current = self.root / self.rel
+        current.write_text("## Current\n[Result](result.md)\n", encoding="utf-8")
+        current.with_name("result.md").write_text(f"Request: {good.parent.name}\n", encoding="utf-8")
+        others = [self.request(f"REQ-OTHER-{j:05}", "OTHER-WORK-123").parent for j in range(201)]
+        with mock.patch.object(Path, "glob", return_value=iter(others)):
+            got = context_query.snapshot(self.root, "스킬 조회", topic="skill")
+        self.assertEqual([row["request_id"] for row in got["relations"]], [good.parent.name])
+        self.assertEqual(got["relations_scan"]["priority_requests"], 1)
+
+    def test_invalid_utf8_request_is_isolated_and_good_row_retained(self):
+        good = self.request("REQ-VALID-00001")
+        bad = self.request("REQ-OTHER-INVALID", "OTHER-WORK-123")
+        bad.write_bytes(b"\xff")
+        got = context_query.snapshot(self.root, "스킬 조회", topic="skill")
+        self.assertIn("NOT_VERIFIED", got["summary"])
+        self.assertEqual([row["request_id"] for row in got["relations"]], [good.parent.name])
+        self.assertEqual(got["relations_state"], "RELATIONS_SCAN_INCOMPLETE")
+        self.assertIn({"request_id": bad.parent.name, "reason": "UnicodeDecodeError"}, got["relations_scan"]["issues"])
+        self.assertFalse(got["relations_scan"]["complete"])
+
+    def test_malformed_request_metadata_is_not_treated_as_another_work(self):
+        self.request("REQ-VALID-00001")
+        bad = self.request("REQ-INVALID-METADATA")
+        bad.write_text("not frontmatter\n", encoding="utf-8")
+        got = context_query.snapshot(self.root, "스킬 조회", topic="skill")
+        self.assertEqual(len(got["relations"]), 1)
+        self.assertEqual(got["relations_state"], "RELATIONS_SCAN_INCOMPLETE")
+        self.assertIn({"request_id": bad.parent.name, "reason": "REQUEST_METADATA_NOT_VERIFIED"}, got["relations_scan"]["issues"])
+
+    def test_request_read_error_does_not_stop_other_relationships(self):
+        good = self.request("REQ-VALID-00001")
+        bad = self.request("REQ-UNREADABLE-0001")
+        original = Path.read_text
+
+        def read(path, *args, **kwargs):
+            if path == bad:
+                raise PermissionError("synthetic permission denial")
+            return original(path, *args, **kwargs)
+
+        with mock.patch.object(Path, "read_text", read):
+            got = context_query.snapshot(self.root, "스킬 조회", topic="skill")
+        self.assertEqual([row["request_id"] for row in got["relations"]], [good.parent.name])
+        self.assertIn({"request_id": bad.parent.name, "reason": "PermissionError"}, got["relations_scan"]["issues"])
+
+    def test_priority_hints_are_deduplicated_and_work_membership_checked(self):
+        good = self.request("REQ-VALID-00001")
+        other = self.request("REQ-FOREIGN-00001", "OTHER-WORK-123")
+        current = self.root / self.rel
+        current.write_text(f"## Current\n{good.parent.name} {good.parent.name} {other.parent.name}\n", encoding="utf-8")
+        got = context_query.snapshot(self.root, "스킬 조회", topic="skill")
+        self.assertEqual([row["request_id"] for row in got["relations"]], [good.parent.name])
+        self.assertEqual(got["relations_scan"]["checked_requests"], 2)
+        self.assertEqual(got["relations_scan"]["priority_requests"], 2)
+        self.assertTrue(got["relations_scan"]["complete"])
+
+    def test_missing_linked_request_is_explicitly_unverified(self):
+        (self.root / "collab" / "requests").mkdir()
+        (self.root / self.rel).write_text("## Current\nREQ-MISSING-00001\n", encoding="utf-8")
+        got = context_query.snapshot(self.root, "스킬 조회", topic="skill")
+        self.assertEqual(got["relations"], [])
+        self.assertFalse(got["relations_scan"]["complete"])
+        self.assertIn("empty list does not prove", got["warning"])
+
+    def test_missing_request_directory_is_not_an_empty_completed_scan(self):
+        got = context_query.snapshot(self.root, "스킬 조회", topic="skill")
+        self.assertEqual(got["relations"], [])
+        self.assertEqual(got["relations_state"], "RELATIONS_SCAN_INCOMPLETE")
+        self.assertIn({"reason": "REQUEST_DIRECTORY_NOT_VERIFIED"}, got["relations_scan"]["issues"])
+
+    def test_evidence_read_error_keeps_request_and_marks_file_unverified(self):
+        self.request("REQ-VALID-00001")
+        original = context_query.safe_file
+
+        def safe(root, rel, max_bytes=context_query.MAX_READ):
+            if rel.endswith("/APPROVAL_SIG.json"):
+                raise PermissionError("synthetic permission denial")
+            return original(root, rel, max_bytes)
+
+        with mock.patch.object(context_query, "safe_file", side_effect=safe):
+            got = context_query.snapshot(self.root, "스킬 조회", topic="skill")
+        self.assertEqual(len(got["relations"]), 1)
+        self.assertEqual(got["relations"][0]["evidence_files"]["approval"], "NOT_VERIFIED_LOCAL")
+        self.assertFalse(got["relations_scan"]["complete"])
+
+    def test_hint_document_paths_stay_within_work_and_do_not_follow_symlinks(self):
+        self.request("REQ-VALID-00001")
+        current = self.root / self.rel
+        outside = self.root / "outside.md"
+        outside.write_text("REQ-OUTSIDE-00001\n", encoding="utf-8")
+        current.with_name("alias.md").symlink_to(outside)
+        current.write_text("## Current\n[x](C:/secret.md) [x](//host/share/secret.md) [x](../outside.md) [x](alias.md)\n", encoding="utf-8")
+        original = Path.read_text
+
+        def read(path, *args, **kwargs):
+            self.assertNotEqual(path, outside)
+            self.assertNotEqual(path, current.with_name("alias.md"))
+            return original(path, *args, **kwargs)
+
+        with mock.patch.object(Path, "read_text", read):
+            got = context_query.snapshot(self.root, "스킬 조회", topic="skill")
+        self.assertEqual(got["relations_scan"]["priority_requests"], 0)
+        self.assertTrue(got["relations_scan"]["complete"])
+
+    def test_hint_document_reads_are_bounded_and_not_recursive(self):
+        self.request("REQ-VALID-00001")
+        current = self.root / self.rel
+        current.write_text("## Current\n" + "\n".join(f"[r](r{j}.md)" for j in range(5)), encoding="utf-8")
+        for j in range(5):
+            current.with_name(f"r{j}.md").write_text("[next](nested.md)\n", encoding="utf-8")
+        seen = []
+        original = Path.read_text
+
+        def read(path, *args, **kwargs):
+            seen.append(path.name)
+            return original(path, *args, **kwargs)
+
+        with mock.patch.object(Path, "read_text", read):
+            context_query.snapshot(self.root, "스킬 조회", topic="skill")
+        self.assertEqual([name for name in seen if name.startswith("r") and name.endswith(".md")], ["r0.md", "r1.md", "r2.md", "r3.md"])
+        self.assertNotIn("nested.md", seen)
+
+    def test_invalid_current_returns_unverified_instead_of_crashing(self):
+        (self.root / self.rel).write_bytes(b"\xff")
+        got = context_query.snapshot(self.root, "스킬 조회", topic="skill")
+        self.assertEqual(got["state"], "CURRENT_NOT_VERIFIED")
+        self.assertEqual(got["host_execution"], "NOT_VERIFIED")
+
+    def test_legacy_list_api_rejects_incomplete_scan(self):
+        self.request("REQ-INVALID-00001").write_bytes(b"\xff")
+        with self.assertRaises(context_query.RequestScanIncomplete):
+            context_query.related(self.root, self.work)
+
+    def test_directory_error_keeps_already_checked_priority_relationship(self):
+        good = self.request("REQ-VALID-00001")
+        (self.root / self.rel).write_text(f"## Current\n{good.parent.name}\n", encoding="utf-8")
+        with mock.patch.object(Path, "glob", side_effect=PermissionError("synthetic directory denial")):
+            got = context_query.snapshot(self.root, "스킬 조회", topic="skill")
+        self.assertEqual([row["request_id"] for row in got["relations"]], [good.parent.name])
+        self.assertEqual(got["relations_state"], "RELATIONS_SCAN_INCOMPLETE")
+        self.assertIn({"reason": "REQUEST_DIRECTORY_NOT_VERIFIED", "error": "PermissionError"}, got["relations_scan"]["issues"])
 
     def test_windows_drive_paths_rejected_before_filesystem_access(self):
         with mock.patch.object(Path, "is_symlink", side_effect=AssertionError("filesystem accessed")), \

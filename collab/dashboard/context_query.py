@@ -26,9 +26,16 @@ COMMIT = re.compile(r"[0-9a-f]{40}\Z")
 REQ_ID = re.compile(r"REQ-[A-Z0-9-]{4,120}\Z")
 WORK_ID = re.compile(r"[A-Z][A-Z0-9_-]{5,120}\Z")
 MAX_READ = 256_000
+REQUEST_TOKEN = re.compile(r"(?<![A-Z0-9-])REQ-[A-Z0-9-]+")
+LOCAL_MD_LINK = re.compile(r"\]\(([^\s)]+\.md)(?:#[^\s)]*)?\)")
+READ_ERRORS = (OSError, UnicodeError, RuntimeError)
 
 
-class RequestScanLimitExceeded(ValueError):
+class RequestScanIncomplete(ValueError):
+    """A list-only caller must not mistake a partial scan for a complete one."""
+
+
+class RequestScanLimitExceeded(RequestScanIncomplete):
     """The P2 request directory exceeded the bounded local scan limit."""
 
 
@@ -98,46 +105,143 @@ def extract_frontmatter(text: str) -> dict[str, str]:
     return result
 
 
-def related(root: Path, work_id: str, max_requests: int = 200) -> list[dict]:
-    """P2 links from pinned REQUEST metadata. File existence != executed review."""
-    request_dir = root / "collab" / "requests"
-    if request_dir.is_symlink() or not request_dir.is_dir():
-        return []
+def _request_hints(root: Path, work_id: str, current: str, limit: int) -> list[str]:
+    """Hints only: CURRENT and up to four directly linked same-Work documents.
+
+    A hint never proves Work membership; REQUEST metadata is checked separately.
+    There is no recursive traversal, network lookup, or new index.
+    """
+    ids: dict[str, None] = {}
+
+    def add(text: str) -> None:
+        for match in REQUEST_TOKEN.finditer(text):
+            rid = match.group()
+            if REQ_ID.fullmatch(rid):
+                ids.setdefault(rid, None)
+                if len(ids) >= limit:
+                    break
+
+    add(current)
+    documents: set[str] = set()
+    for match in LOCAL_MD_LINK.finditer(current):
+        if len(ids) >= limit or len(documents) >= 4:
+            break
+        link = match.group(1)
+        # Only same-Work relative links; use the unchanged F2 guard before I/O.
+        if link.startswith("/") or "\\" in link or ":" in link or PureWindowsPath(link).drive or ".." in Path(link).parts:
+            continue
+        rel = f"collab/projects/{work_id}/{link}"
+        if rel in documents:
+            continue
+        documents.add(rel)
+        try:
+            path = safe_file(root, rel)
+            if path:
+                add(path.read_text(encoding="utf-8"))
+        except READ_ERRORS:
+            # Hints are optional. Coverage is determined by the request scan.
+            continue
+    return list(ids)
+
+
+def _relation_row(root: Path, rid: str, fm: dict[str, str], issues: list[dict]) -> dict:
+    pkg = fm.get("package_path", "")
+    package_rel = ("collab/packages/" + pkg.rsplit("/", 1)[-1]) if pkg.startswith("/SKILL-COLLAB/packages/") else ""
+    files = {
+        "request": f"collab/requests/{rid}/REQUEST.md",
+        "source_pin": f"collab/requests/{rid}/SOURCE_PIN.json",
+        "approval": f"collab/requests/{rid}/APPROVAL_SIG.json",
+        "ready": f"collab/requests/{rid}/READY.md",
+        "review": f"collab/reviews/{rid}/REVIEW_RESULT_1.md",
+        "receipt": f"collab/receipts/{rid}/RECEIPT_1.md",
+        "package": package_rel,
+    }
+    paths = {}
+    for key, rel in files.items():
+        try:
+            paths[key] = "PRESENT_LOCAL_UNVALIDATED" if rel and safe_file(root, rel, max_bytes=100_000_000) else "NOT_FOUND_LOCAL"
+        except READ_ERRORS as exc:
+            paths[key] = "NOT_VERIFIED_LOCAL"
+            issues.append({"request_id": rid, "file": key, "reason": type(exc).__name__})
+    return {
+        "request_id": rid,
+        "request_revision": fm.get("request_revision", "UNKNOWN"),
+        "package_sha256_claim": fm.get("package_sha256", "UNKNOWN"),
+        "evidence_files": paths,
+        "execution_verdict": "NOT_INFERRED_FROM_FILES",
+    }
+
+
+def _scan_relations(root: Path, work_id: str, max_requests: int = 200, current: str = "") -> dict:
+    """Keep metadata-matched relationships within a bounded local file scan."""
+    if not WORK_ID.fullmatch(work_id) or max_requests < 1:
+        raise ValueError("invalid Work or request scan limit")
     answer: list[dict] = []
-    # Materialize at most max_requests + 1 paths; do not sort an unbounded directory.
-    candidates = sorted(islice(request_dir.glob("REQ-*"), max_requests + 1))
-    if len(candidates) > max_requests:
+    issues: list[dict] = []
+    checked: set[str] = set()
+    limit_exceeded = False
+
+    def inspect(rid: str) -> bool:
+        nonlocal limit_exceeded
+        if rid in checked or not REQ_ID.fullmatch(rid):
+            return True
+        if len(checked) >= max_requests:
+            limit_exceeded = True
+            return False
+        checked.add(rid)
+        try:
+            path = safe_file(root, f"collab/requests/{rid}/REQUEST.md")
+            if not path:
+                issues.append({"request_id": rid, "reason": "REQUEST_NOT_VERIFIED"})
+                return True
+            fm = extract_frontmatter(path.read_text(encoding="utf-8"))
+            if not WORK_ID.fullmatch(fm.get("work_id", "")):
+                issues.append({"request_id": rid, "reason": "REQUEST_METADATA_NOT_VERIFIED"})
+            elif fm["work_id"] == work_id:
+                answer.append(_relation_row(root, rid, fm, issues))
+        except READ_ERRORS as exc:
+            issues.append({"request_id": rid, "reason": type(exc).__name__})
+        return True
+
+    priority = _request_hints(root, work_id, current, max_requests)
+    for rid in priority:
+        inspect(rid)
+    try:
+        request_dir = root / "collab" / "requests"
+        if (root / "collab").is_symlink() or request_dir.is_symlink() or not request_dir.is_dir():
+            issues.append({"reason": "REQUEST_DIRECTORY_NOT_VERIFIED"})
+        else:
+            # Only this bounded prefix is sorted. It is never claimed exhaustive
+            # when more entries exist; priority hints share the inspection budget.
+            candidates = sorted(islice(request_dir.glob("REQ-*"), max_requests + 1))
+            limit_exceeded = len(candidates) > max_requests
+            for folder in candidates:
+                if not inspect(folder.name):
+                    break
+    except READ_ERRORS as exc:
+        issues.append({"reason": "REQUEST_DIRECTORY_NOT_VERIFIED", "error": type(exc).__name__})
+    complete = not limit_exceeded and not issues
+    state = ("RELATIONS_SCAN_LIMIT_EXCEEDED" if limit_exceeded else
+             "RELATIONS_SCAN_INCOMPLETE" if not complete else "LOCAL_FILE_PRESENCE_UNVALIDATED")
+    return {
+        "relations": answer,
+        "relations_state": state,
+        "relations_scan": {
+            "complete": complete, "checked_requests": len(checked),
+            "request_limit": max_requests, "priority_requests": len(priority),
+            "limit_exceeded": limit_exceeded, "issues": issues,
+        },
+    }
+
+
+def related(root: Path, work_id: str, max_requests: int = 200) -> list[dict]:
+    """Legacy strict list API. Use snapshot() for partial results and diagnostics."""
+    result = _scan_relations(root, work_id, max_requests)
+    if result["relations_scan"]["limit_exceeded"]:
         raise RequestScanLimitExceeded("request scan limit exceeded")
-    for folder in candidates:
-        rid = folder.name
-        if not REQ_ID.fullmatch(rid) or folder.is_symlink() or not folder.is_dir():
-            continue
-        path = safe_file(root, f"collab/requests/{rid}/REQUEST.md")
-        if not path:
-            continue
-        fm = extract_frontmatter(path.read_text(encoding="utf-8"))
-        if fm.get("work_id") != work_id:
-            continue
-        pkg = fm.get("package_path", "")
-        package_rel = ("collab/packages/" + pkg.rsplit("/", 1)[-1]) if pkg.startswith("/SKILL-COLLAB/packages/") and "/" in pkg else ""
-        files = {
-            "request": f"collab/requests/{rid}/REQUEST.md",
-            "source_pin": f"collab/requests/{rid}/SOURCE_PIN.json",
-            "approval": f"collab/requests/{rid}/APPROVAL_SIG.json",
-            "ready": f"collab/requests/{rid}/READY.md",
-            "review": f"collab/reviews/{rid}/REVIEW_RESULT_1.md",
-            "receipt": f"collab/receipts/{rid}/RECEIPT_1.md",
-        }
-        paths = {key: ("PRESENT_LOCAL_UNVALIDATED" if safe_file(root, rel, max_bytes=100_000_000) else "NOT_FOUND_LOCAL") for key, rel in files.items()}
-        paths["package"] = "PRESENT_LOCAL_UNVALIDATED" if package_rel and safe_file(root, package_rel, max_bytes=100_000_000) else "NOT_FOUND_LOCAL"
-        answer.append({
-            "request_id": rid,
-            "request_revision": fm.get("request_revision", "UNKNOWN"),
-            "package_sha256_claim": fm.get("package_sha256", "UNKNOWN"),
-            "evidence_files": paths,
-            "execution_verdict": "NOT_INFERRED_FROM_FILES",
-        })
-    return answer
+    if not result["relations_scan"]["complete"]:
+        raise RequestScanIncomplete("request scan incomplete")
+    return result["relations"]
 
 
 def diff_summary(root: Path, relative: str, current: str, base_commit: str | None) -> dict:
@@ -169,34 +273,30 @@ def snapshot(root: Path, question: str, topic: str | None = None,
     if not WORK_ID.fullmatch(work):
         raise ValueError("invalid selected work")
     rel = f"collab/projects/{work}/CURRENT.md"
-    target = safe_file(root, rel)
-    if not target:
+    try:
+        target = safe_file(root, rel)
+        contents = target.read_text(encoding="utf-8") if target else None
+    except READ_ERRORS:
+        contents = None
+    if contents is None:
         return {
             "topic": key, "work_id": work, "state": "CURRENT_NOT_VERIFIED",
             "source_path": rel, "evidence": [], "host_execution": "NOT_VERIFIED",
         }
-    contents = target.read_text(encoding="utf-8")
     summary = top_summary(contents)
-    try:
-        relations = related(root, work)
-        relations_state = "LOCAL_FILE_PRESENCE_UNVALIDATED"
-    except RequestScanLimitExceeded:
-        # Keep CURRENT available while refusing to infer a complete P2 relation set.
-        relations = []
-        relations_state = "RELATIONS_SCAN_LIMIT_EXCEEDED"
+    relation_data = _scan_relations(root, work, current=contents)
     return {
         "topic": key, "work_id": work,
         "state": "LOCAL_CURRENT_READ_ONLY",
         "source_path": rel,
         "summary": summary,
-        "relations": relations,
-        "relations_state": relations_state,
+        **relation_data,
         "delta": diff_summary(root, rel, contents, baseline_commit),
         "host_execution": "NOT_VERIFIED_BY_LOCAL_FILES",
         "warning": (
             "Document/REQUEST/READY existence is not independent review, LIVE host, Linux execution or group publication proof."
-            + (" P2 relations are incomplete and NOT_VERIFIED: request scan limit exceeded."
-               if relations_state == "RELATIONS_SCAN_LIMIT_EXCEEDED" else "")
+            + (" P2 relations are incomplete and NOT_VERIFIED; retained rows are partial. An empty list does not prove no related requests."
+               if not relation_data["relations_scan"]["complete"] else "")
         ),
     }
 

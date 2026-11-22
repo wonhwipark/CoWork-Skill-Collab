@@ -5,11 +5,11 @@
       "work_id": "COWORK-SKILL-DISCOVERY-20261112-001",
       "skill": "skill-discovery",
       "title": "skill-discovery",
-      "phase": "P1P2_R1_F1F2_FIX_POSTED__LOCAL_TEST_13_PASS__F3_DOC_COMPLETE__E2E_PENDING",
-      "owner": "GPT: R1 independent review COMPLETED_STATIC, ACCEPT_WITH_CHANGE; F1/F2 source fix applied, F3 limitations documented; Windows audit cost USD 0.7146549 for historical R1, no new paid call.",
-      "self_test": "PASS_13_OF_13__PY_COMPILE_PASS__30_ROUTING_PROBES_EXECUTED",
-      "independent_review": "R1_COMPLETED_STATIC_ONLY__F1F3_POST_REVIEW_FIXES_NOT_REREVIEWED",
-      "next_action": "Windows latest-main SHA readback and 13 Python tests, then Q1-Q5 actual context auto-loading E2E. HOST_E2E=NOT_RUN; no automatic rereview, signer/READY/watcher changes or L1Work release."
+      "phase": "P1P2_F1_PARTIAL_RELATIONS_ERROR_ISOLATION_IMPLEMENTED__F2_UNCHANGED",
+      "owner": "GPT: existing Work resumed after latest-main readback; bounded partial relationships and per-file error isolation implemented. Historical R1 remains closed; this follow-up has no new independent review.",
+      "self_test": "PASS_28_OF_28__CLI_PASS__PY_COMPILE_PASS__F2_F3_AST_UNCHANGED",
+      "independent_review": "R1_COMPLETED_STATIC_ONLY__THIS_FOLLOWUP_NOT_REREVIEWED",
+      "next_action": "A4 question-specific evidence and accuracy/lookup evaluation remains separate. Windows query compatibility and Claude context loading are conditional client checks; full Watcher E2E is not required for this source change."
     }
   ]
 }

@@ -1,5 +1,17 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+
+## 2026-11-22 KST — F1 부분 결과 유지·개별 오류 격리 적용 / F2 유지
+
+- **최신 확인·범위:** main `29c4e5e6ae2d`에서 기존 F1/F2 코드·13건 시험 원본과 동일함을 확인한 뒤 같은 Work에서 보완. 이번 범위는 선택적 읽기 전용 Python 조회기·관련 시험·운용 안내다.
+- **변경:** CURRENT/같은 Work의 직접 연결 문서에서 REQUEST를 우선 검사하고 200건 검사 예산을 공유. 상한 초과·개별 읽기/UTF-8/메타데이터 오류에도 이미 확인한 관계와 요약을 유지한다. `relations_scan.complete=false`·개별 오류를 표시하며 빈 결과로 관계 부재를 추정하지 않는다. F2 경로 보호와 F3 라우터 함수는 변경 없음.
+- **직접 시험:** Linux Python 3.12.14 회귀 **28/28 PASS**, 합성 CLI·구문·차이 확인 PASS. 수정 후 추가 독립 리뷰·실제 Windows·Claude 자동 로딩·A3 UI·A4 A/B는 **NOT_RUN**.
+- **근거:** [적용 결과·시험·소스 SHA](P1_PARTIAL_RELATIONS_ERROR_ISOLATION_RESULT_r0001_20261122_KST.md) · [운용 가이드 §7](P1_P2_CONTEXT_APPLICATION_GUIDE_r0001_20261120_KST.md#7-2026-11-22-후속-적용--f1-부분-결과-유지오류-격리--f2-유지). 기존 R1은 수정 전 정적 리뷰로 종결·재실행 금지.
+- **적용 경계:** GitHub main 소스 보완이며 Windows 설치·Watcher/LIVE·서명·DB·L1Work UI·새 REQUEST/READY 변경 없음. 원격 게시 확인은 위 결과 문서의 게시 확인 절을 따른다.
+- **NEXT_ONE_ACTION:** 기존 A4 질문별 근거 확장·정확도/조회량 평가는 별도 후속 범위. Windows 조회기 사용 시 경로 호환·Claude 세션 활용을 각각 검증하며 Watcher 전체 E2E를 이 코드 적용의 필수조건으로 묶지 않는다.
+
+---
+
 ## 2026-11-22 KST — P1/P2 R1 F1~F3 수정·로컬 시험 완료 / Windows E2E 전 상태
 
 - **GPT 후속 실행:** 기존 R1 `ACCEPT_WITH_CHANGE`의 **F1(200 초과 관계 스캔 crash)·F2(Windows 드라이브 경로 사전 차단)** 수정, **F3(`choose()`의 무조건 skill fallback/부분문자열 오분류)** 운용 문서화. 범위 확장·라우터 정책 변경 없음.
