@@ -1,0 +1,86 @@
+{
+  "status": "development_not_for_deployment",
+  "baseline_zip_sha256": "23579a5c8c6690b5831116410fc623e3a8bbc5c659cb6fdea8628e765fa7c206",
+  "patch_sha256": "28d6b6db55a130fbba7e55863426d62749ed0f1047756a9e884f30ced1431366",
+  "patch_bytes": 39061,
+  "replay": "PASS_EXACT_BYTES",
+  "files": [
+    {
+      "path": "skill_collab_watcher/auto_approval.py",
+      "before_sha256": "d19bba47b8d0c3bc68fb277555c121048c69c910a71cf0b925c1883ccda29f7f",
+      "after_sha256": "bb03626d0349cedd34136df4993fbfdc3628e92479a81bff50ee87e1a03a8454",
+      "bytes": 47934
+    },
+    {
+      "path": "skill_collab_watcher/auto_policy.py",
+      "before_sha256": "17717929275609def3993bba0e79cc85f77c452128d747abb97dc3b60016a06e",
+      "after_sha256": "0ac3a966356e5068ac51ce0f3342a3d5bae86ab193397a79ac04b2923c479183",
+      "bytes": 3082
+    },
+    {
+      "path": "skill_collab_watcher/cli.py",
+      "before_sha256": "bf9d853e8cde19e02c4828d41092c338cfcf9c84d876fc628672728b9242b29b",
+      "after_sha256": "6cc02d658de3f464562d3f3ed289e3b0c2db011875c3dc6e3ce9518cdbcc81fe",
+      "bytes": 32539
+    },
+    {
+      "path": "skill_collab_watcher/config.py",
+      "before_sha256": "b39614a4a464d52e26cfb5cd9fa971dee968bb8896542deb7a0c9c01fcfcc7a9",
+      "after_sha256": "9b881151e1ce4943b198ac57217def18cec03caf0bc4b380133635faaa268b71",
+      "bytes": 13163
+    },
+    {
+      "path": "skill_collab_watcher/state_store.py",
+      "before_sha256": "dd5d762eb2106fb81cff589d89c39d52d47c2f2ad4ee0ed0320d9228f3cb1a87",
+      "after_sha256": "7e75d3c762bbe15f5b1d2ebaf00fca3aa2b4cd0b8df081c0b4a80e597c99c211",
+      "bytes": 37279
+    },
+    {
+      "path": "tests/test_auto_approval.py",
+      "before_sha256": "b5dee65ca00e13a22ccde6b87f961efaee15384d1e1ca1ee6aab67306d890397",
+      "after_sha256": "d5cd76613e853c4042d94cae1c954c5a01d2012618b3d0b28c4e2edd00200164",
+      "bytes": 44669
+    },
+    {
+      "path": "tests/test_cost_gate_removal.py",
+      "before_sha256": null,
+      "after_sha256": "bcee746fd910b8987b2b88108f82e3871845beb93b74020f1886c560c65b65c7",
+      "bytes": 3847
+    },
+    {
+      "path": "tests/test_review_budget_policy_v025.py",
+      "before_sha256": "260b9277e011092e9fd040bd6fa9a31294656412c2b967bef995ebcd4d810ffe",
+      "after_sha256": "d154f1af14266a8bfe35e52d65ac160fb26158f4416af9e33df955a72f629f41",
+      "bytes": 3489
+    },
+    {
+      "path": "tests/test_review_request_gate_tool_v026.py",
+      "before_sha256": "4307c6a2544f7d7a235581d6d1e9cac537b65b475cc043a805751519ce63bbee",
+      "after_sha256": "423b3cbc97302a49e8a8a2c00c84caa304426958fba0aec573e5ff377d8d1277",
+      "bytes": 17274
+    },
+    {
+      "path": "tests/test_v014_budget_tiers.py",
+      "before_sha256": "7302101752dfa55435165c2322fb0048a313de2af316c5300eb57288972cc4ac",
+      "after_sha256": "21dafe6c1d36d690a9a091a870ba17618be4de3be00209153733b12da4fae4c4",
+      "bytes": 7947
+    },
+    {
+      "path": "tests/test_v015_token_savings.py",
+      "before_sha256": "60d2ac50b6b4118601457b8f703aabf2ea3e62cc0a46a5666afeb15016ce3ef6",
+      "after_sha256": "73059b714e5bc3126fc05cf946889d331d7c6a7f5a52603da5a1dd3275812fe2",
+      "bytes": 13495
+    },
+    {
+      "path": "tools/review_request_gate.py",
+      "before_sha256": "08bcfd6633a16a1a3f57fdf896024756bdd32f52bf7154c359100ae6980b4eb1",
+      "after_sha256": "910bf8ddd8eb4836b9314b1042d23288a804ea2a77c1bb5d5cb20dc5a8e8dc01",
+      "bytes": 12009
+    }
+  ],
+  "not_fixed": [
+    "F1 original intent expiry revalidation",
+    "F2 old release manifest",
+    "F3 intent commit A self-reference"
+  ]
+}

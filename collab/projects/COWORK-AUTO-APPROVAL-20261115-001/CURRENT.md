@@ -1,5 +1,14 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-23 KST — 사용자 비용 제한 제거 지시 반영 / 코드·시험 완료 / 호스트 적용 미실행
+
+- **결정:** 비용 기반 접수·서명·READY·디스패치 거부 제거. COST_LIMIT_REMOVAL=USER_AUTHORIZED, **COST_RECONSENT=NOT_REQUIRED**. 과거 “비용 무상한 위험 수용 승인 대기”는 이번 사용자 지시로 해소하며 동일 동의 반복 요청 금지. 최종 후보 LIVE 설치·DB 이행은 별도 확인 경계 유지.
+- **구현:** [비용 제한 제거 결과](GPT_COST_GATE_REMOVAL_IMPLEMENTATION_RESULT_r0001_20261123_KST.md). main 접수기의 가격 인수 거부·USD3/등급 금액 비교/CLI 파싱 제거. r2 후속 개발 패치에서 max_budget/max_request_usd 파싱 차단·INVALID_COST 예약 거부·승인 시 회계 조회 의존 제거. 서명·기간·scope·PIN/ZIP·중복/UNCERTAIN 유지.
+- **직접 시험:** 접수기55 PASS; 집중237 PASS/0 FAIL/1 SKIP. 전체1차1009 PASS/28 FAIL/34 SKIP(OS 전제 문제, 실패 보존). 최종 휴대 가능한 회귀1011 PASS/0 FAIL/34 SKIP/28 DESELECTED. Windows 전체 회귀 PASS로 승격하지 않음.
+- **실물:** [개발 패치](artifacts/cost_gate_removal_r2_r0001.patch) SHA28d6b6db55a130fbba7e55863426d62749ed0f1047756a9e884f30ced1431366/39061 B, clean r2에 변경12파일 exact-byte 재적용 PASS. 새 릴리스 ZIP/새 리뷰 요청 없음.
+- **운영:** HOST_COST_GATE_APPLY=NOT_RUN/BLOCKED_HOST_ACCESS. 이 GPT에 실제 Windows 실행 연결 없음. 운영 v0.2.29 비용 게이트가 제거됐다고 주장하지 않음. 기존 r2 독립 리뷰 COMPLETED/BLOCKING0 보존, 신규 모델 호출·DB/LIVE 변경0. **LIVE_READY=NO**.
+- **NEXT_ONE_ACTION:** 기존 Windows 지시서에 비용 패치를 F1/F2/F3 보완과 통합→Windows 회귀→새 개발 패키지·결과 게시/원격 확인. 비용 승인 재질문·기존 리뷰 재실행 없이 진행; F1/F2/F3는 아직 미해결.
+
 ## 2026-11-22 KST — r2 독립 리뷰 확인 / GPT 실물 검증 보완 필요 / LIVE 보류
 
 - **판정:** [독립 리뷰·GPT 추가 검증](GPT_V033_R2_INDEPENDENT_REVIEW_DISPOSITION_r0001_20261122_KST.md). INDEPENDENT_REVIEW=COMPLETED(BLOCKING 0), GPT_DISPOSITION=HOLD_FOR_CORRECTIONS, **LIVE_READY=NO**.

@@ -1,3 +1,21 @@
+# 2026-11-23 KST — 비용 제한 제거 후속 통합 (이 절 우선)
+저장소: wonhwipark/CoWork-Skill-Collab / 브랜치: main
+Work: collab/projects/COWORK-AUTO-APPROVAL-20261115-001/
+결과: [GPT_COST_GATE_REMOVAL_IMPLEMENTATION_RESULT_r0001_20261123_KST.md](GPT_COST_GATE_REMOVAL_IMPLEMENTATION_RESULT_r0001_20261123_KST.md)
+
+사용자가 “비용제한 삭제해줘 … 리뷰안되는거 무의미해”, “진행해줘”로 지시했다. **COST_LIMIT_REMOVAL=USER_AUTHORIZED / COST_RECONSENT=NOT_REQUIRED.** 아래 과거 “비용 무상한 위험 수용 승인 대기” 문구를 다시 적용하지 않는다. 새로운 금액별 승인/고정USD3 확인을 요구하지 않는다.
+
+1. 기존 F1/F2/F3 격리 후속 후보에 [시험된 개발 패치](artifacts/cost_gate_removal_r2_r0001.patch)를 통합. SHA28d6b6db55a130fbba7e55863426d62749ed0f1047756a9e884f30ced1431366, 39061 B. 정확 r2 ZIP SHA23579a5c8c6690b5831116410fc623e3a8bbc5c659cb6fdea8628e765fa7c206 기반이며 12파일 before/after는 동명 JSON 참조. clean r2 사본은 git apply --check/apply와 목표SHA까지 검증됨. 이미 수정된 후속 트리는 원문 대조로 통합하고 무조건 덮어쓰기 금지.
+2. max_budget_usd/max_request_usd/required_budget 및 집계 금액·CLI 예산 인수가 새 독립 리뷰 자격을 막지 않게 유지. 사후 비용 기록은 보존. protected signer/위임 활성·만료·scope/PIN·nonce·READY·단일 디스패치·UNCERTAIN 방어를 삭제하지 않는다.
+3. 실제 Windows 회귀를 수행. GPT Linux 집중237/0/1 및 접수기55 PASS. 전체1차28FAIL과 최종portable28제외는 Windows 통과 증거가 아님. msvcrt/잠금/cmd/SHADOW 관련 Windows 시험은 실제 호스트에서 확인. 완료 시험은 변경·실패 관련 범위만 반복.
+4. 이 비용 패치만으로 F1/F2/F3 해결 또는 LIVE 준비 완료라고 하지 않는다. 기존 r2 ZIP·승인·리뷰·영수증·DB 이력을 보존. 새 ZIP은 별도 버전/개발 표시·정확 manifest/해시/안전 검사. 기존 r2 리뷰 재실행/자동 새 모델 호출 금지.
+5. 운영 비용 제거는 사용자 지시 범위지만 **불완전 후보 전체 설치·운영 DB 이행·키/scope 변경·10단계 LIVE 컷오버는 이번 지시로 확대하지 않음**. 보호 설정만 null/0/Infinity로 바꿔 구버전 코드의 오류를 유발하지 않는다. 운영 적용 전 현재 설치 코드와 비용 경로를 대조하고 검증된 최소 변경만 사용. 이 GPT 세션은 Windows 연결이 없어 적용 NOT_RUN/BLOCKED_HOST_ACCESS이며, 동일 비용 승인 부족으로 기록하지 않는다.
+6. 같은 Work 결과·CURRENT/TRACKER 및 원격 bytes 검증까지 묶어 마무리. 문서 게시만으로 호스트가 실행됐다고 보고하지 않는다.
+
+---
+
+## 보존된 r2 보완 지시 (비용 승인 문구는 위 절 우선)
+
 # r2 리뷰 완료 — 후속 보완 원샷 / LIVE 보류
 저장소: wonhwipark/CoWork-Skill-Collab / 브랜치: main
 Work: collab/projects/COWORK-AUTO-APPROVAL-20261115-001/

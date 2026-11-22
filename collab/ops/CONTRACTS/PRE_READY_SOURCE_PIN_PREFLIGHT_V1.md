@@ -1,5 +1,17 @@
 # CoWork REVIEW REQUEST/PIN/ZIP 게시 전 필수 정합성 검증 V1
 
+## 현행 결정 r0009 — 금액을 리뷰 자격에 사용하지 않음 (2026-11-23 KST)
+
+- 사용자 비용 제한 제거 지시를 수용. 건당/일/월 비용, 고정USD3 일치, legacy 가격 인수/필드의 존재·형식이 신규 독립 리뷰 접수·승인 자격을 결정하지 않는다. 비용 제거 의사에 대한 같은 승인을 반복 요청하지 않는다. 실제 운영 적용 상태는 [자동 승인 CURRENT](../../projects/COWORK-AUTO-APPROVAL-20261115-001/CURRENT.md)에서 조회한다.
+- 접수기 `required_budget`와 CLI `--required-budget-usd`는 deprecated/ignored. 금액을 파싱·비교하거나 넘겼다는 이유만으로 거부하지 않음. legacy 의도 표기도 가격 비교 없이 정책 identity/원본 호환만 확인. 현행 독립 리뷰 기본은 POLICY-STATIC-V1.
+- 비용 사후 사용량/청구 기록은 보존. 보호된 실행 권한·서명·만료·scope·REQUEST/ZIP/PIN SHA·CRC·READY 마지막·중복/UNCERTAIN 봉인은 유지. GitHub 본문 가격/승인 주장은 권한 근거가 아니다.
+- 운영 코드·설치본 확인 없이 소스 수정을 운영 해제 완료로 보고하지 않는다. 비용 제거 요청이 후보 전체 LIVE 설치·DB 이행·키/위임 확대·최종 컷오버 승인은 아니다. 기존 frozen 요청/서명/READY/영수증을 소급 변경하거나 재실행하지 않는다.
+- 아래 r0008/r0007의 금액 승인 대기·가격 인수 거부·USD3 비교 지시는 이 결정으로 대체. 과거 실행 결과는 해당 시점의 이력으로 보존.
+- 구현·직접 시험: [비용 제한 제거 결과](../../projects/COWORK-AUTO-APPROVAL-20261115-001/GPT_COST_GATE_REMOVAL_IMPLEMENTATION_RESULT_r0001_20261123_KST.md).
+
+---
+
+
 ## 결정 r0008 — 요청 ID 단위 단일 실행 / 비용 상한 제거 후속 구현 (2026-11-22 KST)
 
 - 사용자가 `--max-budget-usd` 제거에 동의하고, 독립 리뷰의 재실행 위험은 **요청 ID별 1회 디스패치, 원자적 중복 방지, 실행 불확실 시 재디스패치 금지**로 통제하도록 결정. `max_calls=1`은 watcher에서 Claude CLI 작업을 1회 넘게 시작하지 않는 보호장치이며 단일 실행 안의 모델 턴 수/청구 금액 상한으로 오해하지 않는다.

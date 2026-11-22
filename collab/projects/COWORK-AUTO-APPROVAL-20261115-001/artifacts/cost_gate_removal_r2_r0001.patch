@@ -1,0 +1,751 @@
+--- a/skill_collab_watcher/auto_approval.py
++++ b/skill_collab_watcher/auto_approval.py
+@@ -75,7 +75,7 @@
+         lines.append(f"auto_approval: delegation not usable ({reason}) -> AUTO_SIGNING stays OFF")
+     else:
+         lines.append(f"auto_approval: delegation file readable; enabled={d.enabled}; projects={len(d.projects)}; skills={len(d.skills)}; "
+-                     f"limit: per review {d.max_request_cents} c; no daily/monthly aggregate limits")
++                     "cost_gate=OFF; legacy price fields do not restrict signing")
+     lines.append(f"auto_approval: signer {'configured' if s.signer else 'NOT configured -> nothing can be signed'}")
+     return lines
+ 
+@@ -176,12 +176,6 @@
+     if t.tzinfo is None:
+         raise ValueError(f"{name} has no time zone")
+     return int(t.timestamp())
+-
+-
+-def _cents(value, name):
+-    if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or value <= 0:
+-        raise ValueError(f"{name} must be a finite positive number")
+-    return int(round(float(value) * 100))
+ 
+ 
+ @dataclass(frozen=True)
+@@ -227,7 +221,7 @@
+         d = Scope(
+             enabled=enabled, repo_id=str(raw["repo_id"]), branch=str(raw["branch"]), projects=frozenset(projects), skills=frozenset(skills),
+             expires_at=_iso(raw["expires_at"], "expires_at"), earliest_request_at=_iso(raw["enabled_at"], "enabled_at"),
+-            max_request_cents=_cents(raw.get("max_request_usd", 1.5), "max_request_usd"), max_day_calls=0,
++            max_request_cents=0, max_day_calls=0,  # all legacy price caps ignored
+             max_day_cents=0, max_month_cents=0,  # old day/month keys ignored
+             families=families)
+         return d, "ok"
+@@ -530,7 +524,12 @@
+         run_policy = str(front.get("run_policy_ref", ""))
+         package_path = str(front.get("package_path", ""))
+         budget = policy.run_budgets_usd.get(run_policy)
+-        estimated = int(round(budget * 100)) if isinstance(budget, (int, float)) else 0
++        estimated = 0  # optional accounting only; never used for admissibility
++        try:
++            if not isinstance(budget, bool) and isinstance(budget, (int, float)) and math.isfinite(budget) and 0 < budget < (2**63 - 1) / 100:
++                estimated = int(round(budget * 100))
++        except (OverflowError, ValueError):
++            pass  # unusable historical price metadata cannot stop approval
+ 
+         package_raw, bytes_ok, commit_ok, created_at = b"", False, False, 0
+         if pins_ok and SAFE_NAME.fullmatch(rid) and package_path.startswith("/SKILL-COLLAB/packages/") and package_path.lower().endswith(".zip"):
+@@ -547,7 +546,8 @@
+                 return AutoResult("COMMIT_UNREADABLE")
+ 
+         prior = self._prior_state(transport, store, root, rid, rev)
+-        usage = store.window_usage(now)
++        # Accounting is observed separately; malformed history must not become an approval gate.
++        usage = {"day_calls": 0, "day_cents": 0, "month_cents": 0}
+         signer_ok = bool(self.signer is not None and policy.trust_root is not None and policy.signature_backend is not None
+                          and (not hasattr(self.signer, "trusts_key") or self.signer.trusts_key(policy.trust_root)))
+         cand = auto_policy.Candidate(
+@@ -635,7 +635,7 @@
+ 
+     def _revalidate(self, transport, store, rid, rev, claim, now, trust=None) -> tuple[bool, str]:
+         """The stored candidate must still be allowed by the CURRENT protected delegation: enabled, unexpired, same repository, the project in the
+-        (exact or family) scope, the skill in its list, the limits (per request, day, month) counted without this request's own reservation, and the
++        (exact or family) scope, the skill in its list, and the
+         pure gate. Anything else stops the request. Nothing is cached: this runs before every signature and every publication."""
+         stored = json.loads((claim or {}).get("candidate_json") or "{}")
+         if not stored:
+@@ -653,12 +653,12 @@
+         scoped = project_scope(d, str(stored.get("project", "")))
+         if scoped is None:
+             return False, "PROJECT_NOT_IN_SCOPE"
+-        usage = store.window_usage(now, exclude=(rid, rev))
++        usage = {"day_calls": 0, "day_cents": 0, "month_cents": 0}
+         cand = auto_policy.Candidate(
+             request_id=rid, revision=int(rev) if rev.isdigit() else 0, project=str(stored["project"]), skill=str(stored.get("skill", "")),
+             repo_id=str(stored["repo_id"]), branch=str(stored.get("branch", "main")), created_at=int(stored["created_at"]),
+             commit_a=str(stored["commit"]), request_sha256=str(stored["request_sha256"]), zip_sha256=str(stored["zip_sha256"]),
+-            policy=str(stored["policy"]), estimated_cents=int(stored["cents"]), max_calls=1, attempt=1, state=str(stored.get("state", "")))
++            policy=str(stored["policy"]), estimated_cents=0, max_calls=1, attempt=1, state=str(stored.get("state", "")))
+         ev = auto_policy.Evidence(now=now, pins_verified=True, bytes_and_crc_verified=True, signer_and_trust_root_valid=True,
+                                   prior_state="NEW", day_calls_used_or_reserved=usage["day_calls"],
+                                   day_cents_used_or_reserved=usage["day_cents"], month_cents_used_or_reserved=usage["month_cents"],
+--- a/skill_collab_watcher/auto_policy.py
++++ b/skill_collab_watcher/auto_policy.py
+@@ -20,7 +20,7 @@
+     skills: frozenset[str]
+     expires_at: int
+     earliest_request_at: int
+-    max_request_cents: int = 150  # legacy scope; protected local value may raise to 300
++    max_request_cents: int = 0  # inert legacy field; never an authorization cap
+     max_day_calls: int = 0  # legacy, ignored for authorization
+     max_day_cents: int = 0   # retained only for legacy compatibility
+     max_month_cents: int = 0   # retained only for legacy compatibility
+--- a/skill_collab_watcher/cli.py
++++ b/skill_collab_watcher/cli.py
+@@ -337,7 +337,7 @@
+     print(f"enabled_source: {rp.enabled_source}")
+     print(f"prompt_cache_ttl: {rp.prompt_cache_ttl}  save_transcript: {rp.save_transcript}  default_effort: {rp.effort or '(user setting)'}")
+     for ref in rp.known_run_policy_refs:
+-        print(f"  run policy {ref}: max_budget_usd={rp.budget_for(ref)} effort={rp.effort_for(ref) or '(user setting)'}")
++        print(f"  run policy {ref}: cost_gate=OFF accounting_reference_usd={rp.budget_for(ref)} effort={rp.effort_for(ref) or '(user setting)'}")
+     print(f"claude_executable: {cfg.claude_executable or '(auto: PATH)'}")
+     section = cfg.raw.get("auto_approval")
+     if section is None:
+--- a/skill_collab_watcher/config.py
++++ b/skill_collab_watcher/config.py
+@@ -54,7 +54,7 @@
+     concurrent_reviews: int = 1
+     model: str | None = None
+     allowed_tools: list[str] = field(default_factory=lambda: ["Read", "Grep", "Glob"])
+-    max_budget_usd: float | None = 1.5
++    max_budget_usd: float | None = None  # legacy accounting reference only; never a spending cap
+     timeout_sec: int = 1800
+     known_run_policy_refs: list[str] = field(default_factory=list)
+     run_budgets: dict[str, float] = field(default_factory=dict)
+@@ -63,8 +63,8 @@
+     prompt_cache_ttl: str = "1h"         # "5m" makes cache writes cost 37.5% less (measured 2026-11-04)
+     save_transcript: bool = False        # keep the CLI's per-turn stream on this PC only, for cost analysis
+     enabled_source: str = "default (off)"
+-    daily_budget_usd: float | None = None      # unattended spending ceiling over any rolling 24 h; null = off
+-    max_dispatches_per_day: int | None = None  # unattended review-count ceiling over any rolling 24 h; null = off
++    daily_budget_usd: float | None = None      # inert legacy setting; never an execution cap
++    max_dispatches_per_day: int | None = None  # inert legacy setting; per-request identity checks remain
+     usage_limit_wait_sec: int = 1800
+     usage_limit_max_wait_sec: int = 86400
+     usage_limit_max_deferrals: int = 12
+@@ -75,8 +75,7 @@
+         return self.enabled and not self.dry_run
+ 
+     def budget_for(self, run_policy_ref: str) -> float | None:
+-        """Per-run spending cap. A REQUEST can only pick one of the locally
+-        registered tiers by name; it can never state an amount itself."""
++        """Legacy accounting reference; never authorizes or limits a review."""
+         return self.run_budgets.get(run_policy_ref, self.max_budget_usd)
+ 
+     def effort_for(self, run_policy_ref: str) -> str | None:
+@@ -84,9 +83,7 @@
+ 
+ 
+ def _parse_run_policy_refs(value) -> tuple[list[str], dict[str, float], dict[str, str]]:
+-    """`known_run_policy_refs` is either a list of names (all use
+-    `max_budget_usd`) or an object
+-    {name: {"max_budget_usd": number, "effort": "low|medium|high|xhigh|max"}}."""
++    """Registered policy identities and effort. Legacy amounts are optional telemetry."""
+     if value is None:
+         return [], {}, {}
+     if isinstance(value, list):
+@@ -103,11 +100,9 @@
+         unknown = set(spec) - {"max_budget_usd", "effort"}
+         if unknown:
+             raise ConfigError(f"run policy {name!r} has unknown keys {sorted(unknown)}")
+-        if "max_budget_usd" in spec:
+-            amount = spec["max_budget_usd"]
+-            if isinstance(amount, bool) or not isinstance(amount, (int, float)) or not math.isfinite(amount) or not amount > 0:
+-                raise ConfigError(f"run policy {name!r}: max_budget_usd must be a number greater than 0")
+-            budgets[name] = float(amount)
++        amount = _accounting_amount(spec.get("max_budget_usd"))
++        if amount is not None:
++            budgets[name] = amount
+         if spec.get("effort") is not None:
+             efforts[name] = _check_effort(spec["effort"], f"run policy {name!r}: effort")
+     return list(value), budgets, efforts
+@@ -125,11 +120,14 @@
+     return kind(value)
+ 
+ 
+-def _check_budget(value) -> float:
+-    """A missing/null cap would start reviews with no spending limit."""
+-    if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or not value > 0:
+-        raise ConfigError(f"review_policy.max_budget_usd must be a number greater than 0, got {value!r}")
+-    return float(value)
++def _accounting_amount(value) -> float | None:
++    """Ignore unusable legacy price metadata; it must never stop a review."""
++    if isinstance(value, bool) or not isinstance(value, (int, float)):
++        return None
++    try:
++        return float(value) if math.isfinite(value) and value > 0 else None
++    except (OverflowError, ValueError):
++        return None
+ 
+ 
+ def _resolve_enabled(raw: dict, rp: dict) -> tuple[bool, str]:
+@@ -208,7 +206,7 @@
+             concurrent_reviews=int(rp.get("concurrent_reviews", 1)),
+             model=rp.get("model"),
+             allowed_tools=list(rp.get("allowed_tools", ["Read", "Grep", "Glob"])),
+-            max_budget_usd=_check_budget(rp.get("max_budget_usd", 1.5)),
++            max_budget_usd=_accounting_amount(rp.get("max_budget_usd")),
+             timeout_sec=int(rp.get("timeout_sec", 1800)),
+             known_run_policy_refs=run_refs,
+             run_budgets=run_budgets,
+--- a/skill_collab_watcher/state_store.py
++++ b/skill_collab_watcher/state_store.py
+@@ -400,9 +400,9 @@
+ 
+     def auto_claim(self, request_id: str, revision: str, package_sha256: str, cents: int, candidate_json: str, now: int, *,
+                    max_day_calls: int, max_day_cents: int, max_month_cents: int) -> str:
+-        """Atomic reservation (BEGIN IMMEDIATE). One row per (request, revision) EVER. The delegation ceilings are evaluated against the watcher's own
+-        recorded dispatches and the other automatic reservations, in the same transaction, with the identity rule of _auto_usage_locked.
+-        Returns CLAIMED, EXISTS, INVALID_COST or READ_ONLY. Aggregate quotas removed."""
++        """Atomic reservation (BEGIN IMMEDIATE). One row per (request, revision) EVER.
++        Preserve identity and history; accounting metadata is never admissibility.
++        Returns CLAIMED, EXISTS or READ_ONLY. Legacy price metadata never rejects a reservation."""
+         if self._skip_write("AUTO_CLAIM", None, request_id):
+             return "READ_ONLY"
+         self.conn.execute("BEGIN IMMEDIATE")
+@@ -413,9 +413,8 @@
+                     return "EXISTS"
+             # No day/month cumulative quota. Keep the same transaction/unique key.
+             # Existing reservation rows remain intact as immutable history.
+-            if not isinstance(cents, int) or isinstance(cents, bool) or cents < 0:
+-                self.conn.execute("ROLLBACK")
+-                return "INVALID_COST"
++            if not isinstance(cents, int) or isinstance(cents, bool) or not 0 <= cents <= 2**63 - 1:
++                cents = 0  # accounting field only; keep the immutable identity claim
+             day_key = datetime.fromtimestamp(now, KST).strftime("%Y-%m-%d")
+             month_key = datetime.fromtimestamp(now, KST).strftime("%Y-%m")
+             self.conn.execute(
+--- a/tests/test_auto_approval.py
++++ b/tests/test_auto_approval.py
+@@ -53,12 +53,12 @@
+     path = tmp_path / "d.json"
+     write_delegation(path)
+     d, why = load_delegation(path, time.time(), "skip")
+-    assert d is not None and d.enabled and d.max_request_cents == 100 and d.max_day_calls == 0 and d.max_day_cents == 0 and d.max_month_cents == 0
++    assert d is not None and d.enabled and d.max_request_cents == 0 and d.max_day_calls == 0 and d.max_day_cents == 0 and d.max_month_cents == 0
+ 
+ 
+ @pytest.mark.parametrize("over", [
+     {"schema": "OTHER"}, {"enabled": "true"}, {"enabled": 1}, {"projects": "x"}, {"skills": [""]}, {"policy": "POLICY-STATIC-V1-LARGE"},
+-    {"expires_at": "tomorrow"}, {"expires_at": "2030-01-01T00:00:00"}, {"enabled_at": None}, {"repo_id": None}, {"max_request_usd": -1},
++    {"expires_at": "tomorrow"}, {"expires_at": "2030-01-01T00:00:00"}, {"enabled_at": None}, {"repo_id": None},
+ ])
+ def test_a_malformed_delegation_is_unusable_not_enabled(tmp_path, over):
+     path = tmp_path / "d.json"
+@@ -275,7 +275,6 @@
+     ({}, {"policy_ref": "POLICY-STATIC-V1-LARGE"}),
+     ({"projects": []}, {}),
+     ({"skills": []}, {}),
+-    ({"max_request_usd": 0.0}, {}),
+     
+     
+     ({"repo_id": "another-repository"}, {}),
+--- /dev/null
++++ b/tests/test_cost_gate_removal.py
+@@ -0,0 +1,82 @@
++"""Cost metadata cannot block approval; use test keys/fake transport only."""
++import json
++import pytest
++
++from auto_helpers import auto, make_request, write_delegation
++from test_auto_approval import direct
++from skill_collab_watcher.auto_approval import load_delegation
++from skill_collab_watcher.config import Config
++from skill_collab_watcher.state_store import StateStore
++
++BAD_AMOUNTS = [None, 0, -1, True, '3', 'broken', {}, float('inf'), float('nan'), 10**400]
++
++
++@pytest.mark.parametrize('amount', BAD_AMOUNTS)
++def test_config_price_metadata_cannot_prevent_loading(tmp_path, amount):
++    path = tmp_path / 'config.json'
++    path.write_text(json.dumps({'review_policy': {
++        'max_budget_usd': amount, 'daily_budget_usd': amount,
++        'known_run_policy_refs': {'POLICY-STATIC-V1': {'max_budget_usd': amount}},
++    }}))
++    p = Config.load(path).review_policy
++    assert p.max_budget_usd is None and p.run_budgets == {} and p.daily_budget_usd is None
++    assert p.dispatch_allowed is False  # price removal cannot enable execution
++
++
++@pytest.mark.parametrize('amount', BAD_AMOUNTS)
++def test_bad_legacy_amount_still_uses_real_test_signer_once(auto, amount):
++    write_delegation(auto.delegation, max_request_usd=amount)
++    d, why = load_delegation(auto.delegation, __import__('time').time(), 'skip')
++    assert d is not None and why == 'ok' and d.max_request_cents == 0
++    auto.policy.run_budgets_usd = {'POLICY-STATIC-V1': amount}
++    info = make_request(auto.env.http)
++    assert direct(auto, info.rid, info) == 'READY_POSTED'
++    assert type(auto.signer).calls == 1
++    direct(auto, info.rid, info)  # cached READY_POSTED may be returned; no second signature is allowed
++    assert type(auto.signer).calls == 1 and auto.env.runner.calls == 0
++
++
++@pytest.mark.parametrize('amount', BAD_AMOUNTS)
++def test_bad_price_does_not_enable_disabled_authority(auto, amount):
++    write_delegation(auto.delegation, max_request_usd=amount, enabled=False)
++    info = make_request(auto.env.http)
++    direct(auto, info.rid, info)
++    assert type(auto.signer).calls == 0 and auto.env.runner.calls == 0
++
++
++@pytest.mark.parametrize('amount', BAD_AMOUNTS)
++def test_price_telemetry_does_not_replace_atomic_duplicate_check(tmp_path, amount):
++    s = StateStore(tmp_path / 'temp.sqlite3')
++    try:
++        s.ensure_auto_tables()
++        args = ('COST-ONLY', '1', 'a'*64, amount, '{}', 2_000_000_000)
++        kw = dict(max_day_calls=0, max_day_cents=0, max_month_cents=0)
++        assert s.auto_claim(*args, **kw) == 'CLAIMED'
++        assert s.auto_get_claim('COST-ONLY', '1')['reserved_cents'] == 0
++        assert s.auto_claim(*args, **kw) == 'EXISTS'
++    finally:
++        s.close()
++
++
++def test_accounting_query_cannot_become_an_approval_dependency(auto, monkeypatch):
++    def must_not_query(*args, **kwargs):
++        raise AssertionError('accounting must not gate authority or revalidation')
++    monkeypatch.setattr(auto.env.store, 'window_usage', must_not_query)
++    info = make_request(auto.env.http)
++    assert direct(auto, info.rid, info) == 'READY_POSTED'
++    assert type(auto.signer).calls == 1 and auto.env.runner.calls == 0
++
++
++def test_legacy_claim_price_metadata_cannot_block_revalidation(auto):
++    info = make_request(auto.env.http)
++    assert direct(auto, info.rid, info) == 'READY_POSTED'
++    claim = dict(auto.env.store.auto_get_claim(info.rid, str(info.rev)))
++    candidate = json.loads(claim['candidate_json'])
++    candidate['cents'] = 'unparseable historical price'
++    claim['candidate_json'] = json.dumps(candidate)
++    from bundle import make_transport
++    transport = make_transport(auto.env.http)
++    transport.ensure_auth()
++    allowed, why = auto.approver._revalidate(transport, auto.env.store, info.rid, str(info.rev),
++                                            claim, __import__('time').time(), auto.trust)
++    assert allowed and why == 'ok'
+--- a/tests/test_review_budget_policy_v025.py
++++ b/tests/test_review_budget_policy_v025.py
+@@ -30,8 +30,7 @@
+     assert names==list(tiers) and budgets=={"POLICY-STATIC-V1":1.5,
+                                              "POLICY-STATIC-V1-DESIGN":3.0}
+     assert efforts=={}
+-    with pytest.raises(ConfigError):
+-        _parse_run_policy_refs({"POLICY-STATIC-V1-DESIGN":{"max_budget_usd":float("inf")}})
++    assert _parse_run_policy_refs({"POLICY-STATIC-V1-DESIGN":{"max_budget_usd":float("inf")}})[1] == {}
+ 
+ def test_basic_tier_allows_unlimited_aggregate_telemetry_design_is_refused():
+     """v0.2.27: only the unified POLICY-STATIC-V1 tier is ever automatically eligible. DESIGN is REVIEW_POLICY
+@@ -61,5 +60,6 @@
+         assert s.auto_claim(rid,"1","a"*64,300,"{}",now,**kw)=="CLAIMED"
+     assert s.auto_claim("REQ-1","1","a"*64,300,"{}",now,**kw)=="EXISTS"
+     assert s.window_usage(now)["day_cents"]>=3600
+-    assert s.auto_claim("BAD","1","a"*64,-1,"{}",now,**kw)=="INVALID_COST"
++    assert s.auto_claim("BAD","1","a"*64,-1,"{}",now,**kw)=="CLAIMED"
++    assert s.auto_get_claim("BAD", "1")["reserved_cents"] == 0
+     s.close()
+--- a/tests/test_review_request_gate_tool_v026.py
++++ b/tests/test_review_request_gate_tool_v026.py
+@@ -63,6 +63,122 @@
+             code = gate.main(list(args))
+         return code, out.getvalue(), err.getvalue()
+ 
++    def test_independent_publication_does_not_consult_cost(self):
++        self.fields["run_policy_ref"] = "POLICY-STATIC-V1"
++        self.save_request()
++        self.config.write_text("{not valid json}")
++        result = gate.check_request_for_publication(self.request, self.package)
++        self.assertEqual(result["run_policy_ref"], "POLICY-STATIC-V1")
++        self.assertNotIn("expected_max_budget_usd", result)
++        self.assertEqual(result["authorization"], "NOT_CHECKED")
++
++    def test_independent_selector_uses_registered_identity_without_price(self):
++        self.assertEqual(gate.select_policy(gate._json(self.config), "independent", None),
++                         "POLICY-STATIC-V1")
++
++    def test_independent_publication_ignores_legacy_budget_parameter(self):
++        self.fields["run_policy_ref"] = "POLICY-STATIC-V1"
++        self.save_request()
++        for legacy in (None, "invalid", -1, True, float("inf"), "3.00"):
++            result = gate.check_request_for_publication(self.request, self.package, required_budget=legacy)
++            self.assertEqual(result["authorization"], "NOT_CHECKED")
++            self.assertNotIn("expected_max_budget_usd", result)
++
++    def test_independent_publication_rejects_bad_policy_reference(self):
++        self.fields["run_policy_ref"] = "POLICY-NOT-KNOWN"
++        self.save_request()
++        with self.assertRaisesRegex(gate.GateReject, "RUN_POLICY_NOT_PUBLISHABLE_FOR_INTENT"):
++            gate.check_request_for_publication(self.request, self.package)
++
++    def test_request_fixture_has_lf_newlines_on_all_platforms(self):
++        request_bytes = self.request.read_bytes()
++        self.assertTrue(request_bytes.startswith(b"---\n"))
++        self.assertNotIn(b"\r\n", request_bytes)
++
++    def test_publication_gate_without_live_config_checks_schema_zip_and_ref(self):
++        self.config.unlink()
++        self.fields["run_policy_ref"] = "POLICY-STATIC-V1"
++        self.save_request()
++        out = gate.check_request_for_publication(
++            self.request, self.package, intent="unified", required_budget=gate._target_money("3.00"))
++        self.assertEqual(out["status"], "PASS_REQUEST_INPUT_ONLY")
++        self.assertEqual(out["authorization"], "NOT_CHECKED")
++        self.assertEqual(out["package_sha256"], self.fields["package_sha256"])
++        self.assertEqual(out["model_calls"], 0)
++
++    def test_publication_gate_rejects_legacy_ref_even_without_host(self):
++        self.config.unlink()
++        with self.assertRaisesRegex(gate.GateReject, "RUN_POLICY_NOT_PUBLISHABLE_FOR_INTENT"):
++            gate.check_request_for_publication(
++                self.request, self.package, intent="unified", required_budget=gate._target_money("3.00"))
++
++    def test_legacy_unified_uses_policy_identity_without_price(self):
++        """The old unified spelling has no price gate or implied authorization."""
++        self.policy_map["POLICY-STATIC-V1"] = {"max_budget_usd": 3.0}
++        self.save_config()
++        self.fields["run_policy_ref"] = "POLICY-STATIC-V1"
++        self.save_request()
++        result = self.pass_check("unified", "3.00")
++        self.assertEqual(result["run_policy_ref"], "POLICY-STATIC-V1")
++        self.assertNotIn("expected_max_budget_usd", result)
++        self.assertEqual(result["authorization"], "NOT_CHECKED")
++        self.assertEqual(gate.select_policy(gate._json(self.config), "unified",
++                                            gate._target_money("3.00")), "POLICY-STATIC-V1")
++
++    def test_unified_ignores_old_one_and_one_fifty_config(self):
++        self.fields["run_policy_ref"] = "POLICY-STATIC-V1"
++        self.save_request()
++        for configured in (1.0, 1.5):
++            self.policy_map["POLICY-STATIC-V1"] = {"max_budget_usd": configured}
++            self.save_config()
++            self.assertEqual(self.pass_check("unified", "3.00")["run_policy_ref"], "POLICY-STATIC-V1")
++
++    def test_unified_rejects_legacy_design_ref_despite_three_dollar_registration(self):
++        self.policy_map["POLICY-STATIC-V1"] = {"max_budget_usd": 3.0}
++        self.save_config()
++        # Existing DESIGN and LARGE refs can stay installed for legacy requests.
++        for legacy in ("POLICY-STATIC-V1-DESIGN", "POLICY-STATIC-V1-LARGE"):
++            self.fields["run_policy_ref"] = legacy
++            self.save_request()
++            with self.assertRaisesRegex(gate.GateReject, "RUN_POLICY_NOT_LIVE_MATCH"):
++                self.pass_check("unified", "3.00")
++
++    def test_unified_cli_prepublication_is_not_approval(self):
++        self.policy_map["POLICY-STATIC-V1"] = {"max_budget_usd": 3.0}
++        self.save_config()
++        self.fields["run_policy_ref"] = "POLICY-STATIC-V1"
++        self.save_request()
++        code, out, err = self.run_cli("select", "--live-config", str(self.config),
++                                      "--intent", "unified")
++        self.assertEqual((code, err), (0, ""))
++        self.assertEqual(json.loads(out)["selected_run_policy_ref"], "POLICY-STATIC-V1")
++        self.assertEqual(json.loads(out)["cost_gate"], "OFF")
++        self.assertEqual(json.loads(out)["approval"], "NOT_CHECKED")
++        code, out, err = self.run_cli("check", "--live-config", str(self.config),
++                                      "--intent", "unified", "--request", str(self.request),
++                                      "--package", str(self.package))
++        self.assertEqual((code, err), (0, ""))
++        self.assertEqual(json.loads(out)["status"], "PASS_PREPUBLICATION_ONLY")
++
++    def test_unified_ignores_legacy_requested_amount(self):
++        self.policy_map["POLICY-STATIC-V1"] = {"max_budget_usd": 1.5}
++        self.save_config()
++        self.fields["run_policy_ref"] = "POLICY-STATIC-V1"
++        self.save_request()
++        self.assertEqual(self.pass_check("unified", "1.50")["authorization"], "NOT_CHECKED")
++        self.policy_map["POLICY-STATIC-V1"] = {"max_budget_usd": 3.0}
++        self.save_config()
++        self.assertEqual(self.pass_check("unified", "6.00")["authorization"], "NOT_CHECKED")
++
++    def test_unified_stale_or_missing_policy_fail_closed(self):
++        self.policy_map.pop("POLICY-STATIC-V1")
++        self.save_config()
++        with self.assertRaisesRegex(gate.GateReject, "POLICY_NOT_INSTALLED"):
++            gate.select_policy(gate._json(self.config), "unified", gate._target_money("3"))
++        self.config.unlink()
++        with self.assertRaises(gate.GateReject):
++            self.pass_check("unified", "3.00")
++
+     def test_old_live_legacy_large_design_passes(self):
+         r = self.pass_check()
+         self.assertEqual(r["run_policy_ref"], "POLICY-STATIC-V1-LARGE")
+@@ -93,17 +209,15 @@
+         with self.assertRaisesRegex(gate.GateReject, "POLICY_NOT_INSTALLED"):
+             self.pass_check()
+ 
+-    def test_configured_cost_disagrees_with_expected(self):
++    def test_configured_cost_disagreement_is_not_a_gate(self):
+         self.policy_map["POLICY-STATIC-V1-LARGE"] = {"max_budget_usd": 6.0}
+         self.save_config()
+-        with self.assertRaisesRegex(gate.GateReject, "POLICY_COST_MISMATCH"):
+-            self.pass_check()
+-
+-    def test_basic_legacy_one_dollar_not_silently_upgraded(self):
+-        self.fields["run_policy_ref"] = "POLICY-STATIC-V1"
+-        self.save_request()
+-        with self.assertRaisesRegex(gate.GateReject, "POLICY_COST_MISMATCH"):
+-            self.pass_check("skill", "1.50")
++        self.assertEqual(self.pass_check()["authorization"], "NOT_CHECKED")
++
++    def test_legacy_skill_amount_is_not_a_gate(self):
++        self.fields["run_policy_ref"] = "POLICY-STATIC-V1"
++        self.save_request()
++        self.assertEqual(self.pass_check("skill", "1.50")["run_policy_ref"], "POLICY-STATIC-V1")
+ 
+     def test_basic_after_live_config_change(self):
+         self.policy_map["POLICY-STATIC-V1"] = {"max_budget_usd": 1.5}
+@@ -118,12 +232,18 @@
+             with self.assertRaises(gate.GateReject):
+                 self.pass_check()
+ 
+-    def test_bad_numbers_rejected(self):
++    def test_legacy_price_values_cannot_reject_registered_input(self):
+         for v in ("3.0", True, 0, -3, float("inf"), float("nan"), 3.001):
+             self.policy_map["POLICY-STATIC-V1-LARGE"] = {"max_budget_usd": v}
+             self.save_config()
+-            with self.assertRaises(gate.GateReject):
+-                self.pass_check()
++            self.assertEqual(self.pass_check()["authorization"], "NOT_CHECKED")
++
++    def test_cli_ignores_malformed_legacy_price_flag(self):
++        code, out, err = self.run_cli("select", "--live-config", str(self.config),
++                                      "--intent", "independent", "--required-budget-usd", "not-a-price")
++        self.assertEqual((code, err), (0, ""))
++        self.assertEqual(json.loads(out)["cost_gate"], "OFF")
++        self.assertEqual(json.loads(out)["approval"], "NOT_CHECKED")
+ 
+     def test_modified_package_rejected(self):
+         self.package.write_bytes(self.package.read_bytes() + b"modified")
+@@ -163,6 +283,12 @@
+         self.fields["work_id"] = "COWORK-OTHER"
+         self.save_request()
+         with self.assertRaisesRegex(gate.GateReject, "PROJECT_WORK_SCOPE_MISMATCH"):
++            self.pass_check()
++
++    def test_nested_request_package_path_rejected(self):
++        self.fields["package_path"] = "/SKILL-COLLAB/packages/nested/candidate.zip"
++        self.save_request()
++        with self.assertRaisesRegex(gate.GateReject, "INVALID_PACKAGE_PATH"):
+             self.pass_check()
+ 
+     def test_invalid_request_path_rejected(self):
+@@ -215,3 +341,4 @@
+ 
+ if __name__ == "__main__":
+     unittest.main()
++
+--- a/tests/test_v014_budget_tiers.py
++++ b/tests/test_v014_budget_tiers.py
+@@ -47,10 +47,6 @@
+ 
+ 
+ @pytest.mark.parametrize("bad", [
+-    {LARGE: {"max_budget_usd": 0}},
+-    {LARGE: {"max_budget_usd": -2}},
+-    {LARGE: {"max_budget_usd": True}},
+-    {LARGE: {"max_budget_usd": "3.0"}},
+     {LARGE: {"max_budget": 3.0}},          # typo'd key must not silently fall back
+     {LARGE: 3.0},
+     "POLICY-STATIC-V1",
+--- a/tests/test_v015_token_savings.py
++++ b/tests/test_v015_token_savings.py
+@@ -60,10 +60,6 @@
+     {"save_transcript": "true"},
+     {"effort": "ultra"},
+     {"known_run_policy_refs": {SMALL: {"effort": "turbo"}}},
+-    {"max_budget_usd": None},
+-    {"max_budget_usd": 0},
+-    {"max_budget_usd": "3"},
+-    {"max_budget_usd": True},
+ ])
+ def test_bad_values_are_config_errors(tmp_path, bad):
+     with pytest.raises(ConfigError):
+--- a/tools/review_request_gate.py
++++ b/tools/review_request_gate.py
+@@ -1,14 +1,14 @@
+ #!/usr/bin/env python3
+-"""Fail-closed, offline CoWork REQUEST prepublication policy compatibility gate.
+-
+-Reads the actual local Windows reviewer configuration. No GitHub writes, approval,
+-READY, signing, watcher calls, model calls or local config modification.
+-This is NOT an authorization check; the host approve_request check is separate.
++"""CoWork REQUEST input verifier plus optional Windows policy-compatibility gate.
++
++Publication validation is host-independent and cannot authorize signing, READY,
++or a model call. The existing Windows policy-compatibility check remains available
++for diagnostics; the installed protected signer/watcher enforces the real policy.
++No GitHub writes or local configuration modifications occur in this module.
+ """
+ from __future__ import annotations
+ 
+ import argparse
+-from decimal import Decimal, InvalidOperation
+ import hashlib
+ import json
+ from pathlib import Path, PurePosixPath
+@@ -23,10 +23,14 @@
+ COMMIT = re.compile(r"[0-9a-f]{40}\Z")
+ REPO_ID = re.compile(r"[1-9][0-9]*\Z")
+ INTENTS = {
++    # Review publication is a source-integrity check, not a billing decision.
++    "independent": ("POLICY-STATIC-V1",),
++    # Legacy intent modes remain for historical compatibility and host diagnostics.
++    # Historical intents remain available for validating frozen legacy inputs.
++    "unified": ("POLICY-STATIC-V1",),
+     "skill": ("POLICY-STATIC-V1",),
+     "design": ("POLICY-STATIC-V1-DESIGN", "POLICY-STATIC-V1-LARGE"),
+ }
+-DEFAULT_BUDGETS = {"skill": "1.50", "design": "3.00"}
+ MAX_REQUEST = 256_000
+ MAX_PACKAGE = 32 * 1024 * 1024
+ 
+@@ -52,26 +56,9 @@
+     return obj
+ 
+ 
+-def _money(value: object) -> Decimal:
+-    if type(value) not in (float, int):
+-        raise GateReject("INVALID_POLICY_COST_TYPE")
+-    try:
+-        v = Decimal(str(value))
+-    except InvalidOperation as e:
+-        raise GateReject("INVALID_POLICY_COST") from e
+-    if not v.is_finite() or v <= 0 or v > 100 or v.as_tuple().exponent < -2:
+-        raise GateReject("INVALID_POLICY_COST")
+-    return v
+-
+-
+-def _target_money(s: str) -> Decimal:
+-    try:
+-        d = Decimal(s)
+-    except InvalidOperation as e:
+-        raise GateReject("INVALID_REQUIRED_BUDGET") from e
+-    if not d.is_finite() or d <= 0 or d > 100 or d.as_tuple().exponent < -2:
+-        raise GateReject("INVALID_REQUIRED_BUDGET")
+-    return d
++def _target_money(value: object) -> object:
++    """Deprecated caller compatibility: price metadata is ignored, not parsed."""
++    return value
+ 
+ 
+ def _registered_policy_map(config: dict) -> dict:
+@@ -84,8 +71,8 @@
+     return refs
+ 
+ 
+-def select_policy(config: dict, intent: str, required_budget: Decimal) -> str:
+-    """Choose only explicitly registered local tiers; legacy LARGE boots design."""
++def select_policy(config: dict, intent: str, required_budget: object = None) -> str:
++    """Check registered policy identity only; legacy price arguments are ignored."""
+     if intent not in INTENTS:
+         raise GateReject("UNKNOWN_REVIEW_INTENT")
+     refs = _registered_policy_map(config)
+@@ -95,9 +82,6 @@
+     entry = refs[selected]
+     if not isinstance(entry, dict):
+         raise GateReject("POLICY_CONFIG_INVALID")
+-    configured = _money(entry.get("max_budget_usd"))
+-    if configured != required_budget:
+-        raise GateReject("POLICY_COST_MISMATCH")
+     return selected
+ 
+ 
+@@ -150,8 +134,8 @@
+         raise GateReject("INVALID_PACKAGE_ZIP") from e
+ 
+ 
+-def check_request(request: Path, package: Path, live_config: Path,
+-                  *, intent: str, required_budget: Decimal) -> dict:
++def _check_request_inputs(request: Path, package: Path,
++                          *, intent: str, required_budget: object = None) -> dict:
+     request_bytes = _read_file(request, limit=MAX_REQUEST)
+     fields = _front_matter(request_bytes.decode("utf-8"))
+     if (fields.get("schema") != "SKILL_COLLAB_REVIEW_REQUEST_V1"
+@@ -172,11 +156,10 @@
+     policy = fields.get("run_policy_ref", "")
+     if not REF.fullmatch(policy):
+         raise GateReject("INVALID_RUN_POLICY_REF")
+-    target = select_policy(_json(live_config), intent, required_budget)
+-    if policy != target:
+-        raise GateReject(f"RUN_POLICY_NOT_LIVE_MATCH: requested={policy} supported={target}")
++    if intent not in INTENTS:
++        raise GateReject("UNKNOWN_REVIEW_INTENT")
+     rawpath = fields.get("package_path", "")
+-    if not rawpath.startswith("/SKILL-COLLAB/packages/") or ".." in PurePosixPath(rawpath).parts:
++    if rawpath != f"/SKILL-COLLAB/packages/{package.name}" or ".." in PurePosixPath(rawpath).parts:
+         raise GateReject("INVALID_PACKAGE_PATH")
+     if Path(rawpath).name != package.name or not package.name.endswith(".zip"):
+         raise GateReject("PACKAGE_BASENAME_MISMATCH")
+@@ -188,11 +171,40 @@
+     except ValueError as e:
+         raise GateReject("INVALID_PACKAGE_SIZE") from e
+     _check_package(package, sha=sha, size=count)
+-    return {"status": "PASS_PREPUBLICATION_ONLY", "request_id": request_id,
++    return {"status": "PASS_REQUEST_INPUT_ONLY", "request_id": request_id,
++            "skill_id": fields["skill_id"],
+             "request_sha256": hashlib.sha256(request_bytes).hexdigest(),
+-            "run_policy_ref": policy, "expected_max_budget_usd": str(required_budget),
++            "run_policy_ref": policy,
+             "package_sha256": sha, "package_size_bytes": count,
+             "authorization": "NOT_CHECKED", "ready": "NOT_CREATED", "model_calls": 0}
++
++
++def check_request_for_publication(request: Path, package: Path,
++                                  *, intent: str = "independent",
++                                  required_budget: object = None) -> dict:
++    """Strict immutable-input verification without a price or execution decision.
++
++    Legacy intent spellings and price arguments remain caller-compatible,
++    but no amount is parsed, compared, or required in any publication route.
++    """
++    result = _check_request_inputs(request, package, intent=intent,
++                                   required_budget=required_budget)
++    if result["run_policy_ref"] not in INTENTS[intent]:
++        raise GateReject("RUN_POLICY_NOT_PUBLISHABLE_FOR_INTENT")
++    return result
++
++
++def check_request(request: Path, package: Path, live_config: Path,
++                  *, intent: str, required_budget: object = None) -> dict:
++    """Existing host-specific policy compatibility check (NOT authorization)."""
++    result = _check_request_inputs(request, package, intent=intent,
++                                   required_budget=required_budget)
++    target = select_policy(_json(live_config), intent, required_budget)
++    if result["run_policy_ref"] != target:
++        raise GateReject(f"RUN_POLICY_NOT_LIVE_MATCH: requested={result['run_policy_ref']} supported={target}")
++    result["status"] = "PASS_PREPUBLICATION_ONLY"
++    return result
++
+ 
+ 
+ def check_source_pin(pin_path: Path, expected_repo_id: str, expected_commit: str) -> None:
+@@ -216,7 +228,7 @@
+                        help="actual Windows local reviewer.config.json, never GitHub")
+         p.add_argument("--intent", choices=sorted(INTENTS), required=True)
+         p.add_argument("--required-budget-usd", default=None,
+-                       help="required per-review budget, default skill=1.5 / design=3")
++                       help="deprecated and ignored; no amount is required or compared")
+         if command == "check":
+             p.add_argument("--request", required=True, type=Path, help="new REQUEST before publish")
+             p.add_argument("--package", required=True, type=Path, help="exact local ZIP bytes")
+@@ -225,12 +237,12 @@
+             p.add_argument("--expected-source-commit", help="required with --source-pin")
+     args = parser.parse_args(argv)
+     try:
+-        budget = _target_money(args.required_budget_usd or DEFAULT_BUDGETS[args.intent])
++        budget = None  # never parse a legacy price flag into an execution gate
+         if args.command == "select":
+             ref = select_policy(_json(args.live_config), args.intent, budget)
+             print(json.dumps({"status": "POLICY_COMPATIBLE_NOT_APPROVED",
+                               "selected_run_policy_ref": ref,
+-                              "expected_max_budget_usd": str(budget), "approval": "NOT_CHECKED"}))
++                              "cost_gate": "OFF", "approval": "NOT_CHECKED"}))
+         else:
+             result = check_request(args.request, args.package, args.live_config,
+                                    intent=args.intent, required_budget=budget)
+@@ -248,3 +260,4 @@
+ 
+ if __name__ == "__main__":
+     raise SystemExit(main())
++

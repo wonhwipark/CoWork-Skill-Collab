@@ -9,7 +9,6 @@ No GitHub writes or local configuration modifications occur in this module.
 from __future__ import annotations
 
 import argparse
-from decimal import Decimal, InvalidOperation
 import hashlib
 import json
 from pathlib import Path, PurePosixPath
@@ -32,7 +31,6 @@ INTENTS = {
     "skill": ("POLICY-STATIC-V1",),
     "design": ("POLICY-STATIC-V1-DESIGN", "POLICY-STATIC-V1-LARGE"),
 }
-DEFAULT_BUDGETS = {"unified": "3.00", "skill": "1.50", "design": "3.00"}
 MAX_REQUEST = 256_000
 MAX_PACKAGE = 32 * 1024 * 1024
 
@@ -58,26 +56,9 @@ def _json(path: Path, *, limit: int = MAX_REQUEST) -> dict:
     return obj
 
 
-def _money(value: object) -> Decimal:
-    if type(value) not in (float, int):
-        raise GateReject("INVALID_POLICY_COST_TYPE")
-    try:
-        v = Decimal(str(value))
-    except InvalidOperation as e:
-        raise GateReject("INVALID_POLICY_COST") from e
-    if not v.is_finite() or v <= 0 or v > 100 or v.as_tuple().exponent < -2:
-        raise GateReject("INVALID_POLICY_COST")
-    return v
-
-
-def _target_money(s: str) -> Decimal:
-    try:
-        d = Decimal(s)
-    except InvalidOperation as e:
-        raise GateReject("INVALID_REQUIRED_BUDGET") from e
-    if not d.is_finite() or d <= 0 or d > 100 or d.as_tuple().exponent < -2:
-        raise GateReject("INVALID_REQUIRED_BUDGET")
-    return d
+def _target_money(value: object) -> object:
+    """Deprecated caller compatibility: price metadata is ignored, not parsed."""
+    return value
 
 
 def _registered_policy_map(config: dict) -> dict:
@@ -90,14 +71,10 @@ def _registered_policy_map(config: dict) -> dict:
     return refs
 
 
-def select_policy(config: dict, intent: str, required_budget: Decimal) -> str:
-    """Choose only locally registered refs; unified selects POLICY-STATIC-V1 at USD 3."""
+def select_policy(config: dict, intent: str, required_budget: object = None) -> str:
+    """Check registered policy identity only; legacy price arguments are ignored."""
     if intent not in INTENTS:
         raise GateReject("UNKNOWN_REVIEW_INTENT")
-    if intent == "independent":
-        raise GateReject("INDEPENDENT_PUBLICATION_ONLY_NO_PRICE_SELECTION")
-    if intent == "unified" and required_budget != Decimal(DEFAULT_BUDGETS["unified"]):
-        raise GateReject("UNIFIED_REVIEW_BUDGET_MISMATCH")
     refs = _registered_policy_map(config)
     selected = next((name for name in INTENTS[intent] if name in refs), None)
     if not selected:
@@ -105,9 +82,6 @@ def select_policy(config: dict, intent: str, required_budget: Decimal) -> str:
     entry = refs[selected]
     if not isinstance(entry, dict):
         raise GateReject("POLICY_CONFIG_INVALID")
-    configured = _money(entry.get("max_budget_usd"))
-    if configured != required_budget:
-        raise GateReject("POLICY_COST_MISMATCH")
     return selected
 
 
@@ -161,7 +135,7 @@ def _check_package(package: Path, *, sha: str, size: int) -> None:
 
 
 def _check_request_inputs(request: Path, package: Path,
-                          *, intent: str, required_budget: Decimal | None) -> dict:
+                          *, intent: str, required_budget: object = None) -> dict:
     request_bytes = _read_file(request, limit=MAX_REQUEST)
     fields = _front_matter(request_bytes.decode("utf-8"))
     if (fields.get("schema") != "SKILL_COLLAB_REVIEW_REQUEST_V1"
@@ -184,8 +158,6 @@ def _check_request_inputs(request: Path, package: Path,
         raise GateReject("INVALID_RUN_POLICY_REF")
     if intent not in INTENTS:
         raise GateReject("UNKNOWN_REVIEW_INTENT")
-    if intent == "unified" and required_budget != Decimal(DEFAULT_BUDGETS["unified"]):
-        raise GateReject("UNIFIED_REVIEW_BUDGET_MISMATCH")
     rawpath = fields.get("package_path", "")
     if rawpath != f"/SKILL-COLLAB/packages/{package.name}" or ".." in PurePosixPath(rawpath).parts:
         raise GateReject("INVALID_PACKAGE_PATH")
@@ -203,21 +175,18 @@ def _check_request_inputs(request: Path, package: Path,
             "skill_id": fields["skill_id"],
             "request_sha256": hashlib.sha256(request_bytes).hexdigest(),
             "run_policy_ref": policy,
-            **({"expected_max_budget_usd": str(required_budget)} if required_budget is not None else {}),
             "package_sha256": sha, "package_size_bytes": count,
             "authorization": "NOT_CHECKED", "ready": "NOT_CREATED", "model_calls": 0}
 
 
 def check_request_for_publication(request: Path, package: Path,
                                   *, intent: str = "independent",
-                                  required_budget: Decimal | None = None) -> dict:
+                                  required_budget: object = None) -> dict:
     """Strict immutable-input verification without a price or execution decision.
 
-    Frozen legacy requests can explicitly use historical budget-compatibility
-    modes; new independent review publication must not use a price gate.
+    Legacy intent spellings and price arguments remain caller-compatible,
+    but no amount is parsed, compared, or required in any publication route.
     """
-    if intent == "independent" and required_budget is not None:
-        raise GateReject("INDEPENDENT_PUBLICATION_BUDGET_NOT_ALLOWED")
     result = _check_request_inputs(request, package, intent=intent,
                                    required_budget=required_budget)
     if result["run_policy_ref"] not in INTENTS[intent]:
@@ -226,7 +195,7 @@ def check_request_for_publication(request: Path, package: Path,
 
 
 def check_request(request: Path, package: Path, live_config: Path,
-                  *, intent: str, required_budget: Decimal) -> dict:
+                  *, intent: str, required_budget: object = None) -> dict:
     """Existing host-specific policy compatibility check (NOT authorization)."""
     result = _check_request_inputs(request, package, intent=intent,
                                    required_budget=required_budget)
@@ -257,9 +226,9 @@ def main(argv: list[str] | None = None) -> int:
         p = subs.add_parser(command)
         p.add_argument("--live-config", type=Path, required=True,
                        help="actual Windows local reviewer.config.json, never GitHub")
-        p.add_argument("--intent", choices=sorted(k for k in INTENTS if k != "independent"), required=True)
+        p.add_argument("--intent", choices=sorted(INTENTS), required=True)
         p.add_argument("--required-budget-usd", default=None,
-                       help="required per-review budget, default unified=3 (legacy skill=1.5/design=3)")
+                       help="deprecated and ignored; no amount is required or compared")
         if command == "check":
             p.add_argument("--request", required=True, type=Path, help="new REQUEST before publish")
             p.add_argument("--package", required=True, type=Path, help="exact local ZIP bytes")
@@ -268,12 +237,12 @@ def main(argv: list[str] | None = None) -> int:
             p.add_argument("--expected-source-commit", help="required with --source-pin")
     args = parser.parse_args(argv)
     try:
-        budget = _target_money(args.required_budget_usd or DEFAULT_BUDGETS[args.intent])
+        budget = None  # never parse a legacy price flag into an execution gate
         if args.command == "select":
             ref = select_policy(_json(args.live_config), args.intent, budget)
             print(json.dumps({"status": "POLICY_COMPATIBLE_NOT_APPROVED",
                               "selected_run_policy_ref": ref,
-                              "expected_max_budget_usd": str(budget), "approval": "NOT_CHECKED"}))
+                              "cost_gate": "OFF", "approval": "NOT_CHECKED"}))
         else:
             result = check_request(args.request, args.package, args.live_config,
                                    intent=args.intent, required_budget=budget)
@@ -291,3 +260,4 @@ def main(argv: list[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

@@ -72,17 +72,17 @@ class GateTests(unittest.TestCase):
         self.assertNotIn("expected_max_budget_usd", result)
         self.assertEqual(result["authorization"], "NOT_CHECKED")
 
-    def test_independent_intent_does_not_enter_legacy_price_selector(self):
-        with self.assertRaisesRegex(gate.GateReject, "INDEPENDENT_PUBLICATION_ONLY_NO_PRICE_SELECTION"):
-            gate.select_policy(gate._json(self.config), "independent",
-                               gate._target_money("3.00"))
+    def test_independent_selector_uses_registered_identity_without_price(self):
+        self.assertEqual(gate.select_policy(gate._json(self.config), "independent", None),
+                         "POLICY-STATIC-V1")
 
-    def test_independent_publication_refuses_budget_parameter(self):
+    def test_independent_publication_ignores_legacy_budget_parameter(self):
         self.fields["run_policy_ref"] = "POLICY-STATIC-V1"
         self.save_request()
-        with self.assertRaisesRegex(gate.GateReject, "INDEPENDENT_PUBLICATION_BUDGET_NOT_ALLOWED"):
-            gate.check_request_for_publication(self.request, self.package,
-                                                required_budget=gate._target_money("3.00"))
+        for legacy in (None, "invalid", -1, True, float("inf"), "3.00"):
+            result = gate.check_request_for_publication(self.request, self.package, required_budget=legacy)
+            self.assertEqual(result["authorization"], "NOT_CHECKED")
+            self.assertNotIn("expected_max_budget_usd", result)
 
     def test_independent_publication_rejects_bad_policy_reference(self):
         self.fields["run_policy_ref"] = "POLICY-NOT-KNOWN"
@@ -112,27 +112,26 @@ class GateTests(unittest.TestCase):
             gate.check_request_for_publication(
                 self.request, self.package, intent="unified", required_budget=gate._target_money("3.00"))
 
-    def test_unified_three_dollar_policy_passes_both_review_subjects(self):
-        """Same USD 3 limit and run_policy_ref for all new independent reviews."""
+    def test_legacy_unified_uses_policy_identity_without_price(self):
+        """The old unified spelling has no price gate or implied authorization."""
         self.policy_map["POLICY-STATIC-V1"] = {"max_budget_usd": 3.0}
         self.save_config()
         self.fields["run_policy_ref"] = "POLICY-STATIC-V1"
         self.save_request()
         result = self.pass_check("unified", "3.00")
         self.assertEqual(result["run_policy_ref"], "POLICY-STATIC-V1")
-        self.assertEqual(result["expected_max_budget_usd"], "3.00")
+        self.assertNotIn("expected_max_budget_usd", result)
         self.assertEqual(result["authorization"], "NOT_CHECKED")
         self.assertEqual(gate.select_policy(gate._json(self.config), "unified",
                                             gate._target_money("3.00")), "POLICY-STATIC-V1")
 
-    def test_unified_rejects_old_one_and_one_fifty_config(self):
+    def test_unified_ignores_old_one_and_one_fifty_config(self):
         self.fields["run_policy_ref"] = "POLICY-STATIC-V1"
         self.save_request()
         for configured in (1.0, 1.5):
             self.policy_map["POLICY-STATIC-V1"] = {"max_budget_usd": configured}
             self.save_config()
-            with self.assertRaisesRegex(gate.GateReject, "POLICY_COST_MISMATCH"):
-                self.pass_check("unified", "3.00")
+            self.assertEqual(self.pass_check("unified", "3.00")["run_policy_ref"], "POLICY-STATIC-V1")
 
     def test_unified_rejects_legacy_design_ref_despite_three_dollar_registration(self):
         self.policy_map["POLICY-STATIC-V1"] = {"max_budget_usd": 3.0}
@@ -153,7 +152,7 @@ class GateTests(unittest.TestCase):
                                       "--intent", "unified")
         self.assertEqual((code, err), (0, ""))
         self.assertEqual(json.loads(out)["selected_run_policy_ref"], "POLICY-STATIC-V1")
-        self.assertEqual(json.loads(out)["expected_max_budget_usd"], "3.00")
+        self.assertEqual(json.loads(out)["cost_gate"], "OFF")
         self.assertEqual(json.loads(out)["approval"], "NOT_CHECKED")
         code, out, err = self.run_cli("check", "--live-config", str(self.config),
                                       "--intent", "unified", "--request", str(self.request),
@@ -161,17 +160,15 @@ class GateTests(unittest.TestCase):
         self.assertEqual((code, err), (0, ""))
         self.assertEqual(json.loads(out)["status"], "PASS_PREPUBLICATION_ONLY")
 
-    def test_unified_rejects_per_request_override_to_cheaper_tier(self):
+    def test_unified_ignores_legacy_requested_amount(self):
         self.policy_map["POLICY-STATIC-V1"] = {"max_budget_usd": 1.5}
         self.save_config()
         self.fields["run_policy_ref"] = "POLICY-STATIC-V1"
         self.save_request()
-        with self.assertRaisesRegex(gate.GateReject, "UNIFIED_REVIEW_BUDGET_MISMATCH"):
-            self.pass_check("unified", "1.50")
+        self.assertEqual(self.pass_check("unified", "1.50")["authorization"], "NOT_CHECKED")
         self.policy_map["POLICY-STATIC-V1"] = {"max_budget_usd": 3.0}
         self.save_config()
-        with self.assertRaisesRegex(gate.GateReject, "UNIFIED_REVIEW_BUDGET_MISMATCH"):
-            self.pass_check("unified", "6.00")
+        self.assertEqual(self.pass_check("unified", "6.00")["authorization"], "NOT_CHECKED")
 
     def test_unified_stale_or_missing_policy_fail_closed(self):
         self.policy_map.pop("POLICY-STATIC-V1")
@@ -212,17 +209,15 @@ class GateTests(unittest.TestCase):
         with self.assertRaisesRegex(gate.GateReject, "POLICY_NOT_INSTALLED"):
             self.pass_check()
 
-    def test_configured_cost_disagrees_with_expected(self):
+    def test_configured_cost_disagreement_is_not_a_gate(self):
         self.policy_map["POLICY-STATIC-V1-LARGE"] = {"max_budget_usd": 6.0}
         self.save_config()
-        with self.assertRaisesRegex(gate.GateReject, "POLICY_COST_MISMATCH"):
-            self.pass_check()
+        self.assertEqual(self.pass_check()["authorization"], "NOT_CHECKED")
 
-    def test_basic_legacy_one_dollar_not_silently_upgraded(self):
+    def test_legacy_skill_amount_is_not_a_gate(self):
         self.fields["run_policy_ref"] = "POLICY-STATIC-V1"
         self.save_request()
-        with self.assertRaisesRegex(gate.GateReject, "POLICY_COST_MISMATCH"):
-            self.pass_check("skill", "1.50")
+        self.assertEqual(self.pass_check("skill", "1.50")["run_policy_ref"], "POLICY-STATIC-V1")
 
     def test_basic_after_live_config_change(self):
         self.policy_map["POLICY-STATIC-V1"] = {"max_budget_usd": 1.5}
@@ -237,12 +232,18 @@ class GateTests(unittest.TestCase):
             with self.assertRaises(gate.GateReject):
                 self.pass_check()
 
-    def test_bad_numbers_rejected(self):
+    def test_legacy_price_values_cannot_reject_registered_input(self):
         for v in ("3.0", True, 0, -3, float("inf"), float("nan"), 3.001):
             self.policy_map["POLICY-STATIC-V1-LARGE"] = {"max_budget_usd": v}
             self.save_config()
-            with self.assertRaises(gate.GateReject):
-                self.pass_check()
+            self.assertEqual(self.pass_check()["authorization"], "NOT_CHECKED")
+
+    def test_cli_ignores_malformed_legacy_price_flag(self):
+        code, out, err = self.run_cli("select", "--live-config", str(self.config),
+                                      "--intent", "independent", "--required-budget-usd", "not-a-price")
+        self.assertEqual((code, err), (0, ""))
+        self.assertEqual(json.loads(out)["cost_gate"], "OFF")
+        self.assertEqual(json.loads(out)["approval"], "NOT_CHECKED")
 
     def test_modified_package_rejected(self):
         self.package.write_bytes(self.package.read_bytes() + b"modified")
@@ -340,3 +341,4 @@ class GateTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
