@@ -52,5 +52,27 @@
     "host_e2e": "NOT_RUN"
   },
   "readback": "PASS_BYTE_EQUIVALENT",
-  "public_delivery_exception": "USER_DIRECTED_PREDEVELOPMENT_AND_BUSINESS_ENVIRONMENT_VALIDATION"
+  "public_delivery_exception": "USER_DIRECTED_PREDEVELOPMENT_AND_BUSINESS_ENVIRONMENT_VALIDATION",
+  "active_change": {
+    "version": "0.5.1",
+    "started_kst": "2026-11-23",
+    "status": "IN_PROGRESS",
+    "base_zip": "l1-workspace-viewer-wiki-integrated_v0_5_0_1122.zip",
+    "base_sha256": "a133d8703cc36a7f74cce8de1fd37db757052ed6a44030bc05fea89a05c253fa",
+    "base_git_blob": "6f62820eef5dace0950f3cf75ccd3c5d35612b5c",
+    "scope": "LLM 도우미·오늘의 업무 기본 숨김, 명시 버튼으로 열기, 이전 인계 전체 포함 독립형 통합 인계와 새 ZIP 공개 전달",
+    "planned_files": [
+      "index.html",
+      "assets/assistant.js",
+      "assets/assistant.css",
+      "assets/app.js",
+      "VERSION",
+      "source-pin.json",
+      "tools/build_release.py",
+      "INTEGRATION_ASSISTANT.md",
+      "tests/assistant-visibility.cjs"
+    ],
+    "independent_review": "USER_WAIVED_PREVIOUS_VIEWER_SCOPE",
+    "host_deploy": "NOT_RUN"
+  }
 }
