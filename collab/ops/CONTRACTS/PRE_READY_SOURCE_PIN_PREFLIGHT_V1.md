@@ -1,5 +1,15 @@
 # CoWork REVIEW REQUEST/PIN/ZIP 게시 전 필수 정합성 검증 V1
 
+## 결정 r0008 — 요청 ID 단위 단일 실행 / 비용 상한 제거 후속 구현 (2026-11-22 KST)
+
+- 사용자가 `--max-budget-usd` 제거에 동의하고, 독립 리뷰의 재실행 위험은 **요청 ID별 1회 디스패치, 원자적 중복 방지, 실행 불확실 시 재디스패치 금지**로 통제하도록 결정. `max_calls=1`은 watcher에서 Claude CLI 작업을 1회 넘게 시작하지 않는 보호장치이며 단일 실행 안의 모델 턴 수/청구 금액 상한으로 오해하지 않는다.
+- **전환 목표(아직 운영 사실 아님):** 신규 독립 리뷰의 비용 기반 실행 허가·CLI 예산 인자를 제거하되, 신뢰되는 사용자 의도·실제 실행 권한, 원본 SHA/PIN/ZIP, 보호 서명, READY 마지막 게시, 과거 이력/중복·UNCERTAIN 봉인을 보존. 적법한 승인 없는 GitHub REQUEST 게시만으로 서명·모델 호출을 시작하지 않는다.
+- **상태:** Windows v0.2.30 격리 후보는 `PER_REQUEST_COST` 및 수동 `--max-usd` 금액 일치 부분만 제거, CLI `--max-budget-usd`는 **여전히 후보에 남음**. Windows LIVE는 마지막 호스트 보고상 v0.2.29, 변경 미적용. 실제 Windows 변경·무모델 호출 회귀·운영 적용은 **NOT_RUN**. 위임 skill SCOPE 개선은 인증·권한 검증 설계를 전제로 별도 시험/승인.
+- **구현·시험 지시:** [동일 Work의 r0001 인계](../../projects/COWORK-AUTO-APPROVAL-20261115-001/INDEPENDENT_REVIEW_IDEMPOTENCY_COST_REMOVAL_HANDOFF_r0001_20261122_KST.md). 기존 frozen REQUEST/승인/영수증 소급 수정·재모델 호출 금지. LIVE 변경은 별도 승인·백업·검증.
+- 기존 r0007/r0006의 과거 구현 설명은 당시 상태 이력이며, 전환 목표가 설치된 것으로 해석하지 않는다.
+
+---
+
 ## 현행 규칙 r0007 — 독립 리뷰만, 게시자 가격·스킬 선검사 제거 (2026-11-22 KST)
 
 - 상위 최신 사용자 결정. **독립 리뷰 단일 유형**을 사용하며 GPT REQUEST 게시자는 비용 상한·가격 정책 선택·스킬별 위임 목록을 검증하지 않는다. `check_request_for_publication(intent="independent")` 기본값; `required_budget`를 넘기는 신규 독립 요청은 거부. `submit_review_request.py`는 실제 가격 설정을 읽지 않으며 AUTO 인자는 **실행 권한이 아닌 요청 메타**다.
