@@ -191,3 +191,83 @@ LIVE_READY = **NO**. 막힌 항목:
 - 10단계 비용 위험 수용 BLOCKED(사용자 결정), LIVE 컷오버 BLOCKED.
 
 - **LIVE_READY = NO.**
+
+---
+
+## 12. Windows 최종 기술 마무리 — QA28·F1/F2/F3·신규 ZIP v0.2.34 (2026-11-23 KST)
+
+**판정 요약:** Windows에서 실행한 결과만 PASS로 기록. F1·F2 수정 완료, F3는 설계 결함으로 **BLOCKED**(기능 미발행, fail-closed 유지). 신규 독립 리뷰 미실행. LIVE 미적용.
+
+### 12.1 착수 대조 (REUSED_WITH_EVIDENCE)
+- 원격 `main` 최신 `cbb1019224fd`(2026-11-22T14:37Z) 확인. r2 보고 §11(정식 요청 `REQ-COWORK-V033-R2-WATCHER-REVIEW-20261122`, 보호 승인 `3036e4a8de`, READY `4539852c7e`, DISPATCH `6781f02`, RESULT `f2d05a3`, RECEIPT `5854d37`) **재사용**. r2 리뷰는 재실행하지 않음.
+- GPT 판정 `GPT_V033_R2_INDEPENDENT_REVIEW_DISPOSITION_r0001_20261122_KST.md`의 보완 대상 F1/F2/F3 확인. 보완 입력: `cost_gate_removal_r2_r0001.patch` SHA `28d6b6db…`(39,061 B), 매니페스트 `cost_gate_removal_r2_r0001.json`, 실패 기록 `cost_gate_tests_r0001.json`(28 노드). 모두 원격에서 내려받아 SHA 확인.
+
+### 12.2 비용 기반 차단 제거 패치 적용 (PASS)
+- 입력 기준 r2 ZIP `23579a5c…` 폴더 `v0_2_33`의 12개 대상 파일이 매니페스트 before 해시와 **12/12 일치** 확인 후 `v0_2_34` 복사본에 `git apply`.
+- 적용 후 8개 파일이 CRLF 혼재 상태였음. CRLF→LF 정규화 시 매니페스트 after 해시와 **정확히 일치**(GPT replay 바이트 기준). 정규화 후 12/12 after 일치.
+- 패치 대상: auto_approval, auto_policy, cli, config, state_store, review_request_gate(tools), 관련 시험 6개, 신규 `test_cost_gate_removal.py`.
+- 잔여 참조(의도적 유지, 신규 독립 경로 아님): `tools/review_request_gate.py`의 `required_budget` 인자는 레거시 unified/skill/design 호환 경로. `notify_events.py`의 `PER_REQUEST_COST` 문구는 죽은 문자열. `auto_policy`의 `max_request_cents`는 0 고정 비활성 필드. 신규 `independent` 접수 경로의 금액 게이트는 없음(게시·시험으로 확인).
+
+### 12.3 Windows QA28 (실제 실행, PASS 28/28)
+- 명령: `.venv\Scripts\python.exe -m pytest -q -p no:cacheprovider <28 노드>` in `v0_2_34`. 노드 목록은 `cost_gate_tests_r0001.json`의 정확 28개.
+- 결과: **exit 0, PASS 28, FAIL 0, SKIP 0**, 70.8초. 요약 `windows_qa28_summary.json` SHA `8491f540…`(F1 수정 후 재실행 값). 최초 실행(F1 수정 전)도 28/28 PASS.
+- GPT의 Linux 환경 실패 28건은 **Windows 실행에서 통과**. Linux 환경 차이로 판단(원인 세부는 미분석).
+- 실행 호스트: 본 Windows Claude 세션(인계서 수신·실행 확인, HOST_EXECUTION=CONFIRMED_THIS_SESSION).
+
+### 12.4 F1 — 소비 후 의도 만료 재검증 (PASS, 수정)
+- 원인: 재검증이 현재 위임만 확인하고 의도의 서명·만료·바인딩을 다시 보지 않았음.
+- 수정: 후보 기록에 `intent_envelope`(서명된 의도 원문)·`intent_expected`(바인딩 값)를 보존. 재검증은 **같은 서명 검증을 현재 시각·현재 신뢰 루트로 재수행**하며, nonce는 **새로 소비하지 않고** 소유자만 확인. 실패 사유는 `CURRENT_POLICY:INTENT_<코드>`.
+- 신규 시험: `test_revalidation_refuses_after_the_consumed_intent_itself_expires` PASS(만료 전 통과, 만료 후 `INTENT_EXPIRED`). 기존 재검증 시험(키 해지·위임 비활성·미소비 nonce)도 PASS.
+
+### 12.5 F2 — 릴리스 매니페스트 (PASS, 재생성)
+- `docs/RELEASE_MANIFEST.json`을 실제 파일 기준으로 재생성: version `0.2.34`, baseline `0.2.33-r2`(sha `23579a5c…`), 자기 파일만 제외(`self_excluded_path`), **112개 파일** 목록(바이트·SHA-256).
+- 신규 시험 `test_release_manifest_v034.py` 3건 PASS: 버전, 모든 항목 크기·해시 일치, 목록과 실물 집합 일치.
+- ZIP 내부 파일도 매니페스트와 **112/112 일치**, 여분 파일 0.
+
+### 12.6 F3 — Commit A 자기 참조 (BLOCKED, 미구현)
+- 문제: 의도 파일을 Commit A 안에 넣을 수 없다(A는 서명 전에 이미 생성). 현재 `_intent_scope`는 A에서만 읽으므로 **실제 발행 흐름에서 의도 경로는 성립하지 않는다.** 보안 우회가 아니라 기능 미발행이며, 항상 `SCOPE`로 거절된다(fail-closed 유지).
+- 필요한 구현: A 이후 고정 스냅샷(커밋 C)에 의도를 두고, 최초 검증 시 C를 고정·기록하여 이후 교체로 권한이 바뀌지 않게 함. 이를 위해 전송 계층에 **경로별 커밋 이력 조회**(GitHub `commits?path=`)와 시험용 가짜 GitHub의 이력 지원이 필요한데 현 코드에 없음.
+- 상태: **BLOCKED**. 다음 후보에서 전송 API 추가 후 로컬 실제 Git 시험(A→C 생성, 정확 revision/재시작/만료/경합) 필요.
+
+### 12.7 전체 Windows 회귀 (PASS 1065 / FAIL 0 / SKIP 12)
+- 명령: `pytest tests -q -rs` in `v0_2_34`. **1065 passed, 12 skipped, 15 subtests passed, 104.6초.**
+- SKIP 12: `test_secret_prompt.py` GUI 실창 8건(`SKILL_COLLAB_GUI_TESTS=1` 옵트인), `test_windows_scripts.py` 4건(후보 폴더 안 `.venv` 필요 — 환경 조건이며 이번에는 미실행, NOT_RUN).
+- 보안·중복·만료·원본 검증은 전체 회귀에 포함: 위조 서명·변조·만료 위임·중복/UNCERTAIN 봉인·재실행 방지 시험 포함(전체 PASS).
+
+### 12.8 신규 ZIP v0.2.34 (구버전 보존)
+- 파일: `D:\User\whpark\skill-collab-watcher-dist\candidates\v0_2_34_intent_scope_candidate.zip`
+- **zip SHA-256 `ecb071c4a57b48d9d3ff00e713df35fc086db7c1127b5dc31ef00c358f4f2160`, 304,880 B, 113 항목**(매니페스트 112 + 자기 매니페스트 1)
+- CRC 정상, 중복 0, 경로 탈출 0, 심볼릭 링크 0, 민감정보 패턴 0. 매니페스트 대비 불일치 0.
+- 트리 SHA-256 `bc705c744d8ad14027886b7c400d9e6338a5bf10e2dfe85d5e12bb1d361346da`
+- 구버전 보존: v0.2.33 r2 `23579a5c…`, v0.2.33 `4dc3c701…`, v0.2.32 `cbf95d11…`, v0.2.31 `1df85457…`, v0.2.30 `541cd3f1…`.
+- 코드 ZIP은 공개 저장소에 게시하지 않음(r2 허용 범위 밖).
+
+### 12.9 정책 동기화 매트릭스 (코드 근거, 실운영 미실행)
+| 단계 | 현행 신규 독립 리뷰 경로 | 금액 차단 |
+|---|---|---|
+| 접수(게시자) | `check_request_for_publication(intent="independent")`, 가격 매개변수 없음 | 없음 |
+| 서명(보호 signer) | 위임·의도·원본 검증 후 서명, 상한 `max_request_cents`는 0 비활성 | 없음 |
+| READY | 서명 뒤 마지막 게시 | 없음 |
+| watcher 디스패치 | `max_calls=1`, `--max-budget-usd` 인자 미전달 | 없음 |
+| 알림·표시 | 완료 알림은 독립 리뷰로 표기(비용 기록은 사후 영수증) | 없음 |
+
+### 12.10 LIVE 적용 준비 판정
+- **LIVE_READY = NO.** 이유: (1) F3 미구현, (2) 호스트 설치 SHADOW NOT_RUN, (3) 실제 GitHub 전송 원자성 NOT_RUN, (4) 운영 DB 이행(`review_intent_nonces`) 미승인, (5) 비용 무상한 위험 수용 미결정(10단계), (6) 최종 LIVE 승인 미수령.
+- **LIVE 변경 범위(예정, 미실행):** 설치 트리 v0.2.29 → v0.2.34(112 파일), 설정 변경 없음(기존 `reviewer.config.json` 유지), 위임·키·trust root 변경 없음, Task/Notifier 변경 없음, 운영 DB는 `review_intent_nonces` 추가 테이블만(추가 전용, 기존 이력 불변).
+- **백업:** 설치 트리 v0.2.29 `backup_v0_2_29_precheck_20261122\install_tree_v0_2_29`(143 파일, 원본과 IDENTICAL, 매니페스트 `INSTALL_TREE_v0_2_29_SHA256SUMS.txt`). DB 스냅샷 `backup_v0_2_29_precheck_20261122\state.sqlite3`는 2026-11-22 시점이므로 **컷오버 직전 새 백업 필수**. 키·위임 사본은 게시 금지, 로컬 보존.
+- **롤백:** 설치 트리를 백업으로 복원 → 워처 정지 상태에서 DB 교체 없이 현재 DB 유지 → 설정·위임 해시 확인 → Task 시작 → 버전 0.2.29, `WATCH_START` 확인. 새 nonce 테이블은 구 코드가 무시하므로 역호환. 과거 DB 교체·테이블 DROP 금지.
+
+### 12.11 차단·미실행 요약
+| 항목 | 상태 |
+|---|---|
+| QA28 | PASS 28/28 (Windows 실행) |
+| F1 | PASS (수정·시험) |
+| F2 | PASS (재생성·시험) |
+| F3 | BLOCKED (전송 이력 API·가짜 GitHub 확장 필요) |
+| 전체 회귀 | PASS 1065 / FAIL 0 / SKIP 12 (SKIP: GUI 8, .venv 스크립트 4 NOT_RUN) |
+| 신규 독립 리뷰 | NOT_RUN (GPT 판정 후 새 고정 입력에서만, 보호 승인 필요) |
+| 호스트 설치 SHADOW | NOT_RUN |
+| 실제 GitHub 전송 경쟁 | NOT_RUN |
+| 운영 DB 이행 / LIVE 설치 / Task·Notifier·키·위임 변경 | NOT_RUN (최종 승인 전) |
+
+- **LIVE_READY = NO.**
