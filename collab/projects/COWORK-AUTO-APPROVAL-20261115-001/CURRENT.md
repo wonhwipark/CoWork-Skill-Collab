@@ -1,5 +1,13 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-23 KST — GPT/Windows 독립 리뷰 단일화·비용 게이트 동기화 실행 요청
+
+- **사용자 최신 판단:** 별도의 "유료 리뷰" 조건·비용 제한을 GPT 쪽에서만 제거하면 Windows LIVE에서 다시 차단됨. 동일 Work의 **[Windows 기존 원샷 인계 최우선 절](WINDOWS_V032_CORRECTIONS_ONE_SHOT_HANDOFF_r0001_20261122_KST.md)**에 역할·실제 호출 경로·정책 불일치 점검·QA28·F1/F2/F3·신규 ZIP·수용기준을 한 묶음으로 갱신. 새 Work/새 REQUEST/새 모델 호출 없음.
+- **목표:** 신규 리뷰는 단일 **독립 리뷰**. USD3/예산/등급 금액 및 회계 조회를 신규 요청·보호 승인·READY·dispatch의 자격 차단에서 제거하고 사후 사용량은 유지. 스킬별 허용 목록의 접수 선차단은 없애되, **유효한 보호 실행권한·현재 scope·서명/만료/PIN/nonce·중복 봉인·단일 호출**은 절대로 우회하거나 승인 없이 확대하지 않음.
+- **게시/실행 분리:** `WINDOWS_PARITY_HANDOFF=POSTED`, `HOST_ACK=NOT_CONFIRMED`, `HOST_EXECUTION=NOT_CONFIRMED`, `WINDOWS_PARITY_TEST=NOT_RUN`, `WINDOWS_LIVE_COST_GATE=UNCHANGED(v0.2.29)`, `LIVE_READY=NO`. 기존 비용 제거 소스·시험(55/237/portable1011)은 재사용; Windows 28개 시험은 미완료. 인계서 GitHub 게시만으로 Windows 자동 수신이나 실제 설치가 되는 것은 아님.
+- **NEXT_ONE_ACTION:** Windows Claude Code의 실제 기존 허용 세션이 갱신 인계서를 수신/ACK하고 격리 후보에서 통합 보완→QA28·전체 회귀→새 ZIP·정책동기화 매트릭스·결과/CURRENT/TRACKER 원격 게시. GPT가 결과 판정 후 추가 리뷰 필요 시에만 별도 정식 요청; 최종 LIVE 운영 변경·DB 이행은 실제 검증을 모아 최종 승인에서 판단.
+
+
 ## 2026-11-23 KST — Windows Claude Code에 QA28 실행·보완·결과 게시 요청
 
 - **사용자 지시:** “그렇다면 클로드에 요청해야지?” 수용. **Windows 시험28개 실행 담당은 Windows Claude Code**, GPT는 결과 수신·판정. 사용자 수동 검증 항목이 아님.
