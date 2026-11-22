@@ -94,6 +94,8 @@ def select_policy(config: dict, intent: str, required_budget: Decimal) -> str:
     """Choose only locally registered refs; unified selects POLICY-STATIC-V1 at USD 3."""
     if intent not in INTENTS:
         raise GateReject("UNKNOWN_REVIEW_INTENT")
+    if intent == "independent":
+        raise GateReject("INDEPENDENT_PUBLICATION_ONLY_NO_PRICE_SELECTION")
     if intent == "unified" and required_budget != Decimal(DEFAULT_BUDGETS["unified"]):
         raise GateReject("UNIFIED_REVIEW_BUDGET_MISMATCH")
     refs = _registered_policy_map(config)
@@ -255,7 +257,7 @@ def main(argv: list[str] | None = None) -> int:
         p = subs.add_parser(command)
         p.add_argument("--live-config", type=Path, required=True,
                        help="actual Windows local reviewer.config.json, never GitHub")
-        p.add_argument("--intent", choices=sorted(INTENTS), required=True)
+        p.add_argument("--intent", choices=sorted(k for k in INTENTS if k != "independent"), required=True)
         p.add_argument("--required-budget-usd", default=None,
                        help="required per-review budget, default unified=3 (legacy skill=1.5/design=3)")
         if command == "check":

@@ -72,6 +72,11 @@ class GateTests(unittest.TestCase):
         self.assertNotIn("expected_max_budget_usd", result)
         self.assertEqual(result["authorization"], "NOT_CHECKED")
 
+    def test_independent_intent_does_not_enter_legacy_price_selector(self):
+        with self.assertRaisesRegex(gate.GateReject, "INDEPENDENT_PUBLICATION_ONLY_NO_PRICE_SELECTION"):
+            gate.select_policy(gate._json(self.config), "independent",
+                               gate._target_money("3.00"))
+
     def test_independent_publication_refuses_budget_parameter(self):
         self.fields["run_policy_ref"] = "POLICY-STATIC-V1"
         self.save_request()
