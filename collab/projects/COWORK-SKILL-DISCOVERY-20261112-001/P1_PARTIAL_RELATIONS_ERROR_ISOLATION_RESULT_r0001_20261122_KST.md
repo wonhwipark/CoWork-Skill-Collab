@@ -64,4 +64,18 @@
 
 ## 6. 게시 확인
 
-소스·시험·문서의 게시 확인은 실제 원격 검증 후 이 절에 추가한다. 이 작성 시점의 원격 바이트 검증은 아직 기록하지 않았다.
+- **SOURCE_CONTENT_COMMIT:** [`7ead07ce3724d1c593aa75b68024d6a65368016a`](https://github.com/wonhwipark/CoWork-Skill-Collab/commit/7ead07ce3724d1c593aa75b68024d6a65368016a).
+- **게시:** 시작 main `29c4e5e6ae2dc9a76e2873e23459b66ed6242937`의 tree 위에 변경 6개 파일을 한 커밋으로 반영하고 예상 HEAD를 검사하는 fast-forward로 main 갱신. commit 메시지에 `[skip ci]`를 사용했다. PR·새 리뷰 REQUEST·READY·Actions 재활성화 없음.
+- **REMOTE_READBACK=PASS_6_OF_6:** 위 고정 commit에서 6개 파일을 base64 원문으로 재조회·디코딩하고, 실제 bytes 전체·크기·SHA-256·Git blob을 로컬 게시본과 대조해 모두 일치했다. GitHub main도 위 commit을 가리키는 것을 확인했다.
+- 아래 값은 **위 소스 적용 commit의 파일**에 대한 검증이다. 이 게시 확인 절과 CURRENT의 검증 요약은 후속 메타데이터 커밋으로 기록하므로 두 문서의 최신 SHA는 아래 고정 시점 값과 달라질 수 있다. 소스·시험·가이드·TRACKER는 그대로 유지한다.
+
+| 고정 commit 파일 | bytes | SHA-256 | 원격 대조 |
+|---|---:|---|---|
+| `collab/dashboard/context_query.py` | 13471 | `9ccba5b635220b152ebbe84d2600a8b27abde9cd38e98f5d8f2b4d54433eb9b1` | PASS |
+| `collab/dashboard/tests/test_context_query.py` | 17981 | `06f828d245fa27adde6eebc12ea51dafd0037fb491496fe85dbe4143aa903f77` | PASS |
+| `collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md` | 114898 | `5fec691a49d93d51f5933f70e4ac973899eca299ebee2cfcba70108931339283` | PASS |
+| `collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/P1_P2_CONTEXT_APPLICATION_GUIDE_r0001_20261120_KST.md` | 11074 | `511b8d4130de1e8f1bb85d493f37ae576e38fcf0ee99940dd239a8bdff471498` | PASS |
+| `collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/TRACKER.json` | 917 | `77704f4a847cc9a2558a2e3ae05dee828e6c27df912e9407564870f707da94a7` | PASS |
+| `collab/projects/COWORK-SKILL-DISCOVERY-20261112-001/P1_PARTIAL_RELATIONS_ERROR_ISOLATION_RESULT_r0001_20261122_KST.md` | 7484 | `87aae1e774d3296edeb5c66612896ab39a8b2fc00a808f7978286430e94b8da4` | PASS |
+
+- **적용 판정:** `F1_PARTIAL_RELATIONS=APPLIED_MAIN`, `F2=UNCHANGED`, `LOCAL_REGRESSION=PASS_28_OF_28`, `CLI=PASS`. 이 판정은 실제 Windows·독립 리뷰·A3/A4·Watcher 운영 E2E 완료가 아니다.
