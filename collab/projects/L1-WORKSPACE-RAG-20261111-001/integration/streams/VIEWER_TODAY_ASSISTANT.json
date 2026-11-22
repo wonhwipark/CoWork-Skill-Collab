@@ -1,0 +1,23 @@
+{
+  "schema": "COWORK_INTEGRATION_STREAM_V1",
+  "work_id": "L1-WORKSPACE-RAG-20261111-001",
+  "stream_id": "VIEWER_TODAY_ASSISTANT",
+  "status": "IN_PROGRESS",
+  "source_base_sha": "ef0e358490a611c8dda4683575f3f8aa314cfa48",
+  "base": {
+    "version": "0.4.1",
+    "sha256": "bee14a9feb11706a98e6b4f3ef0166de15872f3f811a7d0196835050459a401d",
+    "source": "conversation-delivered development ZIP; remote v0.4.0 unchanged"
+  },
+  "planned_files": [
+    "viewer-wiki-ui/index.html",
+    "viewer-wiki-ui/assets/app.js",
+    "viewer-wiki-ui/assets/assistant.js",
+    "viewer-wiki-ui/assets/assistant.css",
+    "viewer-wiki-ui/assets/assistant-client.js",
+    "viewer-wiki-ui/INTEGRATION_ASSISTANT.md"
+  ],
+  "scope": "우측 업무 도우미 + 오늘의 업무 탭; UI 개발 후보; 업무 서버 실행 계약과 명확한 합성 데모",
+  "validation": "사용자 지시: 실제 검증은 업무 환경에서. 자체시험/패키징 후 development_only_public_delivery; 정식 통합/호스트/독립 리뷰 NOT_RUN",
+  "deployment_approved": false
+}
