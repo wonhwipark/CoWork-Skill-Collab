@@ -1,5 +1,15 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-22 KST — v0.2.32 후속 보완 원샷 결과 (부분 완료, LIVE_READY=NO)
+
+- **결과:** [CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md](CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md) (commit `979bb74920e9`).
+- **입력:** v0.2.32 ZIP SHA-256 `cbf95d1141cbed6973d6cace2950065b4ed5eb36e988ecf522a9fc3ab087fa94` 재확인 PASS. 구 ZIP 불변.
+- **완료:** 라이브 읽기 전용 SHADOW 재실행(사본) PASS: 디스패치 0, 모델 0, 쓰기 차단. DB·설정·위임 백업 번들 이전 PASS.
+- **차단:** 차기 후보 v0.2.33 생성 및 승인 경로 연결, 설치 트리(v0.2.29) 백업이 복사 권한 거부로 BLOCKED_PERMISSION. 독립 리뷰는 보호 승인 없음으로 BLOCKED_AUTH. 롤백 DB 교체는 이력 유실 위험으로 보류.
+- **NOT_COVERED:** 재시작 후 nonce 재사용, 동시 nonce 소비, 소급 요청 통합 시험.
+- **LIVE:** NOT_RUN. 라이브 v0.2.29 변경 없음. 신규 리뷰·모델 호출 0.
+- **NEXT_ONE_ACTION:** 사용자에게 v0_2_33 생성 및 v0.2.29 트리 백업 복사 권한 허용 여부 확인. 허용 시 단계 2·3·4·6 이어서 수행. 10단계는 별도 승인.
+
 ## 2026-11-22 KST — 사용자 “진행”: v0.2.32 보완 실행 준비 / 호스트 실행 차단
 
 - **원샷 후속 지시:** [Windows 실행 지시서](WINDOWS_V032_CORRECTIONS_ONE_SHOT_HANDOFF_r0001_20261122_KST.md). GPT 판정 보완을 같은 Work에서 계속하도록 입력 SHA·격리 SCOPE 통합·기존 로그 재사용·백업 권한 원인·무손실 복구·리뷰/SHADOW 경계와 결과 경로를 고정.
