@@ -1,5 +1,16 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-22 KST — CoWork 리뷰 체계 간소화·GPT 제출/Windows 승인 분리안 정식 독립 리뷰 접수
+
+- **사용자 최신 요청:** GPT에서 정식 리뷰 요청을 실제 GitHub REQUEST/SOURCE_PIN 게시까지 진행(②·③)하고, 기존 CoWork 협업 리뷰의 과도·불필요·불합리한 구조와 Windows LIVE 정책 사전검사를 GPT 게시와 분리하는 방안을 **Windows Claude Code 독립 리뷰**로 요청. 신규 리뷰 대상은 CoWork review-watcher/transport 구조; 이전 P1/P2 Work 및 R1 후보를 재처리·명의 변경하지 않음.
+- **정식 REQUEST:** [REQ-COWORK-REVIEW-ARCH-DESIGN-R1-20261122](../../requests/REQ-COWORK-REVIEW-ARCH-DESIGN-R1-20261122/REQUEST.md), `skill_id=cowork-review-watcher`, `run_policy_ref=POLICY-STATIC-V1`, STATIC_ONLY, 1회 최대 USD3. 기존 watcher ZIP 310753B/SHA256 `c67bc342fe77547b000fc42e1b886396cbef035c0d265dbcd124947e267ed83f`의 실제 원격 바이트를 직접 검증, 114개 ZIP 중앙 디렉터리 항목 경로/중복·symlink 검사. 이전 watcher package SHA 불변; 코드를 변경하거나 신규 패키지 발행하지 않음.
+- **원격 증거:** Commit A `1c9ff4448813c4c974d366ef82d25235781a3376`에서 정확한 REQUEST 및 기존 ZIP가 동일 Git tree에 존재함을 재조회. Commit B `cc84fa7c522ebfc8ffe3a938dbffe07ca8efdcd7`의 [SOURCE_PIN](../../requests/REQ-COWORK-REVIEW-ARCH-DESIGN-R1-20261122/SOURCE_PIN.json) `commit`은 A를 가리키고, `repo_id`는 문자열 `"1451933830"`. B 원격 readback·A와 B의 REQUEST blob 일치 `PASS`. REQUEST에는 제출기/정책 게이트/PIN 코드 5개와 호스트 연결 설계의 정확한 Git blob 고정 원문, 검토 질문·보존 게이트/수용기준을 포함.
+- **정책 경계·주의:** 현재 r0005 코드/계약의 `submit_review_request.py`는 REQUEST 게시 전에 실제 Windows LIVE config 확인을 요구하지만, 이 GPT는 그 호스트에 접근할 수 없음. 이번 게시 경로는 GitHub API 직접 Commit A/B이며 `WINDOWS_LIVE_PREPUBLICATION_PREFLIGHT=NOT_RUN`, **현행 호스트 사전검사를 통과한 표준 CLI 제출이라고 주장하지 않음**. Windows 보호 signer의 실제 승인/범위/만료/금액 및 READY 마지막 게시를 대신하지 않는다. 바로 이 설계 분리가 독립 검토 대상. 신뢰 정책·운영 watcher·delegate·key·DB·READY·모델/GPT API·Telegram 설정 변경 0.
+- **검증 상태:** `FORMAL_REQUEST_AND_PIN_POSTED=PASS`, `PINNED_PACKAGE_HASH_AND_TREE=PASS`, `APPROVAL_SIG/READY=NOT_POSTED`, `WINDOWS_HOST_POLICY=NOT_VERIFIED`, `INDEPENDENT_REVIEW=NOT_RUN`(조회 시점), 모델 호출 증거 없음. 구 요청 이력은 그대로 보존. 서명·READY 미게시면 GitHub 게시 성공을 Claude 리뷰 완료로 승격하지 않음.
+- **NEXT_ONE_ACTION:** 기존 Windows v0.2.29 watcher/보호 signer가 이 ID의 실제 정책·scope·서명 가능 여부를 판단하고, 유효한 승인에서만 READY 마지막 게시 → 독립 리뷰 1회 결과/영수증 게시. 차단 시 정확한 호스트 거절 사유만 기록하며 임의 정책 우회·추가 리뷰 요청·재모델 호출 금지.
+
+---
+
 ## 2026-11-22 KST — GPT 리뷰 요청 ②·③ 책임·완료 기준 확정 (범위 한정)
 
 - **사용자 의도 재확정:** 다른 GPT 설계 대화창에서 **“리뷰체계 최신버전 확인후 다시 리뷰요청해줘”**라고 말하면, Windows watcher 확장보다 **GPT의 ② 마지막 확정 설계/코드·Work·원본 revision 직접 확정, ③ 기존 표준 REQUEST/PIN 실제 제출·원격 확인**을 정확히 수행할 것. 초안·Base64 후보·별도 Windows 인계서만 게시하고 정식 리뷰를 요청했다고 보고하는 동작이 사용자 불만의 본체.
