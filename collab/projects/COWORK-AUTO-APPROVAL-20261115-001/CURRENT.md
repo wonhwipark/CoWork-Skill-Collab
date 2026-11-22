@@ -1,5 +1,15 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-22 KST — LIVE 직전 3~9단계 원샷 통합 인계 게시 (Windows 실제 실행 대기)
+
+- **사용자 지시:** 3~9단계(동시 watcher 경합, crash/terminal 재시도 금지, 사용자 의도 기반 SCOPE 설계·격리 구현, 최종 패키지, 독립 리뷰 1회, SHADOW 읽기 전용 검증)를 하나의 개발·검증 작업으로 진행. 10단계 비용 무상한 위험 수용 및 LIVE 운영 컷오버는 **별도 승인**; 11~12단계는 미실행.
+- **GPT 완료:** v0.2.31 결과·최신 CURRENT·공통 브리프·SU-SIMPLE·REVIEW_TRANSPORT/SHADOW 계약 대조 후 [Windows 3~9 원샷 실행 지시서](WINDOWS_V031_TO_LIVE_PRECHECK_ONE_SHOT_HANDOFF_r0001_20261122_KST.md)를 `main`에 게시. 정확한 Windows 원본 폴더/ZIP SHA, 무모델 동시성 테스트와 SCOPE 인가 보존, 분리 독립 리뷰, SHADOW/백업/롤백·게시 판정 명시. 이 지시서 게시만으로 Windows 개발 세션/보호 signer/모델 리뷰를 자동 호출하지 않음.
+- **접근 한계/진실 상태:** v0.2.31 ZIP은 Windows 로컬에만 존재하여 현 GPT 런타임에서 소스 수정·테스트·후보 ZIP 직접 해시 및 Windows SHADOW를 수행 불가. `G3~G9=NOT_RUN_BY_GPT`, `INDEPENDENT_REVIEW=NOT_RUN_THIS_HANDOFF`, `LIVE_APPLY=NOT_RUN`, `NEW_MODEL_CALLS=0_THIS_HANDOFF`. 이전 Windows 자체시험 `960 PASS/0 FAIL/12 SKIP`는 유효한 보고 근거이나 이번 추가 시험의 PASS가 아님.
+- **차단 방어:** 기존 v0.2.29 LIVE, 운영 DB/키/설정/위임/Task/Notifier, 기존 REQUEST/READY/영수증 불변. 3~9단계 실행은 Windows Claude Code에서 인계서에 따라 수행·호스트 근거 게시가 필요. 코드 ZIP PUBLIC 반출은 미승인 상태로 취급, 유효한 보호 승인 없으면 신규 유료 모델 호출·서명/READY 금지.
+- **NEXT_ONE_ACTION:** Windows Claude Code에 위 단일 인계서를 전달하여 **3~9단계 격리 개발·시험·(유효 승인 시) 독립 리뷰·SHADOW**를 수행시키고 동일 Work 결과/CURRENT를 remote readback까지 게시. 그 결과를 GPT가 재판정하여 10단계 사용자 승인 여부만 확인.
+
+---
+
 ## 2026-11-22 KST — GPT v0.2.31 후보 판정: 개발 조건부 수용 / LIVE HOLD
 
 - **GPT_DISPOSITION=`ACCEPT_DEVELOPMENT_WITH_CONDITIONS`**. [판정 원본](GPT_V031_INDEPENDENT_IDEMPOTENCY_DISPOSITION_r0001_20261122_KST.md). Windows 자체시험 960 PASS / 0 FAIL / 12 SKIP를 개발 후보 근거로 수용. ZIP 실물 GPT 독립 검증·별도 독립 리뷰·실제 Claude CLI·두 watcher 동시 경합은 NOT_RUN.
