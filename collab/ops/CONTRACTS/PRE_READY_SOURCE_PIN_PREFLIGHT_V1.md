@@ -1,5 +1,14 @@
 # CoWork REVIEW REQUEST/PIN/ZIP 게시 전 필수 정합성 검증 V1
 
+## 현행 규칙 r0007 — 독립 리뷰만, 게시자 가격·스킬 선검사 제거 (2026-11-22 KST)
+
+- 상위 최신 사용자 결정. **독립 리뷰 단일 유형**을 사용하며 GPT REQUEST 게시자는 비용 상한·가격 정책 선택·스킬별 위임 목록을 검증하지 않는다. `check_request_for_publication(intent="independent")` 기본값; `required_budget`를 넘기는 신규 독립 요청은 거부. `submit_review_request.py`는 실제 가격 설정을 읽지 않으며 AUTO 인자는 **실행 권한이 아닌 요청 메타**다.
+- 출판 과정에서 남는 게이트: USER 명시 독립 리뷰 요청, Work/입력 고정, 기존 결과/READY/영수증/UNCERTAIN 중복 확인, REQUEST schema, ZIP 크기/SHA/CRC/경로, 정적 `run_policy_ref` 호환, REQUEST+ZIP Commit A → PIN Commit B → 원격 바이트 검증.
+- **아직 Windows LIVE는 변경하지 않음**: 기존 호스트에서는 스킬별 위임·USD3 비용·승인/서명·READY·중복·실행 방어가 계속 동작하므로 GPT 출판 개선만으로 `AUTO_NOT_ELIGIBLE:SCOPE`가 해결되었다고 주장하지 않는다. Windows 가격·allowlist 제거는 별도 설치본 수정/격리 회귀/유효 승인 절차가 필요한 후속 구현. 공개 저장소의 REQUEST를 임의 사용자가 실행하게 만드는 무권한 자동 승인 대체는 불가.
+- [실제 코드 변경 및 Windows 전환 경계](../../projects/COWORK-AUTO-APPROVAL-20261115-001/GPT_INDEPENDENT_REVIEW_COST_GATE_SIMPLIFICATION_RESULT_r0001_20261122_KST.md). 아래 r0006의 `unified USD3` 및 게시자 AUTO skill 검사는 과거 규칙으로 대체되지만, LIVE 보호 검사에 대한 기술은 **호스트가 바뀔 때까지 현재 사실**로 유지한다.
+
+---
+
 ## 현행 규칙 r0006 — GPT REQUEST 출판과 Windows 실행 승인 분리 (2026-11-22 KST)
 
 **적용 우선순위:** Windows Claude Code 독립 리뷰 R1 `REQ-COWORK-REVIEW-ARCH-DESIGN-R1-20261122`과 GPT 판정 `ACCEPT_WITH_CORRECTIONS__OPTION_B` 반영. **이 절이 아래 r0005 및 이전 2026-11-17 'Windows LIVE 선검사 필수' 문구보다 우선**. 기존 완료·고정 요청을 소급 수정하거나 READY를 재큐잉하지 않는다.

@@ -1,5 +1,16 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-22 KST — 독립 리뷰 단일화·GPT 비용/스킬 선검사 제거 게시, Windows LIVE 불변
+
+- **사용자 최신 결정:** 독립 리뷰 한 유형, 내부 금액·리뷰 등급·비용 한도 검사를 리뷰 실행 유형으로 취급하지 않음; 스킬별 자동승인 차단도 개선. 무허가 무제한 실행이나 기존 REQUEST 재실행 허용이 아님.
+- **실제 변경:** `collab/ops/review_request_gate.py`, `submit_review_request.py` 및 회귀시험 2개에 신규 `independent` 출판 경로 적용. 건당 USD3 사전판단 및 AUTO 스킬별 제출 선차단 제거. 출판만 수행하며 기존 signer·READY·모델에 권한을 부여하지 않음. 코드 commit `a21bab69dcf1bd2f4f2525fe36e6b6235be567cf`.
+- **상세 결과/안전·전환:** [독립 리뷰 간소화 결과](GPT_INDEPENDENT_REVIEW_COST_GATE_SIMPLIFICATION_RESULT_r0001_20261122_KST.md). 계약 r0007 우선, 역대 frozen requests·legacy USD3 진단은 호환 이력으로 보존.
+- **검증:** `CODE_REMOTE_PUBLISHED=PASS`, `PYTHON_TEST=NOT_RUN`, `WINDOWS_HOST_PROTECTED_GATE=UNCHANGED`, `NEW_REVIEW_READY=0`, `NEW_MODEL_CALLS=0`(이번 변경). GitHub 게시 후 파일별 원격 blob readback은 최종 확인 단계에서 보고.
+- **미해결:** Windows 실제 비용·skill allowlist 검사 제거 미구현/미설치. 그러므로 이전 `SCOPE`로 막힌 요청은 **아직 자동 실행 가능하다고 말할 수 없음**. 승인/서명·운영 게이트는 LIVE 전환 별도 판정.
+- **NEXT_ONE_ACTION:** Windows에서 실제 v0.2.29 signer/validator/watcher source와 정책을 읽기 전용 확인하여, 보존해야 할 보호 경계/호환성을 확정한 뒤 격리 개발 후보와 무과금 회귀를 기존 Work에서 수행. 보호 운영 설치·재큐잉/서명·READY·새 유료 리뷰는 이번 게시로 실행하지 않음.
+
+---
+
 ## 2026-11-22 KST — Option B GPT 정식 REQUEST 게시기 구현·GitHub main 반영
 
 - **상태:** `GPT_PUBLISHER_CODE=POSTED_REMOTE_VERIFIED`, `PYTHON_UNIT_TEST_EXECUTION=NOT_RUN`, `WINDOWS_LIVE=UNCHANGED`, `NEW_PAID_REVIEW=0`. 같은 Work의 Claude 리뷰 R1 및 [GPT 판정](GPT_ARCH_REVIEW_DISPOSITION_r0001_20261122_KST.md) `ACCEPT_WITH_CORRECTIONS__OPTION_B` 후속.

@@ -1,6 +1,6 @@
 # CoWork 공통 맥락 브리프
 
-- 개정: r0016 / 2026-11-22 KST 정식 REQUEST 출판과 Windows 실행 승인 분리(Option B). 운영 LIVE 상태는 각 CURRENT/영수증에서 재확인.
+- 개정: r0017 / 2026-11-22 KST 독립 리뷰 단일화·GPT 출판 가격 및 스킬 선차단 제거. 운영 LIVE 상태는 각 CURRENT/영수증에서 재확인.
 - 저장소: **GitHub PUBLIC** `wonhwipark/CoWork-Skill-Collab`, branch `main` (2026-11-21 실제 visibility 조회). 기존 PRIVATE 경로·문구는 당시 이력. 회사 제한 자료·키/토큰의 신규 게시 허용이 아님.
 - 역할: 협업·L1 지식·관리 스킬의 **고정 지도**. 진행 상태·최신 버전·리뷰 결과·승인 대기·source blob을 복사하지 않는다.
 - 읽기: **이 지도 → 요청 목적에 맞는 CURRENT → 필요한 근거·계약·스킬 원문**. 현재 상태는 실행할 때 해당 정본을 조회한다.
@@ -14,6 +14,8 @@
 - 갱신 기준: [스킬 발견·재사용 절차](ops/CONTRACTS/SKILL_DISCOVERY_AND_REUSE_V1.md). 결과·피드백은 해당 Work에서 관리하고 지도는 구조·역할·경로가 바뀔 때만 수정한다.
 
 ## 자연어 “정식 리뷰 요청” — 새 창 기본 진입
+
+**현행 2026-11-22 r0007:** 리뷰는 **독립 리뷰 한 유형**. 신규 GPT 요청 출판에서 가격 USD3/등급별 금액·스킬별 allowlist 사전 차단을 제거한 코드가 GitHub main에 게시됨. **Windows LIVE v0.2.29 비용·스킬별 서명 허가 게이트는 아직 변경되지 않음**. 소스 변경과 운영 실행은 구분; 상세는 [기존 자동 승인 Work 결과](collab/projects/COWORK-AUTO-APPROVAL-20261115-001/GPT_INDEPENDENT_REVIEW_COST_GATE_SIMPLIFICATION_RESULT_r0001_20261122_KST.md). 아래 예전 r0006 서술 중 가격 기반 출판 게이트는 이 최신 결정으로 대체.
 
 **GPT 필수 수행:** 사용자가 기존 설계 대화창에서 “리뷰요청해줘” 또는 **“리뷰체계 최신버전 확인후 다시 리뷰요청해줘”**라고 지시하면, 현재 창의 마지막 확정 Work·설계/구현물·원본 revision·기존 요청/영수증을 실제 확인해 리뷰 대상을 확정(②)하고, 단순 후보/REQUEST 초안·인계 문서에서 끝내지 않고 **가능한 기존 정식 제출 수단을 사용해 REQUEST+ZIP 같은 Commit A → SOURCE_PIN Commit B 원격 확인(③)**까지 추진한다. 완료 증거가 없으면 `FORMAL_REQUEST=NOT_POSTED/BLOCKED`로 정확히 보고하며 “리뷰 요청 완료”라고 말하지 않는다. LIVE 정책 검사는 REQUEST 출판의 필수 조건이 아니며 Windows 보호 signer의 승인·READY·비용·중복 검증은 우회하지 않는다. [GPT ②③ 필수 완료 게이트](ops/CONTRACTS/PRE_READY_SOURCE_PIN_PREFLIGHT_V1.md)와 [실행 진입](../AGENTS.md)을 우선 적용. Windows watcher 자동 hook 설치가 이 문구로 달성되는 것은 아니다.
 

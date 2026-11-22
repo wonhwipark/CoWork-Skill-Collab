@@ -1,5 +1,13 @@
 # CoWork 리뷰 등급 / 토큰·비용 예산 계약 V1
 
+## 현행 우선 r0005 — 독립 리뷰 단일화 (2026-11-22 KST)
+
+- 사용자 최신 요청: '유료 리뷰' 별도 유형·리뷰별 금액 제한·비용 정책 선택과 내부 자동 가격 판단 제거. **한 유형 '독립 리뷰'**로 명명. 새 GPT 게시기에는 `unified USD3` 금액 검사를 더 이상 적용하지 않는다. 구형 검사와 계약은 과거 고정 요청의 이력·진단 호환으로 남긴다.
+- **실제 Windows v0.2.29 LIVE**의 비용·allowlist 승인 게이트는 이 문서만으로 변경되지 않았다. 운영 코드·보호 정책 전환을 검증할 때까지 기존 비용 검증은 실효. 이 규칙을 근거로 무단 서명·READY·유료 모델 호출 금지.
+- 다음 보호 모델은 가격 속성이 아니라 **인증된 독립 리뷰 실행 권한 + 고정 입력 + 서명·READY + 동일 요청 1회·중복/UNCERTAIN 방어**다. 사용자 지시만으로 무제한 비용을 승인한 것으로 보지 않으며, 기존 계정 과금은 여전히 발생할 수 있다. [최신 변경 및 호스트 전환](../../projects/COWORK-AUTO-APPROVAL-20261115-001/GPT_INDEPENDENT_REVIEW_COST_GATE_SIMPLIFICATION_RESULT_r0001_20261122_KST.md).
+
+---
+
 ## 2026-11-22 r0004 — 정식 REQUEST 출판과 Windows 실행 승인 분리 (현행 우선)
 
 - Claude 아키텍처 R1 및 GPT `ACCEPT_WITH_CORRECTIONS__OPTION_B` 수용. 사용자 명시 리뷰 요청의 GPT 게시 단계에는 **Windows LIVE `reviewer.config.json` 사전 조회를 필수로 요구하지 않는다**. GPT는 현재 Work·요청 형식·정적 unified `POLICY-STATIC-V1` USD3·ZIP SHA/크기/CRC·SOURCE_PIN 두 커밋·중복을 검증해 정식 REQUEST를 게시한다. 단, 실제 LIVE 등록 금액이나 자동 위임 적합성을 주장하지 않는다.

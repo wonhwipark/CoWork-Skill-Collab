@@ -22,7 +22,13 @@
 **표현 규칙:** [용어·저장소·실행 환경 표기 원칙](collab/ops/CONTRACTS/TERMINOLOGY_AND_ACCESS_SCOPE_V1.md)을 따른다. 장소/망 접두어 없이 **GitHub PRIVATE/PUBLIC**, 업무용 Git 역할, 작업 PC, Linux 실행 호스트 등 실제 대상을 지칭한다. 파일명·기존 경로·과거 감사·보안 권한은 바꾸지 않는다. 신규 문서와 응답부터 적용한다.
 
 
-## GPT 정식 리뷰 실행 책임 — “리뷰체계 최신버전 확인 후 다시 리뷰요청해줘” (2026-11-22)
+## GPT 정식 리뷰 실행 책임## 현행 결정 r0007 — 독립 리뷰 단일 유형·게시기 비용 게이트 제거 (2026-11-22 KST)
+
+- 일반 신규 요청은 **독립 리뷰 한 유형**. GPT 게시기 `check_request_for_publication(intent="independent")`는 Windows 가격 파일·금액·스킬별 위임 허용 목록을 조회하지 않는다. 기존 `unified USD3` 선검사와 `--delegated-skill` 출판 선차단은 현행 신규 게시 경로에서 사용하지 않음. `run_policy_ref=POLICY-STATIC-V1`은 기존 Windows 포맷과의 원본 호환을 위해 유지.
+- 게시자의 AUTO 표시는 보호 signer 권한이 아니다. **Windows 설치 LIVE는 아직 USD3 및 skill allowlist를 계속 검증**. 해당 게이트가 실제로 제거됐다는 주장 금지. 새 제안은 [동일 Work 적용/전환 기록](collab/projects/COWORK-AUTO-APPROVAL-20261115-001/GPT_INDEPENDENT_REVIEW_COST_GATE_SIMPLIFICATION_RESULT_r0001_20261122_KST.md)과 [PRE_READY r0007](collab/ops/CONTRACTS/PRE_READY_SOURCE_PIN_PREFLIGHT_V1.md) 기준. 위험한 무승인 모델 호출을 열지 않도록 승인된 reviewer capability·서명·READY·원본/중복 보호는 필수.
+- 구형 유료 리뷰/정책 문구는 그 시점의 이력. 새 사용자 의도와 비용 통제를 별개 리뷰 유형으로 분류하지 않음. 이 결정으로 이전 READY나 실행 중 요청을 다시 큐에 넣지 않는다.
+
+ — “리뷰체계 최신버전 확인 후 다시 리뷰요청해줘” (2026-11-22)
 
 **최신 r0006 우선(2026-11-22):** GPT는 사용자 명시적 리뷰 요청을 받으면 **Windows LIVE 설정 없이** REQUEST/ZIP 형식·실제 바이트 SHA/CRC·기존 ID/결과 중복과 Git source pin을 검증하여 정식 Commit A/B를 직접 게시한다. Windows 정책/위임/비용·서명·READY는 실제 Windows 보호 signer/watcher가 검증한다. 아래 과거 사전 정책 확인 필수·호스트 위임 문구는 **REQUEST 게시 전 필수조건으로 적용하지 않는다**. 제출·실행 승인 경계를 혼동하지 말고 [정본 r0006](collab/ops/CONTRACTS/PRE_READY_SOURCE_PIN_PREFLIGHT_V1.md)을 따른다.
 
