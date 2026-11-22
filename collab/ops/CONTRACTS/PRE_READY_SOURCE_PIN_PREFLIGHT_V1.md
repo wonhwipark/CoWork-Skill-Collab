@@ -30,10 +30,10 @@
 
 **③ 정식 제출 — GPT의 완료 판단 필수**
 
-4. 요청 형식·실제 ZIP 구조/CRC/경로 및 SHA·크기·Git 원본·정책 상한·실제 Windows LIVE 정책 확인을 선행한다. 사용할 실제 제출 API/CLI·권한을 검증한다. 현행 `review_request_gate.py`, `submit_review_request.py`, `review_pin_preflight.py`를 **REUSE**한다. Base64 ZIP·REQUEST 초안이 이미 게시된 경우 `review_staged_submission.py` 경로를 재사용하되 이를 요청 접수로 오인하지 않는다.
+4. 요청 형식·실제 ZIP 구조/CRC/경로 및 SHA·크기·Git 원본과 정적 정책 참조/요청 상한을 사전검사한다. Windows LIVE 정책 적합성은 보호 signer/READY 단계에서 별도 확인한다. 사용할 실제 제출 API/CLI·권한을 검증한다. 현행 `review_request_gate.py`, `submit_review_request.py`, `review_pin_preflight.py`를 **REUSE**한다. Base64 ZIP·REQUEST 초안이 이미 게시된 경우 `review_staged_submission.py` 경로를 재사용하되 이를 요청 접수로 오인하지 않는다.
 5. **조건을 충족하고 실제 게시 권한이 있는 경우** GitHub `main`에 Commit A: 정확한 `REQUEST.md` 및 패키지 ZIP **같은 트리** → 원격 바이트·size/SHA/요청 필드 검증 → Commit B: `SOURCE_PIN.json`이 A를 정확히 지시하고 `repo_id`가 **문자열** → 검증기로 PIN 검사 및 원격 readback을 수행한다. 해당 단계에 필요한 정책/보호 권한 미검증이면 **실행하지 않고 정확한 경계에서 fail-closed**한다. GitHub API 직접 게시도 같은 게이트를 만족해야 하며, GPT가 읽을 수 없다는 이유로 Windows 보호 정책을 정적 GitHub 문서로 대신할 수 없다.
 6. 결과 **`SUBMITTED_AWAITING_PROTECTED_SIGNER`를 말할 수 있는 유일한 근거**는 실제 `collab/requests/<RID>/REQUEST.md` + `SOURCE_PIN.json` 원격 존재, A 고정 ZIP 포함·정합성/바이트 SHA·두 커밋 검증 PASS이다. `REQUEST DRAFT` front matter의 `state: SUBMITTED`, `collab/projects/` 초안·Base64 ZIP·CURRENT/TRACKER 게시, Windows 원샷 지시서만으로는 절대로 `REQUEST_POSTED`/정식 리뷰 접수 PASS로 판정하지 않는다.
-7. 도구·실제 LIVE config·Git commit A/B 검증·호스트 권한이 **불가능한 경우**, GPT는 `FORMAL_REQUEST=NOT_POSTED` 또는 실제 부분 상태(예: `POST_CONFLICT`/`UNCERTAIN`)와 막힌 **정확한 단계**만 보고한다. ②③ 가능한 검증은 마친 후 차단을 짧게 보고하며, 새로운 리레이/daemon/스킬/워크플로 발명이나 반복적인 인계서 게시를 후속 기본 작업으로 확장하지 않는다. 이미 승인된 범위의 실행은 중간마다 재승인 질문 없이 진행하되 유료 리뷰·서명·READY·운영 변경은 기존 실제 보호 정책과 승인 범위를 유지한다.
+7. GitHub 제출 도구·원본·Git commit A/B 검증·원격 쓰기 권한이 **불가능한 경우**, GPT는 `FORMAL_REQUEST=NOT_POSTED` 또는 실제 부분 상태(예: `POST_CONFLICT`/`UNCERTAIN`)와 막힌 **정확한 단계**만 보고한다. ②③ 가능한 검증은 마친 후 차단을 짧게 보고하며, 새로운 리레이/daemon/스킬/워크플로 발명이나 반복적인 인계서 게시를 후속 기본 작업으로 확장하지 않는다. 이미 승인된 범위의 실행은 중간마다 재승인 질문 없이 진행하되 유료 리뷰·서명·READY·운영 변경은 기존 실제 보호 정책과 승인 범위를 유지한다.
 
 **GPT의 사용자 보고:** `Work ID / 리뷰 대상·원본 revision / 검증된 요청 ID / FORMAL_REQUEST=SUBMITTED|NOT_POSTED|BLOCKED / GitHub 정식 REQUEST·PIN 실제 링크·커밋(있을 때만) / 실제 차단 한 가지` 순서. ②③의 검증/실제 GitHub 게시 여부와 ④ Windows 보호 signer/READY 및 Claude 리뷰 완료는 서로 별개로 기록한다. 동일 창에서 정식 리뷰 지시를 받고 **단순 일반 검토로 되돌리지 않는다**. 기존 이력·불확실 재실행 금지를 그대로 유지한다.
 
@@ -54,14 +54,14 @@
 
 ## 자연어 정식 리뷰의 표준 제출 명령 (r0002 / 2026-11-21)
 
-**신규 요청 기본 경로:** 실제 Windows LIVE 정책을 검증할 수 있는 환경에서 `collab/ops/submit_review_request.py`를 사용한다. 이 제출기는 기존 `review_request_gate.check_request`, `source_pin.dumps_source_pin`, `review_pin_preflight.inspect`를 **연속 호출**하고, 요청 생성에 필요한 Commit A/B를 안전하게 `git push`한다. `--publish`가 없으면 원격/로컬에 쓰지 않는 드라이런이다. 안전성 위해 클린 `main`·신뢰 `origin`·원격 최신 SHA·새 REQUEST ID를 강제한다. 인증 토큰·보호 서명·READY는 절대 생성하지 않는다.
+**신규 요청 기본 경로:** Windows LIVE config 접근 없이 `collab/ops/submit_review_request.py`를 사용한다. 이 제출기는 `review_request_gate.check_request_for_publication`, `source_pin.dumps_source_pin`, `review_pin_preflight.inspect`를 **연속 호출**하고, 요청 생성에 필요한 Commit A/B를 안전하게 `git push`한다. `--publish`가 없으면 원격/로컬에 쓰지 않는 드라이런이다. 안전성 위해 클린 `main`·신뢰 `origin`·원격 최신 SHA·새 REQUEST ID를 강제한다. 인증 토큰·보호 서명·READY는 절대 생성하지 않는다.
 
 예시(Windows, 실제 설치 LIVE 설정 경로는 호스트 확인 후 지정):
 
 ```powershell
-python collab/ops/submit_review_request.py --repo-root . --request-draft <OUTSIDE_REPO>\\REQUEST.md --package <OUTSIDE_REPO>\\skill.zip --live-config <WINDOWS_LIVE_CONFIG_PATH>
+python collab/ops/submit_review_request.py --repo-root . --request-draft <OUTSIDE_REPO>\\REQUEST.md --package <OUTSIDE_REPO>\\skill.zip
 # 모든 게이트 검증 성공한 경우에만, 동일 인자로 --publish 추가
-python collab/ops/submit_review_request.py --repo-root . --request-draft <OUTSIDE_REPO>\\REQUEST.md --package <OUTSIDE_REPO>\\skill.zip --live-config <WINDOWS_LIVE_CONFIG_PATH> --publish
+python collab/ops/submit_review_request.py --repo-root . --request-draft <OUTSIDE_REPO>\\REQUEST.md --package <OUTSIDE_REPO>\\skill.zip --publish
 ```
 
 ### 요청 대상과 보호 위임 범위의 분리 (2026-11-21 보완)
