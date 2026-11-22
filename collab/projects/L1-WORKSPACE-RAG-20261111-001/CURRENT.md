@@ -1,5 +1,15 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-23 KST — L1 Knowledge Updater 야간 분석 인계 MD 공개 전달 / 호스트 미실행
+
+- **업무 GPT 전달:** [야간 Module·Procedure·MSC 분석 인계 r0001](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_KNOWLEDGE_UPDATER_NIGHTLY_MODULE_PROCEDURE_MSC_HANDOFF_r0001_20261123_KST.md)를 `wonhwipark/L1Work/main/handoffs/`에 신규 게시, Git blob `7d6b83fb261986251e696878dddeb64f313b4fdd`, commit `0252f45427cc85e09a887be317c67c7a28f25df3`. README 색인 commit `314e55b7e0b96d5e8c6a02038d1fb622574440f8` 및 원격 본문 재조회 확인.
+- **요구:** Updater를 야간 분석 조정자로 사용. 기존 Module→Feature→Scenario 및 Procedure 교차 탐색, 4개 모듈 215개 검토행을 후보로만 취급. NR L1 Tx UL Tx Switching 1건으로 기존 Code Analyzer/MSC/개인 Workspace 저장·readback E2E부터 검증. 그룹 Knowledge 자동 게시 불허.
+- **code-analyzer 후속 검토:** 기존 v0.15.4의 bounded Probe, State/Event/IPC/Callback, Procedure·MSC, source/PEC 검증을 재사용. 신규 수정 근거 없음. [무수정 판정](../COWORK-SKILL-DISCOVERY-20261112-001/CODE_ANALYZER_L1_NIGHTLY_REUSE_REVIEW_r0001_20261123_KST.md).
+- **상태:** `PUBLIC_HANDOFF=PASS_REMOTE_VERIFIED`; `CODE_ANALYZER_CHANGE=NOT_NEEDED`; `UPDATER_LINUX_G0/ANALYSIS_E2E/MSC_WORKSPACE_READBACK/NIGHTLY_SCHEDULER/HOST_DEPLOY/GROUP_KNOWLEDGE_WRITE=NOT_RUN`. 이번 게시로 업무 GPT 실제 수신이나 Linux Job 시작을 주장하지 않음.
+- **NEXT_ONE_ACTION:** 업무 GPT가 인계 MD와 실제 Linux 설치본 계약을 확인하여 기존 Work에 대표 사례 1건의 CODE FACT·MSC·Workspace readback을 검증하고, 야간 예약 가능 조건을 판정. 유효 승인 없는 Job 활성화·운영 설치·그룹 지식 쓰기 금지.
+
+---
+
 ## 2026-11-23 KST — Viewer v0.5.0 사용자 독립 리뷰 생략 / 업무 환경 연결 진행
 
 - **최신 결정:** 사용자 “리뷰없이 진행하자”. 기존 v0.5.0 R1을 [사용자 생략 기록](../../requests/REQ-L1-WORKSPACE-VIEWER-V050-DESIGN-R1-20261122/USER_REVIEW_WAIVER_20261123.md)으로 명시. 독립 리뷰 `SKIP_BY_USER`, 기존 REQUEST/PIN 불변, 신규 리뷰/재큐잉/모델 호출 없음.
