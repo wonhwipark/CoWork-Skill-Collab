@@ -1,5 +1,14 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-22 KST — Viewer v0.4.0 결함 분석·전체 실행 워크플로우 인계 게시 / 수정 패키지 미생성
+
+- ChatGPT Space의 합성 Viewer HTML과 L1Work v0.4.0 원본을 비교해 **한국어 doc.kind→환경설정 종류 필터 불일치, 문서 종류 필터가 본문을 숨기는 문제, Space 전용 모바일 탐색/목차 CSS와 GitHub 원본 불일치**를 확인. 테마·글꼴·프로필 연결/MSC 실연동은 호스트 검증 전까지 미확인.
+- 실행 절차를 [L1Work 전체 워크플로우 HO](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_WORKSPACE_VIEWER_FULL_WORKFLOW_r0001_20261122_KST.md)로 신규 전달. L1Work `main/handoffs/L1_WORKSPACE_VIEWER_FULL_WORKFLOW_r0001_20261122_KST.md`, commit `bf8de52dd4134839fd35c9e483a7bd1ea30e2bd6`, Git blob `b2f62e2af44ac1c99eec3aced9493b50c2dcc51a`, **원격 본문 일치 PASS**. 고정 입력·P1/P2 수정·G0~G10·시험 T01~T14·안전 경계 명시.
+- **실행 상태**: `ANALYSIS_AND_HANDOFF=PASS_REMOTE_VERIFIED`; `NEW_FIX_SOURCE/INTEGRATION_STREAM_REGISTRATION/NEW_ZIP/BROWSER_E2E/INDEPENDENT_REVIEW/LINUX_G0/WRITE_E2E/HOST_DEPLOY=NOT_RUN`. 기존 v0.4.0 `development_not_for_deployment`, Linux Read Only·Write disabled 유지. 업무 GPT 또는 Linux 호스트 실행을 문서 게시로 간주하지 않음.
+- **NEXT_ONE_ACTION**: 기존 Viewer UI/Write/Prefs 3원본 ZIP 및 등록 stream의 최신 SHA와 필수 엔트리를 고정한 뒤, P1 종류 필터·목차/모바일·섹션 분리 문제를 소스에서 수정하고 Node/Chromium 교차 시험 및 새 단일 개발 ZIP 통합 게이트를 진행.
+
+---
+
 ## 2026-11-21 KST — CoWork 공통 병렬 작업 통합 게이트 V1 적용 연결 / Viewer v0.4.0 소급 검증 불가
 
 - UI·Write·환경설정 세 개발창 정합성 누락 재발 방지를 위해 [CoWork 통합 게이트 계약](../../ops/CONTRACTS/PARALLEL_CHANGE_INTEGRATION_GATE_V1.md)과 [검사 코드](../../ops/integration_gate.py)를 도입. 본 Viewer Work의 실제 산출물 3개는 아직 등록/교차 브라우저·Linux 시험 미완료.
