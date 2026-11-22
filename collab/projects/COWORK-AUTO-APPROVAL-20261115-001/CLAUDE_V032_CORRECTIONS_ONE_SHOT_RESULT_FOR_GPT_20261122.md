@@ -63,3 +63,39 @@ LIVE_READY = **NO**. 막힌 항목:
 ## 8. NEXT_ONE_ACTION
 
 사용자에게 복사 권한(v0_2_33 생성, v0.2.29 트리 백업) 허용 여부를 묻는다. 허용되면 단계 2·3·4·6을 이어서 수행한다. 10단계 비용 위험 수용과 LIVE는 별도 승인 전까지 진행하지 않는다.
+
+---
+
+## 9. 후속 실행 (2026-11-22, 최신 지시 1~3단계)
+
+- **사전 확인:** 원격 `main`에 `759de9b87b6f`가 포함됨(`identical`, behind_by 0). 최신 지시서 `WINDOWS_V032_CORRECTIONS_ONE_SHOT_HANDOFF_r0001_20261122_KST.md` 재독.
+- **§1 두 복사 — PASS:**
+  - A. `cp -r .../candidates/v0_2_32_live_precheck .../candidates/v0_2_33` 성공. 파일 수 일치(소스 26, 테스트 58).
+  - B. `cp -r D:\User\whpark\skill-collab-watcher-github .../backup_v0_2_29_precheck_20261122/install_tree_v0_2_29` 성공. `diff -rq`로 원본과 **IDENTICAL**. 파일 143개. 매니페스트 `INSTALL_TREE_v0_2_29_SHA256SUMS.txt`(143줄, 매니페스트 SHA `4bf920cd…`).
+  - 이전 세션의 두 복사 거부는 이번 최신 지시 이후 재시도에서 허용되어 해소됨. 거부 원문 기록은 §7 참고.
+- **§2 SCOPE 격리 연결 — PASS(격리):**
+  - `review_intent.verify_review_intent`는 nonce를 콜백(`consume_nonce`)으로 받는다.
+  - `StateStore.consume_review_intent_nonce`: `review_intent_nonces` 기본키 INSERT 한 번. 재시작과 여러 OS 프로세스에서도 1회만 성공.
+  - `AutoApprover._intent_scope`: 커밋 A의 `REVIEW_INTENT.json`만 읽음. 검증 통과 시 **이 요청의 스킬 한 개**만 위임 범위에 추가.
+  - 재검증(`_revalidate`): 후보 기록의 `intent_nonce`가 **이 요청 ID에 대해 소비되어 있을 때만** 범위를 인정. 그 외 `INTENT_NOT_CONSUMED_FOR_THIS_REQUEST`로 중단.
+  - 순서: 서명 검증 → repo/request/revision/skill/commit/REQUEST·ZIP SHA·크기 바인딩 → 만료/미래 시점 → 소급(의도 발급 시각 < 요청 생성) 거부 → nonce 소비 → 기존 assess·서명·READY·원격 claim.
+  - 수정 중 발견·보완: (a) 의도 발급 시각 비교를 초 단위로 맞춤(마이크로초 때문에 같은 초 내 "아직 유효하지 않음" 오거절). (b) 재검증이 확장 범위를 몰라 `POLICY_STOPPED`가 나던 문제를 nonce 소비 기록 기반 재검증으로 해결.
+  - 신규 DB 테이블 `review_intent_nonces`는 **후보 코드와 temp DB에서만 검증**. 운영 DB 적용 시 `ensure_auto_tables`가 테이블을 만들므로 **운영 이행 요구로 기록**(이번 범위 밖, 미실행).
+- **§3 누락 시험·회귀·패키징:**
+  - `tests/test_v033_nonce_store.py` 3건: 재시작 후 재사용 거부, 읽기 전용 소비 불가, **두 OS 프로세스 경합 → 소비자 1명**(PID 2개 서로 다름, `nonce_worker.py`).
+  - `tests/test_v033_intent_wiring.py` 10건: 정확한 의도 승인 → READY_POSTED·서명 1회, 의도 없음 → SCOPE, 본문 승인 주장 → SCOPE, 위조 → SCOPE, 다른 스킬 의도 → SCOPE, 만료 → SCOPE, 해지 키 → SCOPE, 승인 목적 키 → SCOPE, 요청보다 이른 의도 → SCOPE, 동일 nonce 재소비 거부.
+  - `tests/test_v032_scope_intent.py` 25건은 새 콜백 시그니처로 갱신, 전부 PASS.
+  - **최종 전체 회귀 1회: 1007 PASS / 0 FAIL / 12 SKIP** (v0.2.32 994 + 신규 13).
+  - **v0.2.33 ZIP:** `D:\User\whpark\skill-collab-watcher-dist\candidates\v0_2_33_intent_wired_candidate.zip`, zip SHA-256 `4dc3c701a83c22b2615e244a9dfeca8bd07ef89e9456c1b182a7ec3c01293cda`, 297,249 B, 109 항목, CRC 정상, 중복 0, 경로 탈출 0, 심볼릭 링크 0, 민감정보 패턴 0, 트리 SHA `ab80c9f7d9c163a5d130076e7c0d502891cabb4e6248d958073b83ef7da8103c`. v0.2.32 ZIP(`cbf95d11…`)은 변경 없음.
+- **시험 증거 한계(정직 기록):**
+  - 두 OS 프로세스 경합은 **nonce 소비**에 대해서만 실증. **디스패치 claim 경합은 여전히 같은 프로세스 두 스레드 + 별도 DB** (NOT_RUN for cross-process dispatch, 실제 GitHub 경합 NOT_RUN).
+  - 재시작 후 재사용·동시 소비는 저장소 시험으로 확인, 통합 경로 전체 재시작 시험은 **NOT_COVERED**.
+  - 모델 시작 불명 ALREADY_OURS 봉인은 기존 `test_lost_reservation…`/`test_crash…`로 확인(이번 변경 무관, 회귀에 포함).
+- **§4 설치 트리 백업 — PASS:** 위 B 항목. 백업 경로는 `backup_v0_2_29_precheck_20261122\install_tree_v0_2_29`. 이전 v0.2.25 번들은 v0.2.29 백업으로 취급하지 않음.
+- **§5 롤백 — 판정 유지(BLOCKED_PRESERVE):** 현재 DB 이력이 2026-11-20 번들 이후 진행되었으므로 과거 DB로 교체하지 않음. 코드 롤백 원본은 이제 §4 트리 백업으로 존재. 운영 DB 복원·이행 0.
+- **§6 독립 리뷰 — BLOCKED_AUTH:** v0.2.33 패키지에 대한 유효 보호 승인·전달 허용 없음. 신규 REQUEST·READY·서명·모델 호출 0. 기존 R1 재실행 없음. 키·trust root·위임·LIVE 활성화 0.
+- **§7 도구 거부 기록:**
+  - 이전 세션: 원본 복사 명령이 권한 계층에서 2회 거부됨(원문은 명령 실행 결과로 "Permission to use Bash with command … has been denied"). 우회하지 않음.
+  - 이번 세션: 최신 지시 이후 A·B 복사 명령은 거부되지 않고 성공.
+- **운영 상태:** 운영 DB·GitHub 업무 레코드·Telegram 쓰기 0, LIVE 설치·Task·Notifier 변경 0, 호스트 SHADOW 설치 0. 이번 단계에서 watcher/Notifier 프로세스를 종료·재시작하지 않음.
+- **LIVE_READY = NO.** 남은 승인: 독립 리뷰 보호 승인, 운영 DB 이행 승인(review_intent_nonces), 비용 무상한 위험 수용(10단계), LIVE 컷오버 승인.
