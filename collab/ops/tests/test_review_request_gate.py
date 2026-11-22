@@ -63,6 +63,28 @@ class GateTests(unittest.TestCase):
             code = gate.main(list(args))
         return code, out.getvalue(), err.getvalue()
 
+    def test_independent_publication_does_not_consult_cost(self):
+        self.fields["run_policy_ref"] = "POLICY-STATIC-V1"
+        self.save_request()
+        self.config.write_text("{not valid json}")
+        result = gate.check_request_for_publication(self.request, self.package)
+        self.assertEqual(result["run_policy_ref"], "POLICY-STATIC-V1")
+        self.assertNotIn("expected_max_budget_usd", result)
+        self.assertEqual(result["authorization"], "NOT_CHECKED")
+
+    def test_independent_publication_refuses_budget_parameter(self):
+        self.fields["run_policy_ref"] = "POLICY-STATIC-V1"
+        self.save_request()
+        with self.assertRaisesRegex(gate.GateReject, "INDEPENDENT_PUBLICATION_BUDGET_NOT_ALLOWED"):
+            gate.check_request_for_publication(self.request, self.package,
+                                                required_budget=gate._target_money("3.00"))
+
+    def test_independent_publication_rejects_bad_policy_reference(self):
+        self.fields["run_policy_ref"] = "POLICY-NOT-KNOWN"
+        self.save_request()
+        with self.assertRaisesRegex(gate.GateReject, "RUN_POLICY_NOT_PUBLISHABLE_FOR_INTENT"):
+            gate.check_request_for_publication(self.request, self.package)
+
     def test_request_fixture_has_lf_newlines_on_all_platforms(self):
         request_bytes = self.request.read_bytes()
         self.assertTrue(request_bytes.startswith(b"---\n"))

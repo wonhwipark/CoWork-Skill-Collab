@@ -24,7 +24,9 @@ REF = re.compile(r"[A-Z0-9][A-Z0-9-]{2,100}\Z")
 COMMIT = re.compile(r"[0-9a-f]{40}\Z")
 REPO_ID = re.compile(r"[1-9][0-9]*\Z")
 INTENTS = {
-    # New requests use a single policy and a single per-review budget.
+    # Review publication is a source-integrity check, not a billing decision.
+    "independent": ("POLICY-STATIC-V1",),
+    # Legacy intent modes remain for historical compatibility and host diagnostics.
     # Historical intents remain available for validating frozen legacy inputs.
     "unified": ("POLICY-STATIC-V1",),
     "skill": ("POLICY-STATIC-V1",),
@@ -157,7 +159,7 @@ def _check_package(package: Path, *, sha: str, size: int) -> None:
 
 
 def _check_request_inputs(request: Path, package: Path,
-                          *, intent: str, required_budget: Decimal) -> dict:
+                          *, intent: str, required_budget: Decimal | None) -> dict:
     request_bytes = _read_file(request, limit=MAX_REQUEST)
     fields = _front_matter(request_bytes.decode("utf-8"))
     if (fields.get("schema") != "SKILL_COLLAB_REVIEW_REQUEST_V1"
@@ -198,14 +200,22 @@ def _check_request_inputs(request: Path, package: Path,
     return {"status": "PASS_REQUEST_INPUT_ONLY", "request_id": request_id,
             "skill_id": fields["skill_id"],
             "request_sha256": hashlib.sha256(request_bytes).hexdigest(),
-            "run_policy_ref": policy, "expected_max_budget_usd": str(required_budget),
+            "run_policy_ref": policy,
+            **({"expected_max_budget_usd": str(required_budget)} if required_budget is not None else {}),
             "package_sha256": sha, "package_size_bytes": count,
             "authorization": "NOT_CHECKED", "ready": "NOT_CREATED", "model_calls": 0}
 
 
 def check_request_for_publication(request: Path, package: Path,
-                                  *, intent: str, required_budget: Decimal) -> dict:
-    """Strict schema/ZIP/source-input check; no Windows config and no authority."""
+                                  *, intent: str = "independent",
+                                  required_budget: Decimal | None = None) -> dict:
+    """Strict immutable-input verification without a price or execution decision.
+
+    Frozen legacy requests can explicitly use historical budget-compatibility
+    modes; new independent review publication must not use a price gate.
+    """
+    if intent == "independent" and required_budget is not None:
+        raise GateReject("INDEPENDENT_PUBLICATION_BUDGET_NOT_ALLOWED")
     result = _check_request_inputs(request, package, intent=intent,
                                    required_budget=required_budget)
     if result["run_policy_ref"] not in INTENTS[intent]:

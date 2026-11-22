@@ -8,7 +8,6 @@ No automatic retry: partial publications must be reconciled by an operator.
 from __future__ import annotations
 
 import argparse
-from decimal import Decimal
 import hashlib
 import json
 from pathlib import Path
@@ -16,7 +15,7 @@ import re
 import subprocess
 import sys
 
-from review_request_gate import GateReject, check_request, check_request_for_publication
+from review_request_gate import GateReject, check_request_for_publication
 from review_pin_preflight import PreflightBlocked, inspect
 from source_pin import dumps_source_pin
 
@@ -37,21 +36,15 @@ class SubmissionBlocked(ValueError):
 
 def check_approval_route(skill_id: str, approval_route: str,
                          delegated_skills: tuple[str, ...]) -> dict:
-    """Fail closed before any Git writes; does NOT grant signer authority.
+    """The publisher does not decide which skill is permitted to run.
 
-    Auto skill IDs must come from the Windows protected signer's currently
-    loaded delegation, not a README, prior run, or caller's assumption.
-    The protected signer independently revalidates authorization and limits.
+    The Windows protected signer alone verifies execution authorization.
     """
     if approval_route not in ('manual', 'auto'):
         raise SubmissionBlocked('INVALID_APPROVAL_ROUTE')
     if approval_route == 'auto':
-        if not delegated_skills:
-            raise SubmissionBlocked('AUTO_DELEGATION_SCOPE_NOT_SUPPLIED')
-        if skill_id not in delegated_skills:
-            raise SubmissionBlocked('AUTO_NOT_ELIGIBLE_SCOPE: ' + skill_id)
         return {'approval_route': 'auto',
-                'delegation_scope_preflight': 'MATCHES_SUPPLIED_SCOPE_NOT_SIGNER_VERIFIED'}
+                'delegation_scope_preflight': 'NOT_CHECKED_HOST_AUTHORITY'}
     return {'approval_route': 'manual',
             'delegation_scope_preflight': 'MANUAL_PROTECTED_APPROVAL_REQUIRED'}
 
@@ -93,19 +86,11 @@ def submit(*, root: Path, request_draft: Path, package: Path,
            delegated_skills: tuple[str, ...] = ()) -> dict:
     root = root.resolve()
     original = require_clean_main(root, expected_origin=expected_origin)
-    # Publication is not authorization. The Windows protected signer applies
-    # the actual loaded policy, scope, budget, signature and READY gates.
+    # REQUEST/PIN publication neither prices the review nor authorizes execution.
+    # The installed Windows protected signer retains its own current gates.
     result = check_request_for_publication(request_draft, package,
-                                           intent='unified', required_budget=Decimal('3.00'))
-    policy_advisory = 'NOT_CHECKED_HOST_DECIDES'
-    if live_config is not None:
-        try:
-            check_request(request_draft, package, live_config,
-                          intent='unified', required_budget=Decimal('3.00'))
-        except (GateReject, OSError, UnicodeError):
-            policy_advisory = 'INCOMPATIBLE_OR_UNAVAILABLE_HOST_DECIDES'
-        else:
-            policy_advisory = 'COMPATIBLE_NOT_AUTHORIZED'
+                                           intent='independent')
+    policy_advisory = 'NOT_APPLICABLE_HOST_OWNS_EXECUTION_AUTHORITY'
     rid = result['request_id']
     route = check_approval_route(result['skill_id'], approval_route, delegated_skills)
     if not RID_RE.fullmatch(rid):
@@ -160,7 +145,7 @@ def submit(*, root: Path, request_draft: Path, package: Path,
     pin_commit = git(root, 'rev-parse', 'HEAD')
     checked = inspect(root=root, request_id=rid, package_repo_path=package_rel,
                       expected_repo_id=REPO_ID, main_commit=pin_commit,
-                      approval_mode=approval_route, delegated_skills=delegated_skills)
+                      approval_mode="manual", delegated_skills=())
     if checked['status'] != 'PASS_PINNED_INPUTS_ONLY' or checked['pinned_commit'] != source_commit:
         raise SubmissionBlocked('PINNED_TREE_PREFLIGHT_FAILED')
     git(root, 'push', 'origin', f'HEAD:refs/heads/{BRANCH}')
@@ -179,11 +164,11 @@ def main() -> int:
     ap.add_argument('--request-draft', required=True, type=Path)
     ap.add_argument('--package', required=True, type=Path)
     ap.add_argument('--live-config', type=Path,
-                    help='optional advisory-only Windows config; never required to publish or upload')
+                    help='deprecated and ignored; no local price check is used for publication')
     ap.add_argument('--approval-route', choices=('manual', 'auto'), default='manual',
                     help='manual is the safe default; never an approval or signature')
     ap.add_argument('--delegated-skill', action='append', default=[],
-                    help='auto only: skill IDs from currently loaded protected delegation; not signer proof')
+                    help='deprecated publication hint; does not prove execution authority')
     ap.add_argument('--publish', action='store_true',
                     help='explicitly push Commit A then Commit B to CoWork main')
     args = ap.parse_args()

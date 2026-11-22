@@ -150,7 +150,7 @@ run_policy_ref: POLICY-STATIC-V1
                 'POLICY-STATIC-V1': {'max_budget_usd': 1.50}}}}))
         result = self.submit(publish=True)
         self.assertEqual(result['status'], 'SUBMITTED_AWAITING_PROTECTED_SIGNER')
-        self.assertEqual(result['host_policy_advisory'], 'INCOMPATIBLE_OR_UNAVAILABLE_HOST_DECIDES')
+        self.assertEqual(result['host_policy_advisory'], 'NOT_APPLICABLE_HOST_OWNS_EXECUTION_AUTHORITY')
         self.assertEqual(result['signer_authority'], 'NOT_VERIFIED')
         self.assertFalse((self.local / f'collab/requests/{RID}/READY.md').exists())
 
@@ -159,7 +159,7 @@ run_policy_ref: POLICY-STATIC-V1
         result = mod.submit(root=self.local, request_draft=self.req, package=self.pkg,
                             expected_origin=str(self.origin), publish=True)
         self.assertEqual(result['status'], 'SUBMITTED_AWAITING_PROTECTED_SIGNER')
-        self.assertEqual(result['host_policy_advisory'], 'NOT_CHECKED_HOST_DECIDES')
+        self.assertEqual(result['host_policy_advisory'], 'NOT_APPLICABLE_HOST_OWNS_EXECUTION_AUTHORITY')
         self.assertFalse((self.local / f'collab/requests/{RID}/APPROVAL_SIG.json').exists())
         self.assertFalse((self.local / f'collab/requests/{RID}/READY.md').exists())
 
@@ -177,25 +177,33 @@ run_policy_ref: POLICY-STATIC-V1
                        live_config=self.config, publish=True)
 
 
-    def test_auto_out_of_scope_is_blocked_before_git_write(self):
-        before = git(self.local, 'rev-parse', 'HEAD')
-        with self.assertRaisesRegex(mod.SubmissionBlocked, 'AUTO_NOT_ELIGIBLE_SCOPE'):
-            self.submit(publish=True, approval_route='auto',
-                        delegated_skills=('l1-knowledge-updater', 'cowork-dashboard'))
-        self.assertEqual(git(self.local, 'rev-parse', 'HEAD'), before)
-        self.assertFalse((self.local / f'collab/requests/{RID}').exists())
+    def test_out_of_scope_skill_can_be_published_not_authorized(self):
+        result = self.submit(publish=True, approval_route='auto',
+                             delegated_skills=('l1-knowledge-updater', 'cowork-dashboard'))
+        self.assertEqual(result['delegation_scope_preflight'], 'NOT_CHECKED_HOST_AUTHORITY')
+        self.assertEqual(result['signer_authority'], 'NOT_VERIFIED')
+        self.assertEqual(result['ready'], 'NOT_CREATED')
 
-    def test_auto_without_loaded_scope_is_blocked_before_git_write(self):
-        with self.assertRaisesRegex(mod.SubmissionBlocked, 'AUTO_DELEGATION_SCOPE_NOT_SUPPLIED'):
-            self.submit(publish=True, approval_route='auto')
-        self.assertFalse((self.local / f'collab/requests/{RID}').exists())
+    def test_auto_without_delegation_data_is_only_publication(self):
+        result = self.submit(publish=True, approval_route='auto')
+        self.assertEqual(result['status'], 'SUBMITTED_AWAITING_PROTECTED_SIGNER')
+        self.assertEqual(result['delegation_scope_preflight'], 'NOT_CHECKED_HOST_AUTHORITY')
+        self.assertEqual(result['model_calls'], 0)
 
     def test_auto_scope_match_is_only_preflight_not_signature(self):
         output = self.submit(publish=True, approval_route='auto',
                              delegated_skills=('synthetic-review',))
         self.assertEqual(output['approval_route'], 'auto')
+        self.assertEqual(output['delegation_scope_preflight'], 'NOT_CHECKED_HOST_AUTHORITY')
         self.assertEqual(output['signer_authority'], 'NOT_VERIFIED')
         self.assertEqual(output['ready'], 'NOT_CREATED')
+
+    def test_bad_cost_config_is_not_read_for_publication(self):
+        self.config.write_text('{not valid json}')
+        result = self.submit(publish=True)
+        self.assertEqual(result['status'], 'SUBMITTED_AWAITING_PROTECTED_SIGNER')
+        self.assertEqual(result['host_policy_advisory'], 'NOT_APPLICABLE_HOST_OWNS_EXECUTION_AUTHORITY')
+        self.assertEqual(result['ready'], 'NOT_CREATED')
 
     def test_manual_route_preserves_explicit_approval_requirement(self):
         output = self.submit(publish=False, approval_route='manual')
