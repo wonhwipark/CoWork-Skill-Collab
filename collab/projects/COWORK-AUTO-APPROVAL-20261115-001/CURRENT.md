@@ -1,5 +1,16 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-22 KST — 사용자 확정: 비용 상한 제거 + 요청 ID당 독립 리뷰 디스패치 1회 (Windows 후속 작업 대기)
+
+- **확정:** 신규 독립 리뷰의 내부 비용 판단·`--max-budget-usd` 제거. 리뷰는 독립 리뷰 한 유형으로 통일. **요청 ID 중복·동시 실행·COMPLETED/FAILED/UNCERTAIN 재디스패치 차단**, 원본 고정·권한·서명·READY 순서 유지. `max_calls=1`은 watcher의 **외부 CLI 디스패치 상한**이며 단일 Claude CLI 실행 내부의 모델 턴 수나 청구 금액 상한을 뜻하지 않음. 기존 비금액 타임아웃은 유지.
+- **Windows 구현 지시:** [INDEPENDENT_REVIEW_IDEMPOTENCY_COST_REMOVAL_HANDOFF_r0001_20261122_KST.md](INDEPENDENT_REVIEW_IDEMPOTENCY_COST_REMOVAL_HANDOFF_r0001_20261122_KST.md), commit `45926ab0869e25db321e72a987f9ef8c224ab126`. 실제 Windows v0.2.30 격리 후보의 `review_runner.py`/`orchestrator.py` 예산 인자 제거, 잔여 금액 게이트 정리, ID/UNCERTAIN/인증 회귀, 후보 패키징 및 비민감 결과 게시 요구. 구 후보 ZIP/이력 불변.
+- **SCOPE:** 검증된 사용자 실행 권한 기준의 최소 변경안을 별도 보호 설계/격리 시험으로 요구. 자동 skill wildcard, `cowork-context-design` 임의 추가, 기존 대기 요청 소급 디스패치 금지. 실제 권한 근거 없으면 FAIL-CLOSED.
+- **이번 GPT 실제 완료:** 기존 GitHub `main` 정본과 v0.2.30 결과 재조회, 후속 구현 지시 문서 생성·원격 바이트 검증. **Windows 격리 코드 수정/회귀/패키징/설치 = NOT_RUN**, 신규 모델 호출·서명·READY·재큐잉 0. 기존 Windows v0.2.29 LIVE 불변(마지막 호스트 보고 기준; 현재 호스트 실시간 조회 불가).
+- **LIVE 경계:** 위 사용자 결정은 코드 개선 범위에 대한 진행 지시로 기록. 후보 테스트를 실제 수행하지 않은 상태에서 운영 적용 승인 또는 실행 성공으로 대체하지 않음. 비용 제한 없는 CLI 1회라도 내부 유료 모델 요청이 여러 번 발생할 수 있으므로 위험을 시험 결과와 함께 명시.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 동일 Work와 위 지시서를 읽고 **v0.2.30 후보에서 연속 개발·무모델 호출 회귀·후보 패키징** → 결과를 `main`에 게시·원격 검증. LIVE/위임 실제 변경은 별도 실행 승인 후 진행.
+
+---
+
 ## 2026-11-22 KST — 독립 리뷰 비용 검사 제거 격리 후보 v0.2.30 (LIVE 미적용)
 
 - **결과:** [CLAUDE_COST_GATE_REMOVAL_CANDIDATE_RESULT_FOR_GPT_20261122.md](CLAUDE_COST_GATE_REMOVAL_CANDIDATE_RESULT_FOR_GPT_20261122.md) (commit `b7b562386c14`). 신규 독립 리뷰 실행 허가에서 `PER_REQUEST_COST`와 수동 승인 도구의 `--max-usd` 금액 일치 검사를 제거한 격리 후보 작성·시험 완료.
