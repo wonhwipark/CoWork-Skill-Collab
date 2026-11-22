@@ -147,3 +147,47 @@ LIVE_READY = **NO**. 막힌 항목:
 | LIVE 컷오버 | BLOCKED | 최종 승인 필요, 이번 범위 밖 |
 
 - **LIVE_READY = NO.**
+
+---
+
+## 11. r2 정식 REQUEST·독립 리뷰 실행 (2026-11-22, 사용자 "r2 ZIP PUBLIC 게시 허용")
+
+### 11.1 실물 검증
+- 입력 ZIP `v0_2_33_r2_intent_wired_candidate.zip`: SHA-256 `23579a5c8c6690b5831116410fc623e3a8bbc5c659cb6fdea8628e765fa7c206`, 301,136 B, 111 항목. 재확인 PASS.
+- 원격 게시 파일 `collab/packages/v0_2_33_r2_intent_wired_candidate.zip`: 바이트 SHA-256 동일, 크기 301,136. PASS.
+- 기존 요청 대조: 이 후보에 연결된 요청 없음(목록 대조 PASS). 중복 없음.
+
+### 11.2 정식 제출 (공식 `collab/ops/submit_review_request.py`, 깨끗한 main 클론 `publish_clone` 사용)
+- 드라이런 `PREPUBLICATION_PASS_NOT_SUBMITTED`(manual, auto 두 경로) 후 `--publish`.
+- 요청 ID `REQ-COWORK-V033-R2-WATCHER-REVIEW-20261122` rev 1, `skill_id=cowork-review-watcher`, `POLICY-STATIC-V1`, STATIC_ONLY, WINDOWS.
+- Commit A `dbcfccac2d8552e9aa536a8ffd61671b6488ff40`: REQUEST + ZIP. 원격 readback 일치.
+- Commit B `9e8175a3c6f135be778eaffe065ae2d3027959be`: SOURCE_PIN(`repo_id` `"1451933830"` 문자열, commit = A). 원격 readback 일치.
+
+### 11.3 보호 승인·READY (기존 감시기 자동 경로, 사람의 수동 서명 없음)
+- 감사: `AUTO_RESERVED` 300 cents → `AUTO_SIGNED_LOCAL` → `AUTO_APPROVAL_POSTED` → `AUTO_READY_POSTED`(2026-11-22 13:55 UTC).
+- `APPROVAL_SIG.json` 커밋 `3036e4a8de`, 서명 키 `cowork-approver-1`, 만료 2시간, 요청·ZIP·PIN 바인딩 일치.
+- `READY.md` 커밋 `4539852c7e`(승인 다음, 마지막). 순서 PASS.
+
+### 11.4 독립 리뷰 1회 (감시기 디스패치)
+- `DISPATCH_1.md` 커밋 `6781f02` (2026-11-22 22:57 KST).
+- 감사: `VALIDATED` → `CLAIMED` → `REVIEW_DISPATCHED`(1회) → `REVIEW_COST` → `COMPLETED`.
+- **실제 비용 USD 1.0571709999999999**(감사 DB, 상한 3.0 이내), 내부 턴 36, 디스패치 **모델 호출 1회**(max_calls=1), 중복 0, UNCERTAIN 0.
+- `REVIEW_RESULT_1.md` 커밋 `f2d05a3`, 크기 9,479 B, SHA-256 `bf6f299dc5d192d04a0f0c19e73775e03040748c5f9a342b70672c5684c3ffe6`, `execution_status=COMPLETED`, STATIC_ONLY.
+- `RECEIPT_1.md` 커밋 `5854d37`, SHA-256 `52cfd63bd71fe90ebd431316233dc09520e7411762a1f748576960a6662ca163`, `ok=true`, `watcher_version=0.2.29`, 패키지 SHA 일치.
+
+### 11.5 리뷰 결과 요약 (GPT가 판정, 이 문서는 통합 판정 아님)
+- **BLOCKING: 0.**
+- 비차단 1: 의도 nonce는 전체 검증 뒤에만 소비됨 — 정상 설계로 확인.
+- 비차단 2: `package_size`를 문자열로 비교하는 바인딩 — 발행 도구가 정수 10진수만 쓰는지 확인 필요(후속 확인 항목).
+- 비차단 3: 예산 인자 제거와 금액 상한 제거 확인, 서명자 게이트(`max_day_*`, 재검증 window) 유지 확인.
+- 비차단 4: 크로스 프로세스 디스패치 원자성은 **원격 전송의 create-only 실제 구현에 의존**. 리뷰어는 실제 GitHub/Dropbox 전송 원자성을 읽지 않았다고 명시. → **실제 전송 원자성 검증은 여전히 NOT_RUN.**
+- 비차단 5: `seal_interrupted`/`exclusive` 연결 확인.
+- 리뷰가 지적한 사항은 이번 단계에서 코드 변경하지 않음. 같은 Work 후속 범위로 남김. 수정 후 새 SHA는 이번 리뷰 완료로 승격하지 않음.
+
+### 11.6 미수행·경계
+- 개정 코드 재리뷰 없음(자동 2회 리뷰 금지). LIVE 설치·활성화 0, 운영 DB 이행 0, 위임·키·정책·Task·Notifier 변경 0.
+- 원격 실제 전송 원자성 NOT_RUN.
+- 호스트 설치 SHADOW NOT_RUN.
+- 10단계 비용 위험 수용 BLOCKED(사용자 결정), LIVE 컷오버 BLOCKED.
+
+- **LIVE_READY = NO.**
