@@ -1,5 +1,12 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 2026-11-22 KST — P1/P2 R1 수동 승인·유료 독립 리뷰 실행 근거 (Windows 확인)
+
+- **결과:** [CLAUDE_P1P2_R1_MANUAL_APPROVAL_RESULT_FOR_GPT_20261122.md](CLAUDE_P1P2_R1_MANUAL_APPROVAL_RESULT_FOR_GPT_20261122.md) (commit `d2a8e0d4ed70`). 사용자 명시 승인(최대 USD 3.00, 호출 1회)으로 기존 R1에 공식 승인 도구를 정확히 1회 실행: `APPROVAL_SIG` `bb59ae8b3b19` → `READY` `4d3581a8fc6c`(마지막) → `DISPATCH_1` `aa39cbe8cfa4` → `REVIEW_RESULT_1` `f37468364a0f` → `RECEIPT_1` `e05b860e0c0d`.
+- **비용 근거 보강:** Windows 감사 DB `REVIEW_COST.total_cost_usd` = **USD 0.7146549**(상한 3.0), 모델 호출 1회, 중복 0, `jobs` 1행 COMPLETED. 이로써 앞 항목의 `COST_DB_READBACK=NOT_VERIFIED`는 DB 기준으로 **확인됨**(공개 영수증 자체에는 금액 필드 없음).
+- **불변 확인:** 설정 SHA `2ead4007…`, 위임 SHA `6d826672…` 컷오버와 동일. 수동 승인 경로였으며 자동 위임 allowlist는 변경하지 않았다. 자동 승인 유료 E2E(`LIVE_PAID_E2E`)는 NOT_RUN 유지.
+- **NEXT_ONE_ACTION:** 없음(R1 종결·재실행 금지). F1~F3 보완은 GPT 판정대로 같은 Work에서 진행.
+
 ## 2026-11-22 KST — P1/P2 유료 Claude 독립 리뷰 R1 완료·GPT 수정 조건부 수용
 
 - **정식 결과 완료:** `REQ-COWORK-P1P2-CONTEXT-CODE-R1-20261122`, rev 1의 [Claude 원문](../../reviews/REQ-COWORK-P1P2-CONTEXT-CODE-R1-20261122/REVIEW_RESULT_1.md) = `execution_status=COMPLETED`; [영수증](../../receipts/REQ-COWORK-P1P2-CONTEXT-CODE-R1-20261122/RECEIPT_1.md) = `ok=true`, `watcher_version=0.2.29`, 요청 ID·rev·고정 ZIP SHA `35de54934944807518e0141daaedde1888a42c08c1d264584e9b341f65dcd5f3` 동일. GitHub `REQUEST`·`SOURCE_PIN`·`APPROVAL_SIG`·`READY`도 존재·메타 정합. 실제 Windows DB/서명 암호 검증과 실비용 직접 확인은 별도.
