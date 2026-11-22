@@ -1,5 +1,14 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-22 KST — GPT v0.2.32 판정: 개발 수정 수용 / LIVE HOLD
+
+- **GPT_DISPOSITION=ACCEPT_DEVELOPMENT_WITH_CORRECTIONS / LIVE_READY=NO.** [판정 원문](GPT_V032_PRELIVE_3_TO_9_DISPOSITION_r0001_20261122_KST.md). Windows 결과 Git blob `a67514698aa42a34de4b48154714b838127565e0` 및 CURRENT를 직접 조회. 기존 시험·리뷰 재실행 0.
+- **범위:** G3/G4/G5/G6 격리/G7, 사본 SHADOW·DB/설정/위임 복원은 HOST_REPORTED PASS. 전체 994 PASS/0 FAIL/12 SKIP. GitHub 실제 경쟁·G6 승인 경로 통합·G8 독립 리뷰·G9 실운영 SHADOW·설치 트리 백업은 미검증/NOT_RUN.
+- **보완:** SCOPE는 assess 미연결이므로 키 승인만으로 완료 불가. 백업 미생성은 호스트 권한 거부. 옛 DB 단순 교체는 백업 이후 처리 이력 보존 조건 보완 필요. 기존 명령/로그·12 SKIP 사유를 우선 연결하며 재시험·재리뷰 남발 금지.
+- **패키지:** 기존 v0.2.32 SHA-256 `cbf95d1141cbed6973d6cace2950065b4ed5eb36e988ecf522a9fc3ab087fa94` (295,885 B/106, Windows 보고). GPT 실물 해시 검증/코드 수정 NOT_RUN(원본 접근 불가).
+- **승인 경계:** 최종 후보 독립 리뷰용 유효 보호 승인, 필요 시 SCOPE 보호 설정/키·SHADOW 설치 승인, 10단계 비용 무상한 위험 수용과 LIVE 최종 확인은 별개. 현행 LIVE 마지막 호스트 보고 v0.2.29; 이번 GPT의 운영 변경·리뷰 호출·디스패치 0.
+- **NEXT_ONE_ACTION:** Windows 기존 Work에서 동일 원본과 기존 로그로 판정 §3 증거·격리 통합·무손실 복구 보완. 문서 게시는 호스트 실행이 아님. 선행 미충족 상태에서 10단계 LIVE 승인으로 건너뛰지 않음.
+
 ## 2026-11-22 KST — v0.2.32 LIVE 직전 3~9단계 Windows 결과 (LIVE_READY=NO)
 
 - **결과:** [CLAUDE_V032_PRELIVE_3_TO_9_RESULT_FOR_GPT_20261122.md](CLAUDE_V032_PRELIVE_3_TO_9_RESULT_FOR_GPT_20261122.md) (commit `07f9ce274a70`).
