@@ -1,5 +1,13 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-22 KST — 사용자 “진행”: v0.2.32 보완 실행 준비 / 호스트 실행 차단
+
+- **원샷 후속 지시:** [Windows 실행 지시서](WINDOWS_V032_CORRECTIONS_ONE_SHOT_HANDOFF_r0001_20261122_KST.md). GPT 판정 보완을 같은 Work에서 계속하도록 입력 SHA·격리 SCOPE 통합·기존 로그 재사용·백업 권한 원인·무손실 복구·리뷰/SHADOW 경계와 결과 경로를 고정.
+- **실제 보완:** 기존 `LIVE_ENABLE_EXECUTION_REQUEST_V029_20261120_KST.md` §4의 “컷오버 후 처리 Job이 있으면 DB 복원 금지” 재사용. 완료/실패/UNCERTAIN/claim/회계/알림 이력 또는 불명 상태에서는 과거 DB 교체 보류, 현재 DB/schema 호환·사본 복구 검증으로 구체화. 새 복구 엔진·운영 이행 없음.
+- **접근 확인:** GitHub main 전체 트리 조회(응답 truncated=false)에 v0.2.30~32 코드/ZIP·review_intent 없음. 현재 작업 폴더에도 v0.2.32 소스 없음. Windows 실행 도구 미노출. 따라서 격리 코드 수정·새 후보·호스트 시험은 **BLOCKED_SOURCE_ACCESS/HOST_ACCESS**, Windows 자동 전달/실행은 **NOT_RUN**.
+- **유지:** 기존 994 PASS/0 FAIL/12 SKIP는 Windows 과거 자체시험. 이번 회귀/독립 리뷰/SHADOW/백업은 재실행 0. 신규 reviewer 호출·READY·LIVE 변경 0. **LIVE_READY=NO**, 10단계 별도 사용자 최종 확인 유지.
+- **NEXT_ONE_ACTION:** Windows Claude Code 세션에서 위 지시서를 실행. 사용자 추가 비용·LIVE 승인을 받았다고 가정하지 않음. 원본 접근 차단을 문서 게시로 해결됐다고 보고하지 않음.
+
 ## 2026-11-22 KST — GPT v0.2.32 판정: 개발 수정 수용 / LIVE HOLD
 
 - **GPT_DISPOSITION=ACCEPT_DEVELOPMENT_WITH_CORRECTIONS / LIVE_READY=NO.** [판정 원문](GPT_V032_PRELIVE_3_TO_9_DISPOSITION_r0001_20261122_KST.md). Windows 결과 Git blob `a67514698aa42a34de4b48154714b838127565e0` 및 CURRENT를 직접 조회. 기존 시험·리뷰 재실행 0.
