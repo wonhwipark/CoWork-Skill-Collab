@@ -5,11 +5,11 @@
       "work_id": "COWORK-AUTO-APPROVAL-20261115-001",
       "skill": "cowork-review-watcher",
       "title": "GPT→GitHub REQUEST 자동 서명·READY (제한된 사전 위임)",
-      "phase": "LIVE_V029__ARCH_REVIEW_COMPLETED__GPT_ACCEPT_WITH_CORRECTIONS__PUBLISHER_FIX_PENDING",
+      "phase": "LIVE_V029_UNCHANGED__GPT_PUBLISHER_OPTION_B_POSTED__PYTHON_REGRESSION_PENDING",
       "owner": "User approved v0.2.29 LIVE / USD3; Windows Claude Code performed cutover with host verification; GPT accepted host-reported LIVE cutover with first real paid E2E still pending",
       "self_test": "Windows dev actual v0.2.29 5 rounds 1038 passed/12 skipped/0 failed each; 5-window READY and CLI stub 5/5, no duplicate. Prior su_l1 flaky 2/~31, cause unconfirmed, injected fail-closed invariants 10/10. Writer mock 19 passed + 5 rounds 5/5; real repo/DB NOT_RUN.",
       "independent_review": "REQ-COWORK-REVIEW-ARCH-DESIGN-R1-20261122 rev1 COMPLETED, result+receipt remote matched request/package SHA, watcher=0.2.29; Claude BLOCKING0/MAJOR2(F1,F2)/MINOR2, STATIC_ONLY. User Telegram alert $0.77 but GitHub receipt lacks cost field. GPT disposition ACCEPT_WITH_CORRECTIONS__OPTION_B documented in GPT_ARCH_REVIEW_DISPOSITION_r0001_20261122_KST.md; F1 example config stale vs LIVE $3, F2 two gate copies diverge yet ops unified tests already exist. No re-review or LIVE change.",
-      "next_action": "Implement smallest GPT publisher fix: independently validate and GitHub publish two-commit REQUEST+ZIP/PIN without Windows LIVE-config prerequisite; leave host signer/READY protections and existing v0.2.29 LIVE untouched; unit/integration no-fee tests and remote readback. No automatic re-review, no duplicate or paid test."
+      "next_action": "Execute three zero-fee isolated Python regression test modules in collab/ops (test_review_request_gate.py, test_submit_review_request.py, test_review_staged_submission.py); record PASS/FAIL in this Work. New Option B code + contracts remote verified, static checks 16/16 PASS, Python/E2E NOT_RUN; Windows LIVE and paid reviewer unchanged."
     }
   ]
 }
