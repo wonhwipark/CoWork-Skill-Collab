@@ -1,4 +1,19 @@
-# Windows Claude Code 실행 요청 — 비용 제거 후 Windows 시험 28개
+# Windows Claude Code 실행 요청 — 비용·유료 리뷰 레거시 게이트 동기화 + Windows QA28 원샷
+
+## 2026-11-23 KST — 사용자 최신 지시: GPT↔Windows 독립 리뷰 정책 일치 (최우선)
+
+- **판정과 요청:** 사용자가 별도 "유료 리뷰" 분류 및 비용 상한 제거를 이미 지시했고, Windows에도 같은 변경을 요청하여 GPT/Windows 간 정책 불일치를 해소한다. **비용 제거 재승인·기존 완료 r2 독립 리뷰 재요청 금지.** 이 절이 아래 이전 인계의 구 USD3/예산/비용 위험 승인 대기 표현보다 우선한다.
+- **실제 실행 담당:** Windows Claude Code는 기존 동일 Work의 격리 후속 개발 후보에서 **F1/F2/F3 + 비용 제거 패치 + Windows QA28 + 전체 회귀 + 새 ZIP**을 한 묶음으로 처리한다. GPT가 개발·시험 판정과 변경분의 추가 독립 리뷰 필요 여부를 판단한다. Windows 호스트 실행과 LIVE 전환은 별개.
+- **단일 리뷰 유형:** 신규 요청/CLI/설정/승인기/watcher/상태·알림 표시에서 현재 유효한 리뷰 유형은 **독립 리뷰(independent)** 하나로 통일한다. "유료 리뷰"를 별도 타입·등급·선택지·승인 경로로 운용하지 않는다. 구 `skill/design/unified` 등은 기존 고정 REQUEST·영수증·DB 이력을 읽는 데 필요한 최소 호환만 유지하고 신규 실행의 등급·가격 트리거로 사용 금지. 실제 Claude 모델 과금 및 사후 사용량/영수증 기록 자체는 유지.
+- **Windows 비용 차단 제거 대상:** 현행 v0.2.29 설치 소스(읽기 전용), 격리 후보의 REQUEST validator, auto/manual signer, 위임 로더·policy, READY 생성, watcher 디스패치, CLI/config, 상태 표시까지 실제 호출 경로를 추적해 `required_budget`, `max_budget_usd`, `max_request_usd`, 고정 USD3, 등급별 가격 비교, INVALID_COST, 승인 시 회계 조회 의존성 등의 **금액 기준 접수/서명/READY/모델 실행 차단**이 신규 리뷰 경로에 남지 않는지 확인·제거한다. 이미 제공된 패치와 최신 main 게시 코드를 우선 재사용하고 중복 구현하지 않는다.
+- **스킬별 allowlist와 권한을 구분:** 신규 독립 리뷰 접수/가격 등급 선택에 스킬별 allowlist를 사용하지 않는다. Windows 승인기의 스킬별 위임이 리뷰를 막는다면 **실제 보호된 review capability·명시적으로 유효한 scope/위임을 확인한 뒤** 최소 설계·개발 후보로 정리한다. **공개 GitHub 문구/REQUEST·GPT 주장만으로 실행권한을 부여하거나 실제 보호 scope/위임·서명키를 자동 확대하지 않는다.** 권한 증명이 없으면 AUTH_BLOCKED·모델0, 비용 문제로 오표기하지 않는다.
+- **계속 강제하는 보호:** 정식 실행권한, 기간/만료/서명 검증, 원본 PIN/ZIP SHA·CRC·A/B 순서, source scope, nonce·중복/UNCERTAIN 봉인, `max_model_calls=1`(단일 디스패치), 실패/불확실 재호출 금지, 데이터 비공개, 영수증 및 사용량 사후 기록. 저장된 구 REQUEST/APPROVAL/READY/영수증과 운영 DB/WAL/SHM 변경 금지.
+- **Windows 필수 검증:** (1) 금액이 null/0/음수/문자열/구 USD3와 불일치여도 **금액만으로** 신규 요청을 거부하지 않음, (2) 유효한 보호권한으로 리뷰 1회만 처리, (3) 만료·위조·scope 부재·변조·중복·UNCERTAIN은 여전히 fail-closed, (4) Windows 고유 실패 28 node 개별 결과와 전체 회귀, (5) 레거시 리뷰·금액 필드는 이력 호환되지만 신규 승인게이트로 부활하지 않음. **시험 전송/키·가짜 모델만 사용하며 실제 유료 리뷰 호출 금지.**
+- **종료 산출물:** 새 후보 버전 ZIP·SHA-256/크기/CRC/RELEASE_MANIFEST·전체 PASS/FAIL/SKIP/NOT_RUN·Windows 실제 정책 동기화 matrix(접수→서명→READY→watcher→알림)·F1/F2/F3 보완 diff·보안/회귀 한계·LIVE 적용/롤백 계획을 **기존 결과 문서 후속 절, CURRENT, TRACKER**에 게시하고 GitHub main commit/원격 bytes를 확인. 최신 실물의 운영 변경/DB 이행/Task·Notifier/LIVE 컷오버는 최종 승인 전 **NOT_RUN**으로 둔다.
+- **수신·실행 상태:** 이 인계서 게시 자체는 Windows Claude Code 실행 트리거가 아니다. 실제 호스트 수신 ACK·실행 결과 전까지 `HOST_ACK=NOT_CONFIRMED`, `HOST_EXECUTION=NOT_CONFIRMED`, `LIVE_READY=NO`. 동일한 원샷을 재요청·재큐잉하지 말고 기존 결과가 도착했으면 읽어 후속 단계만 진행.
+
+---
+
 요청일: 2026-11-23 KST
 수신 담당: **Windows Claude Code (로컬 개발·시험 세션)**
 발신: GPT / 사용자 지시 “그렇다면 클로드에 요청해야지?”
