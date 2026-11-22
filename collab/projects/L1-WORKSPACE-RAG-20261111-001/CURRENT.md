@@ -1,5 +1,15 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-22 23:34 KST — Viewer v0.5.0 독립 디자인 리뷰 R1 정식 요청 확인 / 보호 승인 대기
+
+- **정식 R1 재사용:** [REQUEST](../../requests/REQ-L1-WORKSPACE-VIEWER-V050-DESIGN-R1-20261122/REQUEST.md) · [SOURCE_PIN](../../requests/REQ-L1-WORKSPACE-VIEWER-V050-DESIGN-R1-20261122/SOURCE_PIN.json). 동일 사용자 범위의 새 R2·중복 호출을 만들지 않음.
+- **고정 입력 검증:** REQUEST+ZIP Commit A `633b346441b53b9b182681660ddc68da52b7463b`; PIN Commit B `2b4832428138634ab4cb5d6fc7dcfdbad8f70bec` (A의 직접 자식). repo_id 문자열 `1451933830`; ZIP Git blob `6f62820eef5dace0950f3cf75ccd3c5d35612b5c`로 L1Work 공개 원본과 일치. 117897 B / SHA-256 `a133d8703cc36a7f74cce8de1fd37db757052ed6a44030bc05fea89a05c253fa`는 기존 검증값.
+- **범위:** 오늘의 업무·우측 도우미의 발견성, 가독성·반응형/접근성, Work별 대화·원본 revision, 요청/영수증 흐름, v0.4.1 Viewer·Write 공존의 **Windows 독립 정적 디자인 리뷰 1회**. 업무 Linux 실제 연동/브라우저 E2E·운영 적용과 구분.
+- **원격 상태 확인:** 최신 확인 HEAD 기준 R1 APPROVAL_SIG/READY·RESULT/RECEIPT **파일 미발견**. `FORMAL_REQUEST=POSTED_PINNED`; `INDEPENDENT_REVIEW=PENDING_PROTECTED_APPROVAL`; `MODEL_CALL/READY=NOT_VERIFIED`. 보호 signer·watcher의 실제 실행 이력은 호스트 측 별도 확인 대상. GPT가 승인/READY를 대신 작성하지 않음.
+- **NEXT_ONE_ACTION:** Windows 보호 signer가 기존 R1의 실제 위임·사용자 의도·SOURCE_PIN/ZIP·중복·만료 게이트를 대조해 유효할 때만 APPROVAL→READY→독립 리뷰 1회; 결과/영수증 원격 확인 후 GPT 판정. 이미 처리됐거나 UNCERTAIN이면 재큐잉 금지. 개발물은 `development_not_for_deployment` 유지.
+
+---
+
 ## 2026-11-22 KST — Viewer v0.5.0 오늘의 업무·우측 도우미 개발물 L1Work 배송 / 업무 환경 검증 인계
 
 - **사용자 최신 범위:** v0.4.1 기반 우측 업무 도우미·오늘 업무 탭 개발/배포/업무 GPT HO 게시. 실제 검증은 업무 환경에서 진행한다는 지시를 유지. 개발물 공개 전달 예외이며 정식 통합 PASS·운영 설치 승인이 아님.
