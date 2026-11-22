@@ -2,7 +2,7 @@
   "schema": "COWORK_INTEGRATION_STREAM_V1",
   "work_id": "L1-WORKSPACE-RAG-20261111-001",
   "stream_id": "VIEWER_TODAY_ASSISTANT",
-  "status": "DEVELOPMENT_DELIVERED_HOST_VALIDATION_PENDING",
+  "status": "V051_PUBLIC_DEVELOPMENT_DELIVERED_REMOTE_VERIFIED_HOST_PENDING",
   "source_base_sha": "ef0e358490a611c8dda4683575f3f8aa314cfa48",
   "base": {
     "version": "0.4.1",
@@ -21,34 +21,55 @@
   "validation": "사용자 지시: 실제 검증은 업무 환경에서. 자체시험/패키징 후 development_only_public_delivery; 정식 통합/호스트/독립 리뷰 NOT_RUN",
   "deployment_approved": false,
   "artifact": {
-    "path": "l1-workspace-viewer-wiki-integrated_v0_5_0_1122.zip",
-    "sha256": "a133d8703cc36a7f74cce8de1fd37db757052ed6a44030bc05fea89a05c253fa",
+    "path": "l1-workspace-viewer-wiki-integrated_v0_5_1_1123.zip",
+    "sha256": "0bc0240261e29c863c541e9650e9f99271b2b924ffd52be753598889f66cf290",
+    "bytes": 349332,
     "repository": "wonhwipark/L1Work",
-    "ref": "599469f9f17aaa8367c39bbb3069c90130f7b9bd"
+    "ref": "4dd8cfe691f9d18f658c8f23f0da5ed5d8d6d129",
+    "git_blob": "90616a432879f9f253a31b54ad51ed0a79283626"
   },
   "required_entries": {
-    "viewer-wiki-ui/INTEGRATION_ASSISTANT.md": "40707bf05ad73e8df4e3a27d84b25deea2c5c69407d8e4ac550a102e299acc60",
+    "viewer-wiki-ui/INTEGRATION_ASSISTANT.md": "13d8c51ff1d35ca9aa70cfdc5fb3ef347df3a3a4db962f5da0edf75d294702bd",
+    "viewer-wiki-ui/README_1ST_PHASE.md": "e8f59498b80aab0d29918889ef460d0c66fbfb080fc13b59d72bbc27abc766e5",
+    "viewer-wiki-ui/README_INTEGRATED.md": "6f5ba7f04c55c8f7ed1448b08c46cd784a8e36d49585fbedd128d30b127180e9",
+    "viewer-wiki-ui/VERSION": "aba951626c8690ce493cbc8f018205bb468003f61fbf00fd3d3c71cebabc0177",
     "viewer-wiki-ui/adapters/adapter.js": "5f90513fb0f6ab8b69557f92bc46caa05d4672daa332f281aec9d5d0a8fee7ae",
     "viewer-wiki-ui/assets/app.js": "30f2cfff81dd11f3878f18f9ed53955eb87ee239dbbb593b033be0674c376be7",
     "viewer-wiki-ui/assets/assistant-client.js": "3abff70d381afe6603d53417de51ea25bb7dee0656c9535d981bd5ecd5350c2c",
-    "viewer-wiki-ui/assets/assistant.js": "51ba57996fb205c840b1d5f253379a67731613727922d3c54e6fa9be94fbbd0b",
+    "viewer-wiki-ui/assets/assistant.css": "ddb851977f3a8036b212a29dcb180b97c521d8ab4f8779630e3356e9e37798a7",
+    "viewer-wiki-ui/assets/assistant.js": "66443e5b7fbe905341511fc65a037c7264d6c29a09513ce0df2b32de482b3389",
+    "viewer-wiki-ui/assets/favicon.svg": "a07f7bbe73d09d3430d188d79fa29b4c415e5eb8fd06dcc61f21def19daca5c2",
     "viewer-wiki-ui/assets/markdown.js": "d178cef9f58a7f29604f9b0d9d81b58421a6ab36ef5b164e08b6a34ab505132c",
     "viewer-wiki-ui/assets/navigation.js": "e520b7a5f4376e1383cca32b63cfa9ffc38dd119c07f348f21a76bdaf430ccff",
+    "viewer-wiki-ui/assets/preferences.css": "b79e60a4f1a538cea06054f54c38b06f4d8e8c3e3388a26959a890cb6343c8e1",
     "viewer-wiki-ui/assets/preferences.js": "e574568c452004a46b7bae82fe1327072618d1eba99cb43674a9fdf81929ebd3",
+    "viewer-wiki-ui/assets/professional-theme.css": "b3003c967edce6f9c6a6d60c5c03314be67e715b55a694ce5157ffa8f16386d2",
+    "viewer-wiki-ui/assets/style.css": "3c168a44f04013e895503c622bbbf660940ffff45ee02bc7d1d47052d05e8f11",
+    "viewer-wiki-ui/assets/viewer-integrated.css": "284543d08534ba3966e71327daa4dffe7010de71046078031a00050bf4be417c",
     "viewer-wiki-ui/assets/viewer-integrated.js": "a8d0dea3cc894c240e015fbcd2c1ea07ea3a7e1ed86c9e6e994c676e0bd9a15c",
     "viewer-wiki-ui/assets/work-labels.js": "7851c31dbe735bff71f24a5c5faedad2759b2e6f929d44a5d6d08b229a73e860",
     "viewer-wiki-ui/assets/write-client.js": "2f466fc3dbe24a9864ac259ed4b45bbf87398e222bc07e8555a78e02078c59da",
+    "viewer-wiki-ui/assets/write-ui.css": "b391a6f542ac3d1e6e0f86ac5163a70cd018ea2e59a6eec9108e6f919eb5f181",
     "viewer-wiki-ui/assets/write-ui.js": "05f37773cb166c563516ab74bdb8923f83e5dfb69762339328e357b895bf64f1",
     "viewer-wiki-ui/fixtures/demo-data.js": "4acbe6626c60ca259a58f24f276ee7b27f845ce772e19b2edc7086f5ef68ccaf",
-    "viewer-wiki-ui/index.html": "15363c3fc2c3658535cab51315b4544b0b0f124c2713d9f6677bce32aca146e9"
+    "viewer-wiki-ui/index.html": "3ac9f724426033b236d4af7f534d88893c8850d08602a5ec02ec8c118b55fe0f",
+    "viewer-wiki-ui/source-pin.json": "ba5f3951c78cc31306bb704ab8fa77ee8af982a14b79061bdfac559b77058e75",
+    "viewer-wiki-ui/standalone-preview.html": "308249168e73475c2d0fd4a2807b321b8bd87743bd7d1e24a25767057447e59d",
+    "viewer-wiki-ui/tests/assistant-client.cjs": "d3cbae2a8af759aa7b08e6c91c48595cfdc4b9473470102cfc27f9d78252aa67",
+    "viewer-wiki-ui/tests/browser_check.py": "c22825ee33901036d6ca32cf683c7f5d469aa89f06519cd2bf889a178d59b5ff",
+    "viewer-wiki-ui/tests/regression-results.txt": "5c54d05c51bcec794f1692cf98a83b12928dab72a2468359ea5f4c38c8800d20",
+    "viewer-wiki-ui/tests/regression.cjs": "d4f9ddaae0d7d7775d3bca7cd3e4cb03fed1041eecbdf3d4ec660c2ad33ca00d",
+    "viewer-wiki-ui/tests/v050-assistant-client-results.txt": "754282ecb86edac26328996c5a10166bb5c3b3018d20739da853fa400fd2736a",
+    "viewer-wiki-ui/tests/v050-regression-results.txt": "5c54d05c51bcec794f1692cf98a83b12928dab72a2468359ea5f4c38c8800d20",
+    "viewer-wiki-ui/tools/build_release.py": "724decfdfb25a3e4ae294f9728452c2c618c38190be03725c498ec030d0429bd"
   },
   "tests": {
     "regression": 10,
     "assistant": 15,
-    "status": "PASS_SELF_TEST",
-    "browser_e2e": "NOT_RUN",
+    "status": "PASS_SELF_TEST_ON_PUBLISHED_V051",
+    "browser_e2e": "NOT_RUN_ENVIRONMENT_SOCKET_DENIED",
     "formal_integration_gate": "NOT_RUN",
-    "independent_review": "NOT_RUN",
+    "independent_review": "SKIP_BY_USER",
     "host_e2e": "NOT_RUN"
   },
   "readback": "PASS_BYTE_EQUIVALENT",
@@ -56,7 +77,7 @@
   "active_change": {
     "version": "0.5.1",
     "started_kst": "2026-11-23",
-    "status": "IN_PROGRESS",
+    "status": "RESOLVED_BY_EXISTING_CONCURRENT_PUBLICATION_VERIFIED",
     "base_zip": "l1-workspace-viewer-wiki-integrated_v0_5_0_1122.zip",
     "base_sha256": "a133d8703cc36a7f74cce8de1fd37db757052ed6a44030bc05fea89a05c253fa",
     "base_git_blob": "6f62820eef5dace0950f3cf75ccd3c5d35612b5c",
@@ -73,6 +94,45 @@
       "tests/assistant-visibility.cjs"
     ],
     "independent_review": "USER_WAIVED_PREVIOUS_VIEWER_SCOPE",
-    "host_deploy": "NOT_RUN"
-  }
+    "host_deploy": "NOT_RUN",
+    "local_candidate": "NOT_POSTED_NOT_CANONICAL",
+    "final_scope": "문서와 오늘의 업무의 도우미 대화 기본 숨김; 오늘 업무 목록/메뉴 유지; 완결 신규 인계 포함",
+    "evidence": "VIEWER_V051_POST_UPLOAD_VERIFICATION_r0001_20261123_KST.md"
+  },
+  "previous_releases": [
+    {
+      "artifact": {
+        "path": "l1-workspace-viewer-wiki-integrated_v0_5_0_1122.zip",
+        "sha256": "a133d8703cc36a7f74cce8de1fd37db757052ed6a44030bc05fea89a05c253fa",
+        "repository": "wonhwipark/L1Work",
+        "ref": "599469f9f17aaa8367c39bbb3069c90130f7b9bd"
+      },
+      "required_entries": {
+        "viewer-wiki-ui/INTEGRATION_ASSISTANT.md": "40707bf05ad73e8df4e3a27d84b25deea2c5c69407d8e4ac550a102e299acc60",
+        "viewer-wiki-ui/adapters/adapter.js": "5f90513fb0f6ab8b69557f92bc46caa05d4672daa332f281aec9d5d0a8fee7ae",
+        "viewer-wiki-ui/assets/app.js": "30f2cfff81dd11f3878f18f9ed53955eb87ee239dbbb593b033be0674c376be7",
+        "viewer-wiki-ui/assets/assistant-client.js": "3abff70d381afe6603d53417de51ea25bb7dee0656c9535d981bd5ecd5350c2c",
+        "viewer-wiki-ui/assets/assistant.js": "51ba57996fb205c840b1d5f253379a67731613727922d3c54e6fa9be94fbbd0b",
+        "viewer-wiki-ui/assets/markdown.js": "d178cef9f58a7f29604f9b0d9d81b58421a6ab36ef5b164e08b6a34ab505132c",
+        "viewer-wiki-ui/assets/navigation.js": "e520b7a5f4376e1383cca32b63cfa9ffc38dd119c07f348f21a76bdaf430ccff",
+        "viewer-wiki-ui/assets/preferences.js": "e574568c452004a46b7bae82fe1327072618d1eba99cb43674a9fdf81929ebd3",
+        "viewer-wiki-ui/assets/viewer-integrated.js": "a8d0dea3cc894c240e015fbcd2c1ea07ea3a7e1ed86c9e6e994c676e0bd9a15c",
+        "viewer-wiki-ui/assets/work-labels.js": "7851c31dbe735bff71f24a5c5faedad2759b2e6f929d44a5d6d08b229a73e860",
+        "viewer-wiki-ui/assets/write-client.js": "2f466fc3dbe24a9864ac259ed4b45bbf87398e222bc07e8555a78e02078c59da",
+        "viewer-wiki-ui/assets/write-ui.js": "05f37773cb166c563516ab74bdb8923f83e5dfb69762339328e357b895bf64f1",
+        "viewer-wiki-ui/fixtures/demo-data.js": "4acbe6626c60ca259a58f24f276ee7b27f845ce772e19b2edc7086f5ef68ccaf",
+        "viewer-wiki-ui/index.html": "15363c3fc2c3658535cab51315b4544b0b0f124c2713d9f6677bce32aca146e9"
+      },
+      "tests": {
+        "regression": 10,
+        "assistant": 15,
+        "status": "PASS_SELF_TEST",
+        "browser_e2e": "NOT_RUN",
+        "formal_integration_gate": "NOT_RUN",
+        "independent_review": "NOT_RUN",
+        "host_e2e": "NOT_RUN"
+      }
+    }
+  ],
+  "handoff": "handoffs/L1_WORKSPACE_VIEWER_V051_TODAY_ASSISTANT_HANDOFF_r0001_20261123_KST.md"
 }

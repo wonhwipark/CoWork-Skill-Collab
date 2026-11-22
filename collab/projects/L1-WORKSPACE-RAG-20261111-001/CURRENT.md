@@ -1,5 +1,15 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-23 KST — Viewer v0.5.1 게시본 직접 재검증 완료
+
+- **정본:** 기존 공개 commit `4dd8cfe691f9d18f658c8f23f0da5ed5d8d6d129`의 v0.5.1 ZIP/완결 인계 재사용. 같은 버전 덮어쓰기·추가 ZIP 발행 없음.
+- **GPT 실제 확인:** 원격 ZIP 349332 B/34 entries/SHA/CRC/manifest·Write 3파일 불변·공개 HTML/인계 SHA·standalone/CSP·source/inline JS 구문 PASS. 게시 ZIP에서 기존 Node 시험 **25 PASS(10+15)**를 새로 실행. 이전 인계의 전체 계약·A01~A10과 신판 H01~H05 포함 확인.
+- **근거:** [게시본 재검증](VIEWER_V051_POST_UPLOAD_VERIFICATION_r0001_20261123_KST.md). 별도 로컬 후보의 91 PASS는 정본 결과로 사용하지 않음. stream·TRACKER를 현재 공개 v0.5.1로 정산.
+- **미검증:** 브라우저는 환경 socket 제한으로 시작 불가, BROWSER_E2E=NOT_RUN. Linux/LLM·Agent/Write/운영 적용·정식 통합 게이트 NOT_RUN; 기존 독립 리뷰 사용자 생략 유지.
+- **NEXT_ONE_ACTION:** 업무 GPT에 [v0.5.1 완결 인계](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_WORKSPACE_VIEWER_V051_TODAY_ASSISTANT_HANDOFF_r0001_20261123_KST.md)와 [신규 ZIP](https://github.com/wonhwipark/L1Work/blob/main/l1-workspace-viewer-wiki-integrated_v0_5_1_1123.zip)만 전달해 현장 검증. 공개 개발물 전달 완료와 운영 적용을 구분.
+
+---
+
 ## 2026-11-23 KST — Viewer v0.5.1 업무 도우미 기본 숨김, 완결 ZIP·인계서 L1Work 전달
 
 - **사용자 최종 지시:** v0.5.0 ZIP은 불변 보존, 버전 업한 신규 ZIP 개발, 새 버전 기준 업무 GPT 인계서를 발행. 업무 GPT에는 v0.5.0 ZIP·인계서를 전달하지 않으므로 **기존 v0.5.0 인계 내용 전량을 신규 인계서에 포함**.
