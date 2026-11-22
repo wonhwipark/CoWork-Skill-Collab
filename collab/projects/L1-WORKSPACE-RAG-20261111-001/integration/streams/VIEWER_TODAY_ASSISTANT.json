@@ -2,7 +2,7 @@
   "schema": "COWORK_INTEGRATION_STREAM_V1",
   "work_id": "L1-WORKSPACE-RAG-20261111-001",
   "stream_id": "VIEWER_TODAY_ASSISTANT",
-  "status": "IN_PROGRESS",
+  "status": "DEVELOPMENT_DELIVERED_HOST_VALIDATION_PENDING",
   "source_base_sha": "ef0e358490a611c8dda4683575f3f8aa314cfa48",
   "base": {
     "version": "0.4.1",
@@ -19,5 +19,38 @@
   ],
   "scope": "우측 업무 도우미 + 오늘의 업무 탭; UI 개발 후보; 업무 서버 실행 계약과 명확한 합성 데모",
   "validation": "사용자 지시: 실제 검증은 업무 환경에서. 자체시험/패키징 후 development_only_public_delivery; 정식 통합/호스트/독립 리뷰 NOT_RUN",
-  "deployment_approved": false
+  "deployment_approved": false,
+  "artifact": {
+    "path": "l1-workspace-viewer-wiki-integrated_v0_5_0_1122.zip",
+    "sha256": "a133d8703cc36a7f74cce8de1fd37db757052ed6a44030bc05fea89a05c253fa",
+    "repository": "wonhwipark/L1Work",
+    "ref": "599469f9f17aaa8367c39bbb3069c90130f7b9bd"
+  },
+  "required_entries": {
+    "viewer-wiki-ui/INTEGRATION_ASSISTANT.md": "40707bf05ad73e8df4e3a27d84b25deea2c5c69407d8e4ac550a102e299acc60",
+    "viewer-wiki-ui/adapters/adapter.js": "5f90513fb0f6ab8b69557f92bc46caa05d4672daa332f281aec9d5d0a8fee7ae",
+    "viewer-wiki-ui/assets/app.js": "30f2cfff81dd11f3878f18f9ed53955eb87ee239dbbb593b033be0674c376be7",
+    "viewer-wiki-ui/assets/assistant-client.js": "3abff70d381afe6603d53417de51ea25bb7dee0656c9535d981bd5ecd5350c2c",
+    "viewer-wiki-ui/assets/assistant.js": "51ba57996fb205c840b1d5f253379a67731613727922d3c54e6fa9be94fbbd0b",
+    "viewer-wiki-ui/assets/markdown.js": "d178cef9f58a7f29604f9b0d9d81b58421a6ab36ef5b164e08b6a34ab505132c",
+    "viewer-wiki-ui/assets/navigation.js": "e520b7a5f4376e1383cca32b63cfa9ffc38dd119c07f348f21a76bdaf430ccff",
+    "viewer-wiki-ui/assets/preferences.js": "e574568c452004a46b7bae82fe1327072618d1eba99cb43674a9fdf81929ebd3",
+    "viewer-wiki-ui/assets/viewer-integrated.js": "a8d0dea3cc894c240e015fbcd2c1ea07ea3a7e1ed86c9e6e994c676e0bd9a15c",
+    "viewer-wiki-ui/assets/work-labels.js": "7851c31dbe735bff71f24a5c5faedad2759b2e6f929d44a5d6d08b229a73e860",
+    "viewer-wiki-ui/assets/write-client.js": "2f466fc3dbe24a9864ac259ed4b45bbf87398e222bc07e8555a78e02078c59da",
+    "viewer-wiki-ui/assets/write-ui.js": "05f37773cb166c563516ab74bdb8923f83e5dfb69762339328e357b895bf64f1",
+    "viewer-wiki-ui/fixtures/demo-data.js": "4acbe6626c60ca259a58f24f276ee7b27f845ce772e19b2edc7086f5ef68ccaf",
+    "viewer-wiki-ui/index.html": "15363c3fc2c3658535cab51315b4544b0b0f124c2713d9f6677bce32aca146e9"
+  },
+  "tests": {
+    "regression": 10,
+    "assistant": 15,
+    "status": "PASS_SELF_TEST",
+    "browser_e2e": "NOT_RUN",
+    "formal_integration_gate": "NOT_RUN",
+    "independent_review": "NOT_RUN",
+    "host_e2e": "NOT_RUN"
+  },
+  "readback": "PASS_BYTE_EQUIVALENT",
+  "public_delivery_exception": "USER_DIRECTED_PREDEVELOPMENT_AND_BUSINESS_ENVIRONMENT_VALIDATION"
 }
