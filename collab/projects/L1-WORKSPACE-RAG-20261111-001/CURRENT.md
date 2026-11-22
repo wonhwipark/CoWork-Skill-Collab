@@ -1,5 +1,17 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-22 KST — Viewer v0.5.0 오늘의 업무·우측 도우미 개발물 L1Work 배송 / 업무 환경 검증 인계
+
+- **사용자 최신 범위:** v0.4.1 기반 우측 업무 도우미·오늘 업무 탭 개발/배포/업무 GPT HO 게시. 실제 검증은 업무 환경에서 진행한다는 지시를 유지. 개발물 공개 전달 예외이며 정식 통합 PASS·운영 설치 승인이 아님.
+- **전체 개발 ZIP:** [l1-workspace-viewer-wiki-integrated_v0_5_0_1122.zip](https://github.com/wonhwipark/L1Work/blob/main/l1-workspace-viewer-wiki-integrated_v0_5_0_1122.zip), **117,897 B / 34 entries / SHA-256 `a133d8703cc36a7f74cce8de1fd37db757052ed6a44030bc05fea89a05c253fa`**. v0.4.1 필터·제목·너비·가독성 개선 포함, 이전 원격 v0.4.0 및 전달 v0.4.1 보존.
+- **구현:** 우측 목차/업무 도우미·크게 보기, 오늘의 업무 목록/대화, Work별 메모리 대화·초안, context/source revision 고정, 실제 호스트용 읽기/제안/실행/상태/영수증 UI bridge. 기본은 합성 예시, 실제 LLM/업무 실행/저장 없음. Write 3파일 원본 해시 보존.
+- **L1Work 전달:** [업무 GPT HO](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_WORKSPACE_VIEWER_V050_TODAY_ASSISTANT_HANDOFF_r0001_20261122_KST.md) · [HTML](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_Workspace_Viewer_v0_5_0_20261122_KST.html) · [결과/근거](VIEWER_V050_DEVELOPMENT_AND_PUBLIC_DELIVERY_RESULT_r0001_20261122_KST.md). L1Work main commit `599469f9f17aaa8367c39bbb3069c90130f7b9bd`; ZIP/HTML/HO/결과/체크섬/색인 6항목 원격 바이트 일치 PASS.
+- **실제 자체시험:** Node 기존10+신규15=25 PASS, source/inline JS 구문·HTML ID/asset·미리보기 동등성·credential 패턴·ZIP CRC/manifest·2회 결정형 빌드 PASS. 브라우저/실 Linux/LLM·Agent/Write/독립 리뷰/정식 통합 게이트/운영 적용=NOT_RUN; `development_not_for_deployment` 유지.
+- **stream:** `integration/streams/VIEWER_TODAY_ASSISTANT.json` 시작·종료 소스/범위/해시 등록. 이전 3 UI/Write/Prefs stream 개별 재고정 및 실제 교차 게이트는 현장 후속. 배포 게이트 PASS로 승격하지 않음.
+- **NEXT_ONE_ACTION:** 업무 GPT가 HO+고정 ZIP을 받아 실제 Viewer 저장소/브랜치/read root/인증/기존 LLM·Agent·스킬·request 상태/receipt G0 대조 → 최소 이식·A01~A10 검증. 실설치·실행 활성화는 유효 현장 승인 범위에서만. 게시가 업무 GPT 자동 수신·호스트 실행을 의미하지 않음.
+
+---
+
 ## 2026-11-22 KST — Viewer v0.4.0 결함 분석·전체 실행 워크플로우 인계 게시 / 수정 패키지 미생성
 
 - ChatGPT Space의 합성 Viewer HTML과 L1Work v0.4.0 원본을 비교해 **한국어 doc.kind→환경설정 종류 필터 불일치, 문서 종류 필터가 본문을 숨기는 문제, Space 전용 모바일 탐색/목차 CSS와 GitHub 원본 불일치**를 확인. 테마·글꼴·프로필 연결/MSC 실연동은 호스트 검증 전까지 미확인.
