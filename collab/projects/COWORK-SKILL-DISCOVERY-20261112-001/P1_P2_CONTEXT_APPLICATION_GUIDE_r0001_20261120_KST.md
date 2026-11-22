@@ -52,3 +52,12 @@ python collab/dashboard/context_query.py --root . --question "현재 스킬 변�
 새 창에서 "전체 상황"을 물으면 첫 문장은 **현재 상태·차단·다음 동작**으로, 필요할 때만 근거 파일로 내려가도록 운용. 기존 문서에 기록된 현재 상태가 바뀌면 GitHub 최신 HEAD·해당 Work의 CURRENT를 재조회하고, PRIVATE 조회기 결과만으로 실호스트가 최신이라고 주장하지 않음.
 
 다른 영역 데이터·레코드 스키마/자동 승인/WINDOWS 리뷰 transport/업무 GPT 스킬 변경은 이번 P1/P2 범위 밖.
+
+
+## 6. 2026-11-22 R1 F1~F3 후속 보완 — E2E 이전 운용 주의
+
+- 이 절은 2026-11-20 원문 이력을 보존한 후속 보완이다. 자세한 수정·시험·30질문 출력: [F1~F3 보완 결과](P1_P2_R1_F1_F3_PRE_E2E_REMEDIATION_RESULT_r0001_20261122_KST.md).
+- **F1 (조회 상한)**: 요청 폴더가 200개를 넘으면 `snapshot()`은 CURRENT 요약을 계속 반환하되, `relations=[]`와 `relations_state=RELATIONS_SCAN_LIMIT_EXCEEDED`를 함께 반환한다. 이는 '관계 없음'이 아니라 **관계 조회 미완료/NOT_VERIFIED**다. `related()` 직접 호출은 `RequestScanLimitExceeded(ValueError)`를 발생시키는 기존 상한 의미 유지. 요청 상한을 풀거나 조회를 무제한 확대하지 않는다.
+- **F2 (경로 안전)**: `safe_file()`은 Windows 드라이브 경로(`C:/...`, `C:foo`)와 UNC·POSIX 절대경로를 파일 접근 **전에** 거부하도록 보완. Windows 자체 시험은 별도.
+- **F3 (질문 분류)**: `choose()`는 문자 부분 일치로 점수를 매긴다. **키워드 미매칭은 무조건 `skill`**로 라우팅하며 '분류 불가'를 의미하지 않는다. `그룹웨어`는 `그룹` 부분문자열 때문에 `knowledge`로 오분류될 수 있고, 복수 주제는 점수·우선순위로 한 Work만 선택한다. 이 결과를 의미 정답이나 최신 실행 상태로 승격하지 않는다. 담당자가 명확한 질문에는 `--topic` 명시를 우선하며, 정보가 불충분하면 관련 Work의 최신 하위 증거를 추가 조회한다.
+- **시험 구분**: 격리 Linux/Python 단위 13/13 PASS 및 모델 없는 30질문 분류 출력 기록. 이는 실제 Windows·모바일·PC 및 A4 정량 정확도/토큰/E2E 검증을 대체하지 않는다. 추가 유료 독립 리뷰·운영 LIVE 변경·L1Work 공개 UI 변경 없음.
