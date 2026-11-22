@@ -1,5 +1,15 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-22 KST — 정식 아키텍처 리뷰 REQUEST → Windows 승인/READY 실제 게시 확인
+
+- **REVIEW ID:** `REQ-COWORK-REVIEW-ARCH-DESIGN-R1-20261122`. 같은 Work의 새 독립 설계·보안·간소화 리뷰 입력: 기존 v0.2.29 watcher ZIP (310753B, SHA-256 `c67bc342fe77547b000fc42e1b886396cbef035c0d265dbcd124947e267ed83f`), 제출기/정책/핀 코드 원문과 LIVE 검사 분리안/과설계 비교 질문.
+- **정식 제출 원격 PASS:** Commit A `1c9ff4448813c4c974d366ef82d25235781a3376` (REQUEST와 정확한 ZIP 같은 tree), Commit B `cc84fa7c522ebfc8ffe3a938dbffe07ca8efdcd7` (문자열 repo_id SOURCE_PIN → A), 원격 readback 정합 PASS.
+- **Windows 관련 후속 파일:** [APPROVAL_SIG.json](../../requests/REQ-COWORK-REVIEW-ARCH-DESIGN-R1-20261122/APPROVAL_SIG.json)과 [READY.md](../../requests/REQ-COWORK-REVIEW-ARCH-DESIGN-R1-20261122/READY.md)가 실제 원격 게시됨. 승인 payload의 `source_commit`은 A, `run_policy_ref=POLICY-STATIC-V1`, `key_id=cowork-approver-1`, REQUEST SHA-256 `d2f3433b053252aaee11069dd4447c18423f1acb8fdb8383768be10d14fe6f3e`, READY SHA-256 `e0f6e8f66271e5f4bb279827cac0f54f6af2976b37020dc0b0e399377f96abc1`. 두 SHA 모두 실제 원격 본문 직접 계산 결과와 일치. **Ed25519 독립 서명 검증·Windows 로컬 상태는 이번 GPT에서 NOT_RUN**. 호스트 내부 signer 검증 통과를 추정하지 않음.
+- **현재 경계:** `REQUEST_PIN=PASS`, `APPROVAL_SIG_READY_REMOTE=PASS`, `REVIEW_RESULT/RECEIPT=NOT_POSTED`(마지막 조회). 실제 Claude 유료 호출/비용·Telegram 수신 `NOT_VERIFIED`. GPT가 Windows LIVE 사전검사를 직접 수행한 것은 아니며 현행 r0005 게시 전 CLI 게이트와의 차이를 이번 리뷰에 명시. 실제 보호 signer의 유효성 판단과 허용 범위는 기존 설치본이 최종 책임.
+- **NEXT_ONE_ACTION:** 해당 리뷰 ID의 `REVIEW_RESULT_1.md` + `RECEIPT_1.md` 실제 발생 시 SHA/비용/중복과 함께 확인하고 GPT가 검토·판정. 미도착 또는 불확실이면 재모델 호출/READY 재게시 금지.
+
+---
+
 ## 2026-11-22 KST — CoWork 리뷰 체계 간소화·GPT 제출/Windows 승인 분리안 정식 독립 리뷰 접수
 
 - **사용자 최신 요청:** GPT에서 정식 리뷰 요청을 실제 GitHub REQUEST/SOURCE_PIN 게시까지 진행(②·③)하고, 기존 CoWork 협업 리뷰의 과도·불필요·불합리한 구조와 Windows LIVE 정책 사전검사를 GPT 게시와 분리하는 방안을 **Windows Claude Code 독립 리뷰**로 요청. 신규 리뷰 대상은 CoWork review-watcher/transport 구조; 이전 P1/P2 Work 및 R1 후보를 재처리·명의 변경하지 않음.
