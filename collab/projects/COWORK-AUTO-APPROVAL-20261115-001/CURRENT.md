@@ -1,5 +1,15 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-22 KST — 독립 리뷰 단일 실행·비용 상한 제거 v0.2.31 격리 후보 (LIVE 미적용)
+
+- **결과:** [CLAUDE_INDEPENDENT_REVIEW_IDEMPOTENT_CANDIDATE_RESULT_FOR_GPT_20261122.md](CLAUDE_INDEPENDENT_REVIEW_IDEMPOTENT_CANDIDATE_RESULT_FOR_GPT_20261122.md) (commit `eb61ec398d88`). 신규 독립 리뷰 경로에서 `--max-budget-usd` 전달 제거, 남은 금액 차단(`UNSUPPORTED_DELEGATION_LIMIT`, 금액 0 클레임 거부) 제거. 회계 참고값은 `accounting_reference_usd`로만 기록.
+- **시험:** 후보 전체 시험 960 PASS / 0 FAIL / 12 SKIP(신규 8). 무모델 호출, 실제 `claude` 호출 0. 재시작·새 DB 두 번째 watcher·동일 ID 다른 ZIP·시간 초과 UNCERTAIN·업로드 실패 후 게시만: 모두 모델 재호출 0.
+- **패키지:** zip SHA-256 `1df85457ec01eaaa1a63022777f40b658732355e9d4f016a92b07076da950ea3`(291,484 B, 103 항목). 구 v0.2.30 ZIP 불변. 코드 ZIP은 공개 저장소에 게시하지 않음.
+- **SCOPE:** 설계만(서명된 독립 리뷰 의도 매니페스트, 와일드카드 금지, FAIL-CLOSED). 구현·위임 변경 없음. `cowork-context-design` 소급 디스패치 없음.
+- **LIVE:** 미적용. 현행 v0.2.29 설치본·설정·위임·DB·Task·Notifier 불변.
+- **BLOCKER/결정:** 단일 실행 내부 비용 상한이 사라짐(경계는 timeout_sec와 max_calls=1). 수용 여부 사용자 결정 필요. LIVE 적용은 별도 운영 승인 대기.
+- **NEXT_ONE_ACTION:** 사용자가 비용 무상한 위험 수용 여부와 LIVE 컷오버 승인 여부를 결정. 그 전까지 재리뷰·기존 요청 재디스패치 없음.
+
 ## 2026-11-22 KST — 사용자 확정: 비용 상한 제거 + 요청 ID당 독립 리뷰 디스패치 1회 (Windows 후속 작업 대기)
 
 - **확정:** 신규 독립 리뷰의 내부 비용 판단·`--max-budget-usd` 제거. 리뷰는 독립 리뷰 한 유형으로 통일. **요청 ID 중복·동시 실행·COMPLETED/FAILED/UNCERTAIN 재디스패치 차단**, 원본 고정·권한·서명·READY 순서 유지. `max_calls=1`은 watcher의 **외부 CLI 디스패치 상한**이며 단일 Claude CLI 실행 내부의 모델 턴 수나 청구 금액 상한을 뜻하지 않음. 기존 비금액 타임아웃은 유지.
