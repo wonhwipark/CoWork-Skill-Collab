@@ -11,7 +11,8 @@ import difflib
 import json
 import re
 import subprocess
-from pathlib import Path
+from itertools import islice
+from pathlib import Path, PureWindowsPath
 
 ROUTES = {
     "collab": ("COWORK-DROPBOX-TO-GITHUB-MIGRATION", ("리뷰", "claude", "watcher", "협업", "live", "provider")),
@@ -25,6 +26,10 @@ COMMIT = re.compile(r"[0-9a-f]{40}\Z")
 REQ_ID = re.compile(r"REQ-[A-Z0-9-]{4,120}\Z")
 WORK_ID = re.compile(r"[A-Z][A-Z0-9_-]{5,120}\Z")
 MAX_READ = 256_000
+
+
+class RequestScanLimitExceeded(ValueError):
+    """The P2 request directory exceeded the bounded local scan limit."""
 
 
 def choose(question: str, topic: str | None = None) -> tuple[str, str]:
@@ -46,7 +51,7 @@ def choose(question: str, topic: str | None = None) -> tuple[str, str]:
 
 
 def safe_file(root: Path, rel: str, max_bytes: int = MAX_READ) -> Path | None:
-    if not rel or rel.startswith("/") or "\\" in rel:
+    if not rel or rel.startswith("/") or "\\" in rel or Path(rel).is_absolute() or PureWindowsPath(rel).drive:
         return None
     parts = Path(rel).parts
     if any(p in ("..", ".", "") for p in parts):
@@ -99,9 +104,10 @@ def related(root: Path, work_id: str, max_requests: int = 200) -> list[dict]:
     if request_dir.is_symlink() or not request_dir.is_dir():
         return []
     answer: list[dict] = []
-    candidates = sorted(request_dir.glob("REQ-*"))
+    # Materialize at most max_requests + 1 paths; do not sort an unbounded directory.
+    candidates = sorted(islice(request_dir.glob("REQ-*"), max_requests + 1))
     if len(candidates) > max_requests:
-        raise ValueError("request scan limit exceeded")
+        raise RequestScanLimitExceeded("request scan limit exceeded")
     for folder in candidates:
         rid = folder.name
         if not REQ_ID.fullmatch(rid) or folder.is_symlink() or not folder.is_dir():
@@ -171,15 +177,27 @@ def snapshot(root: Path, question: str, topic: str | None = None,
         }
     contents = target.read_text(encoding="utf-8")
     summary = top_summary(contents)
+    try:
+        relations = related(root, work)
+        relations_state = "LOCAL_FILE_PRESENCE_UNVALIDATED"
+    except RequestScanLimitExceeded:
+        # Keep CURRENT available while refusing to infer a complete P2 relation set.
+        relations = []
+        relations_state = "RELATIONS_SCAN_LIMIT_EXCEEDED"
     return {
         "topic": key, "work_id": work,
         "state": "LOCAL_CURRENT_READ_ONLY",
         "source_path": rel,
         "summary": summary,
-        "relations": related(root, work),
+        "relations": relations,
+        "relations_state": relations_state,
         "delta": diff_summary(root, rel, contents, baseline_commit),
         "host_execution": "NOT_VERIFIED_BY_LOCAL_FILES",
-        "warning": "Document/REQUEST/READY existence is not independent review, LIVE host, Linux execution or group publication proof.",
+        "warning": (
+            "Document/REQUEST/READY existence is not independent review, LIVE host, Linux execution or group publication proof."
+            + (" P2 relations are incomplete and NOT_VERIFIED: request scan limit exceeded."
+               if relations_state == "RELATIONS_SCAN_LIMIT_EXCEEDED" else "")
+        ),
     }
 
 
