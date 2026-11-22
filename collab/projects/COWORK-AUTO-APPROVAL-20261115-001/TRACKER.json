@@ -5,11 +5,11 @@
       "work_id": "COWORK-AUTO-APPROVAL-20261115-001",
       "skill": "cowork-review-watcher",
       "title": "GPT→GitHub REQUEST 자동 서명·READY (제한된 사전 위임)",
-      "phase": "V032_CORRECTIONS_HANDOFF_POSTED__HOST_EXECUTION_BLOCKED__LIVE_READY_NO",
+      "phase": "STEPS_1_TO_3_USER_REQUESTED__WINDOWS_HOST_ACCESS_BLOCKED__LIVE_READY_NO",
       "owner": "User approved v0.2.29 LIVE / USD3; Windows Claude Code performed cutover with host verification; GPT accepted host-reported LIVE cutover with first real paid E2E still pending",
       "self_test": "v0.2.32 Windows self-report: 994 PASS/0 FAIL/12 SKIP; G3 fake-transport race x5/G4 recovery PASS; review_intent 25 isolated tests PASS, assess NOT_CONNECTED; snapshot SHADOW 0 dispatch/models; DB/config/delegation restore reported PASS; install tree backup NOT_DONE permission denial. GPT did not run tests or hash Windows ZIP.",
       "independent_review": "REQ-COWORK-REVIEW-ARCH-DESIGN-R1-20261122 rev1 COMPLETED, result+receipt remote matched request/package SHA, watcher=0.2.29; Claude BLOCKING0/MAJOR2(F1,F2)/MINOR2, STATIC_ONLY. User Telegram alert $0.77 but GitHub receipt lacks cost field. GPT disposition ACCEPT_WITH_CORRECTIONS__OPTION_B documented in GPT_ARCH_REVIEW_DISPOSITION_r0001_20261122_KST.md; F1 example config stale vs LIVE $3, F2 two gate copies diverge yet ops unified tests already exist. No re-review or LIVE change. v0.2.32 candidate independent review NOT_RUN/BLOCKED_AUTH; previous R1 is not evidence of independent review for new candidate. No rerun or new reviewer calls.",
-      "next_action": "Windows Claude Code: execute collab/projects/COWORK-AUTO-APPROVAL-20261115-001/WINDOWS_V032_CORRECTIONS_ONE_SHOT_HANDOFF_r0001_20261122_KST.md against exact v0.2.32 SHA. Existing lossless rollback rule reused; source/host unavailable to GPT, code/tests/backup/review/shadow NOT_RUN. Reuse prior evidence; no existing review rerun; no LIVE/keys/policy/DB changes."
+      "next_action": "Execute existing WINDOWS_V032_CORRECTIONS_ONE_SHOT_HANDOFF_r0001_20261122_KST.md on Windows: scoped two copies, isolated SCOPE/nonce integration, process-race and replay tests, full regression/new v0.2.33 ZIP. User requested 1-3 only; no repeated scope approval. Tool permission must allow; GPT has no Windows host/source access; actual execution NOT_RUN. No independent review/LIVE/key/policy/DB changes."
     }
   ]
 }

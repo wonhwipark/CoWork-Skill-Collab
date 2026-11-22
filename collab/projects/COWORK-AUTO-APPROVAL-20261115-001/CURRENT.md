@@ -1,5 +1,13 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-22 KST — 사용자 최신 지시: 남은 조치 1~3 원샷 / 두 복사 작업 포함
+
+- **범위 확정:** 사용자 “3단계까지 원샷으로 진행해줘” = ①v0.2.33 후보 폴더 생성 및 v0.2.29 설치 트리 로컬 백업 복사 ②격리 SCOPE 승인 경로·nonce 연결 ③별도 프로세스 경합/재시작·동시 nonce/소급 요청 시험·전체 회귀·새 ZIP 패키징. 같은 범위 재승인 질문 불필요.
+- **실행 지시 갱신:** [기존 Windows 지시서](WINDOWS_V032_CORRECTIONS_ONE_SHOT_HANDOFF_r0001_20261122_KST.md)를 1~3 전용으로 갱신. 기존 정식 도구 권한 경로에서 두 복사 작업 재평가; 거부 지속 시 원문과 범위를 기록하고 우회 없이 해당 항목만 차단. 문서의 사용자 요청 기록은 보호 signer 승인/도구 허용을 대신하지 않음.
+- **실제 실행 상태:** GitHub main 원본 확인·지시 갱신 수행. 최신 트리에 v0.2.32/33 소스·ZIP 없음, 사용 가능한 Windows 실행 연결 미확인. 따라서 **GPT_STEP1=BLOCKED_HOST_ACCESS**, **GPT_STEP2/3=NOT_RUN_SOURCE_ACCESS**. Windows에 자동 전송/실행한 사실 없음.
+- **종료 경계:** 새 독립 리뷰·REQUEST/READY·모델 호출·실운영 SHADOW 설치·LIVE/정책/키/운영 DB·Task/Notifier 변경은 이번 1~3 범위 밖. 새 ZIP/새 시험 결과 아직 없음. **LIVE_READY=NO**.
+- **NEXT_ONE_ACTION:** Windows Claude Code에서 같은 지시서를 재개해 1~3 수행, 기존 결과 문서에 새 실행 결과 추가·CURRENT/TRACKER 갱신·main 원격 검증. 이전 994 PASS/12 SKIP는 이번 시험 결과로 승격하지 않음.
+
 ## 2026-11-22 KST — v0.2.32 후속 보완 원샷 결과 (부분 완료, LIVE_READY=NO)
 
 - **결과:** [CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md](CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md) (commit `979bb74920e9`).
