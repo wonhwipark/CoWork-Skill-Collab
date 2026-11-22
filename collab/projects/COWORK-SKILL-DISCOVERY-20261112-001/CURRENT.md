@@ -1,5 +1,14 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 2026-11-22 KST — P1/P2 R1 유료 Claude 독립 리뷰 요청 명칭 정정·중복 제출 차단
+
+- **사용자 최신 요청:** 앞서 제출한 리뷰를 유료 리뷰로 명확히 하고 다시 요청하라는 지시. 기존 [R1 REQUEST](../../requests/REQ-COWORK-P1P2-CONTEXT-CODE-R1-20261122/REQUEST.md)의 실제 실행 정책을 직접 확인: `test_policy=STATIC_ONLY`, `run_policy_ref=POLICY-STATIC-V1`, Windows Claude 모델 **최대 1회**, 건당 **최대 USD 3**. 이는 무과금 동료 검토가 아니라 **유료 모델 호출을 예정한 독립 리뷰**다. '독립'은 개발자와 분리된 리뷰어라는 의미이지 무료 실행을 뜻하지 않는다.
+- **최신 원격 상태:** R1 `REQUEST.md` + `SOURCE_PIN.json`만 존재하며, 승인/READY·리뷰 결과·영수증의 게시 근거가 없어 **유료 모델 실행/실제 과금은 미확인**. `FORMAL_REQUEST=SUBMITTED_AWAITING_PROTECTED_SIGNER`, `PAID_REVIEW_EXECUTION=NOT_VERIFIED`.
+- **중복 처리 금지:** 동일 ZIP SHA `35de54934944807518e0141daaedde1888a42c08c1d264584e9b341f65dcd5f3`와 동일 검토 범위를 가진 R2를 명칭 정정만을 위해 새로 게시하지 않음(`NEW_REQUEST=NOT_CREATED_DUPLICATE_PREVENTION`). SOURCE_PIN으로 고정된 R1 REQUEST·ZIP 바이트는 변경하지 않고 기존 유료 독립 리뷰 요청을 보존. 정책·보호 서명자·위임·READY는 변경 0.
+- **NEXT_ONE_ACTION:** Windows 보호 signer가 **기존 R1 한 건**에 대해 실제 승인 가능 여부와 중복/비용/실행 상태를 확인. 유효 승인에서만 READY 마지막 게시 후 유료 Claude 독립 리뷰 **1회**. 비허용이면 BLOCKED 근거를 남기고 모델 호출 0. 실제 실행·영수증 확인 전 완료/비용 청구 주장 금지.
+
+---
+
 ## 2026-11-22 KST — P1/P2 정식 독립 리뷰 REQUEST/PIN 2커밋 접수·원격 검증 PASS
 
 - **사용자 최신 명시 요청:** “협업 리뷰체계최신버전확인후 다시 리뷰요청해줘”. 현행 [REQUEST/PIN 계약 r0006](../../ops/CONTRACTS/PRE_READY_SOURCE_PIN_PREFLIGHT_V1.md) Option B 우선 적용: GPT의 정식 입력 출판(②③)과 Windows 보호 signer의 실제 승인/READY·유료 실행 분리. 과거 r0005 Windows LIVE 사전검사 요구로 출판을 차단하지 않음.
