@@ -1,5 +1,15 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-22 KST — GPT v0.2.33 판정: 복사·격리 구현 수용 / 3단계 시험 부분 완료
+
+- **판정:** [v0.2.33 GPT 판정](GPT_V033_PARTIAL_ACCEPTANCE_AND_REMAINING_TESTS_r0001_20261122_KST.md), **ACCEPT_DEVELOPMENT_WITH_CONDITIONS / STEP3=PARTIAL / LIVE_READY=NO**. 원격 HEAD `9051f9593a93`의 결과 §9·CURRENT·TRACKER를 대조. Windows 자체시험 보고이며 GPT ZIP 실물·코드 검증/독립 리뷰 아님.
+- **수용:** 1-A/B 복사·v0.2.29 설치 트리 백업 PASS 보고(143개·IDENTICAL), 격리 SCOPE/영속 nonce 연결 PASS 보고, 1007 PASS/0 FAIL/12 SKIP 및 새 ZIP 패키징 PASS 보고. 복사 권한 차단 해소.
+- **필수 미완료:** 별도 OS 프로세스의 **디스패치 claim** 경합 NOT_RUN, 승인·디스패치 통합 경로의 재시작 후 replay NOT_COVERED. 프로세스 간 nonce 저장소 시험으로 이 두 항목을 대체하지 않음. 실제 GitHub 경쟁은 기존 쓰기 금지로 NOT_RUN 유지.
+- **추가 확인:** nonce 소비 기록 기반 _revalidate가 현재 권한·만료/키 해지·정확한 입력 바인딩을 대신하지 않는지 코드/관련 시험 확인 필요(결함 확정 아님).
+- **후속:** [기존 Windows 실행 지시서](WINDOWS_V032_CORRECTIONS_ONE_SHOT_HANDOFF_r0001_20261122_KST.md)를 남은 시험 전용으로 갱신. 기존 1~3 승인 범위이므로 시험보다 먼저 운영/리뷰 승인을 요구하지 않음. v0.2.33 ZIP SHA `4dc3c701a83c22b2615e244a9dfeca8bd07ef89e9456c1b182a7ec3c01293cda`(297249 B/109, 호스트 보고) 보존.
+- **경계:** 신규 리뷰·REQUEST/READY·모델 호출·운영 DB 이행·LIVE 변경 0. 독립 리뷰, DB/보호 설정 운영 승인, 호스트 SHADOW·복원 검증, 10단계 위험 수용·LIVE 최종 확인은 별도 미충족.
+- **NEXT_ONE_ACTION:** Windows 같은 후보에서 위 두 필수 시험과 재검증 경계를 확인→같은 결과 문서 증거 추가→CURRENT/TRACKER 갱신·main 원격 검증. GPT의 Windows 실행·소스 접근은 없어 직접 시험 NOT_RUN.
+
 ## 2026-11-22 KST — v0.2.33 의도 검증 승인 경로 연결 후보 (LIVE_READY=NO)
 
 - **결과:** [CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md](CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md) §9 (commit `c75d4160adc1`).

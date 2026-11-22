@@ -1,40 +1,31 @@
-# v0.2.32 후속 보완 — 최신 실행 범위 1~3
+# v0.2.33 — 기존 1~3단계의 남은 시험만 원샷 재개
 
 저장소: wonhwipark/CoWork-Skill-Collab
 브랜치: main
 Work: collab/projects/COWORK-AUTO-APPROVAL-20261115-001/
-2026-11-22 KST 사용자 최신 지시: “3단계까지 원샷으로 진행해줘”.
-이는 직전 남은 조치 표의 ①복사 차단 해소 ②격리 SCOPE 연결 ③누락 시험·회귀·v0.2.33 패키징을 뜻한다. 기존 본문의 독립 리뷰·호스트 SHADOW·운영 활성화까지 확대하지 않는다.
-이전 지시서는 Git commit 0a1d72042779a292ee0f558349961e3eb178e3e6의 같은 경로로 보존한다.
+범위: 사용자 “3단계까지 원샷으로 진행해줘”의 미완료 보완. 같은 범위 승인 반복 질문 없음.
+최신 판정: GPT_V033_PARTIAL_ACCEPTANCE_AND_REMAINING_TESTS_r0001_20261122_KST.md
+근거: CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md §9.
+1-A/B 복사·v0.2.29 트리 백업은 PASS 보고됨. 이 작업을 처음부터 다시 하지 않는다.
 
-## 0. 재개
-CURRENT.md와 CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md를 읽고 이미 한 작업·기존 로그를 재사용한다.
-원본 폴더: D:\User\whpark\skill-collab-watcher-dist\candidates\v0_2_32_live_precheck
-ZIP: 위 candidates 아래 v0_2_32_live_precheck_candidate.zip
-기준 SHA-256: cbf95d1141cbed6973d6cace2950065b4ed5eb36e988ecf522a9fc3ab087fa94
-295885 B/106항목. 실물 SHA/CRC와 폴더 대응 확인. 구 ZIP 불변.
+## 고정 입력
+후보 폴더: D:\User\whpark\skill-collab-watcher-dist\candidates\v0_2_33
+ZIP: D:\User\whpark\skill-collab-watcher-dist\candidates\v0_2_33_intent_wired_candidate.zip
+SHA-256: 4dc3c701a83c22b2615e244a9dfeca8bd07ef89e9456c1b182a7ec3c01293cda
+297249 B/109항목. 실물·폴더 대응 확인 후 재사용. 기존 ZIP·리뷰·영수증 보존.
+기존 전체 회귀는 1007 PASS/0 FAIL/12 SKIP의 자체시험 보고. 새 시험 PASS로 재사용하지 않는다.
 
-## 1. 두 복사 작업
-사용자는 다음 두 작업의 실행을 이번 요청 범위에 포함했다. 같은 작업 범위 승인을 반복 질문하지 않는다.
-A. 원본 후보 폴더 → D:\User\whpark\skill-collab-watcher-dist\candidates\v0_2_33
-B. D:\User\whpark\skill-collab-watcher-github (현재 v0.2.29 설치 트리 읽기) → D:\User\whpark\skill-collab-watcher-dist\backup_v0_2_29_precheck_20261122\install_tree_v0_2_29
-대상이 이미 있으면 출처·완전성을 검증해 재개하고 무조건 덮어쓰지 않는다. B는 원본 읽기·백업 경로 쓰기이며 LIVE 원본 수정/정지/재시작이 아니다.
-이 지시가 도구 권한 시스템의 허용 결정을 대신하지 않는다. 최신 사용자 요청으로 기존 정식 권한 경로에서 해당 두 작업을 재평가한다. 거부가 지속되면 실제 명령·비밀 제외한 거부 원문·차단 계층·필요 허용 범위를 기록하고 해당 항목만 BLOCKED_PERMISSION. 다른 셸/도구로 거부를 우회하거나 포괄 권한/ACL/보안 설정을 변경하지 않는다. A/B가 독립적으로 가능하면 가능한 쪽은 계속한다.
-백업은 전체 설치 트리 SHA/파일 수/매니페스트와 원본 전후 불변을 확인한다. DB·위임·키 사본은 GitHub에 게시하지 않는다. 옛 v0.2.25 번들을 v0.2.29 백업으로 취급하지 않는다.
+## 이번에 끝낼 것
+1. 별도 OS 프로세스 watcher 두 개·서로 다른 temp DB·동일 ID/revision/PIN/ZIP으로 모두 실제 디스패치 claim 직전 barrier에 도달시킨다. 프로세스 간 공유되는 원자적 fake claim 저장소, 서로 다른 PID와 두 도달 이벤트를 기록한다. fake runner 합계 1 이하, 패자/재스캔 추가 호출 0. nonce 소비만 경쟁하거나 두 스레드만 사용하는 것으로 대체하지 않는다. 실제 GitHub 쓰기 경쟁은 NOT_RUN 유지.
+2. 의도 검증→nonce 소비→상태 보존→재검증→서명/READY→claim의 통합 경로를 실제 후보 코드와 fake signer/transport/runner로 실행한다. nonce 소비 후·claim 후 프로세스 중단과 새 프로세스 재기동을 주입한다. 같은 요청 replay, 다른 revision/SHA, 모델 시작 여부 불명에서 권한 확대/추가 디스패치 0을 확인한다. nonce 저장소 단독 재시작으로 대체하지 않는다.
+3. _revalidate의 nonce 소비 기록이 현재 권한·만료/키 해지·정확한 revision/commit/입력 바인딩을 대체하지 않는지 코드 경로·관련 시험을 확인한다. 최초 검증 후 만료/해지/입력 변경도 fail-closed. 기존 시험이 있으면 연결만 한다. source 미접근 단계는 결함 확정 없이 NOT_RUN으로 기록한다.
+기존 스킬·API·시험을 재사용해 관련 실패만 최소 수정한다. test key/temp DB/모의 전송만 사용한다. 운영 DB의 테이블 생성·이행은 수행하지 않는다.
 
-## 2. 격리 SCOPE 통합
-v0.2.33 후보에서 기존 signer/assess/review_intent/StateStore를 조사하고 REUSE→CONNECT한다. 정확한 repo/request/revision/skill/commit/REQUEST·ZIP SHA·크기/만료/서명 목적을 검증한 의도만 승인 경로에 연결한다.
-nonce는 재시작·동시 프로세스에서도 한 번만 소비되도록 기존 저장·트랜잭션 경계를 우선 재사용한다. 새 테이블이 실제로 필요하면 후보 코드와 temp DB에서만 구현·시험하고 운영 이행 요구를 기록한다. 운영 DB 테이블 추가는 이번 범위 밖이다.
-위조/해지/만료/입력 불일치/소급·미승인 요청/GitHub 본문 승인 주장은 fail-closed. 기존 유효 요청 호환, 보호 서명→READY→원격 claim 순서 보존. test key는 격리 임시 공간만 사용한다.
+## 후보·회귀
+기존 ZIP 그대로 검증하는 경우 입력 SHA 고정. 코드/시험을 ZIP에 반영하여 bytes가 바뀌면 구 ZIP 보존·새 후보 revision 발행·관련 시험·최종 전체 회귀 1회·새 SHA/크기/트리 SHA/CRC/중복/경로/링크/민감정보 검사. 최종 변경/실패/미해결 우려가 없으면 기존 전체 회귀를 게시만을 위해 반복하지 않는다. 12 SKIP 사유·명령/로그/빌드·입력 SHA/PID/시점을 연결한다.
+코드 ZIP과 운영 백업은 공개 게시하지 않는다.
 
-## 3. 누락 시험·최종 패키지
-- 별도 OS 프로세스·서로 다른 DB·barrier로 같은 요청 경합. 프로세스 간 공유되는 원자적 모의 claim 저장소 사용, PID/명령/증거 기록, fake runner 합계 1 이하. 실제 GitHub 쓰기 경쟁 시험은 NOT_RUN 유지.
-- nonce: 같은 저장소의 재시작 후 replay 거부, 동시 소비 성공 1 이하, 소급 요청 거부, 통합 경로에서 위조·변조·만료·해지·wrong skill/repo 거부.
-- 모델 시작 여부 불명 CLAIMED/RUNNING/ALREADY_OURS는 봉인, 자동 재디스패치 0. 결과 게시 실패는 게시만 재시도.
-기존 로그·12 SKIP 사유를 우선 연결하고 새/변경 관련 시험 후 최종 후보 전체 회귀를 1회 실행한다. 실패 시 관련 수정·재시험. fake runner·temp DB만 사용한다.
-v0.2.33 ZIP 새 생성: CRC/중복/경로 이탈/링크/필수 파일·민감정보/크기/전체 SHA-256/트리 SHA 확인. 코드 ZIP은 로컬 보존하고 공개 배포하지 않는다. 실패 후보는 development_not_for_deployment.
-
-## 결과·종료
-같은 Work의 CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md에 후속 실행 시각·명령·원본/최종 SHA·1~3별 PASS/FAIL/SKIP/NOT_RUN·차단 사유를 추가하고 이전 이력을 보존한다. CURRENT와 TRACKER 현행 필드를 맞춰 main에 직접 게시, commit·원격 bytes SHA 확인.
-실행 중 프로세스는 watcher/Notifier를 실제 명령·Task로 구별하여 중복 watcher를 추정으로 종결하지 않는다. 변경·종료는 금지.
-새 독립 리뷰/REQUEST/READY/모델 호출/Telegram/호스트 SHADOW 설치/운영 DB·키·정책·Task·Notifier 변경 0. 단계 4~6 및 10단계 LIVE는 이번 범위 밖. 결과 게시 후 종료하며 LIVE_READY=NO를 유지한다.
+## 기록·종료
+같은 CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md에 새 절로 추가하고 과거 §9를 보존한다. CURRENT·TRACKER self_test/next_action을 실제 결과와 맞춰 main 직접 게시·commit/원격 bytes SHA 확인.
+독립 리뷰/REQUEST/READY/실제 모델 호출/Telegram/LIVE 설치·정책·키·운영 DB·Task/Notifier 변경 0. 호스트 SHADOW 설치도 이번 범위 밖. LIVE_READY=NO 유지.
+도구 차단 시 원문과 정확한 필요 범위 기록·우회 금지. 새 승인 요청 때문에 이미 허용된 시험을 중단하지 말고 가능한 범위 끝까지 수행한다.
