@@ -5,11 +5,11 @@
       "work_id": "COWORK-SKILL-DISCOVERY-20261112-001",
       "skill": "skill-discovery",
       "title": "skill-discovery",
-      "phase": "P1P2_F1_PARTIAL_RELATIONS_ERROR_ISOLATION_IMPLEMENTED__F2_UNCHANGED",
-      "owner": "GPT: existing Work resumed after latest-main readback; bounded partial relationships and per-file error isolation implemented. Historical R1 remains closed; this follow-up has no new independent review.",
-      "self_test": "PASS_28_OF_28__CLI_PASS__PY_COMPILE_PASS__F2_F3_AST_UNCHANGED",
-      "independent_review": "R1_COMPLETED_STATIC_ONLY__THIS_FOLLOWUP_NOT_REREVIEWED",
-      "next_action": "A4 question-specific evidence and accuracy/lookup evaluation remains separate. Windows query compatibility and Claude context loading are conditional client checks; full Watcher E2E is not required for this source change."
+      "phase": "P1P2_ARCHITECTURE_REVIEWED__F3_DIAGNOSTICS_AND_P2_PACKAGE_PATH_POSTED__FULL_REGRESSION_NOT_RUN",
+      "owner": "GPT: P1/P2 architecture review and conservative read-only code hardening posted to main; earlier F1 28 PASS pertains prior source; 7 additional tests posted but not executed.",
+      "self_test": "PREVIOUS_SOURCE_28_PASS__ISOLATED_PATCH_LOGIC_10_PASS__NEW_FULL_35_NOT_RUN",
+      "independent_review": "R1_COMPLETED_STATIC_ON_OLD_INPUT__LATEST_PATCH_NOT_REVIEWED",
+      "next_action": "Run py_compile + 35 targeted unittest cases against new bytes; then A4 question/evidence benchmark and separately existing Windows r0002 E2E."
     }
   ]
 }
