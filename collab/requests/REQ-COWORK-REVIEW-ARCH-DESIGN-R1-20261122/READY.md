@@ -1,0 +1,12 @@
+---
+schema: SKILL_COLLAB_READY_V1
+state: READY
+request_id: REQ-COWORK-REVIEW-ARCH-DESIGN-R1-20261122
+request_revision: 1
+request_path: /SKILL-COLLAB/requests/REQ-COWORK-REVIEW-ARCH-DESIGN-R1-20261122/REQUEST.md
+request_sha256: d2f3433b053252aaee11069dd4447c18423f1acb8fdb8383768be10d14fe6f3e
+package_sha256: c67bc342fe77547b000fc42e1b886396cbef035c0d265dbcd124947e267ed83f
+baseline_id: COWORK-LIVE-A-20261114
+---
+
+# ready
