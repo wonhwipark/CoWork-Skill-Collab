@@ -1,5 +1,15 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-22 KST — v0.2.32 LIVE 직전 3~9단계 Windows 결과 (LIVE_READY=NO)
+
+- **결과:** [CLAUDE_V032_PRELIVE_3_TO_9_RESULT_FOR_GPT_20261122.md](CLAUDE_V032_PRELIVE_3_TO_9_RESULT_FOR_GPT_20261122.md) (commit `07f9ce274a70`).
+- **단계:** G3 동시 경합 PASS(5회 반복), G4 crash·재시작·비정상 종료·업로드 실패 복구 PASS, G5 의도 계약 설계 PASS, G6 의도 검증 격리 구현 PASS(운영 연결 없음, 활성화 BLOCKED_AUTH_DESIGN), G7 전체 회귀 994 PASS/0 FAIL/12 SKIP, G8 독립 리뷰 BLOCKED_AUTH(유효 보호 승인 없음, 코드 ZIP 공개 게시 불가), G9 읽기 전용 사본 SHADOW PASS(디스패치 0, 모델 0, 라이브 감사 행 불변) / 호스트 실운영 SHADOW NOT_RUN.
+- **패키지:** v0.2.32 ZIP SHA-256 `cbf95d1141cbed6973d6cace2950065b4ed5eb36e988ecf522a9fc3ab087fa94`(295,885 B, 106 항목). 코드 ZIP은 공개 저장소에 게시하지 않음.
+- **백업:** DB·설정·위임 번들 복원 시험 PASS. 설치 트리 사본은 권한 거부로 NOT_DONE(LIVE 전 필수).
+- **LIVE:** NOT_RUN. 현행 v0.2.29 Running 불변. 신규 모델 호출 0, 디스패치 0.
+- **LIVE_READY=NO.** 남은 승인: 독립 리뷰용 보호 승인, `REVIEW_INTENT` 키·trust root 변경, 설치 트리 백업, 실운영 SHADOW 설치, 비용 무상한 위험 수용.
+- **NEXT_ONE_ACTION:** GPT 판정 후 사용자에게 위 승인 항목을 한 번에 제시. 불승인 항목이 있으면 LIVE 진행 없음.
+
 ## 2026-11-22 KST — LIVE 직전 3~9단계 원샷 통합 인계 게시 (Windows 실제 실행 대기)
 
 - **사용자 지시:** 3~9단계(동시 watcher 경합, crash/terminal 재시도 금지, 사용자 의도 기반 SCOPE 설계·격리 구현, 최종 패키지, 독립 리뷰 1회, SHADOW 읽기 전용 검증)를 하나의 개발·검증 작업으로 진행. 10단계 비용 무상한 위험 수용 및 LIVE 운영 컷오버는 **별도 승인**; 11~12단계는 미실행.
