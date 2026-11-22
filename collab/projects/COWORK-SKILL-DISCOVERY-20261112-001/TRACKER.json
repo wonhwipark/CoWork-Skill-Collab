@@ -5,11 +5,11 @@
       "work_id": "COWORK-SKILL-DISCOVERY-20261112-001",
       "skill": "skill-discovery",
       "title": "skill-discovery",
-      "phase": "P1P2_FORMAL_REVIEW_REQUEST_PIN_POSTED_A_B__PROTECTED_SIGNER_PENDING",
-      "owner": "GPT: P1/P2 code+UI+Windows plan input ZIP 94843B SHA 35de5493... pinned, r0006 Option B Commit A e8ed8cfd... / B 0dd28843... confirmed; signer/READY/review not yet verified",
+      "phase": "P1P2_R1_INDEPENDENT_REVIEW_COMPLETED__GPT_ACCEPT_WITH_CHANGE__F1_REMEDIATION_PENDING",
+      "owner": "GPT: R1 review COMPLETED (watcher v0.2.29 ok receipt). BLOCKING0 MAJOR1 MINOR2, GPT disposition published. Cost USD0.71 user notification only; receipt lacks billed cost, DB not verified.",
       "self_test": "PASS",
-      "independent_review": "NOT_RUN__FORMAL_REQUEST_SUBMITTED_AWAITING_PROTECTED_SIGNER",
-      "next_action": "Windows protected signer checks actual skill_id cowork-context-design delegation/manual authority, policy USD3, source pin, duplicates and expiry; authorized READY last and one Claude review only when valid; otherwise blocked without model call"
+      "independent_review": "COMPLETED_STATIC_ONLY__ACCEPT_WITH_CHANGE__BLOCKING_0_MAJOR_1_MINOR_2",
+      "next_action": "Fix F1 context_query.related >200 REQUEST folders ValueError escaping snapshot; add >200 snapshot regression and graceful degraded status, bundle Windows safe_file drive guard (F2), document routing fallback (F3). No automatic paid rereview. Windows/browser E2E remains NOT_RUN."
     }
   ]
 }
