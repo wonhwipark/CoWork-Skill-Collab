@@ -1,5 +1,14 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-22 KST — 사용자 기술 마무리 원샷 요청 / 최종 LIVE 확인 별도
+
+- **최신 요청:** 사용자 “횟수를 줄일 수 없나”에 기술 마무리와 최종 LIVE의 두 묶음을 제안했고, “진행해줘”로 기술 마무리 수행을 요청함. **누락 시험·보완·회귀·후보 동결 → 실제 유효 보호 승인하의 독립 리뷰 1회 → 읽기 전용 SHADOW·사본 복구 검증 → 증거 통합 게시/GPT 판정**으로 진행. 같은 범위 보완·재시험은 중간 질문 없이 묶음 처리.
+- **기존 지시서 갱신:** [Windows 기술 마무리 원샷](WINDOWS_V032_CORRECTIONS_ONE_SHOT_HANDOFF_r0001_20261122_KST.md). 이전 “1~3만/독립 리뷰 제외” 범위는 위 묶음으로 대체. 기존 완료 복사·백업·시험은 재사용. 독립 리뷰는 최종 실제 코드 입력·기존 이력·현행 보호 승인·전달 허용을 확인한 경우에만 정식 A/B 제출과 1회 실행. 문서상의 요청 의도는 보호 승인/READY를 대신하지 않음.
+- **현재 실행 근거:** Windows v0.2.33 자체시험 1007 PASS/0 FAIL/12 SKIP는 기존 결과. 두 필수 시험·재검증 확인 미완료, 신규 리뷰·호스트 SHADOW·사본 복구 완료 증거 없음. 현재 후보 Windows 로컬 SHA `4dc3c701a83c22b2615e244a9dfeca8bd07ef89e9456c1b182a7ec3c01293cda`(297249 B/109) 보존.
+- **GPT 차단:** 최신 원본/정식 제출 계약·게시기 확인 및 지시 갱신을 수행. Windows 원본 ZIP/실행 연결에 접근할 수 없어 직접 코드 시험·최종 후보 생성·코드 ZIP 정식 REQUEST A/B 제출·보호 signer/리뷰·호스트 SHADOW/복구 실행은 **NOT_RUN**. **FORMAL_REQUEST=NOT_POSTED_THIS_SESSION**. 기존 R1 재실행/새 모델 호출 0. 문서 게시는 Windows 시작 트리거가 아님.
+- **운영 경계:** 기존 승인 리뷰 실행의 통상 원장·서명/READY·결과 기록과 운영 DB schema/설정 변경을 구분. SHADOW 자체는 읽기 전용. 후보 설치·운영 DB 이행·키/정책/위임/Task/Notifier 변경 및 비용 무상한 LIVE 위험 수용·컷오버는 최종 확인 전 미실행.
+- **NEXT_ONE_ACTION:** Windows Claude Code에 위 기존 지시서 한 개를 전달해 기술 마무리 전체를 재개. 실제 차단만 최종 보고에 모으고 동일 결과 문서·CURRENT·TRACKER main 원격 검증. 최종 근거를 GPT가 읽어 판정한 후 사용자에게 LIVE 승인을 한 번에 제시. 현 **LIVE_READY=NO**.
+
 ## 2026-11-22 KST — GPT v0.2.33 판정: 복사·격리 구현 수용 / 3단계 시험 부분 완료
 
 - **판정:** [v0.2.33 GPT 판정](GPT_V033_PARTIAL_ACCEPTANCE_AND_REMAINING_TESTS_r0001_20261122_KST.md), **ACCEPT_DEVELOPMENT_WITH_CONDITIONS / STEP3=PARTIAL / LIVE_READY=NO**. 원격 HEAD `9051f9593a93`의 결과 §9·CURRENT·TRACKER를 대조. Windows 자체시험 보고이며 GPT ZIP 실물·코드 검증/독립 리뷰 아님.
