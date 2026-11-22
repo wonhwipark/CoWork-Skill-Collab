@@ -1,5 +1,15 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 2026-11-22 KST — P1/P2 유료 Claude 독립 리뷰 R1 완료·GPT 수정 조건부 수용
+
+- **정식 결과 완료:** `REQ-COWORK-P1P2-CONTEXT-CODE-R1-20261122`, rev 1의 [Claude 원문](../../reviews/REQ-COWORK-P1P2-CONTEXT-CODE-R1-20261122/REVIEW_RESULT_1.md) = `execution_status=COMPLETED`; [영수증](../../receipts/REQ-COWORK-P1P2-CONTEXT-CODE-R1-20261122/RECEIPT_1.md) = `ok=true`, `watcher_version=0.2.29`, 요청 ID·rev·고정 ZIP SHA `35de54934944807518e0141daaedde1888a42c08c1d264584e9b341f65dcd5f3` 동일. GitHub `REQUEST`·`SOURCE_PIN`·`APPROVAL_SIG`·`READY`도 존재·메타 정합. 실제 Windows DB/서명 암호 검증과 실비용 직접 확인은 별도.
+- **GPT 판정:** [P1/P2 R1 결과·개별 지적 판정](GPT_P1_P2_R1_REVIEW_DISPOSITION_r0001_20261122_KST.md) `ACCEPT_WITH_CHANGE` — **BLOCKING 0 / MAJOR 1 / MINOR 2**. F1=`related()` 요청 폴더 총량 200 초과 시 `snapshot()`에 미처리 `ValueError` 전파(**수정 필수**). F2=Windows drive-absolute 경로의 stat 선호출 제거(안전 보완). F3=미매칭 `skill` fallback/부분문자열 오분류 문서화 및 30문항 검증. 기존 UI allowlist/상태 미검증 분리는 정적 검토상 문제 없음. **코드 실행·Windows E2E·모바일·PC·30문항은 NOT_RUN**.
+- **비용 근거 구분:** 사용자 전달 알림 **USD 0.71**; 공개 GitHub 영수증에는 금액 필드가 없어 `COST_DB_READBACK=NOT_VERIFIED`. 이 판정에서 유료 리뷰를 재호출하지 않음.
+- **현행 상태:** `FORMAL_REQUEST=PASS_REMOTE`; `READY=PRESENT_REMOTE`; `INDEPENDENT_REVIEW=COMPLETED_STATIC_SCOPE`; `GPT_DISPOSITION=ACCEPT_WITH_CHANGE`; `R1_CLOSED_NO_RERUN`. R1을 미승인 대기라고 표시한 아래 기록은 **작성 당시 이력**. 새로운 Windows 작업·운영 설정·REQUEST/READY·서명·모델 호출·L1Work 배포 변경 0.
+- **NEXT_ONE_ACTION:** 같은 P1/P2 Work에서 F1을 구조화된 degraded state로 보완하고 `snapshot()>200` 직접 회귀시험을 수행. F2의 드라이브 경로 차단을 동일 수정 묶음에서 시험하고 F3는 기존 문서/30문항 계획에만 반영. F1 보완·시험 전 범용 장기 운영 안정성 PASS/확대 배포 금지. **별도 유료 재리뷰 자동 생성 금지**.
+
+---
+
 ## 2026-11-22 KST — P1/P2 R1 유료 Claude 독립 리뷰 요청 명칭 정정·중복 제출 차단
 
 - **사용자 최신 요청:** 앞서 제출한 리뷰를 유료 리뷰로 명확히 하고 다시 요청하라는 지시. 기존 [R1 REQUEST](../../requests/REQ-COWORK-P1P2-CONTEXT-CODE-R1-20261122/REQUEST.md)의 실제 실행 정책을 직접 확인: `test_policy=STATIC_ONLY`, `run_policy_ref=POLICY-STATIC-V1`, Windows Claude 모델 **최대 1회**, 건당 **최대 USD 3**. 이는 무과금 동료 검토가 아니라 **유료 모델 호출을 예정한 독립 리뷰**다. '독립'은 개발자와 분리된 리뷰어라는 의미이지 무료 실행을 뜻하지 않는다.
