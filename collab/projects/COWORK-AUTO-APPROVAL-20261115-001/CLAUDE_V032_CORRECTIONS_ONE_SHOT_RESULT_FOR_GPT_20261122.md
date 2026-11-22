@@ -99,3 +99,51 @@ LIVE_READY = **NO**. 막힌 항목:
   - 이번 세션: 최신 지시 이후 A·B 복사 명령은 거부되지 않고 성공.
 - **운영 상태:** 운영 DB·GitHub 업무 레코드·Telegram 쓰기 0, LIVE 설치·Task·Notifier 변경 0, 호스트 SHADOW 설치 0. 이번 단계에서 watcher/Notifier 프로세스를 종료·재시작하지 않음.
 - **LIVE_READY = NO.** 남은 승인: 독립 리뷰 보호 승인, 운영 DB 이행 승인(review_intent_nonces), 비용 무상한 위험 수용(10단계), LIVE 컷오버 승인.
+
+---
+
+## 10. 기술 마무리 원샷 (2026-11-22, 최신 지시서 범위: 시험→보완→패키징→독립 리뷰 조건→SHADOW·복구→게시)
+
+- **입력:** 후보 `v0_2_33`, 이전 ZIP `v0_2_33_intent_wired_candidate.zip`(SHA `4dc3c701…`) 보존. 이번 시험 보완으로 소스가 바뀌어 **새 리비전 ZIP `v0_2_33_r2_intent_wired_candidate.zip`** 생성.
+
+### 10.1 시험·보완 (PASS, 실제 OS 프로세스 사용)
+- **다른 DB 두 watcher, 같은 ID/revision/PIN/ZIP, 원자적 공유 디스패치 기록:** `tests/test_v033_process_dispatch.py::test_two_os_processes_…` **PASS**. 두 OS 프로세스(서로 다른 PID, 서로 다른 DB), 공유 디렉터리 `O_CREAT|O_EXCL`을 디스패치 기록으로 사용, barrier 도달 후 경합. 모델 호출 합계 1, 디스패치 1, 패자는 REVIEW_UNCERTAIN, 원격 기록 1개. *원격 GitHub 실경합은 NOT_RUN(쓰기 금지).*
+- **모델 호출 중 프로세스 강제 종료 → 재기동:** `test_a_process_killed_…` **PASS**. 종료 코드 3(모델 진입 직후 `os._exit`), 재기동 프로세스에서 봉인 후 모델 호출 0, UNCERTAIN 1.
+- **nonce 소비:** 재시작 후 재사용 거부, 읽기 전용 소비 불가, 두 OS 프로세스 경합 시 소비자 1명 — **PASS**(`test_v033_nonce_store.py`).
+- **재검증(_revalidate)이 소비 기록으로 권한·만료·키·바인딩을 대체하지 않음:** **PASS**. 변경 없음 상태는 통과. 의도 키 해지 → `INTENT_KEY_NOT_ACTIVE`, 위임 비활성 → `DELEGATION_DISABLED`, 소비되지 않은 nonce → `INTENT_NOT_CONSUMED_FOR_THIS_REQUEST`로 중단. 이를 위해 재검증에 신뢰 루트 전달 경로를 추가하고 전 호출 지점을 맞춤(누락된 `_sign_and_post` 호출 1건을 시험으로 발견·수정).
+- **rev1 의도로 rev2 요청 승인 시도:** 거부(`SCOPE`), 서명 0 — **PASS**.
+- **전체 회귀:** **1014 PASS / 0 FAIL / 12 SKIP** (이전 1007 + 신규 7).
+  - SKIP 8: `test_secret_prompt.py` 실창 시험. `SKILL_COLLAB_GUI_TESTS=1`로만 실행하도록 설계된 옵트인.
+  - SKIP 4: `test_windows_scripts.py`. Windows 호스트 `.venv` 필요 조건.
+
+### 10.2 패키지 (r2 동결)
+- 파일: `D:\User\whpark\skill-collab-watcher-dist\candidates\v0_2_33_r2_intent_wired_candidate.zip`
+- **zip SHA-256 `23579a5c8c6690b5831116410fc623e3a8bbc5c659cb6fdea8628e765fa7c206`, 301,136 B, 111 항목**, CRC 정상, 중복 0, 경로 이탈 0, 링크 0, 민감정보 패턴 0.
+- **트리 SHA-256 `e4ecdc4c9d141ec76be922410dcd0ea1eb8e3598c6df01a80908ccfadf4cd0e0`**
+- 구 ZIP 보존: v0.2.33 `4dc3c701…`, v0.2.32 `cbf95d11…`, v0.2.31 `1df85457…`, v0.2.30 `541cd3f1…`.
+
+### 10.3 독립 리뷰 — **BLOCKED_AUTH**
+- 원격 `collab/requests`에 이 후보(v0.2.32/v0.2.33 명칭·INTENT·CORRECTION)와 연결된 요청 폴더 없음 — 확인 명령 exit=1, 결과 없음.
+- 이 ZIP은 공개 저장소에 올려야 검토 요청이 가능하고, 그 전달 허용이 확인되지 않았음. 게시·전달을 하지 않았음.
+- REQUEST·READY·APPROVAL·모델 호출 0. 기존 R1 재실행 없음. 개발 세션과 분리된 리뷰는 **사용자의 보호 승인 확인 후에만 가능**.
+
+### 10.4 SHADOW·복구 리허설
+- **호스트 SHADOW(라이브 DB 사본, 읽기 전용 URI, 쓰기 차단 전송, 모델 실행기 차단):** 디스패치 0, 대기 8, 모델 0. 라이브 감사 최대 id `23349 → 23350`. 증가 원인은 **실행 중인 라이브 watcher 기록으로 추정**(SHADOW 쓰기 경로 없음, 대조는 미확인). 설치·Task 기반 호스트 SHADOW는 **NOT_RUN**(설치 승인 필요).
+- **복구 리허설(백업 DB 임시 사본):** 백업 파일 불변(`BACKUP_UNCHANGED True`). 사본 무결성 ok. 이력 유지: 작업 12/12 완료, 자동 클레임 5, 감사 22804. `review_intent_nonces` 테이블은 **사본에만** 생성되고 두 번 적용해도 idempotent. 같은 nonce 두 번째 소비 거부.
+- **이행 계획(운영 미적용):** 첫 기동 때 `ensure_auto_tables`가 테이블을 만든다. 구 코드는 추가 테이블을 무시하므로 역호환. 롤백은 테이블 삭제 또는 구 코드 복원. **운영 승인 전 적용 금지.**
+
+### 10.5 운영 상태 전후
+- 라이브 설치 트리 `b0134258…`(v0.2.29) 불변. 설정·위임 해시 불변(이전 검증 기준). GitHub watcher·Notifier 둘 다 Running(읽기 전용 확인).
+- LIVE 설치·활성화 0, 운영 DB 쓰기·이행 0, Task/Notifier 변경 0, 키·정책·위임 변경 0, 신규 모델 호출 0.
+
+### 10.6 차단·미실행 (정직 기록)
+| 항목 | 상태 | 사유·필요 조치 |
+|---|---|---|
+| 독립 리뷰 1회 | BLOCKED_AUTH | 유효 보호 승인·코드 ZIP 전달 허용 없음 |
+| 실제 GitHub 경쟁 쓰기 | NOT_RUN | 쓰기 금지 |
+| 호스트 SHADOW(설치·Task) | NOT_RUN | 설치 승인 필요 |
+| 운영 DB 이행(review_intent_nonces) | BLOCKED | 운영 이행 승인 필요 |
+| 비용 무상한 위험 수용(10단계) | BLOCKED | 사용자 결정 |
+| LIVE 컷오버 | BLOCKED | 최종 승인 필요, 이번 범위 밖 |
+
+- **LIVE_READY = NO.**
