@@ -9,7 +9,7 @@
       "owner": "User approved v0.2.29 LIVE / USD3; Windows Claude Code performed cutover with host verification; GPT accepted host-reported LIVE cutover with first real paid E2E still pending",
       "self_test": "Windows dev actual v0.2.29 5 rounds 1038 passed/12 skipped/0 failed each; 5-window READY and CLI stub 5/5, no duplicate. Prior su_l1 flaky 2/~31, cause unconfirmed, injected fail-closed invariants 10/10. Writer mock 19 passed + 5 rounds 5/5; real repo/DB NOT_RUN.",
       "independent_review": "REQ-COWORK-REVIEW-ARCH-DESIGN-R1-20261122 rev1 COMPLETED, result+receipt remote matched request/package SHA, watcher=0.2.29; Claude BLOCKING0/MAJOR2(F1,F2)/MINOR2, STATIC_ONLY. User Telegram alert $0.77 but GitHub receipt lacks cost field. GPT disposition ACCEPT_WITH_CORRECTIONS__OPTION_B documented in GPT_ARCH_REVIEW_DISPOSITION_r0001_20261122_KST.md; F1 example config stale vs LIVE $3, F2 two gate copies diverge yet ops unified tests already exist. No re-review or LIVE change.",
-      "next_action": "Read-only inspect Windows live v0.2.29 protected signer/validator and implement source-isolated no-cost independent-review authorization with genuine capability; run offline regression and package candidate. No READY/retry/model call or LIVE install until verified. GPT publisher code commit a21bab69... published."
+      "next_action": "Windows live v0.2.29 protected signer/validator READ_ONLY G0, implement cost-free generic independent-review authorization in isolated candidate, zero-fee tests, then approval-gated LIVE change. Publisher remote readback 20/20 static PASS; Python unittest NOT_RUN; no new READY or calls."
     }
   ]
 }
