@@ -1,5 +1,15 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 2026-11-23 KST — code-analyzer 야간 L1 분석 재사용 검토 / 불필요 수정 없음
+
+- **사용자 최신 범위:** `l1-knowledge-updater`는 업무 GPT에 MD 인계, `code-analyzer`는 실제 기능 검토 후 입증된 필요가 있을 때만 수정·배포. 버전 올림·중복 분석기 신설 금지.
+- **원본 검토:** L1Work 공개 `code-analyzer_v0_15_4_1119.zip` 515,581 B / 217 entries / 기존 공개 검증 SHA-256 `11e1da15ee12e750c3652190c348a7fc8e31aa1741876e3c06bc0af3413b16af`, Git blob `1c43503a2a4695400727fb3fb1cd0cb3c49f826b`. ZIP 구성과 `probe_engine.py`/`feature_analysis.py`/`flow_composer.py`/`pec_hop_excerpt_readonly.py`, Procedure/MSC 계약의 실제 내용 정적 확인.
+- **판정:** bounded scope, caller/callee, dispatch/callback, State/Event/IPC, build option, Procedure REQ/CNF, 원본 provenance/PEC, MSC 정책이 기존 제공. **REUSE/NO_CHANGE**, 근거 없는 C++ AST/GraphDB/신규 파서 강제 확장 금지. 정확도·비동기 복잡 조건은 첫 업무 시나리오 E2E의 추가 검증 대상. [전체 검토 결과](CODE_ANALYZER_L1_NIGHTLY_REUSE_REVIEW_r0001_20261123_KST.md).
+- **결과:** `NEW_SOURCE_CHANGE=0`, `NEW_CODE_ANALYZER_ZIP=NOT_BUILT_NOT_NEEDED`, `NEW_PUBLIC_ZIP=NOT_POSTED_NOT_NEEDED`, `STATIC_REVIEW=PASS`; `HOST_G0/REAL_L1_ANALYSIS/NEW_REGRESSION/INDEPENDENT_REVIEW=NOT_RUN`. 기존 PUBLIC v0.15.4 보존.
+- **업무 GPT 연결:** [L1Work 야간 분석 인계 r0001](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_KNOWLEDGE_UPDATER_NIGHTLY_MODULE_PROCEDURE_MSC_HANDOFF_r0001_20261123_KST.md) 원격 게시/색인 확인. **NEXT_ONE_ACTION:** 실제 Linux 첫 NR UL Tx Switching 분석에서 누락/오탐 반례를 모아 필요할 때만 Analyzer 최소 변경 범위를 재판정.
+
+---
+
 ## 2026-11-22 KST — P1/P2 전체 설계 평가·F3 진단/P2 패키지 관계 안전 보완
 
 - **설계 종합판정:** `RETAIN_WITH_TARGETED_IMPROVEMENT`. 기존 브리프 → 현재 Work CURRENT → 필요한 근거/영수증, P2 200건 예산·부분 결과·오류 격리 유지. 핵심 미해결은 하드코딩된 6경로/키워드 오분류, 같은 Work의 질문별 하위 근거 확장, 원격/호스트 최신성, A4/Windows 실제 실측.
