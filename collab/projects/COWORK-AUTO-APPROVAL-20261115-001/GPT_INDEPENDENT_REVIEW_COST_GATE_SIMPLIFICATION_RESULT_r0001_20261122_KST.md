@@ -32,3 +32,14 @@
 ## 3. 다음 실행 한 가지
 
 Windows Claude Code가 현 LIVE v0.2.29의 보호 signer/validator/watcher 호출 경로를 먼저 **읽기 전용** 확인하고, 그 결과에 근거해 기존 Work에서 수정 가능한 격리 소스·무과금 시험·개발 후보 패키징까지 진행. 운영 설치/위임/서명·READY 변경은 유효 승인 및 실호스트 검증 전 **NOT_RUN**. 이 과정에서 새로운 유료 리뷰는 요청하지 않음.
+
+
+### 원격 실물 SHA-256 (UTF-8 실제 바이트)
+
+- SHA-256 구현의 표준 검증 벡터 `abc` PASS. GitHub main 원격 각 파일 원문을 다시 가져와 계산한 값:
+  - `collab/ops/review_request_gate.py`: `0f33921fabaffc8718f9900d233b1caeaa2362e194e9f4ffe07de78b8f2e4543`
+  - `collab/ops/submit_review_request.py`: `825a0a18cdb57fe706ee033ea4a19a209f320270270b79a5d2faf6cd890c195e`
+  - `collab/ops/tests/test_review_request_gate.py`: `2872bf5ca3cc4979066c2e0be1ca00f734cf8ff05db6ac4458086b5502833d31`
+  - `collab/ops/tests/test_submit_review_request.py`: `c2ef83c098583e90614f993a12baa4d9b59b8c2f6c98b19ca7167fb72220fa55`
+- GitHub 원격 blob readback = PASS; 정적 로직 점검 20/20 PASS. Python unittest 및 Windows 호스트 E2E는 이 결과의 PASS 범위에 포함하지 않음.
+
