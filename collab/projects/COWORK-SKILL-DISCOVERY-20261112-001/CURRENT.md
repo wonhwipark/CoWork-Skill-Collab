@@ -1,5 +1,17 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 2026-11-22 KST — P1/P2 R1 F1~F3 수정·로컬 시험 완료 / Windows E2E 전 상태
+
+- **GPT 후속 실행:** 기존 R1 `ACCEPT_WITH_CHANGE`의 **F1(200 초과 관계 스캔 crash)·F2(Windows 드라이브 경로 사전 차단)** 수정, **F3(`choose()`의 무조건 skill fallback/부분문자열 오분류)** 운용 문서화. 범위 확장·라우터 정책 변경 없음.
+- **직접 시험:** 격리 Linux Python 3.13.5 `unittest discover -s collab/dashboard/tests -p test_context_query.py -v` **13/13 PASS**(기존 9 + 신규 4), `py_compile` PASS. 201개 타 Work REQUEST에서도 `snapshot()` crash 0, `relations_state=RELATIONS_SCAN_LIMIT_EXCEEDED`·`relations=[]`·미검증 경고 반환. 200개 경계·Windows 경로 stat 접근 0 검증. 모델 없는 30질문 라우팅 출력 기록(정확도/A4 E2E 아님).
+- **원격 코드:** `collab/dashboard/context_query.py` Git blob `8086c2b91f67c6c99528a7fcd83fe7df34d71559` (SHA-256 `a38465c3de7439e2594c9f42cc3f434b4c5ae7e19a5b597db0643a3a5848b59c`); `collab/dashboard/tests/test_context_query.py` blob `6ff548b5cd4278218024c2738f940c11ac63dc49` (SHA-256 `d520dd11b3e62a0daa54e7a32c99bfd5809c43c83ea8b1ef62630444c531b9b1`). 두 파일 원격 readback PASS.
+- **상세:** [F1~F3 후속 수정·시험 결과](P1_P2_R1_F1_F3_PRE_E2E_REMEDIATION_RESULT_r0001_20261122_KST.md); [P1/P2 적용 가이드 §6](P1_P2_CONTEXT_APPLICATION_GUIDE_r0001_20261120_KST.md).
+- **정확한 상태:** `F1_F2_CODE=POSTED_AND_LOCAL_TEST_PASS`; `F3_KNOWN_LIMITATION=DOCUMENTED`; `ROUTER_PROBE=30_EXECUTED`; `WINDOWS_CODE_REGRESSION=NOT_RUN`; `WINDOWS_CLAUDE_E2E=NOT_RUN`; `A4_BENCHMARK=NOT_RUN`; `INDEPENDENT_REVIEW_R1=COMPLETED_STATIC`, **보완분 추가 독립 리뷰 NOT_RUN**. 기존 R1 REQUEST/READY/영수증/보호 승인·운영 LIVE·L1Work UI 불변, 추가 비용 0.
+- **NEXT_ONE_ACTION:** 최신 `main` 및 수정 코드 SHA를 실제 Windows Claude Code 세션에서 재조회 후 [기존 Windows E2E r0002](WINDOWS_P1_P2_READONLY_E2E_EXECUTION_REQUEST_r0002_20261121_KST.md)로 **13건 로컬 시험 → Q1~Q5·맥락 실제 자동 로딩** 검증. 이 단계는 아직 호스트 접수·실행하지 않았으며 기존 승인의 모델/비용 경계 유지.
+
+---
+
+
 ## 2026-11-22 KST — P1/P2 R1 수동 승인·유료 독립 리뷰 실행 근거 (Windows 확인)
 
 - **결과:** [CLAUDE_P1P2_R1_MANUAL_APPROVAL_RESULT_FOR_GPT_20261122.md](CLAUDE_P1P2_R1_MANUAL_APPROVAL_RESULT_FOR_GPT_20261122.md) (commit `d2a8e0d4ed70`). 사용자 명시 승인(최대 USD 3.00, 호출 1회)으로 기존 R1에 공식 승인 도구를 정확히 1회 실행: `APPROVAL_SIG` `bb59ae8b3b19` → `READY` `4d3581a8fc6c`(마지막) → `DISPATCH_1` `aa39cbe8cfa4` → `REVIEW_RESULT_1` `f37468364a0f` → `RECEIPT_1` `e05b860e0c0d`.
