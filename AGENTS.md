@@ -24,10 +24,13 @@
 
 ## GPT 정식 리뷰 실행 책임 — “리뷰체계 최신버전 확인 후 다시 리뷰요청해줘” (2026-11-22)
 
+**최신 r0006 우선(2026-11-22):** GPT는 사용자 명시적 리뷰 요청을 받으면 **Windows LIVE 설정 없이** REQUEST/ZIP 형식·실제 바이트 SHA/CRC·기존 ID/결과 중복과 Git source pin을 검증하여 정식 Commit A/B를 직접 게시한다. Windows 정책/위임/비용·서명·READY는 실제 Windows 보호 signer/watcher가 검증한다. 아래 과거 사전 정책 확인 필수·호스트 위임 문구는 **REQUEST 게시 전 필수조건으로 적용하지 않는다**. 제출·실행 승인 경계를 혼동하지 말고 [정본 r0006](collab/ops/CONTRACTS/PRE_READY_SOURCE_PIN_PREFLIGHT_V1.md)을 따른다.
+
+
 - 사용자가 설계 중인 **해당 GPT 대화창**에서 “리뷰요청해줘” 또는 “리뷰체계 최신버전 확인후 다시 리뷰요청해줘”라고 실행 지시하면 **정식 Windows Claude Code 독립 리뷰 요청**이다. 계약 조회·문서 요약·자체 검토로 요청을 대체하지 않는다. 같은 대화에서 마지막으로 확정한 동일 Work/설계·구현 산출물만 대상으로 삼는다.
 - **GPT 책임 ② — 대상 확정:** 최근 사용자 수정·확정 사항 → 해당 Work CURRENT/열린 결과·리뷰 이력 → 실제 GitHub 원본 revision·경로·SHA/크기·시험 증거를 순서대로 확인한다. 오래된 인계서나 이전 ZIP보다 마지막 확정 산출물 우선. 기존 REQUEST/READY/결과·영수증 및 불확실 이력부터 조회해 **동일 건 중복 접수·재모델 호출을 차단**한다. 정확한 Work·검토 목적/포함·제외 범위·소스 고정이 가능하면 사용자에게 같은 입력을 재요구하지 않는다.
-- **GPT 책임 ③ — 실제 정식 제출:** 필요한 비민감 리뷰 입력이 이미 있으면 재생성하지 않고 검증·재사용한다. ZIP 실제 바이트·SHA-256·크기·CRC/경로·REQUEST 필수 필드·원본 고정·LIVE 정책/승인 경계를 사전검사한 뒤, 허용된 제출 수단으로 **Commit A(REQUEST.md와 정확한 ZIP 같은 커밋) → 원격 검증 → Commit B(SOURCE_PIN.json이 A를 가리킴) → 원격 readback**까지 진행한다. 가능한 API/도구와 승인 범위를 실제 조회·활용하며, **인계 MD·ZIP Base64 후보·REQUEST 초안·CURRENT/TRACKER 갱신만으로 종료하지 않는다**. 이 자료를 만든 후 즉시 실제 제출 가능 여부까지 판정한다.
-- **실제 제출 불가능할 때:** Windows 실제 LIVE 정책/보호 signer 사전검사가 필요한데 현재 GPT에 접근 수단이 없으면, **정식 요청 미접수**로 정확히 판정하고 누락 게이트 한 가지를 보고한다. 별도 Windows 작업을 실행했다고 주장하거나 대체 제출/무단 서명·READY·비용 우회를 하지 않는다. 반복적인 인계서·새 후보·새 Work 생성으로 문제를 숨기지 않는다. 사용자가 요청한 ②③을 수행 가능한 범위에서 모두 끝낸 다음에만 이 차단을 보고한다.
+- **GPT 책임 ③ — 실제 정식 제출:** 필요한 비민감 리뷰 입력이 이미 있으면 재생성하지 않고 검증·재사용한다. ZIP 실제 바이트·SHA-256·크기·CRC/경로·REQUEST 필수 필드·원본 고정을 사전검사한 뒤, 허용된 제출 수단으로 **Commit A(REQUEST.md와 정확한 ZIP 같은 커밋) → 원격 검증 → Commit B(SOURCE_PIN.json이 A를 가리킴) → 원격 readback**까지 진행한다. 가능한 API/도구와 승인 범위를 실제 조회·활용하며, **인계 MD·ZIP Base64 후보·REQUEST 초안·CURRENT/TRACKER 갱신만으로 종료하지 않는다**. 이 자료를 만든 후 즉시 실제 제출 가능 여부까지 판정한다.
+- **실제 제출 불가능할 때:** GPT가 GitHub 정식 Commit A/B 원격 게시·원본 해시/중복 검증 자체를 수행할 도구·권한이 없으면, **정식 요청 미접수**로 정확히 판정하고 누락 게이트 한 가지를 보고한다. 별도 Windows 작업을 실행했다고 주장하거나 대체 제출/무단 서명·READY·비용 우회를 하지 않는다. 반복적인 인계서·새 후보·새 Work 생성으로 문제를 숨기지 않는다. 사용자가 요청한 ②③을 수행 가능한 범위에서 모두 끝낸 다음에만 이 차단을 보고한다.
 - **최종 보고 필수:** 확인한 Work ID/대상·원본 SHA, 정식 `collab/requests/<RID>/REQUEST.md`와 `SOURCE_PIN.json` **원격 실재·commit A/B 확인 여부**, 상태 `SUBMITTED_AWAITING_PROTECTED_SIGNER` 또는 `NOT_POSTED/BLOCKED`, 이후 signer/READY/Claude 리뷰는 별도 판정. **“리뷰 요청 완료”는 REQUEST·ZIP·SOURCE_PIN 원격 검증이 실제 PASS일 때만 사용**한다. 상세 판단 기준은 [REQUEST/PIN 계약의 GPT ②③ 게이트](collab/ops/CONTRACTS/PRE_READY_SOURCE_PIN_PREFLIGHT_V1.md)를 따른다.
 
 ## 자연어 정식 리뷰 요청 — 표준 생성 경로 (2026-11-21)
@@ -36,14 +39,16 @@
 
 - 정본: [두 커밋 생성 및 검증 절차](collab/ops/CONTRACTS/PRE_READY_SOURCE_PIN_PREFLIGHT_V1.md), 단일 게시기 `collab/ops/submit_review_request.py`, 정책 검사 `review_request_gate.py`, PIN 검사 `review_pin_preflight.py`.
 - **Base64로 보관된 설계 후보의 Windows 접수 경로:** 동일 Work의 원격 고정 REQUEST 초안·Base64 ZIP이 이미 있으면 `collab/ops/review_staged_submission.py`의 **기본 dry-run**으로 원본/Work/크기/SHA·Windows 실제 LIVE 정책을 검사하고, 허용된 경우에만 `--publish`로 기존 단일 게시기를 호출한다. 정확한 절차는 [접수 보조 및 Windows 연결 게이트](collab/projects/COWORK-AUTO-APPROVAL-20261115-001/REVIEW_INTAKE_ONE_SHOT_HOST_INTEGRATION_r0001_20261122_KST.md). **호스트 자동 hook은 아직 미설치**이며 이 파일·일반 GitHub 후보/문서 게시만으로 Windows 접수나 signer/READY를 완료했다고 보고하지 않는다. 사용자가 긴 프롬프트를 반복 입력하도록 하지 않되, Windows host 접근이 실제로 없으면 HOST_BLOCKED로 분리한다.
-- **정식 요청 생성은 단일 게시기 우선**: Windows LIVE 정책과 입력 ZIP으로 게시 전 검증 → 동일 Commit A에 REQUEST+ZIP → 원격 SHA/bytes 확인 → Commit A를 가리키는 PIN을 별도 Commit B에 게시 → 로컬 PIN 검사·원격 확인. 실패하면 `BLOCKED`, 새 ID 남발·이전 요청 재큐잉·수동 우회 금지. GitHub 파일 작성 도구로 직접 쓰는 경우에도 **동일 절차·각 게이트 실측** 없이는 정식 제출 판정 금지.
+- **정식 요청 생성은 단일 게시기 우선**: Windows LIVE 설정이 아닌 입력 REQUEST·ZIP 자체 무결성을 게시 전 검증 → 동일 Commit A에 REQUEST+ZIP → 원격 SHA/bytes 확인 → Commit A를 가리키는 PIN을 별도 Commit B에 게시 → 로컬 PIN 검사·원격 확인. 실패하면 `BLOCKED`, 새 ID 남발·이전 요청 재큐잉·수동 우회 금지. GitHub 파일 작성 도구로 직접 쓰는 경우에도 **동일 절차·각 게이트 실측** 없이는 정식 제출 판정 금지.
 - 게시기의 `SUBMITTED_AWAITING_PROTECTED_SIGNER`는 **서명/READY/Claude 리뷰 완료가 아님**. Windows 보호 signer의 실제 승인·위임/비용/만료/중복 검사와 READY 마지막 게이트는 별도. 자동 대상 외라면 유효한 수동 승인만 사용; 스킬 ID 변경으로 우회 금지.
-- GPT가 실제 Windows `reviewer.config.json` 및 보호 자격을 읽을 수 없으면 **해당 검증·게시 단계는 Windows Claude Code의 표준 게시기 실행으로 위임**하고, 이 대화/문서만으로 실행됐다고 주장하지 않는다. 현재 발화의 승인 범위보다 유료 호출·운영 변경을 확대하지 않는다.
+- GPT는 실제 Windows `reviewer.config.json` 및 보호 자격을 읽을 필요 없이 **정식 REQUEST+PIN 게시까지 수행**한다. GitHub commit A/B 원격 readback이 되지 않으면 완료로 보고하지 않는다. Windows 실제 LIVE 정책·보호 서명·READY/유료 모델 실행은 호스트의 기존 보호 경로에서 별도로 검사하며 현재 승인 범위를 확대하지 않는다.
 - **새 창 적용 경계:** 이 저장소의 AGENTS/CLAUDE 및 ChatGPT 프로젝트가 읽는 CONTEXT_BRIEF로 진입을 안내하지만, 모든 GPT 세션의 자동 조회·Windows 설치·호스트 강제 hook은 별도 실측 전 `NOT_VERIFIED`. 기존 스크립트를 거치지 않는 GitHub API 쓰기까지 기술적으로 막힌 것은 아니다.
 
-## CoWork 리뷰 REQUEST 사전 검증 (신규 요청만)
+## CoWork 리뷰 REQUEST 게시/실행 승인 분리 (r0006 / 2026-11-22)
 
-GPT가 새 REQUEST를 작성·게시하기 **전에** `collab/ops/CONTRACTS/REVIEW_TIER_TOKEN_BUDGET_V1.md`의 신규 'REQUEST 게시 전 정책 호환성 필수 게이트'를 따라야 한다. `collab/ops/review_request_gate.py`의 `select` / `check`에 Windows 실제 LIVE `reviewer.config.json` 및 신규 ZIP 바이트를 사용하고 `PASS_PREPUBLICATION_ONLY`를 확인한다. LIVE 설정 직접 조회가 불가능하면 Windows Claude Code에 읽기 전용 검증을 요청하고, 검증 전에는 REQUEST를 게시하지 않는다. GPT가 개발 예정 정책명을 선택해 기존 LIVE를 막는 자기 참조를 금지. SOURCE_PIN/서명/READY는 기존 계약대로 별도 검증하며 이 절차로 유료 모델을 호출하거나 운영 설정을 변경하지 않는다.
+- GPT 게시 전 필수: `review_request_gate.check_request_for_publication()`의 schema·정적 run_policy_ref(`POLICY-STATIC-V1`/USD3 unified)·실제 ZIP 크기/SHA-256/CRC·경로 검증, 기존 ID/영수증/UNCERTAIN·Git commit A/B 원본 고정. `submit_review_request.py`의 `--live-config`는 **선택적 참고**이며 생략해도 REQUEST+PIN 게시 가능. GitHub API 게시도 동일 입력/커밋/원격 readback을 만족해야 한다.
+- Windows 승인 전 필수: 실제 LIVE reviewer.config/delegation/비용/승인 서명·READY·중복 검증은 **계속 강제**한다. GPT가 작성한 policy/status/문서만으로는 승인이나 서명을 대체할 수 없고, READY 없이는 모델 호출 0. 정식 REQUEST 게시 완료와 Claude 리뷰 완료는 별도 판정.
+- 과거 `REVIEW_TIER_TOKEN_BUDGET_V1.md`의 2026-11-17 **REQUEST 게시 전 Windows LIVE 검증 의무 조항은 r0006에 의해 대체**. 호스트 자체 호환성 검사 CLI `review_request_gate.py select/check`는 삭제하지 않으며 읽기 전용 진단으로 유지. 새 리뷰/재큐잉/정책·키·위임/운영 변경에 대한 추가 권한을 이 문서가 부여하지 않음.
 
 ## 후속 조치가 있는 응답의 마무리
 

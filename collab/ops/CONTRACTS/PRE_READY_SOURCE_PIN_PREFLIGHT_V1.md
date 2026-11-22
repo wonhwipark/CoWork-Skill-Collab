@@ -1,5 +1,18 @@
 # CoWork REVIEW REQUEST/PIN/ZIP 게시 전 필수 정합성 검증 V1
 
+## 현행 규칙 r0006 — GPT REQUEST 출판과 Windows 실행 승인 분리 (2026-11-22 KST)
+
+**적용 우선순위:** Windows Claude Code 독립 리뷰 R1 `REQ-COWORK-REVIEW-ARCH-DESIGN-R1-20261122`과 GPT 판정 `ACCEPT_WITH_CORRECTIONS__OPTION_B` 반영. **이 절이 아래 r0005 및 이전 2026-11-17 'Windows LIVE 선검사 필수' 문구보다 우선**. 기존 완료·고정 요청을 소급 수정하거나 READY를 재큐잉하지 않는다.
+
+- **GPT 단계 ②**: 동일 대화의 마지막 확정 Work·설계/구현 입력 revision·실제 ZIP/문서·이미 존재하는 REQUEST/READY/결과·영수증/UNCERTAIN을 직접 확인한다. 사용자가 **“리뷰요청해줘”**라고 명시한 경우에만 제출. 초안·handoff만 만들고 종료하지 않는다.
+- **GPT 단계 ③**: `collab/ops/review_request_gate.py:check_request_for_publication`으로 schema, `unified` 정적 `POLICY-STATIC-V1` 및 USD3 표준, ZIP 크기/SHA-256/CRC/경로/중복 필드 검사. 실제 LIVE config 조회 없이 **Commit A(REQUEST+정확한 ZIP 같은 트리) → SHA/바이트 원격 확인 → Commit B(SOURCE_PIN이 A를 지시, repo_id JSON 문자열) → PIN/REQUEST/ZIP 원격 재조회**. `submit_review_request.py --publish` 또는 동등 게이트를 충족한 GitHub connector/API 두 커밋 게시. 외부 호스트 설정이 없어서 차단하지 않는다.
+- `submit_review_request.py --live-config`는 **선택적 참고 검사**이며 PASS/FAIL이 GitHub 접수 권한·모델 실행 권한을 부여하거나 REQUEST 출판을 차단하지 않는다. Windows `review_request_gate.py select/check`는 로컬 정책 진단용으로 보존. 과거 packaged `tools/review_request_gate.py`와 현재 GPT `collab/ops/review_request_gate.py`는 버전이 달라 운영 ZIP 원본을 직접 동일하게 고치지 않는다. GPT 게시기 기준 정본은 `collab/ops/`, 차기 watcher 후보 packaging 시 gate 의미/테스트 정합성을 확인한다.
+- **Windows 운영 보호 게이트 불변**: validator, 실제 LIVE policy, 위임 allowlist/만료/enabled_at·단일 USD3 한도, source pin 고정, 공식 서명·READY 마지막, 중복·UNCERTAIN 및 비용 검증 통과 시에만 Claude 모델 호출. 공개 GitHub REQUEST·GPT 주장·문서 게시만으로 AUTO signer 권한을 만들지 않는다. 잘못된 정책/비용/범위는 REQUEST를 보존하되 READY/모델 호출 0.
+- **완료 판정 분리**: `SUBMITTED_AWAITING_PROTECTED_SIGNER` = Commit A/B 및 원격 검증 완료일 뿐 승인/READY 아님. `READY_POSTED`와 `REVIEW_RESULT/RECEIPT_VERIFIED`는 각각 실제 근거로 확인. 원격 게시 중단·충돌 또는 미확인은 자동 재게시 금지·부분 상태 정산. 사용자 명시 리뷰 지시 없이 문서 변경/Actions로 새 유료 요청 생성 금지.
+- **F1/F2 현행 근거 구분**: Windows v0.2.29 LIVE `POLICY-STATIC-V1=USD3`는 11/20 호스트 보고 및 이번 정식 리뷰 결과 체인으로 확인. v0.2.29 ZIP 내부 `config/reviewer.config.example.json`의 USD1은 이전 예제이지 현행 운영값이 아님. `collab/ops/tests/test_review_request_gate.py`에는 unified $3 및 구 값 거부 테스트가 존재하므로 시험 없었다는 주장은 부정확. 두 코드 사본 드리프트는 차기 packager 정합성 과제이며 운영 ZIP 불변.
+
+---
+
 - 제정: 2026-11-21 KST
 - 직접 원인: `REQ-L1-KNOWLEDGE-PREFLIGHT-V020-R1-20261121`의 SOURCE_PIN이 **ZIP만 있는 커밋**을 참조했고, 해당 커밋에 REQUEST가 없어서 Windows watcher가 `COMMIT_UNREADABLE / WAIT_INPUT`으로 정지.
 - 추가 원인: `skill_id=knowledge_analysis_preflight`가 실제 자동 위임 허용 집합에 없음. 자동 signer가 허용되지 않는 요청을 수동 승인 없이 실행할 수 없음.

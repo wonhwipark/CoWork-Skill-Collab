@@ -1,5 +1,13 @@
 # CoWork 리뷰 등급 / 토큰·비용 예산 계약 V1
 
+## 2026-11-22 r0004 — 정식 REQUEST 출판과 Windows 실행 승인 분리 (현행 우선)
+
+- Claude 아키텍처 R1 및 GPT `ACCEPT_WITH_CORRECTIONS__OPTION_B` 수용. 사용자 명시 리뷰 요청의 GPT 게시 단계에는 **Windows LIVE `reviewer.config.json` 사전 조회를 필수로 요구하지 않는다**. GPT는 현재 Work·요청 형식·정적 unified `POLICY-STATIC-V1` USD3·ZIP SHA/크기/CRC·SOURCE_PIN 두 커밋·중복을 검증해 정식 REQUEST를 게시한다. 단, 실제 LIVE 등록 금액이나 자동 위임 적합성을 주장하지 않는다.
+- Windows 운영 watcher/보호 signer에서 실제 정책·건당 예산·위임 범위·enabled_at·만료·서명·READY·중복/UNCERTAIN 검증은 그대로 유지하며, 부적합한 REQUEST가 게시돼도 **READY 및 모델 호출 0**. 공개 GitHub 문서는 유료 사용 권한이 아니다.
+- 아래 2026-11-17 `REQUEST 게시 전 정책 호환성 필수 게이트`는 **이전 설계 이력으로서 신규 게시 필수조건에 적용하지 않는다**. `review_request_gate.py select/check --live-config`는 호스트 진단용. 운영 v0.2.29 `POLICY-STATIC-V1=USD3` 호스트 확인과 ZIP에 포함된 과거 예제 USD1의 차이를 혼동하지 않는다. [r0006 최신 제출 계약](PRE_READY_SOURCE_PIN_PREFLIGHT_V1.md)과 [GPT 판정](../../projects/COWORK-AUTO-APPROVAL-20261115-001/GPT_ARCH_REVIEW_DISPOSITION_r0001_20261122_KST.md)을 우선한다.
+
+---
+
 ## 2026-11-19 KST — 최신 승인: 신규 독립 리뷰 단일 건당 USD 3.00 (r0003)
 
 - **사용자 명시 승인:** 기존 일반/설계 비용 분할 대신 모든 신규 정식 Claude Code 독립 리뷰에 **동일한 건당 최대 USD 3.00**, 일·월 호출 횟수 및 누적 비용 제한 **없음**. R0~R3 리뷰 깊이는 참고·범위 선택만 가능하며 유료 등급·자동 승급의 근거 아님.
@@ -18,7 +26,7 @@
 - **필수 선행 검증**: 설치된 로컬 config로 `select/check --intent design --required-budget-usd 3.00` 및 실제 ZIP·REQUEST bytes 고정 PASS, 이어서 호스트 기존 `approve_request.py check`와 **실제로 유효한 수동 서명/승인 자격** PASS. `POLICY_COMPATIBLE_NOT_APPROVED`는 승인 자체가 아니다. 호스트 허가/비용 범위가 부족하면 REQUEST/READY/모델 0. 보호 위임 USD 1, 운영 watcher/config/키/DB/Task 변경 0. 다른 요청·ID·revision은 이 예외로 승인하지 않음.
 - Commit A 실제 원격 readback/SOURCE_PIN(repo_id 문자열)/보호 서명/READY 마지막·중복·UNCERTAIN·모델 호출 1회·영수증 원칙 유지. 새 POLICY-STATIC-V1 통합 기본은 **실제 별도 배포가 검증되기 전까지 LIVE라고 주장하지 않음**.
 
-## REQUEST 게시 전 정책 호환성 필수 게이트 (2026-11-17 재발 방지)
+## [과거 설계·신규 제출 비적용] REQUEST 게시 전 정책 호환성 필수 게이트 (2026-11-17 이력)
 
 **모든 신규 CoWork 정식 리뷰 REQUEST는 게시 이전에 Windows 설치 LIVE의 실제 reviewer.config.json 기준으로 `collab/ops/review_request_gate.py`를 실행해 호환성을 확인한다.** GPT는 현행 설치 상태를 추정하거나 개발 후보에만 존재하는 정책명을 선택하지 않는다. 코드·문서 배포만으로 이 단계가 자동 실행됐다고 표시하지 않는다.
 
