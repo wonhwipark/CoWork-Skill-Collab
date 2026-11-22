@@ -14,10 +14,10 @@
 | `submit_review_request` 스킬 자동 preflight | `--delegated-skill`에 없으면 GitHub Commit A 전 `AUTO_NOT_ELIGIBLE_SCOPE` | 게시자는 스킬 허용 여부를 판정하지 않음. `approval_route=auto`는 희망 경로 표시일 뿐. PIN 검사도 읽기 전용 manual 경로로 고정 | **실제 Windows signer의 scope 검사는 여전히 그대로** |
 | 불변 보호 | source pin, ZIP SHA/CRC, 원격 두 커밋, 동일 요청 중복·READY 금지 | 유지 | 운영 보호 signer·권한·모델 호출 자체 미변경 |
 
-- 코드 게시: commit `a21bab69dcf1bd2f4f2525fe36e6b6235be567cf` (실제 원격 조회와 변경 파일별 readback 별도 확인).
+- 코드 게시: commit `a21bab69dcf1bd2f4f2525fe36e6b6235be567cf`; 과거 가격 진단 CLI에서 신규 독립 모드가 잘못 노출되는 문제 보완 commit `ea3a4811e5208618fcb714786086b596fdf86f99`. 파일별 원격 Git blob 재조회 확인.
 - 변경 코드 2개·회귀 소스 2개: `collab/ops/review_request_gate.py`, `collab/ops/submit_review_request.py`, `collab/ops/tests/test_review_request_gate.py`, `collab/ops/tests/test_submit_review_request.py`.
 - 테스트 추가: 가격 설정 손상/유무와 무관한 게시, 명시 가격 인수 거부, 미등록 policy 거부, 잘못된 자동 scope·미제공 scope라도 REQUEST 게시 가능/서명 및 READY 불가. 기존 고정 입력·중복 회귀 보존.
-- 판정: `SOURCE_EDIT=PASS`; `REMOTE_READBACK=PENDING`(게시 후 별도 확인); `PYTHON_TEST=NOT_RUN`(이 GPT 연결에서 GitHub 소스를 Python 컨테이너로 내려받는 네트워크 미제공); `WINDOWS_LIVE=UNCHANGED`; `INDEPENDENT_REVIEW=NOT_REQUESTED`; `MODEL_CALLS_THIS_CHANGE=0`.
+- 판정: `SOURCE_EDIT=PASS`; `REMOTE_READBACK=PASS`, `STATIC_CONTRACT_ASSERTIONS=20/20 PASS`(실제 Python 단위시험 아님); `PYTHON_TEST=NOT_RUN`(이 GPT 연결에서 GitHub 소스를 Python 컨테이너로 내려받는 네트워크 미제공); `WINDOWS_LIVE=UNCHANGED`; `INDEPENDENT_REVIEW=NOT_REQUESTED`; `MODEL_CALLS_THIS_CHANGE=0`.
 
 ## 2. Windows 전환 목표 — 아직 구현/설치 아님
 
