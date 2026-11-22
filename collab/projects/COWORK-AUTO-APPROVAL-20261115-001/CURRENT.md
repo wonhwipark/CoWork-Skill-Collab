@@ -1,5 +1,14 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-22 KST — r2 독립 리뷰 확인 / GPT 실물 검증 보완 필요 / LIVE 보류
+
+- **판정:** [독립 리뷰·GPT 추가 검증](GPT_V033_R2_INDEPENDENT_REVIEW_DISPOSITION_r0001_20261122_KST.md). INDEPENDENT_REVIEW=COMPLETED(BLOCKING 0), GPT_DISPOSITION=HOLD_FOR_CORRECTIONS, **LIVE_READY=NO**.
+- **실제 도착:** `REQ-COWORK-V033-R2-WATCHER-REVIEW-20261122` rev1. DISPATCH 22:57:05 KST → RESULT COMPLETED → RECEIPT ok=true, 정확 r2 SHA 일치. Windows 감사 보고 디스패치 1/중복 0/비용 USD 1.057171; 영수증 자체에는 비용 없음.
+- **GPT 직접 확인:** ZIP SHA `23579a5c8c6690b5831116410fc623e3a8bbc5c659cb6fdea8628e765fa7c206`/301136 B/111항목·CRC·경로 PASS. 원격 승인 메타데이터·바인딩·APPROVAL→READY 순서 대조. 보호 trust root 기반 GPT 암호서명 재검증 NOT_RUN.
+- **추가 보완:** F1 소비 후 원본 REVIEW_INTENT 만료 재검증 누락(실제 함수+합성 의존성에서 만료 후 allow 재현), F2 RELEASE_MANIFEST version0.2.26/21불일치/13부재 참조, F3 A 내부 의도에 source_commit=A를 요구하는 Git 자기 참조(소스 충돌, 실제 Git 발행시험 NOT_RUN). 이는 독립 리뷰의 BLOCKING 지적과 구별. 완료 리뷰의 2시간 APPROVAL이 무효라는 뜻이 아님.
+- **유지:** Windows 전체 회귀 1014/0/12는 기존 호스트 보고. 운영·nonce 이력 보존, 감사 귀속 UNVERIFIED. 이번 새 리뷰 요청·기존 재실행·LIVE 변경 0. 후보 r2/승인/READY/결과/영수증 동결.
+- **NEXT_ONE_ACTION:** 기존 Windows 지시서의 최상단 후속 보완 범위(F1/F2/F3)로 별도 개발 후보·관련 시험·회귀·패키징을 한 묶음으로 수행. 정식 접수·서명·리뷰 대기 단계는 완료됐으므로 반복 금지. 새 후보를 r2 리뷰로 승인 처리하거나 자동 추가 리뷰하지 않음.
+
 ## 2026-11-22 KST — r2 정식 REQUEST·보호 승인·독립 리뷰 1회 완료 (LIVE_READY=NO)
 
 - **결과:** [CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md](CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md) §11 (commit `28a642811ccb`).

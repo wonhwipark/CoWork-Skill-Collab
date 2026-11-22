@@ -1,0 +1,55 @@
+{
+  "scope": "GPT offline supplementary check; actual function/pure gate with synthetic dependencies; no signer, network, host DB or model",
+  "revalidation": {
+    "original_intent_expiry": 1999999999,
+    "now": 2000000000,
+    "delegation_expiry": 2000086400,
+    "observed": [
+      true,
+      "ok"
+    ],
+    "verdict": "FAIL_SECURITY_INVARIANT",
+    "limitation": "Not full pipeline or cryptographic verification; original intent deadline is not persisted or read"
+  },
+  "manifest": {
+    "version": "0.2.26",
+    "mismatches": [
+      "docs/AUTO_APPROVAL.md",
+      "docs/BUDGET_POLICY_CONFIGURATION.md",
+      "docs/CUTOVER_RUNBOOK.md",
+      "skill_collab_watcher/__init__.py",
+      "skill_collab_watcher/auto_approval.py",
+      "skill_collab_watcher/auto_policy.py",
+      "skill_collab_watcher/cli.py",
+      "skill_collab_watcher/fake_runner.py",
+      "skill_collab_watcher/orchestrator.py",
+      "skill_collab_watcher/review_runner.py",
+      "skill_collab_watcher/state_store.py",
+      "tests/test_auto_approval.py",
+      "tests/test_auto_policy_gpt_proto.py",
+      "tests/test_phase2_acceptance.py",
+      "tests/test_r1_findings.py",
+      "tests/test_review_budget_policy_v025.py",
+      "tests/test_review_request_gate_tool_v026.py",
+      "tests/test_review_runner_argv.py",
+      "tests/test_v014_budget_tiers.py",
+      "tests/test_v015_token_savings.py",
+      "tests/test_v022_findings.py"
+    ],
+    "missing": [
+      "requirements-crypto-test.lock",
+      "su_l1/README.md",
+      "su_l1/ledger_worker_r0003.py",
+      "su_l1/local_only_contract_r0002.py",
+      "su_l1/local_only_contract_r0003.py",
+      "su_l1/mutants_r0003.py",
+      "su_l1/mutants_su_l1_r0001.py",
+      "su_l1/receipt_publish_sim_r0001.py",
+      "su_l1/su_l1_policy_r0001.py",
+      "su_l1/test_local_only_contract_r0002.py",
+      "su_l1/test_local_only_contract_r0003.py",
+      "su_l1/test_receipt_publish_sim_r0001.py",
+      "su_l1/test_su_l1_policy_r0001.py"
+    ]
+  }
+}

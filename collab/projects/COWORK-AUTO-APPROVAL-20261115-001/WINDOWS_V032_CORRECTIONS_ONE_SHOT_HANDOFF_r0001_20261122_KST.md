@@ -1,3 +1,23 @@
+# r2 리뷰 완료 — 후속 보완 원샷 / LIVE 보류
+저장소: wonhwipark/CoWork-Skill-Collab / 브랜치: main
+Work: collab/projects/COWORK-AUTO-APPROVAL-20261115-001/
+최신 판정: [GPT_V033_R2_INDEPENDENT_REVIEW_DISPOSITION_r0001_20261122_KST.md](GPT_V033_R2_INDEPENDENT_REVIEW_DISPOSITION_r0001_20261122_KST.md)
+
+**이 절이 아래 과거 접수·실행 지시보다 우선한다.** r2 정식 요청 REQ-COWORK-V033-R2-WATCHER-REVIEW-20261122 rev1은 이미 COMPLETED/BLOCKING0, 영수증 ok=true다. 디스패치 대기/승인 재발급/REQUEST·READY 재게시/기존 리뷰 재실행 금지.
+
+다음 개발 범위는 F1/F2/F3를 한 후보에서 묶어 수정→관련 시험→전체 회귀→신규 후보 ZIP과 SHA→같은 Work 결과·CURRENT/TRACKER 게시/원격 검증이다. 완료 시험·백업 복사 반복은 새 변경/실패와 연관된 경우만 수행한다.
+1. F1: 원본 서명 의도와 expires_at·정확 입력 바인딩을 보존하고 서명·READY 직전 현재 trust/시간으로 재검증. 이미 소비된 nonce는 재소비 없이 동일 요청/revision/입력의 소유권만 인정. 만료 후 재개/재시작·키 해지·revision 변경은 서명/READY/모델0 시험.
+2. F3: REQUEST/ZIP Commit A 이후의 고정 의도 snapshot으로 자기 참조 해소. A·SHA·크기·요청/revision/스킬 바인딩 유지, 읽은 snapshot/bytes 고정. 실제 로컬 Git A 생성→의도 서명/추가→PIN/검증 흐름을 시험(운영 보호 키 대신 시험 키). commit 무관 mock만으로 발행 PASS 처리 금지.
+3. F2: 실제 후보 버전/포함 파일로 RELEASE_MANIFEST 재생성. 해시·크기·누락/추가·자기 hash 제외 규칙 점검. 현재 r2에서 version0.2.26/21불일치/13부재 참조 확인.
+4. 신규 후보는 development_not_for_deployment. r2 입력 SHA23579a5c8c6690b5831116410fc623e3a8bbc5c659cb6fdea8628e765fa7c206와 기존 ZIP·승인·결과·영수증 보존. 새 SHA를 r2 완료 리뷰로 승격하거나 자동 추가 리뷰·PUBLIC 전달하지 않는다. 이번 정확 r2 공개 허용을 다른 SHA로 확대하지 않는다.
+5. 실운영 GitHub 경쟁 쓰기·LIVE 설치·운영 DB/키/정책/위임/Task/Notifier 변경 미실행. 현재 DB·nonce·완료 이력 보존; DROP/과거 DB 교체 금지. 감사 귀속 UNVERIFIED 유지.
+
+본 문서 게시만으로 Windows 실행 완료가 아니다. 이번 GPT는 직접 ZIP/소스 검증·오프라인 함수 단위 재현만 수행했다. LIVE_READY=NO. Windows 원본/실행 권한이 없는 환경은 해당 실행만 BLOCKED_HOST_ACCESS로 구분하며 완료로 보고하지 않는다.
+
+---
+
+## 보존된 이전 r2 접수 지시 (완료 이력; 다시 실행하지 않음)
+
 # r2 동결 후보 — PUBLIC 게시 허용 확인 / 정식 리뷰 접수·실행
 저장소: wonhwipark/CoWork-Skill-Collab
 브랜치: main
