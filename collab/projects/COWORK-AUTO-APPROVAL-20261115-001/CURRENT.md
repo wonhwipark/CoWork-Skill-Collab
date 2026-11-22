@@ -1,5 +1,14 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-22 KST — GPT v0.2.31 후보 판정: 개발 조건부 수용 / LIVE HOLD
+
+- **GPT_DISPOSITION=`ACCEPT_DEVELOPMENT_WITH_CONDITIONS`**. [판정 원본](GPT_V031_INDEPENDENT_IDEMPOTENCY_DISPOSITION_r0001_20261122_KST.md). Windows 자체시험 960 PASS / 0 FAIL / 12 SKIP를 개발 후보 근거로 수용. ZIP 실물 GPT 독립 검증·별도 독립 리뷰·실제 Claude CLI·두 watcher 동시 경합은 NOT_RUN.
+- **COST_UNBOUNDED_LIVE_RISK=USER_ACCEPTANCE_REQUIRED**: `--max-budget-usd` 제거 설계에는 동의하되, 외부 CLI 1회 제한은 단일 실행 내부 과금 상한이 아님. `accounting_reference_usd`는 청구 금액 제한 아님. **LIVE 위험 수용/운영 컷오버 미승인**, 기존 v0.2.29 LIVE 불변.
+- **SCOPE_MANIFEST=`CONDITIONAL_DESIGN_ACCEPTANCE`**: 감시기 자체 서명/임의 확장 없이, 별도 검증된 사용자 의도 및 권한에 바인딩, exact skill·만료·nonce·서명/재사용 차단 필수. 구현 설치/위임 확대/기존 `cowork-context-design` 소급 처리 금지.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 기존 v0.2.31 격리 후보에서 **무모델·무과금 동시 두-watcher 경합 + terminal FAILED/CLAIMED/RUNNING/crash 회귀** → 비민감 결과·CURRENT GitHub main 게시·readback. 이후 사용자 비용 위험 수용 및 별도 LIVE 승인 판단. 기존 REQUEST/READY·모델 재호출/운영 보호 설정 변경 0.
+
+---
+
 ## 2026-11-22 KST — 독립 리뷰 단일 실행·비용 상한 제거 v0.2.31 격리 후보 (LIVE 미적용)
 
 - **결과:** [CLAUDE_INDEPENDENT_REVIEW_IDEMPOTENT_CANDIDATE_RESULT_FOR_GPT_20261122.md](CLAUDE_INDEPENDENT_REVIEW_IDEMPOTENT_CANDIDATE_RESULT_FOR_GPT_20261122.md) (commit `eb61ec398d88`). 신규 독립 리뷰 경로에서 `--max-budget-usd` 전달 제거, 남은 금액 차단(`UNSUPPORTED_DELEGATION_LIMIT`, 금액 0 클레임 거부) 제거. 회계 참고값은 `accounting_reference_usd`로만 기록.
