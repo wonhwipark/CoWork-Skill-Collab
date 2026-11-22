@@ -1,5 +1,14 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-23 KST — Viewer v0.5.0 사용자 독립 리뷰 생략 / 업무 환경 연결 진행
+
+- **최신 결정:** 사용자 “리뷰없이 진행하자”. 기존 v0.5.0 R1을 [사용자 생략 기록](../../requests/REQ-L1-WORKSPACE-VIEWER-V050-DESIGN-R1-20261122/USER_REVIEW_WAIVER_20261123.md)으로 명시. 독립 리뷰 `SKIP_BY_USER`, 기존 REQUEST/PIN 불변, 신규 리뷰/재큐잉/모델 호출 없음.
+- **운영 취소 경계:** 이 GitHub 기록 자체는 Windows 보호 signer/watcher 차단이 아니며, 호스트 실차단 `NOT_VERIFIED`. 원격 R1 APPROVAL/READY/RESULT/RECEIPT 미관측; 이미 실행된 이력이 존재하면 영수증 확인·중복 방지 우선.
+- **개발물 유지:** L1Work `main` v0.5.0 ZIP·업무 GPT HO 이미 게시, 자체시험 25 PASS(보고). 개발·배포 예시와 Linux 설치·실연동은 구분, `development_not_for_deployment` 유지.
+- **NEXT_ONE_ACTION:** 업무 GPT/허용된 Linux Agent가 [기존 v0.5.0 HO](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_WORKSPACE_VIEWER_V050_TODAY_ASSISTANT_HANDOFF_r0001_20261122_KST.md)로 실제 Viewer G0→UI/adapter 최소 이식→A01~A10 현장 검증. 운영 활성화는 유효 별도 승인 전 보류.
+
+---
+
 ## 2026-11-22 23:34 KST — Viewer v0.5.0 독립 디자인 리뷰 R1 정식 요청 확인 / 보호 승인 대기
 
 - **정식 R1 재사용:** [REQUEST](../../requests/REQ-L1-WORKSPACE-VIEWER-V050-DESIGN-R1-20261122/REQUEST.md) · [SOURCE_PIN](../../requests/REQ-L1-WORKSPACE-VIEWER-V050-DESIGN-R1-20261122/SOURCE_PIN.json). 동일 사용자 범위의 새 R2·중복 호출을 만들지 않음.
