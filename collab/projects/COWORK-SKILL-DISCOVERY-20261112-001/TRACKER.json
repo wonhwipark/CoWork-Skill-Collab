@@ -5,11 +5,11 @@
       "work_id": "COWORK-SKILL-DISCOVERY-20261112-001",
       "skill": "skill-discovery",
       "title": "skill-discovery",
-      "phase": "P1P2_REVIEW_INPUT_STAGED__HOST_INTAKE_ADAPTER_PASS__FORMAL_REQUEST_PENDING",
-      "owner": "GPT: P1/P2 current implementation + Windows E2E verification r0002 review input staged (NOT formally submitted); earlier integration-gate changes/host E2E pending unchanged",
+      "phase": "P1P2_FORMAL_REVIEW_REQUEST_PIN_POSTED_A_B__PROTECTED_SIGNER_PENDING",
+      "owner": "GPT: P1/P2 code+UI+Windows plan input ZIP 94843B SHA 35de5493... pinned, r0006 Option B Commit A e8ed8cfd... / B 0dd28843... confirmed; signer/READY/review not yet verified",
       "self_test": "PASS",
-      "independent_review": "NOT_RUN",
-      "next_action": "Use existing P1/P2 candidate REQ-COWORK-P1P2-CONTEXT-CODE-R1-20261122 without requeue. Windows Claude Code G0 read-only actual policy/signer + one dry-run of collab/ops/review_staged_submission.py (paths in COWORK-AUTO-APPROVAL-20261115-001/REVIEW_INTAKE_ONE_SHOT_HOST_INTEGRATION_r0001_20261122_KST.md); only authorized subsequent Commit A/B, signed READY, 1 review. Host watcher auto-intake hook NOT_APPLIED, model calls 0. Do not invent in-scope approval or reinstall LIVE."
+      "independent_review": "NOT_RUN__FORMAL_REQUEST_SUBMITTED_AWAITING_PROTECTED_SIGNER",
+      "next_action": "Windows protected signer checks actual skill_id cowork-context-design delegation/manual authority, policy USD3, source pin, duplicates and expiry; authorized READY last and one Claude review only when valid; otherwise blocked without model call"
     }
   ]
 }
