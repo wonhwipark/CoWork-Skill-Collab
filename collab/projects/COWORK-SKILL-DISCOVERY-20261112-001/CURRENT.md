@@ -1,5 +1,14 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 2026-11-22 KST — P1/P2 이전 설계창 재요청 시 GPT ②·③ 정식 접수 판정 기준 강화
+
+- **사용자 요청:** 원래 P1/P2 설계 GPT 대화창에서 “리뷰체계 최신버전 확인후 다시 리뷰요청해줘”만 입력하면 기존 입력·Work·결정 범위를 GPT가 정확히 재조회·확정하고, 인계서/ZIP 후보 준비에서 멈추지 말고 **실제 REQUEST+ZIP Commit A / SOURCE_PIN Commit B의 정식 제출 가능 여부를 끝까지 판정**.
+- **GPT 진입 정본:** [AGENTS.md](../../../AGENTS.md) ②·③ 완료 게이트와 [REQUEST/PIN 계약 r0005](../../ops/CONTRACTS/PRE_READY_SOURCE_PIN_PREFLIGHT_V1.md). 기존 R1 후보 `REQ-COWORK-P1P2-CONTEXT-CODE-R1-20261122` / 94,843B / SHA `35de54934944807518e0141daaedde1888a42c08c1d264584e9b341f65dcd5f3`를 **실제 최신 대화/원격과 대조 후 재사용**. 다른 Work·다른 skill_id로 우회하거나 중복 REQUEST를 생성하지 않음.
+- **실제 상태:** 본문 개정은 **GPT 요청 처리 계약 갱신만**. P1/P2의 `REQUEST/ZIP` 정식 Commit A, PIN Commit B, Windows 실정책 확인, 승인/READY, Claude 리뷰는 새로 실행하지 않았으므로 기존 `FORMAL_REQUEST=NOT_POSTED`, `INDEPENDENT_REVIEW=NOT_RUN` 유지. 새 ZIP/승인/모델 호출 0.
+- **NEXT_ONE_ACTION:** 원래 GPT 창에서 사용자 단축 명령 1회 → 최신 설계·입력 확정(②) → 기존 정식 제출기/실제 권한·LIVE 사전검사(③) → 실제 원격 요청·PIN 링크/commit 또는 단일 차단 원인을 보고. Windows watcher 자동 접수 hook 개선은 이번 범위 아님.
+
+---
+
 ## 2026-11-22 KST — P1/P2 정식 리뷰 후보의 Windows 접수 보조 경로 연결 / 실제 접수는 대기
 
 - 기존 2026-11-22 후보 `REQ-COWORK-P1P2-CONTEXT-CODE-R1-20261122` 및 입력 ZIP 94,843B/SHA-256 `35de54934944807518e0141daaedde1888a42c08c1d264584e9b341f65dcd5f3` 불변. 기존 제출 초안/Windows 인계/과거 P1 설계 R1 및 리뷰 SKIP 이력 보존. 새 요청·재검토·비용 발생 0.
