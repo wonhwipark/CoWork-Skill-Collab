@@ -1,5 +1,15 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-22 KST — v0.2.33 의도 검증 승인 경로 연결 후보 (LIVE_READY=NO)
+
+- **결과:** [CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md](CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md) §9 (commit `c75d4160adc1`).
+- **복사:** A `v0_2_33` 작업 폴더 생성 PASS. B 라이브 v0.2.29 설치 트리 백업 PASS(`diff -rq` IDENTICAL, 파일 143, 매니페스트 `INSTALL_TREE_v0_2_29_SHA256SUMS.txt`).
+- **연결:** 커밋 A `REVIEW_INTENT.json` → 서명·바인딩·시각·nonce 검증 → 이 요청 스킬 1개만 범위 추가. 재검증은 nonce 소비 기록으로만 인정. nonce 저장소는 원자적 기본키 INSERT(운영 이행 요구 기록).
+- **시험:** 전체 회귀 1007 PASS / 0 FAIL / 12 SKIP. 두 OS 프로세스 nonce 경합 1명 소비 PASS. 디스패치 claim 프로세스 경합은 NOT_RUN(스레드 기준 유지).
+- **패키지:** v0.2.33 ZIP SHA-256 `4dc3c701a83c22b2615e244a9dfeca8bd07ef89e9456c1b182a7ec3c01293cda`(297,249 B, 109 항목). 코드 ZIP은 공개 게시하지 않음.
+- **미수행·차단:** 독립 리뷰 BLOCKED_AUTH, LIVE 변경 0, 운영 DB 이행 0, 호스트 SHADOW 설치 NOT_RUN.
+- **NEXT_ONE_ACTION:** 사용자 결정 — 독립 리뷰용 보호 승인, 운영 DB 이행(review_intent_nonces) 승인, 비용 위험 수용(10단계), LIVE 컷오버 승인.
+
 ## 2026-11-22 KST — 사용자 최신 지시: 남은 조치 1~3 원샷 / 두 복사 작업 포함
 
 - **범위 확정:** 사용자 “3단계까지 원샷으로 진행해줘” = ①v0.2.33 후보 폴더 생성 및 v0.2.29 설치 트리 로컬 백업 복사 ②격리 SCOPE 승인 경로·nonce 연결 ③별도 프로세스 경합/재시작·동시 nonce/소급 요청 시험·전체 회귀·새 ZIP 패키징. 같은 범위 재승인 질문 불필요.
