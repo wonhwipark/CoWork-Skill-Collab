@@ -1,5 +1,15 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-22 KST — Claude 아키텍처 독립 리뷰 R1 완료·GPT 판정(수정 수용)
+
+- **정식 리뷰 R1 완료:** [결과](../../reviews/REQ-COWORK-REVIEW-ARCH-DESIGN-R1-20261122/REVIEW_RESULT_1.md)와 [영수증](../../receipts/REQ-COWORK-REVIEW-ARCH-DESIGN-R1-20261122/RECEIPT_1.md) 원격 조회. `execution_status=COMPLETED`, `ok=true`, `watcher_version=0.2.29`, 요청 ID/revision 1/ZIP SHA-256 `c67bc342fe77547b000fc42e1b886396cbef035c0d265dbcd124947e267ed83f` 일치. Claude static 결과 **BLOCKING 0, MAJOR 2, MINOR 2**. 비용 USD0.77은 사용자 전달 Telegram 알림 기준, GitHub 영수증 자체 비용 항목 없음(`COST_DB_READBACK=NOT_VERIFIED`).
+- **GPT 최종 판정:** [GPT_ARCH_REVIEW_DISPOSITION_r0001_20261122_KST.md](GPT_ARCH_REVIEW_DISPOSITION_r0001_20261122_KST.md) = `ACCEPT_WITH_CORRECTIONS__OPTION_B`. 사용자 목표 ② 현재 대화 최신 Work/입력 확정 → ③ GPT에서 실물 SHA/정합 검사 후 직접 REQUEST+ZIP Commit A / PIN Commit B 제출, **Windows LIVE config 접근은 게시 필수조건에서 제외**, 보호 signer의 실제 정책/비용/범위/READY 검증은 그대로 유지. 이번 실제 A/B → 승인/READY → 리뷰/영수증 원격 체인 관측으로 **새 Windows 상주 인입 hook 필수 가정은 기각**.
+- **Claude 발견 개별 판정:** F1 unified USD3와 구형 example USD1 불일치는 실제 운영 USD3와 구분해 **예제·문서 정합성 수정 수용(운영 MAJOR 아님)**; 기존 LIVE 정책명을 LARGE로 바꾸는 안은 거절. F2 packaged `tools/` gate와 GPT `collab/ops/` gate drift는 **정합성 보완 수용**하되, 실제 `collab/ops/tests/test_review_request_gate.py`에 unified USD3 정상·USD1/1.5 차단 시험이 이미 있음. Source/빌드 역할 확인 후 필요한 부분만 패치. 두 커밋 A/B·자동 위임/서명/READY·중복 차단 유지; Base64 초안 필수화 제거; stale PRIVATE 표기는 현행 진입 문서에서만 최소 정리.
+- **검증/변경 경계:** `FORMAL_REQUEST=PASS`, `READY=PASS_REMOTE`, `INDEPENDENT_REVIEW=PASS_REMOTE`, `RECEIPT=PASS_REMOTE`, `LIVE_REAL_REVIEW_CHAIN=PASS_REMOTE_EVIDENCE`, `HOST_DB_COST_AND_DUPLICATE_AUDIT=NOT_RUN`. **구현 패치/개발 회귀/Windows 운영 적용은 NOT_RUN**, 유료 재리뷰/새로운 READY·서명·Task·키·DB·위임 변경 없음.
+- **NEXT_ONE_ACTION:** 같은 Work에서 **GPT 게시기(②·③) 호스트 독립 검증·정식 A/B 제출 경로 최소 수정과 무과금 회귀시험** → GitHub main 원격 readback. 리뷰 재요청은 하지 않음.
+
+---
+
 ## 2026-11-22 KST — 정식 아키텍처 리뷰 REQUEST → Windows 승인/READY 실제 게시 확인
 
 - **REVIEW ID:** `REQ-COWORK-REVIEW-ARCH-DESIGN-R1-20261122`. 같은 Work의 새 독립 설계·보안·간소화 리뷰 입력: 기존 v0.2.29 watcher ZIP (310753B, SHA-256 `c67bc342fe77547b000fc42e1b886396cbef035c0d265dbcd124947e267ed83f`), 제출기/정책/핀 코드 원문과 LIVE 검사 분리안/과설계 비교 질문.
