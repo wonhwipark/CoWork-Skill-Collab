@@ -75,3 +75,13 @@ python collab/dashboard/context_query.py --root . --question "현재 스킬 변�
 - **F2/F3:** `safe_file()`의 Windows 드라이브·UNC·절대경로·경로 이탈·symlink 보호와 `choose()` 분류 정책은 변경하지 않는다. 새 문서 힌트도 F2 가드를 통과한 같은 Work 상대경로만 읽는다.
 - **검증 경계:** Linux Python 3.12.14 회귀시험 28/28 PASS, 합성 CLI PASS, F2/F3 함수 AST 불변 확인. 수정 후 독립 리뷰·실제 Windows·Claude 세션 로딩·A3 UI·A4 30문항 A/B는 NOT_RUN. Windows 조회기 사용 시 경로 호환·세션 활용은 각각 별도 검증하며 Watcher 전체 E2E를 이번 코드 적용의 필수조건으로 묶지 않는다.
 - **상세 근거:** [F1 부분 조회·오류 격리 적용 결과](P1_PARTIAL_RELATIONS_ERROR_ISOLATION_RESULT_r0001_20261122_KST.md). 기존 R1 재실행·새 REQUEST/READY·Watcher/LIVE·서명·DB·L1Work UI 변경은 없다.
+
+
+## 8. 2026-11-22 전체 설계 평가·F3 진단/P2 패키지 관계 안전 개선
+
+- 최신 종합 판정 및 고정 소스: [P1/P2 전체 설계 평가·최소 개선 결과](P1_P2_ARCHITECTURE_EVALUATION_AND_SAFETY_HARDENING_r0001_20261122_KST.md).
+- 기존 `choose()` 6개 ROUTES·미매칭 `skill` 폴백·복수 질문 우선순위는 **변경하지 않았다**. 대신 선택 근거를 `routing.state / selected_topic / candidate_topics / requires_review`로 표시. `FALLBACK_UNVERIFIED`, `MULTI_TOPIC_REVIEW`, `SUBSTRING_MATCH_REVIEW`에서는 선택 Work를 의미 정답으로 확정하지 말고 사용자 의도/관련 CURRENT를 추가 확인한다. `SINGLE_TOPIC_MATCH` 역시 정답 검증이 아니다.
+- 기존 `summary`는 3,600자 상한을 유지하되 `summary_truncated=true`면 상단 절을 전부 읽지 않은 것임을 표시한다. Q4/Q5처럼 같은 Work의 여러 흐름은 필요한 최신 결과를 별도 증거로 좁혀 읽는다.
+- P2 `package_path`는 정확한 평면 ZIP 경로만 로컬 파일 존재 연결. 비표준 하위 경로의 basename을 같은 파일명으로 추정하지 않는다. `PRESENT_LOCAL_UNVALIDATED`는 기존처럼 해시/승인/실행 근거가 아니다.
+- 추가 회귀시험 7개는 원격 게시됐으나 이 세션에서 전체 실제 Python 시험·Windows Claude E2E·A4 30문항 A/B는 **NOT_RUN**. 축소 로직 재현 10/10 PASS를 전체 회귀 PASS로 승격하지 않는다.
+- 운영 WATCHER/LIVE·DB/서명/READY·GitHub Actions·L1Work UI는 변경하지 않았다. 새 창 자동 로딩도 이 코드 게시만으로 실현되지 않는다.
