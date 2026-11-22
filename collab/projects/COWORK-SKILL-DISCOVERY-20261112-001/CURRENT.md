@@ -1,5 +1,16 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 2026-11-22 KST — P1/P2 정식 독립 리뷰 REQUEST/PIN 2커밋 접수·원격 검증 PASS
+
+- **사용자 최신 명시 요청:** “협업 리뷰체계최신버전확인후 다시 리뷰요청해줘”. 현행 [REQUEST/PIN 계약 r0006](../../ops/CONTRACTS/PRE_READY_SOURCE_PIN_PREFLIGHT_V1.md) Option B 우선 적용: GPT의 정식 입력 출판(②③)과 Windows 보호 signer의 실제 승인/READY·유료 실행 분리. 과거 r0005 Windows LIVE 사전검사 요구로 출판을 차단하지 않음.
+- **정확한 기존 후보 재사용:** Work `COWORK-SKILL-DISCOVERY-20261112-001`, Request `REQ-COWORK-P1P2-CONTEXT-CODE-R1-20261122`, revision 1, `skill_id=cowork-context-design`, `POLICY-STATIC-V1`/최대 USD3/모델 최대 1회/`STATIC_ONLY`. 기존 ZIP staging `P1_P2_REVIEW_CANDIDATE_r0001_1122.zip.base64`의 10 members·8개 실제 source Git blob 각각 원격 일치. ZIP 94,843 bytes, SHA-256 `35de54934944807518e0141daaedde1888a42c08c1d264584e9b341f65dcd5f3`, 구조/CRC PASS. 이전 P1 설계 R1 HOST_PREFLIGHT_BLOCKED 및 11/20 사용자 P1/P2 구현 리뷰 SKIP 이력 불변.
+- **Commit A — 정식 REQUEST + 정확한 ZIP 동시 게시:** `e8ed8cfd9a9a4bdbcf7989d9576ed5694f51a1a7`. [REQUEST](../../requests/REQ-COWORK-P1P2-CONTEXT-CODE-R1-20261122/REQUEST.md) (Git blob `907d639e7319ffc4e8c8143c67fe54476400a302`, SHA-256 `d7ea49b6d5cad731f2e67c37f862f9a2c57c708df7bc8211fe117ac267724a08`)와 [ZIP](../../packages/cowork_p1p2_context_review_input_r0001_1122.zip) (Git blob `194cbc151d11778128e153786a2fc2a535b3a39a`, 위 고정 SHA/크기), 원격 Commit A에서 함께 readback PASS.
+- **Commit B — SOURCE_PIN 게시:** `0dd28843a5779c966b207f7e3203c93425b177c4`, [SOURCE_PIN](../../requests/REQ-COWORK-P1P2-CONTEXT-CODE-R1-20261122/SOURCE_PIN.json) Git blob `12eac17068d3079816642be24d4f4e643b983a09`, `schema=SKILL_COLLAB_SOURCE_PIN_V1`, `commit=A`, `repo_id` **문자열** `"1451933830"`. B의 REQUEST/ZIP blob이 A와 같은지, PIN의 A 참조, 원격 main SHA가 B인지 재조회 PASS. GitHub connector 직접 두 커밋으로 출판, 실제 Python `submit_review_request.py`/Windows CLI는 NOT_RUN; 동일 게이트 수준의 원격 source 정합성 직접 확인.
+- **상태 및 경계:** `FORMAL_REQUEST=SUBMITTED_AWAITING_PROTECTED_SIGNER`; `REQUEST_ZIP_A=PASS_REMOTE`; `SOURCE_PIN_B=PASS_REMOTE`; `APPROVAL_SIG/READY/REVIEW_RESULT/RECEIPT=NOT_POSTED` (게시 직후 조회 404); `WINDOWS_SIGNER_POLICY/SCOPE/COST/DUPLICATE=NOT_VERIFIED`; `MODEL_CALLS_BY_THIS_GPT=0`. 출판을 승인/READY나 유료 Claude 완료로 오인하지 않음. Windows watcher·DB/서명키/위임·LIVE·L1Work/자동 Actions 불변.
+- **NEXT_ONE_ACTION:** 승인된 Windows 보호 signer가 **신규 ID `REQ-COWORK-P1P2-CONTEXT-CODE-R1-20261122` 1건만** 실제 policy·skill_id 위임/수동 승인 범위·enabled_at/만료·source pin·USD3/호출1회·DB 중복/UNCERTAIN을 확인. 모든 게이트 PASS 시에만 공식 서명 후 READY 마지막 게시→Claude 독립 리뷰 1회 및 영수증; 허용되지 않으면 REQUEST는 보존하고 `AUTO_NOT_ELIGIBLE/BLOCKED` 등 원인 기록·모델 호출 0. 요청 중복 생성·READY 임의 게시·무단 재실행 금지.
+
+---
+
 ## 2026-11-22 KST — P1/P2 이전 설계창 재요청 시 GPT ②·③ 정식 접수 판정 기준 강화
 
 - **사용자 요청:** 원래 P1/P2 설계 GPT 대화창에서 “리뷰체계 최신버전 확인후 다시 리뷰요청해줘”만 입력하면 기존 입력·Work·결정 범위를 GPT가 정확히 재조회·확정하고, 인계서/ZIP 후보 준비에서 멈추지 말고 **실제 REQUEST+ZIP Commit A / SOURCE_PIN Commit B의 정식 제출 가능 여부를 끝까지 판정**.
