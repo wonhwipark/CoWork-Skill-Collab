@@ -1,5 +1,15 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-22 KST — GPT r2 개발 후보 수용 / 감사 귀속·롤백 정정 / 독립 리뷰 대기
+
+- **판정:** [r2 GPT 판정·정정·리뷰 진입](GPT_V033_R2_DISPOSITION_AND_REVIEW_GATE_r0001_20261122_KST.md). **ACCEPT_DEVELOPMENT_CANDIDATE / INDEPENDENT_REVIEW=NOT_RUN / LIVE_READY=NO**. 결과 §10 및 원격 HEAD `f49c418dfa09`를 대조한 Windows 보고 수용이며 GPT ZIP·코드 직접 검증 아님.
+- **개발 증거:** 다른 OS 프로세스/DB의 공유 O_EXCL 디스패치 경합(모델 1/패자 UNCERTAIN), 모델 진입 후 종료→재기동 봉인(추가 0), nonce·재검증 보완, 1014 PASS/0 FAIL/12 SKIP(GUI 옵트인 8/Windows .venv 조건 4). 기존 완료 시험·백업을 반복하도록 지시하지 않음.
+- **r2 동결:** ZIP SHA `23579a5c8c6690b5831116410fc623e3a8bbc5c659cb6fdea8628e765fa7c206`(301136 B/111, Windows 보고), 구 ZIP 보존. 사본 SHADOW·복구 리허설은 사본 범위 PASS 보고, 설치/Task 호스트 SHADOW NOT_RUN.
+- **사용자 정정 수용:** “감사 행 증가는 watcher 기록”은 스크립트의 상수 설명이며 귀속 대조 증거 없음. **LIVE_AUDIT_DELTA_CAUSE=UNVERIFIED**. 이 문구로 운영 DB 무쓰기를 입증하지 않음. 기존 원문 보존, 이 정정 우선.
+- **롤백 보완:** 결과 §10.4의 nonce 테이블 삭제를 일반 운영 롤백에서 제외. 현재 DB·nonce 소비 이력 보존, 호환 구 코드 복원 기본. 비호환이면 무손실 방안·승인 전 보류. 운영 DB 변경 0.
+- **리뷰 진입:** 독립 리뷰 1회 수행 의도는 이미 요청됨. 정식 REQUEST/ZIP/PIN은 **NOT_POSTED**, 실제 보호 승인은 **NOT_VERIFIED_FOR_CANDIDATE**. START_HERE의 PUBLIC 허용/PRIVATE 후보 제한 혼재로 위 정확한 r2 ZIP 한 건의 PUBLIC CoWork 전달 범위 확인 필요. 자료 허용 후 기존 A/B 게시와 호스트 실제 보호 게이트를 분리해 진행. 기존 아키텍처 R1로 대체하지 않음.
+- **NEXT_ONE_ACTION:** 정확한 r2 PUBLIC 전달 범위를 확인→[기존 지시서](WINDOWS_V032_CORRECTIONS_ONE_SHOT_HANDOFF_r0001_20261122_KST.md)로 정식 A/B·유효 보호 승인하의 리뷰 1회·결과/영수증 확인. 운영 DB 이행/필요 설정·호스트 SHADOW·위험 수용·LIVE는 결과 판정 후 최종 확인 묶음으로 유지.
+
 ## 2026-11-22 KST — v0.2.33 r2 기술 마무리 원샷 결과 (LIVE_READY=NO, 독립 리뷰 BLOCKED_AUTH)
 
 - **결과:** [CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md](CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md) §10 (commit `9f95af6694db`).
