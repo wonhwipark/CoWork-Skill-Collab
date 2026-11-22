@@ -1,5 +1,14 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-23 KST — Windows Claude Code에 QA28 실행·보완·결과 게시 요청
+
+- **사용자 지시:** “그렇다면 클로드에 요청해야지?” 수용. **Windows 시험28개 실행 담당은 Windows Claude Code**, GPT는 결과 수신·판정. 사용자 수동 검증 항목이 아님.
+- **실행 인계:** [기존 Windows 인계서 최상단](WINDOWS_V032_CORRECTIONS_ONE_SHOT_HANDOFF_r0001_20261122_KST.md)에 정확28 node/PowerShell 실행·후보/patch SHA·실패 보완/재시험·기존 결과 문서 후속 절·main 게시/원격 검증까지 구체 요청. 개발 QA이며 기존 독립 리뷰 재실행 아님.
+- **상태:** **HOST_HANDOFF=POSTED / HOST_ACK=NOT_CONFIRMED / HOST_EXECUTION=NOT_CONFIRMED**. 이 연결에 Windows Claude 직접 시작 도구가 없어 자동 호출·수신을 주장하지 않음. 설치된 QA relay 현황은 직접 검증하지 못함. 문서 게시를 Claude 실행으로 승격하지 않음.
+- **검증 대상:** artifacts/cost_gate_tests_r0001.json의 failed_test_names28개. 비용 제거 patch SHA28d6b6db55a130fbba7e55863426d62749ed0f1047756a9e884f30ced1431366/39061 B, 격리 r2 후속 후보만. **WINDOWS_QA28=NOT_RUN_ON_WINDOWS/PENDING_CLAUDE**; 기존 Linux 실패 기록 보존.
+- **유지:** 비용 승인 재질문 없음. 실제 모델/기존 리뷰 재호출0, 운영 DB/설치/LIVE 변경0. F1/F2/F3 미해결, **LIVE_READY=NO**.
+- **NEXT_ONE_ACTION:** Windows Claude가 기존 인계서 요청을 수신·실행하고 CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md에 QA28/보완/회귀 결과를 게시. GPT는 해당 ACK/결과를 확인해 판정. 호스트 시작 수단 부재는 전달/실행 연결 차단이며 사용자 시험 할 일이나 비용 승인 부족으로 돌리지 않음.
+
 ## 2026-11-23 KST — 사용자 비용 제한 제거 지시 반영 / 코드·시험 완료 / 호스트 적용 미실행
 
 - **결정:** 비용 기반 접수·서명·READY·디스패치 거부 제거. COST_LIMIT_REMOVAL=USER_AUTHORIZED, **COST_RECONSENT=NOT_REQUIRED**. 과거 “비용 무상한 위험 수용 승인 대기”는 이번 사용자 지시로 해소하며 동일 동의 반복 요청 금지. 최종 후보 LIVE 설치·DB 이행은 별도 확인 경계 유지.

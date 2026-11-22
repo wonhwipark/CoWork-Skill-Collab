@@ -5,11 +5,11 @@
       "work_id": "COWORK-AUTO-APPROVAL-20261115-001",
       "skill": "cowork-review-watcher",
       "title": "GPT→GitHub REQUEST 자동 서명·READY (제한된 사전 위임)",
-      "phase": "COST_GATES_REMOVED_IN_SOURCE__HOST_APPLY_BLOCKED__V033_R2_CORRECTIONS_OPEN__LIVE_READY_NO",
-      "owner": "User instructed review cost-limit removal (no repeated monetary consent required). Windows v0.2.29 is last host-reported LIVE; removal not applied/verified on host by GPT.",
+      "phase": "WINDOWS_QA28_HANDOFF_POSTED__CLAUDE_ACK_PENDING__LIVE_READY_NO",
+      "owner": "Windows Claude Code: execute QA28 on isolated cost-patched successor, fix failures, publish evidence. GPT: receive results and judge. Not a manual user test task.",
       "self_test": "GPT Linux: publisher55 PASS; cost targets237 PASS/0 FAIL/1 SKIP; full tree first attempt1009 PASS/28 FAIL/34 SKIP (Windows/OS dependencies, failures retained); portable final1011 PASS/0 FAIL/34 SKIP/28 DESELECTED; patch clean-r2 exact-byte replay12 files PASS. Windows acceptance NOT_RUN. F1/F2/F3 remain open; preserve DB/nonce history and audit-cause UNVERIFIED.",
       "independent_review": "REQ-COWORK-V033-R2-WATCHER-REVIEW-20261122 rev1 COMPLETED, STATIC_ONLY BLOCKING0, RESULT/RECEIPT directly read and bound to r2 SHA. Host audit reports dispatch1/duplicate0/USD1.057171 (cost not in remote receipt). GPT disposition HOLD_FOR_CORRECTIONS; no rerun.",
-      "next_action": "Integrate artifacts/cost_gate_removal_r2_r0001.patch into the same isolated successor work with F1/F2/F3; run Windows acceptance, package and publish evidence. Cost removal user-authorized, no price re-consent. Runtime application BLOCKED_HOST_ACCESS, not BLOCKED_AUTH. Preserve frozen r2/completed review, no requeue, no new model or final LIVE cutover."
+      "next_action": "Windows Claude Code reads the latest WINDOWS_V032_CORRECTIONS_ONE_SHOT_HANDOFF_r0001_20261122_KST.md, records actual ACK, runs the28 pinned nodes, fixes/retests within candidate, publishes the existing result doc and CURRENT/TRACKER with remote verification. HOST_HANDOFF=POSTED; ACK/execution NOT_CONFIRMED because this GPT connection cannot start Windows Claude. Do not use static review dispatch as a host-execution substitute; no cost re-consent, duplicate review, live/DB changes."
     }
   ]
 }

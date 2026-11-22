@@ -1,3 +1,51 @@
+# Windows Claude Code 실행 요청 — 비용 제거 후 Windows 시험 28개
+요청일: 2026-11-23 KST
+수신 담당: **Windows Claude Code (로컬 개발·시험 세션)**
+발신: GPT / 사용자 지시 “그렇다면 클로드에 요청해야지?”
+저장소: **wonhwipark/CoWork-Skill-Collab**, 브랜치: **main**
+기존 Work: **collab/projects/COWORK-AUTO-APPROVAL-20261115-001/**
+이 파일: **collab/projects/COWORK-AUTO-APPROVAL-20261115-001/WINDOWS_V032_CORRECTIONS_ONE_SHOT_HANDOFF_r0001_20261122_KST.md**
+
+**지금 요청하는 작업은 Windows QA 실행이며 독립 리뷰 재실행이 아니다. 사용자에게 시험 실행·같은 비용 승인을 다시 요청하지 말고, 허용된 격리 후보에서 실행→실패 원인 보완→관련 재시험→결과 게시까지 한 번에 수행.**
+이 요청은 GitHub 인계로 게시됨. **HOST_HANDOFF=POSTED / HOST_ACK=NOT_CONFIRMED / HOST_EXECUTION=NOT_CONFIRMED**. 이 GPT 연결에 Windows Claude 세션 직접 호출 도구가 없어 자동 시작을 주장하지 않음. 실제 Windows Claude 세션이 이 요청을 수신한 뒤에만 ACK/진행 결과를 기록.
+
+## 실행 입력과 순서
+1. 최신 main의 CURRENT·이 인계서·[비용 제거 결과](GPT_COST_GATE_REMOVAL_IMPLEMENTATION_RESULT_r0001_20261123_KST.md)를 확인. 동일 28개 QA의 ACK/결과가 이미 있으면 기존 증거를 대조하고 완료 부분 재실행 없이 회수.
+2. 현재 격리 후속 후보를 실제 확인. [비용 제거 패치](artifacts/cost_gate_removal_r2_r0001.patch) SHA-256 **28d6b6db55a130fbba7e55863426d62749ed0f1047756a9e884f30ced1431366**/39061 B, 원본·목표 파일 SHA는 [매니페스트](artifacts/cost_gate_removal_r2_r0001.json). clean r2 기준 ZIP SHA **23579a5c8c6690b5831116410fc623e3a8bbc5c659cb6fdea8628e765fa7c206**. 동결 r2 ZIP을 덮어쓰지 말고 기존 후속 후보에 정확히 통합. 이미 변경된 부분은 원문 대조; 운영 v0.2.29에 이 패치 직접 적용 금지.
+3. Windows에서 후보용 Python/시험 venv·시험 키·가짜 CLI/전송만 사용. 아래 명령은 **Windows Claude가 실제 경로를 선택해 실행**하며 사용자에게 경로/명령 실행을 넘기지 않는다. 운영 키·DB/실제 Claude 모델·운영 토큰으로 시험하지 않음.
+
+```powershell
+# $repoRoot = 확인한 최신 CoWork checkout
+# $candidateRoot = 확인한 격리 후속 후보 루트 (LIVE 설치 경로 금지)
+# $testPython = 해당 후보 시험용 Python 실행 파일
+$evidence = Join-Path $repoRoot "collab/projects/COWORK-AUTO-APPROVAL-20261115-001/artifacts/cost_gate_tests_r0001.json"
+$names = (Get-Content -LiteralPath $evidence -Raw | ConvertFrom-Json).runs.full_tree_attempt.failed_test_names
+$nodes = @($names | ForEach-Object { $_ -replace '^tests\.([^:]+)::', 'tests/$1.py::' })
+if ($nodes.Count -ne 28) { throw "Expected 28 pinned test nodes" }
+Push-Location $candidateRoot
+try {
+  & $testPython -m pytest -q @nodes --junitxml=windows_qa28.xml
+  $qaExit = $LASTEXITCODE
+} finally { Pop-Location }
+# $qaExit와 28 node별 결과를 기록. 비정상 종료도 보존하고 실패를 숨기지 않음.
+```
+
+4. node 목록은 [GPT 실패 기록](artifacts/cost_gate_tests_r0001.json)의 정확28개를 사용. Windows에서 PASS인지 실제 제품/시험 결함인지 판정하고, 환경 설정 또는 후보/시험의 실제 문제만 보완. 실패를 skip/제외 처리해 통과로 바꾸지 않는다. 막힌 항목만 BLOCKED/NOT_RUN으로 나누고 나머지는 계속.
+5. 수정이 생기면 영향받은 집중 회귀와 Windows 전체 회귀를 실행. 변경이 없고 기존 동일 후보의 유효한 Windows 전체 결과가 있으면 원본 SHA와 증거를 대조해 재사용. Linux 237 PASS/1 SKIP 또는 portable1011 PASS/34 SKIP/28제외를 Windows 통과로 쓰지 않는다.
+6. 결과는 **기존 CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md에 “Windows QA28 수신·실행 결과(2026-11-23 KST)” 후속 절**로 게시. ACK 시각·담당·실제 후보/patch SHA·Python/OS·명령/exit·28개별 PASS/FAIL/SKIP/NOT_RUN·보완 diff·재시험·전체 회귀·로그SHA·남은 차단을 기재. 민감정보/운영 DB/개인키는 게시 금지. CURRENT/TRACKER를 실제 결과에 맞춰 main 게시/원격 bytes 확인. 결과 게시 실패는 게시만 복구.
+
+## 계속 유지할 범위
+- 담당: Windows Claude=호스트 시험·보완·증거 게시 / GPT=결과 수신·판정. 사용자 수동 시험 작업으로 넘기지 않음.
+- 비용 제한 제거는 이미 사용자 지시됨. 별도 금액/동일 위험 수용 재질문 금지.
+- 기존 F1/F2/F3 보완은 아래 통합 지시와 같은 후보에서 진행하되, 28개 QA의 개별 결과와 구분. 비용 패치만으로 F1/F2/F3 해결 또는 LIVE 준비로 판정 금지.
+- 기존 r2 독립 리뷰 COMPLETED 보존. 새로운 독립 리뷰/REQUEST/서명/READY·실제 모델 호출을 QA 명목으로 만들지 않음.
+- 운영 watcher/Task/Notifier·키/위임·운영 DB/이력·LIVE 컷오버 변경 금지. 테스트 중인 사본만 변경. 새 스케줄러/감시기/호출 relay 설치는 이 요청 범위 아님.
+- 결과 도착 전 **WINDOWS_QA28=NOT_RUN_ON_WINDOWS/PENDING_CLAUDE, LIVE_READY=NO**. 문서 게시만으로 작업 실행/완료를 보고하지 않음.
+
+---
+
+## 보존된 비용 제거·후속 후보 통합 지시 (위 QA 담당·수신 구분 우선)
+
 # 2026-11-23 KST — 비용 제한 제거 후속 통합 (이 절 우선)
 저장소: wonhwipark/CoWork-Skill-Collab / 브랜치: main
 Work: collab/projects/COWORK-AUTO-APPROVAL-20261115-001/
