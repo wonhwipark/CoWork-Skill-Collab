@@ -1,5 +1,13 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-22 KST — 사용자 “허용”: 정확한 r2 ZIP PUBLIC 리뷰 자료 게시 승인
+
+- **새로 확인한 허용 범위:** 사용자에게 `v0_2_33_r2_intent_wired_candidate.zip` 한 건의 PUBLIC CoWork 게시 허용을 요청했고 사용자가 **“허용”**으로 답함. `wonhwipark/CoWork-Skill-Collab/main/collab/packages/v0_2_33_r2_intent_wired_candidate.zip`, SHA-256 `23579a5c8c6690b5831116410fc623e3a8bbc5c659cb6fdea8628e765fa7c206`, 301136 B/111항목만 대상. **MATERIAL_TRANSFER=AUTHORIZED_EXACT_SHA**. 이 건의 이전 PUBLIC/PRIVATE 문구 상충에 따른 확인 대기 해소. 같은 승인 반복 요청 없음.
+- **반영:** [기존 Windows 지시서](WINDOWS_V032_CORRECTIONS_ONE_SHOT_HANDOFF_r0001_20261122_KST.md)에 정확한 대상·바이트 검사·기존 단일 게시기 A/B·중복 대조·실제 보호 승인하의 리뷰 1회를 연결. 다른 ZIP/공개 배포/호스트 설치나 운영 DB·키·정책 변경 허용은 아님.
+- **실제 접근 확인:** HEAD `720b211091e9`의 전체 트리(truncated=false)에 r2 ZIP/정식 연결 요청 없음. GPT 작업 파일 시스템의 정확 후보 검색도 없음. 따라서 **FORMAL_REQUEST=NOT_POSTED / ZIP_UPLOAD=NOT_RUN / PROTECTED_AUTH=NOT_VERIFIED_FOR_CANDIDATE / INDEPENDENT_REVIEW=NOT_RUN**. 권한 대기가 아니라 **BLOCKED_SOURCE_ACCESS/HOST_ACCESS**. 문서 갱신을 코드 ZIP 게시·Windows 실행으로 보고하지 않음.
+- **유지:** Windows 자체시험 1014 PASS/0 FAIL/12 SKIP, r2 동결·감사 귀속 UNVERIFIED·nonce 이력 보존 판정 재사용. 이번 새 시험·리뷰 모델 호출·기존 요청 재실행·LIVE 변경 0. **LIVE_READY=NO**.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 같은 지시서로 실제 ZIP 검증→REQUEST+ZIP Commit A/원격 bytes→PIN Commit B/원격 확인→현행 보호 signer/READY→허용된 독립 리뷰 1회→결과/영수증·CURRENT/TRACKER 게시/원격 검증까지 이어감. GPT가 직접 사용할 코드 원본·실행 연결이 없어 이번 세션의 정식 A/B 게시 자체는 미실행. 운영 DB 이행/위험 수용/LIVE는 최종 확인 전 보류.
+
 ## 2026-11-22 KST — GPT r2 개발 후보 수용 / 감사 귀속·롤백 정정 / 독립 리뷰 대기
 
 - **판정:** [r2 GPT 판정·정정·리뷰 진입](GPT_V033_R2_DISPOSITION_AND_REVIEW_GATE_r0001_20261122_KST.md). **ACCEPT_DEVELOPMENT_CANDIDATE / INDEPENDENT_REVIEW=NOT_RUN / LIVE_READY=NO**. 결과 §10 및 원격 HEAD `f49c418dfa09`를 대조한 Windows 보고 수용이며 GPT ZIP·코드 직접 검증 아님.
