@@ -1,5 +1,15 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-22 KST — GPT 리뷰 요청 ②·③ 책임·완료 기준 확정 (범위 한정)
+
+- **사용자 의도 재확정:** 다른 GPT 설계 대화창에서 **“리뷰체계 최신버전 확인후 다시 리뷰요청해줘”**라고 말하면, Windows watcher 확장보다 **GPT의 ② 마지막 확정 설계/코드·Work·원본 revision 직접 확정, ③ 기존 표준 REQUEST/PIN 실제 제출·원격 확인**을 정확히 수행할 것. 초안·Base64 후보·별도 Windows 인계서만 게시하고 정식 리뷰를 요청했다고 보고하는 동작이 사용자 불만의 본체.
+- **반영 위치:** [GPT 공통 진입](../../../AGENTS.md), [새 창 공통 브리프](../../CONTEXT_BRIEF.md), [정식 REQUEST/PIN 계약 r0005](../../ops/CONTRACTS/PRE_READY_SOURCE_PIN_PREFLIGHT_V1.md). 같은 Work의 기존 입력·이력과 실제 원격 REQUEST/ZIP·PIN 존재 여부로 제출 완료를 판단. 다른 창에서 대상/ID 재입력 요구·무의미한 신규 Work·반복 초안 생성 금지.
+- **완료 기준:** 실제 Commit A(REQUEST+ZIP) 및 Commit B(PIN), 원격 원본/해시 readback이 확인되었을 때만 `SUBMITTED_AWAITING_PROTECTED_SIGNER`. 미실행이면 반드시 `NOT_POSTED/BLOCKED` 및 단일 정확한 사유 표기. 승인/서명/READY/모델 호출을 우회하거나 GPT가 Windows 운영 설정을 확인했다고 가정하지 않음.
+- **검증·범위:** GitHub main의 새 진입 계약 원격 파일·blob 일치 `PASS`; 이전 대화창의 실제 후속 호출·Windows 실정책 검증·정식 제출 E2E는 `NOT_RUN`. Windows LIVE·watcher hook·위임·보호 signer·READY·유료 호출 변경 없음. 이전 11/11 격리 시험은 보조 Python 기능 근거로 보존, 새 문서 지침 자체의 E2E PASS로 승격하지 않음.
+- **NEXT_ONE_ACTION:** 사용자가 원래 설계 대화창에서 위 짧은 명령을 **한 번** 사용하면 해당 GPT가 최신 정본 계약대로 ②·③을 직접 수행하고, 정식 접수/정확한 차단 결과만 보고. 기존 P1/P2 입력·Request ID를 재생성하지 않음.
+
+---
+
 ## 2026-11-22 KST — “리뷰요청해줘” 정식 접수 Windows 보조 코드 구현·원격 검증 / 운영 hook 미연결
 
 - **사용자 요청:** 다른 설계 창의 P1/P2 리뷰 요청이 94,843B 후보·초안 게시에서 멈춘 실제 문제를 CoWork 시스템으로 보완. 이전 Work `COWORK-SKILL-DISCOVERY-20261112-001`의 기존 `REQ-COWORK-P1P2-CONTEXT-CODE-R1-20261122`를 보존하고 새 요청·재큐잉 금지.
