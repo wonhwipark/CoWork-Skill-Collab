@@ -57,6 +57,31 @@ def choose(question: str, topic: str | None = None) -> tuple[str, str]:
     raise AssertionError("topic routing")
 
 
+def route_diagnostics(question: str, topic: str | None = None) -> dict:
+    """Explain the legacy topic choice without changing its routing policy.
+
+    Inferred single-Work selection is not proof of a matching user intent.
+    """
+    selected, _ = choose(question, topic)
+    if topic:
+        return {"state": "EXPLICIT_TOPIC", "selected_topic": selected,
+                "candidate_topics": [selected], "requires_review": False}
+    q = question.lower()
+    matches = {key: [term for term in terms if term in q]
+               for key, (_, terms) in ROUTES.items()}
+    candidates = [key for key, terms in matches.items() if terms]
+    if not candidates:
+        state = "FALLBACK_UNVERIFIED"
+    elif len(candidates) > 1:
+        state = "MULTI_TOPIC_REVIEW"
+    elif "그룹" in matches.get("knowledge", ()) and re.search(r"그룹[가-힣a-z0-9]", q):
+        state = "SUBSTRING_MATCH_REVIEW"
+    else:
+        state = "SINGLE_TOPIC_MATCH"
+    return {"state": state, "selected_topic": selected,
+            "candidate_topics": candidates, "requires_review": state != "SINGLE_TOPIC_MATCH"}
+
+
 def safe_file(root: Path, rel: str, max_bytes: int = MAX_READ) -> Path | None:
     if not rel or rel.startswith("/") or "\\" in rel or Path(rel).is_absolute() or PureWindowsPath(rel).drive:
         return None
@@ -146,7 +171,8 @@ def _request_hints(root: Path, work_id: str, current: str, limit: int) -> list[s
 
 def _relation_row(root: Path, rid: str, fm: dict[str, str], issues: list[dict]) -> dict:
     pkg = fm.get("package_path", "")
-    package_rel = ("collab/packages/" + pkg.rsplit("/", 1)[-1]) if pkg.startswith("/SKILL-COLLAB/packages/") else ""
+    package_match = re.fullmatch(r"/SKILL-COLLAB/packages/([A-Za-z0-9._-]+\.zip)", pkg)
+    package_rel = f"collab/packages/{package_match.group(1)}" if package_match else ""
     files = {
         "request": f"collab/requests/{rid}/REQUEST.md",
         "source_pin": f"collab/requests/{rid}/SOURCE_PIN.json",
@@ -270,6 +296,7 @@ def diff_summary(root: Path, relative: str, current: str, base_commit: str | Non
 def snapshot(root: Path, question: str, topic: str | None = None,
              baseline_commit: str | None = None) -> dict:
     key, work = choose(question, topic)
+    route_info = route_diagnostics(question, topic)
     if not WORK_ID.fullmatch(work):
         raise ValueError("invalid selected work")
     rel = f"collab/projects/{work}/CURRENT.md"
@@ -281,15 +308,17 @@ def snapshot(root: Path, question: str, topic: str | None = None,
     if contents is None:
         return {
             "topic": key, "work_id": work, "state": "CURRENT_NOT_VERIFIED",
-            "source_path": rel, "evidence": [], "host_execution": "NOT_VERIFIED",
+            "routing": route_info, "source_path": rel, "evidence": [],
+            "host_execution": "NOT_VERIFIED",
         }
     summary = top_summary(contents)
+    summary_truncated = len(top_summary(contents, max_chars=MAX_READ)) > len(summary)
     relation_data = _scan_relations(root, work, current=contents)
     return {
-        "topic": key, "work_id": work,
+        "topic": key, "work_id": work, "routing": route_info,
         "state": "LOCAL_CURRENT_READ_ONLY",
         "source_path": rel,
-        "summary": summary,
+        "summary": summary, "summary_truncated": summary_truncated,
         **relation_data,
         "delta": diff_summary(root, rel, contents, baseline_commit),
         "host_execution": "NOT_VERIFIED_BY_LOCAL_FILES",
@@ -297,6 +326,10 @@ def snapshot(root: Path, question: str, topic: str | None = None,
             "Document/REQUEST/READY existence is not independent review, LIVE host, Linux execution or group publication proof."
             + (" P2 relations are incomplete and NOT_VERIFIED; retained rows are partial. An empty list does not prove no related requests."
                if not relation_data["relations_scan"]["complete"] else "")
+            + (" Topic routing requires review; selected Work may not match the question."
+               if route_info["requires_review"] else "")
+            + (" CURRENT top section is truncated; inspect narrower evidence."
+               if summary_truncated else "")
         ),
     }
 
