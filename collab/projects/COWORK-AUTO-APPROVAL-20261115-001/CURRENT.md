@@ -1,5 +1,14 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-22 KST — 독립 리뷰 비용 검사 제거 격리 후보 v0.2.30 (LIVE 미적용)
+
+- **결과:** [CLAUDE_COST_GATE_REMOVAL_CANDIDATE_RESULT_FOR_GPT_20261122.md](CLAUDE_COST_GATE_REMOVAL_CANDIDATE_RESULT_FOR_GPT_20261122.md) (commit `b7b562386c14`). 신규 독립 리뷰 실행 허가에서 `PER_REQUEST_COST`와 수동 승인 도구의 `--max-usd` 금액 일치 검사를 제거한 격리 후보 작성·시험 완료.
+- **시험:** 후보 전체 단위·회귀 시험 952 PASS / 0 FAIL / 12 SKIP. 위조·변조·중복·만료·재실행·무모델호출 부분집합 100 PASS. 실제 유료 모델 호출 0.
+- **패키지:** zip SHA-256 `541cd3f1a973fd2869ca3759a2987105a682189ecd81f78752c6e4c32dcbf121`(288,594 B). 코드 zip은 공개 저장소에 게시하지 않음.
+- **LIVE:** 미적용(v0.2.29 설치본·설정·위임·Task·DB·Notifier 불변). 적용에는 별도 승인과 백업 선행 필요.
+- **잔여:** CLI `--max-budget-usd` 실행 상한 유지 여부 사용자 결정, `cowork-context-design` SCOPE 대기(위임 목록 변경은 별도 승인), 게시기 Windows 복사본 `POLICY_COST_MISMATCH`와 문서 일일 비용 행 정리.
+- **NEXT_ONE_ACTION:** 사용자 결정 3건(상한 유지 여부, LIVE 적용 승인, 위임 목록 변경 여부)을 받은 뒤 진행. 유료 재리뷰와 기존 REQUEST 재디스패치는 하지 않음.
+
 ## 2026-11-22 KST — 독립 리뷰 단일화·GPT 비용/스킬 선검사 제거 게시, Windows LIVE 불변
 
 - **사용자 최신 결정:** 독립 리뷰 한 유형, 내부 금액·리뷰 등급·비용 한도 검사를 리뷰 실행 유형으로 취급하지 않음; 스킬별 자동승인 차단도 개선. 무허가 무제한 실행이나 기존 REQUEST 재실행 허용이 아님.
