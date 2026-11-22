@@ -1,5 +1,25 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-22 KST — Option B GPT 정식 REQUEST 게시기 구현·GitHub main 반영
+
+- **상태:** `GPT_PUBLISHER_CODE=POSTED_REMOTE_VERIFIED`, `PYTHON_UNIT_TEST_EXECUTION=NOT_RUN`, `WINDOWS_LIVE=UNCHANGED`, `NEW_PAID_REVIEW=0`. 같은 Work의 Claude 리뷰 R1 및 [GPT 판정](GPT_ARCH_REVIEW_DISPOSITION_r0001_20261122_KST.md) `ACCEPT_WITH_CORRECTIONS__OPTION_B` 후속.
+- **수정:** `collab/ops/review_request_gate.py`의 `check_request_for_publication()`가 Windows 설정 없이 REQUEST 형식·정적 `POLICY-STATIC-V1` unified USD3 참조·ZIP SHA/크기/CRC·경로를 검증. `submit_review_request.py` 및 `review_staged_submission.py`는 `--live-config`를 **선택적 참고**로 변경. 원격 Commit A REQUEST+ZIP → Commit B SOURCE_PIN 고정, 기존 ID/영수증 중복 거부·PIN 검사·모델 재실행 금지 유지. 검사 이후 REQUEST/ZIP 변경 SHA 재검증, 중첩 패키지 경로 차단 추가.
+- **변경 Git commit:** `37a46f7c63cce5bcf0818716791f2d508008e9a6` 코드/시험, `7563502c3febe2d9bf42f83167b69b1955697620` AGENTS·브리프·정본 계약, `cc59a42428cbef42f8194eb6fcae55326e581a6d` 입력 변경 방지, `4b37f7d33197ce4b4cb6c951a506cd4ed139e2c6` 구 Windows 선검사 안내 정리.
+- **원격 실제 SHA-256:** `review_request_gate.py` = `7c2831fbc1151eb5048772169831c68ae440a3f7c55cb21b5c9f53034473e784`, `submit_review_request.py` = `f870d10cc472870dc804ee64559c171e75fad1a21f885d49ebe78c528774a038`, `review_staged_submission.py` = `77cfffd7ac528e53cfa9f58136bb788018ec0ccf8809c57fe2c6be15b48e465c`. GitHub main blob readback 및 구성·보호 경계 **정적 검증 16/16 PASS**. SHA-256 도구 자체 시험 벡터 `abc` PASS.
+- **회귀시험 추가:** `collab/ops/tests/test_review_request_gate.py`, `test_submit_review_request.py`, `test_review_staged_submission.py`에 **신규 테스트 메서드 8건**: 호스트 정책 파일 없음/불일치, 잘못된 정책 ID, 경로 탈출, 검사 직후 REQUEST/ZIP 바이트 변경, staged 호스트 파일 생략. **실제 Python 실행은 NOT_RUN**: 이번 실행 환경에서 GitHub 소스를 Python container로 직접 가져오는 연결이 불가. 테스트 코드 게시와 시험 PASS를 혼동하지 않음.
+- **안전·범위:** v0.2.29 설치 ZIP 및 Windows watcher의 validator, 보호 signer/위임/READY·비용·만료·중복/UNCERTAIN·Notifier/Task·DB 변경 **없음**. 기존 운영 입력·결과·영수증 불변, 새 REQUEST/READY·모델 호출 0. F1의 example 구 USD1과 현재 LIVE USD3 차이를 문서에 명시; F2 packaged `tools/review_request_gate.py`의 이전 버전은 다음 패키징 때 정합 확인이 필요, 기존 ZIP 소급 수정 금지.
+- **현재 판정:** `SOURCE_EDIT=PASS`, `REMOTE_READBACK=PASS`, `STATIC_CONTRACT_CHECK=PASS`, `PYTHON_REGRESSION=NOT_RUN`, `WINDOWS_RUNTIME_TEST=NOT_RUN`, `FRESH_USER_INTENT_E2E=NOT_RUN`, `INDEPENDENT_RE_REVIEW=NOT_REQUESTED`.
+- **NEXT_ONE_ACTION:** Windows 또는 Git+Python 실행 가능한 기존 checkout에서 아래 **무과금 별도 프로세스** 회귀를 시행하고 실제 PASS/FAIL을 같은 Work에 기록. 새로운 유료 리뷰나 Windows LIVE 변경은 시작하지 않음.
+
+```powershell
+cd collab/ops
+python -m unittest discover -s tests -p test_review_request_gate.py
+python -m unittest discover -s tests -p test_submit_review_request.py
+python -m unittest discover -s tests -p test_review_staged_submission.py
+```
+
+---
+
 ## 2026-11-22 KST — Claude 아키텍처 독립 리뷰 R1 완료·GPT 판정(수정 수용)
 
 - **정식 리뷰 R1 완료:** [결과](../../reviews/REQ-COWORK-REVIEW-ARCH-DESIGN-R1-20261122/REVIEW_RESULT_1.md)와 [영수증](../../receipts/REQ-COWORK-REVIEW-ARCH-DESIGN-R1-20261122/RECEIPT_1.md) 원격 조회. `execution_status=COMPLETED`, `ok=true`, `watcher_version=0.2.29`, 요청 ID/revision 1/ZIP SHA-256 `c67bc342fe77547b000fc42e1b886396cbef035c0d265dbcd124947e267ed83f` 일치. Claude static 결과 **BLOCKING 0, MAJOR 2, MINOR 2**. 비용 USD0.77은 사용자 전달 Telegram 알림 기준, GitHub 영수증 자체 비용 항목 없음(`COST_DB_READBACK=NOT_VERIFIED`).
