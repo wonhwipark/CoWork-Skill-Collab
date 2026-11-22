@@ -1,6 +1,6 @@
 # CoWork 공통 맥락 브리프
 
-- 개정: r0014 / 2026-11-21 KST 동일 설계창의 단축 리뷰 요청 진입 추가. CoWork PUBLIC 전환에 따른 저장소 역할을 유지하고, 실행 상태는 각 CURRENT에서 재확인.
+- 개정: r0015 / 2026-11-22 KST GPT 정식 리뷰 ② 대상 확정·③ 제출 완료 증빙 필수 기준 추가. 운영 LIVE 상태는 각 CURRENT/영수증에서 재확인.
 - 저장소: **GitHub PUBLIC** `wonhwipark/CoWork-Skill-Collab`, branch `main` (2026-11-21 실제 visibility 조회). 기존 PRIVATE 경로·문구는 당시 이력. 회사 제한 자료·키/토큰의 신규 게시 허용이 아님.
 - 역할: 협업·L1 지식·관리 스킬의 **고정 지도**. 진행 상태·최신 버전·리뷰 결과·승인 대기·source blob을 복사하지 않는다.
 - 읽기: **이 지도 → 요청 목적에 맞는 CURRENT → 필요한 근거·계약·스킬 원문**. 현재 상태는 실행할 때 해당 정본을 조회한다.
@@ -14,6 +14,8 @@
 - 갱신 기준: [스킬 발견·재사용 절차](ops/CONTRACTS/SKILL_DISCOVERY_AND_REUSE_V1.md). 결과·피드백은 해당 Work에서 관리하고 지도는 구조·역할·경로가 바뀔 때만 수정한다.
 
 ## 자연어 “정식 리뷰 요청” — 새 창 기본 진입
+
+**GPT 필수 수행:** 사용자가 기존 설계 대화창에서 “리뷰요청해줘” 또는 **“리뷰체계 최신버전 확인후 다시 리뷰요청해줘”**라고 지시하면, 현재 창의 마지막 확정 Work·설계/구현물·원본 revision·기존 요청/영수증을 실제 확인해 리뷰 대상을 확정(②)하고, 단순 후보/REQUEST 초안·인계 문서에서 끝내지 않고 **가능한 기존 정식 제출 수단을 사용해 REQUEST+ZIP 같은 Commit A → SOURCE_PIN Commit B 원격 확인(③)**까지 추진한다. 완료 증거가 없으면 `FORMAL_REQUEST=NOT_POSTED/BLOCKED`로 정확히 보고하며 “리뷰 요청 완료”라고 말하지 않는다. 호스트 LIVE 정책 검증 불가·승인 범위 밖은 우회하지 않는다. [GPT ②③ 필수 완료 게이트](ops/CONTRACTS/PRE_READY_SOURCE_PIN_PREFLIGHT_V1.md)와 [실행 진입](../AGENTS.md)을 우선 적용. Windows watcher 자동 hook 설치가 이 문구로 달성되는 것은 아니다.
 
 리뷰 요청은 단순 문서 게시가 아니다. **현재 설계를 진행하던 동일 창에서 사용자가 “리뷰요청해줘” 한마디만 해도**, 해당 창에서 마지막으로 확정한 Work·설계/구현 범위·source revision을 자동 선택하여 정식 리뷰 제출 절차로 진입한다. 이미 제공된 Work ID·파일·설명은 반복 질문하지 않는다. 사용자 표현을 예시로 논의하는 문맥은 실행 요청이 아니다. 새 창의 GPT/Windows Claude Code는 사용자 자연어 **“정식 리뷰 요청해 줘”**를 받으면 기존 Work·기존 요청/영수증/승인을 확인한 다음 [표준 REQUEST/PIN 게시·차단 계약](ops/CONTRACTS/PRE_READY_SOURCE_PIN_PREFLIGHT_V1.md)으로 이동한다. 구현: `collab/ops/review_staged_submission.py`(GitHub 보관 후보의 Windows 실제 정책검사·기존 제출기 연결; **운영 자동 hook 미적용**), `collab/ops/submit_review_request.py`(게시 전 정책+ZIP 검사, Commit A REQUEST+ZIP, Commit B PIN, 원격 검증), `collab/ops/review_pin_preflight.py`(읽기 전용 PIN 검사). 전용 명령 미사용·호스트 정책 미확인이면 정식 리뷰 접수/실행 완료로 보고하지 않는다. **서명·READY·Claude 결과/영수증은 별도 확인**. 문서 연결만으로 모든 새 창에서 자동 실행되거나 Windows 운영 hook이 설치된 것은 아니다.
 
