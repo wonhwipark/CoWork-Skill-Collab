@@ -5,6 +5,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import context_query
@@ -85,7 +86,50 @@ class ContextQueryTests(unittest.TestCase):
         self.assertEqual(got["state"], "LOCAL_CURRENT_READ_ONLY")
         self.assertEqual(got["host_execution"], "NOT_VERIFIED_BY_LOCAL_FILES")
         self.assertEqual(got["relations"], [])
+        self.assertEqual(got["relations_state"], "LOCAL_FILE_PRESENCE_UNVALIDATED")
         self.assertEqual(got["delta"]["state"], "NO_BASELINE")
+
+
+    def test_snapshot_scan_limit_returns_explicit_degraded_state(self):
+        p = self.root / "collab" / "requests"
+        p.mkdir(parents=True)
+        for j in range(201):
+            (p / f"REQ-OTHER-{j:05}").mkdir()
+        # The limit applies to all folders, even if none belongs to this Work.
+        got = context_query.snapshot(self.root, "스킬 조회", topic="skill")
+        self.assertEqual(got["state"], "LOCAL_CURRENT_READ_ONLY")
+        self.assertIn("NOT_VERIFIED", got["summary"])
+        self.assertEqual(got["relations_state"], "RELATIONS_SCAN_LIMIT_EXCEEDED")
+        self.assertEqual(got["relations"], [])
+        self.assertIn("incomplete and NOT_VERIFIED", got["warning"])
+        self.assertEqual(got["host_execution"], "NOT_VERIFIED_BY_LOCAL_FILES")
+
+    def test_snapshot_at_limit_does_not_drop_valid_relation(self):
+        p = self.root / "collab" / "requests"
+        p.mkdir(parents=True)
+        for j in range(199):
+            (p / f"REQ-OTHER-{j:05}").mkdir()
+        rid = "REQ-THIS-WORK-00001"
+        request = p / rid / "REQUEST.md"
+        request.parent.mkdir()
+        request.write_text(f"---\nwork_id: {self.work}\nrequest_revision: 1\n---\n", encoding="utf-8")
+        got = context_query.snapshot(self.root, "스킬 조회", topic="skill")
+        self.assertEqual(got["relations_state"], "LOCAL_FILE_PRESENCE_UNVALIDATED")
+        self.assertEqual(len(got["relations"]), 1)
+        self.assertEqual(got["relations"][0]["execution_verdict"], "NOT_INFERRED_FROM_FILES")
+
+    def test_windows_drive_paths_rejected_before_filesystem_access(self):
+        with mock.patch.object(Path, "is_symlink", side_effect=AssertionError("filesystem accessed")), \
+             mock.patch.object(Path, "is_file", side_effect=AssertionError("filesystem accessed")), \
+             mock.patch.object(Path, "stat", side_effect=AssertionError("filesystem accessed")):
+            for path in ("C:/Windows/win.ini", "C:relative.txt", "Z:/private", "//server/share/secret", r"\\server\share\secret"):
+                with self.subTest(path=path):
+                    self.assertIsNone(context_query.safe_file(self.root, path))
+
+    def test_router_documents_existing_known_false_positive(self):
+        # No router policy change in F3: retain and document its known bias.
+        self.assertEqual(context_query.choose("그룹웨어 설치 문의")[0], "knowledge")
+        self.assertEqual(context_query.choose("전혀 관계없는 질문")[0], "skill")
 
     def test_request_scan_is_bounded(self):
         p = self.root / "collab" / "requests"
