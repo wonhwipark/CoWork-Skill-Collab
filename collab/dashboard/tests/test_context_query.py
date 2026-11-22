@@ -312,5 +312,65 @@ class ContextQueryTests(unittest.TestCase):
             context_query.related(self.root, self.work, max_requests=2)
 
 
+    def test_route_diagnostics_unmatched_fallback_is_not_a_confirmed_match(self):
+        got = context_query.route_diagnostics("회의 일정?")
+        self.assertEqual(got["selected_topic"], "skill")
+        self.assertEqual(got["state"], "FALLBACK_UNVERIFIED")
+        self.assertTrue(got["requires_review"])
+        self.assertEqual(got["candidate_topics"], [])
+
+    def test_route_diagnostics_multiple_topic_candidates_are_visible(self):
+        got = context_query.route_diagnostics("대시보드 스킬 ZIP 현황?")
+        self.assertEqual(got["state"], "MULTI_TOPIC_REVIEW")
+        self.assertIn("dashboard", got["candidate_topics"])
+        self.assertIn("skill", got["candidate_topics"])
+        self.assertTrue(got["requires_review"])
+
+    def test_route_diagnostics_known_groupware_substring_trap(self):
+        got = context_query.route_diagnostics("그룹웨어 설치 문의")
+        self.assertEqual(got["selected_topic"], "knowledge")  # unchanged legacy behavior
+        self.assertEqual(got["state"], "SUBSTRING_MATCH_REVIEW")
+        self.assertTrue(got["requires_review"])
+        self.assertEqual(context_query.route_diagnostics("그룹 지식 업데이트")["state"], "SINGLE_TOPIC_MATCH")
+
+    def test_explicit_topic_overrides_route_warning(self):
+        got = context_query.route_diagnostics("회의 일정?", topic="knowledge")
+        self.assertEqual(got["state"], "EXPLICIT_TOPIC")
+        self.assertFalse(got["requires_review"])
+        self.assertEqual(got["candidate_topics"], ["knowledge"])
+
+    def test_snapshot_emits_uncertain_route_and_maintains_read_only_state(self):
+        (self.root / "collab" / "requests").mkdir()
+        got = context_query.snapshot(self.root, "회의 일정?")
+        self.assertEqual(got["state"], "LOCAL_CURRENT_READ_ONLY")
+        self.assertEqual(got["routing"]["state"], "FALLBACK_UNVERIFIED")
+        self.assertIn("routing requires review", got["warning"])
+        self.assertEqual(got["host_execution"], "NOT_VERIFIED_BY_LOCAL_FILES")
+
+    def test_truncated_current_is_not_presented_as_whole_top_section(self):
+        (self.root / "collab" / "requests").mkdir()
+        (self.root / self.rel).write_text("## Current\n" + ("A" * 5000) + "\n## Historical\nPASS_OLD\n", encoding="utf-8")
+        got = context_query.snapshot(self.root, "스킬 ZIP?", topic="skill")
+        self.assertTrue(got["summary_truncated"])
+        self.assertLessEqual(len(got["summary"]), 3600)
+        self.assertIn("top section is truncated", got["warning"])
+        self.assertNotIn("PASS_OLD", got["summary"])
+
+    def test_nested_package_path_does_not_alias_same_basename(self):
+        rid = "REQ-PACKAGE-ALIAS-0001"
+        request = self.request(rid)
+        request.write_text(
+            "---\n"
+            f"work_id: {self.work}\n"
+            "package_path: /SKILL-COLLAB/packages/nested/candidate.zip\n"
+            "---\n", encoding="utf-8")
+        pkg = self.root / "collab" / "packages" / "candidate.zip"
+        pkg.parent.mkdir(parents=True)
+        pkg.write_bytes(b"unvalidated local bytes")
+        got = context_query.related(self.root, self.work)
+        self.assertEqual(len(got), 1)
+        self.assertEqual(got[0]["evidence_files"]["package"], "NOT_FOUND_LOCAL")
+
+
 if __name__ == "__main__":
     unittest.main()
