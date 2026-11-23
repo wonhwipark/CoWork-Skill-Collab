@@ -21,7 +21,7 @@
 - 코드 게시: `a98e3d7527e71964b8fbb872f885afee0c044359` → 지침/정리 `486ac057c93fd686b14401c6f00b5b64725d381e` → 근거 한계 보강 `f32680b57993fb7ea7d1e9f7f5a4338f87a4b822`.
 - 시험 게시: `afef6adba47f7fd0e64528d09405e551cda4b6f3` → 실제 ZIP 회귀 fixture `6c99b6c0046828713891abd2f06774caa3efd7f9`.
 - 최종 코드 Git blob: `246af9e910c7498ba98492c30a9865e60ea97402`; 시험 Git blob: `4c45afab2507034811a240850afca5374da9e588`. **Git blob SHA-1은 파일 SHA-256이 아님**.
-- 두 수정 파일 각각 GitHub main 원격 본문 바이트 readback 일치. 온라인 워크플로 Run ID/실제 PASS는 이 단계에서 확인하지 못했으므로 미검증으로 유지.
+- 두 수정 파일 각각 GitHub main 원격 본문 바이트 readback 일치. Python 코드 최종 UTF-8 원본 SHA-256: `1822aa46e762872f44fc303aec54a24428f704db59f7e8a621d5c6a8f1061c31`; 테스트 최종 UTF-8 원본 SHA-256: `7c6d9243e997ce43c91bb1173541c17b16acf8ef066d4d4473ce5cf545b5b960`. 온라인 워크플로 Run ID/실제 PASS는 이 단계에서 확인하지 못했으므로 미검증으로 유지.
 
 ## 운영 안전 재개
 1. 먼저 Windows Claude Code 또는 GitHub 무과금 오프라인 시험으로 수정된 소스·시험을 실제 실행. `test_real_v035_package_inventory_preflight_without_network` 포함 PASS 확인; 완료 서명/REQUEST/READY/pin과 원본 패키지의 **실제 preflight 재실행**이 PASS여야 함. Windows git clone은 `core.autocrlf=false`; 공개키 변수는 이전에 검증된 원본 사용.
