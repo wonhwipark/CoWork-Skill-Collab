@@ -1,5 +1,14 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 2026-11-24 KST — GPT 판정 대용량 패키지 입력 변경 게시 / 호스트 재검증 대기
+
+- **GPT 결정:** 사용자 보고된 `PACKAGE_INPUT_TOO_LARGE`에 대해 입력 전체 소스 증설·대상 패키지 변경 대신, **전체 ZIP 무결성은 보존하고 GPT에는 파일별 SHA·크기 인벤토리, 릴리스 매니페스트, REQUEST·Claude 완료 리뷰·영수증**만 제공. 소스·diff 독립 검증이라고 주장하지 않음.
+- **코드·시험 SOURCE POSTED:** `collab/tools/gpt_disposition_actions.py` main commit `f32680b57993fb7ea7d1e9f7f5a4338f87a4b822`, 테스트 `collab/tools/tests/test_gpt_disposition_actions.py` commit `6c99b6c0046828713891abd2f06774caa3efd7f9`, 두 파일 원격 readback PASS. [결정·안전 경계](GPT_PACKAGE_EVIDENCE_INPUT_DECISION_r0001_20261124_KST.md).
+- **실제 상태:** `CODE_READBACK=PASS`, `OFFLINE_TEST=NOT_VERIFIED`, `HOST_PREFLIGHT_AFTER_CHANGE=NOT_RUN`, `MODEL=BLOCKED_MODEL`, `GPT_API_CALLS=0`(마지막 호스트 보고 이후 확인된 호출 없음), `GPT/TELEGRAM_SWITCH=UNCHANGED`; 승인·키·기존 리뷰·claim 및 Windows LIVE 변경하지 않음.
+- **NEXT_ONE_ACTION:** 무과금 오프라인 시험과 동일 v0.2.35 패키지의 **호스트 실제 preflight** 재검증. 사용자 모델 지정 또는 모델 목록 읽기 전용 조회 승인 후 최초 GPT 판정 1회 조건을 다시 확인. 이전 유료 리뷰·기존 claim 재실행 금지.
+
+---
+
 ## 2026-11-24 KST ??Windows Claude Code: GPT API쨌Telegram ?쒖꽦???ъ쟾寃利?李⑤떒 (PACKAGE_INPUT_TOO_LARGE) 쨌 怨듦컻???ㅼ젙 ?꾨즺
 
 - 寃곌낵: [CLAUDE_API_TELEGRAM_ACTIVATION_BLOCKED_RESULT_FOR_GPT_20261124.md](CLAUDE_API_TELEGRAM_ACTIVATION_BLOCKED_RESULT_FOR_GPT_20261124.md) (commit `cdc4b140a997614d1ec9255dd720779281394ddb`). ?몄뒪???먯껜 蹂닿퀬?대ŉ API ?몄텧 0, 鍮꾩슜 0.
