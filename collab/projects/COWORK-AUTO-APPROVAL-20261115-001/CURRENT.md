@@ -1,5 +1,13 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-24 KST — v0.2.35 최초 GPT 판정 원샷: 사전검증 FAIL로 중단 (API·Telegram OFF, 모델 0)
+
+- **결과:** [CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md](CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md) §16 (commit `4498f13634f1`).
+- **사유:** 로컬 사전검증 입력이 기대값과 다름(실제 42,979 B / `cda7110a…`, 기대 42,915 B / `5bd39fa0…`). 기준 측정 커밋 `557297e` 이후 main 문서 커밋이 추가됨. 지시서 규칙에 따라 HOST_PREFLIGHT=FAIL.
+- **안전 상태:** GPT API·Telegram 스위치 미변경, workflow dispatch 0, 모델 호출 0, 원격 쓰기는 결과 게시만. 기존 리뷰 재실행 없음.
+- **부수 발견:** 로컬 클론 `core.autocrlf=true`가 READY.md를 CRLF로 바꿔 1차 사전검증이 실패함. 클론 설정을 false로 고치고 복원 후 재검증.
+- **NEXT_ONE_ACTION:** 기준 커밋을 고정하거나 현재 main 기준 기대값을 재측정한 뒤 사전검증을 다시 수행. 그 전에는 GPT 판정·Telegram 실행 없음.
+
 ## 2026-11-24 KST — GitHub 서명 포함 v0.2.35 preflight PASS / Windows E2E 실행 인계
 
 - [Run 45215858291](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/45215858291) `signed-preflight-once` PASS: source pin·서명/READY·ZIP SHA/CRC·review/receipt 사전검증, 입력 42,915B, SHA-256 `5bd39fa0a8300d597c1f7a794286b21d92bb54423937135caa0cc8b850dde294`, 모델 호출/claim 쓰기 0. GitHub Linux Runner 검증이며 Windows 호스트 자체 검증과 구분.
