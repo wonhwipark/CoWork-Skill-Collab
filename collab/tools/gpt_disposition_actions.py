@@ -62,11 +62,12 @@ def require(condition: bool, message: str) -> None:
         raise Hold(message)
 
 
-def one_cycle_work_id(root: Path, rid: str) -> str:
-    """Fail closed if this Work has any other submitted review request.
+def one_cycle_work_id(root: Path, rid: str, *, completed_review: bool = False) -> str:
+    """Validate Work identity. On new submissions, reject a second review request.
 
-    The GitHub Actions work-scoped CREATE_ONLY claim is the remote concurrency lock.
-    This checkout scan is an additional history/identity gate, not a Windows LIVE gate.
+    A completed, verified Claude review can be graded once even when its Work
+    contains historical REQUESTs predating this single-cycle rule. The atomic
+    remote ONE_CYCLE_CLAIM remains mandatory before any GPT API call.
     """
     require(RID_RE.fullmatch(rid) is not None, 'INVALID_REQUEST_ID')
     base = root / 'collab' / 'requests'
@@ -82,6 +83,10 @@ def one_cycle_work_id(root: Path, rid: str) -> str:
     anchor = root / 'collab' / 'projects' / work_id / 'CURRENT.md'
     require(anchor.is_file() and not anchor.is_symlink() and
             not anchor.parent.is_symlink(), 'WORK_ANCHOR_MISSING')
+    if completed_review:
+        # Only preflight() uses this after verifying the completed review chain.
+        # Legacy REQUEST history must not block the first remote Work claim.
+        return work_id
     folders = [p for p in base.iterdir() if p.is_dir() and not p.is_symlink()]
     require(len(folders) <= 500, 'WORK_CYCLE_SCAN_LIMIT')
     for folder in folders:
@@ -191,7 +196,7 @@ def preflight(root: Path, rid: str, repo_id: str, public_key_b64: str | None) ->
     ready_path = base / 'READY.md'
     approval_check(request_path, ready_path, base / 'SOURCE_PIN.json', base / 'APPROVAL_SIG.json',
                    repo_id, public_key_b64=public_key_b64)
-    work_id = one_cycle_work_id(root, rid)
+    work_id = one_cycle_work_id(root, rid, completed_review=True)
     req_raw = checked_file(request_path).decode('utf-8')
     result_raw = checked_file(root / 'collab' / 'reviews' / rid / 'REVIEW_RESULT_1.md').decode('utf-8')
     receipt_raw = checked_file(root / 'collab' / 'receipts' / rid / 'RECEIPT_1.md').decode('utf-8')
