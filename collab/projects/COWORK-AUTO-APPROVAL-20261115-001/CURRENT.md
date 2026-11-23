@@ -1,5 +1,12 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-23 KST — GPT API 최초 E2E 인증 경계: PUBLIC 유지, 호스트 BLOCKED_KEY/MODEL/TRUST
+
+- **연계 상태:** [이관 Work 최신 CURRENT](../COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md). 사용자 CoWork PUBLIC 유지 확정, GitHub visibility=public 직접 확인. Windows Claude Code의 원샷 인계 실행 ACK 보고 수용, GPT API 키·모델·서명 공개키 GitHub 설정 부재(`BLOCKED_KEY`/`BLOCKED_MODEL`/`BLOCKED_TRUST`), API·Telegram 스위치 미설정. 기존 Telegram Bot/Chat ID는 호스트 보고상 설치됨.
+- **GPT 직접 확인:** 기존 v0.2.35 완료 리뷰의 GPT disposition/claim과 Work `ONE_CYCLE_CLAIM.json` 등 4개 모두 GitHub 404. 새 Runner 유료 호출 0, `PREFLIGHT=NOT_RUN`, `FIRST_GPT_E2E=NOT_RUN`, `LIVE_WATCHER=v0.2.29`(마지막 Windows 호스트 보고). 오프라인 회귀 최종 31/31 PASS 기존 근거 유지.
+- **신뢰 경계:** 서명 호스트에서 기존 `cowork-approver-1` 신뢰 공개키만 fingerprint 검증해 재사용, 개인키/키 교체 금지. OpenAI API 프로젝트 키 존재/권한 확인이 안 되면 새 키 임의 생성 금지. 비용 승인·지출 상한의 재요청은 하지 않음.
+- **NEXT_ONE_ACTION:** 기존 인증 소스 확보 후 migration Work의 활성화 원샷 단계 3~10을 수행하고 Run ID/판정/Telegram 영수증을 실제 확인. 새 Claude 독립 리뷰/중복 요청 금지.
+
 ## 2026-11-23 KST — GPT Runner 사전검증 레거시 Work 충돌 보완·31 PASS, LIVE 별개
 
 - **연계:** [GPT API/Telegram 원샷 활성화 인계](../COWORK-DROPBOX-TO-GITHUB-MIGRATION/GPT_API_TELEGRAM_ACTIVATION_ONE_SHOT_r0001_20261123_KST.md). 레거시 동일 Work REQUEST가 있어 v0.2.35 최초 GPT 판정까지 `WORK_SINGLE_CYCLE_ALREADY_REQUESTED`로 차단할 버그 수정(기존 새 REQUEST 엄격 검사 유지, 완료 리뷰의 원자적 Work claim 유지). commit `479cc207ea85`, 회귀 commit `38e63ceab97`.
