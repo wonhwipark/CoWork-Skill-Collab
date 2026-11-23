@@ -1,5 +1,13 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-23 KST — v0.2.36 Runner E2E 판정: 신규 ZIP 미생성(BLOCKED_SOURCE), Runner 자동 시작 확인 (LIVE=OFF)
+
+- **결과:** [CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md](CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md) §15 (commit `b20fab62bf88`).
+- **Runner 자동 감지 PASS(기존 증거):** v0.2.35 결과·영수증 push → Run `45132178582`, `45132184098`(actor `wonhwipark`, offline-selftest success, gpt-disposition·telegram-smoke skipped).
+- **v0.2.36:** 실질 변경 불필요로 ZIP 미생성. 버전 올림만은 금지. 신규 독립 리뷰 미요청(같은 ZIP 재리뷰 = 재실행).
+- **GPT 판정·Telegram(Actions):** NOT_RUN — API·알림 변수 미설정, 비용 정책 승인 필요.
+- **NEXT_ONE_ACTION:** GPT 판정 검증을 원하면 비용 정책 승인 필요. 실질 변경이 필요하면 구체 요구를 주시면 v0.2.36 작성.
+
 ## 2026-11-23 KST — 사용자 지시: v0.2.36 신규 독립 리뷰로 완료→Runner E2E 검증
 
 - 기존 v0.2.35 재생 무모델 시험 Issue #3은 superseded/closed(미실행). 기존 v0.2.35 독립 리뷰 재실행 금지.
