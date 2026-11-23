@@ -209,6 +209,7 @@ def package_inputs(root: Path, request: dict) -> str:
         f'text_member_count: {text_count}',
         f'total_text_bytes_verified_not_forwarded: {text_size}',
         'The complete ZIP was size/SHA/CRC/path-checked. The GPT did NOT read all source.',
+        'No baseline diff or source-body verification is provided in this evidence. Flag this limitation.',
         'Each line below is path | uncompressed_size_bytes | sha256 (all non-directory members):',
     ]
     lines.extend(f'{n} | {length} | {sha}' for n, length, sha in entries)
