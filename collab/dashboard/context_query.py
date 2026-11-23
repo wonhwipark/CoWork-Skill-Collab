@@ -2,7 +2,7 @@
 """CoWork P1/P2: bounded, read-only context and evidence relationships.
 
 No model invocation, network access, disk writes, private-to-public exports, or
-cached state. Local PRIVATE checkout only. The output is NOT for publication.
+cached state. Authorized local checkout only. The output is NOT for publication.
 """
 from __future__ import annotations
 
@@ -423,7 +423,7 @@ def snapshot(root: Path, question: str, topic: str | None = None,
 
 
 def main() -> None:
-    p = argparse.ArgumentParser(description="PRIVATE CoWork P1/P2 scoped context, read-only")
+    p = argparse.ArgumentParser(description="CoWork P1/P2 scoped local context, read-only")
     p.add_argument("--root", type=Path, default=Path("."))
     p.add_argument("--question", required=True, help="What information is needed?")
     p.add_argument("--topic", choices=sorted(ROUTES))
