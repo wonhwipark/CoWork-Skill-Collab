@@ -435,3 +435,22 @@ LIVE_READY = **NO**. 막힌 항목:
 - 실질 변경을 원하면 구체 요구(예: 워처가 결과를 올린 뒤 Runner 다시 트리거 등)를 주시면 그때 v0.2.36을 만듭니다.
 
 - **LIVE_READY = NO. LIVE = OFF.**
+
+---
+
+## 16. v0.2.35 최초 GPT 판정 원샷 — 사전검증 FAIL로 중단 (2026-11-24 KST)
+
+**판정: HOST_PREFLIGHT=FAIL, 안전 중단. GPT API·Telegram 스위치 미변경, workflow dispatch 0, 모델 호출 0, 원격 쓰기 0.**
+
+- HOST_ACK: 실제 Windows Claude Code 세션에서 인계서 수신·실행(CONFIRMED_THIS_SESSION).
+- 대상: `REQ-COWORK-V035-WATCHER-REVIEW-20261123`(완료된 기존 리뷰). 재리뷰 없음.
+- 신뢰 루트: 로컬 `trust_root_file`이 설정의 고정 SHA와 일치, 키 `cowork-approver-1` ACTIVE, 로컬 공개키가 GitHub 변수 `COWORK_APPROVER_PUBLIC_KEY_B64`와 일치(키 값은 출력하지 않음).
+- SECRETS_PRESENT: `OPENAI_API_KEY`, `COWORK_TELEGRAM_BOT_TOKEN`, `COWORK_TELEGRAM_CHAT_ID` 이름 존재 확인(값 미열람).
+- MODEL_VARIABLE: `COWORK_GPT_MODEL` 미설정.
+- 사전검증 1차 FAIL(`APPROVAL_FIELD_READY_SHA256`): 클론의 `core.autocrlf=true`가 READY.md를 CRLF로 변환한 것이 원인. 원격 blob `d30f6f24…`는 승인 필드와 일치. 클론 설정을 false로 바꾸고 요청 폴더를 저장소 바이트로 복원한 뒤 재검증.
+- 사전검증 2차 PASS_RETURNED(모델 0)였으나 입력 기대값과 불일치: 기대 `5bd39fa0…`/42,915 B, 실제 `cda7110a…`/42,979 B(main `8a95f3f` 기준). 기준 Run `45215858291`은 커밋 `557297e`에서 측정되었고 이후 문서 커밋이 추가됨. 지시서 규칙에 따라 HOST_PREFLIGHT=FAIL.
+- PREEXISTING_CLAIMS: 미확인(사전검증 FAIL로 claim 조회 전 중단, claim 생성 없음).
+- API_SWITCH=UNCHANGED, TELEGRAM_SWITCH=UNCHANGED, RUN_ID=없음, GPT_DISPOSITION=NOT_RUN, USAGE=0, TELEGRAM_SENT=0, MOBILE_RECEIVE=NOT_VERIFIED.
+- LIVE_WATCHER: v0.2.29 Running 유지. 설치·DB·Task·Notifier·키 변경 없음.
+- NEXT_ONE_ACTION: 기준 커밋을 고정하거나 현재 main 기준 기대값을 재측정한 뒤 사전검증을 다시 수행. 먼저 추가된 문서 커밋이 입력에 들어가는지 확인.
+
