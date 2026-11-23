@@ -1,5 +1,16 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-24 KST — Updater 직접 분석 MSC의 HTML 링크 부재: 업무 GPT 통합 HO r0002 게시
+
+- **사용자 관찰:** 업무 Viewer에서 PlantUML만 보이고 MSC HTML 링크 없음. 실제 Updater→Converter 호출/HTML 생성/Work artifact 등록/Viewer 표시 여부는 `UNKNOWN/NOT_RUN`으로 구분. 문제 원인 단정 금지.
+- **현재 상태:** 기존 Viewer v0.5.2 ZIP 불변 재사용. 업무 GPT 통합 [HO r0002](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_WORKSPACE_VIEWER_V052_MSC_UPDATER_CONVERTER_COMPLETE_HANDOFF_r0002_20261124_KST.md) 공개 게시·원격 읽기검증 PASS (blob `7f5128b34e5afa14949867af74850fd246a69191`). 기존 r0001 전체 계약 보존. [결과 기록](VIEWER_V052_MSC_UPDATER_CONVERTER_HANDOFF_RESULT_r0001_20261124_KST.md).
+- **검증 경로:** 호출/영수증 → HTML/SVG 파일·manifest → 개인 Workspace 같은 Work artifact/Evidence·revision readback → Viewer 실제 read adapter·HTML 링크·브라우저. 입증된 gap만 최소 변경하며 `l1-fix-workflow` 매회 경유 강제하지 않음.
+- **차단/미실행:** 업무 Linux G0·Converter 실호출/MSC 실렌더·독립 리뷰·운영 설치·Write ON/Job/모델 실행 = NOT_RUN. 문서와 ZIP 공개 게시로 실제 업무 적용 완료 주장 금지.
+- **NEXT_ONE_ACTION:** 업무 GPT가 동일 Work 실사 1건으로 Updater→Converter→Workspace→Viewer 상태를 단계별 판정하고, 기존 writer/adapter 재사용 우선으로 가능한 연결·회귀시험 수행.
+
+---
+
+
 ## 2026-11-24 KST — Viewer v0.5.2 문서 가독성 개선 개발물 L1Work 게시·원격 검증
 
 - **현재 상태:** `PUBLIC_DEV_DELIVERY=PASS_REMOTE_VERIFIED`; 업무 Linux/실제 읽기 adapter/Node/브라우저 E2E/독립 리뷰/운영 적용=`NOT_RUN`. 개발물 전달은 실제 운영 반영 승인이 아님.
