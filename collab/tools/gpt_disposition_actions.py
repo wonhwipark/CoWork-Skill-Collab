@@ -269,7 +269,9 @@ def git_changed(before: str, after: str) -> list[str]:
 
 
 def github_json(method: str, repo: str, path: str, token: str, payload: dict | None = None) -> tuple[int, dict]:
-    url = 'https://api.github.com/repos/' + repo + '/' + path
+    url = 'https://api.github.com/repos/' + repo
+    if path:
+        url += '/' + path
     data = None if payload is None else json.dumps(payload, ensure_ascii=False).encode('utf-8')
     request = urllib.request.Request(url, data=data, method=method, headers={
         'Authorization': 'Bearer ' + token,
