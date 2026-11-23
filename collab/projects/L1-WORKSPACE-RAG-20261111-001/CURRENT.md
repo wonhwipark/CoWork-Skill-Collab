@@ -1,5 +1,14 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-24 KST — Viewer v0.5.2 통합 HO r0002 후속 시험 근거·현장 회신 보완
+
+- **대상 정본:** L1Work `main` [통합 HO r0002](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_WORKSPACE_VIEWER_V052_MSC_UPDATER_CONVERTER_COMPLETE_HANDOFF_r0002_20261124_KST.md), [handoffs 인덱스](https://github.com/wonhwipark/L1Work/blob/main/handoffs/README.md). 기존 r0002 전체 본문, r0001 전량 계승, A01~A10/H01~H05·T1~T8, v0.5.2 ZIP 및 이전 버전 원본 보존.
+- **변경·원격 확인:** r0002에 v0.5.1 게시본 Node 25 PASS 근거와 **v0.5.2 Node/브라우저/업무 G0=NOT_RUN** 버전별 분리, 실제 활성 source revision·Updater/Converter 호출·MSC HTML/SVG artifact/readback·Viewer 링크 상태·담당·재현 ID·짧은 비민감 현장 회신 추가. r0002 commit `5f68eef015065267b9e3f617f31b260032fc72f6` / Git blob `6270aadf30046a56c724c69d899e4fd753a2a415`. README 최상단 최신 인계 연결 commit `c733b2009a522af434553bebfc38b9a90458af5b` / blob `28eff9753aa0da14c1997b5423d6e8a682a04875`; 두 파일 원격 본문 일치 **PASS**.
+- **게이트:** 문서만 변경, Viewer/Updater/Converter 스킬 ZIP 무변경. 업무 Linux G0·실제 Converter 호출·HTML 링크·Node/브라우저 E2E·호스트 설치·LLM/Write/Job 활성화·독립 리뷰=**NOT_RUN**. 이력의 v0.5.1 Node PASS를 v0.5.2의 시험 결과로 치환하지 않음.
+- **NEXT_ONE_ACTION:** 업무 GPT가 위 최신 r0002와 v0.5.2 ZIP 하나로 기존 실제 Work의 MSC 1건을 G0→호출/산출물/Work 등록/Viewer 노출 순으로 재검증하고 현장 회신 양식으로 비민감 근거 참조만 반환.
+
+---
+
 ## 2026-11-24 KST — Updater 직접 분석 MSC의 HTML 링크 부재: 업무 GPT 통합 HO r0002 게시
 
 - **사용자 관찰:** 업무 Viewer에서 PlantUML만 보이고 MSC HTML 링크 없음. 실제 Updater→Converter 호출/HTML 생성/Work artifact 등록/Viewer 표시 여부는 `UNKNOWN/NOT_RUN`으로 구분. 문제 원인 단정 금지.
