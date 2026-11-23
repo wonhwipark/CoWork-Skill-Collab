@@ -1,0 +1,70 @@
+name: CoWork v0.2.35 GPT signed preflight once (no model)
+# Explicit user-approved non-billable verification. No OpenAI API or writes.
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/cowork-v035-signed-preflight-once-20261124.yml'
+permissions:
+  contents: read
+jobs:
+  signed-preflight-once:
+    if: >-
+      github.repository == 'wonhwipark/CoWork-Skill-Collab' &&
+      github.ref == 'refs/heads/main' &&
+      github.run_attempt == 1 &&
+      github.event.head_commit.message == 'chore: perform v035 signed GPT preflight once without model 20261124'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out current main preserving content bytes
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Install signature verification dependency
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m venv .cowork-venv
+          .cowork-venv/bin/python -m pip -q install --disable-pip-version-check 'cryptography>=45,<47'
+      - name: Verify completed v0.2.35 review chain and signed package without model
+        shell: bash
+        env:
+          COWORK_APPROVER_PUBLIC_KEY_B64: ${{ vars.COWORK_APPROVER_PUBLIC_KEY_B64 }}
+        run: |
+          set -euo pipefail
+          .cowork-venv/bin/python - <<'PY'
+          import hashlib
+          import os
+          import sys
+          from collab.tools.gpt_disposition_actions import ROOT, Hold, preflight
+
+          rid = "REQ-COWORK-V035-WATCHER-REVIEW-20261123"
+          key = os.getenv("COWORK_APPROVER_PUBLIC_KEY_B64", "")
+          if not key:
+              print("BLOCKED: VERIFIED_PUBLIC_KEY_VARIABLE_MISSING")
+              sys.exit(2)
+          try:
+              evidence = preflight(ROOT, rid, "1451933830", key)
+          except Hold as exc:
+              print("PREFLIGHT=FAIL " + str(exc))
+              sys.exit(2)
+          except Exception as exc:
+              # No input, stack trace, secrets or raw ZIP bytes in logs.
+              print("PREFLIGHT=BLOCKED_UNEXPECTED_ERROR " + type(exc).__name__)
+              sys.exit(2)
+          assert evidence["request_revision"] == "1"
+          assert evidence["package_sha256"] == "658a6f3da8bd018b96b64453892aec77d96868e19bc5788745c1591b1729a740"
+          assert evidence["work_id"] == "COWORK-AUTO-APPROVAL-20261115-001"
+          assert 0 < len(evidence["input"].encode("utf-8")) <= 140_000
+          assert hashlib.sha256(evidence["input"].encode("utf-8")).hexdigest() == evidence["input_sha256"]
+          print("PREFLIGHT=PASS")
+          print("REVIEW_ID=" + rid)
+          print("SOURCE_PACKAGE_SHA256=" + evidence["package_sha256"])
+          print("MODEL_INPUT_BYTES=" + str(len(evidence["input"].encode("utf-8"))))
+          print("MODEL_INPUT_SHA256=" + evidence["input_sha256"])
+          print("SIGNATURE_AND_ZIP_CHECK=PASS")
+          print("MODEL_CALLS=0")
+          print("CLAIM_WRITES=0")
+          PY
