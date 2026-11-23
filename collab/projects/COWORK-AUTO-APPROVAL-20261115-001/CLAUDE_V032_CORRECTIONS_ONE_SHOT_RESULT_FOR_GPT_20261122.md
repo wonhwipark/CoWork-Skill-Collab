@@ -400,3 +400,38 @@ LIVE_READY = **NO**. 막힌 항목:
 - 이 승인이 나면 경합 시험 → 통과 시 LIVE 설치(§13.7 범위) → 운영 검증 순서로 진행합니다.
 
 - **LIVE_READY = NO. LIVE = OFF(변경 없음).**
+
+---
+
+## 15. v0.2.36 Runner 완료 감지 E2E 판정 (2026-11-23 KST)
+
+**판정: v0.2.36 ZIP 미생성 (FORMAL_REQUEST=BLOCKED_SOURCE). 신규 독립 리뷰 미요청. 기존 완료 리뷰 재실행 없음.**
+
+### 15.1 Runner 자동 감지 — 기존 실행 증거로 PASS
+- 워크플로 `cowork-gpt-disposition.yml`은 `main`에 대한 `push` 중 `collab/reviews/**/REVIEW_RESULT_1.md`, `collab/receipts/**/RECEIPT_1.md` 경로 변경에 자동 실행.
+- v0.2.35 결과·영수증 게시로 생성된 Run:
+  - `45132178582` (push, head `45e20834c9`, 트리거 actor `wonhwipark`): offline-selftest **success**, gpt-disposition **skipped**, telegram-smoke **skipped**.
+  - `45132184098` (push, head `98c6813705`): offline-selftest **success**, gpt-disposition **skipped**, telegram-smoke **skipped**.
+- 해석: 결과 게시 → Runner 자동 시작은 **확인됨**. 두 skipped는 설계상 게이트 때문(GPT API 변수 `COWORK_GPT_API_ENABLED` 등 미설정, 원격 변수 목록에 `COWORK_TELEGRAM_SMOKE_ENABLED`만 존재).
+
+### 15.2 v0.2.36 필요성 판단
+- 지시서 2번: Runner 자동 시작을 위한 **실질적 최소 변경만** 반영. 위 증거상 워치독 코드·워크플로 변경은 **불필요**.
+- 단순 버전 올림은 지시서가 금지한 무의미 변경. 실제 신규 소스가 없으므로 지시서 4번에 따라 `FORMAL_REQUEST=BLOCKED_SOURCE`로 종료하고 가짜 ZIP·SHA·REQUEST를 게시하지 않음.
+- 같은 v0.2.35 ZIP으로 리뷰를 다시 여는 것은 완료된 리뷰 재실행에 해당하므로 하지 않음.
+
+### 15.3 상태 구분
+| 항목 | 상태 | 근거 |
+|---|---|---|
+| 결과 게시 → Runner 자동 시작 | PASS | Run 45132178582 / 45132184098 (push, actor wonhwipark) |
+| offline 무모델 검증 | PASS | offline-selftest success (두 Run) |
+| 모델 실행(신규 리뷰) | NOT_RUN | 신규 리뷰 없음 |
+| GPT 판정(GitHub GPT API) | NOT_RUN | `COWORK_GPT_API_ENABLED` 미설정, 비용 정책 미승인 |
+| Telegram(GitHub Actions 경로) | NOT_RUN | `COWORK_GPT_TELEGRAM_NOTIFY_ENABLED` 미설정 |
+| v0.2.36 ZIP·독립 리뷰 | BLOCKED_SOURCE | 실질 변경 없음 |
+| LIVE 설치 | NOT_RUN | 이번 범위 밖, 기존 게이트 미충족 유지 |
+
+### 15.4 다음 한 가지 결정
+- GPT 판정까지 실제로 검증하려면 `COWORK_GPT_API_ENABLED`·비용 정책 승인·지출 상한 확인이 필요합니다. 이는 별도 비용 승인 범위이므로 사용자 결정이 필요합니다.
+- 실질 변경을 원하면 구체 요구(예: 워처가 결과를 올린 뒤 Runner 다시 트리거 등)를 주시면 그때 v0.2.36을 만듭니다.
+
+- **LIVE_READY = NO. LIVE = OFF.**
