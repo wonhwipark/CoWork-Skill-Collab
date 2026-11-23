@@ -5,10 +5,10 @@
       "work_id": "COWORK-AUTO-APPROVAL-20261115-001",
       "skill": "cowork-review-watcher",
       "title": "GPT→GitHub REQUEST 자동 서명·READY (제한된 사전 위임)",
-      "phase": "V035_F3_COMMIT_PINNED_TESTED__INDEPENDENT_REVIEW_BLOCKED_AUTH__LIVE_BLOCKED_PENDING_FINAL_APPROVAL",
+      "phase": "V035_PUBLIC_REVIEW_COMPLETED_BLOCKING0__LIVE_NOT_EXECUTED__RACE_GATE_NOT_RUN__LIVE_OFF",
       "owner": "Windows Claude Code: execute QA28 on isolated cost-patched successor, fix failures, publish evidence. GPT: receive results and judge. Not a manual user test task.",
       "self_test": "GPT Linux: publisher55 PASS; cost targets237 PASS/0 FAIL/1 SKIP; full tree first attempt1009 PASS/28 FAIL/34 SKIP (Windows/OS dependencies, failures retained); portable final1011 PASS/0 FAIL/34 SKIP/28 DESELECTED; patch clean-r2 exact-byte replay12 files PASS. Windows acceptance NOT_RUN. F1/F2/F3 remain open; preserve DB/nonce history and audit-cause UNVERIFIED.",
-      "independent_review": "REQ-COWORK-V033-R2-WATCHER-REVIEW-20261122 rev1 COMPLETED, STATIC_ONLY BLOCKING0, RESULT/RECEIPT directly read and bound to r2 SHA. Host audit reports dispatch1/duplicate0/USD1.057171 (cost not in remote receipt). GPT disposition HOLD_FOR_CORRECTIONS; no rerun.",
+      "independent_review": "REQ-COWORK-V035-WATCHER-REVIEW-20261123 rev1 COMPLETED, BLOCKING 0, cost USD 0.844, dispatch 1",
       "next_action": "Windows Claude Code reads the latest WINDOWS_V032_CORRECTIONS_ONE_SHOT_HANDOFF_r0001_20261122_KST.md, records actual ACK, runs the28 pinned nodes, fixes/retests within candidate, publishes the existing result doc and CURRENT/TRACKER with remote verification. HOST_HANDOFF=POSTED; ACK/execution NOT_CONFIRMED because this GPT connection cannot start Windows Claude. Do not use static review dispatch as a host-execution substitute; no cost re-consent, duplicate review, live/DB changes."
     }
   ]
