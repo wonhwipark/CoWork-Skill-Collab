@@ -472,3 +472,27 @@ LIVE_READY = **NO**. 막힌 항목:
 - **안전 복귀:** `COWORK_GPT_API_ENABLED=false`, `COWORK_GPT_TELEGRAM_NOTIFY_ENABLED=false`로 되돌리고 readback 확인(이렇게 두면 결과 push 시 자동 GPT 호출을 막음).
 - **다음 필요 조치:** 게이트 버그 수정은 `collab/tools/gpt_disposition_actions.py` 변경과 `main` push가 필요합니다. 이 push는 워크플로 경로 필터에 걸려 Actions를 자동 실행하므로, 수정 범위 승인과 push 허용을 받은 뒤 진행합니다. 수정 후 기존 Run 재사용이 아니라 새 workflow_dispatch 1회로 재시도합니다.
 - **LIVE:** 변경 없음. LIVE=OFF, LIVE_READY=NO.
+
+
+---
+
+## 18. GPT 최초 판정 승인 실행 — 모델 호출 불확실로 중단 (2026-11-23 23:32 UTC)
+
+- **승인 범위:** 사용자 승인(2026-11-24 KST) 범위에서 workflow_dispatch 1회, 스위치 ON·OFF 복귀, 결과 게시.
+- **사전 조건 재확인:** main `9b79c0546a84868b96a738cd6edd5648ee43ab6e`, 입력 SHA-256 `5bd39fa0…`(42,915 B), 진행 중인 Run 없음, 4개 claim 경로 최초 상태 없음, 모델 변수 `gpt-6.2-sol`.
+- **스위치:** Telegram `true` → API `true`(마지막), 두 값 readback 확인. 실행 후 API `false`, Telegram `false`로 복귀, readback 확인.
+- **Run:** `45289692844` (workflow_dispatch, actor wonhwipark, request_id `REQ-COWORK-V035-WATCHER-REVIEW-20261123`, telegram_smoke=false).
+  - `gpt-disposition`: **failure** — 로그 `BLOCKED: MODEL_CALL_UNCERTAIN_NO_RETRY`, exit 2.
+  - `offline-selftest`: success.
+  - `telegram-smoke`: skipped.
+- **Claim 상태(원격 readback):**
+  - `collab/projects/COWORK-AUTO-APPROVAL-20261115-001/ONE_CYCLE_CLAIM.json` 존재, state `ONE_REVIEW_CYCLE_CLAIMED_NO_AUTO_REVIEW`, created 2026-11-23T23:32:40Z.
+  - `collab/reviews/REQ-COWORK-V035-WATCHER-REVIEW-20261123/GPT_API_EXECUTION_CLAIM.json` 존재, state `CLAIMED_CALL_MAY_OCCUR_NO_AUTO_RETRY`, created 2026-11-23T23:32:41Z, github_run_id 45289692844.
+  - `GPT_DISPOSITION.json` 없음 — GPT 판정 결과 없음.
+  - `GPT_TELEGRAM_NOTIFICATION_CLAIM.json` 없음 — Telegram 발송 없음.
+- **모델 호출:** 발생 여부 **불확실**. claim이 모델 호출 직전에 생성되었고, `api.openai.com/v1/responses` 호출이 OSError/ValueError로 끝났습니다. 스크립트 설계상 과금 가능성 때문에 자동 재시도하지 않습니다. usage 값은 없습니다.
+- **원인:** 로그는 예외 세부를 남기지 않아 확정할 수 없습니다(HTTP 상태, 타임아웃, 스키마 오류 중 어느 것인지 불명). 재현을 위한 추가 호출은 하지 않았습니다.
+- **Telegram ACK:** 없음 (발송되지 않음, 사유: 판정 게시 전 중단).
+- **GitHub 게시:** 이 보고와 CURRENT 상단 요약만 문서 전용으로 게시. 코드 파일 변경 없음.
+- **최종 상태:** API `false`, Telegram `false`. LIVE 변경 없음. 재디스패치 없음.
+- **다음 한 행동:** 사용자가 OpenAI 대시보드에서 2026-11-23 23:32 UTC 전후 `gpt-6.2-sol` 요청 여부와 과금을 확인한 뒤 결정. 자동 재시도는 금지.
