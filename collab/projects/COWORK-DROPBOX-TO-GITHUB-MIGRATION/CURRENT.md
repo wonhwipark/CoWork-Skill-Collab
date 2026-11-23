@@ -1,5 +1,15 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 2026-11-23 KST — 사용자 PUBLIC 유지 확정 · GPT API 최초 E2E 인증 연결 BLOCKED_KEY/MODEL/TRUST
+
+- **사용자 최신 결정:** `wonhwipark/CoWork-Skill-Collab`은 PUBLIC 유지. GitHub API 직접 확인 `visibility=public`, `repo_id=1451933830`. PRIVATE 복구/운영 변경 요청 아님. 공개 저장소에 키·비밀값·제한 L1 자료 신규 게시 금지.
+- **Windows Claude Code 실행 보고:** `GPT_API_TELEGRAM_ACTIVATION_ONE_SHOT_r0001_20261123_KST.md` 단계 2에서 실제 호스트가 인계서 수신 및 진입(`HOST_ACK=YES_HOST_REPORTED`). Secret `COWORK_TELEGRAM_BOT_TOKEN`/ `COWORK_TELEGRAM_CHAT_ID` 존재, `OPENAI_API_KEY` 부재. Variables `COWORK_GPT_MODEL`, `COWORK_APPROVER_PUBLIC_KEY_B64`, `COWORK_GPT_API_ENABLED`, `COWORK_GPT_TELEGRAM_NOTIFY_ENABLED` 부재. 이 GitHub API 연결은 Secret/Variable 목록·쓰기/dispatch 권한 부재이므로 위 설정 자체는 **Windows 호스트 보고를 채택**; GPT가 Secret 원문을 읽은 것은 아님.
+- **원격 직접 확인:** 2026-11-23 KST v0.2.35 대상 `GPT_DISPOSITION.json`, `GPT_API_EXECUTION_CLAIM.json`, `GPT_TELEGRAM_NOTIFICATION_CLAIM.json`, Work `ONE_CYCLE_CLAIM.json` **4개 모두 404**. GitHub Actions 최종 Run `45196080268` 성공, 코드 회귀 31/31 PASS(이전 검증); 신규 유료 Run 없음.
+- **신뢰 공개키 재사용:** 보호 서명 키 `cowork-approver-1`은 2026-11-16 Windows 운영 보고상 DPAPI와 신뢰 루트를 기존 설정으로 보존함. 기존 설계상 trust root는 **GitHub 외부의 ACL 보호된 운영 Windows 파일/OS 저장소**. 현재 Claude PC에 없다면 **서명 운영 호스트**에서 *기존 보호 신뢰 루트의 해당 Ed25519 공개키만* fingerprint·key_id 검증 후 안전하게 읽어 Actions variable로 전달. 개인키·신뢰 루트 변경·새 키 발급 금지; 동일 호스트/접근권한이 없으면 `BLOCKED_TRUST` 유지.
+- **API 키/모델:** `OPENAI_API_KEY=BLOCKED_KEY`는 GitHub에 존재하지 않음(Windows 보고). 허용된 다른 기존 보호 저장소에 키가 있고 소유자 권한이 확인될 경우에만 값 비노출로 GitHub Secret 등록. 없다면 신규 발급은 별도 사용자 작업/승인 필요. `COWORK_GPT_MODEL=BLOCKED_MODEL`은 실제 API 프로젝트가 사용 가능한 Responses API 모델을 확인한 다음에만 설정(모델값 임의 추정 금지). **금액 정책·건당/월 상한 재승인 요구 없음.**
+- **실행 경계:** `PREFLIGHT=NOT_RUN` (신뢰 공개키 부재), `GPT_API_ENABLED=OFF_OR_UNSET`, `TELEGRAM_NOTIFY=OFF_OR_UNSET`, `API_MODEL_CALLS=0`, `WORKFLOW_DISPATCH=NOT_RUN`, `FIRST_GPT_DISPOSITION=NOT_RUN`, `TELEGRAM_SENT=0`; 기존 Claude 독립 리뷰·Windows watcher v0.2.29 LIVE 이력 불변. 개인키/토큰 출력·가짜 서명·동일 리뷰 재호출 금지.
+- **NEXT_ONE_ACTION:** 기존 인증 가능한 OpenAI API 프로젝트 키의 실제 보관처/권한부터 확인(없는 경우 사용자에게 필요한 한 항목으로 질문), 서명 운영 호스트의 기존 공개키 확보·서명 원문 검증 및 지원 API 모델 확인 후 현재 [활성화 원샷 인계](GPT_API_TELEGRAM_ACTIVATION_ONE_SHOT_r0001_20261123_KST.md)의 **단계 3~10**을 동일 요청 1회로 이어서 실행. READY/리뷰는 재실행하지 않고 최초 GPT 판정만 수행.
+
 ## 2026-11-23 KST — GPT API 자동 판정·Telegram 활성화 승인 후 준비·실행 인계 (HOST 미실행)
 
 - **사용자 승인:** 이 대화에서 GPT 판정 활성화 및 Telegram까지 E2E 검증 지시. 이미 제거한 비용 정책·금액 상한 승인 재요청 없음. 기존 키/모델이 없다면 임의 생성하지 않음.
