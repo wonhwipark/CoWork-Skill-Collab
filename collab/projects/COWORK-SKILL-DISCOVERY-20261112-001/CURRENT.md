@@ -1,5 +1,17 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 2026-11-24 KST — 새 GPT 창 Work 라우팅·대용량 CURRENT·PUBLIC 정합화 적용
+
+- **사용자 평가 수용:** [평가서 반영·변경/시험/미검증 결과](NEW_CHAT_ROUTING_AND_CURRENT_BOUNDED_FIX_RESULT_r0001_20261124_KST.md). 기존 Work에서 보완; 새 스킬/원장/ZIP·REQUEST/READY·유료 리뷰/운영 호스트 변경 없음.
+- **PUBLIC 경계:** `wonhwipark/CoWork-Skill-Collab/main` 실제 `visibility=PUBLIC` 확인. 공통 브리프 r0018 및 스킬 발견 계약을 안전한 PUBLIC 게시 기준으로 맞추고 상대경로 오류 수정. **ChatGPT 프로젝트 설정 r0002의 PRIVATE 문구 자동 변경은 불가/NOT_APPLIED**, 사용자 설정 정합화 필요.
+- **조회기 변경:** 기존 6→**10 Work/11 topic**(Viewer→지식 Work alias). Viewer/NR 실제 분석/Smoke와 기존 Job 진단 구분. CURRENT 단독 최대 1 MiB, 최신 48 H2 중 질문별 요약; 상한 시 원격 링크와 미검증 표시. 기존 REQUEST/증거 읽기 256KB·200 관계 스캔 보호 유지.
+- **실측:** 변경된 핵심 Python 추출 로직 격리 11 라우팅+2 섹션 **13 PASS**, 해당 추출 코드 py_compile PASS. 실제 L1 Workspace CURRENT **312,413 bytes**/blob `dbdb5364410757580d5620c44d977194d7161a06`를 이용한 동일 선택 로직 재현 Viewer/Updater 해당 H2 **PASS**; 원격 코드·시험·문서 전체 SHA-256 readback PASS.
+- **미검증:** 게시본 Python 전체 py_compile 및 **39개 unittest NOT_RUN**, 실제 `snapshot()` 두 사례·Windows Claude 독립 세션/호스트·새 GPT 무요청 로딩·업무 Linux/Knowledge E2E **NOT_RUN**. 기존 35/35는 변경 전 시험이며 이번 39/39로 승격 금지.
+- **NEXT_ONE_ACTION:** Windows Claude Code 또는 파일 접근 가능한 허용된 실행 환경에서 **게시본 최신 두 Python 파일** 대상으로 `python -m py_compile`, 39건 unittest 및 실제 312,413B CURRENT Viewer/Updater `snapshot()` 검증. 실패 시 동일 Work에서만 최소 보완. 기존 독립 R1 재실행 금지.
+
+---
+
+
 ## 2026-11-23 KST — code-analyzer 원본 Knowledge 시작 경로 확정 / 변경·배포 불필요
 
 - **요청·원본:** 분석 시작 시 `l1sw-dev-knowledge` 조회/실행 구현을 신규 필요성 기준으로 다시 확인. 실제 `L1Work/main/code-analyzer_v0_15_4_1119.zip` 515581 B / 217 entries를 내려받아 Git blob SHA-1 `1c43503a2a4695400727fb3fb1cd0cb3c49f826b`와 일치 확인. 기존 릴리스 기록의 SHA-256 `11e1da15ee12e750c3652190c348a7fc8e31aa1741876e3c06bc0af3413b16af` 참조.
