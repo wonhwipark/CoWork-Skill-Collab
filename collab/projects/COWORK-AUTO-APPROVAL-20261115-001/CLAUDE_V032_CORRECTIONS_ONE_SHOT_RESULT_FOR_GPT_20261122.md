@@ -454,3 +454,21 @@ LIVE_READY = **NO**. 막힌 항목:
 - LIVE_WATCHER: v0.2.29 Running 유지. 설치·DB·Task·Notifier·키 변경 없음.
 - NEXT_ONE_ACTION: 기준 커밋을 고정하거나 현재 main 기준 기대값을 재측정한 뒤 사전검증을 다시 수행. 먼저 추가된 문서 커밋이 입력에 들어가는지 확인.
 
+
+
+---
+
+## 17. v0.2.35 GPT 최초 판정 재개 — 게이트 버그로 호출 전 차단, 스위치 안전 복귀 (2026-11-24 KST)
+
+- **HOST_ACK:** 실제 Windows Claude Code 세션(CONFIRMED_THIS_SESSION).
+- **클론:** 새 클론 `publish_clone_lf`, `core.autocrlf=false`, 워킹트리 clean, HEAD `dd98fd7`. READY.md `d30f6f24…` 저장소 바이트와 일치.
+- **사전검증 PASS(모델 0, 원격 쓰기 0):** 입력 SHA `5bd39fa0a8300d597c1f7a794286b21d92bb54423937135caa0cc8b850dde294`, 42,915 B — 기대값과 정확히 일치. work_id `COWORK-AUTO-APPROVAL-20261115-001`.
+- **미실행 확인:** claim·결과 4개(`GPT_DISPOSITION.json`, `GPT_API_EXECUTION_CLAIM.json`, Work `ONE_CYCLE_CLAIM.json`, `GPT_TELEGRAM_NOTIFICATION_CLAIM.json`) 모두 404. 최근 `cowork-gpt-disposition` Run 전부 `gpt-disposition`·`telegram-smoke`가 skipped였음 → 과거 GPT 판정 실행 없음.
+- **지출 상한 변수:** `COWORK_GPT_PROJECT_SPEND_CAP_CONFIRMED`는 설정하지 않음(워크플로에서 조건 제거 확인).
+- **스위치 설정:** `COWORK_GPT_MODEL=gpt-6.2-sol`, `COWORK_GPT_TELEGRAM_NOTIFY_ENABLED=true`, `COWORK_GPT_API_ENABLED=true`(마지막). 각각 readback 확인.
+- **1회 디스패치:** `workflow_dispatch` Run `45268991482`(request_id=REQ-COWORK-V035-WATCHER-REVIEW-20261123, telegram_smoke=false). 결과: `gpt-disposition` **failure**, `offline-selftest` success, `telegram-smoke` skipped.
+- **실패 원인:** 로그 `BLOCKED: REPOSITORY_NOT_PUBLIC`. 저장소는 실제로 공개(`private=false`). 원인은 `collab/tools/gpt_disposition_actions.py`의 `github_json`이 URL을 `repos/<repo>/`(끝 슬래시)로 만들고, GitHub이 이 형식에 404를 반환해 `code == 200` 검사가 실패한 **게이트 코드 버그**. 저장소 조회에서 끝 슬래시 없이 `200`/`private=false` 확인.
+- **모델·Telegram 상태:** claim이 생성되기 전 차단. 모델 호출 0, GPT 판정 0, Telegram 발송 0, `MOBILE_RECEIVE=NOT_VERIFIED`.
+- **안전 복귀:** `COWORK_GPT_API_ENABLED=false`, `COWORK_GPT_TELEGRAM_NOTIFY_ENABLED=false`로 되돌리고 readback 확인(이렇게 두면 결과 push 시 자동 GPT 호출을 막음).
+- **다음 필요 조치:** 게이트 버그 수정은 `collab/tools/gpt_disposition_actions.py` 변경과 `main` push가 필요합니다. 이 push는 워크플로 경로 필터에 걸려 Actions를 자동 실행하므로, 수정 범위 승인과 push 허용을 받은 뒤 진행합니다. 수정 후 기존 Run 재사용이 아니라 새 workflow_dispatch 1회로 재시도합니다.
+- **LIVE:** 변경 없음. LIVE=OFF, LIVE_READY=NO.
