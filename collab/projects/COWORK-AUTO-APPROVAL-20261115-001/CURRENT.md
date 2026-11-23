@@ -1,5 +1,12 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-23 KST — 사용자 v0.2.35 공개 리뷰·조건부 LIVE·단일 실행 무상한 위험 일괄 승인 (실행 대기)
+
+- **승인 범위:** 정확한 ZIP SHA `658a6f3da8bd018b96b64453892aec77d96868e19bc5788745c1591b1729a740` 한 건 공개 리뷰 입력 게시, 독립 리뷰/필수 게이트 통과 후 v0.2.29→v0.2.35 설치 트리 교체 및 `review_intent_nonces` 추가 전용·watcher 재시작(설정·위임·키·Task·Notifier 불변), 단일 모델 실행 금액 상한 없음 위험 수용. 보호 서명·scope·원본·중복 검증은 유지.
+- **Windows 원샷 인계:** [WINDOWS_V035_REVIEW_TO_LIVE_APPROVED_ONE_SHOT_r0001_20261123_KST.md](WINDOWS_V035_REVIEW_TO_LIVE_APPROVED_ONE_SHOT_r0001_20261123_KST.md). 새 Work/중복 r2 리뷰 없음.
+- **실제 상태:** `APPROVAL_SCOPE=RECORDED`, `HOST_HANDOFF=POSTED`, `HOST_ACK=NOT_CONFIRMED`, `V035_PUBLIC_ZIP=NOT_POSTED`, `V035_REVIEW=NOT_RUN`, `LIVE=OFF`, `LIVE_READY=NO`. 문서 게시만으로 Windows 실행이 시작되지 않음.
+- **NEXT_ONE_ACTION:** Windows Claude Code 실제 세션에서 위 인계서 1회 실행 → 정확한 ZIP 공개 게시/정식 독립 리뷰/필수 운영 게이트/조건부 LIVE 컷오버/결과 원격 검증까지 연속 처리. 차단 시 이유·증거만 기록하고 무권한 우회 금지.
+
 ## 2026-11-23 KST — F3 커밋 고정 구현·v0.2.35 후보·LIVE 보류 (LIVE_READY=NO, LIVE=OFF)
 
 - **결과:** [CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md](CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md) §13 (commit `d272d2990fcc`).
