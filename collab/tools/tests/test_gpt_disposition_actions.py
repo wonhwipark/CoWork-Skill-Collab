@@ -13,6 +13,11 @@ import unittest
 from unittest.mock import patch
 import zipfile
 
+
+def write_lf(path, data, encoding='utf-8'):
+    # Windows text mode writes CRLF; the verified inputs are LF bytes as served by GitHub.
+    path.write_bytes(data.encode(encoding))
+
 SCRIPT = Path(__file__).resolve().parents[3] / 'collab/tools/gpt_disposition_actions.py'
 
 # The live script imports existing repo modules; use narrow stubs in isolated fixture.
@@ -227,9 +232,9 @@ class BridgeTests(unittest.TestCase):
     def test_no_public_key_blocks_approval(self):
         with tempfile.TemporaryDirectory() as td:
             d = Path(td)
-            (d / 'REQUEST.md').write_text('---\nrequest_revision: 1\npackage_sha256: ' + 'f' * 64 + '\nrun_policy_ref: POLICY-STATIC-V1\n---\n')
-            (d / 'READY.md').write_text('---\nstate: READY\n---\n')
-            (d / 'SOURCE_PIN.json').write_text(json.dumps({'schema': 'SKILL_COLLAB_SOURCE_PIN_V1',
+            write_lf((d / 'REQUEST.md'), '---\nrequest_revision: 1\npackage_sha256: ' + 'f' * 64 + '\nrun_policy_ref: POLICY-STATIC-V1\n---\n')
+            write_lf((d / 'READY.md'), '---\nstate: READY\n---\n')
+            write_lf((d / 'SOURCE_PIN.json'), json.dumps({'schema': 'SKILL_COLLAB_SOURCE_PIN_V1',
                                                               'repo_id': '1451933830', 'commit': 'a'*40}))
             reqsha = hashlib.sha256((d / 'REQUEST.md').read_bytes()).hexdigest()
             readysha = hashlib.sha256((d / 'READY.md').read_bytes()).hexdigest()
@@ -237,7 +242,7 @@ class BridgeTests(unittest.TestCase):
                        'request_revision': '1', 'request_sha256': reqsha, 'ready_sha256': readysha,
                        'package_sha256': 'f'*64, 'package_size_bytes': None, 'repo_id': '1451933830',
                        'source_commit': 'a'*40, 'run_policy_ref': 'POLICY-STATIC-V1'}
-            (d / 'APPROVAL_SIG.json').write_text(json.dumps({'schema': 'SKILL_COLLAB_APPROVAL_SIG_V1',
+            write_lf((d / 'APPROVAL_SIG.json'), json.dumps({'schema': 'SKILL_COLLAB_APPROVAL_SIG_V1',
                                                               'payload': payload, 'signature': ''}))
             with self.assertRaises(bridge.Hold):
                 bridge.approval_check(d / 'REQUEST.md', d / 'READY.md', d / 'SOURCE_PIN.json',
@@ -247,11 +252,11 @@ class BridgeTests(unittest.TestCase):
     def _one_cycle_fixture(self, root, rid, work_id):
         request = root / 'collab' / 'requests' / rid
         request.mkdir(parents=True, exist_ok=True)
-        (request / 'REQUEST.md').write_text(
+        write_lf((request / 'REQUEST.md'), 
             f'---\nrequest_id: {rid}\nwork_id: {work_id}\n---\n', encoding='utf-8')
         anchor = root / 'collab' / 'projects' / work_id
         anchor.mkdir(parents=True, exist_ok=True)
-        (anchor / 'CURRENT.md').write_text('Current', encoding='utf-8')
+        write_lf((anchor / 'CURRENT.md'), 'Current', encoding='utf-8')
 
     def test_one_cycle_first_request_accepted_read_only(self):
         with tempfile.TemporaryDirectory() as td:
@@ -281,15 +286,15 @@ class BridgeTests(unittest.TestCase):
                  patch.object(bridge, 'approval_check'), \
                  patch.object(bridge, 'package_inputs', return_value='safe source'):
                 request = root / 'collab/requests/REQ-TEST-R2'
-                (request / 'REQUEST.md').write_text(
+                write_lf((request / 'REQUEST.md'), 
                     '---\nrequest_id: REQ-TEST-R2\nwork_id: WORK-001\n'
                     'request_revision: 1\npackage_sha256: ' + 'f' * 64 + '\n---\n')
                 review = root / 'collab/reviews/REQ-TEST-R2'
                 receipt = root / 'collab/receipts/REQ-TEST-R2'
                 review.mkdir(parents=True)
                 receipt.mkdir(parents=True)
-                (review / 'REVIEW_RESULT_1.md').write_text('# Completed verified review')
-                (receipt / 'RECEIPT_1.md').write_text('{"processing_key": "VALID"}')
+                write_lf((review / 'REVIEW_RESULT_1.md'), '# Completed verified review')
+                write_lf((receipt / 'RECEIPT_1.md'), '{"processing_key": "VALID"}')
                 output = bridge.preflight(root, 'REQ-TEST-R2', '1451933830', 'fake-public-key')
                 self.assertEqual(output['work_id'], 'WORK-001')
                 self.assertEqual(output['processing_key'], 'VALID')
@@ -315,10 +320,10 @@ class BridgeTests(unittest.TestCase):
             root = Path(td)
             self._one_cycle_fixture(root, 'REQ-TEST-R1', 'WORK-001')
             p = root / 'collab' / 'requests' / 'REQ-TEST-R1' / 'REQUEST.md'
-            p.write_text('---\nrequest_id: REQ-TEST-R1\n---\n', encoding='utf-8')
+            write_lf(p, '---\nrequest_id: REQ-TEST-R1\n---\n', encoding='utf-8')
             with self.assertRaisesRegex(bridge.Hold, 'WORK_ID_INVALID'):
                 bridge.one_cycle_work_id(root, 'REQ-TEST-R1')
-            p.write_text('---\nrequest_id: REQ-TEST-R1\nwork_id: WORK-001\n---\n', encoding='utf-8')
+            write_lf(p, '---\nrequest_id: REQ-TEST-R1\nwork_id: WORK-001\n---\n', encoding='utf-8')
             (root / 'collab' / 'projects' / 'WORK-001' / 'CURRENT.md').unlink()
             with self.assertRaisesRegex(bridge.Hold, 'WORK_ANCHOR_MISSING'):
                 bridge.one_cycle_work_id(root, 'REQ-TEST-R1')
