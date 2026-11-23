@@ -1,5 +1,13 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 2026-11-24 KST — 사용자 `OPENAI_API_KEY` Secret 등록 보고, 인증 연결 재개
+
+- **사용자 보고:** CoWork GitHub Actions Repository Secret `OPENAI_API_KEY` 등록 완료(값 노출 없음). `SECRET_REGISTERED=USER_REPORTED`, GitHub 도구의 Secret 목록·활용 가능성 직접 조회 미지원으로 `SECRET_READBACK=NOT_VERIFIED`. 신규 키 발급·중복 등록 금지.
+- **직접 확인:** 저장소 PUBLIC 유지. 기존 `REQ-COWORK-V035-WATCHER-REVIEW-20261123`의 GPT 판정·API claim·Telegram claim·Work claim 4개 원격 **404**; 최신 Runner 무과금 31 PASS 이후 새 유료 Run 없음.
+- **기존 인계 갱신:** [GPT_API_TELEGRAM_ACTIVATION_ONE_SHOT_r0001_20261123_KST.md](GPT_API_TELEGRAM_ACTIVATION_ONE_SHOT_r0001_20261123_KST.md) 하단 신규 후속 절차. 키 이름만 Windows Claude Code에서 조회하고, **기존 signer 운영 PC의 `cowork-approver-1` 공개키**를 신뢰 루트/fingerprint로 검증 후 API 모델을 실제 프로젝트 권한으로 확인. 필요 변수만 설정하고 전제 충족 시 최초 GPT 판정 1회+Telegram E2E. 서명 검증 우회·개인키 복사·재리뷰·불확실 재호출 금지.
+- **상태:** `COWORK_GPT_MODEL=NOT_VERIFIED`, `COWORK_APPROVER_PUBLIC_KEY_B64=NOT_VERIFIED`, `PREFLIGHT=NOT_RUN`, `GPT_API_ENABLED=UNCHANGED`, `FIRST_GPT_DISPOSITION=NOT_RUN`, `TELEGRAM_SENT=NOT_RUN`. 현 GitHub 커넥터로 Actions Variables/Secrets 쓰기·workflow_dispatch 불가, Windows 호스트 후속 실행 필요.
+- **NEXT_ONE_ACTION:** Windows Claude Code에서 기존 승인 공개키 보관 호스트와 API 모델·Secret 존재를 먼저 확인. 유효한 공개키를 찾지 못하면 정확한 서명 운영 PC 경로/접근 권한 한 가지만 사용자에게 요청하고 안전 중단.
+
 ## 2026-11-23 KST — 사용자 PUBLIC 유지 확정 · GPT API 최초 E2E 인증 연결 BLOCKED_KEY/MODEL/TRUST
 
 - **사용자 최신 결정:** `wonhwipark/CoWork-Skill-Collab`은 PUBLIC 유지. GitHub API 직접 확인 `visibility=public`, `repo_id=1451933830`. PRIVATE 복구/운영 변경 요청 아님. 공개 저장소에 키·비밀값·제한 L1 자료 신규 게시 금지.
