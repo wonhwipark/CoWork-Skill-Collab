@@ -1,5 +1,13 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-23 KST — 사용자 지시: v0.2.36 신규 독립 리뷰로 완료→Runner E2E 검증
+
+- 기존 v0.2.35 재생 무모델 시험 Issue #3은 superseded/closed(미실행). 기존 v0.2.35 독립 리뷰 재실행 금지.
+- **Windows 원샷 인계:** [WINDOWS_V036_NEW_REVIEW_RUNNER_E2E_ONE_SHOT_r0001_20261123_KST.md](WINDOWS_V036_NEW_REVIEW_RUNNER_E2E_ONE_SHOT_r0001_20261123_KST.md). 기존 Work 사용, 신규 실제 변경→v0.2.36 ZIP→새 정식 리뷰→Runner E2E.
+- **실제 상태:** `HANDOFF=POSTED`, `HOST_ACK=NOT_CONFIRMED`, `V036_ZIP=NOT_BUILT`, `V036_SHA=UNKNOWN`, `FORMAL_REQUEST=NOT_POSTED`, `V036_PUBLIC_APPROVAL=NOT_GRANTED`, `V036_REVIEW=NOT_RUN`, `RUNNER_E2E=NOT_RUN`, `LIVE=v0.2.29` (마지막 확인).
+- **승인 경계:** 이전 공개 승인 및 LIVE 컷오버 승인은 정확한 v0.2.35 ZIP에 한정. 신규 v0.2.36 PUBLIC ZIP·LIVE 변경은 별도 범위 확인 필요. 보호 승인·서명·중복 방지 우회 금지.
+- **NEXT_ONE_ACTION:** Windows Claude Code 실제 세션에서 인계서 실행하여 v0.2.36 실제 후보 생성·시험·SHA 확인, 신규 ZIP 공개 승인 필요시 한 번에 요청하고 정식 리뷰/Runner E2E까지 진행.
+
 ## 2026-11-23 KST — v0.2.35 공개 리뷰 완료, 필수 게이트 기록, LIVE 미실행 (LIVE=OFF, LIVE_READY=NO)
 
 - **결과:** [CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md](CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md) §14 (commit `d67fb9876e05`).
