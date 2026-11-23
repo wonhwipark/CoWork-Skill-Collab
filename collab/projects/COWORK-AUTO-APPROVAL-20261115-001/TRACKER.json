@@ -5,7 +5,7 @@
       "work_id": "COWORK-AUTO-APPROVAL-20261115-001",
       "skill": "cowork-review-watcher",
       "title": "GPT→GitHub REQUEST 자동 서명·READY (제한된 사전 위임)",
-      "phase": "V034_WINDOWS_FINAL_TECH_FINISH__QA28_PASS__F3_BLOCKED__LIVE_READY_NO",
+      "phase": "V035_F3_COMMIT_PINNED_TESTED__INDEPENDENT_REVIEW_BLOCKED_AUTH__LIVE_BLOCKED_PENDING_FINAL_APPROVAL",
       "owner": "Windows Claude Code: execute QA28 on isolated cost-patched successor, fix failures, publish evidence. GPT: receive results and judge. Not a manual user test task.",
       "self_test": "GPT Linux: publisher55 PASS; cost targets237 PASS/0 FAIL/1 SKIP; full tree first attempt1009 PASS/28 FAIL/34 SKIP (Windows/OS dependencies, failures retained); portable final1011 PASS/0 FAIL/34 SKIP/28 DESELECTED; patch clean-r2 exact-byte replay12 files PASS. Windows acceptance NOT_RUN. F1/F2/F3 remain open; preserve DB/nonce history and audit-cause UNVERIFIED.",
       "independent_review": "REQ-COWORK-V033-R2-WATCHER-REVIEW-20261122 rev1 COMPLETED, STATIC_ONLY BLOCKING0, RESULT/RECEIPT directly read and bound to r2 SHA. Host audit reports dispatch1/duplicate0/USD1.057171 (cost not in remote receipt). GPT disposition HOLD_FOR_CORRECTIONS; no rerun.",
