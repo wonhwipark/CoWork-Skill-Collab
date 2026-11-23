@@ -1,5 +1,14 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 2026-11-24 KST — v0.2.35 GPT 최초 판정: 게이트 버그로 호출 전 차단, 스위치 OFF 복귀 (모델 0, Telegram 0)
+
+- **결과:** [CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md](CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md) §17 (commit `dcda4c7db50d`).
+- **사전검증 PASS:** 입력 SHA `5bd39fa0…`, 42,915 B (기대값 일치).
+- **미실행 확인:** claim·결과 4개 모두 404, 최근 Run의 gpt-disposition 전부 skipped.
+- **1회 dispatch:** Run `45268991482` → gpt-disposition failure: `BLOCKED: REPOSITORY_NOT_PUBLIC`. 원인은 게이트 스크립트 URL의 끝 슬래시(404). 저장소는 공개. claim 생성 전 차단이라 모델 호출·Telegram 발송 0.
+- **안전 복귀:** `COWORK_GPT_API_ENABLED=false`, `COWORK_GPT_TELEGRAM_NOTIFY_ENABLED=false` readback 완료.
+- **NEXT_ONE_ACTION:** 게이트 버그 수정 범위 승인 및 main push 허용을 받은 뒤 수정·재시험, 새 dispatch 1회. LIVE=OFF, LIVE_READY=NO 유지.
+
 ## 2026-11-24 KST — v0.2.35 최초 GPT 판정 원샷: 사전검증 FAIL로 중단 (API·Telegram OFF, 모델 0)
 
 - **결과:** [CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md](CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md) §16 (commit `4498f13634f1`).
