@@ -1,5 +1,14 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-24 KST — GPT API 모델 메타데이터 GET 1회 검증 완료
+
+- [읽기 전용 모델 조회 결과](../COWORK-DROPBOX-TO-GITHUB-MIGRATION/GPT_MODEL_DISCOVERY_READONLY_RESULT_r0001_20261124_KST.md): 첫 Run `45212208881` SKIPPED (모델 API 미호출), 후속 Run [45212536082](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/45212536082) **SUCCESS**, 후보 ID 86개 중 `gpt-6.2-sol` 존재. 공식 Structured Outputs·Responses 지원 확인. GET 엔드포인트 인증은 유효하지만 실제 판정 API 호출 권한·사용량은 아직 미검증.
+- 대용량 GPT 근거 입력 개선 GitHub Actions [45208515737](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/45208515737) 회귀 **35 PASS**. Windows 실제 서명 preflight는 변경 후 NOT_RUN.
+- `MODEL_RECOMMENDED=gpt-6.2-sol`, `MODEL_VARIABLE=NOT_SET`, `API_SWITCH=UNCHANGED`, `TELEGRAM_SWITCH=UNCHANGED`, `CLAUDE_REREVIEW=0`, `GPT_FIRST_DISPOSITION=NOT_RUN`, `WINDOWS_LIVE=UNCHANGED`. 기존 claim/서명/READY 이력 유지.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 마지막 소스의 v0.2.35 서명 포함 preflight를 무과금 실제 실행해 PASS를 확인한 뒤, 기존 승인된 활성화 범위에서 추천 모델 변수 설정 및 최초 GPT 판정 1회와 Telegram ACK를 검증.
+
+---
+
 ## 2026-11-24 KST — 최초 GPT disposition 패키지 근거 입력 보완
 
 - 패키지 938,634B 텍스트 합산으로 인한 `PACKAGE_INPUT_TOO_LARGE`를 **전체 ZIP 무결성 검사와 GPT 증거 입력 분리**로 수정. 샘플 v0.2.35 ZIP 무결성·서명 검증은 이전 호스트 보고상 PASS이고 새 구현 호스트 실행은 별도 미실시.
