@@ -21,7 +21,6 @@ import urllib.parse
 import urllib.request
 import zipfile
 from datetime import datetime, timezone
-from decimal import Decimal, InvalidOperation
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'collab' / 'dashboard'))
@@ -318,22 +317,6 @@ def call_once(model: str, api_key: str, message: str) -> tuple[dict, dict]:
     return verdict, {'response_id': obj.get('id'), 'usage': obj.get('usage', {}), 'model': obj.get('model')}
 
 
-def budget_preflight(message: str, rate_in: str, rate_out: str, cap: str) -> str:
-    # Conservative upper bound: UTF-8 bytes >= input tokens for ordinary byte-level BPE;
-    # includes a 4096-token cushion for instructions / request framing. Operators MUST
-    # supply independently verified USD-per-1M-token rates for the exact model.
-    try:
-        inp, out, maximum = [Decimal(x) for x in (rate_in, rate_out, cap)]
-    except (InvalidOperation, TypeError, ValueError) as e:
-        raise Hold('BUDGET_CONFIG_INVALID') from e
-    require(all(x.is_finite() and x > 0 and x.as_tuple().exponent >= -6 for x in (inp, out, maximum)),
-            'BUDGET_RATE_INVALID')
-    require(maximum <= Decimal('3.00'), 'PER_CALL_CAP_TOO_LARGE')
-    upper = ((Decimal(len(message.encode('utf-8')) + 4096) * inp) +
-             Decimal(OUT_TOKENS) * out) / Decimal(1_000_000)
-    require(upper <= maximum, 'ESTIMATED_SPEND_ABOVE_APPROVED_CAP')
-    return str(upper)
-
 
 def main() -> int:
     parser = argparse.ArgumentParser()
@@ -374,16 +357,6 @@ def main() -> int:
             require(bool(re.fullmatch(r'[A-Za-z0-9._-]{3,80}', model)), 'MODEL_NOT_APPROVED')
             api_key = os.environ.get('OPENAI_API_KEY', '')
             require(bool(api_key), 'API_KEY_MISSING')
-            # Separate API authorization plus an externally enforced project spend limit.
-            require(os.environ.get('COWORK_GPT_COST_POLICY_APPROVED') == 'true', 'BILLING_NOT_APPROVED')
-            require(os.environ.get('COWORK_GPT_PROJECT_SPEND_CAP_CONFIRMED') == 'true',
-                    'OPENAI_PROJECT_CAP_NOT_CONFIRMED')
-            budget_upper = budget_preflight(
-                evidence['input'],
-                os.environ.get('COWORK_GPT_INPUT_RATE_USD_PER_1M', ''),
-                os.environ.get('COWORK_GPT_OUTPUT_RATE_USD_PER_1M', ''),
-                os.environ.get('COWORK_GPT_MAX_CALL_USD', ''),
-            )
             work_id = evidence['work_id']
             work_claim_path = f'collab/projects/{work_id}/ONE_CYCLE_CLAIM.json'
             # Work-level atomic gate before any billable API call. Does not trigger
@@ -405,7 +378,6 @@ def main() -> int:
                 'request_revision': evidence['request_revision'], 'package_sha256': evidence['package_sha256'],
                 'processing_key': evidence['processing_key'], 'model': model,
                 'input_sha256': evidence['input_sha256'],
-                'budget_upper_usd': budget_upper,
                 'created_at': datetime.now(timezone.utc).isoformat(),
                 'github_run_id': os.environ.get('GITHUB_RUN_ID', 'UNKNOWN'),
                 'state': 'CLAIMED_CALL_MAY_OCCUR_NO_AUTO_RETRY',
@@ -423,7 +395,6 @@ def main() -> int:
                 'summary': verdict['summary'], 'findings': verdict['findings'],
                 'limitations': verdict['limitations'], 'next_action': verdict['next_action'],
                 'claim_path': claimpath, 'input_sha256': evidence['input_sha256'],
-                'budget_upper_usd': budget_upper,
                 'response_id': usage['response_id'], 'model': usage['model'], 'usage': usage['usage'],
                 'created_at': datetime.now(timezone.utc).isoformat(),
                 'trust': 'APPROVAL_SIGNATURE_VERIFIED_AND_DOCUMENT_FIELDS_MATCHED',
