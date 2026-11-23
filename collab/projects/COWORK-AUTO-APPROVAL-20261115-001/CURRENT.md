@@ -1,5 +1,11 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-24 KST — GPT API Secret 사용자 등록 보고 / 인증·신뢰 공개키 준비 후 최초 판정
+
+- 사용자 `OPENAI_API_KEY` Repository Secret 등록 완료 보고. Secret 자체는 GitHub 연결에서 직접 확인 불가. 기존 CoWork PUBLIC 유지 및 v0.2.35 완료 리뷰·Windows watcher LIVE(v0.2.29 마지막 보고) 이력 불변.
+- [이관 Work 원샷 인계 후속](../COWORK-DROPBOX-TO-GITHUB-MIGRATION/GPT_API_TELEGRAM_ACTIVATION_ONE_SHOT_r0001_20261123_KST.md) 갱신됨. 기존 `cowork-approver-1` 보호 신뢰 공개키 확보·fingerprint/서명 검증, 실제 API 모델 권한 확인이 남음. 기존 승인 서명/READY/REQUEST는 재실행 금지.
+- 직접 확인: GPT disposition / 요청 claim / Telegram claim / Work cycle claim 4개 모두 404. `GPT_API_MODEL_CALL=NOT_RUN`, `LIVE_WATCHER=UNCHANGED`. NEXT: 인증·신뢰 조건 충족 후 기존 리뷰 최초 GPT 판정 1회와 Telegram 영수증 확인.
+
 ## 2026-11-23 KST — GPT API 최초 E2E 인증 경계: PUBLIC 유지, 호스트 BLOCKED_KEY/MODEL/TRUST
 
 - **연계 상태:** [이관 Work 최신 CURRENT](../COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md). 사용자 CoWork PUBLIC 유지 확정, GitHub visibility=public 직접 확인. Windows Claude Code의 원샷 인계 실행 ACK 보고 수용, GPT API 키·모델·서명 공개키 GitHub 설정 부재(`BLOCKED_KEY`/`BLOCKED_MODEL`/`BLOCKED_TRUST`), API·Telegram 스위치 미설정. 기존 Telegram Bot/Chat ID는 호스트 보고상 설치됨.
