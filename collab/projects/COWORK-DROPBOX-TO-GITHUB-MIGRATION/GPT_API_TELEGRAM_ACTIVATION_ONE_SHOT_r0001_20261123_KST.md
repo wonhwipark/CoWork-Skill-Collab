@@ -28,3 +28,13 @@
 ## 보고 형식
 `HOST_ACK` / `SECRETS_PRESENT` / `MODEL_APPROVED` / `PREFLIGHT` / `PREEXISTING_CLAIMS` / `API_SWITCH` / `TELEGRAM_SWITCH` / `RUN_ID` / `GPT_DISPOSITION` / `USAGE` / `TELEGRAM_SENT` / `MOBILE_RECEIVE` / `LIVE_WATCHER_VERSION` / `POSTED_COMMIT` / `NEXT_ONE_ACTION`.
 성공하지 않은 단계를 완료로 표시하지 않음. GitHub 문서 게시만으로 Windows 호스트 실행을 주장하지 않음.
+
+## 2026-11-24 KST — 사용자 Secret 등록 보고 후 실행 재개 조건
+
+- **확인:** 사용자 직접 `OPENAI_API_KEY`를 CoWork 저장소의 Repository Secret에 등록했다고 보고. 값은 대화에 노출되지 않았고 GPT GitHub 연결은 Secrets 조회가 지원되지 않으므로 `KEY_REGISTERED=USER_REPORTED`, `KEY_USABLE=NOT_VERIFIED`. 신규 키 발급/비밀값 복사 금지.
+- **현재 원격 readback:** v0.2.35의 GPT 판정, GPT 실행 claim, Telegram claim, Work cycle claim 4개 모두 404. 최신 Actions Run 45196080268 offline-selftest 31 PASS. 이 기록만으로 현재 GitHub Secret/변수가 설치되었다고 확정하지 않음.
+- **다음 실행은 Windows Claude Code 동일 Work에서 재개:** (1) `gh secret list`에서 `OPENAI_API_KEY` **이름만** 재확인, (2) 서명 운영 PC/승인된 보안 저장소에서 `cowork-approver-1`에 대응하는 **기존 Ed25519 공개키만** 신뢰 루트의 key ID·fingerprint로 식별, (3) 유효 서명 검증을 수행하여 `PREFLIGHT=PASS`를 먼저 확인, (4) 실제 OpenAI API 프로젝트의 사용 가능 모델/Responses API 구조화 출력 호환성을 확인한 뒤 `COWORK_GPT_MODEL` 변수 등록. 인증 부족 시 새 키/신뢰 루트/모델을 임의로 만들거나 추측하지 않음.
+- **설정 순서:** 검증 후 `COWORK_APPROVER_PUBLIC_KEY_B64`(공개키만)·`COWORK_GPT_MODEL` 변수 등록 및 값 검증 → 기존 `COWORK_TELEGRAM_BOT_TOKEN`/`COWORK_TELEGRAM_CHAT_ID` Secret의 존재 확인 → 필요 범위에 따라 `COWORK_GPT_TELEGRAM_NOTIFY_ENABLED=true` → **마지막으로** `COWORK_GPT_API_ENABLED=true`. 기존 제거된 비용 정책/지출 상한 게이트는 다시 요구하지 않음.
+- **유료 1회 직전:** 기존 4개 claim/판정 파일 404와 `PREFLIGHT=PASS` 재확인 후 기존 요청 `REQ-COWORK-V035-WATCHER-REVIEW-20261123`에 대해서만 `workflow_dispatch` 1회. Run ID·모델 usage·GPT 판정 원격 bytes·Telegram 발송 영수증 확인. 이미 claim/실행 존재·불확실이면 재디스패치하지 않음.
+- **경계:** 신뢰 루트는 GitHub 공개 저장소에서 임의 다운로드하거나 과거 승인 서명만으로 공개키를 만들어 대체할 수 없음. 현재 Claude PC에 signer/trust root가 없다면 **실제 signer Windows 운영 PC의 접근 허가/공개키 전용 export**가 필요. 사용자가 기존 신뢰 루트 PC 위치를 확인할 수 없다면 `BLOCKED_TRUST`로 유지.
+- **운영 상태:** `KEY_REGISTERED=USER_REPORTED`, `MODEL_VARIABLE=NOT_VERIFIED`, `TRUST_VARIABLE=NOT_VERIFIED`, `API_SWITCH=UNCHANGED`, `WORKFLOW_DISPATCH=NOT_RUN`, `MODEL_CALLS=0`, `TELEGRAM_SENT=0`, `WINDOWS_WATCHER_LIVE=UNCHANGED`.
