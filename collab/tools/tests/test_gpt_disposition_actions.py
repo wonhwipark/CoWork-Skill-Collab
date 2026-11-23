@@ -202,7 +202,7 @@ class BridgeTests(unittest.TestCase):
             with self.assertRaisesRegex(bridge.Hold, 'WORK_SINGLE_CYCLE_ALREADY_REQUESTED'):
                 bridge.one_cycle_work_id(root, 'REQ-TEST-R2')
             # Only a completed review chain can enter post-review disposition.
-            with patch.object(bridge.review_chain, 'inspect',
+            with patch.object(bridge.review_chain, 'inspect', create=True,
                               return_value={'stage': 'GPT_NOT_OBSERVED'}), \
                  patch.object(bridge, 'approval_check'), \
                  patch.object(bridge, 'package_inputs', return_value='safe source'):
