@@ -96,6 +96,20 @@ class BridgeTests(unittest.TestCase):
             self.assertIn('images/binary.bin', evidence)
             self.assertNotIn('A' * 100, evidence)
 
+    def test_real_v035_package_inventory_preflight_without_network(self):
+        # The historical reviewed ZIP is a fixed repository fixture. This test
+        # does not verify signatures or call the model; it verifies the package
+        # evidence is now bounded while validating all 114 archive entries.
+        root = SCRIPT.parents[2]
+        req_path = root / 'collab/requests/REQ-COWORK-V035-WATCHER-REVIEW-20261123/REQUEST.md'
+        req = bridge.review_chain.metadata(req_path.read_text(encoding='utf-8'))
+        evidence = bridge.package_inputs(root, req)
+        self.assertIn('member_count: 114', evidence)
+        self.assertIn('text_member_count: 109', evidence)
+        self.assertIn('total_text_bytes_verified_not_forwarded: 938634', evidence)
+        self.assertIn('RELEASE MANIFEST AS PROVIDED', evidence)
+        self.assertLessEqual(len(evidence.encode('utf-8')), bridge.MAX_SOURCE)
+
     def test_secret_in_unforwarded_text_fails_closed(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
