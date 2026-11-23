@@ -1,5 +1,14 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 2026-11-23 KST — GPT API 자동 판정·Telegram 활성화 승인 후 준비·실행 인계 (HOST 미실행)
+
+- **사용자 승인:** 이 대화에서 GPT 판정 활성화 및 Telegram까지 E2E 검증 지시. 이미 제거한 비용 정책·금액 상한 승인 재요청 없음. 기존 키/모델이 없다면 임의 생성하지 않음.
+- **추가 실제 버그 수정:** 같은 Work의 레거시 REQUEST가 있는 경우 최초 GPT 판정 preflight가 차단되는 결함을 완료 리뷰 검증 경로에 한정해 수정. 신규 리뷰 요청 중복 검사 및 Work/Request 단위 CREATE_ONLY claim은 유지. commit `479cc207ea85`, 단위시험 보강·수정 commit `10148b6e5b05`, `38e63ceab97`.
+- **실제 GitHub Actions 검증:** 최종 [Run 45196080268](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/45196080268) push SUCCESS, offline-selftest **31/31 PASS**, GPT disposition/Telegram job은 SKIP. 중간 Run 45195890869 1 ERROR(테스트 mock 수정 전), 이전 기록 보존.
+- **원샷 운영 인계:** [GPT_API_TELEGRAM_ACTIVATION_ONE_SHOT_r0001_20261123_KST.md](GPT_API_TELEGRAM_ACTIVATION_ONE_SHOT_r0001_20261123_KST.md) (commit `2502bd03c437`). 정확한 기존 완료 리뷰 `REQ-COWORK-V035-WATCHER-REVIEW-20261123`의 **첫 GPT 판정만** 허용, Claude 재리뷰 금지. API 호출 전 실제 서명·ZIP·입력 등 preflight 및 claim 404 확인, 운영 설정 검증, 실제 Run ID·판정·Telegram 영수증 readback 필수.
+- **미실행/차단:** GitHub 연결이 Actions Variables/Secrets read/write와 `workflow_dispatch` 실행을 지원하지 않음. Windows Claude의 실제 세션 ACK 미확인, 기존 OPENAI_API_KEY·모델·신뢰 공개키/Telegram Secret 현재 설정 미확인. `GPT_API_ENABLED=NOT_CHANGED`(최근 OFF 보고), `TELEGRAM_NOTIFY=NOT_CHANGED`, `GPT_API_MODEL_CALLS=0`, `RUNNER_PAID_E2E=NOT_RUN`, `HOST_EXECUTION=NOT_CONFIRMED`. 문서 게시만으로 Windows 호스트 자동 실행 아님.
+- **NEXT_ONE_ACTION:** 승인된 Windows Claude Code 실제 세션에서 위 원샷 인계 수신/실행 → 기존 GitHub 인증·비밀값 존재만 검증 → 무과금 실제 preflight → 보호 설정 ON → 기존 완료 리뷰의 신규 GPT 판정 1회 `workflow_dispatch` → Telegram/원격 영수증 확인. 차단 시 증거만 남기고 신규 키 발급·중복 모델 호출·서명 우회 금지.
+
 ## 2026-11-23 KST — GPT Actions Runner 비용 제한 제거 원샷 코드 반영
 
 - **결과:** [GPT_ACTIONS_COST_GATE_REMOVAL_RESULT_r0001_20261123_KST.md](GPT_ACTIONS_COST_GATE_REMOVAL_RESULT_r0001_20261123_KST.md). `gpt_disposition_actions.py`·회귀시험·`cowork-gpt-disposition.yml` 원격 바이트 readback PASS.
