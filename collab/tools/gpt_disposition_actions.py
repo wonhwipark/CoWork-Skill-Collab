@@ -346,8 +346,15 @@ def call_once(model: str, api_key: str, message: str) -> tuple[dict, dict]:
     try:
         with urllib.request.urlopen(req, timeout=180) as response:
             obj = json.loads(response.read(1_000_000).decode('utf-8'))
+    except urllib.error.HTTPError as e:
+        # HTTP status is safe to report; never log the response body or headers.
+        raise Hold(f'MODEL_CALL_UNCERTAIN_NO_RETRY HTTP_STATUS_{e.code}') from e
+    except urllib.error.URLError as e:
+        # Reason text may contain sensitive network details: only report its type.
+        raise Hold(f'MODEL_CALL_UNCERTAIN_NO_RETRY NETWORK_{type(e.reason).__name__}') from e
     except (OSError, ValueError) as e:
-        raise Hold('MODEL_CALL_UNCERTAIN_NO_RETRY') from e
+        # Do not print exception messages, API payloads, headers, or credentials.
+        raise Hold(f'MODEL_CALL_UNCERTAIN_NO_RETRY {type(e).__name__}') from e
     require(obj.get('status') == 'completed', 'MODEL_INCOMPLETE_NO_RETRY')
     messages = [c.get('text') for item in obj.get('output', []) if item.get('type') == 'message'
                 for c in item.get('content', []) if c.get('type') == 'output_text']
