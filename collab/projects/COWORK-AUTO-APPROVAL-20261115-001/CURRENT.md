@@ -1,5 +1,12 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-23 KST — GPT Runner 사전검증 레거시 Work 충돌 보완·31 PASS, LIVE 별개
+
+- **연계:** [GPT API/Telegram 원샷 활성화 인계](../COWORK-DROPBOX-TO-GITHUB-MIGRATION/GPT_API_TELEGRAM_ACTIVATION_ONE_SHOT_r0001_20261123_KST.md). 레거시 동일 Work REQUEST가 있어 v0.2.35 최초 GPT 판정까지 `WORK_SINGLE_CYCLE_ALREADY_REQUESTED`로 차단할 버그 수정(기존 새 REQUEST 엄격 검사 유지, 완료 리뷰의 원자적 Work claim 유지). commit `479cc207ea85`, 회귀 commit `38e63ceab97`.
+- **실제 GitHub CI:** [Run 45196080268](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/45196080268) `offline-selftest=31/31 PASS`. 유료 GPT/Telegram Job은 SKIP, API 실판정·알림 E2E 미실행. v0.2.35 ZIP/독립 리뷰 기존 완료 이력 그대로, 신규 v0.2.36은 만들지 않음.
+- **운영:** Windows watcher LIVE는 마지막 호스트 보고상 v0.2.29 유지. GPT Runner Actions 설정 변경과 watcher LIVE 설치는 별도. 이번 GitHub 도구는 Actions variables/secrets 및 workflow_dispatch 쓰기 권한이 없어 `HOST_ACK=NOT_CONFIRMED`, `GPT_API_ACTIVATION=BLOCKED_HOST_ACCESS`. 사용자 기존 승인 반복 요구 금지.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 연계 원샷 인계에 따라 실제 인증 상태·preflight·현재 claim 확인 후 GPT API/Telegram 실연동 1회. 키 미존재·검증 실패는 fail-closed, 결과 게시.
+
 ## 2026-11-23 KST — GPT Runner 비용 게이트 불일치 제거 코드 반영(운영 활성화 별도)
 
 - **연계 정본:** [GitHub GPT Runner 비용 게이트 제거 결과](../COWORK-DROPBOX-TO-GITHUB-MIGRATION/GPT_ACTIONS_COST_GATE_REMOVAL_RESULT_r0001_20261123_KST.md). GPT API Runner의 USD3·정책 승인·지출 상한/단가 검사 코드를 제거하고 `COWORK_GPT_API_ENABLED`와 원본/서명/claim/중복·no-retry는 유지. 파일 3개 원격 readback PASS, 정적 11/11 PASS. GitHub Actions 최종 Run 45193270095 `offline-selftest` **29/29 PASS**; GPT API Job SKIP, 실제 유료 판정 E2E NOT_RUN.
