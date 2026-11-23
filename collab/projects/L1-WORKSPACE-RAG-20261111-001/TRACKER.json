@@ -5,11 +5,11 @@
       "work_id": "L1-WORKSPACE-RAG-20261111-001",
       "skill": "l1-knowledge-updater",
       "title": "l1-knowledge-updater",
-      "phase": "VIEWER_V051_PUBLIC_DEV_DELIVERED_REMOTE_VERIFIED_HOST_PENDING",
-      "owner": "GPT: Viewer v0.5.1 canonical ZIP/complete handoff remotely verified; existing v0.5.0 preserved",
-      "self_test": "PUBLISHED_V051_NODE_25_PASS; SHA_CRC_MANIFEST_JS_CSP_PASS; BROWSER_LINUX_LLM_WRITE_NOT_RUN",
-      "independent_review": "WIKI_UI_UX_R1_ACCEPT_WITH_CHANGE_CLOSED; VIEWER_AUTH_EDIT_DESIGN_R1_ACCEPT_WITH_CHANGE_CLOSED_B1_M2_N4; VIEWER_STYLE_DESIGN_R1_USER_WAIVED_HOST_STOP_UNVERIFIED; VIEWER_WRITE_V020_CODE_REVIEW_NOT_RUN; VIEWER_V051_SKIP_BY_USER",
-      "next_action": "업무 GPT: L1Work main/handoffs/L1_WORKSPACE_VIEWER_V051_TODAY_ASSISTANT_HANDOFF_r0001_20261123_KST.md + l1-workspace-viewer-wiki-integrated_v0_5_1_1123.zip만 수령, G0 및 A01~A10/H01~H05 현장 검증. 운영 설치 별도."
+      "phase": "VIEWER_V052_PUBLIC_DEV_DELIVERED_REMOTE_VERIFIED_HOST_PENDING",
+      "owner": "GPT: Viewer v0.5.2 source ZIP and complete handoff posted/readback; v0.5.1 preserved; real Linux adapter pending",
+      "self_test": "V052_SOURCE_PIN_ZIP_CRC_MANIFEST_WRITE_SHA_REMOTE_READBACK_PASS; V052_NODE_BROWSER_LINUX_AGENT_WRITE_NOT_RUN",
+      "independent_review": "WIKI_UI_UX_R1_ACCEPT_WITH_CHANGE_CLOSED; VIEWER_AUTH_EDIT_DESIGN_R1_ACCEPT_WITH_CHANGE_CLOSED_B1_M2_N4; VIEWER_STYLE_DESIGN_R1_USER_WAIVED_HOST_STOP_UNVERIFIED; VIEWER_WRITE_V020_CODE_REVIEW_NOT_RUN; VIEWER_V051_SKIP_BY_USER; VIEWER_V052_NOT_RUN",
+      "next_action": "업무 GPT: L1Work main/handoffs/L1_WORKSPACE_VIEWER_V052_READABILITY_COMPLETE_HANDOFF_r0001_20261124_KST.md + l1-workspace-viewer-wiki-integrated_v0_5_2_1124.zip만 수령. 실제 read adapter/ACL G0 후 Node·브라우저 회귀, A01~A10/H01~H05 수행; 운영 적용 별도."
     }
   ]
 }
