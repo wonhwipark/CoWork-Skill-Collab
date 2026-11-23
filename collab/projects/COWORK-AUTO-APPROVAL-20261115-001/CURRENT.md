@@ -1,5 +1,13 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-23 KST — GPT 판정: Runner 트리거 정상, v0.2.36 불필요, GPT API 별도 차단
+
+- **GPT 판정:** [GPT_V035_RUNNER_TRIGGER_E2E_DISPOSITION_r0001_20261123_KST.md](GPT_V035_RUNNER_TRIGGER_E2E_DISPOSITION_r0001_20261123_KST.md). `ACCEPT_CLAUDE_FINDING`; v0.2.35 결과/영수증 push → Runner 시작은 Windows Claude 보고 Run 두 건으로 수용, GitHub 직접 Runner API 실조회는 이번 GPT에서 NOT_RUN.
+- **v0.2.36:** 실질 변경 근거 없음 → 새 ZIP/REQUEST/재리뷰 불필요. 완료된 v0.2.35 리뷰는 유지, 중복 재실행 금지.
+- **남은 자동화:** `gpt-disposition`은 실행되지 않음. GPT API 승인/설정·보호 키/모델/프로젝트 한도 및 코드 내 건당 USD3 게이트는 Claude 독립 리뷰 비용 제한 제거와 구별해 별도 검토. Actions GPT Telegram도 OFF. 일반 ChatGPT 대화를 Runner가 자동으로 시작하는 기능 아님.
+- **LIVE:** 마지막 보고된 Windows v0.2.29 가동 유지; v0.2.35 설치·실제 GitHub 프로세스 경합 미실행.
+- **NEXT_ONE_ACTION:** GPT API 자동 판정이 실제 필요한지 사용자 확정 후, 기존 Runner 설정·승인·비용 게이트 정합성을 무과금으로 검증; 허가 없이 키/유료 호출/운영 변경 금지.
+
 ## 2026-11-23 KST — v0.2.36 Runner E2E 판정: 신규 ZIP 미생성(BLOCKED_SOURCE), Runner 자동 시작 확인 (LIVE=OFF)
 
 - **결과:** [CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md](CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md) §15 (commit `b20fab62bf88`).
