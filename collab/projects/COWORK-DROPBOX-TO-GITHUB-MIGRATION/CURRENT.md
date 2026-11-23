@@ -1,5 +1,15 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 2026-11-24 KST — v0.2.35 서명 포함 preflight PASS (GitHub) · Windows 최초 GPT 판정 실행 인계
+
+- **직접 검증:** [GitHub Actions Run 45215858291](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/45215858291), job `signed-preflight-once` **SUCCESS**. 실제 `preflight(ROOT, RID, repo_id, 검증 공개키)` 통과: 서명·SOURCE_PIN·READY·전체 ZIP SHA/CRC/경로·요청·리뷰·영수증 입력, `MODEL_INPUT_BYTES=42915`, `INPUT_SHA256=5bd39fa0a8300d597c1f7a794286b21d92bb54423937135caa0cc8b850dde294`. `MODEL_CALLS=0`, `CLAIM_WRITES=0`. 이 결과는 GitHub Linux Runner 검증으로 Windows 호스트 실행을 대체하지 않음.
+- **원격 실행 선점 확인:** 2026-11-24 KST 조회 시 기존 `REQ-COWORK-V035-WATCHER-REVIEW-20261123`의 GPT disposition/실행 claim/Telegram claim/Work claim **4개 404**. 원샷 dispatch 직전 재조회 필수.
+- **사용자 승인·인계:** [Windows Claude Code 후속 원샷](WINDOWS_GPT_V035_FIRST_DISPOSITION_EXECUTION_HANDOFF_r0001_20261124_KST.md) 게시·readback PASS(commit `c2d4dfa7fe118143670b2d2d2a5de15a93d14022`). 모델 후보 `gpt-6.2-sol`: OpenAI 공식 Responses/Structured Outputs 문서 확인, API 실제 모델 목록 GET PASS. 사용자 유효 기존 첫 GPT 판정 1회 승인 범위 유지.
+- **아직 미실행:** `WINDOWS_HOST_ACK=NOT_CONFIRMED`, `WINDOWS_PREFLIGHT=NOT_RUN`, `MODEL_VARIABLE=NOT_SET_LAST_VERIFIED`, `API_SWITCH/TELEGRAM_SWITCH=UNCHANGED`, `GPT_FIRST_DISPOSITION=NOT_RUN`, `TELEGRAM_E2E=NOT_RUN`, `WINDOWS_WATCHER_LIVE=UNCHANGED`. 이 GitHub 연결은 Actions 변수 쓰기/dispatch 및 실제 Windows Claude 호스트 실행 미지원. 문서 게시를 자동 실행으로 간주 금지.
+- **NEXT_ONE_ACTION:** 승인된 Windows Claude Code 실제 세션에서 위 인계서를 실행하여 Windows 로컬 preflight·4개 claim·모델 변수 readback 확인 뒤 **기존 완료 리뷰 첫 GPT 판정 1회 및 Telegram 영수증** 게시. 불확실 호출/claim 존재 시 무재실행 안전 중단.
+
+---
+
 ## 2026-11-24 KST — 사용자 승인 모델 목록 조회 1회 PASS / 최초 GPT 판정은 미실행
 
 - **실행 완료:** 사용자 승인된 GitHub Actions 메타데이터 전용 `GET /v1/models` 성공. 최초 신규 워크플로 Run [45212208881](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/45212208881) SKIP(진입 조건), 수정 후 [45212536082](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/45212536082) SUCCESS, 실제 모델 ID 후보 86개 확인. 그중 `gpt-6.2-sol` 실제 목록에 있고 공식 Responses/Structured Outputs 지원 → 권장 후보. [실행 결과](GPT_MODEL_DISCOVERY_READONLY_RESULT_r0001_20261124_KST.md).
