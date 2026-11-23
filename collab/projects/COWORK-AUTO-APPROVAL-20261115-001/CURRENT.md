@@ -1,5 +1,16 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-23 KST — F3 커밋 고정 구현·v0.2.35 후보·LIVE 보류 (LIVE_READY=NO, LIVE=OFF)
+
+- **결과:** [CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md](CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md) §13 (commit `d272d2990fcc`).
+- **F3:** 의도 파일을 커밋 A가 아닌 후속 커밋 C에서 찾고(경로별 이력 정확히 1개, A의 후손, REQUEST·ZIP 동일), C와 원문 해시를 고정. 재검증은 고정본만 신뢰. 실제 Git 의미 검사 6/6 PASS, 고정 시험 6/6 PASS.
+- **시험:** Windows QA28 28/28 PASS. Windows 스크립트 4/4 PASS(임시 junction). 전체 1075 PASS / 0 FAIL / 8 SKIP(GUI 실창 옵트인, NOT_RUN).
+- **패키지:** v0.2.35 ZIP SHA-256 `658a6f3da8bd018b96b64453892aec77d96868e19bc5788745c1591b1729a740`, 307,418 B, 114 항목. 구버전 보존. 코드 ZIP 미게시.
+- **독립 리뷰:** BLOCKED_AUTH — v0.2.35 ZIP 공개 게시 승인 없음.
+- **LIVE:** BLOCKED — 기존 승인은 v0.2.29 컷오버 범위. 설치·DB 추가 테이블·watcher 재시작은 최종 승인 필요. 현재 운영 v0.2.29 유지, Task 두 개 Running.
+- **백업:** DB 번들 2026-11-23 생성·검증(작업 13, 복구 사본 integrity ok). 설치 트리 v0.2.29 백업 2026-11-22(143 파일).
+- **NEXT_ONE_ACTION:** 사용자 최종 승인 1회 — (a) v0.2.35 ZIP 공개 게시, (b) LIVE 변경 범위(설치 트리 교체·review_intent_nonces 추가·watcher 재시작), (c) 상한 없는 단일 실행 비용 위험 수용.
+
 ## 2026-11-23 KST — Windows 최종 기술 마무리 v0.2.34 (QA28 28/28 PASS, F3 BLOCKED, LIVE_READY=NO)
 
 - **결과:** [CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md](CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md) §12 (commit `cdcb7d0c81a5`).
