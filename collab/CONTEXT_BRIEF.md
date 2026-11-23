@@ -1,13 +1,16 @@
 # CoWork 공통 맥락 브리프
 
-- 개정: r0017 / 2026-11-22 KST 독립 리뷰 단일화·GPT 출판 가격 및 스킬 선차단 제거. 운영 LIVE 상태는 각 CURRENT/영수증에서 재확인.
+- 개정: r0018 / 2026-11-24 KST 공개 범위·새 창 Work 라우팅/긴 CURRENT 보완. 운영 LIVE 상태는 각 CURRENT/영수증에서 재확인.
 - 저장소: **GitHub PUBLIC** `wonhwipark/CoWork-Skill-Collab`, branch `main` (2026-11-21 실제 visibility 조회). 기존 PRIVATE 경로·문구는 당시 이력. 회사 제한 자료·키/토큰의 신규 게시 허용이 아님.
 - 역할: 협업·L1 지식·관리 스킬의 **고정 지도**. 진행 상태·최신 버전·리뷰 결과·승인 대기·source blob을 복사하지 않는다.
 - 읽기: **이 지도 → 요청 목적에 맞는 CURRENT → 필요한 근거·계약·스킬 원문**. 현재 상태는 실행할 때 해당 정본을 조회한다.
 - **세션 로딩:** Windows Claude Code는 CoWork 저장소에서 시작 시 루트 [`CLAUDE.md`](../CLAUDE.md)를 통해 `AGENTS.md`·이 브리프를 프로젝트 맥락으로 import할 수 있다. GPT는 CoWork 프로젝트 지침에 따른 요청 시 조회다. **Claude의 실제 호스트 로딩·GitHub 최신 정보 자동 조회 및 GPT의 무요청 선조회는 각각 별도 검증/제약**으로 구분한다.
 - **GPT 공통 투두:** [전체 개선 후보·GPT 검토 의견](GPT_TODO.md). 후보 조회·정리·작업 연결은 이 목록에서 관리하고, 실행 진행은 관련 CURRENT에서 확인한다.
 
-- **P1/P2 빠른 맥락 조회:** [단계별 질문 조회·근거/시점·관계/변경분 안내](projects/COWORK-SKILL-DISCOVERY-20261112-001/P1_P2_CONTEXT_APPLICATION_GUIDE_r0001_20261120_KST.md). 대화에서는 관련 CURRENT+증거를 직접 조회하고, PRIVATE 로컬 체크아웃에서는 선택적 읽기 전용 `collab/dashboard/context_query.py`를 사용할 수 있다. PUBLIC 요약은 기존 B안 Pages의 허용목록만 이용하며 호스트 LIVE/실행 사실을 자동 검증하지 않는다.
+- **가시성·게시 게이트:** 저장소의 실제 `visibility`를 GitHub 저장소 속성/API에서 읽어 확인한다(2026-11-24 현재 `PUBLIC`). 프로젝트 지침 r0002의 `PRIVATE` 문구는 최신 공개 운영 사실과 충돌하며 GitHub 문서 게시만으로 ChatGPT 프로젝트 설정이 바뀌지 않는다. **PUBLIC 유지 ≠ 모든 문서/키/회사 제한 자료 게시 허가**. 현재 사용자 승인된 비민감 코드·문서 변경만 게시, 유료 리뷰·Windows LIVE·호스트 실행은 각 별도 승인/실행 게이트를 준수한다.
+- **Work 라우팅과 큰 CURRENT:** [보조 조회기](dashboard/context_query.py)는 브리프의 기존 **10 Work**를 대상으로 Viewer(지식 Work와 동일)·NR 실제 분석·Job 진단·Smoke를 구분한다. 별도 승인된 로컬 체크아웃에서만 읽기 전용으로 실행한다. CURRENT는 최대 1 MiB까지만 읽고 최신 48절 중 질문과 관련된 절을 선택한다. 선택은 힌트이며 원문 CURRENT·최신 결과/영수증으로 최종 검증한다. 상한/읽기 실패 시 원격 `source_url`을 직접 확인한다.
+
+- **P1/P2 빠른 맥락 조회:** [단계별 질문 조회·근거/시점·관계/변경분 안내](projects/COWORK-SKILL-DISCOVERY-20261112-001/P1_P2_CONTEXT_APPLICATION_GUIDE_r0001_20261120_KST.md). 대화에서는 관련 CURRENT+증거를 직접 조회하고, 권한 있는 로컬 체크아웃에서는 선택적 읽기 전용 `collab/dashboard/context_query.py`를 사용할 수 있다. PUBLIC 요약은 기존 B안 Pages의 허용목록만 이용하며 호스트 LIVE/실행 사실을 자동 검증하지 않는다.
 
 
 - **L1Work 스킬 현황 바로가기:** [공개 ZIP·관리 스킬 분석 인덱스](projects/COWORK-SKILL-DISCOVERY-20261112-001/L1WORK_PUBLIC_SKILL_RELEASE_ANALYSIS_r0001_20261117_KST.md) · [스킬 관리 CURRENT](projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md). 공개본/개발 후보/검증 경계를 구분해 확인하고, 최신 버전·판정은 실제 PUBLIC HEAD와 관련 Work CURRENT에서 재조회한다.
@@ -15,7 +18,7 @@
 
 ## 자연어 “정식 리뷰 요청” — 새 창 기본 진입
 
-**현행 2026-11-22 r0007:** 리뷰는 **독립 리뷰 한 유형**. 신규 GPT 요청 출판에서 가격 USD3/등급별 금액·스킬별 allowlist 사전 차단을 제거한 코드가 GitHub main에 게시됨. **Windows LIVE v0.2.29 비용·스킬별 서명 허가 게이트는 아직 변경되지 않음**. 소스 변경과 운영 실행은 구분; 상세는 [기존 자동 승인 Work 결과](collab/projects/COWORK-AUTO-APPROVAL-20261115-001/GPT_INDEPENDENT_REVIEW_COST_GATE_SIMPLIFICATION_RESULT_r0001_20261122_KST.md). 아래 예전 r0006 서술 중 가격 기반 출판 게이트는 이 최신 결정으로 대체.
+**현행 2026-11-22 r0007:** 리뷰는 **독립 리뷰 한 유형**. 신규 GPT 요청 출판에서 가격 USD3/등급별 금액·스킬별 allowlist 사전 차단을 제거한 코드가 GitHub main에 게시됨. **Windows LIVE v0.2.29 비용·스킬별 서명 허가 게이트는 아직 변경되지 않음**. 소스 변경과 운영 실행은 구분; 상세는 [기존 자동 승인 Work 결과](projects/COWORK-AUTO-APPROVAL-20261115-001/GPT_INDEPENDENT_REVIEW_COST_GATE_SIMPLIFICATION_RESULT_r0001_20261122_KST.md). 아래 예전 r0006 서술 중 가격 기반 출판 게이트는 이 최신 결정으로 대체.
 
 **GPT 필수 수행:** 사용자가 기존 설계 대화창에서 “리뷰요청해줘” 또는 **“리뷰체계 최신버전 확인후 다시 리뷰요청해줘”**라고 지시하면, 현재 창의 마지막 확정 Work·설계/구현물·원본 revision·기존 요청/영수증을 실제 확인해 리뷰 대상을 확정(②)하고, 단순 후보/REQUEST 초안·인계 문서에서 끝내지 않고 **가능한 기존 정식 제출 수단을 사용해 REQUEST+ZIP 같은 Commit A → SOURCE_PIN Commit B 원격 확인(③)**까지 추진한다. 완료 증거가 없으면 `FORMAL_REQUEST=NOT_POSTED/BLOCKED`로 정확히 보고하며 “리뷰 요청 완료”라고 말하지 않는다. LIVE 정책 검사는 REQUEST 출판의 필수 조건이 아니며 Windows 보호 signer의 승인·READY·비용·중복 검증은 우회하지 않는다. [GPT ②③ 필수 완료 게이트](ops/CONTRACTS/PRE_READY_SOURCE_PIN_PREFLIGHT_V1.md)와 [실행 진입](../AGENTS.md)을 우선 적용. Windows watcher 자동 hook 설치가 이 문구로 달성되는 것은 아니다.
 
@@ -98,6 +101,7 @@ CoWork Work/리뷰 요청과 업무 Kernel Work는 별개다. 팀 지식 정본�
 | 협업 provider·독립 리뷰 운송·LIVE/롤백 | [이관](projects/COWORK-DROPBOX-TO-GITHUB-MIGRATION/CURRENT.md) |
 | 자동 승인·서명 개선 | [자동 승인](projects/COWORK-AUTO-APPROVAL-20261115-001/CURRENT.md) |
 | L1 지식·RAG·Workflow/Updater·CL/PR 설계 | [L1 지식](projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md) |
+| L1 Workspace Viewer·문서 목차·오늘의 업무 | [L1 지식과 같은 Work](projects/L1-WORKSPACE-RAG-20261111-001/CURRENT.md) — Viewer 구간·결과 우선 |
 | 담당 모듈·Procedure/Feature·분류 검토 | [담당 범위](projects/L1-CHANNEL-KNOWLEDGE-SCOPE-20261113-001/CURRENT.md) |
 | NR L1 Tx 실제 코드 분석·해당 Job | [NR 코드 분석](projects/NR-L1TX-CODE-ANALYSIS-20261115-001/CURRENT.md) |
 | 기존 Job-list Registry·MCP 결과 조회 장애 | [기존 Job 진단](projects/JOBLIST-NRTX-20261112-001/CURRENT.md) |
@@ -116,7 +120,7 @@ CoWork Work/리뷰 요청과 업무 Kernel Work는 별개다. 팀 지식 정본�
 2. 대상·작업 흐름·고정 입력 revision·완료 근거·미확인·기존 승인 범위·다음 한 행동/담당을 확인한다. 이 항목은 문서상 최소 인계 내용이며 새 Kernel 필드가 아니다.
 3. 허용된 스킬로 작업하고 결과를 기록한다. 피드백을 수용/수정 수용/거절/보류/추가 확인으로 판정하고 필요한 보완은 같은 Work에서 진행한다.
 4. 결과·판정 원문은 기존 결과/결정/notes에 보존하고 해당 CURRENT의 짧은 현재 요약·근거 링크·미해결·다음 행동을 갱신한다. 기존 TRACKER는 필요한 현행 추적 필드만 맞춘다.
-5. 작업한 GPT/Agent가 PRIVATE 게시 후 commit·원격 본문·바이트 해시를 확인한다. 게시/조회 실패는 NOT_POSTED/UNVERIFIED로 남기며 게시 실패 때문에 분석·리뷰·Job을 재실행하지 않는다.
+5. 작업한 GPT/Agent가 실제 저장소 가시성과 사용자 승인 범위를 확인하고 공개 가능한 비민감 자료만 CoWork PUBLIC `main`에 게시한 뒤 commit·원격 본문·바이트 해시를 확인한다. 게시/조회 실패는 NOT_POSTED/UNVERIFIED로 남기며 게시 실패 때문에 분석·리뷰·Job을 재실행하지 않는다.
 6. 다음 창은 다시 관련 CURRENT와 새 근거를 읽고 이어간다. 최신 조회 불가 시 마지막 확인 시점과 미확인을 밝히고 과거 상태로 실행 가능 여부를 확정하지 않는다.
 
 문서 연결은 이를 읽는 세션에 적용한다. ChatGPT 프로젝트 설정·새 창 자동 선조회·대화 자동 저장·스킬 설치·예약 작업·모델 호출을 이 지도 게시로 설정하지 않는다. 운영 변경·PUBLIC 게시·유료 리뷰는 해당 계약과 실제 승인 범위를 따른다.
