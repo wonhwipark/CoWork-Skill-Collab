@@ -1,5 +1,15 @@
 # COWORK-SKILL-DISCOVERY-20261112-001 — CURRENT
 
+## 2026-11-23 KST — code-analyzer 원본 Knowledge 시작 경로 확정 / 변경·배포 불필요
+
+- **요청·원본:** 분석 시작 시 `l1sw-dev-knowledge` 조회/실행 구현을 신규 필요성 기준으로 다시 확인. 실제 `L1Work/main/code-analyzer_v0_15_4_1119.zip` 515581 B / 217 entries를 내려받아 Git blob SHA-1 `1c43503a2a4695400727fb3fb1cd0cb3c49f826b`와 일치 확인. 기존 릴리스 기록의 SHA-256 `11e1da15ee12e750c3652190c348a7fc8e31aa1741876e3c06bc0af3413b16af` 참조.
+- **원본 사실:** `SKILL.md`·`request_router.py`·`knowledge_link.py`·`references/knowledge_link.md` 대조. `route-request` 진입 시 `inspect_knowledge_link(prompt_once=not args.plan_only)`로 **링크 상태** 확인. 노출·승인된 provider 도구가 있고 도메인 맥락 필요 시에만 Knowledge 보조 조회. 미가용이면 분석 계속. 기존 설정 등록은 provider 실행·권한 증명이 아님.
+- **판정:** `CODE_ANALYZER_CHANGE=NOT_NEEDED`, `REUSE_EXISTING_PROVIDER_REFERENCE=YES`; Knowledge 기존 Feature/Scenario 탐색·후보 선정은 Updater/업무 GPT 조정 경로를 사용, Analyzer는 CODE FACT 권위 보유. 지식 전체 조회/신규 CLI 강제 구현 금지. [상세 원본 검토·이행 판단](CODE_ANALYZER_KNOWLEDGE_STARTUP_ORIGINAL_REVIEW_r0001_20261123_KST.md) commit `8701a9a93e09abe9d17ebe404a766968689849e2` 원격 readback PASS.
+- **시험/배포:** `SOURCE_BYTE_GIT_BLOB=PASS`, `STATIC_SOURCE_REVIEW=PASS`; `NEW_REGRESSION/INDEPENDENT_REVIEW/LINUX_HOST_G0/REAL_PROVIDER_CALL/REAL_L1_E2E=NOT_RUN`, `NEW_SKILL_ZIP=NOT_NEEDED_NOT_POSTED`. 기존 L1Work 공개 v0.15.4 불변.
+- **NEXT_ONE_ACTION:** 업무 GPT가 [기존 야간 분석 인계](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_KNOWLEDGE_UPDATER_NIGHTLY_MODULE_PROCEDURE_MSC_HANDOFF_r0001_20261123_KST.md)를 사용해 실제 NR UL Tx Switching 대표 1건에서 Updater 지식 조회→Analyzer source fact→MSC/Work readback의 재현 결과 확인. 입증된 결함이 나오면 그 소유 스킬만 최소 변경.
+
+---
+
 ## 2026-11-23 KST — code-analyzer 야간 L1 분석 재사용 검토 / 불필요 수정 없음
 
 - **사용자 최신 범위:** `l1-knowledge-updater`는 업무 GPT에 MD 인계, `code-analyzer`는 실제 기능 검토 후 입증된 필요가 있을 때만 수정·배포. 버전 올림·중복 분석기 신설 금지.
