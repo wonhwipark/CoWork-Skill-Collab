@@ -1,6 +1,6 @@
 name: CoWork one-shot API model IDs (metadata only)
 # GET /v1/models only; zero Responses/model-generation requests.
-# New file creation is the only permitted trigger. No manual rerun path.
+# Exact commit-message gate and run_attempt==1 limit this to one intended GET-only execution.
 on:
   push:
     branches: [main]
@@ -16,8 +16,7 @@ jobs:
       github.repository == 'wonhwipark/CoWork-Skill-Collab' &&
       github.ref == 'refs/heads/main' &&
       github.run_attempt == 1 &&
-      github.event.head_commit.message == 'chore: CoWork model discovery GET-only once 20261124' &&
-      contains(github.event.head_commit.added, '.github/workflows/cowork-model-ids-once-20261124.yml')
+      github.event.head_commit.message == 'chore: CoWork model discovery GET-only one-shot retry 20261124'
     runs-on: ubuntu-latest
     timeout-minutes: 3
     steps:
