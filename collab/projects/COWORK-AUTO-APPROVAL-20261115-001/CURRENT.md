@@ -1,5 +1,15 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-24 KST — GitHub 서명 포함 v0.2.35 preflight PASS / Windows E2E 실행 인계
+
+- [Run 45215858291](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/45215858291) `signed-preflight-once` PASS: source pin·서명/READY·ZIP SHA/CRC·review/receipt 사전검증, 입력 42,915B, SHA-256 `5bd39fa0a8300d597c1f7a794286b21d92bb54423937135caa0cc8b850dde294`, 모델 호출/claim 쓰기 0. GitHub Linux Runner 검증이며 Windows 호스트 자체 검증과 구분.
+- 최신 직접 확인: GPT disposition, 실행 claim, Telegram claim, Work claim 4건 모두 원격 404(원샷 실행 직전 재검사 필요). 모델 목록 GET PASS, `gpt-6.2-sol` 실제 목록 및 공식 지원 확인, **모델 변수/스위치는 아직 미변경**.
+- [Windows 실제 실행 인계](../COWORK-DROPBOX-TO-GITHUB-MIGRATION/WINDOWS_GPT_V035_FIRST_DISPOSITION_EXECUTION_HANDOFF_r0001_20261124_KST.md) 생성·readback PASS. 기존 첫 GPT disposition 1회 + Telegram만, Claude 재리뷰·기존 signed REQUEST/READY 재생성 및 Windows LIVE 변경 금지.
+- `WINDOWS_PREFLIGHT=NOT_RUN`, `MODEL_VARIABLE=NOT_SET_LAST_VERIFIED`, `GPT_DISPOSITION=NOT_RUN`, `TELEGRAM_E2E=NOT_RUN`, `HOST_EXECUTION=BLOCKED_HOST_ACCESS`.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 인계서대로 로컬 사전검증 PASS 후 모델 변수 설정·첫 GPT 판정 1회·Telegram ACK를 같은 Work에 원격 게시.
+
+---
+
 ## 2026-11-24 KST — GPT API 모델 메타데이터 GET 1회 검증 완료
 
 - [읽기 전용 모델 조회 결과](../COWORK-DROPBOX-TO-GITHUB-MIGRATION/GPT_MODEL_DISCOVERY_READONLY_RESULT_r0001_20261124_KST.md): 첫 Run `45212208881` SKIPPED (모델 API 미호출), 후속 Run [45212536082](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/45212536082) **SUCCESS**, 후보 ID 86개 중 `gpt-6.2-sol` 존재. 공식 Structured Outputs·Responses 지원 확인. GET 엔드포인트 인증은 유효하지만 실제 판정 API 호출 권한·사용량은 아직 미검증.
