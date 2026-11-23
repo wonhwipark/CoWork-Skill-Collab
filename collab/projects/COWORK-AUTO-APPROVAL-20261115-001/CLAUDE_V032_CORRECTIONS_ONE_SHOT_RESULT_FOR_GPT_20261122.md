@@ -347,3 +347,56 @@ LIVE_READY = **NO**. 막힌 항목:
 
 - **LIVE_READY = NO. LIVE = OFF(변경 없음).**
 - **사용자 최종 승인 1회 요청 항목:** (a) v0.2.35 ZIP 공개 게시 1회(독립 리뷰용), (b) 위 §13.7 LIVE 변경 범위 설치·DB 추가 테이블·watcher 재시작, (c) 상한 없는 단일 실행 모델 비용 위험 수용.
+
+---
+
+## 14. v0.2.35 승인 원샷: 공개 게시·독립 리뷰·게이트·LIVE 판정 (2026-11-23 KST)
+
+**요약:** (1) 승인된 ZIP 정확히 공개 게시 PASS. (2) 독립 리뷰 COMPLETED, BLOCKING 0. (3) 필수 게이트 중 **실제 GitHub 두 프로세스 동시 경합 NOT_RUN** → 지시서 규칙에 따라 **LIVE 전환 미실행**. 운영은 v0.2.29 그대로(LIVE=OFF 상태 유지, Task 두 개 Running). LIVE_READY=NO.
+
+### 14.1 공개 게시 (PASS)
+- 입력 ZIP `v0_2_35_intent_scope_candidate.zip`: SHA-256 `658a6f3da8bd018b96b64453892aec77d96868e19bc5788745c1591b1729a740`, 307,418 B, 114 항목 — 승인값과 일치 확인.
+- 저장소 실제 visibility 재조회: PUBLIC. 동일 버전 기존 요청 없음.
+- 공식 `collab/ops/submit_review_request.py`(깨끗한 main 클론 `49629ba`), 드라이런 PASS 후 `--publish`.
+- 요청 `REQ-COWORK-V035-WATCHER-REVIEW-20261123` rev 1, `skill_collab_watcher`=`cowork-review-watcher`, `POLICY-STATIC-V1`, STATIC_ONLY, WINDOWS.
+- Commit A `f8ad29b1037f07716b6ff0de2dd26c72170061e9`(REQUEST+ZIP), Commit B `b2f186fb7de55638983ad6a057f9204e0c4aed9c`(SOURCE_PIN, A 고정, repo_id 문자열 `"1451933830"`). 원격 ZIP 바이트 SHA 일치.
+
+### 14.2 보호 승인·READY·디스패치·독립 리뷰 (PASS)
+- 기존 감시기 자동 경로(기존 보호 위임 범위), 수동 서명 없음. APPROVAL_SIG 및 READY 원격 게시 확인.
+- 감사: `REVIEW_DISPATCHED` 1회(2026-11-23 07:32 UTC), `REVIEW_COST` 기록, `COMPLETED`. jobs COMPLETED 1, 중복 0.
+- 실제 비용 USD 0.8444 (상한 3.0 이내), 내부 턴 24 (디스패치 1회).
+- `REVIEW_RESULT_1.md`: `execution_status: COMPLETED`, SHA-256 `67547d03fe189e72107b1fa04aa0570badd764bb8fbe28c22173b08f40c7bdbf`, 7,001 B. **BLOCKING: None.** 비차단 관찰 4건(F3 고정 설계 확인, F1 재검증 nonce 비소비 확인, 디스패치 1회 확인, F2 매니페스트 일부 확인).
+- 영수증 `RECEIPT_1.md`: `ok: true`, watcher 0.2.29, 패키지 SHA 일치.
+- 리뷰어 미검증 항목(매니페스트 113 해시, 런타임 GitHub API, 테스트 재실행)은 본 세션에서 대신 확인(§14.3).
+
+### 14.3 필수 게이트 검증
+| 게이트 | 결과 | 근거 |
+|---|---|---|
+| 리뷰 BLOCKING 0 | PASS | §14.2 |
+| 매니페스트 113 해시 vs ZIP | PASS | 패키지 검사 불일치 0 |
+| 실제 GitHub API: 경로별 커밋 조회 | PASS | `commits_touching(REQUEST.md)` → 커밋 A 정확 반환, 없는 의도 파일 → 0건 (GET 전용) |
+| 실제 GitHub API: 조상 관계 | PASS | A가 main HEAD의 조상 `true`, 역방향 `false`, 동일 `true` (GET 전용) |
+| 실제 GitHub 원자성(create-only) | PASS(단일 시도) | 기존 `DISPATCH_1.md`에 **동일 바이트** create-only 쓰기 → `UPLOAD_CONFLICT` 거부, 내용 불변 (sha `0ae6bc8d…` 전후 동일) |
+| **실제 GitHub 두 프로세스 동시 경합** | **NOT_RUN — 필수 게이트 미충족** | 새 경로에 동시 생성은 운영 저장소에 산출물을 남기는 쓰기. 승인된 범위(ZIP 공개·리뷰·LIVE)에 없음 |
+| Windows 호스트 SHADOW(사본) | PASS | 최신 상태 사본: 디스패치 0, 대기 9, 모델 0, 쓰기 차단 래퍼. 라이브 DB 읽기 전용 |
+| 호스트 설치형 SHADOW | NOT_RUN | 설치·Task 변경 필요(LIVE 범위 전) |
+| 구 코드 롤백 호환 | PASS | v0.2.29 코드가 `review_intent_nonces`가 있는 사본에서 정상 스캔(디스패치 0, 무결성 ok, 작업 14 유지) |
+| 컷오버 직전 DB 백업 | PASS | `backup_live_db_20261123_precut`: 무결성 ok, 작업 14(진행 중 0), 클레임 7, 감사 최대 25310, 복구 사본 무결성 ok, 설정·위임 SHA 라이브와 일치 |
+| 설치 트리 백업 대조 | PASS | 2026-11-22 `install_tree_v0_2_29`의 Python 파일 25개 = 라이브 25개(SHA 일치) |
+| 설정·위임·키·Task·Notifier 불변 | PASS | 설정 `2ead4007…`, 위임 `6d826672…`, Task 정의 미변경(조회만), Notifier Running |
+| provider 단일성·중복 방지 | PASS | lease `github` 1행, 진행 중 작업 0, 대기 클레임 0 |
+
+### 14.4 LIVE 전환 — 미실행 (필수 게이트 미충족)
+- 지시서 4번: "실제 GitHub 전송 경합/원자성 ... 실행 불가한 필수 검증은 NOT_RUN/BLOCKED로 두고 LIVE 강행 금지."
+- 두 프로세스 동시 경합은 **NOT_RUN**. 따라서 설치(watcher 정지·설치 트리 교체·테이블 추가·재시작)를 **수행하지 않았습니다.**
+- 현재 운영: **v0.2.29 Running** (작업 `SKILL-COLLAB-GitHub-Watcher`, `Running`), Notifier Running, 설치 트리·DB·설정·위임 변경 없음.
+- 롤백 자산은 이미 준비됨(§14.3 백업·호환 PASS). 설치 자체는 실행 전.
+
+### 14.5 운영 검증(§5 항목 6~7)
+- LIVE 미전환이므로 v0.2.35 운영 검증·실모델 E2E·Task/Notifier 중복 검증은 **NOT_RUN**. 무권한 유료 요청 생성 금지 규칙에 따라 테스트용 요청도 만들지 않음.
+
+### 14.6 필요한 사용자 조치 (최소 1건)
+- 실제 GitHub 동시 경합 시험 경로 승인: 예) `collab/ops/race-tests/<run-id>/` 아래 synthetic 파일을 두 클라이언트가 같은 새 경로에 동시에 create-only로 쓰는 1회 시험(산출물 1개가 저장소에 남음, 이후 삭제는 별도 쓰기 필요). 또는 전용 격리 저장소 허용.
+- 이 승인이 나면 경합 시험 → 통과 시 LIVE 설치(§13.7 범위) → 운영 검증 순서로 진행합니다.
+
+- **LIVE_READY = NO. LIVE = OFF(변경 없음).**
