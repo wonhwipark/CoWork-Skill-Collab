@@ -299,8 +299,8 @@ class ContextQueryTests(unittest.TestCase):
                     self.assertIsNone(context_query.safe_file(self.root, path))
 
     def test_router_documents_existing_known_false_positive(self):
-        # No router policy change in F3: retain and document its known bias.
-        self.assertEqual(context_query.choose("그룹웨어 설치 문의")[0], "knowledge")
+        # Specific word matching avoids the old 그룹웨어 → Knowledge false positive.
+        self.assertEqual(context_query.choose("그룹웨어 설치 문의")[0], "skill")
         self.assertEqual(context_query.choose("전혀 관계없는 질문")[0], "skill")
 
     def test_request_scan_is_bounded(self):
@@ -328,8 +328,8 @@ class ContextQueryTests(unittest.TestCase):
 
     def test_route_diagnostics_known_groupware_substring_trap(self):
         got = context_query.route_diagnostics("그룹웨어 설치 문의")
-        self.assertEqual(got["selected_topic"], "knowledge")  # unchanged legacy behavior
-        self.assertEqual(got["state"], "SUBSTRING_MATCH_REVIEW")
+        self.assertEqual(got["selected_topic"], "skill")
+        self.assertEqual(got["state"], "FALLBACK_UNVERIFIED")
         self.assertTrue(got["requires_review"])
         self.assertEqual(context_query.route_diagnostics("그룹 지식 업데이트")["state"], "SINGLE_TOPIC_MATCH")
 
@@ -353,7 +353,7 @@ class ContextQueryTests(unittest.TestCase):
         got = context_query.snapshot(self.root, "스킬 ZIP?", topic="skill")
         self.assertTrue(got["summary_truncated"])
         self.assertLessEqual(len(got["summary"]), 3600)
-        self.assertIn("top section is truncated", got["warning"])
+        self.assertIn("selected section is truncated", got["warning"])
         self.assertNotIn("PASS_OLD", got["summary"])
 
     def test_nested_package_path_does_not_alias_same_basename(self):
@@ -371,6 +371,71 @@ class ContextQueryTests(unittest.TestCase):
         self.assertEqual(len(got), 1)
         self.assertEqual(got[0]["evidence_files"]["package"], "NOT_FOUND_LOCAL")
 
+
+    def test_actual_intent_examples_route_to_existing_work(self):
+        examples = {
+            "자동 승인과 서명의 상태를 확인해줘": "auto",
+            "기존 스킬의 역할과 입출력을 알려줘": "skill",
+            "공개 대시보드 화면의 가독성을 확인해줘": "dashboard",
+            "Viewer 화면에서 문서 목차 폭을 수정한 작업을 이어줘": "viewer",
+            "NR L1 Tx Init RACH 코드 분석 Job을 이어줘": "nr_analysis",
+            "모델 호출 없는 Job 운송을 확인해줘": "smoke",
+            "L1 지식 Updater 야간 분석 인계를 찾아줘": "knowledge",
+        }
+        for question, topic in examples.items():
+            with self.subTest(question=question):
+                actual, work_id = context_query.choose(question)
+                self.assertEqual(actual, topic)
+                self.assertEqual(work_id, context_query.ROUTES[topic][0])
+        self.assertEqual(len({work for work, _ in context_query.ROUTES.values()}), 10)
+
+    def test_specific_route_candidates_and_explicit_override(self):
+        for question, expected in [
+            ("Viewer 화면에서 목차 폭 수정", "viewer"),
+            ("NR L1 Tx Init RACH 코드 분석 Job", "nr_analysis"),
+            ("모델 호출 없는 Job 운송", "smoke"),
+        ]:
+            with self.subTest(question=question):
+                result = context_query.route_diagnostics(question)
+                self.assertEqual(result["selected_topic"], expected)
+                self.assertIn(expected, result["candidate_topics"])
+        self.assertEqual(context_query.choose("Viewer 화면 수정", topic="dashboard")[0], "dashboard")
+
+    def test_large_current_question_scoped_viewer_and_updater(self):
+        work = "L1-WORKSPACE-RAG-20261111-001"
+        path = self.root / "collab" / "projects" / work / "CURRENT.md"
+        path.parent.mkdir(parents=True)
+        path.write_text(
+            "# CURRENT\n\n"
+            "## 2026-11-23 Viewer v0.5.1 재검증\n- 목차 폭 확인\n\n"
+            "## 2026-11-23 Viewer 화면 수정\n- 문서 목차 폭 수정\n\n"
+            "## 2026-11-23 Knowledge Updater 야간 분석 인계\n"
+            "- L1 지식 Updater 야간 분석 인계 링크\n\n"
+            "## 이전 이력\n" + ("x" * 310_000), encoding="utf-8")
+        self.assertGreater(path.stat().st_size, context_query.MAX_READ)
+        self.assertLess(path.stat().st_size, context_query.MAX_CURRENT_READ)
+        (self.root / "collab" / "requests").mkdir()
+        for question, topic, needle in [
+            ("Viewer 화면에서 문서 목차 폭을 수정한 작업을 이어줘", "viewer", "Viewer"),
+            ("L1 지식 Updater 야간 분석 인계를 찾아줘", "knowledge", "Updater"),
+        ]:
+            with self.subTest(topic=topic):
+                got = context_query.snapshot(self.root, question)
+                self.assertEqual(got["state"], "LOCAL_CURRENT_READ_ONLY")
+                self.assertEqual(got["topic"], topic)
+                self.assertIn(needle, got["summary_heading"])
+                self.assertEqual(got["summary_selection"], "QUESTION_SECTION_MATCH")
+                self.assertGreater(got["current_bytes"], context_query.MAX_READ)
+
+    def test_over_limit_current_fails_closed_with_direct_link(self):
+        path = self.root / self.rel
+        path.write_bytes(b"X" * (context_query.MAX_CURRENT_READ + 1))
+        got = context_query.snapshot(self.root, "스킬 현황", topic="skill")
+        self.assertEqual(got["state"], "CURRENT_NOT_VERIFIED")
+        self.assertEqual(got["read_reason"], "CURRENT_MISSING_OR_OVER_LIMIT")
+        self.assertTrue(got["source_url"].endswith(self.rel))
+        self.assertNotIn("summary", got)
+        self.assertEqual(got["host_execution"], "NOT_VERIFIED")
 
 if __name__ == "__main__":
     unittest.main()
