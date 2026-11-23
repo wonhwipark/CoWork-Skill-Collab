@@ -271,3 +271,79 @@ LIVE_READY = **NO**. 막힌 항목:
 | 운영 DB 이행 / LIVE 설치 / Task·Notifier·키·위임 변경 | NOT_RUN (최종 승인 전) |
 
 - **LIVE_READY = NO.**
+
+---
+
+## 13. F3 커밋 고정 구현 + 최종 Windows 검증 + LIVE 준비 (2026-11-23 KST)
+
+**요약:** F3 구현·시험 PASS. v0.2.35 ZIP 생성. **독립 리뷰 BLOCKED_AUTH**(ZIP 공개 게시 허용 없음). **LIVE 활성화 BLOCKED**(최종 승인 없음). LIVE=OFF 유지, LIVE_READY=NO.
+
+### 13.1 F3 구현 (커밋 고정 방식)
+- 전송 계층 최소 확장: `commits_touching(path, limit)`(GitHub `commits?path=&sha=`), `is_ancestor(A, C)`(GitHub `compare`의 `ahead`/`identical`). 기반 클래스는 기본 거절.
+- 승인기 `_intent_scope`: 의도 파일을 커밋 A에서 찾지 않고, 경로별 커밋 이력에서 **정확히 1개** 커밋 C를 찾는다. 조건: C ≠ A, A가 C의 조상, C에서 REQUEST·패키지 바이트가 A와 동일, 그 뒤 서명·바인딩·만료·nonce 검증. 실패는 모두 fail-closed.
+- 고정: 후보 기록에 `intent_commit`(C), `intent_raw_sha`(원문 해시), `intent_path`, 원문 `intent_envelope`, 바인딩 `intent_expected`를 저장.
+- 재검증: 저장된 C에서 의도 원문을 다시 읽어 **해시·원문이 기록과 같아야** 통과. 이후 HEAD에 새 의도를 올려도 기존 승인은 바뀌지 않는다(시험 확인).
+- nonce 소비는 기존 원자적 저장(기본키 INSERT) 유지, 재검증은 소비하지 않고 소유자만 확인.
+
+### 13.2 F3 시험 (Windows PASS)
+- `tests/test_v035_commit_pinned_intent.py` 6/6 PASS: 정상 고정, 승인 후 교체해도 기존 승인 유지, A보다 이전 커밋의 의도 거절, 의도 커밋 2개(모호) 거절, 커밋의 REQUEST 바이트가 A와 다르면 거절, 사이드 커밋(main 이력 밖)은 보이지 않아 거절.
+- `tests/test_v033_intent_wiring.py` 15/15 PASS(커밋 방식으로 재배선), `test_v033_nonce_store.py` 3/3, `test_v032_scope_intent.py` 25/25 PASS.
+- **실제 Git CLI 의미 검사** `real_git_semantics_check.py` 6/6 PASS(임시 저장소): 경로별 커밋 최신순 목록, A가 C의 조상, C가 A의 조상 아님, 사이드 커밋이 main 이력 밖, 이른 의도 커밋이 A의 후손 아님. → 가짜 GitHub 계약과 실제 Git 의미 일치 확인.
+- **한계:** 실제 GitHub 원격 쓰기 경합은 NOT_RUN(쓰기 금지). 가짜 GitHub는 선형 브랜치 모델.
+
+### 13.3 F1 / F2 / QA28 / 전체 회귀
+- F1 PASS(§12.4 보존). F2 PASS(v0.2.35 매니페스트 113 파일 재생성, `.venv` 제외, 시험 3건 PASS).
+- **QA28 Windows 재실행: 28/28 PASS**(exit 0).
+- **Windows 미실행 시험 4건 해결 PASS:** `test_windows_scripts.py` 4/4. 후보 루트에 `.venv`가 필요해 기존 watcher venv를 가리키는 **임시 junction**을 만들어 실행한 뒤 junction만 제거(원본 venv 무결 확인).
+- **전체 회귀: 1075 PASS / 0 FAIL / 8 SKIP.** SKIP 8은 `test_secret_prompt.py` GUI 실창 시험(옵트인 `SKILL_COLLAB_GUI_TESTS=1`). 실제 창을 띄우고 사용자 입력을 요구하므로 무인 세션에서 실행하지 않음(NOT_RUN, 사유 기록).
+
+### 13.4 신규 ZIP v0.2.35
+- 파일: `D:\User\whpark\skill-collab-watcher-dist\candidates\v0_2_35_intent_scope_candidate.zip`
+- **zip SHA-256 `658a6f3da8bd018b96b64453892aec77d96868e19bc5788745c1591b1729a740`, 307,418 B, 114 항목**(매니페스트 113 + 자기 매니페스트 1)
+- CRC 정상, 중복 0, 경로 탈출 0, 링크 0, 민감정보 0. 매니페스트 대비 불일치 0. 트리 SHA `fac132f3ceaa8e4065267d6fa08f88695ad15bf33ebbc82e7e18d16267c56816`. `.venv` 제외 확인.
+- 구버전 보존: v0.2.34 `ecb071c4…`, v0.2.33 r2 `23579a5c…`, v0.2.33 `4dc3c701…`, v0.2.32 `cbf95d11…`.
+
+### 13.5 독립 리뷰 — BLOCKED_AUTH
+- 리뷰 흐름은 REQUEST+ZIP을 PUBLIC 저장소에 올려야 한다. v0.2.35 ZIP 공개 게시 허용은 기록에 없다(r2 ZIP 한 건 허용만 존재). 지시서도 "코드 ZIP PUBLIC 게시는 별도 승인 없이 금지"로 명시.
+- 따라서 게시·REQUEST·승인·READY·모델 호출 **모두 0**. 기존 r2 리뷰는 재실행하지 않음.
+- 필요한 사용자 조치: v0.2.35 ZIP 공개 게시 1회 허용 여부.
+
+### 13.6 LIVE 준비 점검 (읽기 전용·사본)
+| 항목 | 결과 | 근거 |
+|---|---|---|
+| 설치 버전 비교 | 운영 **v0.2.29** / 후보 **v0.2.35** | 운영 tree `b0134258…`, 설정 `2ead4007…`, 위임 `6d826672…` 불변 확인 |
+| Task·Notifier | GitHub watcher **Running**, Notifier **Running**, 나머지 Disabled | 읽기 전용 검증 |
+| provider 단일성 | lease `github` 1행 | 읽기 전용 검증 |
+| DB 무결성 | integrity ok | 읽기 전용 |
+| 새 DB 백업 | `backup_live_db_20261123\` 생성·검증 | 작업 13(완료 13), claims 6, 감사 최대 id 24873, 복구 사본 integrity ok, 설정·위임 SHA 일치 |
+| 설치 트리 백업 | 2026-11-22 `install_tree_v0_2_29`(143 파일, 원본과 IDENTICAL) | 설치 직전 재검증 필요 |
+| 사본 SHADOW(v0.2.35) | PASS(사본 한정) | 디스패치 0, 대기 9, 모델 0, 쓰기 차단. 라이브 감사 증가 원인은 **미확인**(상수 출력 주의) |
+| 호스트 설치 SHADOW | NOT_RUN | 설치·Task 승인 필요 |
+| 실제 GitHub 전송 경합 | NOT_RUN | 쓰기 금지 |
+| `review_intent_nonces` 이행 | 필요(F3·의도 경로가 사용) | 추가 전용 테이블. 구 코드는 무시해 역호환. 이행은 승인 필요, 미실행 |
+| 비용 추적 | REVIEW_COST 기록 유지(사후 영수증) | 코드 경로 확인. 상한 없는 단일 실행 위험은 사용자 수용 필요 |
+
+### 13.7 LIVE 활성화 — BLOCKED (최종 승인 필요)
+- 기존 운영 승인은 **v0.2.29 컷오버**에 대한 것이며 v0.2.35 설치를 포함하지 않음. 지시서 역시 설치·DB 이행·Task/설정/키/위임 변경은 최종 승인 전 금지.
+- 변경 범위(승인 요청 대상): (1) watcher 작업 안전 정지, (2) 설치 트리 v0.2.29 → v0.2.35(113 파일), (3) DB에 `review_intent_nonces` 추가(추가 전용), (4) watcher 작업 재시작. 설정·위임·키·trust root·Task 정의·Notifier·Bridge는 변경하지 않음.
+- 위험: 단일 실행 모델 비용 상한 없음(외부 CLI 1회, 시간 제한만). F3 경로는 실제 GitHub에서 아직 미검증.
+- 롤백: watcher 정지 → 설치 트리를 백업(2026-11-22 트리)으로 복원 → DB는 교체하지 않음(현재 이력 유지, 신규 테이블은 구 코드가 무시) → 설정·위임 해시 확인 → watcher 시작 → 버전 0.2.29, `WATCH_START` 확인.
+- 실운영 검증(정상 요청의 승인→READY→DISPATCH→RESULT, 실제 모델 호출)은 **유효한 실행 권한과 최종 승인 후에만** 수행.
+
+### 13.8 차단·미실행 요약
+| 항목 | 상태 |
+|---|---|
+| F3 커밋 고정 구현·시험 | PASS(Windows, 가짜 GitHub + 실제 Git 의미 검사) |
+| F1 / F2 | PASS |
+| QA28 | PASS 28/28 |
+| Windows 스크립트 시험 4 | PASS 4/4 (임시 junction) |
+| 전체 회귀 | PASS 1075 / FAIL 0 / SKIP 8 (GUI 실창 옵트인, NOT_RUN) |
+| v0.2.35 ZIP | 생성·검증 완료 |
+| 독립 리뷰 | BLOCKED_AUTH (ZIP 공개 게시 승인 필요) |
+| 실제 GitHub 경합 | NOT_RUN |
+| 호스트 설치 SHADOW | NOT_RUN |
+| DB 이행·LIVE 설치·Task 변경 | BLOCKED (최종 승인 필요) |
+| 실운영 모델 검증 | NOT_RUN (실행 권한 필요) |
+
+- **LIVE_READY = NO. LIVE = OFF(변경 없음).**
+- **사용자 최종 승인 1회 요청 항목:** (a) v0.2.35 ZIP 공개 게시 1회(독립 리뷰용), (b) 위 §13.7 LIVE 변경 범위 설치·DB 추가 테이블·watcher 재시작, (c) 상한 없는 단일 실행 모델 비용 위험 수용.
