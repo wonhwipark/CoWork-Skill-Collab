@@ -20,12 +20,19 @@ ROUTES = {
     "skill": ("COWORK-SKILL-DISCOVERY-20261112-001", ("스킬", "skill", "zip", "버전", "배포", "맥락", "컨텍스트")),
     "dashboard": ("COWORK-GITHUB-DASHBOARD-20261111-001", ("대시보드", "dashboard", "화면", "가독성", "ui")),
     "execution": ("JOBLIST-NRTX-20261112-001", ("job", "linux", "mcp", "llm", "opencode", "실행", "분석")),
-    "knowledge": ("L1-WORKSPACE-RAG-20261111-001", ("knowledge", "지식", "rag", "updater", "그룹")),
+    "knowledge": ("L1-WORKSPACE-RAG-20261111-001", ("knowledge", "지식", "rag", "updater", "그룹 지식")),
+    "viewer": ("L1-WORKSPACE-RAG-20261111-001", ("viewer", "뷰어", "목차", "오늘의 업무")),
+    "nr_analysis": ("NR-L1TX-CODE-ANALYSIS-20261115-001", ("nr l1 tx", "nr l1tx", "init rach", "ul scell")),
+    "smoke": ("JOBLIST-SMOKE-20261114-001", ("무모델", "모델 호출 없는", "운송", "smoke")),
+    "scope": ("L1-CHANNEL-KNOWLEDGE-SCOPE-20261113-001", ("담당 모듈", "담당 범위", "분류 검토")),
+    "issue": ("ISSUE-ANALYZER-20261114-001", ("issue analyzer", "이슈 분석기")),
 }
 COMMIT = re.compile(r"[0-9a-f]{40}\Z")
 REQ_ID = re.compile(r"REQ-[A-Z0-9-]{4,120}\Z")
 WORK_ID = re.compile(r"[A-Z][A-Z0-9_-]{5,120}\Z")
 MAX_READ = 256_000
+MAX_CURRENT_READ = 1_048_576  # CURRENT only; REQUEST and linked evidence retain MAX_READ
+CURRENT_REMOTE_BASE = "https://github.com/wonhwipark/CoWork-Skill-Collab/blob/main/"
 REQUEST_TOKEN = re.compile(r"(?<![A-Z0-9-])REQ-[A-Z0-9-]+")
 LOCAL_MD_LINK = re.compile(r"\]\(([^\s)]+\.md)(?:#[^\s)]*)?\)")
 READ_ERRORS = (OSError, UnicodeError, RuntimeError)
@@ -39,47 +46,75 @@ class RequestScanLimitExceeded(RequestScanIncomplete):
     """The P2 request directory exceeded the bounded local scan limit."""
 
 
+def _specific_routes(q: str) -> list[str]:
+    """Strong, bounded intent cues before generic words such as '화면' or 'job'."""
+    patterns = (
+        ("viewer", r"viewer|뷰어|목차\s*(?:폭|너비)|문서\s*탐색|오늘의\s*업무"),
+        ("nr_analysis", r"nr[\s_-]*l1[\s_-]*tx|init[\s_-]*rach|ul[\s_-]*scell"),
+        ("smoke", r"무모델|모델\s*호출\s*없는|모델\s*없는|smoke|job\s*운송|worker\s*도달"),
+        ("scope", r"담당\s*(?:모듈|범위)|(?:procedure|프로시저).*(?:feature|피처).*분류|분류\s*검토"),
+        ("issue", r"issue[\s_-]*analyzer|이슈\s*분석기"),
+    )
+    return [key for key, pattern in patterns if re.search(pattern, q)]
+
+
+def _term_matches(q: str, terms: tuple[str, ...]) -> list[str]:
+    # Avoid matching an English word inside another word (and '그룹웨어' as 그룹).
+    return [term for term in terms
+            if (re.search(r"(?<![a-z0-9])" + re.escape(term) + r"(?![a-z0-9])", q)
+                if term.isascii() and term.replace(" ", "").isalnum()
+                else term in q)]
+
+
 def choose(question: str, topic: str | None = None) -> tuple[str, str]:
-    """Deterministic, observable topic router; fallback is context Work."""
+    """Deterministic router; an explicit topic always overrides inference."""
     if topic:
         if topic not in ROUTES:
             raise ValueError("unknown topic")
         return topic, ROUTES[topic][0]
     q = question.lower()
-    scored = [(sum(1 for word in terms if word in q), key) for key, (_, terms) in ROUTES.items()]
-    best = max((s for s, _ in scored), default=0)
+    strong = _specific_routes(q)
+    if strong:
+        return strong[0], ROUTES[strong[0]][0]
+    scored = [(len(_term_matches(q, terms)), key) for key, (_, terms) in ROUTES.items()]
+    best = max((score for score, _ in scored), default=0)
     if best == 0:
         return "skill", ROUTES["skill"][0]
-    # Specific UX, Knowledge and auto-approval questions beat generic review/skill.
-    for key in ("dashboard", "knowledge", "auto", "execution", "collab", "skill"):
+    for key in ("auto", "knowledge", "dashboard", "execution", "collab", "skill",
+                "scope", "issue", "smoke", "nr_analysis", "viewer"):
         if (best, key) in scored:
             return key, ROUTES[key][0]
     raise AssertionError("topic routing")
 
 
 def route_diagnostics(question: str, topic: str | None = None) -> dict:
-    """Explain the legacy topic choice without changing its routing policy.
-
-    Inferred single-Work selection is not proof of a matching user intent.
-    """
+    """Surface conflicting candidates; never equate keyword selection with proof."""
     selected, _ = choose(question, topic)
     if topic:
         return {"state": "EXPLICIT_TOPIC", "selected_topic": selected,
                 "candidate_topics": [selected], "requires_review": False}
     q = question.lower()
-    matches = {key: [term for term in terms if term in q]
-               for key, (_, terms) in ROUTES.items()}
+    matches = {key: _term_matches(q, terms) for key, (_, terms) in ROUTES.items()}
+    strong = _specific_routes(q)
     candidates = [key for key, terms in matches.items() if terms]
-    if not candidates:
-        state = "FALLBACK_UNVERIFIED"
+    for key in strong:
+        if key not in candidates:
+            candidates.append(key)
+    if strong:
+        competing = [key for key in candidates if key not in strong and not (
+            (key == "dashboard" and selected == "viewer" and "대시보드" not in q) or
+            (key == "execution" and selected in ("nr_analysis", "smoke")
+             and not re.search(r"진단|장애|registry", q)))]
+        review = len(strong) > 1 or bool(competing)
+        state = "MULTI_TOPIC_REVIEW" if review else "SPECIFIC_ROUTE_MATCH"
+    elif not candidates:
+        state, review = "FALLBACK_UNVERIFIED", True
     elif len(candidates) > 1:
-        state = "MULTI_TOPIC_REVIEW"
-    elif "그룹" in matches.get("knowledge", ()) and re.search(r"그룹[가-힣a-z0-9]", q):
-        state = "SUBSTRING_MATCH_REVIEW"
+        state, review = "MULTI_TOPIC_REVIEW", True
     else:
-        state = "SINGLE_TOPIC_MATCH"
+        state, review = "SINGLE_TOPIC_MATCH", False
     return {"state": state, "selected_topic": selected,
-            "candidate_topics": candidates, "requires_review": state != "SINGLE_TOPIC_MATCH"}
+            "candidate_topics": candidates, "requires_review": review}
 
 
 def safe_file(root: Path, rel: str, max_bytes: int = MAX_READ) -> Path | None:
@@ -113,6 +148,44 @@ def top_summary(content: str, max_chars: int = 3600) -> str:
         return content[:max_chars]
     end = next((i for i in range(start + 1, len(lines)) if lines[i].startswith("## ")), len(lines))
     return "\n".join(lines[start:end]).strip()[:max_chars]
+
+
+def question_section_summary(content: str, question: str,
+                             max_chars: int = 3600) -> dict:
+    """Pick a recent, question-relevant CURRENT section without historical tail scan.
+
+    Inspect at most 48 newest H2 sections in a file already capped at 1 MiB.
+    This is a heuristic pointer, not proof that the section is the latest result.
+    """
+    matches = list(islice(re.finditer(r"(?m)^## ", content), 49))
+    if not matches:
+        summary = content[:max_chars]
+        return {"summary": summary, "summary_truncated": len(content) > len(summary),
+                "summary_selection": "TOP_FALLBACK_UNVERIFIED",
+                "summary_heading": "", "summary_section_index": -1}
+    words = [word for word in re.findall(r"[a-z][a-z0-9_-]*|[가-힣]{2,}", question.lower())
+             if word not in {"해줘", "확인", "이어줘", "찾아줘", "관련", "작업", "내용", "수정한"}]
+    best_idx, best_score = 0, 0.0
+    for idx, match in enumerate(matches[:48]):
+        end = matches[idx + 1].start() if idx + 1 < len(matches) else len(content)
+        section = content[match.start():end]
+        heading = section.split("\n", 1)[0].lower()
+        preview = section[:1800].lower()
+        score = (sum(4 for word in words if word in heading) +
+                 sum(1 for word in words if word not in heading and word in preview) -
+                 idx * 0.12)
+        if score > best_score:
+            best_idx, best_score = idx, score
+    start = matches[best_idx].start()
+    end = matches[best_idx + 1].start() if best_idx + 1 < len(matches) else len(content)
+    section = content[start:end].strip()
+    summary = section[:max_chars]
+    return {
+        "summary": summary, "summary_truncated": len(section) > len(summary),
+        "summary_selection": "QUESTION_SECTION_MATCH" if best_score >= 2 else "TOP_FALLBACK_UNVERIFIED",
+        "summary_heading": section.split("\n", 1)[0],
+        "summary_section_index": best_idx,
+    }
 
 
 def extract_frontmatter(text: str) -> dict[str, str]:
@@ -300,25 +373,38 @@ def snapshot(root: Path, question: str, topic: str | None = None,
     if not WORK_ID.fullmatch(work):
         raise ValueError("invalid selected work")
     rel = f"collab/projects/{work}/CURRENT.md"
+    read_reason = "CURRENT_NOT_VERIFIED"
     try:
-        target = safe_file(root, rel)
-        contents = target.read_text(encoding="utf-8") if target else None
+        target = safe_file(root, rel, max_bytes=MAX_CURRENT_READ)
+        if target:
+            with target.open("rb") as stream:
+                data = stream.read(MAX_CURRENT_READ + 1)
+            if len(data) > MAX_CURRENT_READ:
+                contents = None
+                read_reason = "CURRENT_READ_LIMIT_EXCEEDED"
+            else:
+                contents = data.decode("utf-8")
+        else:
+            contents = None
+            read_reason = "CURRENT_MISSING_OR_OVER_LIMIT"
     except READ_ERRORS:
         contents = None
     if contents is None:
         return {
             "topic": key, "work_id": work, "state": "CURRENT_NOT_VERIFIED",
-            "routing": route_info, "source_path": rel, "evidence": [],
-            "host_execution": "NOT_VERIFIED",
+            "read_reason": read_reason, "routing": route_info, "source_path": rel,
+            "source_url": CURRENT_REMOTE_BASE + rel,
+            "evidence": [], "host_execution": "NOT_VERIFIED",
+            "warning": "Local CURRENT is unavailable or over the bounded read limit; inspect source_url directly.",
         }
-    summary = top_summary(contents)
-    summary_truncated = len(top_summary(contents, max_chars=MAX_READ)) > len(summary)
+    section = question_section_summary(contents, question)
     relation_data = _scan_relations(root, work, current=contents)
     return {
         "topic": key, "work_id": work, "routing": route_info,
         "state": "LOCAL_CURRENT_READ_ONLY",
-        "source_path": rel,
-        "summary": summary, "summary_truncated": summary_truncated,
+        "source_path": rel, "source_url": CURRENT_REMOTE_BASE + rel,
+        "current_bytes": len(data),
+        **section,
         **relation_data,
         "delta": diff_summary(root, rel, contents, baseline_commit),
         "host_execution": "NOT_VERIFIED_BY_LOCAL_FILES",
@@ -328,8 +414,10 @@ def snapshot(root: Path, question: str, topic: str | None = None,
                if not relation_data["relations_scan"]["complete"] else "")
             + (" Topic routing requires review; selected Work may not match the question."
                if route_info["requires_review"] else "")
-            + (" CURRENT top section is truncated; inspect narrower evidence."
-               if summary_truncated else "")
+            + (" CURRENT selected section is truncated; inspect source_url and narrower evidence."
+               if section["summary_truncated"] else "")
+            + (" Section selection is a heuristic or fallback; verify linked evidence."
+               if section["summary_selection"] != "QUESTION_SECTION_MATCH" else "")
         ),
     }
 
