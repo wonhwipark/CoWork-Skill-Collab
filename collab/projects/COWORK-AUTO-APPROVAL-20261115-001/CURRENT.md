@@ -1,5 +1,14 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-23 KST — v0.2.35 공개 리뷰 완료, 필수 게이트 기록, LIVE 미실행 (LIVE=OFF, LIVE_READY=NO)
+
+- **결과:** [CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md](CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md) §14 (commit `d67fb9876e05`).
+- **공개·리뷰:** 승인된 ZIP `658a6f3d…`(307,418 B) 정확 게시. 요청 `REQ-COWORK-V035-WATCHER-REVIEW-20261123`, A `f8ad29b1`, B `b2f186fb`. 자동 승인→READY→디스패치 1회→RESULT·RECEIPT 완료. 독립 리뷰 BLOCKING 0. 비용 USD 0.844(상한 3.0 이내), 중복 0.
+- **게이트:** 실제 GitHub 경로별 커밋·조상 API PASS(GET). create-only 거부 PASS(단일 시도, 내용 불변). 사본 SHADOW PASS. 롤백 호환(구 코드+신규 테이블) PASS. 컷오버 직전 DB 백업 PASS.
+- **미충족:** 실제 GitHub 두 프로세스 동시 경합 **NOT_RUN**(승인 범위 밖의 운영 저장소 쓰기). 지시서 규칙에 따라 **LIVE 설치 미실행**.
+- **운영:** v0.2.29 Running 유지, 설치 트리·DB·설정·위임·키·Task·Notifier 변경 없음.
+- **NEXT_ONE_ACTION:** 사용자 승인 1건 — 실제 GitHub 동시 경합 시험 경로(`collab/ops/race-tests/<run-id>/` synthetic 파일 1개 또는 격리 저장소). 승인 시 경합 → LIVE 설치(§13.7 범위) → 운영 검증.
+
 ## 2026-11-23 KST — 사용자 v0.2.35 공개 리뷰·조건부 LIVE·단일 실행 무상한 위험 일괄 승인 (실행 대기)
 
 - **승인 범위:** 정확한 ZIP SHA `658a6f3da8bd018b96b64453892aec77d96868e19bc5788745c1591b1729a740` 한 건 공개 리뷰 입력 게시, 독립 리뷰/필수 게이트 통과 후 v0.2.29→v0.2.35 설치 트리 교체 및 `review_intent_nonces` 추가 전용·watcher 재시작(설정·위임·키·Task·Notifier 불변), 단일 모델 실행 금액 상한 없음 위험 수용. 보호 서명·scope·원본·중복 검증은 유지.
