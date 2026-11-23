@@ -6,7 +6,7 @@
 - **변경:** GPT API 판정 건당 USD3·사전 비용 승인·프로젝트 지출 상한·모델 단가 환경변수 검사 제거. 신규 claim/disposition `budget_upper_usd` 추정 필드 제거, 모델 응답 usage 기록 유지. 과거 문서/요청/영수증 불변.
 - **보호:** `COWORK_GPT_API_ENABLED` 명시 ON 유지, API key·승인 서명/원본/Work별·요청별 원자 claim·모델 1회·불확실 재시도 0, Telegram 별도 OFF 유지.
 - **검증:** GPT 원격 3개 파일 바이트 일치 PASS, 정적 안전 체크 11/11 PASS. 실제 GitHub Actions [Run 45193260720](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/45193260720), [Run 45193270095](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/45193270095) 각각 `offline-selftest` **29/29 PASS**, GPT/API·Telegram Job SKIP·모델 호출 0. 중간 단독 시험 커밋 Run 45193139501은 3 FAIL, 최종 모두 해결; 실제 GPT API 판정 E2E 별도 미검증.
-- **NEXT_ONE_ACTION:** 실제 Actions `offline-selftest` 29건 성공 여부를 원격 Run ID로 확인; 그 후 기존 GPT API 활성화·알림의 별도 유효 권한/설정을 검토. 비용 승인 반복 요청 없음.
+- **NEXT_ONE_ACTION:** Actions `offline-selftest` 29/29 PASS 확인 완료. 이제 GPT API·알림의 별도 운영 활성화 권한 및 모델/API key의 실제 설치 상태를 무노출 확인한 뒤, 유효한 승인 범위에서만 1회 실호출 E2E 검증. 비용 승인 반복 요청 없음.
 
 ## 2026-11-21 KST — Telegram 메시지 머릿말 표준화 (Claude / GPT / 연결 시험)
 
