@@ -1,5 +1,16 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-24 KST — Viewer v0.5.2 문서 가독성 개선 개발물 L1Work 게시·원격 검증
+
+- **현재 상태:** `PUBLIC_DEV_DELIVERY=PASS_REMOTE_VERIFIED`; 업무 Linux/실제 읽기 adapter/Node/브라우저 E2E/독립 리뷰/운영 적용=`NOT_RUN`. 개발물 전달은 실제 운영 반영 승인이 아님.
+- **변경:** v0.5.1 349,332B/34파일 원본 불변. 새 [v0.5.2 ZIP](https://github.com/wonhwipark/L1Work/blob/main/l1-workspace-viewer-wiki-integrated_v0_5_2_1124.zip) 374,930B/36파일 SHA-256 `15e83f136fa10ef680619602b55d74c4cd4c0c86a6cc470c1bec9cac250239ba`; 공개 commit `0b602472b2a505a86ebb0fdf0d94535098f5117d`. 상대 링크/표·엔티티/검증상태·근거형 이슈 첫 화면/폰트 일관성. 실제 adapter는 합성 데모가 아닌 현장 연결 필요.
+- **검증:** source pin, ZIP/manifest/CRC, 기존 Write 3파일 고정 SHA, 원격 ZIP·인계·HTML blob readback PASS. **새 Node 회귀와 브라우저 실행은 NOT_RUN**.
+- **인계:** [v0.5.2 단일 완결 인계](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_WORKSPACE_VIEWER_V052_READABILITY_COMPLETE_HANDOFF_r0001_20261124_KST.md); [상세 결과](VIEWER_V052_READABILITY_IMPLEMENTATION_AND_DELIVERY_RESULT_r0001_20261124_KST.md). v0.5.1 기존 전체 A01~A10/H01~H05 보존. Workflow v1.6.75/Kernel v0.7.43 스킬 수정 보류.
+- **NEXT_ONE_ACTION:** 업무 GPT/업무 Linux Agent가 새 ZIP·인계만 입력으로 실제 Viewer 읽기 adapter G0·권한·revision 확인→Node/브라우저 회귀 및 대표 Work 3건 근거 대조. 운영 설치·Write/LLM 활성화 전 기존 별도 게이트 필요.
+
+---
+
+
 ## 2026-11-23 KST — Viewer v0.5.1 게시본 직접 재검증 완료
 
 - **정본:** 기존 공개 commit `4dd8cfe691f9d18f658c8f23f0da5ed5d8d6d129`의 v0.5.1 ZIP/완결 인계 재사용. 같은 버전 덮어쓰기·추가 ZIP 발행 없음.
