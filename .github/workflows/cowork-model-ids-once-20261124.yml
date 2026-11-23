@@ -1,0 +1,81 @@
+name: CoWork one-shot API model IDs (metadata only)
+# GET /v1/models only; zero Responses/model-generation requests.
+# New file creation is the only permitted trigger. No manual rerun path.
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/cowork-model-ids-once-20261124.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  list-api-models-once:
+    if: >-
+      github.repository == 'wonhwipark/CoWork-Skill-Collab' &&
+      github.ref == 'refs/heads/main' &&
+      github.run_attempt == 1 &&
+      github.event.head_commit.message == 'chore: CoWork model discovery GET-only once 20261124' &&
+      contains(github.event.head_commit.added, '.github/workflows/cowork-model-ids-once-20261124.yml')
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: List candidate model identifiers through metadata endpoint only
+        shell: bash
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          import os
+          import re
+          import sys
+          import urllib.error
+          import urllib.request
+
+          key = os.environ.get("OPENAI_API_KEY", "")
+          if not key:
+              print("BLOCKED: OPENAI_API_KEY secret is unavailable (no value logged)")
+              sys.exit(2)
+          request = urllib.request.Request(
+              "https://api.openai.com/v1/models",
+              method="GET",
+              headers={"Authorization": "Bearer " + key,
+                       "Accept": "application/json",
+                       "User-Agent": "CoWork-model-discovery-once-20261124"},
+          )
+          try:
+              with urllib.request.urlopen(request, timeout=20) as response:
+                  if response.status != 200:
+                      print("BLOCKED: UNEXPECTED_HTTP_STATUS")
+                      sys.exit(2)
+                  payload = json.loads(response.read(512_001).decode("utf-8"))
+          except urllib.error.HTTPError as exc:
+              # Do not log response bodies or request headers.
+              print("BLOCKED: API_HTTP_STATUS_" + str(exc.code))
+              sys.exit(2)
+          except (urllib.error.URLError, ValueError, UnicodeError, OSError):
+              print("BLOCKED: API_METADATA_UNREADABLE")
+              sys.exit(2)
+          if not isinstance(payload, dict) or not isinstance(payload.get("data"), list):
+              print("BLOCKED: INVALID_MODELS_RESPONSE")
+              sys.exit(2)
+          all_ids = [m.get("id") for m in payload["data"] if isinstance(m, dict)]
+          candidates = sorted(set(i for i in all_ids
+                                  if isinstance(i, str)
+                                  and re.fullmatch(r"[A-Za-z0-9._-]{3,100}", i)
+                                  and (i.startswith("gpt-") or re.match(r"o[0-9]", i))))
+          if not candidates or len(candidates) > 200:
+              print("BLOCKED: CANDIDATE_COUNT_OUT_OF_RANGE")
+              sys.exit(2)
+          print("MODEL_DISCOVERY=SUCCESS_METADATA_ONLY")
+          print("MODEL_CANDIDATE_COUNT=" + str(len(candidates)))
+          print("MODEL_IDS_BEGIN")
+          for model_id in candidates:
+              print(model_id)
+          print("MODEL_IDS_END")
+          print("NOTE=Listing a model ID does not verify Responses API JSON-schema compatibility or permissions for a generation call.")
+          print("MODEL_GENERATION_REQUESTS=0")
+          PY
