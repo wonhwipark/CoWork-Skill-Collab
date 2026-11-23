@@ -63,9 +63,69 @@ class BridgeTests(unittest.TestCase):
             raw = zf.read_bytes()
             req = {'package_path': '/SKILL-COLLAB/packages/test.zip',
                    'package_size_bytes': len(raw), 'package_sha256': hashlib.sha256(raw).hexdigest()}
-            self.assertIn('Design', bridge.package_inputs(root, req))
+            inventory = bridge.package_inputs(root, req)
+            self.assertIn('design.md', inventory)
+            self.assertIn(hashlib.sha256(b'# Design\nHello').hexdigest(), inventory)
+            self.assertNotIn('# Design\nHello', inventory)
             req['package_sha256'] = '0' * 64
             with self.assertRaises(bridge.Hold):
+                bridge.package_inputs(root, req)
+
+    def test_large_valid_archive_uses_bounded_complete_inventory(self):
+        # >8 times the old 110 KB text cap; all bytes remain verified, none
+        # silently clipped into the model prompt.
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            folder = root / 'collab/packages'
+            folder.mkdir(parents=True)
+            archive = folder / 'large.zip'
+            names = [f'chunk_{i:02d}.md' for i in range(10)]
+            with zipfile.ZipFile(archive, 'w', compression=zipfile.ZIP_DEFLATED) as z:
+                for i, name in enumerate(names):
+                    z.writestr(name, chr(65+i) * 95_000)
+                z.writestr('images/binary.bin', b'\\x00\\x01')
+            raw = archive.read_bytes()
+            req = {'package_path': '/SKILL-COLLAB/packages/large.zip',
+                   'package_size_bytes': len(raw),
+                   'package_sha256': hashlib.sha256(raw).hexdigest()}
+            evidence = bridge.package_inputs(root, req)
+            self.assertLessEqual(len(evidence.encode('utf-8')), bridge.MAX_SOURCE)
+            self.assertIn('total_text_bytes_verified_not_forwarded: 950000', evidence)
+            self.assertIn('member_count: 11', evidence)
+            self.assertEqual(sum(name in evidence for name in names), len(names))
+            self.assertIn('images/binary.bin', evidence)
+            self.assertNotIn('A' * 100, evidence)
+
+    def test_secret_in_unforwarded_text_fails_closed(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            folder = root / 'collab/packages'
+            folder.mkdir(parents=True)
+            archive = folder / 'secret.zip'
+            with zipfile.ZipFile(archive, 'w') as z:
+                z.writestr('ordinary.md', 'safe')
+                z.writestr('unforwarded.txt', 'sk-' + 'X' * 30)
+            raw = archive.read_bytes()
+            req = {'package_path': '/SKILL-COLLAB/packages/secret.zip',
+                   'package_size_bytes': len(raw),
+                   'package_sha256': hashlib.sha256(raw).hexdigest()}
+            with self.assertRaisesRegex(bridge.Hold, 'POTENTIAL_SECRET_IN_PACKAGE'):
+                bridge.package_inputs(root, req)
+
+    def test_release_manifest_evidence_is_not_silently_truncated(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            folder = root / 'collab/packages'
+            folder.mkdir(parents=True)
+            archive = folder / 'manifest.zip'
+            with zipfile.ZipFile(archive, 'w') as z:
+                z.writestr('docs/RELEASE_MANIFEST.json', ' ' * 32_001)
+                z.writestr('ordinary.md', 'safe')
+            raw = archive.read_bytes()
+            req = {'package_path': '/SKILL-COLLAB/packages/manifest.zip',
+                   'package_size_bytes': len(raw),
+                   'package_sha256': hashlib.sha256(raw).hexdigest()}
+            with self.assertRaisesRegex(bridge.Hold, 'RELEASE_MANIFEST_EVIDENCE_TOO_LARGE'):
                 bridge.package_inputs(root, req)
 
     def test_output_tokens_bounded_independent_of_cost(self):
