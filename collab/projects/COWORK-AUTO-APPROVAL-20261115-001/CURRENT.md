@@ -2,7 +2,7 @@
 
 ## 2026-11-23 KST — GPT Runner 비용 게이트 불일치 제거 코드 반영(운영 활성화 별도)
 
-- **연계 정본:** [GitHub GPT Runner 비용 게이트 제거 결과](../COWORK-DROPBOX-TO-GITHUB-MIGRATION/GPT_ACTIONS_COST_GATE_REMOVAL_RESULT_r0001_20261123_KST.md). GPT API Runner의 USD3·정책 승인·지출 상한/단가 검사 코드를 제거하고 `COWORK_GPT_API_ENABLED`와 원본/서명/claim/중복·no-retry는 유지. 파일 3개 원격 readback PASS, 정적 11/11 PASS. Python·GitHub Actions 이번 코드 E2E NOT_VERIFIED.
+- **연계 정본:** [GitHub GPT Runner 비용 게이트 제거 결과](../COWORK-DROPBOX-TO-GITHUB-MIGRATION/GPT_ACTIONS_COST_GATE_REMOVAL_RESULT_r0001_20261123_KST.md). GPT API Runner의 USD3·정책 승인·지출 상한/단가 검사 코드를 제거하고 `COWORK_GPT_API_ENABLED`와 원본/서명/claim/중복·no-retry는 유지. 파일 3개 원격 readback PASS, 정적 11/11 PASS. GitHub Actions 최종 Run 45193270095 `offline-selftest` **29/29 PASS**; GPT API Job SKIP, 실제 유료 판정 E2E NOT_RUN.
 - **상태:** `GPT_API_SOURCE_COST_GATE=REMOVED`, `GPT_API_ENABLE=UNCHANGED_OFF_LAST_REPORTED`, `MODEL_CALLS=0_THIS_CHANGE`, `TELEGRAM=UNCHANGED`, `WINDOWS_WATCHER_LIVE=v0.2.29` (마지막 호스트 보고). v0.2.36 신규 후보/독립 리뷰 불필요, v0.2.35 완료 이력 불변.
 - **NEXT_ONE_ACTION:** GitHub Actions 최신 push offline-selftest 결과 확인 및 필요 시 최소 수정; 실제 GPT API 자동 판정 ON은 별도 실행 권한 확인 후. 독립 리뷰 비용 승인 재요청 금지.
 
