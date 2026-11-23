@@ -193,6 +193,42 @@ class BridgeTests(unittest.TestCase):
             with self.assertRaisesRegex(bridge.Hold, 'WORK_SINGLE_CYCLE_ALREADY_REQUESTED'):
                 bridge.one_cycle_work_id(root, 'REQ-TEST-R2')
 
+    def test_completed_review_with_prior_requests_allows_first_gpt_disposition(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            self._one_cycle_fixture(root, 'REQ-TEST-R1', 'WORK-001')
+            self._one_cycle_fixture(root, 'REQ-TEST-R2', 'WORK-001')
+            # Strict gate remains active for new review request submission.
+            with self.assertRaisesRegex(bridge.Hold, 'WORK_SINGLE_CYCLE_ALREADY_REQUESTED'):
+                bridge.one_cycle_work_id(root, 'REQ-TEST-R2')
+            # Only a completed review chain can enter post-review disposition.
+            with patch.object(bridge.review_chain, 'inspect',
+                              return_value={'stage': 'GPT_NOT_OBSERVED'}), \
+                 patch.object(bridge, 'approval_check'), \
+                 patch.object(bridge, 'package_inputs', return_value='safe source'):
+                request = root / 'collab/requests/REQ-TEST-R2'
+                (request / 'REQUEST.md').write_text(
+                    '---\nrequest_id: REQ-TEST-R2\nwork_id: WORK-001\n'
+                    'request_revision: 1\npackage_sha256: ' + 'f' * 64 + '\n---\n')
+                review = root / 'collab/reviews/REQ-TEST-R2'
+                receipt = root / 'collab/receipts/REQ-TEST-R2'
+                review.mkdir(parents=True)
+                receipt.mkdir(parents=True)
+                (review / 'REVIEW_RESULT_1.md').write_text('# Completed verified review')
+                (receipt / 'RECEIPT_1.md').write_text('{"processing_key": "VALID"}')
+                output = bridge.preflight(root, 'REQ-TEST-R2', '1451933830', 'fake-public-key')
+                self.assertEqual(output['work_id'], 'WORK-001')
+                self.assertEqual(output['processing_key'], 'VALID')
+
+    def test_completed_review_still_rejects_invalid_work_identity(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            self._one_cycle_fixture(root, 'REQ-TEST-R1', 'WORK-001')
+            anchor = root / 'collab/projects/WORK-001/CURRENT.md'
+            anchor.unlink()
+            with self.assertRaisesRegex(bridge.Hold, 'WORK_ANCHOR_MISSING'):
+                bridge.one_cycle_work_id(root, 'REQ-TEST-R1', completed_review=True)
+
     def test_one_cycle_different_work_unaffected(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
