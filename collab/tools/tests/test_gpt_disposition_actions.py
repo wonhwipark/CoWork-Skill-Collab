@@ -68,13 +68,10 @@ class BridgeTests(unittest.TestCase):
             with self.assertRaises(bridge.Hold):
                 bridge.package_inputs(root, req)
 
-    def test_budget_gate_fail_closed(self):
-        self.assertEqual(bridge.budget_preflight('x' * 1000, '2.00', '10.00', '0.10'), '0.040192')
-        for value in ('', 'nan', '-1', 'oops'):
-            with self.assertRaises(bridge.Hold):
-                bridge.budget_preflight('x', '2', '10', value)
-        with self.assertRaises(bridge.Hold):
-            bridge.budget_preflight('x' * 140000, '4', '24', '0.20')
+    def test_output_tokens_bounded_independent_of_cost(self):
+        self.assertGreater(bridge.OUT_TOKENS, 0)
+        self.assertLessEqual(bridge.OUT_TOKENS, 3000)
+        self.assertFalse(hasattr(bridge, 'budget_preflight'))
 
     def test_github_changed_paths_only(self):
         with patch.object(bridge.subprocess, 'run') as runner:
@@ -86,23 +83,40 @@ class BridgeTests(unittest.TestCase):
         with self.assertRaises(bridge.Hold):
             bridge.git_changed('0' * 40, 'b' * 40)
 
-    def test_no_api_call_without_external_spend_cap(self):
-        with patch.dict(os.environ, {'GITHUB_REPOSITORY': 'wonhwipark/CoWork-Skill-Collab',
-                                     'GITHUB_REPOSITORY_ID': '1451933830', 'GITHUB_REF': 'refs/heads/main',
-                                     'COWORK_GPT_API_ENABLED': 'true', 'GITHUB_TOKEN': 'not-a-real-token',
-                                     'COWORK_GPT_MODEL': 'gpt-6', 'OPENAI_API_KEY': 'fake-key',
-                                     'COWORK_GPT_COST_POLICY_APPROVED': 'false',
-                                     'COWORK_GPT_PROJECT_SPEND_CAP_CONFIRMED': 'false'}):
-            with patch.object(sys, 'argv', ['bridge', '--request-id', 'REQ-TEST-123']):
-                def github_get(method, repo, path, token, payload=None):
-                    if path == '': return 200, {'private': False}
-                    return 404, {}
+    def test_legacy_cost_flags_do_not_block_explicitly_enabled_valid_call(self):
+        def github_get(method, repo, path, token, payload=None):
+            return (200, {'private': False}) if path == '' else (404, {})
+        evidence = {
+            'input': 'test', 'work_id': 'WORK-001',
+            'request_revision': '1', 'package_sha256': 'f' * 64,
+            'input_sha256': 'e' * 64, 'processing_key': 'TEST',
+        }
+        writes = []
+        def record_write(repo, rel, token, obj, message):
+            writes.append((rel, obj))
+        env = {
+            **self._one_cycle_live_mocks(),
+            'COWORK_GPT_COST_POLICY_APPROVED': 'false',
+            'COWORK_GPT_PROJECT_SPEND_CAP_CONFIRMED': 'false',
+            'COWORK_GPT_MAX_CALL_USD': '0',
+            'COWORK_GPT_INPUT_RATE_USD_PER_1M': '',
+            'COWORK_GPT_OUTPUT_RATE_USD_PER_1M': '',
+        }
+        with patch.dict(os.environ, env, clear=True):
+            with patch.object(sys, 'argv', ['bridge', '--request-id', 'REQ-TEST-R1']):
                 with patch.object(bridge, 'github_json', side_effect=github_get), \
-                     patch.object(bridge, 'preflight', return_value={'input': 'x' * 1000,
-                         'request_revision': '1', 'package_sha256': 'f' * 64,
-                         'input_sha256': 'e' * 64, 'processing_key': 'TEST'}), \
-                     patch.object(bridge, 'call_once', side_effect=AssertionError('no model call')):
-                    self.assertEqual(bridge.main(), 2)
+                     patch.object(bridge, 'preflight', return_value=evidence), \
+                     patch.object(bridge, 'create_only', side_effect=record_write), \
+                     patch.object(bridge, 'call_once', return_value=(
+                         {'verdict': 'ACCEPT', 'summary': 'ok', 'findings': [],
+                          'limitations': [], 'next_action': 'stop'},
+                         {'response_id': 'resp_x', 'usage': {'input_tokens': 17}, 'model': 'gpt-test'})) as model:
+                    self.assertEqual(bridge.main(), 0)
+                    model.assert_called_once()
+        self.assertEqual(len(writes), 3)
+        self.assertNotIn('budget_upper_usd', writes[1][1])
+        self.assertNotIn('budget_upper_usd', writes[2][1])
+        self.assertEqual(writes[2][1]['usage']['input_tokens'], 17)
 
     def test_symlink_zip_member_rejected(self):
         with tempfile.TemporaryDirectory() as td:
@@ -205,8 +219,6 @@ class BridgeTests(unittest.TestCase):
             'GITHUB_REPOSITORY_ID': '1451933830',
             'GITHUB_REF': 'refs/heads/main', 'GITHUB_TOKEN': 'fake-token',
             'COWORK_GPT_API_ENABLED': 'true',
-            'COWORK_GPT_COST_POLICY_APPROVED': 'true',
-            'COWORK_GPT_PROJECT_SPEND_CAP_CONFIRMED': 'true',
             'COWORK_GPT_MODEL': 'gpt-test',
             'OPENAI_API_KEY': 'fake-api-key',
         }
@@ -226,7 +238,6 @@ class BridgeTests(unittest.TestCase):
             with patch.object(sys, 'argv', ['bridge', '--request-id', 'REQ-TEST-R1']):
                 with patch.object(bridge, 'github_json', side_effect=github_get), \
                      patch.object(bridge, 'preflight', return_value=evidence), \
-                     patch.object(bridge, 'budget_preflight', return_value='0.01'), \
                      patch.object(bridge, 'create_only', side_effect=record_write), \
                      patch.object(bridge, 'call_once', return_value=(
                          {'verdict': 'ACCEPT', 'summary': 'ok', 'findings': [],
@@ -252,7 +263,6 @@ class BridgeTests(unittest.TestCase):
             with patch.object(sys, 'argv', ['bridge', '--request-id', 'REQ-TEST-R1']):
                 with patch.object(bridge, 'github_json', side_effect=github_get), \
                      patch.object(bridge, 'preflight', return_value=evidence), \
-                     patch.object(bridge, 'budget_preflight', return_value='0.01'), \
                      patch.object(bridge, 'create_only', side_effect=bridge.Hold('OUTPUT_ALREADY_PRESENT_OR_UNREADABLE')), \
                      patch.object(bridge, 'call_once', side_effect=AssertionError('must not call model')):
                     self.assertEqual(bridge.main(), 2)
