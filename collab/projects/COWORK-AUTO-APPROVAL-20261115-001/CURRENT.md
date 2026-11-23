@@ -1,5 +1,14 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-24 KST — 최초 GPT disposition 패키지 근거 입력 보완
+
+- 패키지 938,634B 텍스트 합산으로 인한 `PACKAGE_INPUT_TOO_LARGE`를 **전체 ZIP 무결성 검사와 GPT 증거 입력 분리**로 수정. 샘플 v0.2.35 ZIP 무결성·서명 검증은 이전 호스트 보고상 PASS이고 새 구현 호스트 실행은 별도 미실시.
+- 코드/시험 게시 및 원격 readback PASS: `collab/tools/gpt_disposition_actions.py` (`f32680b57993fb7ea7d1e9f7f5a4338f87a4b822`), `collab/tools/tests/test_gpt_disposition_actions.py` (`6c99b6c0046828713891abd2f06774caa3efd7f9`). [설계 판정·결과](../COWORK-DROPBOX-TO-GITHUB-MIGRATION/GPT_PACKAGE_EVIDENCE_INPUT_DECISION_r0001_20261124_KST.md).
+- `OFFLINE_TEST=NOT_VERIFIED`, `PREFLIGHT_AFTER_CHANGE=NOT_RUN`, `MODEL=BLOCKED_MODEL`, `GPT_API/TELEGRAM_SWITCH=UNCHANGED`, `FIRST_GPT_DISPOSITION=NOT_RUN`; 기존 Windows LIVE/서명·유료 리뷰 재실행 없음.
+- **NEXT_ONE_ACTION:** 무과금 시험 및 기존 완료 `REQ-COWORK-V035-WATCHER-REVIEW-20261123`의 호스트 실제 preflight 재실행 결과 확인. 모델 조회/선택 문제는 사용자 지정 또는 읽기 전용 조회 승인 범위에서 별도 해결.
+
+---
+
 ## 2026-11-24 KST — GPT API Secret 사용자 등록 보고 / 인증·신뢰 공개키 준비 후 최초 판정
 
 - 사용자 `OPENAI_API_KEY` Repository Secret 등록 완료 보고. Secret 자체는 GitHub 연결에서 직접 확인 불가. 기존 CoWork PUBLIC 유지 및 v0.2.35 완료 리뷰·Windows watcher LIVE(v0.2.29 마지막 보고) 이력 불변.
