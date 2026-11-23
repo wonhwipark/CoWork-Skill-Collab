@@ -1,0 +1,12 @@
+---
+schema: SKILL_COLLAB_READY_V1
+state: READY
+request_id: REQ-COWORK-V035-WATCHER-REVIEW-20261123
+request_revision: 1
+request_path: /SKILL-COLLAB/requests/REQ-COWORK-V035-WATCHER-REVIEW-20261123/REQUEST.md
+request_sha256: 7ba3dd6e259cd04722b0fd05de7cbd5c00fc92988b6f84a7319ee2a1e3b0c576
+package_sha256: 658a6f3da8bd018b96b64453892aec77d96868e19bc5788745c1591b1729a740
+baseline_id: COWORK-LIVE-A-20261114
+---
+
+# ready
