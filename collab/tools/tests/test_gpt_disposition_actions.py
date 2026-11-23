@@ -43,6 +43,29 @@ spec.loader.exec_module(bridge)
 
 
 class BridgeTests(unittest.TestCase):
+    def test_model_error_diagnostics_are_sanitized_and_never_retried(self):
+        import urllib.error
+        import urllib.request
+        cases = [
+            (urllib.error.HTTPError('https://example.invalid', 400, 'secret detail', {}, None), 'HTTP_STATUS_400'),
+            (urllib.error.HTTPError('https://example.invalid', 401, 'secret detail', {}, None), 'HTTP_STATUS_401'),
+            (urllib.error.HTTPError('https://example.invalid', 429, 'secret detail', {}, None), 'HTTP_STATUS_429'),
+            (urllib.error.HTTPError('https://example.invalid', 500, 'secret detail', {}, None), 'HTTP_STATUS_500'),
+            (urllib.error.URLError(OSError('private network detail')), 'NETWORK_OSError'),
+            (ValueError('private malformed response'), 'ValueError'),
+            (TimeoutError('private timeout detail'), 'TimeoutError'),
+        ]
+        for error, expected in cases:
+            with self.subTest(expected=expected):
+                with patch.object(urllib.request, 'urlopen', side_effect=error) as mocked:
+                    with self.assertRaises(bridge.Hold) as cm:
+                        bridge.call_once('test-model', 'sk-secret-do-not-log', 'fixture')
+                    self.assertIn('MODEL_CALL_UNCERTAIN_NO_RETRY', str(cm.exception))
+                    self.assertIn(expected, str(cm.exception))
+                    self.assertNotIn('secret', str(cm.exception))
+                    self.assertNotIn('private', str(cm.exception))
+                    mocked.assert_called_once()
+
     def test_default_off_no_network(self):
         with patch.dict(os.environ, {'GITHUB_REPOSITORY': 'wonhwipark/CoWork-Skill-Collab',
                                      'GITHUB_REPOSITORY_ID': '1451933830', 'GITHUB_REF': 'refs/heads/main',
