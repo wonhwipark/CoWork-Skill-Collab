@@ -1,5 +1,14 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 2026-11-24 KST — 사용자 승인 모델 목록 조회 1회 PASS / 최초 GPT 판정은 미실행
+
+- **실행 완료:** 사용자 승인된 GitHub Actions 메타데이터 전용 `GET /v1/models` 성공. 최초 신규 워크플로 Run [45212208881](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/45212208881) SKIP(진입 조건), 수정 후 [45212536082](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/45212536082) SUCCESS, 실제 모델 ID 후보 86개 확인. 그중 `gpt-6.2-sol` 실제 목록에 있고 공식 Responses/Structured Outputs 지원 → 권장 후보. [실행 결과](GPT_MODEL_DISCOVERY_READONLY_RESULT_r0001_20261124_KST.md).
+- **보호:** Secret 값 출력/모델 생성 0. 기존 승인·서명·REQUEST/READY·claim·Windows watcher/Telegram/GPT 활성화 스위치 변경 없음. `COWORK_GPT_MODEL=NOT_SET`, `GPT_FIRST_DISPOSITION=NOT_RUN`.
+- **추가 확인:** 대용량 패키지 근거 입력 수정 후 Actions [Run 45208515737](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/45208515737) `offline-selftest=35 PASS`(v0.2.35 fixture 포함). Windows 서명 검증 포함 `preflight=NOT_RUN_AFTER_SOURCE_CHANGE`.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 최신 코드로 기존 완료 `REQ-COWORK-V035-WATCHER-REVIEW-20261123` 서명 포함 실제 preflight 재실행. PASS면 기존 승인 경계의 모델 변수 `gpt-6.2-sol` 설정·readback 및 최초 GPT 판정 1회/Telegram 원샷 진행. 재리뷰/중복 호출 금지.
+
+---
+
 ## 2026-11-24 KST — GPT 판정 대용량 패키지 입력 변경 게시 / 호스트 재검증 대기
 
 - **GPT 결정:** 사용자 보고된 `PACKAGE_INPUT_TOO_LARGE`에 대해 입력 전체 소스 증설·대상 패키지 변경 대신, **전체 ZIP 무결성은 보존하고 GPT에는 파일별 SHA·크기 인벤토리, 릴리스 매니페스트, REQUEST·Claude 완료 리뷰·영수증**만 제공. 소스·diff 독립 검증이라고 주장하지 않음.
