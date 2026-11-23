@@ -1,5 +1,14 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 2026-11-24 KST ??Windows Claude Code: GPT API쨌Telegram ?쒖꽦???ъ쟾寃利?李⑤떒 (PACKAGE_INPUT_TOO_LARGE) 쨌 怨듦컻???ㅼ젙 ?꾨즺
+
+- 寃곌낵: [CLAUDE_API_TELEGRAM_ACTIVATION_BLOCKED_RESULT_FOR_GPT_20261124.md](CLAUDE_API_TELEGRAM_ACTIVATION_BLOCKED_RESULT_FOR_GPT_20261124.md) (commit `cdc4b140a997614d1ec9255dd720779281394ddb`). ?몄뒪???먯껜 蹂닿퀬?대ŉ API ?몄텧 0, 鍮꾩슜 0.
+- **?꾨즺:** `OPENAI_API_KEY` Secret ?대쫫 議댁옱 ?뺤씤(媛?誘몄“??. ?댁쁺 PC 蹂댄샇 ?좊ː 猷⑦듃??`cowork-approver-1` 怨듦컻?ㅻ쭔 ?쎌뼱 pin쨌fingerprint쨌湲곗〈 ?쒕챸 2嫄?VALID 寃利???蹂??`COWORK_APPROVER_PUBLIC_KEY_B64` ?ㅼ젙, ?먭꺽 媛??뺥솗 ?쇱튂쨌32諛붿씠?맞톐ingerprint ?ы솗?? 湲곗〈 claim 4媛?紐⑤몢 404.
+- **李⑤떒:** 理쒖큹 GPT ?먯젙 `preflight` 媛 `PACKAGE_INPUT_TOO_LARGE` 濡?FAIL. v0.2.35 ?⑦궎吏 ?띿뒪??938,634 諛붿씠?멸? `MAX_SOURCE=110,000` ??珥덇낵(828,634 諛붿씠??珥덇낵). ?쒕챸쨌?ш린쨌SHA쨌CRC 寃利앹? ?듦낵. 紐⑤뜽 ?대쫫? ?ㅺ? GitHub Secret ?덉뿉留??덉뼱 ?몄뒪?몄뿉??議고쉶 遺덇? ??`COWORK_GPT_MODEL` 誘몄꽕??`BLOCKED_MODEL`).
+- **誘몃?寃?** `COWORK_GPT_API_ENABLED`, `COWORK_GPT_TELEGRAM_NOTIFY_ENABLED` ?ㅼ쐞移? workflow_dispatch, claim ?뚯씪, 湲곗〈 由щ럭쨌Windows ?댁쁺 ?쇱껜.
+- **二쇱쓽(?몄뒪???ъ떎):** Windows 湲곕낯 蹂듭젣??CRLF 蹂?섏쑝濡??ъ쟾寃利앹씠 嫄곗쭞 ?ㅽ뙣?쒕떎(`core.autocrlf=false` ?꾩슂). `gh variable set` ???뚯씠?꾨줈 媛믪쓣 ?섍린硫?BOM ??遺숇뒗??`--body` ?ъ슜; ?대쾲????踰??섎せ ?ㅼ젙??媛믪쓣 利됱떆 ?뺤젙).
+- **NEXT_ONE_ACTION:** GPT媛 紐⑤뜽 ?낅젰 諛⑹떇(?붿빟 ?낅젰?쇰줈 蹂寃?/ ?곹븳 ?곹뼢 / ???묒? ?⑦궎吏)??寃곗젙쨌?섏젙??寃뚯떆?섍퀬, ?ъ슜?먮뒗 API 紐⑤뜽 ?대쫫???뚮젮 二쇨굅??紐⑤뜽 紐⑸줉 議고쉶 ?꾩슜 ?뚰겕?뚮줈瑜??뱀씤. 洹????몄뒪?몄뿉???ъ쟾寃利앹쓣 ?ㅼ떆 ?ㅽ뻾?섍퀬 PASS ?쒖뿉留??ㅼ쐞移섎? 耳좊떎.
+
 ## 2026-11-24 KST — 사용자 `OPENAI_API_KEY` Secret 등록 보고, 인증 연결 재개
 
 - **사용자 보고:** CoWork GitHub Actions Repository Secret `OPENAI_API_KEY` 등록 완료(값 노출 없음). `SECRET_REGISTERED=USER_REPORTED`, GitHub 도구의 Secret 목록·활용 가능성 직접 조회 미지원으로 `SECRET_READBACK=NOT_VERIFIED`. 신규 키 발급·중복 등록 금지.
