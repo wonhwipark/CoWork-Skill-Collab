@@ -510,3 +510,44 @@ LIVE_READY = **NO**. 막힌 항목:
 - **코드 변경·커밋:** 없음. 원격 게시 대상 코드 없음.
 - **LIVE·운영:** 변경 없음(LIVE watcher v0.2.29 유지, DB·키·Task·Notifier 불변). 실제 모델 호출·Telegram 발송 없음. 독립 리뷰 미실행.
 - **운영 설치 적용 필요 여부:** 예. 설치본 v0.2.29에는 금액 차단이 남아 있어 v0.2.35 후보 적용 전까지 비용 조건이 유지됨. 적용은 별도 승인 필요.
+
+
+---
+
+## 20. v0.2.35 운영 전환 실행 기록 (2026-11-24 KST, 사용자 승인 범위)
+
+**결과: 필수 게이트 PASS, 백업·설치·사후검증 완료. 운영 감시기 v0.2.35 Running.**
+
+### 20.1 필수 게이트
+- 실제 GitHub create-only 동시 경합 (합성 데이터, 1회): 두 OS 프로세스(A pid 27896, B pid 33476)가 같은 새 경로 `collab/ops/race-tests/RACE-20261124-001/synthetic_race_target.txt`에 동시 생성. A는 CREATED, B는 UPLOAD_CONFLICT. 원격 내용 SHA-256은 승자 페이로드와 같음. PASS. 시험 산출물 1개가 저장소에 남음(정리는 별도 쓰기라 미실행).
+- 격리 호스트 설치형 SHADOW: 별도 트리 `skill-collab-watcher-isolated\v0_2_35`, 별도 state·shadow_state, transport 읽기 전용, 모델 실행기 차단. scan 1회 종료 코드 0, dispatched 0, pending 9. 격리 DB 무결성 ok, 금지 이벤트 0건. 계정 격리 finding 1건은 policy=warn으로 기록. PASS.
+- 재사용: 독립 리뷰 PASS(BLOCKING 0), 후보 회귀 1071 PASS / 0 FAIL, 비용 게이트 제거 프로브 PASS.
+
+### 20.2 백업 (전환 전)
+- 폴더: `backup_cutover_v0_2_29_20261124`
+- DB: 백업 API 스냅샷, 무결성 ok, jobs 14, audit 최대 26443, auto_claims 7, SHA-256 `69739ef0…`. 복구 사본 무결성 ok.
+- 설정 `2ead4007…`, 위임 `6d826672…` (라이브와 일치).
+- 설치 트리 전체 사본 `install_tree_v0_2_29` (Python 25개가 라이브와 일치), 작업 정의 XML 2개(Watcher, Notifier).
+
+### 20.3 전환
+1. 감시기 작업 `SKILL-COLLAB-GitHub-Watcher` 정지, 프로세스 0개 확인. Notifier는 Running 유지.
+2. 패키지 교체: v0.2.29 패키지 폴더 8개를 설치 트리 밖의 `retired_v0_2_29_20261124`로 이동한 뒤 v0.2.35를 복사. 설정·`package`·`su_l1`·잠금 파일은 미변경. 바이트 일치 검증 mismatch 0, `__version__ = "0.2.35"`.
+3. DB: `review_intent_nonces` 추가 전용 테이블 생성. 다른 테이블 행 수 불변, 무결성 ok.
+4. 감시기 작업 시작: Running, 프로세스 2개(런처·자식).
+
+### 20.4 사후 검증 (라이브)
+- `WATCH_START` version 0.2.35, enabled true, dispatch_allowed true.
+- 시작 후 신규 감사: WAIT_INPUT 9, VALIDATED 4, APPROVAL_REJECTED 4(사유 모두 APPROVAL_EXPIRED, 기존 기록과 같은 패턴), AUTO_NOT_ELIGIBLE 5, AUTO_PRE_EXISTING_REQUEST 3.
+- 모델·claim·서명·READY·디스패치 이벤트 0건, 오류 이벤트(GROUP_ERROR, FAILED, CONFLICT) 0건.
+- provider lease github 1행. 무결성 ok. Notifier Running.
+- 설치 트리에 비용 차단 식별자 없음. `notify_events.py`의 죽은 문구 1줄만 남음(동작 무관).
+
+### 20.5 보존과 롤백
+- 보존: DB(이력, claim, 영수증, nonce 소비 기록), 설정, 위임, 키, 작업 정의, Notifier, 구 패키지(retired 폴더).
+- 롤백 절차: 감시기 작업 정지 → retired 폴더의 패키지 폴더를 설치 트리로 복원 → 설정·위임 해시 확인 → 작업 시작 → WATCH_START 버전 0.2.29 확인. DB 교체와 테이블 DROP은 하지 않음. 구 코드는 추가 테이블을 무시함.
+
+### 20.6 미실행·차단
+- provider 전환 등 승인 범위 밖의 LIVE 항목은 실행하지 않음. 기존 github 단일 provider 유지.
+- GPT API, Telegram, 모델 호출, 기존 요청 재실행, 운영 키 변경 없음.
+- 경합 시험 산출물 1개 정리는 미실행(추가 쓰기 필요).
+- 코드 커밋 없음. 운영 설치는 로컬 설치 트리 변경이며 저장소 코드는 변경하지 않음.
