@@ -1,11 +1,18 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-24 KST — 비용/과금 용어 및 실행 게이트 정정
+
+- **현행 판정:** GitHub Actions GPT 판정 Runner의 비용 승인·건당 금액·프로젝트 상한 사전 차단은 제거됨. API 응답 `usage`는 실행 후 토큰 사용량 영수증이며 과금 여부를 별도 조회하거나 재실행을 승인하는 게이트가 아님.
+- **문서 정정:** 아래 과거 섹션의 '과금 확인' NEXT 문구는 당시 진단 제안으로만 보존하며 현행 필수 단계에서 제외. 과거 USD3·예산 정책은 이력이며 신규 독립 리뷰 접수·출판 기준으로 복원 금지.
+- **미검증:** Windows 운영 설치본의 가격 게이트 제거 적용은 HOST_READBACK=NOT_RUN. 운영 정책·서명/READY·scope·중복 방지는 별개로 유지.
+- **NEXT_ONE_ACTION:** Windows 설치본의 가격 기반 차단 잔존 여부를 읽기 전용으로 확인하고 소스/운영 차이를 기록. 기존 Run 45289692844는 UNKNOWN·claim 보존·자동 재시도 금지.
+
 ## 2026-11-24 KST — GPT 오류 진단 시험 ResourceWarning 해소, 오프라인 38 PASS
 
 - **수정:** `collab/tools/tests/test_gpt_disposition_actions.py` 모의 HTTPError 객체 명시적 close, commit `09dc222e626ee24f2b351a35da8514207e76e3c4`. 프로덕션 호출 경로 변경 없음.
 - **실제 검증:** [GitHub Actions Run 45293802674](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/45293802674) 완료 SUCCESS. `offline-selftest` 38 PASS/0 FAIL; `test_model_error_diagnostics_are_sanitized_and_never_retried` PASS; 전체 해당 job 로그에서 `ResourceWarning` 0건. `gpt-disposition` SKIPPED, `telegram-smoke` SKIPPED.
 - **안전 경계:** 기존 Run `45289692844`의 모델 호출 여부 UNKNOWN·claim 보존·재시도 금지. 이번 단계에서 신규 모델/Telegram 호출, Windows LIVE 설치·설정 변경 없음.
-- **NEXT_ONE_ACTION:** 기존 실패 Run의 과금·실제 호출 여부는 OpenAI 사용량 기록으로만 별도 확인. 재디스패치 없이 기존 협업의 다음 승인된 범위를 판단.
+- **NEXT_ONE_ACTION (현행 정정):** 비용·과금 조회는 후속 실행의 선행 게이트가 아님. 기존 불확실 실행의 claim/영수증을 보존하고 재디스패치 없이 Windows 설치본의 가격 차단 잔존 여부를 읽기 전용으로 확인한 후, 별도 유효 요청의 정상 판정·알림 E2E 범위를 판단.
 
 
 ## 2026-11-24 KST — GPT API 오류 진단 보완, GitHub 오프라인 회귀 38 PASS
