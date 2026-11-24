@@ -1,5 +1,15 @@
 # COWORK-DROPBOX-TO-GITHUB-MIGRATION — 현재 상태
 
+## 2026-11-24 KST — 비용 게이트 제거 점검: 후보 v0.2.35 이미 제거 확인, 코드 수정 없음 (설치본 미변경)
+
+- **결과:** [CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md](CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md) §19 (commit `a972bacdaa11`).
+- **GitHub main:** 독립 접수 경로는 금액 판단 없음. 워크플로에 비용·지출 상한 조건 없음.
+- **설치본 v0.2.29:** PER_REQUEST_COST·UNSUPPORTED_DELEGATION_LIMIT·CLI `--max-budget-usd`·INVALID_COST 잔존(미변경).
+- **후보 v0.2.35:** 금액 차단 제거 확인. 프로브: 금액 0/음수/과대/과거 USD3에도 허용, 서명·중복·입력·만료·범위는 거부 유지.
+- **회귀:** 1071 PASS / 0 FAIL (SKIP 12: GUI 8, `.venv` 없는 Windows 스크립트 4).
+- **LIVE·운영:** 변경 없음. 실제 모델 호출·Telegram·독립 리뷰 없음.
+- **NEXT_ONE_ACTION:** v0.2.35 운영 적용은 별도 승인 필요.
+
 ## 2026-11-23 KST — GPT 최초 판정 실행 45289692844: 모델 호출 불확실로 중단, 재시도 없음 (스위치 OFF)
 
 - **결과:** [CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md](CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md) §18 (commit `19d5c6da2cc1`).
