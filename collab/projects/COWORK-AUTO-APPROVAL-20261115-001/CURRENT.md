@@ -1,5 +1,15 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-24 KST — 비용 게이트 제거 점검: 후보 v0.2.35 이미 제거 확인, 코드 수정 없음 (설치본 미변경)
+
+- **결과:** [CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md](CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md) §19 (commit `a972bacdaa11`).
+- **GitHub main:** 독립 접수 경로는 금액 판단 없음. 워크플로에 비용·지출 상한 조건 없음.
+- **설치본 v0.2.29:** PER_REQUEST_COST·UNSUPPORTED_DELEGATION_LIMIT·CLI `--max-budget-usd`·INVALID_COST 잔존(미변경).
+- **후보 v0.2.35:** 금액 차단 제거 확인. 프로브: 금액 0/음수/과대/과거 USD3에도 허용, 서명·중복·입력·만료·범위는 거부 유지.
+- **회귀:** 1071 PASS / 0 FAIL (SKIP 12: GUI 8, `.venv` 없는 Windows 스크립트 4).
+- **LIVE·운영:** 변경 없음. 실제 모델 호출·Telegram·독립 리뷰 없음.
+- **NEXT_ONE_ACTION:** v0.2.35 운영 적용은 별도 승인 필요.
+
 ## 2026-11-24 KST — 비용/과금 용어 및 실행 게이트 정정
 
 - **현행 판정:** GitHub Actions GPT 판정 Runner의 비용 승인·건당 금액·프로젝트 상한 사전 차단은 제거됨. API 응답 `usage`는 실행 후 토큰 사용량 영수증이며 과금 여부를 별도 조회하거나 재실행을 승인하는 게이트가 아님.
