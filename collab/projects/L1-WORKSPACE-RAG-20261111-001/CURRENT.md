@@ -1,5 +1,16 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-25 KST — Qwen Updater 완결 인계 + Code Analyzer v0.15.5 개발 ZIP 공개 전달
+
+- **현재 상태:** PUBLIC_HANDOFF=PASS_REMOTE_VERIFIED / ANALYZER_DEVELOPMENT_DELIVERY=PASS_REMOTE_VERIFIED. [업무 GPT 인계](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_KNOWLEDGE_UPDATER_QWEN36_ANALYSIS_QUALITY_IMPLEMENTATION_HANDOFF_r0001_20261125_KST.md), [Code Analyzer v0.15.5](https://github.com/wonhwipark/L1Work/blob/main/code-analyzer_v0_15_5_1125.zip), [상세 결과](QWEN_UPDATER_HANDOFF_AND_CODE_ANALYZER_V0155_DEVELOPMENT_DELIVERY_RESULT_r0001_20261125_KST.md).
+- **변경:** Updater 인계에 요청 생성·명시적 Analyzer/Converter 호출·중간 근거·MSC/Work/Viewer·품질 수락 조건 반영. Analyzer 실제 v0.15.4 원본에서 callers/callees의 max_files 무시 및 불량 line/endpoint CONFIRMED 결손을 확인하여 최소 코드 수정, partial coverage meta/RN 및 회귀 테스트 추가. 기존 v0.15.4 유지.
+- **실제 시험:** 변경 함수 격리 Python 9 PASS; 전체 패키지 실행 아님. 원본 CRC 217/217·manifest 216/216, 신규 CRC 220/220·manifest 219/219 및 payload roundtrip, 원격 bytes/SHA-256/문서 readback PASS. ZIP 594930 B / SHA-256 `61099248ab0a4b2597ca8316e613f5987caaee671d735337eea1e0f70a6c2877`, L1Work commit `891b05ccb794d67ea7ea168d2f96e2d8444a0ec8`.
+- **경계:** development_not_for_deployment. 전체 회귀·신규 독립 코드 리뷰·Linux 설치/호출·실제 Qwen 분석 및 MSC/Work E2E=NOT_RUN. 업무 GPT 실제 수신 미확인. 기존 R1·claim/READY 보존, 신규 실행 없음.
+- **NEXT_ONE_ACTION:** 업무 GPT가 위 완결 인계로 실제 Updater G0 및 호출 연결·품질 검증, Analyzer v0.15.5는 격리 전체 회귀/호환 및 별도 유효 설치 승인 확인 후 후보로 사용; 자동 덮어쓰기 금지.
+
+---
+
+
 ## 2026-11-25 KST — Qwen R1 독립 리뷰 완료 및 GPT 수동 판정
 
 - **현재 상태:** INDEPENDENT_REVIEW=COMPLETED; GPT_MANUAL_DISPOSITION=ACCEPT_WITH_CHANGE. [리뷰](../../reviews/REQ-L1-KNOWLEDGE-QWEN36-DESIGN-R1-20261125/REVIEW_RESULT_1.md) · [영수증](../../receipts/REQ-L1-KNOWLEDGE-QWEN36-DESIGN-R1-20261125/RECEIPT_1.md) · [지적별 GPT 판정](GPT_QWEN36_DESIGN_R1_REVIEW_DISPOSITION_r0001_20261125_KST.md). 요청/결과/영수증 ID·rev·package SHA 일치 PASS, watcher 0.2.35.
