@@ -1,5 +1,16 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-24 KST — v0.2.35 운영 전환 완료 (감시기 Running, 사후검증 PASS)
+
+- **결과:** [CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md](CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md) §20 (commit `75914eaf0215`).
+- **필수 게이트:** 실제 GitHub create-only 동시 경합 PASS(합성 데이터 1회, 2 OS 프로세스, CREATED 1 / CONFLICT 1). 격리 SHADOW PASS(dispatch 0, 금지 이벤트 0).
+- **백업:** DB 스냅샷·설정·위임·설치 트리 전체·작업 XML, 무결성·해시 검증 PASS.
+- **설치:** 운영 감시기 v0.2.35, WATCH_START version 0.2.35. 추가 전용 테이블 review_intent_nonces 생성, 기존 행 수 불변.
+- **사후:** 모델·claim·서명·READY·디스패치 0건, 오류 0건, provider github 1행, Notifier Running.
+- **롤백 자산:** 구 패키지 retired_v0_2_29_20261124, DB 스냅샷, 설치 트리 백업.
+- **LIVE:** provider 전환은 승인 범위 밖이라 미실행. 기존 github 단일 유지.
+- **NEXT_ONE_ACTION:** 경합 시험 산출물 collab/ops/race-tests/RACE-20261124-001/ 정리 여부는 별도 쓰기 승인 필요.
+
 ## 2026-11-24 KST — 비용 게이트 제거 점검: 후보 v0.2.35 이미 제거 확인, 코드 수정 없음 (설치본 미변경)
 
 - **결과:** [CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md](CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md) §19 (commit `a972bacdaa11`).
