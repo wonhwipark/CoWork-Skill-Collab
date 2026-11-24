@@ -1,5 +1,13 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-24 KST — GPT 오류 진단 시험 ResourceWarning 해소, 오프라인 38 PASS
+
+- **수정:** `collab/tools/tests/test_gpt_disposition_actions.py` 모의 HTTPError 객체 명시적 close, commit `09dc222e626ee24f2b351a35da8514207e76e3c4`. 프로덕션 호출 경로 변경 없음.
+- **실제 검증:** [GitHub Actions Run 45293802674](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/45293802674) 완료 SUCCESS. `offline-selftest` 38 PASS/0 FAIL; `test_model_error_diagnostics_are_sanitized_and_never_retried` PASS; 전체 해당 job 로그에서 `ResourceWarning` 0건. `gpt-disposition` SKIPPED, `telegram-smoke` SKIPPED.
+- **안전 경계:** 기존 Run `45289692844`의 모델 호출 여부 UNKNOWN·claim 보존·재시도 금지. 이번 단계에서 신규 모델/Telegram 호출, Windows LIVE 설치·설정 변경 없음.
+- **NEXT_ONE_ACTION:** 기존 실패 Run의 과금·실제 호출 여부는 OpenAI 사용량 기록으로만 별도 확인. 재디스패치 없이 기존 협업의 다음 승인된 범위를 판단.
+
+
 ## 2026-11-24 KST — GPT API 오류 진단 보완, GitHub 오프라인 회귀 38 PASS
 
 - **코드:** `collab/tools/gpt_disposition_actions.py` HTTP 상태(400/401/429/500), URLError 원인 타입, 기타 OSError/ValueError 타입을 민감한 본문·헤더 없이 구분. `MODEL_CALL_UNCERTAIN_NO_RETRY` 및 기존 claim/중복 방지 유지. commit `413b3b0f953d8e358914d8e4a8b38029d2c3880c`.
