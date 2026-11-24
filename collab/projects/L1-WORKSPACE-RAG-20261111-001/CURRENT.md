@@ -1,5 +1,17 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-25 KST — Qwen 3.6-27B 분석 품질 개선 독립 설계 리뷰 R1 정식 접수
+
+- **현재 상태:** FORMAL_REQUEST=SUBMITTED_AWAITING_PROTECTED_SIGNER; [REQUEST](../../requests/REQ-L1-KNOWLEDGE-QWEN36-DESIGN-R1-20261125/REQUEST.md) · [SOURCE_PIN](../../requests/REQ-L1-KNOWLEDGE-QWEN36-DESIGN-R1-20261125/SOURCE_PIN.json).
+- **범위:** Code Analyzer 기존 기능 재사용/입증된 최소 수정, Knowledge Updater의 Analyzer·Converter 명시적 호출과 orchestration, bounded evidence, 분석/문서화 품질 및 대표 합성 사례. 정적 독립 설계 리뷰 1회. 기존 Work 유지.
+- **입력:** [비민감 설계 ZIP](../../packages/qwen_knowledge_analysis_design_r0001_1125_REVIEW_INPUT.zip), 2978 B, SHA-256 `a99399a255073158e83f14422148b624cd683070395cc1680fe0426d56f5d8f6`. 공개 저장소이므로 원본 인계 전문과 업무 사례 식별자는 제외; 원본은 로컬 보존, 공개 참조 revision 고정. 실제 설치본/제품 코드/분석 결과 미확인.
+- **검증:** 동등 로컬 REQUEST/ZIP schema·CRC·경로·SHA 검사 PASS (원본 helper 직접 실행 아님); Commit A `2452779b0c2e32535bdb9ceb25f9d678c969956f`, Commit B `a8355cbc3a50a205eb2d0c8e56e1944cec2cdd2c` 직접 자식 확인, 원격 PIN repo_id 문자열 및 A/main REQUEST·ZIP base64 동일·blob 일치 PASS. 기존 리뷰 요청·결과·영수증 목록에서 동일 Qwen 요청 미발견. 기존 승인/호스트 상태를 소급 변경하지 않음.
+- **미검증:** 보호 signer·APPROVAL/READY·Claude 실행 및 리뷰 결과/영수증 미확인. GPT 직접 모델 호출·호스트 변경·스킬 수정·배포 0.
+- **NEXT_ONE_ACTION:** 기존 Windows 보호 signer가 실제 권한·서명·만료·중복 검증 후 유효할 때만 READY를 게시하여 R1 수행. 결과/영수증 접수 후 GPT 판정.
+
+---
+
+
 
 ## 2026-11-24 KST — Recovery Viewer v0.5.3 + Kernel v0.7.47 공개 개발 ZIP·업무 GPT 완결 인계 게시 검증
 
