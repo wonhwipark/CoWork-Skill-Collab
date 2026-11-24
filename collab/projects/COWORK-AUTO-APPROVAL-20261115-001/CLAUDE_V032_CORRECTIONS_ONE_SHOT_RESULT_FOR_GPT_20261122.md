@@ -496,3 +496,17 @@ LIVE_READY = **NO**. 막힌 항목:
 - **GitHub 게시:** 이 보고와 CURRENT 상단 요약만 문서 전용으로 게시. 코드 파일 변경 없음.
 - **최종 상태:** API `false`, Telegram `false`. LIVE 변경 없음. 재디스패치 없음.
 - **다음 한 행동:** 사용자가 OpenAI 대시보드에서 2026-11-23 23:32 UTC 전후 `gpt-6.2-sol` 요청 여부와 과금을 확인한 뒤 결정. 자동 재시도는 금지.
+
+
+---
+
+## 19. 비용 게이트 제거 점검 (2026-11-24 KST) — 코드 수정 없음, 설치본 미변경
+
+- **GitHub main (`9b79c05`):** 독립 접수 경로(`check_request_for_publication`)는 금액을 해석·비교·요구하지 않음. 가격 인수는 무시(`required_budget=None`). 워크플로에는 비용 정책·지출 상한 조건 없음. 잔여 `select_policy`는 정책 식별자 일치 검사만 수행.
+- **설치본 v0.2.29 (읽기 전용):** 금액 차단 잔존 — `auto_policy` PER_REQUEST_COST(79–80), UNSUPPORTED_DELEGATION_LIMIT(82), `auto_approval` 541–542 제외 분기, CLI `--max-budget-usd` 전달(review_runner 185–186, orchestrator 758), state_store INVALID_COST(393). **설치본은 변경하지 않음.**
+- **후보 v0.2.35 (dev copy):** 위 차단 조건 모두 제거 확인. `_accounting_amount`는 None·0·음수·문자열·불리언을 무시(예외·거부 없음). 설정의 `max_budget_usd`는 회계 참고값만 사용.
+- **프로브 (무모델, 읽기 전용):** 1센트 과거 상한 기준에서도 300c·0c·음수·10^6c 모두 `ALLOW`. 서명 위조·중복(COMPLETED)·입력 미검증 `INPUT_OR_TRUST`/`DUPLICATE_OR_UNCERTAIN`, 만료 `DELEGATION_EXPIRED`, 미등록 스킬 `SCOPE` 모두 거부 유지.
+- **회귀:** 후보 전체 `pytest tests` → **1071 PASS / 0 FAIL / 0 ERROR**, SKIP 12 (GUI 실창 옵트인 8 NOT_RUN; `.venv` 없는 Windows 스크립트 4 NOT_RUN, 이전 1075 값은 junction 임시 구성에서 얻은 것).
+- **코드 변경·커밋:** 없음. 원격 게시 대상 코드 없음.
+- **LIVE·운영:** 변경 없음(LIVE watcher v0.2.29 유지, DB·키·Task·Notifier 불변). 실제 모델 호출·Telegram 발송 없음. 독립 리뷰 미실행.
+- **운영 설치 적용 필요 여부:** 예. 설치본 v0.2.29에는 금액 차단이 남아 있어 v0.2.35 후보 적용 전까지 비용 조건이 유지됨. 적용은 별도 승인 필요.
