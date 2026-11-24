@@ -1,5 +1,16 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+
+## 2026-11-24 KST — Recovery Viewer v0.5.3 + Kernel v0.7.47 공개 개발 ZIP·업무 GPT 완결 인계 게시 검증
+
+- **현재 상태:** L1Work/main에 Viewer `v0.5.3`(399,993B / SHA-256 `9fe5d6cce9ac7064152099e183cdeee21421a0cefe9044ce48d39db686b67411`) 및 Kernel `v0.7.47`(406,507B / SHA-256 `5c1f73a09b2cd8c4ec93134f387ed7f80cec799b534f2d044978b66e6c38b20c`) 전체 ZIP과 [업무 GPT HO r0001](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_CHANNEL_RECOVERY_VIEWER_KERNEL_CONVERTER_COMPLETE_HANDOFF_r0001_20261124_KST.md) 게시, commit `9eeda1cc674b4453f6637da2a60bb12a61f8c445`. 원격 ZIP bytes/SHA 일치, Viewer CRC 40/40·manifest 39/39, Kernel CRC 172/172·manifest 171/171 **PASS**. [상세 결과](RECOVERY_VIEWER_KERNEL_PUBLIC_DELIVERY_RESULT_r0001_20261124_KST.md).
+- **변경:** Viewer Recovery 읽기/상세/MSC 승인 callback, Kernel 0.7.46 Recovery + 0.7.43 Viewer Write guard 병합 및 물리적 `recovery/` 파생 조회. 기존 Work/Evidence 단일 원본 유지. `l1-channel-recovery` 분석/Edge 판단과 `doc-converter` Seed 전후·AS-IS/TO-BE HTML/SVG 생성은 **업무 GPT 소유**로 HO 인계. 과거 Viewer v0.5.2·Kernel 후보/Workflow 보존.
+- **시험 경계:** 변경 코드 격리 검토와 패키지 무결성은 PASS. 최신 전체 Node/Python suite·독립 리뷰·실제 업무 Linux G0/Writer/Converter/Viewer 브라우저 E2E·운영 설치/Write ON·제품 Recovery 효과는 **NOT_RUN**. 두 ZIP은 `development_not_for_deployment` 공개 개발 전달본이며 실제 호스트 설치 완료가 아님.
+- **열린 사항:** Workflow `v1.6.75` 다른 소스 2종 충돌은 업무 호스트 활성본 확인 후 실제 gap일 때만 별도 통합. Edge 의미·MSC artifact 실제 출력/ACL은 미확정.
+- **NEXT_ONE_ACTION:** 업무 GPT가 기존 실제 Recovery Work/완료 영수증을 먼저 확인하고 실제 doc-converter PUML/SVG/HTML→Work Evidence/readback→`recovery/index.json`→Viewer 목록·MSC 클릭을 한 사례로 검증, 비민감 판정만 회신.
+
+---
+
 ## 2026-11-24 KST — Viewer v0.5.2 통합 HO r0002 후속 시험 근거·현장 회신 보완
 
 - **대상 정본:** L1Work `main` [통합 HO r0002](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_WORKSPACE_VIEWER_V052_MSC_UPDATER_CONVERTER_COMPLETE_HANDOFF_r0002_20261124_KST.md), [handoffs 인덱스](https://github.com/wonhwipark/L1Work/blob/main/handoffs/README.md). 기존 r0002 전체 본문, r0001 전량 계승, A01~A10/H01~H05·T1~T8, v0.5.2 ZIP 및 이전 버전 원본 보존.
