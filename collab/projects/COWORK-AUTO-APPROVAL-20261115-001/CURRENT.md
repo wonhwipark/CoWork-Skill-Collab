@@ -1,5 +1,15 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-24 KST — GPT API 오류 진단 보완, GitHub 오프라인 회귀 38 PASS
+
+- **코드:** `collab/tools/gpt_disposition_actions.py` HTTP 상태(400/401/429/500), URLError 원인 타입, 기타 OSError/ValueError 타입을 민감한 본문·헤더 없이 구분. `MODEL_CALL_UNCERTAIN_NO_RETRY` 및 기존 claim/중복 방지 유지. commit `413b3b0f953d8e358914d8e4a8b38029d2c3880c`.
+- **시험:** `collab/tools/tests/test_gpt_disposition_actions.py` 모의 오류 7사례 추가, commit `502d02a1b53c5caaef3ebb8a9d60ff661b8bd98f`. [GitHub Actions Run 45293496644](https://github.com/wonhwipark/CoWork-Skill-Collab/actions/runs/45293496644) `offline-selftest` **38 PASS/0 FAIL**, `gpt-disposition` SKIPPED, `telegram-smoke` SKIPPED. 실제 API/Telegram 호출 0.
+- **주의:** 시험 로그에 HTTPError 모의 객체 정리 시 ResourceWarning(모의 'secret detail' 문자열 포함)이 관찰됨. 프로덕션 예외 출력에는 본문/헤더를 추가하지 않았으나, 시험 fixture 정리 경고는 후속 개선 대상.
+- **기존 Run 45289692844:** 호출 발생 여부 UNKNOWN, claim 보존, 재디스패치 없음. 이번 패치는 과거 실패의 실제 HTTP 원인을 소급 확정하지 못함.
+- **검증 경계:** GitHub Linux 오프라인 회귀 PASS; Windows 독립 호스트 시험 NOT_RUN; LIVE 설치/스위치 변경 NOT_RUN.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 최신 main에서 무호출 회귀를 독립 실행하고 시험 fixture ResourceWarning의 안전한 정리 여부를 확인. 기존 claim 및 스위치 유지.
+
+
 ## 2026-11-23 KST — GPT 최초 판정 실행 45289692844: 모델 호출 불확실로 중단, 재시도 없음 (스위치 OFF)
 
 - **결과:** [CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md](CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md) §18 (commit `19d5c6da2cc1`).
