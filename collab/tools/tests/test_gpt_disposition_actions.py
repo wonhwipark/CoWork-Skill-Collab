@@ -65,6 +65,11 @@ class BridgeTests(unittest.TestCase):
                     self.assertNotIn('secret', str(cm.exception))
                     self.assertNotIn('private', str(cm.exception))
                     mocked.assert_called_once()
+        # HTTPError is also a file-like object. Explicitly close mock instances
+        # so their finalizers cannot emit ResourceWarning in later tests.
+        for error, _ in cases:
+            if isinstance(error, urllib.error.HTTPError):
+                error.close()
 
     def test_default_off_no_network(self):
         with patch.dict(os.environ, {'GITHUB_REPOSITORY': 'wonhwipark/CoWork-Skill-Collab',
