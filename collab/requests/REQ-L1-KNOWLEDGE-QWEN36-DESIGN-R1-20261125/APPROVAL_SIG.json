@@ -1,0 +1,23 @@
+{
+  "key_id": "cowork-approver-1",
+  "payload": {
+    "expires_at": "2026-11-24T18:11:05.360833+00:00",
+    "issued_at": "2026-11-24T16:11:05.360833+00:00",
+    "knowledge_refs_hash": "d84c599b38b661764ac1ef97be223d823d5a916ea7a4dfcabaf4d575e82c6652",
+    "local_policy_revision": "1",
+    "nonce": "094e41cda35fff30876b7ecbb45eb1b5",
+    "package_path": "/SKILL-COLLAB/packages/qwen_knowledge_analysis_design_r0001_1125_REVIEW_INPUT.zip",
+    "package_sha256": "a99399a255073158e83f14422148b624cd683070395cc1680fe0426d56f5d8f6",
+    "package_size_bytes": 2978,
+    "ready_sha256": "c7f42790a714d5e7483057dc6bae56ae452bfcf074e5fd3f5fa2e6309c062a2d",
+    "repo_id": "1451933830",
+    "request_id": "REQ-L1-KNOWLEDGE-QWEN36-DESIGN-R1-20261125",
+    "request_revision": "1",
+    "request_sha256": "033c84bbb493bcd1e3e2c73b4104e7469649b8e940ee5c4346399d9370db7b81",
+    "run_policy_ref": "POLICY-STATIC-V1",
+    "schema": "SKILL_COLLAB_APPROVAL_PAYLOAD_V1",
+    "source_commit": "2452779b0c2e32535bdb9ceb25f9d678c969956f"
+  },
+  "schema": "SKILL_COLLAB_APPROVAL_SIG_V1",
+  "signature": "x3FjF4asRLK9tI/VjfAAWB1ec7O0tBpt0ykvKXFjHQcoyk02JmIb0ffS8rKlANnfvt/csA5pw5hvCbfoH8EADw=="
+}
