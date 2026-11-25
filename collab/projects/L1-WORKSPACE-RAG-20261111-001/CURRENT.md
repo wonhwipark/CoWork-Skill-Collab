@@ -1,5 +1,13 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-25 KST — Recovery R1 접수 보류 원인 점검 (원본 유지)
+
+- **상태:** REQUEST/PIN 및 A의 ZIP SHA·size PASS. APPROVAL_SIG/READY/REVIEW_INTENT, dispatch/review/receipt 원격 부재. HOST_ACK=UNKNOWN, SUBMITTED_AWAITING_PROTECTED_SIGNER, INDEPENDENT_REVIEW=NOT_CONFIRMED.
+- **연결:** [기존 자동 승인 Work의 정산/Windows 인계](../COWORK-AUTO-APPROVAL-20261115-001/WINDOWS_RECOVERY_R1_APPROVAL_AND_NOTIFICATION_CLOSEOUT_r0001_20261125_KST.md). v0.2.35 보호 scope/intent 및 WAIT_INPUT 알림 기능은 원문에서 확인; 실제 차단 사유는 호스트 접근 불가로 미확정. R1 원본·PIN·ZIP 불변, 신규 요청/리뷰 없음.
+- **NEXT_ONE_ACTION:** 같은 R1의 실제 Windows 감지/보호 권한·중복 확인 후 유효 기존 서명 경로로 READY·결과/영수증 회수. 재요청/재서명 우회 금지.
+
+---
+
 ## 2026-11-25 KST — L1 Channel Recovery r0003 독립 설계 리뷰 R1 접수
 
 - **상태** `SUBMITTED_AWAITING_PROTECTED_SIGNER`. [정식 요청](../../requests/REQ-L1-CHANNEL-RECOVERY-DESIGN-R1-20261125/REQUEST.md) · [입력 고정 기록](../../requests/REQ-L1-CHANNEL-RECOVERY-DESIGN-R1-20261125/SOURCE_PIN.json) · [심사 대상 r0003](https://github.com/wonhwipark/L1Work/blob/e9e9b4fb43a012dbed7e24be2c8dfcad2b616950/handoffs/L1_RECOVERY_POINT_ANALYSIS_DETAILED_DESIGN_AND_IMPLEMENTATION_HANDOFF_r0003_20261125_KST.md).
