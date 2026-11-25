@@ -1,5 +1,15 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-25 KST — Code Analyzer v0.15.6 개발 후보 전달
+
+- **현재 상태:** PUBLIC_DEV_DELIVERY=PASS_REMOTE_VERIFIED / DEPLOYMENT=BLOCKED_PENDING_REGRESSION. [ZIP](https://github.com/wonhwipark/L1Work/blob/b098060828fd654f9ad2b95b0aa8b423f08af8a8/code-analyzer_v0_15_6_1125.zip) · [업무 GPT 인계](https://github.com/wonhwipark/L1Work/blob/b098060828fd654f9ad2b95b0aa8b423f08af8a8/handoffs/CODE_ANALYZER_V0156_DEVELOPMENT_DELIVERY_r0001_20261125_KST.md).
+- **변경:** v0.15.5 원본 594,930 B·SHA-256 불변 확인. 신규 v0.15.6은 설치/릴리스 버전 정합성과 callers/callees의 단순 직접 호출 원본 검증을 보완; 미확정 표기는 UNCERTAIN, 기존 action/schema 및 구조 근거 유지. 인덱스/dispatch 신규 파서 보류.
+- **시험:** 격리 Python harness 13/13 PASS (일부 대역, 전체 패키지 아님), 삽입 helper/test 해시 일치. 원본 CRC 220/220·manifest 219/219, 신규 ZIP CRC 222/222·manifest 221/221, 파일 내용 왕복·경로 검사 PASS. 신규 ZIP 611206 B / SHA-256 `bf1f369aed47e75c38fad3061041e720d5497953b0d90bcf4dc2fbf0d97b69ef`, L1Work commit `b098060828fd654f9ad2b95b0aa8b423f08af8a8` 및 main 원격 실바이트 해시 일치, 인계 본문 readback PASS.
+- **경계:** 로컬 DNS 제한으로 GitHub Base64 직접 처리로 패키징. 전체 회귀·설치 self-check·독립 리뷰·업무 호스트 G0·실제 Qwen/제품 E2E NOT_RUN. development_not_for_deployment; 자동 업데이트/운영 설치 금지. C++ target resolution·런타임 실행·MSC 순서를 확정하지 않음.
+- **NEXT_ONE_ACTION:** 격리 환경에서 기존/신규 caller/callee, accuracy/storage, OpenCode 회귀와 설치 self-check를 실행하고 실제 결과를 판정. 기존 활성본 유지; 운영 전환은 별도 승인.
+
+---
+
 ## 2026-11-25 KST — Recovery 단일 인계 r0005 게시·원격 바이트 확인
 
 - **현재 상태** `PUBLIC_HANDOFF=PASS_REMOTE_VERIFIED`. [업무 GPT 인계 r0005](https://github.com/wonhwipark/L1Work/blob/96cd9b6e3184298caeb133464956e6279ffa1e2b/handoffs/L1_RECOVERY_POINT_ANALYSIS_DETAILED_DESIGN_AND_IMPLEMENTATION_HANDOFF_r0005_20261125_KST.md) · [인계 목록](https://github.com/wonhwipark/L1Work/blob/36642493e874a0a88d97d4a46aa4e860561db81d/handoffs/README.md) · [제안 판정·검증 결과](RECOVERY_R0005_SCALE_AND_EVIDENCE_HANDOFF_RESULT_r0001_20261125_KST.md). r0004의 R1 지적 4건과 기존 분석 절차를 계승했어요.
