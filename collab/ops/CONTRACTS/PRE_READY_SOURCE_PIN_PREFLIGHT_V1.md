@@ -1,5 +1,18 @@
 # CoWork REVIEW REQUEST/PIN/ZIP 게시 전 필수 정합성 검증 V1
 
+## 결정 r0010 — 정식 요청 제출 이후 실제 접수 확인 및 보류 회수 (2026-11-25 KST)
+
+- 자연어 “리뷰요청해줘”의 사용자 목표는 유효한 승인 경계 안에서 독립 리뷰 실행까지 연결하는 것이다. REQUEST/PIN 제출만으로 실행 준비/리뷰 완료라고 보고하지 않는다. 기존 r0009의 가격 기반 차단 제거 및 보호 서명·만료·scope·중복/UNCERTAIN 봉인은 유지.
+- 제출자는 Commit A/B readback 이후 실제 APPROVAL_SIG/READY, dispatch, review/receipt와 기존 보호 signer 접수 상태를 확인 가능한 범위에서 회수. 승인·READY 부재는 SUBMITTED_AWAITING_PROTECTED_SIGNER; 호스트 감지/권한 미확인은 HOST_ACK=UNKNOWN. 원격 기록 부재는 이전 로컬 호출 0을 입증하지 않는다.
+- 기존 watcher의 정상 scan cadence를 실제 확인해 접수 확인 구간을 설정(권장 연속 2회 정상 scan). 미감지와 보호 정책 차단, 서명/전송 불확실, Notifier 전달 실패를 구분하고 정확한 관측 코드·담당·다음 한 행동을 기록한다. 호스트 불접근 시 GPT가 차단 원인을 추정 확정하거나 무기한 대기·백그라운드 확인을 약속하지 않는다.
+- 기존 권한 내 요청이면 사용자에게 같은 리뷰 승인 반복 질문 없이 실제 보호 signer를 통해 처리한다. scope 밖은 공식 일회성 승인 또는 기존 보호 REVIEW_INTENT 경로의 실제 자격 검증이 필요. PUBLIC REQUEST/GPT 사용자 발화의 문서화만으로 서명 권한을 부여하지 않는다. 키·위임 확대·보호 정책 우회 금지.
+- 동일 RID의 보류는 기존 입력과 과거 claim/nonce/READY/결과/영수증을 먼저 정산. 불확실 실행/서명은 봉인하고 재서명·재큐잉 금지. 결과 게시 실패는 기존 결과 재게시만. 별도 신규 daemon/예약/승인 엔진을 기본 도입하지 않는다.
+- 구현 근거: v0.2.35의 auto_approval/review_intent 및 orchestrator WAIT_INPUT, notify_events는 이미 해당 경로를 제공. 실제 운영 연결과 차단 알림의 전달 여부는 별도 호스트 검증. 기존 pending_requests_audit.py에 선택적 --request-id 진단 추가. 로컬 helper 합성 SQLite 7 PASS, CLI/호스트 전체 회귀 NOT_RUN. [실제 Recovery R1 정산 및 호스트 검증](../../projects/COWORK-AUTO-APPROVAL-20261115-001/WINDOWS_RECOVERY_R1_APPROVAL_AND_NOTIFICATION_CLOSEOUT_r0001_20261125_KST.md).
+- 위 규칙 문서 게시 자체는 watcher runtime/Notifier 설정 변경·자동 접수 E2E 성공이 아니다. 구현/운영 판정은 기존 Work CURRENT의 실제 증거로 관리한다.
+
+---
+
+
 ## 현행 결정 r0009 — 금액을 리뷰 자격에 사용하지 않음 (2026-11-23 KST)
 
 - 사용자 비용 제한 제거 지시를 수용. 건당/일/월 비용, 고정USD3 일치, legacy 가격 인수/필드의 존재·형식이 신규 독립 리뷰 접수·승인 자격을 결정하지 않는다. 비용 제거 의사에 대한 같은 승인을 반복 요청하지 않는다. 실제 운영 적용 상태는 [자동 승인 CURRENT](../../projects/COWORK-AUTO-APPROVAL-20261115-001/CURRENT.md)에서 조회한다.
