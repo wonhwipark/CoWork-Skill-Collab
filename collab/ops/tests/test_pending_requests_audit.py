@@ -228,5 +228,78 @@ class PendingAuditTests(unittest.TestCase):
         self.assertEqual(self.writer.conn.execute("SELECT COUNT(*) FROM audit_log").fetchone()[0], before)
 
 
+
+class TargetDiagnosticTests(unittest.TestCase):
+    """Synthetic SQLite tests for the exact v0.2.35 audit_log/auto_seen columns."""
+
+    def setUp(self):
+        self.conn = sqlite3.connect(":memory:")
+        self.conn.executescript(
+            "CREATE TABLE audit_log(id INTEGER PRIMARY KEY, ts TEXT, event TEXT, processing_key TEXT, detail TEXT);"
+            "CREATE TABLE auto_seen(request_id TEXT, revision TEXT);")
+        self.store = type("ReadStore", (), {
+            "conn": self.conn,
+            "_table_exists": lambda _, name: bool(self.conn.execute(
+                "SELECT 1 FROM sqlite_master WHERE name=?", (name,)).fetchone()),
+        })()
+
+    def tearDown(self):
+        self.conn.close()
+
+    def log(self, event, key, detail=""):
+        self.conn.execute("INSERT INTO audit_log(ts,event,processing_key,detail) VALUES(?,?,?,?)",
+                          ("2026-11-25T02:00:00Z", event, key, detail))
+
+    def result(self):
+        return audit_tool._target_diagnostic(self.store, "REQ_A", "1")
+
+    def test_missing_is_not_admission(self):
+        r = self.result()
+        self.assertEqual(r["auto_seen"], "NO_MATCHING_ROW")
+        self.assertEqual(r["events"], [])
+        self.assertFalse(r["requeue_allowed"])
+
+    def test_scope_and_seen(self):
+        self.conn.execute("INSERT INTO auto_seen VALUES(?,?)", ("REQ_A", "1"))
+        self.log("AUTO_NOT_ELIGIBLE", "REQ_A", "SCOPE")
+        r = self.result()
+        self.assertEqual(r["auto_seen"], "RECORDED")
+        self.assertEqual(r["events"][0]["reason_code"], "SCOPE")
+        self.assertEqual(r["events"][0]["revision_binding"], "ID_ONLY")
+
+    def test_exact_prefix_and_revision(self):
+        self.log("WAIT_INPUT", "REQXA|1", "SECRET")
+        self.log("WAIT_INPUT", "REQ_A|2", "SECRET")
+        self.log("WAIT_INPUT", "REQ_A|1", json.dumps(dict(
+            request_id="REQ_A", revision="1", approval_stage="SCOPE", reason_code="SCOPE")))
+        r = self.result()
+        self.assertEqual(len(r["events"]), 1)
+        self.assertEqual(r["events"][0]["reason_code"], "SCOPE")
+
+    def test_secret_and_bad_json_binding(self):
+        self.log("AUTO_ERROR", "REQ_A", "TOKEN secret")
+        self.log("WAIT_INPUT", "REQ_A|1", json.dumps(dict(
+            request_id="OTHER", revision="1", approval_stage="SCOPE", reason_code="SCOPE")))
+        r = self.result()
+        self.assertNotIn("TOKEN", json.dumps(r))
+        self.assertTrue(all(e["reason_code"] == "NOT_VERIFIED" for e in r["events"]))
+
+    def test_scan_read_only(self):
+        self.log("SCAN_START", None)
+        self.conn.commit()
+        trace = []
+        self.conn.set_trace_callback(trace.append)
+        self.assertTrue(self.result()["last_scan_at"])
+        self.assertTrue(all(s.startswith("SELECT") for s in trace))
+
+    def test_intent_reject_code(self):
+        self.log("AUTO_NOT_ELIGIBLE", "REQ_A", "INTENT_REJECTED: EXPIRED")
+        self.assertEqual(self.result()["events"][0]["reason_code"], "INTENT_EXPIRED")
+
+    def test_invalid_id(self):
+        with self.assertRaises(ValueError):
+            audit_tool._target_diagnostic(self.store, "../escape", "1")
+
+
 if __name__ == "__main__":
     unittest.main()
