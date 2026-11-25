@@ -213,5 +213,73 @@ run_policy_ref: POLICY-STATIC-V1
         self.assertEqual(output['ready'], 'NOT_CREATED')
 
 
+
+    def observe(self, **kwargs):
+        return mod.observe_remote_status(self.local, RID, expected_origin=str(self.origin), **kwargs)
+
+    def advance_remote(self, files):
+        foreign = Path(self.temp.name) / 'status_other'
+        subprocess.check_call(['git', 'clone', '-q', str(self.origin), str(foreign)])
+        git(foreign, 'config', 'user.name', 'Regression')
+        git(foreign, 'config', 'user.email', 'regression@example.invalid')
+        for rel, body in files.items():
+            path = foreign / rel
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(body, encoding='utf-8')
+        git(foreign, 'add', '.')
+        git(foreign, 'commit', '-qm', 'synthetic status')
+        git(foreign, 'push', 'origin', 'HEAD:refs/heads/main')
+
+    def test_post_submission_is_observed_not_authorized(self):
+        out = self.submit(publish=True)['post_submission']
+        self.assertEqual(out['stage'], 'SUBMITTED_AWAITING_PROTECTED_SIGNER')
+        self.assertEqual(out['host_ack'], 'UNKNOWN')
+        self.assertFalse(out['authorization_verified'])
+        self.assertFalse(out['requeue_allowed'])
+
+    def test_status_accepts_remote_descendant_without_updating_checkout(self):
+        out = self.submit(publish=True)
+        local = git(self.local, 'rev-parse', 'HEAD')
+        tracking = git(self.local, 'rev-parse', 'refs/remotes/origin/main')
+        base = f'collab/requests/{RID}'
+        self.advance_remote({f'{base}/APPROVAL_SIG.json': 'fake', f'{base}/READY.md': 'fake'})
+        state = self.observe(submitted_commit=out['pin_commit'],
+                             frozen_paths=(f'{base}/REQUEST.md', f'{base}/SOURCE_PIN.json',
+                                           f'collab/packages/{self.pkg.name}'))
+        self.assertEqual(state['stage'], 'READY_ARTIFACTS_PRESENT_UNVERIFIED')
+        self.assertFalse(state['execution_verified'])
+        self.assertEqual(git(self.local, 'rev-parse', 'HEAD'), local)
+        self.assertEqual(git(self.local, 'rev-parse', 'refs/remotes/origin/main'), tracking)
+        self.assertFalse(git(self.local, 'status', '--porcelain'))
+
+    def test_status_rejects_frozen_input_change(self):
+        out = self.submit(publish=True)
+        path = f'collab/requests/{RID}/REQUEST.md'
+        self.advance_remote({path: 'changed'})
+        with self.assertRaisesRegex(mod.SubmissionBlocked, 'FROZEN_INPUT_CHANGED'):
+            self.observe(submitted_commit=out['pin_commit'], frozen_paths=(path,))
+
+    def test_status_partial_ready_does_not_authorize(self):
+        self.submit(publish=True)
+        self.advance_remote({f'collab/requests/{RID}/READY.md': 'fake'})
+        self.assertEqual(self.observe()['stage'], 'PARTIAL_APPROVAL_ARTIFACTS')
+
+    def test_result_and_receipt_presence_does_not_prove_execution(self):
+        self.submit(publish=True)
+        self.advance_remote({f'collab/reviews/{RID}/REVIEW_RESULT_1.md': 'fake',
+                             f'collab/receipts/{RID}/RECEIPT_1.md': 'fake'})
+        state = self.observe()
+        self.assertEqual(state['stage'], 'REVIEW_RECEIPT_PRESENT_UNVERIFIED')
+        self.assertFalse(state['execution_verified'])
+
+    def test_status_untrusted_origin_rejected(self):
+        with self.assertRaisesRegex(mod.SubmissionBlocked, 'UNTRUSTED_ORIGIN'):
+            mod.observe_remote_status(self.local, RID)
+
+    def test_status_invalid_request_id_rejected(self):
+        with self.assertRaisesRegex(mod.SubmissionBlocked, 'INVALID_REQUEST_ID'):
+            mod.observe_remote_status(self.local, '../escape', expected_origin=str(self.origin))
+
+
 if __name__ == '__main__':
     unittest.main()
