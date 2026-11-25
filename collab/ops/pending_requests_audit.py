@@ -97,7 +97,73 @@ def _row(store, scope, rid, input_scope, root, parse_front_matter):
     return out
 
 
-def audit(store, request_root: Path, scope: str, parse_front_matter):
+# A request-specific diagnostic is deliberately separate from pending classification.
+# Audit rows have no provider column; never treat these observations as admission.
+_TARGET_EVENTS = (
+    "WAIT_INPUT", "AUTO_NOT_ELIGIBLE", "AUTO_ERROR", "AUTO_SIGNING_UNCERTAIN",
+    "AUTO_DUPLICATE_BLOCKED", "READY_POSTED", "AUTO_READY_POSTED",
+    "REVIEW_DISPATCHED", "REVIEW_UNCERTAIN", "COMPLETED", "FAILED",
+)
+_SAFE_CODE = re.compile(r"[A-Z][A-Z0-9_]{0,79}\Z")
+
+
+def _safe_code(value):
+    return value if isinstance(value, str) and _SAFE_CODE.fullmatch(value) else "NOT_VERIFIED"
+
+
+def _target_diagnostic(store, rid, revision):
+    if not NAME.fullmatch(rid):
+        raise ValueError("invalid request id")
+    conn = store.conn
+    result = {"request_id": rid, "request_revision": revision,
+              "provider_attribution": "LOCAL_HISTORY_PROVIDER_UNBOUND",
+              "approval_admission": "NOT_ASSESSED", "requeue_allowed": False,
+              "auto_seen": "NOT_VERIFIED", "last_scan_at": None, "events": []}
+    if store._table_exists("auto_seen") and revision is not None:
+        seen = conn.execute("SELECT 1 FROM auto_seen WHERE request_id=? AND revision=?",
+                            (rid, revision)).fetchone()
+        result["auto_seen"] = "RECORDED" if seen else "NO_MATCHING_ROW"
+    if not store._table_exists("audit_log"):
+        return result
+    result["last_scan_at"] = conn.execute(
+        "SELECT MAX(ts) FROM audit_log WHERE event='SCAN_START'").fetchone()[0]
+    prefix = rid + "|"
+    placeholders = ",".join("?" for _ in _TARGET_EVENTS)
+    rows = conn.execute(
+        "SELECT id, ts, event, processing_key, detail FROM audit_log "
+        "WHERE (processing_key=? OR substr(processing_key,1,?)=?) "
+        f"AND event IN ({placeholders}) ORDER BY id DESC LIMIT 100",
+        (rid, len(prefix), prefix, *_TARGET_EVENTS))
+    for event_id, ts, event, key, detail in rows:
+        parts = key.split("|")
+        bound_revision = parts[1] if len(parts) > 1 else None
+        if revision is not None and bound_revision is not None and bound_revision != revision:
+            continue
+        stage = code = "NOT_VERIFIED"
+        if event == "WAIT_INPUT":
+            try:
+                data = json.loads(detail or "")
+            except (ValueError, TypeError):
+                data = None
+            if (isinstance(data, dict) and data.get("request_id") == rid
+                    and bound_revision is not None and data.get("revision") == bound_revision):
+                stage = _safe_code(data.get("approval_stage"))
+                code = _safe_code(data.get("reason_code"))
+        elif event == "AUTO_NOT_ELIGIBLE":
+            # Only the existing stable codes; never output free-form exception text.
+            if detail in ("SCOPE", "PROJECT_NOT_IN_SCOPE", "DELEGATION_EXPIRED",
+                          "DELEGATION_DISABLED", "RETROACTIVE_OR_FUTURE_REQUEST",
+                          "INPUT_OR_TRUST", "DUPLICATE_OR_UNCERTAIN"):
+                code = detail
+            elif isinstance(detail, str) and detail.startswith("INTENT_REJECTED: "):
+                code = "INTENT_" + _safe_code(detail.removeprefix("INTENT_REJECTED: "))
+        result["events"].append({"id": event_id, "ts": ts, "event": event,
+                                 "revision_binding": "KEYED" if bound_revision is not None else "ID_ONLY",
+                                 "stage": stage, "reason_code": code})
+    return result
+
+
+def audit(store, request_root: Path, scope: str, parse_front_matter, request_id=None):
     """하나의 SQLite 읽기 스냅샷. 어떠한 분류도 실행/서명 승인은 아님."""
     if not store.read_only or store.conn.in_transaction:
         raise ValueError("a fresh read-only StateStore is required")
@@ -117,7 +183,7 @@ def audit(store, request_root: Path, scope: str, parse_front_matter):
             values["tracked_total"] = len(selected)
             values["unresolved_total"] = len(selected) - values["completed"]
             counts[provider] = values
-        return {
+        result = {
             "mode": "READ_ONLY", "model_execution": "NOT_RUN", "automatic_requeue": False,
             "request_source": "LOCAL_BYTES_REMOTE_FRESHNESS_NOT_VERIFIED",
             "counts": counts, "requests": rows,
@@ -125,6 +191,15 @@ def audit(store, request_root: Path, scope: str, parse_front_matter):
                        "WAITING은 실행 가능 판정이 아님", "실행 이벤트 부재만으로 과거 유료 호출 0을 증명하지 않음",
                        "UNCERTAIN은 보존; 별도 호스트 정산·유효 승인·공식 signer 검증 필요"],
         }
+        if request_id is not None:
+            if not NAME.fullmatch(request_id):
+                raise ValueError("invalid request id")
+            row = _row(store, scope, request_id, scope, root, parse_front_matter)
+            ident = row["identity"] or {}
+            result["target"] = {"pending_listed": request_id in manifest["pending"].get(scope, []),
+                                "local_request": row,
+                                "diagnostic": _target_diagnostic(store, request_id, ident.get("request_revision"))}
+        return result
     finally:
         store.conn.execute("ROLLBACK")
 
@@ -135,6 +210,7 @@ def main(argv=None):
     parser.add_argument("--db", type=Path, required=True)
     parser.add_argument("--requests-root", type=Path, required=True)
     parser.add_argument("--scope", choices=("github", "dropbox"), required=True)
+    parser.add_argument("--request-id", help="Read-only targeted audit, including requests not in pending")
     args = parser.parse_args(argv)
     store = None
     try:
@@ -149,7 +225,7 @@ def main(argv=None):
         if not Path(state.__file__).resolve().is_relative_to(root):
             raise ValueError("imported StateStore is outside watcher root")
         store = state.StateStore(db, read_only=True)
-        result = audit(store, args.requests_root, args.scope, validator.parse_front_matter)
+        result = audit(store, args.requests_root, args.scope, validator.parse_front_matter, args.request_id)
         result["state_store_sha256"] = hashlib.sha256(Path(state.__file__).read_bytes()).hexdigest()
         print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
         return 0
