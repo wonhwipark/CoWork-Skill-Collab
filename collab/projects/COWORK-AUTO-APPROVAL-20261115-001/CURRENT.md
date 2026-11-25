@@ -1,5 +1,15 @@
 # COWORK-AUTO-APPROVAL-20261115-001 — CURRENT
 
+## 2026-11-25 KST — Recovery R1 독립 리뷰 접수 보류: GPT 원인 분석·진단 보완, Windows 확인 대기
+
+- **현재 상태:** R1=SUBMITTED_AWAITING_PROTECTED_SIGNER, HOST_ACK=UNKNOWN, HOST_DIAG=BLOCKED_HOST_ACCESS, INDEPENDENT_REVIEW=NOT_CONFIRMED. [정산/실행 인계](WINDOWS_RECOVERY_R1_APPROVAL_AND_NOTIFICATION_CLOSEOUT_r0001_20261125_KST.md). 원격 REQUEST/PIN 존재, APPROVAL_SIG/READY/REVIEW_INTENT/dispatch/review/receipt 미존재. 원격 부재만으로 호스트 실행 0 확정 금지.
+- **확인:** v0.2.35 실제 공개 후보 원문 auto_approval/review_intent 및 WAIT_INPUT Notifier 지원 확인. scope 밖은 보호된 요청별 intent 필요; 현재 실제 scope/감지/알림 전달은 미확인. 비용 게이트 제거와 별개. 기존 R1 입력 A/ZIP SHA·크기 검증 PASS.
+- **GPT 변경:** 기존 pending_requests_audit.py 선택적 --request-id(미감지 대상 포함, auto_seen/scan/정형 감사 코드/기존 job·claim) commit b1086c510b26, 테스트 12c6eca1e37c, 원격 본문/실제 SHA readback PASS. 격리 helper 합성 SQLite 7 PASS, helper SHA 동일. CLI 통합/전체 회귀/실제 Windows DB/독립 리뷰 NOT_RUN. [계약 r0010](../../ops/CONTRACTS/PRE_READY_SOURCE_PIN_PREFLIGHT_V1.md) 접수 후 ACK·차단/완료 구분.
+- **경계:** 이번 GPT 작업 모델 호출 0, R1 입력/서명/READY/운영 설정 변경 0. watcher runtime/Notifier 수정 여부는 실제 gap 입증 후 결정.
+- **NEXT_ONE_ACTION:** Windows Claude Code가 인계 §2–4의 실제 로그·위임·Notifier를 읽기 전용 확인하고 유효 권한 및 중복/UNCERTAIN 검증 후 같은 R1의 정상 승인·READY·리뷰 1회 및 결과/영수증 회수. 운영 수정은 실제 gap·유효 승인·회귀/독립 검증 후만.
+
+---
+
 ## 2026-11-24 KST — v0.2.35 운영 전환 완료 (감시기 Running, 사후검증 PASS)
 
 - **결과:** [CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md](CLAUDE_V032_CORRECTIONS_ONE_SHOT_RESULT_FOR_GPT_20261122.md) §20 (commit `75914eaf0215`).
