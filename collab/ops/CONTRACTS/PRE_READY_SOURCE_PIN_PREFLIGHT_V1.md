@@ -1,5 +1,17 @@
 # CoWork REVIEW REQUEST/PIN/ZIP 게시 전 필수 정합성 검증 V1
 
+## 결정 r0011 — 협업 Claude 자연어 실행 명령의 공통 진입 및 제출 후 상태 회수 (2026-11-25 KST)
+
+- 사용자 실행 지시 “협업 클로드리뷰 요청해줘” 및 동등한 협업 Claude/정식 독립 리뷰 명령은 AGENTS.md 현행 진입에 따라 같은 Work·확정 입력으로 진행. 예시·질문·인용은 실행하지 않는다.
+- 표준 제출기는 Commit B 게시 이후 원격 main snapshot을 읽고 B의 descendant 여부 및 REQUEST/PIN/ZIP의 Git tree 일치 여부를 검증하며 `post_submission`에 승인/READY/dispatch/review/receipt 존재 상태를 돌려준다. watcher가 즉시 승인 게시하여 HEAD가 전진해도 고정 입력 불변일 때만 정상 제출로 판정. 불일치/조회 실패는 부분 제출 가능성 보존, 자동 재시도 금지.
+- 기존 RID는 `python collab/ops/submit_review_request.py --repo-root . --status-request-id <RID>` 읽기 전용 원격 상태 회수(로컬 Git 객체 fetch만, 브랜치/추적 ref/작업 트리 변경 없음). GitHub API 사용 세션은 같은 snapshot의 REQUEST/PIN·승인·READY·dispatch·review·receipt를 직접 조회한다. artifact 존재만으로 서명 유효/실행 완료를 판정하지 않는다. HOST_ACK=UNKNOWN일 수 있음.
+- `--approval-route auto`는 실행 승인 수단이 아니다. 기존 보호 signer의 자동 위임 또는 실제 지원되는 보호된 요청별 REVIEW_INTENT 경로를 재사용해야 한다. 신규 스킬이 scope 밖이고 유효한 보호 승인 경로가 없으면 BLOCKED를 기록한다. GPT와 공개 GitHub 게시만으로 서명·위임·키 생성/확장을 대신하지 않는다.
+- 정식 제출 완료(승인 대기), 보호 서명·READY 실제 검증 완료, 독립 리뷰 실제 완료를 분리한다. 신규 GPT 창의 자동 맥락 로딩·실제 호스트 승인 경로 연결·실사용 E2E는 문서/제출기 개선만으로 PASS하지 않는다.
+- 검증: 원격 observe_remote_status helper SHA-256 1eba530c77422804fd63df35aa23896b571f6c4753fadecae0943c5a471e2014와 로컬 시험 입력 일치, 격리 bare Git helper 7 PASS; 기존 전체 통합/Windows/새 대화창 실제 리뷰 E2E는 NOT_RUN. 상세 진행은 자동 승인 Work CURRENT.
+
+---
+
+
 ## 결정 r0010 — 정식 요청 제출 이후 실제 접수 확인 및 보류 회수 (2026-11-25 KST)
 
 - 자연어 “리뷰요청해줘”의 사용자 목표는 유효한 승인 경계 안에서 독립 리뷰 실행까지 연결하는 것이다. REQUEST/PIN 제출만으로 실행 준비/리뷰 완료라고 보고하지 않는다. 기존 r0009의 가격 기반 차단 제거 및 보호 서명·만료·scope·중복/UNCERTAIN 봉인은 유지.
