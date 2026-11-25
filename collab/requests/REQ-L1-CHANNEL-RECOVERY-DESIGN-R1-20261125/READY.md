@@ -1,0 +1,12 @@
+---
+schema: SKILL_COLLAB_READY_V1
+state: READY
+request_id: REQ-L1-CHANNEL-RECOVERY-DESIGN-R1-20261125
+request_revision: 1
+request_path: /SKILL-COLLAB/requests/REQ-L1-CHANNEL-RECOVERY-DESIGN-R1-20261125/REQUEST.md
+request_sha256: 97d3ebf721fb74ad144aa27784d2b9fe2bede76370f69474db7b7d7a448d76da
+package_sha256: 6b0803091be6ae0272ca4b5d909fa0869d65297611f158dea919dc6a4d4a44a7
+baseline_id: COWORK-LIVE-A-20261114
+---
+
+# ready
