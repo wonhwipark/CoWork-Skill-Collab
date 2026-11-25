@@ -80,6 +80,56 @@ def verify_remote_head(root: Path, expected: str) -> None:
         raise SubmissionBlocked('REMOTE_HEAD_READBACK_MISMATCH')
 
 
+def observe_remote_status(root: Path, rid: str, *, expected_origin: str | None = None,
+                          submitted_commit: str | None = None,
+                          frozen_paths: tuple[str, ...] = ()) -> dict:
+    """Read one remote main snapshot; never authorize, sign, dispatch or requeue.
+
+    Fetch objects only (no branch, tracking ref or worktree update). Artifact
+    presence is not signature verification or proof of a local model call.
+    """
+    if not RID_RE.fullmatch(rid):
+        raise SubmissionBlocked('INVALID_REQUEST_ID')
+    remote = git(root, 'remote', 'get-url', 'origin')
+    if remote not in ({expected_origin} if expected_origin else VALID_ORIGINS):
+        raise SubmissionBlocked('UNTRUSTED_ORIGIN')
+    ref = git(root, 'ls-remote', 'origin', f'refs/heads/{BRANCH}').split()
+    if len(ref) != 2 or ref[1] != f'refs/heads/{BRANCH}' or not re.fullmatch(r'[0-9a-f]{40}', ref[0]):
+        raise SubmissionBlocked('REMOTE_STATUS_HEAD_UNVERIFIED')
+    head = ref[0]
+    git(root, 'fetch', '--no-tags', '--no-write-fetch-head', '--refmap=', 'origin', head)
+    if submitted_commit is not None:
+        git(root, 'merge-base', '--is-ancestor', submitted_commit, head)
+        for path in frozen_paths:
+            if git(root, 'ls-tree', submitted_commit, '--', path) != git(root, 'ls-tree', head, '--', path):
+                raise SubmissionBlocked('FROZEN_INPUT_CHANGED_AFTER_PUBLICATION')
+    base = f'collab/requests/{rid}'
+    names = ('REQUEST.md', 'SOURCE_PIN.json', 'REVIEW_INTENT.json', 'APPROVAL_SIG.json', 'READY.md')
+    dirs = (f'collab/dispatch/{rid}', f'collab/reviews/{rid}', f'collab/receipts/{rid}')
+    paths = git(root, 'ls-tree', '-r', '--name-only', head, '--', base, *dirs).splitlines()
+    present = {name: f'{base}/{name}' in paths for name in names}
+    dispatch = any(p.startswith(dirs[0] + '/') for p in paths)
+    review = any(p.startswith(dirs[1] + '/') for p in paths)
+    receipt = any(p.startswith(dirs[2] + '/') for p in paths)
+    if not (present['REQUEST.md'] and present['SOURCE_PIN.json']):
+        stage = 'REQUEST_OR_PIN_MISSING'
+    elif review and receipt:
+        stage = 'REVIEW_RECEIPT_PRESENT_UNVERIFIED'
+    elif dispatch or review or receipt:
+        stage = 'EXECUTION_ARTIFACT_PRESENT_UNVERIFIED'
+    elif present['APPROVAL_SIG.json'] and present['READY.md']:
+        stage = 'READY_ARTIFACTS_PRESENT_UNVERIFIED'
+    elif present['APPROVAL_SIG.json'] or present['READY.md']:
+        stage = 'PARTIAL_APPROVAL_ARTIFACTS'
+    else:
+        stage = 'SUBMITTED_AWAITING_PROTECTED_SIGNER'
+    return {'request_id': rid, 'observed_commit': head, 'stage': stage,
+            'request_artifacts': present, 'dispatch_present': dispatch,
+            'review_present': review, 'receipt_present': receipt,
+            'host_ack': 'UNKNOWN', 'authorization_verified': False,
+            'execution_verified': False, 'requeue_allowed': False}
+
+
 def submit(*, root: Path, request_draft: Path, package: Path,
            live_config: Path | None = None, publish: bool = False, expected_origin: str | None = None,
            approval_route: str = 'manual',
@@ -149,8 +199,13 @@ def submit(*, root: Path, request_draft: Path, package: Path,
     if checked['status'] != 'PASS_PINNED_INPUTS_ONLY' or checked['pinned_commit'] != source_commit:
         raise SubmissionBlocked('PINNED_TREE_PREFLIGHT_FAILED')
     git(root, 'push', 'origin', f'HEAD:refs/heads/{BRANCH}')
-    verify_remote_head(root, pin_commit)
+    # The watcher may publish approval immediately after B. Accept a descendant
+    # only if all frozen inputs still match. Never label presence as authorization.
+    observation = observe_remote_status(root, rid, expected_origin=expected_origin,
+                                        submitted_commit=pin_commit,
+                                        frozen_paths=(request_rel, pin_rel, package_rel))
     return {'status': 'SUBMITTED_AWAITING_PROTECTED_SIGNER', 'request_id': rid,
+            'post_submission': observation,
             **route, 'source_commit': source_commit, 'pin_commit': pin_commit,
             'package_sha256': result['package_sha256'],
             'host_policy_advisory': policy_advisory,
@@ -161,8 +216,9 @@ def submit(*, root: Path, request_draft: Path, package: Path,
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--repo-root', required=True, type=Path)
-    ap.add_argument('--request-draft', required=True, type=Path)
-    ap.add_argument('--package', required=True, type=Path)
+    ap.add_argument('--request-draft', type=Path)
+    ap.add_argument('--package', type=Path)
+    ap.add_argument('--status-request-id', help='read one remote snapshot for an existing RID; no submission')
     ap.add_argument('--live-config', type=Path,
                     help='deprecated and ignored; no local price check is used for publication')
     ap.add_argument('--approval-route', choices=('manual', 'auto'), default='manual',
@@ -173,6 +229,14 @@ def main() -> int:
                     help='explicitly push Commit A then Commit B to CoWork main')
     args = ap.parse_args()
     try:
+        if args.status_request_id is not None:
+            if args.publish or args.request_draft is not None or args.package is not None:
+                raise SubmissionBlocked('STATUS_MODE_CANNOT_SUBMIT')
+            out = observe_remote_status(args.repo_root, args.status_request_id)
+            print(json.dumps(out, ensure_ascii=False, indent=2))
+            return 0
+        if args.request_draft is None or args.package is None:
+            raise SubmissionBlocked('SUBMISSION_INPUT_REQUIRED')
         out = submit(root=args.repo_root, request_draft=args.request_draft,
                      package=args.package, live_config=args.live_config, publish=args.publish,
                      approval_route=args.approval_route,
