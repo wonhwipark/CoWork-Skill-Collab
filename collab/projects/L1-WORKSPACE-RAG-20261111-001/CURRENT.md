@@ -1,5 +1,14 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-25 KST — Recovery 단일 인계 r0005 게시·원격 바이트 확인
+
+- **현재 상태** `PUBLIC_HANDOFF=PASS_REMOTE_VERIFIED`. [업무 GPT 인계 r0005](https://github.com/wonhwipark/L1Work/blob/96cd9b6e3184298caeb133464956e6279ffa1e2b/handoffs/L1_RECOVERY_POINT_ANALYSIS_DETAILED_DESIGN_AND_IMPLEMENTATION_HANDOFF_r0005_20261125_KST.md) · [인계 목록](https://github.com/wonhwipark/L1Work/blob/36642493e874a0a88d97d4a46aa4e860561db81d/handoffs/README.md) · [제안 판정·검증 결과](RECOVERY_R0005_SCALE_AND_EVIDENCE_HANDOFF_RESULT_r0001_20261125_KST.md). r0004의 R1 지적 4건과 기존 분석 절차를 계승했어요.
+- **반영** 기존 비-timeout Seed 1건, 조회 상한·원본 근거 재검증, 등록과 실행의 구분, 누락·오탐·미확인 대조, 같은 Work와 Viewer 실제 열람. 인덱스는 보류, 등록표 규칙·시나리오 병렬은 실측 후 판정해요.
+- **근거·경계** r0005 37,084 B / SHA-256 `7564af19bcdba3aeaa25c951826b80e7cf179284aea2f37c99da4df931693ae8`. 공개 v0.15.5 개발본의 선별 격리 시험 61 PASS/1 FAIL로 설치 보류. 신규 독립 리뷰·업무 호스트 G0·Qwen/MSC/Viewer E2E·제품 효과 시험은 `NOT_RUN`이에요.
+- **NEXT_ONE_ACTION** 업무 GPT가 r0005 1절로 기존 Work·활성본을 확인하고 대표 Seed 1건의 6절 수락 시험 및 결과 재조회를 진행해요.
+
+---
+
 ## 2026-11-25 KST — Recovery R1 독립 리뷰 완료·GPT 판정 및 r0004 업무 인계 게시 검증
 
 - **현재 상태:** INDEPENDENT_REVIEW=COMPLETED / GPT_MANUAL_DISPOSITION=ACCEPT_WITH_CHANGE / PUBLIC_HANDOFF=PASS_REMOTE_VERIFIED. [리뷰](../../reviews/REQ-L1-CHANNEL-RECOVERY-DESIGN-R1-20261125/REVIEW_RESULT_1.md) · [영수증](../../receipts/REQ-L1-CHANNEL-RECOVERY-DESIGN-R1-20261125/RECEIPT_1.md) · [GPT 판정·처리 근거](GPT_RECOVERY_R1_REVIEW_DISPOSITION_AND_HANDOFF_RESULT_r0001_20261125_KST.md). 아래 접수 보류 기록은 당시 이력이고 R1의 결과·영수증으로 해소됐어요.
