@@ -1,0 +1,23 @@
+{
+  "key_id": "cowork-approver-1",
+  "payload": {
+    "expires_at": "2026-11-25T05:40:46.110750+00:00",
+    "issued_at": "2026-11-25T03:40:46.110750+00:00",
+    "knowledge_refs_hash": "d84c599b38b661764ac1ef97be223d823d5a916ea7a4dfcabaf4d575e82c6652",
+    "local_policy_revision": "1",
+    "nonce": "bc751d4eb97ba9ee452bfdffb8cf20a5",
+    "package_path": "/SKILL-COLLAB/packages/l1_channel_recovery_design_r0003_1125_REVIEW_INPUT.zip",
+    "package_sha256": "6b0803091be6ae0272ca4b5d909fa0869d65297611f158dea919dc6a4d4a44a7",
+    "package_size_bytes": 16878,
+    "ready_sha256": "764c6d18a3b56f96b470e6a29844d301d769b19dcffb6c0759ed2c893fd954a5",
+    "repo_id": "1451933830",
+    "request_id": "REQ-L1-CHANNEL-RECOVERY-DESIGN-R1-20261125",
+    "request_revision": "1",
+    "request_sha256": "97d3ebf721fb74ad144aa27784d2b9fe2bede76370f69474db7b7d7a448d76da",
+    "run_policy_ref": "POLICY-STATIC-V1",
+    "schema": "SKILL_COLLAB_APPROVAL_PAYLOAD_V1",
+    "source_commit": "53ced35a2b095422560e34d5828d2efca6a6d01b"
+  },
+  "schema": "SKILL_COLLAB_APPROVAL_SIG_V1",
+  "signature": "4wtwPlskrHcFI4xFH7e+tlDXJkBefZQ0RC7j4uBfVcPHsWXhL3s/4fuPLXLCE0N0A22Ske3S8C23bHC8RgS2Bw=="
+}
