@@ -9,6 +9,15 @@
 5. 작업 결과·피드백 원문은 해당 결과/결정/notes에 보존하고, 현재 상태·근거 링크·미해결·승인 범위·다음 한 행동은 해당 CURRENT에 갱신한다. 보완은 같은 목적의 Work와 작업 흐름을 이어간다. 기존 TRACKER는 필요한 현행 필드만 맞추고 별도 상태 정본으로 삼지 않는다.
 6. 공통 브리프는 역할·정본 위치·요청별 경로가 바뀔 때, 카탈로그는 스킬 책임·입출력·연결 계약이 바뀔 때만 갱신한다. 일반 진행·버전·리뷰 상태를 브리프에 복사하지 않는다. 작업한 GPT/Agent가 CoWork main 게시와 원격 재조회까지 확인하며 사용자 최신 지시와 최신 실제 근거를 우선한다.
 
+## 자연어 협업 Claude 독립 리뷰 — 현행 실행 진입 (2026-11-25)
+
+- 사용자의 실행 지시 **“협업 클로드리뷰 요청해줘”**, “협업 Claude 리뷰 요청해줘”, “클로드 협업 리뷰 요청해줘”, “정식 독립리뷰 요청해줘”, “리뷰요청해줘”는 동일한 정식 Windows Claude Code 독립 리뷰 워크플로를 의미한다. 예시·인용·절차 질문은 실행이 아니다. 일반 “검토해줘”는 독립 리뷰로 확대하지 않는다.
+- 어느 CoWork 대화창이든 최신 CONTEXT_BRIEF 및 해당 CURRENT에서 기존 Work·마지막 확정 입력·중복/불확실 이력을 확인하고 [현행 계약](collab/ops/CONTRACTS/PRE_READY_SOURCE_PIN_PREFLIGHT_V1.md)을 적용. Work/원본/입력이 이미 제공됐으면 반복 질문하지 않는다.
+- 표준 제출기 또는 동등한 GitHub API 절차로 REQUEST+ZIP/PIN을 게시한 뒤 반드시 같은 RID의 보호 승인·READY·dispatch·결과/영수증 상태를 다시 조회한다. 표준 제출기의 post_submission/--status-request-id 또는 동일 고정 원격 스냅샷 읽기를 재사용. 기존 RID의 보류는 신규 제출하지 않고 회수한다.
+- 기존 유효 권한이면 실제 보호 signer 경로를 연결한다. 스킬 범위 밖이면 실제로 지원되는 보호된 일회성 승인/서명 REVIEW_INTENT 경로를 사용하며, 자격이 없거나 호스트 접근 불가이면 정확한 차단을 보고한다. GitHub 공개 REQUEST나 자연어 기록 자체는 실행 권한이 아니며 --approval-route auto는 표시일 뿐이다. 기존 위임·키·scope 임의 변경 금지.
+- 완료 표현: REQUEST/PIN 원격 검증은 **정식 제출 완료(승인 대기)**; 보호 서명·READY 정합성 실제 검증은 **실행 준비 완료**; 실제 dispatch 증거는 **리뷰 실행 확인**; 결과/영수증 정합성 검증은 **독립 리뷰 완료**. 파일 존재만으로 검증 PASS 금지. 원격 snapshot만 읽을 수 있으면 HOST_ACK=UNKNOWN이며 미실행/실패를 단정하지 않는다.
+- 자동 승인이 가능한 기존 보호 경로는 재사용하되, 해당 경로가 실제 운영에서 미연결이면 같은 Work에 차단·담당·다음 한 동작을 기록한다. 새 리뷰 요청이나 별도 수동 프롬프트를 기본 동작으로 만들지 않는다. 본 지침은 실제 자동 로딩·호스트 접속·권한 변경을 보장하지 않는다. 아래 구형 게시/비용/완료 표현보다 이 현행 진입과 최신 계약이 우선한다.
+
 ## 동일 스킬·Viewer 병렬 개발 통합 게이트 — 새 창의 필수 진입 (2026-11-21)
 
 - **공통 정본:** [병렬 변경 통합 게이트 V1](collab/ops/CONTRACTS/PARALLEL_CHANGE_INTEGRATION_GATE_V1.md), 코드 `collab/ops/integration_gate.py`, 기존 Work CURRENT. 새 창에서 UI·Write·환경설정 등 **같은 Work/단일 ZIP을 수정**하면 시작 전에 기존 `integration/streams/<stream_id>.json` 등록 여부와 각 작업의 기준 revision·필수 파일·원본 ZIP SHA를 확인하고, 같은 Work를 재개한다. 다른 창의 진행을 대화 메모리만으로 추측하지 않는다.
@@ -39,7 +48,7 @@
 - **GPT 책임 ② — 대상 확정:** 최근 사용자 수정·확정 사항 → 해당 Work CURRENT/열린 결과·리뷰 이력 → 실제 GitHub 원본 revision·경로·SHA/크기·시험 증거를 순서대로 확인한다. 오래된 인계서나 이전 ZIP보다 마지막 확정 산출물 우선. 기존 REQUEST/READY/결과·영수증 및 불확실 이력부터 조회해 **동일 건 중복 접수·재모델 호출을 차단**한다. 정확한 Work·검토 목적/포함·제외 범위·소스 고정이 가능하면 사용자에게 같은 입력을 재요구하지 않는다.
 - **GPT 책임 ③ — 실제 정식 제출:** 필요한 비민감 리뷰 입력이 이미 있으면 재생성하지 않고 검증·재사용한다. ZIP 실제 바이트·SHA-256·크기·CRC/경로·REQUEST 필수 필드·원본 고정을 사전검사한 뒤, 허용된 제출 수단으로 **Commit A(REQUEST.md와 정확한 ZIP 같은 커밋) → 원격 검증 → Commit B(SOURCE_PIN.json이 A를 가리킴) → 원격 readback**까지 진행한다. 가능한 API/도구와 승인 범위를 실제 조회·활용하며, **인계 MD·ZIP Base64 후보·REQUEST 초안·CURRENT/TRACKER 갱신만으로 종료하지 않는다**. 이 자료를 만든 후 즉시 실제 제출 가능 여부까지 판정한다.
 - **실제 제출 불가능할 때:** GPT가 GitHub 정식 Commit A/B 원격 게시·원본 해시/중복 검증 자체를 수행할 도구·권한이 없으면, **정식 요청 미접수**로 정확히 판정하고 누락 게이트 한 가지를 보고한다. 별도 Windows 작업을 실행했다고 주장하거나 대체 제출/무단 서명·READY·비용 우회를 하지 않는다. 반복적인 인계서·새 후보·새 Work 생성으로 문제를 숨기지 않는다. 사용자가 요청한 ②③을 수행 가능한 범위에서 모두 끝낸 다음에만 이 차단을 보고한다.
-- **최종 보고 필수:** 확인한 Work ID/대상·원본 SHA, 정식 `collab/requests/<RID>/REQUEST.md`와 `SOURCE_PIN.json` **원격 실재·commit A/B 확인 여부**, 상태 `SUBMITTED_AWAITING_PROTECTED_SIGNER` 또는 `NOT_POSTED/BLOCKED`, 이후 signer/READY/Claude 리뷰는 별도 판정. **“리뷰 요청 완료”는 REQUEST·ZIP·SOURCE_PIN 원격 검증이 실제 PASS일 때만 사용**한다. 상세 판단 기준은 [REQUEST/PIN 계약의 GPT ②③ 게이트](collab/ops/CONTRACTS/PRE_READY_SOURCE_PIN_PREFLIGHT_V1.md)를 따른다.
+- **최종 보고 필수:** 확인한 Work ID/대상·원본 SHA, 정식 `collab/requests/<RID>/REQUEST.md`와 `SOURCE_PIN.json` **원격 실재·commit A/B 확인 여부**, 상태 `SUBMITTED_AWAITING_PROTECTED_SIGNER` 또는 `NOT_POSTED/BLOCKED`, 이후 signer/READY/Claude 리뷰는 별도 판정. **“정식 제출 완료(승인 대기)”는 REQUEST·ZIP·SOURCE_PIN 원격 검증이 실제 PASS일 때만 사용**한다. 실행 준비/리뷰 완료는 위 현행 기준을 따른다. 상세 판단 기준은 [REQUEST/PIN 계약의 GPT ②③ 게이트](collab/ops/CONTRACTS/PRE_READY_SOURCE_PIN_PREFLIGHT_V1.md)를 따른다.
 
 ## 자연어 정식 리뷰 요청 — 표준 생성 경로 (2026-11-21)
 
