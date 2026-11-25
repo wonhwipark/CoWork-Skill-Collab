@@ -1,6 +1,6 @@
 # CoWork 공통 맥락 브리프
 
-- 개정: r0018 / 2026-11-24 KST 공개 범위·새 창 Work 라우팅/긴 CURRENT 보완. 운영 LIVE 상태는 각 CURRENT/영수증에서 재확인.
+- 개정: r0019 / 2026-11-25 KST. 자연어 협업 Claude 독립 리뷰 진입과 접수 이후 상태 회수 경로 정리. 운영 상태는 각 CURRENT/영수증에서 재확인.
 - 저장소: **GitHub PUBLIC** `wonhwipark/CoWork-Skill-Collab`, branch `main` (2026-11-21 실제 visibility 조회). 기존 PRIVATE 경로·문구는 당시 이력. 회사 제한 자료·키/토큰의 신규 게시 허용이 아님.
 - 역할: 협업·L1 지식·관리 스킬의 **고정 지도**. 진행 상태·최신 버전·리뷰 결과·승인 대기·source blob을 복사하지 않는다.
 - 읽기: **이 지도 → 요청 목적에 맞는 CURRENT → 필요한 근거·계약·스킬 원문**. 현재 상태는 실행할 때 해당 정본을 조회한다.
@@ -16,13 +16,13 @@
 - **L1Work 스킬 현황 바로가기:** [공개 ZIP·관리 스킬 분석 인덱스](projects/COWORK-SKILL-DISCOVERY-20261112-001/L1WORK_PUBLIC_SKILL_RELEASE_ANALYSIS_r0001_20261117_KST.md) · [스킬 관리 CURRENT](projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md). 공개본/개발 후보/검증 경계를 구분해 확인하고, 최신 버전·판정은 실제 PUBLIC HEAD와 관련 Work CURRENT에서 재조회한다.
 - 갱신 기준: [스킬 발견·재사용 절차](ops/CONTRACTS/SKILL_DISCOVERY_AND_REUSE_V1.md). 결과·피드백은 해당 Work에서 관리하고 지도는 구조·역할·경로가 바뀔 때만 수정한다.
 
-## 자연어 “정식 리뷰 요청” — 새 창 기본 진입
+## 자연어 협업 Claude 독립 리뷰 — 새 창 기본 진입
 
-**현행 2026-11-22 r0007:** 리뷰는 **독립 리뷰 한 유형**. 신규 GPT 요청 출판에서 가격 USD3/등급별 금액·스킬별 allowlist 사전 차단을 제거한 코드가 GitHub main에 게시됨. **Windows LIVE v0.2.29 비용·스킬별 서명 허가 게이트는 아직 변경되지 않음**. 소스 변경과 운영 실행은 구분; 상세는 [기존 자동 승인 Work 결과](projects/COWORK-AUTO-APPROVAL-20261115-001/GPT_INDEPENDENT_REVIEW_COST_GATE_SIMPLIFICATION_RESULT_r0001_20261122_KST.md). 아래 예전 r0006 서술 중 가격 기반 출판 게이트는 이 최신 결정으로 대체.
+**“협업 클로드리뷰 요청해줘”**, “협업 Claude 리뷰 요청해줘”, “정식 독립리뷰 요청해줘”, “리뷰요청해줘”는 동일한 실행 명령이다. 예시·인용·절차 질문은 실행이 아니다. 해당 대화의 마지막 확정 Work·설계/구현 입력을 우선하고, 기존 REQUEST/READY/결과·영수증/불확실 이력을 조회해 중복 실행을 방지한다. 이미 제공된 정보는 다시 묻지 않는다.
 
-**GPT 필수 수행:** 사용자가 기존 설계 대화창에서 “리뷰요청해줘” 또는 **“리뷰체계 최신버전 확인후 다시 리뷰요청해줘”**라고 지시하면, 현재 창의 마지막 확정 Work·설계/구현물·원본 revision·기존 요청/영수증을 실제 확인해 리뷰 대상을 확정(②)하고, 단순 후보/REQUEST 초안·인계 문서에서 끝내지 않고 **가능한 기존 정식 제출 수단을 사용해 REQUEST+ZIP 같은 Commit A → SOURCE_PIN Commit B 원격 확인(③)**까지 추진한다. 완료 증거가 없으면 `FORMAL_REQUEST=NOT_POSTED/BLOCKED`로 정확히 보고하며 “리뷰 요청 완료”라고 말하지 않는다. LIVE 정책 검사는 REQUEST 출판의 필수 조건이 아니며 Windows 보호 signer의 승인·READY·비용·중복 검증은 우회하지 않는다. [GPT ②③ 필수 완료 게이트](ops/CONTRACTS/PRE_READY_SOURCE_PIN_PREFLIGHT_V1.md)와 [실행 진입](../AGENTS.md)을 우선 적용. Windows watcher 자동 hook 설치가 이 문구로 달성되는 것은 아니다.
+**필수 흐름:** [AGENTS.md 현행 진입](../AGENTS.md) → 해당 CURRENT → [REQUEST/PIN 및 실제 접수 계약](ops/CONTRACTS/PRE_READY_SOURCE_PIN_PREFLIGHT_V1.md) → 표준 제출기 또는 동등한 검증 API로 REQUEST+ZIP Commit A / PIN Commit B → 같은 RID의 보호 서명·READY·dispatch·결과/영수증 재조회 및 유효한 기존 승인 경로 연결. 제출기 `collab/ops/submit_review_request.py`의 `post_submission`, 기존 RID의 `--status-request-id`를 재사용한다. API만 사용 가능한 경우 동일 고정 원격 snapshot의 파일 존재와 실제 검증 상태를 구분해 읽는다. 단순 초안이나 인계서만 남기지 않는다.
 
-리뷰 요청은 단순 문서 게시가 아니다. **현재 설계를 진행하던 동일 창에서 사용자가 “리뷰요청해줘” 한마디만 해도**, 해당 창에서 마지막으로 확정한 Work·설계/구현 범위·source revision을 자동 선택하여 정식 리뷰 제출 절차로 진입한다. 이미 제공된 Work ID·파일·설명은 반복 질문하지 않는다. 사용자 표현을 예시로 논의하는 문맥은 실행 요청이 아니다. 새 창의 GPT/Windows Claude Code는 사용자 자연어 **“정식 리뷰 요청해 줘”**를 받으면 기존 Work·기존 요청/영수증/승인을 확인한 다음 [표준 REQUEST/PIN 게시·차단 계약](ops/CONTRACTS/PRE_READY_SOURCE_PIN_PREFLIGHT_V1.md)으로 이동한다. 구현: `collab/ops/review_staged_submission.py`(GitHub 보관 후보의 Windows 실제 정책검사·기존 제출기 연결; **운영 자동 hook 미적용**), `collab/ops/submit_review_request.py`(게시 전 REQUEST·ZIP 정합성 검사, Commit A REQUEST+ZIP, Commit B PIN, 원격 검증; Windows LIVE 검사는 선택적 참고), `collab/ops/review_pin_preflight.py`(읽기 전용 PIN 검사). 정식 REQUEST+PIN은 실제 원격 readback 전까지 접수 완료로 보고하지 않고, 호스트 승인/READY/리뷰 완료는 별도 확인한다. **서명·READY·Claude 결과/영수증은 별도 확인**. 문서 연결만으로 모든 새 창에서 자동 실행되거나 Windows 운영 hook이 설치된 것은 아니다.
+**완료 판정:** 정식 제출 완료(승인 대기) ≠ 실행 준비 완료 ≠ 실제 독립 리뷰 완료. 보호 signer가 실제 서명 및 READY를 검증하며, 스킬 범위 밖은 기존의 보호된 요청별 승인/REVIEW_INTENT 경로를 적용할 수 있을 때만 사용한다. 공개 REQUEST나 `--approval-route auto`만으로 권한이 생기지 않는다. 호스트 접근 또는 보호 권한이 확인되지 않으면 정확한 차단과 다음 한 행동을 기존 Work에 기록하고 신규 RID/재서명/재큐잉을 하지 않는다. 상세 구현·실제 운영 상태는 [자동 승인 CURRENT](projects/COWORK-AUTO-APPROVAL-20261115-001/CURRENT.md)에서 확인한다. 이 지도는 자동 로딩·호스트 실행·권한 변경을 보장하지 않는다.
 
 ## 0. 협업 → 업무·지식 → 피드백 전체 흐름
 
