@@ -1,5 +1,14 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-26 KST — Viewer v0.5.7 Knowledge 표준 섹션 순서 개발 전달
+
+- **현재 상태:** `PUBLIC_DEV_DELIVERY=PASS_REMOTE_VERIFIED`; `development_not_for_deployment`. [전체 ZIP](https://github.com/wonhwipark/L1Work/blob/8cf8771347bdea926d2dd5eaed7ebfb8c331f98d/l1-workspace-viewer-wiki-integrated_v0_5_7_1126.zip) · [업무 GPT 단일 인계](https://github.com/wonhwipark/L1Work/blob/8cf8771347bdea926d2dd5eaed7ebfb8c331f98d/handoffs/L1_WORKSPACE_VIEWER_V057_KNOWLEDGE_SECTION_ORDER_COMPLETE_HANDOFF_r0001_20261126_KST.md) · [handoffs index](https://github.com/wonhwipark/L1Work/blob/8cf8771347bdea926d2dd5eaed7ebfb8c331f98d/handoffs/README.md). L1Work commit `8cf8771347bdea926d2dd5eaed7ebfb8c331f98d`; ZIP 457,657 B, 46 entries, SHA-256 `4a7a7ce742106cebbb4192c250a716ec303ac223ad31fb9673dfe61cb8332ddd`, 원격 bytes 재확인 PASS.
+- **변경:** v0.5.6 원본 보존(446,659 B, SHA-256 `147c414777e6fd368520e7a7e7b9c8298c9fa047f2411d8525191e7b91c77343`). 5종 Knowledge의 검증된 동일 계층 연속 구간을 표시 전용으로 정렬, 미확인 경계/하위 제목/MSC 링크/원문 및 기존 Work 기능 보존. Kernel/Workflow/Updater/Analyzer/Converter/Recovery 및 저장 스키마/API 변경 없음.
+- **실제 개발시험:** 기준 ZIP 44 CRC/43 manifest, 신규 46 CRC/파일별 해시 왕복, 기존 36파일 동일, JS 14개 구문, 기존 v055/v056 시험 프로그램 및 신규 11건 V8 assertion/DOM 대역 PASS. 최초 대역 시험의 순환 참조 비교 오류 수정 후 재시험 PASS. 실제 Node/브라우저/업무 호스트/독립 리뷰/운영 설치 NOT_RUN. 로컬 DNS 제한으로 GitHub Base64 직접 처리.
+- **NEXT_ONE_ACTION:** 업무 GPT가 최신 단일 인계와 고정 ZIP으로 실제 활성 Viewer/adapter G0 및 V56-01~08/V57-01~04 시험 수행. 실제 문서 섹션 매핑 및 권한/링크/readback 확인 후 별도 유효 승인 범위에서만 적용. 화면 표시 실패로 기존 분석/Job을 재실행하지 않음.
+
+---
+
 ## 2026-11-25 KST — PcellTxPathOnOff API Job-list / code-analyzer Procedure MSC 실행 프롬프트 업로드
 
 - **현재 상태:** 업무 GPT 실행용 [one-shot Job-list/Procedure MSC 프롬프트](https://github.com/wonhwipark/L1Work/blob/main/handoffs/JOBLIST_PCELL_TX_PATH_ON_OFF_PROCEDURE_MSC_PROMPT_r0001_20261125_KST.md)를 PUBLIC `wonhwipark/L1Work/main/handoffs/`에 게시. 인계서 commit `c8e445bc4863fee95c67a710e752cffe7e590bc1`, README 링크 commit `205842e68fe7f0716578f4cedc20d3b4f3e0eba6`. 기존 Work 재사용, 신규 스킬 ZIP 없음.
