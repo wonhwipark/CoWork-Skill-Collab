@@ -1,5 +1,15 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-25 KST — PcellTxPathOnOff API Job-list / code-analyzer Procedure MSC 실행 프롬프트 업로드
+
+- **현재 상태:** 업무 GPT 실행용 [one-shot Job-list/Procedure MSC 프롬프트](https://github.com/wonhwipark/L1Work/blob/main/handoffs/JOBLIST_PCELL_TX_PATH_ON_OFF_PROCEDURE_MSC_PROMPT_r0001_20261125_KST.md)를 PUBLIC `wonhwipark/L1Work/main/handoffs/`에 게시. 인계서 commit `c8e445bc4863fee95c67a710e752cffe7e590bc1`, README 링크 commit `205842e68fe7f0716578f4cedc20d3b4f3e0eba6`. 기존 Work 재사용, 신규 스킬 ZIP 없음.
+- **범위:** `PcellTxPathOnOff` 실제 symbol·revision 탐색 → 현재 설치된 `code-analyzer` 명시적 호출 → caller/guard/callee/상태·비동기 Procedure MSC → 유효한 `doc-converter` PUML/SVG/HTML → 원래 업무 Work/Evidence 및 MCP·Runner 결과 readback. 조회된 최신 Analyzer v0.15.6은 운영 설치 보류 개발 후보로 취급.
+- **검증·경계:** 공개 MD 및 handoffs README 게시, 현장 source/스킬·실제 Job ID·Worker 시작·모델 호출·MSC 생성·MCP 조회·운영 설치 `NOT_RUN`. 문서 공개는 실행 승인·Job 등록이 아님. 업무 코드/세부 MSC는 공개 반출 금지.
+- **NEXT_ONE_ACTION:** 업무 GPT가 설치된 Job-list 및 Analyzer·Converter의 실제 action·호출 권한을 G0로 확인하고 기존 결과를 우선 재사용해 `PcellTxPathOnOff` 한 건의 Procedure MSC를 생성·Work 저장·readback 확인.
+
+---
+
+
 ## 2026-11-25 KST — Code Analyzer v0.15.6 개발 후보 전달
 
 - **현재 상태:** PUBLIC_DEV_DELIVERY=PASS_REMOTE_VERIFIED / DEPLOYMENT=BLOCKED_PENDING_REGRESSION. [ZIP](https://github.com/wonhwipark/L1Work/blob/b098060828fd654f9ad2b95b0aa8b423f08af8a8/code-analyzer_v0_15_6_1125.zip) · [업무 GPT 인계](https://github.com/wonhwipark/L1Work/blob/b098060828fd654f9ad2b95b0aa8b423f08af8a8/handoffs/CODE_ANALYZER_V0156_DEVELOPMENT_DELIVERY_r0001_20261125_KST.md).
