@@ -1,5 +1,14 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-27 KST — Source Map R1 독립 리뷰 완료 및 GPT 판정 REVISE
+
+- **상태:** INDEPENDENT_REVIEW=COMPLETED / GPT_MANUAL_DISPOSITION=REVISE. [리뷰](../../reviews/REQ-L1-SOURCE-MAP-DESIGN-R1-20261127/REVIEW_RESULT_1.md) · [영수증](../../receipts/REQ-L1-SOURCE-MAP-DESIGN-R1-20261127/RECEIPT_1.md) · [지적별 GPT 판정](GPT_SOURCE_MAP_R1_REVIEW_DISPOSITION_r0001_20261127_KST.md). ID/rev/hash/processing key 일치, watcher 0.2.35. 기존 요청 접수 대기는 해소.
+- **결론:** BLOCKING 1 / MAJOR 6 / MINOR 3. LLM-first 방향 유지; provenance와 확인 상태 분리, 골드셋/비교/예산·stale 검증, 단일 snapshot/권한·소유권, 단계적 적용 요구 보완. 실제 업무 계약 확인 전 신규 엔진/스킬 변경 확정 금지.
+- **미검증:** 실제 설치본·모델/제품 품질·G6/Writer/Kernel/MCP 및 Viewer E2E. 이번 GPT 수동 판정 외 신규 리뷰/API 호출/Job/구현/설치/배포/업무 인계 없음.
+- **NEXT_ONE_ACTION:** 통합 설계 r0002 및 업무 G0 요구 작성 후 별도 유효 요청으로 R2 진행. 기존 RID/서명/영수증 불변.
+
+---
+
 ## 2026-11-27 KST — L1 Source Map LLM-first 독립 설계 리뷰 R1 접수
 
 - **상태:** FORMAL_REQUEST=SUBMITTED_AWAITING_PROTECTED_SIGNER, HOST_ACK=UNKNOWN. [REQUEST](../../requests/REQ-L1-SOURCE-MAP-DESIGN-R1-20261127/REQUEST.md) · [SOURCE_PIN](../../requests/REQ-L1-SOURCE-MAP-DESIGN-R1-20261127/SOURCE_PIN.json) · [리뷰 입력 ZIP](../../packages/l1_source_map_design_r0001_1127_REVIEW_INPUT.zip).
