@@ -1,0 +1,23 @@
+{
+  "key_id": "cowork-approver-1",
+  "payload": {
+    "expires_at": "2026-11-26T17:53:55.279523+00:00",
+    "issued_at": "2026-11-26T15:53:55.279523+00:00",
+    "knowledge_refs_hash": "d84c599b38b661764ac1ef97be223d823d5a916ea7a4dfcabaf4d575e82c6652",
+    "local_policy_revision": "1",
+    "nonce": "af91550ca2a5f2c41273658986474b48",
+    "package_path": "/SKILL-COLLAB/packages/l1_source_map_design_r0001_1127_REVIEW_INPUT.zip",
+    "package_sha256": "ec953eb4a92512a3e8d8d74b4f56e72fd8e91b7fddca5ef748cc30744c025eeb",
+    "package_size_bytes": 3205,
+    "ready_sha256": "495d63ab755656cb7b592ecc0a264ff443fef8adda01fd7837f95a477d291ae6",
+    "repo_id": "1451933830",
+    "request_id": "REQ-L1-SOURCE-MAP-DESIGN-R1-20261127",
+    "request_revision": "1",
+    "request_sha256": "1f667e7913d2add31d668e9598efe5a8738c97b4262a77805a1b88dc5526499c",
+    "run_policy_ref": "POLICY-STATIC-V1",
+    "schema": "SKILL_COLLAB_APPROVAL_PAYLOAD_V1",
+    "source_commit": "9c0ffbdfd612c825d7661bb4257a20329942dbb6"
+  },
+  "schema": "SKILL_COLLAB_APPROVAL_SIG_V1",
+  "signature": "3z506U1znuGPa59H96l8jShARoxh3dTGlCLgNjD2JbMmwuko2r/K5a2gr9l8MBWPAjYHKx5sq1dlHFO36/RiCQ=="
+}
