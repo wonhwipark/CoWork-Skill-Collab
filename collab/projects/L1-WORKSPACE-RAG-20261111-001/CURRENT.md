@@ -1,5 +1,13 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-27 KST — Source Map r0002 상세 설계 및 업무 G0 인계
+
+- **상태:** DESIGN_R0002=POSTED_REMOTE_VERIFIED / G0_HANDOFF=POSTED_REMOTE_VERIFIED / INDEPENDENT_REVIEW_R2=SKIP_USER_DIRECTIVE. 사용자 최신 지시로 추가 독립 리뷰 생략, GPT 자체 검토 및 회귀시험으로 진행. R1 결과·영수증 보존.
+- [통합 설계 r0002](L1_SOURCE_MAP_LLM_FIRST_INTEGRATED_DESIGN_r0002_20261127_KST.md) · [업무 GPT G0 인계](https://github.com/wonhwipark/L1Work/blob/33a7b4cb8552274c27c44285af22173de4944f60/handoffs/L1_SOURCE_MAP_LLM_FIRST_G0_HANDOFF_r0001_20261127_KST.md). R1 지적 10개 반영: 신뢰도/검증 상태, bounded 조회, 수치 예산 및 골드셋, 버전/충돌·권한, 역할/단계별 시험. 설계 commit `3ee216ff501172a164958e91106053c1ed6cd1f9`, 인계 commit `33a7b4cb8552274c27c44285af22173de4944f60`.
+- **다음 조치:** 업무 GPT의 G01~G06 읽기 전용 현장 확인. 기존 7개 Discovery 재사용 및 G6 승인 범위, Writer/Kernel/조회, 실제 추출/모델 설정 확인 후 관리 스킬 변경 범위 확정. 코드·설치·Job·그룹 게시·실제 시험 NOT_RUN. R2 요청/추가 모델 호출 없음.
+
+---
+
 ## 2026-11-27 KST — Source Map R1 독립 리뷰 완료 및 GPT 판정 REVISE
 
 - **상태:** INDEPENDENT_REVIEW=COMPLETED / GPT_MANUAL_DISPOSITION=REVISE. [리뷰](../../reviews/REQ-L1-SOURCE-MAP-DESIGN-R1-20261127/REVIEW_RESULT_1.md) · [영수증](../../receipts/REQ-L1-SOURCE-MAP-DESIGN-R1-20261127/RECEIPT_1.md) · [지적별 GPT 판정](GPT_SOURCE_MAP_R1_REVIEW_DISPOSITION_r0001_20261127_KST.md). ID/rev/hash/processing key 일치, watcher 0.2.35. 기존 요청 접수 대기는 해소.
