@@ -1,5 +1,13 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-27 KST — LTE/NR 1,500파일 Source Map 설계 확정 · R2 리뷰 완료
+
+- Windows Claude Code R2 정적 리뷰 1회 완료(차단 0·주요 4·경미 2). GPT가 업무 GPT용 r0003에 반영하고 자체시험 확인. [지적별 판정·시험·파일 SHA](./GPT_SOURCE_MAP_1500_R2_DISPOSITION_r0001_20261127_KST.md) · [리뷰](../../reviews/REQ-L1-SOURCE-MAP-DESIGN-R2-20261127/REVIEW_RESULT_1.md) · [영수증](../../receipts/REQ-L1-SOURCE-MAP-DESIGN-R2-20261127/RECEIPT_1.md).
+- 기존 Discovery 재사용, 전체 경량 인덱스·모듈/build 관계·질문별 원문 확인을 채택. Analyzer 85건, Viewer 8개 프로그램, 합성 1,500파일 범위와 GCC 4조합 통과. r0003 추가 독립 리뷰 생략. 실제 업무 G0, 모델 품질, 운영 반영은 미실행.
+- 다음 행동은 업무 GPT가 기존 7건을 r0003 관계표에 대조해 재사용/부분 보완/충돌을 회신하는 일이에요.
+
+---
+
 ## 2026-11-27 KST — Source Map Viewer v0.5.8 / Analyzer v0.15.7 개발 전달
 
 - **현재 상태:** PUBLIC_DEV_DELIVERY=POSTED_REMOTE_VERIFIED (2 ZIP 및 통합 인계), development_not_for_deployment, INDEPENDENT_REVIEW=SKIP_USER_DIRECTIVE. 실제 업무 G0/전체 회귀·설치·운영 적용 NOT_RUN. 기존 활성본 유지.
