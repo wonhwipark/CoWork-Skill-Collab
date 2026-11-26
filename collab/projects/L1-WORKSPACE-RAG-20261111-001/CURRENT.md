@@ -1,5 +1,15 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-27 KST — Source Map Viewer v0.5.8 / Analyzer v0.15.7 개발 전달
+
+- **현재 상태:** PUBLIC_DEV_DELIVERY=POSTED_REMOTE_VERIFIED (2 ZIP 및 통합 인계), development_not_for_deployment, INDEPENDENT_REVIEW=SKIP_USER_DIRECTIVE. 실제 업무 G0/전체 회귀·설치·운영 적용 NOT_RUN. 기존 활성본 유지.
+- [업무 GPT 통합 인계](https://github.com/wonhwipark/L1Work/blob/9134db8028f3d2acbf81e7067c5a7c6721e44351/handoffs/L1_SOURCE_MAP_VIEWER_ANALYZER_DEVELOPMENT_DELIVERY_r0001_20261127_KST.md) · [Viewer v0.5.8](https://github.com/wonhwipark/L1Work/blob/e80cb844d4409b8b60ca212d2822bd91f1692891/l1-workspace-viewer-wiki-integrated_v0_5_8_1127.zip) 301164 B, SHA-256 `5d7935edba33bf062d167c95f3a44c620c683c33accc9c7aadacb69561fa73de` · [Analyzer v0.15.7](https://github.com/wonhwipark/L1Work/blob/d015c6c5c7d7e37ee93e3760ca3022cc48a0a3b8/code-analyzer_v0_15_7_1127.zip) 627385 B, SHA-256 `6a11cb8685c46d1ac22a1465968193a72708ca90bcfcf453b371c869abdfbeab`.
+- **변경:** Viewer 독립 읽기 전용 Source Map 및 검증된 Knowledge 링크, 기존 구조 보존; Analyzer 전처리 sibling/nested guard·UNKNOWN/UNCERTAIN·legacy pending patch 보호. Updater/Kernel/Converter 변경 없음.
+- **시험:** 원본/신규 ZIP CRC·manifest·remote bytes PASS, Analyzer 집중 9 PASS/1 SKIP 및 g++ A/B 4조합 PASS, Viewer 집중 Node 2 프로그램 및 합성 분리 Chromium 1280/360 PASS, 실제 fixture/adapter exact search·Knowledge link V8 PASS. 로컬 DNS/ZIP 반입 제한으로 기존 Analyzer 75회귀·실제 CLI/설치, Viewer 기존 6프로그램·전체 통합 브라우저 NOT_RUN. 추가 독립 리뷰 및 Job 미실행.
+- **NEXT_ONE_ACTION:** 업무 GPT가 통합 인계에 따라 기존 G0 계약 확인과 임시 격리 전체 회귀/실제 adapter 연결 검증을 진행. 운영 전환은 별도 판정·승인. 기존 legacy patch 보존 및 새 scope 재분석.
+
+---
+
 ## 2026-11-27 KST — Source Map r0002 상세 설계 및 업무 G0 인계
 
 - **상태:** DESIGN_R0002=POSTED_REMOTE_VERIFIED / G0_HANDOFF=POSTED_REMOTE_VERIFIED / INDEPENDENT_REVIEW_R2=SKIP_USER_DIRECTIVE. 사용자 최신 지시로 추가 독립 리뷰 생략, GPT 자체 검토 및 회귀시험으로 진행. R1 결과·영수증 보존.
