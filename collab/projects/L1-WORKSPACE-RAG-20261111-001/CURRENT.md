@@ -1,5 +1,14 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
+## 2026-11-27 KST — L1 Source Map LLM-first 독립 설계 리뷰 R1 접수
+
+- **상태:** FORMAL_REQUEST=SUBMITTED_AWAITING_PROTECTED_SIGNER, HOST_ACK=UNKNOWN. [REQUEST](../../requests/REQ-L1-SOURCE-MAP-DESIGN-R1-20261127/REQUEST.md) · [SOURCE_PIN](../../requests/REQ-L1-SOURCE-MAP-DESIGN-R1-20261127/SOURCE_PIN.json) · [리뷰 입력 ZIP](../../packages/l1_source_map_design_r0001_1127_REVIEW_INPUT.zip).
+- **범위:** Claude Code JIT + Aider Repo Map 개념, C++ 심볼/메시지/Handler/상태/빌드 관계, bounded retrieval 및 stale fallback, Updater 소유권·독립 Source Map 경로/Viewer 메뉴, 기존 Writer/Kernel/MCP 재사용, Qwen/Recovery V2/V3 비교 시험. 실제 업무 자료/설치본 미포함·미검증. 정적 독립 리뷰 1회만; 운영 변경/Job/설치/그룹 게시 없음.
+- **검증:** Commit A `9c0ffbdfd612c825d7661bb4257a20329942dbb6` REQUEST+ZIP 동일 트리, Commit B `8eec0a85de646f3ebaddbf039db24b272581da9c` PIN. 로컬 ZIP CRC/원문 왕복 PASS, 3205 B, SHA-256 `ec953eb4a92512a3e8d8d74b4f56e72fd8e91b7fddca5ef748cc30744c025eeb`, 로컬 Git blob 및 원격 A/main blob 일치, REQUEST/PIN 원격 재조회 일치. 접수 직후 보호 서명·READY·결과/영수증 미관측. 실제 Windows 승인 경로는 접근 불가.
+- **NEXT_ONE_ACTION:** 동일 RID의 기존 보호 signer/READY·실행·리뷰/영수증 상태 회수. 필요 시 보호된 기존 요청별 승인 절차만 사용; 신규 RID·중복 디스패치·임의 서명 금지.
+
+---
+
 ## 2026-11-26 KST — Viewer v0.5.7 Knowledge 표준 섹션 순서 개발 전달
 
 - **현재 상태:** `PUBLIC_DEV_DELIVERY=PASS_REMOTE_VERIFIED`; `development_not_for_deployment`. [전체 ZIP](https://github.com/wonhwipark/L1Work/blob/8cf8771347bdea926d2dd5eaed7ebfb8c331f98d/l1-workspace-viewer-wiki-integrated_v0_5_7_1126.zip) · [업무 GPT 단일 인계](https://github.com/wonhwipark/L1Work/blob/8cf8771347bdea926d2dd5eaed7ebfb8c331f98d/handoffs/L1_WORKSPACE_VIEWER_V057_KNOWLEDGE_SECTION_ORDER_COMPLETE_HANDOFF_r0001_20261126_KST.md) · [handoffs index](https://github.com/wonhwipark/L1Work/blob/8cf8771347bdea926d2dd5eaed7ebfb8c331f98d/handoffs/README.md). L1Work commit `8cf8771347bdea926d2dd5eaed7ebfb8c331f98d`; ZIP 457,657 B, 46 entries, SHA-256 `4a7a7ce742106cebbb4192c250a716ec303ac223ad31fb9673dfe61cb8332ddd`, 원격 bytes 재확인 PASS.
