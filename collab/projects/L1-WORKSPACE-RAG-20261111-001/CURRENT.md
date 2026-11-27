@@ -2,6 +2,7 @@
 
 ## 2026-11-27 KST — LTE/NR 1,500파일 Source Map 설계 확정 · R2 리뷰 완료
 
+- [L1Work 업무 GPT 통합 인계서 r0003](https://github.com/wonhwipark/L1Work/blob/6a1afc7c8cdc6843c82f2913975eaa864b156583/handoffs/L1_SOURCE_MAP_1500_UPDATER_INTEGRATED_HANDOFF_r0003_20261127_KST.md)를 [인계 목록](https://github.com/wonhwipark/L1Work/blob/6a1afc7c8cdc6843c82f2913975eaa864b156583/handoffs/README.md) 맨 위에 게시했어요. 원격 본문 45,813 bytes와 SHA-256 `5d85c228426fc9fcfc3d4c67d8cbe3e2750f85e842d0b3644a681a8c07eee968`이 확정본과 일치해요. 업무 GPT의 G0 회신은 대기 중이에요.
 - Windows Claude Code R2 정적 리뷰 1회 완료(차단 0·주요 4·경미 2). GPT가 업무 GPT용 r0003에 반영하고 자체시험 확인. [지적별 판정·시험·파일 SHA](./GPT_SOURCE_MAP_1500_R2_DISPOSITION_r0001_20261127_KST.md) · [리뷰](../../reviews/REQ-L1-SOURCE-MAP-DESIGN-R2-20261127/REVIEW_RESULT_1.md) · [영수증](../../receipts/REQ-L1-SOURCE-MAP-DESIGN-R2-20261127/RECEIPT_1.md).
 - 기존 Discovery 재사용, 전체 경량 인덱스·모듈/build 관계·질문별 원문 확인을 채택. Analyzer 85건, Viewer 8개 프로그램, 합성 1,500파일 범위와 GCC 4조합 통과. r0003 추가 독립 리뷰 생략. 실제 업무 G0, 모델 품질, 운영 반영은 미실행.
 - 다음 행동은 업무 GPT가 기존 7건을 r0003 관계표에 대조해 재사용/부분 보완/충돌을 회신하는 일이에요.
