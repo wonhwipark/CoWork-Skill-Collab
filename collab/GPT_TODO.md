@@ -24,7 +24,20 @@
 | TD-003 | 2 | 작업 연결 | 여러 스킬 간 인계·피드백 순환 검증 | 8개 인계·오류 문서 추적 PASS; Linux MCP 접근 도구 부재로 실제 E2E NOT_RUN. NR 분석 기존 Work에 동일 Job ID의 설치·Run/Receipt/MCP readback 원샷 인계 게시(운영 실행 트리거 아님) | [TD-003 추적](projects/COWORK-SKILL-DISCOVERY-20261112-001/TD003_MULTI_SKILL_HANDOFF_FEEDBACK_TRACE_20261115.md) · [호스트 원샷](projects/NR-L1TX-CODE-ANALYSIS-20261115-001/TD003_LINUX_MCP_E2E_ONE_SHOT_HANDOFF_r0001_20261115_KST.md) |
 | TD-004 | 2 | 완료 | CURRENT의 과거·현재 표시 정리 검토 | 기존 맥락 Work의 CURRENT 과거 절 2곳 `(LATEST)` 오독 위험 정정. 역사적 내용·근거 보존, PRIVATE 원격 본문 재조회 완료. 다른 Work의 전수감사는 이번 범위 밖 | [D07](projects/COWORK-SKILL-DISCOVERY-20261112-001/COWORK_L1_INTEGRATED_CONTEXT_DESIGN_TODO_r0001_20261115_KST.md#3-통합-설계-todo) · [TD-004 결과](projects/COWORK-SKILL-DISCOVERY-20261112-001/TD004_CURRENT_HISTORY_LABEL_REVIEW_20261115.md) |
 
-상세 문서의 D01~D10·수용 기준·이력은 그대로 재사용. 위 네 묶음으로 다른 기존 항목을 취소하거나 신규 실행을 시작하지 않음.
+| TD-005 | 1 | 후보 | Agent MCP·Skill Updater·Job List 운영 정합성 검토 | 실제 대상·실행본·버전 조회 정합성, 개인 Knowledge/Source Map 읽기 연결, 수동 업데이트와 예약 활성화 차이, Job–Run–Receipt–Result readback. 기존 Work 재사용, Source Map 개발과 별도 관리 | [기존 Updater 정적 분석](projects/SKILL-UPDATER-JOBLIST-LATENCY-20261115-001/FOCUSED_AUDIT_v0544.md) · [기존 Job 복구 CURRENT](projects/JOBLIST-NRTX-20261112-001/CURRENT.md) |
+
+상세 문서의 D01~D10·수용 기준·이력은 그대로 재사용. 기존 네 묶음과 TD-005 후보는 다른 기존 항목을 취소하거나 신규 실행을 시작하지 않음.
+
+## TD-005 상세 검토 범위 (2026-11-28 KST)
+
+- 목적: 모바일 Agent → Linux MCP → 실제 스킬/Updater/Job 실행·조회 경계의 정합성 검토. Knowledge Updater/Source Map 기능 개발과 분리한 운영 기반 후보. 우선순위 1, 상태 후보(실행 대기), 담당 검토 GPT.
+- 확인 근거: 최신 L1Work 게시본 Skill Updater v0.5.44, Job List v0.4.38. 기존 공개 ZIP 정적 감사에서 `JOBLIST_ACTIVATION_EVERY_CYCLE=False`(scheduled entry only; MCP update-only) 확인. 실제 호스트 활성본·호출 모드까지 확인된 것은 아님. 사용자 제공 MCP 요약에서는 inventory와 상태 라벨 간 버전 차이, 개인 Knowledge library 미구성, 출력 제한이 보고됨. 상세 업무 관측 원문은 공개 저장소에 복제하지 않음.
+- P0: 동일 대상 호스트 및 실제 실행 경로/loaded version/digest를 기준으로 inventory·capabilities·status metadata의 출처와 현재성 대조. 버전 하드코딩/캐시/중복 설치/별도 실행 경로는 가설로만 분류. 개인 Knowledge reader root/권한과 Source Map 읽기 연결은 실제 지원 계약 확인 후 최소 보완 후보로 분리.
+- P1: 기존 Updater의 최신 ZIP 탐색·검증·설치 및 self-update Bootstrap, MCP 수동 update-only와 OS 예약 활성화 경로 대조. 설치 성공을 Job 실행 성공으로 판정하지 않음. 기존 정책을 변경하려면 별도 승인.
+- P1: 기존 Job의 Catalog/Registry/Queue→Runner/Worker→Run ID→Result/Receipt→MCP readback 대조. 과거 DONE/SUCCESS 및 RESULT_UNSUPPORTED 사례의 현재 해결 여부 확인. 기존 산출물 우선, 소비된 Job 재실행 금지. 조회 페이지/출력 제한은 원본 계약 내에서 진단.
+- 완료 기준: 실제 호스트 동일성·설치/로드/응답 version의 근거 있는 일치 또는 차이 설명, 기존 조회 경로의 권한/현재성, 수동/예약 동작 계약 확정, 기존 Job의 실행·결과·조회 단계별 증거 및 최소 변경 필요성 판정. 읽기 조사만으로 운영 복구 완료를 선언하지 않음.
+- 기존 작업 연결: [Updater latency 감사](projects/SKILL-UPDATER-JOBLIST-LATENCY-20261115-001/STATIC_AUDIT_v0544.md), [RACH 복구 CURRENT](projects/JOBLIST-NRTX-20261112-001/CURRENT.md), [Smoke 후보 CURRENT](projects/JOBLIST-SMOKE-20261114-001/CURRENT.md), [기존 운영 구조 인계](https://github.com/wonhwipark/L1Work/blob/main/handoffs/JobList_Agent_MCP_SkillUpdater_Lifecycle_Inhouse_GPT_r0001_20261113_2157_KST.md), [MCP 스킬 접근 인계](https://github.com/wonhwipark/L1Work/blob/main/handoffs/L1_MCP_AGENT_SKILL_ACCESS_AND_CAPABILITY_HANDOFF_r0002_20261120_KST.md). TD-003 및 기존 실행 Work의 결과·승인·이력 재사용. 별도 신규 실행 Work를 발급하지 않음.
+- 다음 한 행동: 사용자 진행 요청 시 기존 Work에서 실제 활성 MCP/스킬 metadata 및 읽기·실행 경로의 계약 차이를 읽기 전용으로 확인하고 REUSE/CONNECT/PROVEN_GAP/UNKNOWN 표를 작성. 현재 후보 등록만 수행. 신규 REQUEST/READY, 독립 리뷰, 모델 호출, 스킬 설치/수정, Job 등록·실행·재큐잉, 서비스/정책 변경 없음.
 
 ## GPT 검토 메모
 
@@ -50,6 +63,8 @@
 후보 상태·우선순위·GPT 의견의 정본은 이 목록. 상세 문서는 수정 방향·근거·완료 기준, CURRENT는 실제 작업 진행·결과를 관리. 브리프·진입점에는 고정 링크만 두며 후보별 상태를 복사하지 않음.
 
 ## 등록 이력
+
+- 2026-11-28: 사용자 요청으로 TD-005 운영 정합성 검토 후보 등록. 기존 감사/복구 Work 연결, 실행 미승인·미실행 유지.
 
 - 2026-11-15: 사용자 승인으로 GPT 공통 목록과 TD-001~004 구성. 기존 상세 설계 TODO를 재사용하고 공통 브리프·협업 진입점에 연결. 기존 Work·진행 중 요청·실행 승인 상태는 유지.
 - 2026-11-15: 사용자 순차 검토·실행 요청에 따라 TD-004를 기존 맥락 Work에서 먼저 처리. [점검 결과](projects/COWORK-SKILL-DISCOVERY-20261112-001/TD004_CURRENT_HISTORY_LABEL_REVIEW_20261115.md)와 [CURRENT](projects/COWORK-SKILL-DISCOVERY-20261112-001/CURRENT.md)에 연결. PRIVATE 문서 수준 점검이며 독립 리뷰·실제 새 창 검증 미실행.
