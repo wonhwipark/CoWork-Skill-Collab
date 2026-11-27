@@ -1,0 +1,12 @@
+---
+schema: SKILL_COLLAB_READY_V1
+state: READY
+request_id: REQ-L1-KNOWLEDGE-UPDATER-R0004-R1-20261128
+request_revision: 1
+request_path: /SKILL-COLLAB/requests/REQ-L1-KNOWLEDGE-UPDATER-R0004-R1-20261128/REQUEST.md
+request_sha256: a1fc9e5be57c9a29090fe277bd132071fc867b599d5cc466f719e80a8e67ce7a
+package_sha256: 79b0d4e2aed3374c2d61ac8f789a4c66339013c0bc03c2477ad4510383de988a
+baseline_id: COWORK-LIVE-A-20261114
+---
+
+# ready
