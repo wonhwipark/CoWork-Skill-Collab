@@ -1,12 +1,12 @@
 # L1-WORKSPACE-RAG-20261111-001 — CURRENT
 
-## 2026-11-28 KST — Viewer 운영 관리 Skill Management 상세 설계 및 독립 R1 접수
+## 2026-11-28 KST — Viewer 운영 관리 Skill Management 독립 R1 완료 및 GPT 판정 REVISE
 
 - **설계:** [상세 설계 r0001](L1_VIEWER_OPERATIONS_SKILL_MANAGEMENT_DETAILED_DESIGN_r0001_20261128_KST.md) 게시. 운영 관리 하위 Read Only 화면, Linux 실제 설치·활성·공개 버전 분리, 기존 Job-list/Updater/Kernel/MCP 재사용, 상세 데이터 모델/권한·예외·20개 수락시험 제시.
 - **정식 R1 입력:** [REQUEST](../../requests/REQ-L1-VIEWER-SKILL-MANAGEMENT-DESIGN-R1-20261128/REQUEST.md) · [SOURCE_PIN](../../requests/REQ-L1-VIEWER-SKILL-MANAGEMENT-DESIGN-R1-20261128/SOURCE_PIN.json) · [고정 설계 ZIP](../../packages/l1_viewer_skill_management_design_r0001_1128_REVIEW_INPUT.zip). Commit A `21207360b5657bbb267aeb2d1cf505a0635f997d`, PIN commit `e306e4a099bc57b164ded6d4ffa263f3ceeda1ce`. ZIP 27,372 bytes, SHA-256 `0d755b787468af4567484805256ff6a3cb3625d80924fa4cc6bdabdfdcc0b509`.
-- **현재 상태:** `DESIGN_POSTED / FORMAL_REQUEST_SUBMITTED / SOURCE_PIN_POSTED`. `APPROVAL_SIG/READY/REVIEW_RESULT/RECEIPT=NOT_VERIFIED`. 보호 signer·Windows watcher가 정식 게이트를 충족하기 전 모델 리뷰 실행을 완료로 표시하지 않음.
+- **현재 상태:** `INDEPENDENT_REVIEW=COMPLETED / GPT_MANUAL_DISPOSITION=REVISE`. 2026-11-28 19:55 KST readback: 승인 서명·READY·Dispatch·리뷰·영수증 존재, 요청 ID/rev/package SHA 및 processing key 일치, receipt ok=true. 서명 암호학적 검증 및 ZIP 재해시 미수행. [리뷰](../../reviews/REQ-L1-VIEWER-SKILL-MANAGEMENT-DESIGN-R1-20261128/REVIEW_RESULT_1.md) · [영수증](../../receipts/REQ-L1-VIEWER-SKILL-MANAGEMENT-DESIGN-R1-20261128/RECEIPT_1.md). BLOCKING 3 / MAJOR 7 / MINOR 5.
 - **G0 경계:** v0.5.8 파일/루트/버전은 공개 HO에서 검증, Linux 실제 설치본·read adapter/API·호스트 권한/서버는 NOT_VERIFIED. 공개 소스·업무 데이터·운영/Job·스킬 설치/수정 없음.
-- **NEXT_ONE_ACTION:** 기존 보호 signer가 동일 RID에 유효한 서명·READY를 게시할 수 있는지 확인하고, 기존 watcher가 리뷰 결과·영수증을 기록했는지 readback. 무단 READY 작성·동일 RID 재실행 금지. 실제 결과 도착 후 GPT 지적 처리 및 구현 HO 별도 작성.
+- **NEXT_ONE_ACTION:** 상세 설계 r0002의 B1~B3(서버 ACL fail-closed, 권한 거절 시 캐시 파기, 호스트/설치/버전 데이터 계약) 및 주요 지적 반영 여부 자체 검증 후 구현 인계. 실제 Linux G0 및 운영 적용은 별도 검증. 동일 RID 재실행 금지.
 
 ---
 
